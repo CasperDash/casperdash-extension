@@ -5,7 +5,11 @@ import reducers from './reducers';
 export const initialState = {
 	userAction: {
 		showLoginModal: false,
-		user: null,
+		user: {
+			publicAddress: '',
+			balance: null,
+			error: null,
+		},
 		balance: null,
 	},
 };

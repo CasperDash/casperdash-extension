@@ -525,6 +525,9 @@ table {
 		align-items: center;
 		margin-left: auto;
 		min-width: 130px;
+		.zl_all_page_error {
+			color: rgba(186, 19, 88, 0.42);
+		}
 		.dropdown-toggle {
 			display: flex;
 			align-items: center;
