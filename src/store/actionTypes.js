@@ -1,0 +1,3 @@
+export const USERS = {
+	GET_ACCOUNT_BALANCE: 'USER.GET_ACCOUNT_BALANCE',
+};

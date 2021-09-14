@@ -1,0 +1,435 @@
+@import "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap";
+.zl_light_theme_active {
+  background: linear-gradient(180deg, #FFFFFF -100%, #FFFFFF 100%);
+}
+.zl_light_theme_active .zl_dark_theme_slide_img {
+  display: none;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .round_shap_img_one {
+  display: none;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .round_shap_img_two {
+  display: none;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_indicator .zl_welcome_slide_indicator_items {
+  background: #3B445A;
+  opacity: 0.3;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_indicator .zl_welcome_slide_indicator_items:first-child[title="1"] {
+  background: #3B445A;
+  opacity: 1;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_indicator .zl_welcome_slide_indicator_items:nth-child(2)[title="2"] {
+  background: #3B445A;
+  opacity: 1;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_indicator .zl_welcome_slide_indicator_items:nth-child(3)[title="3"] {
+  background: #3B445A;
+  opacity: 1;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_indicator .zl_welcome_slide_indicator_items:nth-child(2)[title="1"] {
+  background: #3B445A;
+  opacity: 0.6;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_indicator .zl_welcome_slide_indicator_items:nth-child(3)[title="2"] {
+  background: #3B445A;
+  opacity: 0.6;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_indicator .zl_welcome_slide_indicator_items:nth-child(2)[title="3"] {
+  background: #3B445A;
+  opacity: 0.6;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_heading {
+  color: #252F47;
+}
+.zl_light_theme_active .zl_welcome_slide_section .zl_welcome_slide_content .zl_welcome_slide_step_btns {
+  color: #fff;
+}
+.zl_light_theme_active .zl_login_section .zl_login_content .zl_login_btn a {
+  color: #fff;
+}
+.zl_light_theme_active .zl_login_section .zl_login_content .zl_login_heading_text .zl_login_heading {
+  color: #252F47;
+  opacity: 1;
+}
+.zl_light_theme_active .zl_login_section .zl_login_content .zl_login_input_content .zl_login_input {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_login_section .zl_login_content .zl_login_input_content::before {
+  display: none;
+}
+.zl_light_theme_active .zl_light_theme_logo {
+  display: block !important;
+}
+.zl_light_theme_active .zl_main_logo {
+  display: none !important;
+}
+.zl_light_theme_active .zl_page_sidebar.zl_hide_sidebar .zl_light_theme_logo {
+  display: none !important;
+}
+.zl_light_theme_active .zl_page_sidebar {
+  background: linear-gradient(180deg, rgba(241, 245, 255, 0.38) 0%, rgba(230, 235, 249, 0.31) 57.44%, rgba(252, 253, 255, 0.57) 100%);
+}
+.zl_light_theme_active .zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items .zl_page_sidebar_link {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items .zl_page_sidebar_link svg path {
+  fill: #3D476A;
+}
+.zl_light_theme_active .zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items .zl_page_sidebar_link svg rect {
+  fill: #3D476A;
+}
+.zl_light_theme_active .zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items:nth-child(5) .zl_page_sidebar_link svg path:last-child {
+  fill: #FFFFFF;
+}
+.zl_light_theme_active .zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items:nth-child(6) .zl_page_sidebar_link svg path {
+  fill: none;
+  stroke: #3D476A;
+}
+.zl_light_theme_active .zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items:nth-child(2) .zl_page_sidebar_link svg path {
+  fill: none;
+  stroke: #3D476A;
+}
+.zl_light_theme_active .zl_page_sidebar_toggle_btn {
+  background: #ECEEF3;
+  border: 1px solid #ECEEF3;
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_heading h2 {
+  color: #252F47;
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .zl_all_page_logout_btn {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .dropdown-menu {
+  background: linear-gradient(210.96deg, #FFFFFF 0.01%, #FFFFFF 42.05%, #FFFFFF 104.81%);
+  box-shadow: -10px 48.6px 140px rgba(23, 18, 43, 0.2);
+  backdrop-filter: blur(19px);
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .dropdown-menu .zl_all_page_notification_body .zl_all_page_notification_heading {
+  color: #252F47;
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .dropdown-menu .zl_all_page_notification_body .zl_all_page_notification_list .zl_all_page_notification_list_body .zl_all_page_notification_list_heading {
+  color: #3d476ab3;
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .dropdown-menu .zl_all_page_notification_body .zl_all_page_notification_list:hover {
+  background: linear-gradient(224.09deg, #EFF0F2 0%, #EFF0F2 98.47%);
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .dropdown-menu .zl_all_page_notification_body .zl_all_page_notification_list:hover .zl_all_page_notification_list_body .zl_all_page_notification_list_heading {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .dropdown-menu .zl_all_page_notification_body .zl_all_page_notification_list:hover .zl_all_page_notification_list_more_btn svg {
+  color: #828CAE;
+}
+.zl_light_theme_active .zl_all_page_heading_section .zl_all_page_notify_logout_btn .dropdown-toggle {
+  box-shadow: 0px 5px 34px rgba(186, 19, 88, 0.42);
+}
+.zl_light_theme_active .react-datepicker__navigation-icon::before {
+  border-color: #252F47;
+}
+.zl_light_theme_active .react-datepicker__year-read-view--down-arrow {
+  border-color: #252F47;
+}
+.zl_light_theme_active .react-datepicker__month-read-view--down-arrow {
+  border-color: #252F47;
+}
+.zl_light_theme_active .react-datepicker__month-year-read-view--down-arrow {
+  border-color: #252F47;
+}
+.zl_light_theme_active .zl_all_page_comman_content {
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active .zl_chart_box_heading_date .zl_chart_box_heading {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_all_page_comman_total_price .zl_all_page_total_price_text {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_add_currency_row .zl_add_currency_column .zl_add_currency_inner_content {
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active .zl_add_currency_row .zl_add_currency_column .zl_add_currency_inner_content .zl_add_currency_price p {
+  color: #3D476A;
+  opacity: 0.7;
+}
+.zl_light_theme_active .zl_add_currency_row .zl_add_currency_column .zl_add_currency_btn_content {
+  color: #3D476A;
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active .zl_add_currency_row .zl_currency_column_sub_row::-webkit-scrollbar-track {
+  background: #EFF0F2;
+}
+.zl_light_theme_active .zl_add_currency_row .zl_currency_column_sub_row::-webkit-scrollbar-thumb {
+  background: #828CAE;
+}
+.zl_light_theme_active .zl_add_currency_row .zl_currency_column_sub_row::-webkit-scrollbar-thumb:hover {
+  background: #828CAE;
+}
+.zl_light_theme_active .zl_portfolio_page .zl_add_currency_row .zl_add_currency_column .zl_add_currency_inner_content .zl_add_currency_price p {
+  color: #3D476A;
+  opacity: 1;
+}
+.zl_light_theme_active .zl_currency_icon svg path[fill="#2E3855"] {
+  fill: #fff;
+}
+.zl_light_theme_active .zl_send_recive_content .zl_send_recive_inner_content {
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active .zl_custom_currency_checkbox.custom-switch .custom-control-label::before {
+  filter: drop-shadow(2px 3px 7px rgba(0, 0, 0, 0.12));
+}
+.zl_light_theme_active .zl_custom_currency_checkbox.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+  filter: none;
+}
+.zl_light_theme_active .custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: none;
+}
+.zl_light_theme_active .zl_wallets_page .zl_add_currency_row .zl_add_currency_column .zl_add_currency_inner_content .zl_add_currency_price p {
+  opacity: 1;
+}
+.zl_light_theme_active .zl_wallets_page .zl_add_currency_inner_content:hover .zl_add_currency_price p {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_wallets_page .zl_add_currency_inner_content.active .zl_add_currency_price p {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_history_page .zl_add_currency_inner_content:hover .zl_add_currency_price p {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_history_page .zl_add_currency_inner_content.active .zl_add_currency_price p {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_wallet_chart_bottom_content .zl_wallet_chart_send_recive_btn button {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_wallet_chart_bottom_content .zl_wallet_chart_send_recive_btn button:active {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_wallet_chart_bottom_content button svg path {
+  fill: #fff;
+}
+.zl_light_theme_active .zl_send_currency_btn_text .zl_send_currency_btn {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_send_currency_btn_text .zl_send_currency_btn:active {
+  color: #fff !important;
+}
+.zl_light_theme_active .zl_send_currency_btn_text .zl_send_currency_text p span {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_transaction_list_main_heading {
+  color: #828CAE;
+}
+.zl_light_theme_active .zl_transaction_list_table .zl_transaction_list_table_heading {
+  color: #828CAE;
+}
+.zl_light_theme_active .zl_send_qr_address {
+  background: #EFF0F2;
+}
+.zl_light_theme_active .zl_send_qr_address input {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_send_qr_address input:focus {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_send_qr_address input::placeholder {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_recive_address_content .zl_recive_address_qr_code {
+  background: #EFF0F2;
+}
+.zl_light_theme_active .zl_recive_address_content .zl_recive_copy_address_content button {
+  background: #EFF0F2;
+}
+.zl_light_theme_active .zl_recive_address_content .zl_recive_copy_address_content button svg path {
+  fill: #3D476A;
+}
+.zl_light_theme_active .zl_recive_address_content .zl_recive_copy_address_content button:active {
+  background: #EFF0F2 !important;
+}
+.zl_light_theme_active .zl_recive_address_content .zl_recive_copy_address_content p {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_send_currency_input_content {
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active .zl_send_currency_input_content .zl_send_currency_input {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_send_currency_input_content .zl_send_currency_input_btns button {
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active .zl_send_currency_text_type .zl_send_currency_text {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_send_currency_text_type .zl_send_currency_type {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_all_currency_content {
+  color: #3D476A;
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active .zl_all_currency_content:hover {
+  color: #fff;
+}
+.zl_light_theme_active .zl_securebackup_input_content .zl_securebackup_input {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_securebackup_input_content .zl_securebackup_input::placeholder {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_setting_list .zl_setting_list_items .zl_setting_items_right_text h3 {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_setting_list .zl_setting_list_items .zl_setting_items_right_text svg path {
+  stroke: #3D476A;
+}
+.zl_light_theme_active .zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph h3 {
+  color: #828CAE;
+}
+.zl_light_theme_active .zl_account_support_input_list .zl_account_support_input_items .form-control {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_account_support_input_list .zl_account_support_input_items .form-control::placeholder {
+  color: #3D476A;
+}
+.zl_light_theme_active .zl_dark_theme_qrcode {
+  display: none;
+}
+.zl_light_theme_active .zl_light_theme_qrcode {
+  display: block;
+}
+.zl_light_theme_active .zl_all_currency_content.active {
+  color: #fff;
+}
+.zl_light_theme_active .zl_securebackup_btn a {
+  color: #fff;
+}
+.zl_light_theme_active .zl_SecureBackup_heading h3 {
+  color: #828CAE;
+}
+.zl_light_theme_active .zl_currency_page .zl_add_currency_row .zl_add_currency_column.active .zl_add_currency_inner_content {
+  background: #ECEEF3;
+}
+
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__input-container input {
+  color: #3D476A;
+  border-color: #EFF0F2;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__input-container::before {
+  background-image: url(../image/calender-dark-icon.svg);
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker {
+  background: linear-gradient(210.96deg, #FFFFFF 0.01%, #FFFFFF 42.05%, #FFFFFF 104.81%);
+  box-shadow: -10px 48.6px 140px rgba(23, 18, 43, 0.2);
+  backdrop-filter: blur(19px);
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {
+  border-bottom-color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {
+  border-bottom-color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__day-name {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__day {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__day:hover {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__time-name {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__month-text:hover {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__quarter-text:hover {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__year-text:hover {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__current-month {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker-time__header {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker-year-header {
+  color: #252F47;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__day--keyboard-selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__month-text--keyboard-selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__quarter-text--keyboard-selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__year-text--keyboard-selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__day--selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__day--in-selecting-range {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__day--in-range {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__month-text--selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__month-text--in-selecting-range {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__month-text--in-range {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__quarter-text--selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__quarter-text--in-selecting-range {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__quarter-text--in-range {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__year-text--selected {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__year-text--in-selecting-range {
+  color: #fff;
+}
+.zl_light_theme_active.zl_all_pages_content .react-datepicker__year-text--in-range {
+  color: #fff;
+}
+
+.zl_light_theme_active .zl_history_page .zl_add_currency_row.nav::-webkit-scrollbar-track {
+  background: #EFF0F2;
+}
+.zl_light_theme_active .zl_history_page .zl_add_currency_row.nav::-webkit-scrollbar-thumb {
+  background: #828CAE;
+}
+.zl_light_theme_active .zl_history_page .zl_add_currency_row.nav::-webkit-scrollbar-thumb:hover {
+  background: #828CAE;
+}
+
+@media (max-width: 991px) {
+  .zl_light_theme_active .zl_page_sidebar {
+    background: linear-gradient(180deg, #F9FBFF 0%, #F7F9FD 57.44%, #FDFEFF 100%);
+  }
+  .zl_light_theme_active .zl_page_sidebar.zl_hide_sidebar .zl_light_theme_logo {
+    display: block !important;
+  }
+
+  .zl_mini_sidebar_logo {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=light-theme.css.map */

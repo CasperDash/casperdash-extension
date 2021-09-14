@@ -1,0 +1,36 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import HeadingModule from '../components/Layout/HeadingComponent/Heading';
+import { Tab } from 'react-bootstrap';
+import WalletDetails from '../components/Layout/WalletComponent/main';
+
+const currency = [
+	{
+		id: 1,
+		name: 'CSPR',
+		ratio: '1.9678',
+		updown: '+12,5%',
+		price: '$6,541.1',
+		value: 'cspr',
+	},
+];
+const PortfolioModule = () => {
+	return (
+		<>
+			<section className="zl_wallets_page">
+				<HeadingModule name={'Dashboard'} />
+				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
+					<Tab.Content>
+						{currency.map((item) => (
+							<Tab.Pane eventKey={`tab${item.id}`} key={item.id}>
+								<WalletDetails {...item} />
+							</Tab.Pane>
+						))}
+					</Tab.Content>
+				</Tab.Container>
+			</section>
+		</>
+	);
+};
+
+export default connect(null, null)(PortfolioModule);
