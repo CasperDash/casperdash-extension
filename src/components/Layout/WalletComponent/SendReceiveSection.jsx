@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, FormControl } from 'react-bootstrap';
 import QRCode from 'qrcode.react';
-import { getPublicAddress } from '../../../selectors/user';
+import { getPublicKey } from '../../../selectors/user';
 
 export const SendReceiveSection = ({ handleToggle }) => {
-	const publicAddress = useSelector(getPublicAddress);
+	const publicKey = useSelector(getPublicKey);
 	return (
 		<div className="zl_send_recive_content">
 			<div className="zl_send_recive_content_row">
@@ -106,19 +106,19 @@ export const SendReceiveSection = ({ handleToggle }) => {
 										/>
 									</svg>
 								</Button>
-								<p>{publicAddress ? publicAddress : 'Please connect with Casper Sign'}</p>
+								<p>{publicKey ? publicKey : 'Please connect with Casper Sign'}</p>
 							</div>
-							{publicAddress && (
+							{publicKey && (
 								<div className="zl_recive_address_qr_code">
 									<QRCode
-										value={publicAddress}
+										value={publicKey}
 										bgColor={'transparent'}
 										fgColor={'#CAD3F2'}
 										size={166}
 										className="zl_dark_theme_qrcode"
 									/>
 									<QRCode
-										value={publicAddress}
+										value={publicKey}
 										bgColor={'transparent'}
 										fgColor={'#3D476A'}
 										size={166}

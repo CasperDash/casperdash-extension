@@ -3,14 +3,14 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 
 export const initialState = {
-	userAction: {
-		showLoginModal: false,
-		user: {
-			publicAddress: '',
-			balance: null,
-			error: null,
-		},
+	user: {
+		publicKey: '',
 		balance: null,
+	},
+	signer: {
+		isConnected: false,
+		isUnlocked: true,
+		error: null,
 	},
 };
 

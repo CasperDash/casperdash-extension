@@ -15,7 +15,7 @@ const Page404Module = () => {
 			<p>{texts.title}</p>
 			<p>{texts.subTitle}</p>
 			<div>
-				<Link to={routes.homepage}>{texts.backToLogin}</Link>
+				<Link to={routes.dashboardpage}>{texts.backToHomepage}</Link>
 			</div>
 		</div>
 	);

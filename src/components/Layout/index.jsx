@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import Connector from './Connector';
 
-const mapStoreToProps = ({ userAction }) => ({
-	user: userAction.user,
+const mapStoreToProps = ({ user }) => ({
+	user: user,
 });
 
 export default withRouter(connect(mapStoreToProps)(Connector));

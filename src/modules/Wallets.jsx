@@ -1,8 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import HeadingModule from '../components/Layout/HeadingComponent/Heading';
 import { Tab } from 'react-bootstrap';
 import WalletDetails from '../components/Layout/WalletComponent/main';
+import { getBalance } from '../actions/userActions';
 
 const currency = [
 	{
@@ -15,6 +16,10 @@ const currency = [
 	},
 ];
 const PortfolioModule = () => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getBalance());
+	});
 	return (
 		<>
 			<section className="zl_wallets_page">

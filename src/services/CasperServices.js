@@ -11,9 +11,9 @@ export const getBlockInfo = async () => {
 };
 
 export const getAccountBalance = async () => {
-	Signer.sendConnectionRequest();
 	const publicKey = await Signer.getActivePublicKey();
-	const balance = await casperClient.balanceOfByAccountHash('test');
+
+	const balance = await casperClient.balanceOfByAccountHash(publicKey);
 
 	return `${parseInt(balance._hex, 16)} - ${publicKey}`;
 };
