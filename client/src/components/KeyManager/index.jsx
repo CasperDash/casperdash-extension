@@ -9,8 +9,8 @@ const KeyManager = () => {
 			<section className="zl_history_page">
 				<HeadingModule name={'Key Manager'} />
 				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
-					<div className="zl_add_currency_content">
-						<h3 className="zl_bottom_content_heading">Account</h3>
+					<div className="zl_SecureBackup_heading">
+						<h3>Account</h3>
 					</div>
 					<Tab.Content>
 						<Tab.Pane eventKey="tab1">
