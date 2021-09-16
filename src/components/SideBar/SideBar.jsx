@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './css/Header.css';
+import './css/SideBar.css';
 
-const Header = (props) => {
+const SideBar = (props) => {
 	// hide show header
-	const [send, setSend] = useState(false);
+	const [showSideBar, setShowSideBar] = useState(false);
 
 	const handleToggle = () => {
-		setSend(!send);
+		setShowSideBar(!showSideBar);
 	};
 
 	return (
 		<>
-			<section className={`zl_page_sidebar ${send ? 'zl_hide_sidebar' : ''}`} title={props.title}>
+			<section className={`zl_page_sidebar ${showSideBar ? 'zl_hide_sidebar' : ''}`} title={props.title}>
 				<div className="zl_page_sidebar_content">
 					<div className="zl_page_sidebar_logo">
 						<button className="zl_page_sidebar_toggle_btn" onClick={handleToggle}>
@@ -100,4 +100,4 @@ const Header = (props) => {
 	);
 };
 
-export default Header;
+export default SideBar;

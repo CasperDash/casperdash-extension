@@ -12,40 +12,39 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    autobind(this);
+	constructor(props) {
+		super(props);
+		autobind(this);
 
-    this._routes = null;
-  }
+		this._routes = null;
+	}
 
-  renderRoutes() {
-    if (this._routes) {
-      return this._routes;
-    }
+	renderRoutes() {
+		if (this._routes) {
+			return this._routes;
+		}
 
-    this._routes = Object.keys(modules).map((item) => (
-      <Route key={`route_${item}`} exact path={item} component={withRouter(modules[item])} />
-    ));
+		this._routes = Object.keys(modules).map((item) => (
+			<Route key={`route_${item}`} exact path={item} component={withRouter(modules[item])} />
+		));
 
-    return this._routes;
-  }
-  
-  render() {
-    const routes = this.renderRoutes();
+		return this._routes;
+	}
 
-    return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <Layout>
-            <Switch>
-              {routes}
-              <Route component={Page404} />
-            </Switch>
-          </Layout>
-        </BrowserRouter>
-      </Provider>
-    );
-  }
+	render() {
+		const routes = this.renderRoutes();
+
+		return (
+			<Provider store={store}>
+				<BrowserRouter>
+					<Layout>
+						<Switch>
+							{routes}
+							<Route component={Page404} />
+						</Switch>
+					</Layout>
+				</BrowserRouter>
+			</Provider>
+		);
+	}
 }
-

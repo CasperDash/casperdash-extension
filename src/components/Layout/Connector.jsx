@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Header from '../Header';
+import SideBar from '../SideBar';
 
 const Layout = (props) => {
 	const [color, setColor] = useState('zl_light_theme_active');
@@ -23,7 +23,7 @@ const Layout = (props) => {
 
 	return (
 		<div className={`zl_all_pages_content ${color === null ? 'zl_light_theme_active' : color}`}>
-			<Header title={title} />
+			<SideBar title={title} />
 			<div className="zl_all_pages_inner_content">{props.children}</div>
 		</div>
 	);
