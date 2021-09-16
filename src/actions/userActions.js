@@ -1,5 +1,4 @@
 import { USERS, SIGNER } from '../store/actionTypes';
-import { getAccountBalance } from '../services/CasperServices';
 import { Signer } from 'casper-js-sdk';
 
 export const getBalance = () => {
@@ -7,8 +6,7 @@ export const getBalance = () => {
 		const state = getState();
 		console.log(state);
 		if (state.user.publicAddress) {
-			const balance = await getAccountBalance();
-			dispatch({ type: USERS.GET_ACCOUNT_BALANCE, payload: { balance: balance } });
+			dispatch({ type: USERS.GET_ACCOUNT_BALANCE, payload: { balance: 0 } });
 		}
 	};
 };
