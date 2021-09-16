@@ -35,7 +35,7 @@ const Header = (props) => {
 							<img src="assets/image/Logo.svg" alt="logo" className="img-fluid zl_main_logo" />
 							<img src="assets/image/cspr.png" alt="logo" className="img-fluid zl_mini_sidebar_logo" />
 							<img
-								src="assets/image/light-Logo.svg"
+								src="assets/image/Logo-light.svg"
 								alt="light-logo"
 								className="img-fluid zl_light_theme_logo d-none"
 							/>
