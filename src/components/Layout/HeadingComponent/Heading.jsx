@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { getPublicKey } from '../../../selectors/user';
@@ -25,13 +25,6 @@ const HeadingModule = (props) => {
 	const { isUnlocked, isConnected } = useSelector(getSignerStatus);
 	const dispatch = useDispatch();
 
-	const handleSignerEvents = useCallback(
-		(event) => {
-			console.log(event);
-			dispatch(connectCasper(event.detail));
-		},
-		[dispatch],
-	);
 	useEffect(() => {
 		window.addEventListener(SIGNER_EVENTS.unlocked, (event) => {
 			dispatch(handleUnlockSigner(event.detail));
@@ -61,11 +54,13 @@ const HeadingModule = (props) => {
 
 				<div className="zl_all_page_notify_logout_btn">
 					{!isConnected ? (
-						<Button onClick={handleSignerEvents}>{`Connect Casper`}</Button>
+						<Button onClick={connectCasper}>{`Connect Casper`}</Button>
 					) : !isUnlocked ? (
-						<Button onClick={handleSignerEvents}>{`Unlock Casper`}</Button>
+						<Button onClick={connectCasper}>{`Unlock Casper`}</Button>
 					) : (
-						publicKey
+						<span className="zl_public_key">
+							<p title={publicKey}>{publicKey}</p>
+						</span>
 					)}
 				</div>
 			</div>

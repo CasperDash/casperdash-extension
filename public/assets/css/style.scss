@@ -525,9 +525,23 @@ table {
 		align-items: center;
 		margin-left: auto;
 		min-width: 130px;
-		.zl_all_page_error {
-			color: rgba(186, 19, 88, 0.42);
+		.zl_public_key {
+			position: relative;
+			width: 100px;
+			color: #ffffff;
+			p {
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			p:after {
+				content: attr(data-filetype);
+				position: absolute;
+				left: 100%;
+				top: 0;
+			}
 		}
+
 		.dropdown-toggle {
 			display: flex;
 			align-items: center;
