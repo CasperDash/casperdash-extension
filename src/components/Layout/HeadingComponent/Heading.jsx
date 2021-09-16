@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { getPublicKey } from '../../../selectors/user';
 import { isConnectedCasper, getSignerStatus } from '../../../selectors/signer';
 import {
@@ -23,6 +23,8 @@ const SIGNER_EVENTS = {
 const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
 	const { isUnlocked, isConnected } = useSelector(getSignerStatus);
+	const [showError, setShowError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -45,6 +47,18 @@ const HeadingModule = (props) => {
 		});
 	}, [isConnected, dispatch]);
 
+	const handleCloseError = () => setShowError(false);
+	const handleShowError = () => setShowError(true);
+
+	const handleConnectCasper = () => {
+		const connectMessage = connectCasper();
+		console.log(connectMessage);
+		if (connectMessage) {
+			handleShowError();
+			setErrorMessage(connectMessage);
+		}
+	};
+
 	return (
 		<>
 			<div className="zl_all_page_heading_section">
@@ -54,15 +68,28 @@ const HeadingModule = (props) => {
 
 				<div className="zl_all_page_notify_logout_btn">
 					{!isConnected ? (
-						<Button onClick={connectCasper}>{`Connect Casper`}</Button>
+						<Button onClick={handleConnectCasper}>{`Connect Casper`}</Button>
 					) : !isUnlocked ? (
-						<Button onClick={connectCasper}>{`Unlock Casper`}</Button>
+						<Button onClick={handleConnectCasper}>{`Unlock Casper`}</Button>
 					) : (
 						<span className="zl_public_key">
 							<p title={publicKey}>{publicKey}</p>
 						</span>
 					)}
 				</div>
+				<Modal
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
+					show={showError}
+					onHide={handleCloseError}
+				>
+					<Modal.Body>
+						<p>{errorMessage}</p>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button onClick={handleCloseError}>Close</Button>
+					</Modal.Footer>
+				</Modal>
 			</div>
 		</>
 	);

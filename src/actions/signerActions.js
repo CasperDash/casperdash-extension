@@ -12,7 +12,11 @@ export const updateLockStatus = (isLocked) => {
 };
 
 export const connectCasper = () => {
-	Signer.sendConnectionRequest();
+	try {
+		Signer.sendConnectionRequest();
+	} catch (error) {
+		return error.message;
+	}
 };
 
 export const handleUnlockSigner = ({ isUnlocked, activeKey }) => {
