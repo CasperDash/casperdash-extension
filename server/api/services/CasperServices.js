@@ -29,7 +29,38 @@ const getAccountBalance = async (publicKey) => {
 	}
 };
 
+const getAccountBalanceByHash = async (hash) => {
+	const { stateRootHash } = getStateRootHash();
+	const balance = await casperServiceRPC.getAccountBalanceUrefByPublicKeyHash(stateRootHash, hash);
+	return balance;
+};
+
+const getAccountBalanceByUref = async (uref) => {
+	try {
+		const { stateRootHash } = await getStateRootHash();
+		console.log('test', uref);
+		const balance = await casperServiceRPC.getAccountBalance(stateRootHash, uref);
+		return balance;
+	} catch {
+		return 0;
+	}
+};
+
+const getAccount = async (publicKey) => {
+	const { stateRootHash, latestBlockInfo } = await getStateRootHash();
+	const publicKeyCL = CLPublicKey.fromHex(publicKey);
+
+	const account = await casperServiceRPC
+		.getBlockState(stateRootHash, publicKeyCL.toAccountHashStr(), [])
+		.then((res) => res);
+	const blocktransfers = await casperServiceRPC.getBlockTransfers();
+	const status = casperServiceRPC.getStatus();
+	return { status, account, blocktransfers, latestBlockInfo };
+};
+
 module.exports = {
 	getAccountBalance,
 	getStateRootHash,
+	getAccountBalanceByUref,
+	getAccount,
 };
