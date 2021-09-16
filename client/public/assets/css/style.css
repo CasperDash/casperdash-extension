@@ -1777,12 +1777,22 @@ table td {
   opacity: 0.7;
   margin-bottom: 13px;
 }
+.zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph h4 {
+  font-size: 15px;
+  line-height: 21px;
+  color: #FFFFFF;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
 .zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph p {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
   color: #828CAE;
-  margin-bottom: 0;
+  margin-bottom: 5px;
+}
+.zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph p span {
+  font-weight: normal;
 }
 .zl_setting_list .zl_setting_list_items .zl_setting_items_right_text {
   display: flex;
@@ -1934,6 +1944,26 @@ table td {
 }
 .zl_history_page .zl_add_currency_row .zl_add_currency_column {
   margin-bottom: 0 !important;
+}
+
+.zl_key_list_table {
+  width: auto !important;
+  margin-bottom: 0 !important;
+  min-width: 800px;
+}
+.zl_key_list_table .zl_key_list_table_heading {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  text-transform: uppercase;
+  color: #CAD3F2;
+  text-align: center;
+}
+.zl_key_list_table tr td {
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #828CAE;
 }
 
 @media (max-width: 1350px) {

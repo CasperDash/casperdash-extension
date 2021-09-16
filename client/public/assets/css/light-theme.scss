@@ -1,4 +1,4 @@
-@import "./theme-config.scss";
+@import './theme-config.scss';
 
 .zl_light_theme_active {
 	background: $gradian-color14;
@@ -94,10 +94,10 @@
 						color: $color12;
 						svg {
 							path {
-								fill: $color12
+								fill: $color12;
 							}
 							rect {
-								fill: $color12
+								fill: $color12;
 							}
 						}
 					}
@@ -117,7 +117,7 @@
 							svg {
 								path {
 									fill: none;
-									stroke: $color12
+									stroke: $color12;
 								}
 							}
 						}
@@ -127,7 +127,7 @@
 							svg {
 								path {
 									fill: none;
-									stroke: $color12
+									stroke: $color12;
 								}
 							}
 						}
@@ -257,7 +257,7 @@
 	}
 	.zl_currency_icon {
 		svg {
-			path[fill="#2E3855"] {
+			path[fill='#2E3855'] {
 				fill: $color13;
 			}
 		}
@@ -274,7 +274,7 @@
 			}
 		}
 		.custom-control-input {
-			&:checked~.custom-control-label {
+			&:checked ~ .custom-control-label {
 				&::before {
 					filter: none;
 				}
@@ -282,7 +282,7 @@
 		}
 	}
 	.custom-control-input {
-		&:focus~.custom-control-label {
+		&:focus ~ .custom-control-label {
 			&::before {
 				box-shadow: none;
 			}
@@ -375,6 +375,14 @@
 			color: $color3;
 		}
 	}
+	.zl_key_list_main_heading {
+		color: $color3;
+	}
+	.zl_key_list_table {
+		.zl_key_list_table_heading {
+			color: $color3;
+		}
+	}
 	.zl_send_qr_address {
 		background: $color20;
 		input {
@@ -396,10 +404,10 @@
 				background: $color20;
 				svg {
 					path {
-						fill: $color12
+						fill: $color12;
 					}
 				}
-				&:active{
+				&:active {
 					background: $color20 !important;
 				}
 			}
@@ -450,12 +458,15 @@
 				}
 				svg {
 					path {
-						stroke: $color12
+						stroke: $color12;
 					}
 				}
 			}
 			.zl_setting_items_heading_peregraph {
 				h3 {
+					color: $color3;
+				}
+				h4 {
 					color: $color3;
 				}
 			}
@@ -515,7 +526,7 @@
 		box-shadow: -10px 48.6px 140px rgb(23 18 43 / 20%);
 		backdrop-filter: blur(19px);
 	}
-	.react-datepicker-popper[data-placement^="bottom"] {
+	.react-datepicker-popper[data-placement^='bottom'] {
 		.react-datepicker__triangle {
 			&::before {
 				border-bottom-color: $color13;
@@ -611,10 +622,10 @@
 	}
 }
 
-.zl_light_theme_active{
-	.zl_history_page{
-		.zl_add_currency_row{
-			&.nav{
+.zl_light_theme_active {
+	.zl_history_page {
+		.zl_add_currency_row {
+			&.nav {
 				&::-webkit-scrollbar-track {
 					background: $color20;
 				}
