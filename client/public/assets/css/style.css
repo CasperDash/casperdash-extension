@@ -1776,6 +1776,7 @@ table td {
   color: #FFFFFF;
   opacity: 0.7;
   margin-bottom: 13px;
+  margin-top: 13px;
 }
 .zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph h4 {
   font-size: 15px;
@@ -1789,7 +1790,7 @@ table td {
   font-size: 12px;
   line-height: 15px;
   color: #828CAE;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 .zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph p span {
   font-weight: normal;
@@ -1964,6 +1965,17 @@ table td {
   line-height: 15px;
   text-align: center;
   color: #828CAE;
+}
+
+.zl_account_info_table {
+  width: auto !important;
+  margin-bottom: 0 !important;
+}
+.zl_account_info_table tr td {
+  font-size: 12px;
+  line-height: 10px;
+  color: #828CAE;
+  min-width: 200px;
 }
 
 @media (max-width: 1350px) {

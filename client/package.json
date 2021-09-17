@@ -9,6 +9,7 @@
 		"@testing-library/user-event": "^7.2.1",
 		"antd": "^4.4.1",
 		"apexcharts": "^3.26.3",
+		"async-selector": "^1.0.26",
 		"axios": "^0.19.2",
 		"bootstrap": "^4.5.0",
 		"browserslist": "^4.13.0",
@@ -41,6 +42,7 @@
 		"redux-devtools-extension": "^2.13.8",
 		"redux-form": "^8.3.6",
 		"redux-thunk": "^2.3.0",
+		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
 		"typescript": "^3.9.6",
 		"url-join": "^4.0.1"

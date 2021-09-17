@@ -1,15 +1,8 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import { formatKeyByPrefix } from '../../helpers/key';
 
-const keyList = new Array(10).fill().map((item, i) => {
-	return {
-		id: i + 1,
-		accountHash: '931df268d9dc4272793a44824a2edfc2ed1737d0d539217b80c6cf43103941f0',
-		weight: i + 1,
-	};
-});
-
-const KeyList = (props) => {
+const KeyList = ({ associatedKeys }) => {
 	return (
 		<>
 			<div className="overflow-auto">
@@ -23,10 +16,10 @@ const KeyList = (props) => {
 						</tr>
 					</thead>
 					<tbody>
-						{keyList.map((key, i) => (
-							<tr key={key.id}>
-								<td className="zl_key_list_no">{key.id}</td>
-								<td className="zl_key_list_key">{key.accountHash}</td>
+						{associatedKeys.map((key, i) => (
+							<tr key={i}>
+								<td className="zl_key_list_no">{i + 1}</td>
+								<td className="zl_key_list_key">{formatKeyByPrefix(key.accountHash)}</td>
 								<td className="zl_key_list_weight">{key.weight}</td>
 								<td className="zl_key_list_action">edit</td>
 							</tr>

@@ -1,12 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Table } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { Tab } from 'react-bootstrap';
 import KeyList from './KeyList';
 import { getPublicKey } from '../../selectors/user';
+import { keyManagerResult } from '../../selectors/keyManager';
 
 const KeyManager = () => {
 	const publicKey = useSelector(getPublicKey);
+	const { actionThresholds = {}, associatedKeys = [] } = useSelector(keyManagerResult);
+
 	return (
 		<>
 			<section className="zl_key_manager_page">
@@ -15,22 +18,55 @@ const KeyManager = () => {
 					<div className="zl_setting_list_items">
 						<div className="zl_setting_items_heading_peregraph">
 							<h3>Account Info</h3>
-							<p>
-								Public Key: <span>{publicKey}</span>
+							<Table className="zl_account_info_table">
+								<tbody>
+									<tr>
+										<td>Public Key</td>
+										<td>
+											<span>{publicKey}</span>
+										</td>
+									</tr>
+									<tr>
+										<td>Account Hash</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</Table>
+
+							{/* <p>
+								Public Key: 
 							</p>
-							<h4>Action Thresholds</h4>
 							<p>
-								Deployment: <span>1</span>
+								Account hash: <span>{publicKey}</span>
+							</p> */}
+							<h3>Action Thresholds</h3>
+							<Table className="zl_account_info_table">
+								{/* <h3>Account Info</h3> */}
+								<tbody>
+									<tr>
+										<td>Deployment</td>
+										<td>
+											<span>{actionThresholds.deployment}</span>
+										</td>
+									</tr>
+									<tr>
+										<td>Key Management</td>
+										<td>{actionThresholds.keyManagement}</td>
+									</tr>
+								</tbody>
+							</Table>
+							{/* <p>
+								Deployment: <span>{actionThresholds.deployment}</span>
 							</p>
 							<p>
-								Key Management: <span>2</span>
-							</p>
+								Key Management: <span>{actionThresholds.keyManagement}</span>
+							</p> */}
 						</div>
 					</div>
 				</div>
 				<div className="zl_transaction_list">
 					<h3 className="zl_transaction_list_main_heading">Associated Keys</h3>
-					<KeyList />
+					<KeyList associatedKeys={associatedKeys} />
 				</div>
 			</section>
 		</>
