@@ -1,14 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
 import { getPublicKey } from '../../selectors/user';
 import { keyManagerResult } from '../../selectors/keyManager';
+import { formatKeyByPrefix } from '../../helpers/key';
+import { getWeightByAccountHash } from '../../helpers/keyManager';
+import { getWeightDeploy, setKeyWeight } from '../../services/keyManager';
+import { EditModal } from './EditModal';
 
 const KeyManager = () => {
 	const publicKey = useSelector(getPublicKey);
-	const { actionThresholds = {}, associatedKeys = [] } = useSelector(keyManagerResult);
+	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = useSelector(keyManagerResult);
+	const accountWeight = getWeightByAccountHash(_accountHash, associatedKeys);
+	const [editField, setEditField] = useState('');
+	const [editValue, setEditValue] = useState();
+	const [showEditModal, setShowEditModal] = useState(false);
+
+	const onEdit = (field, value) => {
+		setEditField(field);
+		setEditValue(value);
+		setShowEditModal(true);
+	};
+
+	const handleCloseEditModal = () => {
+		setShowEditModal(false);
+	};
+
+	const handleEditValue = (value) => {
+		setEditValue(value);
+	};
+
+	const handleSumitChange = async () => {
+		let deploy;
+		switch (editField) {
+			case 'deployment':
+				deploy = await setKeyWeight(editValue, publicKey, publicKey);
+				console.log(deploy);
+				break;
+
+			default:
+				break;
+		}
+	};
 
 	return (
 		<>
@@ -28,39 +63,42 @@ const KeyManager = () => {
 									</tr>
 									<tr>
 										<td>Account Hash</td>
-										<td></td>
+										<td>{formatKeyByPrefix(_accountHash)}</td>
+									</tr>
+									<tr>
+										<td>Weight</td>
+										<td>{accountWeight}</td>
 									</tr>
 								</tbody>
 							</Table>
 
-							{/* <p>
-								Public Key: 
-							</p>
-							<p>
-								Account hash: <span>{publicKey}</span>
-							</p> */}
 							<h3>Action Thresholds</h3>
 							<Table className="zl_account_info_table">
-								{/* <h3>Account Info</h3> */}
 								<tbody>
 									<tr>
 										<td>Deployment</td>
 										<td>
-											<span>{actionThresholds.deployment}</span>
+											{actionThresholds.deployment}
+											{'   '}
+											{actionThresholds.deployment && (
+												<i
+													class="bi bi-pencil-fill"
+													onClick={() => onEdit('deployment', actionThresholds.deployment)}
+												></i>
+											)}
 										</td>
 									</tr>
 									<tr>
 										<td>Key Management</td>
-										<td>{actionThresholds.keyManagement}</td>
+										<td>
+											{actionThresholds.keyManagement}
+											{'   '}
+											{actionThresholds.keyManagement && <i class="bi bi-pencil-fill"></i>}
+										</td>
+										<td></td>
 									</tr>
 								</tbody>
 							</Table>
-							{/* <p>
-								Deployment: <span>{actionThresholds.deployment}</span>
-							</p>
-							<p>
-								Key Management: <span>{actionThresholds.keyManagement}</span>
-							</p> */}
 						</div>
 					</div>
 				</div>
@@ -69,6 +107,14 @@ const KeyManager = () => {
 					<KeyList associatedKeys={associatedKeys} />
 				</div>
 			</section>
+			<EditModal
+				field={editField}
+				value={editValue}
+				show={showEditModal}
+				handleClose={handleCloseEditModal}
+				handleEditValue={handleEditValue}
+				handleSumitChange={handleSumitChange}
+			/>
 		</>
 	);
 };
