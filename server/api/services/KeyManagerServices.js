@@ -1,4 +1,4 @@
-const { getAccount } = require('./CasperServices');
+const { getAccount } = require('./UserService');
 
 const getKeyManagerInfoByPublicKey = async (publicKey) => {
 	if (!publicKey) {
