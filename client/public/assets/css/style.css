@@ -1448,6 +1448,9 @@ table td {
   display: block;
 }
 
+.zl_chart_component {
+  padding-top: 10px;
+}
 .zl_chart_component .zl_send_recive_content {
   display: none;
 }

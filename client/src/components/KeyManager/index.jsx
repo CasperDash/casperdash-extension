@@ -71,7 +71,10 @@ const KeyManager = () => {
 									</tr>
 								</tbody>
 							</Table>
-
+						</div>
+					</div>
+					<div className="zl_setting_list_items">
+						<div className="zl_setting_items_heading_peregraph">
 							<h3>Action Thresholds</h3>
 							<Table className="zl_account_info_table">
 								<tbody>
