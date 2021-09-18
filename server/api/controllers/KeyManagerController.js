@@ -7,7 +7,7 @@ module.exports = {
 			const keyManagerInfo = await getKeyManagerInfoByPublicKey(publicKey);
 			res.json(keyManagerInfo);
 		} catch (error) {
-			res.json(error);
+			res.status(401).json({ message: error.message });
 		}
 	},
 };
