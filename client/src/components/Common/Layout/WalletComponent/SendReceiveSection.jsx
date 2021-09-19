@@ -1,76 +1,111 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Button, FormControl } from 'react-bootstrap';
+import { Button, FormControl, Form } from 'react-bootstrap';
+import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
-import { getPublicKey } from '../../../../selectors/user';
+import { validateTransferForm } from '../../../../helpers/validator';
 
-export const SendReceiveSection = ({ handleToggle }) => {
-	const publicKey = useSelector(getPublicKey);
+//TODO: get prize from api
+export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddress, prize = 0.13 }) => {
+	const setBalance = (percent, setFieldValue) => {
+		const amount = displayBalance / percent;
+		setFieldValue('sendAmount', amount);
+	};
+
+	const handleSubmit = (event) => {
+		const form = event.currentTarget;
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	};
+
 	return (
-		<div className="zl_send_recive_content">
-			<div className="zl_send_recive_content_row">
-				<div className="zl_send_recive_content_column">
-					<div className="zl_send_recive_inner_content">
-						<h3 className="zl_send_recive_heading">
-							<svg
-								width="15"
-								height="15"
-								viewBox="0 0 6 6"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M3.60609 3.60609L2.69695 4.51523C2.36222 4.84996 1.81951 4.84996 1.48477 4.51523C1.15004 4.18049 1.15004 3.63778 1.48477 3.30305L2.39391 2.39391L0 0H6V6L3.60609 3.60609Z"
-									fill="#53B9EA"
-								/>
-							</svg>
-							Send
-						</h3>
-						<div className="zl_send_qr_address">
-							<FormControl placeholder="Insert address" />
-							<QRCode
-								value="test"
-								bgColor={'#3D476A'}
-								fgColor={'#CAD3F2'}
-								size={32}
-								className="zl_dark_theme_qrcode"
-							/>
-							<QRCode
-								value="EYdNhC7hGgHuL2sF20p2dLv"
-								bgColor={'#EFF0F2'}
-								fgColor={'#3D476A'}
-								size={32}
-								className="zl_light_theme_qrcode"
-							/>
-						</div>
-						<div className="zl_send_currency_input_content">
-							<FormControl type="number" className="zl_send_currency_input" defaultValue="500" />
-							<div className="zl_send_currency_input_btns">
-								<Button>1/4</Button>
-								<Button>Half</Button>
-								<Button>All</Button>
-							</div>
-						</div>
-						<div className="zl_send_currency_text_type">
-							<h3 className="zl_send_currency_text">$825.42</h3>
-							<h3 className="zl_send_currency_type">USD</h3>
-						</div>
-						<div className="zl_send_currency_btn_text">
-							<Button className="zl_send_currency_btn" onClick={handleToggle}>
-								Back
-							</Button>
-							<Button className="zl_send_currency_btn">Send</Button>
-							<div className="zl_send_currency_text">
-								<p>
-									Network Fee<span>$0.16</span>
-								</p>
-							</div>
-						</div>
+		<div className="zl_send_receive_content">
+			<div className="zl_send_receive_content_row">
+				<div className="zl_send_receive_content_column">
+					<div className="zl_send_receive_inner_content">
+						<Formik
+							initialValues={{ sendAmount: 0, toAddress: '' }}
+							validate={(values) => validateTransferForm(values, displayBalance)}
+						>
+							{({ errors, touched, values, isValidating, handleChange, setFieldValue }) => (
+								<Form noValidate onSubmit={handleSubmit}>
+									<h3 className="zl_send_receive_heading">
+										<svg
+											width="15"
+											height="15"
+											viewBox="0 0 6 6"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M3.60609 3.60609L2.69695 4.51523C2.36222 4.84996 1.81951 4.84996 1.48477 4.51523C1.15004 4.18049 1.15004 3.63778 1.48477 3.30305L2.39391 2.39391L0 0H6V6L3.60609 3.60609Z"
+												fill="#53B9EA"
+											/>
+										</svg>
+										Send
+									</h3>
+									<div>
+										<h3>Balance:{displayBalance}</h3>
+									</div>
+									<div className="zl_send_qr_address">
+										<FormControl
+											required
+											placeholder="Insert address"
+											name="toAddress"
+											value={values.toAddress}
+											onChange={handleChange}
+											isInvalid={errors.toAddress}
+										/>
+										<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
+									</div>
+									<div className="zl_send_currency_input_content">
+										<FormControl
+											value={values.sendAmount}
+											name="sendAmount"
+											required
+											type="number"
+											className="zl_send_currency_input"
+											onChange={handleChange}
+											isInvalid={errors.sendAmount}
+										/>
+
+										<div className="zl_send_currency_input_btns">
+											<Button onClick={() => setBalance(4, setFieldValue)}>1/4</Button>
+											<Button onClick={() => setBalance(2, setFieldValue)}>Half</Button>
+											<Button onClick={() => setBalance(1, setFieldValue)}>All</Button>
+										</div>
+										<Form.Control.Feedback type="invalid">
+											{errors.sendAmount}
+										</Form.Control.Feedback>
+									</div>
+									<div className="zl_send_currency_text_type">
+										<h3 className="zl_send_currency_text">
+											${parseFloat(values.sendAmount * 0.13).toFixed(2)}
+										</h3>
+										<h3 className="zl_send_currency_type">USD</h3>
+									</div>
+									<div className="zl_send_currency_btn_text">
+										<Button className="zl_send_currency_btn" onClick={handleToggle}>
+											Back
+										</Button>
+										<Button className="zl_send_currency_btn" type="submit">
+											Send
+										</Button>
+										<div className="zl_send_currency_text">
+											<p>
+												Network Fee<span>$0.16</span>
+											</p>
+										</div>
+									</div>
+								</Form>
+							)}
+						</Formik>
 					</div>
 				</div>
-				<div className="zl_send_recive_content_column">
-					<div className="zl_send_recive_inner_content">
-						<h3 className="zl_send_recive_heading zl_recive_heading">
+				<div className="zl_send_receive_content_column">
+					<div className="zl_send_receive_inner_content">
+						<h3 className="zl_send_receive_heading zl_receive_heading">
 							<svg
 								width="15"
 								height="15"
@@ -85,9 +120,9 @@ export const SendReceiveSection = ({ handleToggle }) => {
 							</svg>
 							Receive
 						</h3>
-						<div className="zl_recive_address_content">
-							<p className="zl_recive_address_heading">Address</p>
-							<div className="zl_recive_copy_address_content">
+						<div className="zl_receive_address_content">
+							<p className="zl_receive_address_heading">Address</p>
+							<div className="zl_receive_copy_address_content">
 								<Button onClick={() => navigator.clipboard.writeText('EYdNhC7hGgHuL2sF20p2dLv')}>
 									<svg
 										width="20"
@@ -106,19 +141,19 @@ export const SendReceiveSection = ({ handleToggle }) => {
 										/>
 									</svg>
 								</Button>
-								<p>{publicKey ? publicKey : 'Please connect with Casper Sign'}</p>
+								<p>{fromAddress ? fromAddress : 'Please connect with Casper Sign'}</p>
 							</div>
-							{publicKey && (
-								<div className="zl_recive_address_qr_code">
+							{fromAddress && (
+								<div className="zl_receive_address_qr_code">
 									<QRCode
-										value={publicKey}
+										value={fromAddress}
 										bgColor={'transparent'}
 										fgColor={'#CAD3F2'}
 										size={166}
 										className="zl_dark_theme_qrcode"
 									/>
 									<QRCode
-										value={publicKey}
+										value={fromAddress}
 										bgColor={'transparent'}
 										fgColor={'#3D476A'}
 										size={166}

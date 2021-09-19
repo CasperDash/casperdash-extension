@@ -8,7 +8,7 @@ import { SendReceiveSection } from './SendReceiveSection';
 import { getMassagedUserDetails, getPublicKey } from '../../../../selectors/user';
 import { formatKeyByPrefix } from '../../../../helpers/key';
 
-const MainComponent = (props) => {
+const MainComponent = ({ name, value, updown, price }) => {
 	// send btn
 	const [send, setSend] = useState(false);
 
@@ -19,7 +19,7 @@ const MainComponent = (props) => {
 	const userDetails = useSelector(getMassagedUserDetails);
 	const publicKey = useSelector(getPublicKey);
 
-	const { name, value, updown, price } = props;
+	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
 
 	return (
 		<>
@@ -58,11 +58,9 @@ const MainComponent = (props) => {
 					<div className="zl_wallet_chart_bottom_content">
 						<div className="zl_all_page_comman_total_price">
 							<p className="zl_all_page_total_price_heading">Total Balance</p>
-							<h2 className="zl_all_page_total_price_text">
-								{userDetails.balance && userDetails.balance.displayBalance}
-							</h2>
+							<h2 className="zl_all_page_total_price_text">{displayBalance}</h2>
 						</div>
-						<div className="zl_wallet_chart_send_recive_btn">
+						<div className="zl_wallet_chart_send_receive_btn">
 							<Button className="zl_wallet_chart_send_btn" onClick={handleToggle}>
 								<svg
 									width="15"
@@ -78,7 +76,7 @@ const MainComponent = (props) => {
 								</svg>
 								Send
 							</Button>
-							<Button className="zl_wallet_chart_recive_btn" onClick={handleToggle}>
+							<Button className="zl_wallet_chart_receive_btn" onClick={handleToggle}>
 								<svg
 									width="15"
 									height="15"
@@ -96,7 +94,11 @@ const MainComponent = (props) => {
 						</div>
 					</div>
 				</div>
-				<SendReceiveSection handleToggle={handleToggle} />
+				<SendReceiveSection
+					handleToggle={handleToggle}
+					displayBalance={displayBalance}
+					fromAddress={publicKey}
+				/>
 				<div className="zl_transaction_list">
 					<h3 className="zl_transaction_list_main_heading">
 						Transaction

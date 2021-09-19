@@ -262,8 +262,8 @@
 			}
 		}
 	}
-	.zl_send_recive_content {
-		.zl_send_recive_inner_content {
+	.zl_send_receive_content {
+		.zl_send_receive_inner_content {
 			border-color: $color20;
 		}
 	}
@@ -336,7 +336,7 @@
 		}
 	}
 	.zl_wallet_chart_bottom_content {
-		.zl_wallet_chart_send_recive_btn {
+		.zl_wallet_chart_send_receive_btn {
 			button {
 				color: $color13 !important;
 				&:active {
@@ -395,11 +395,11 @@
 			}
 		}
 	}
-	.zl_recive_address_content {
-		.zl_recive_address_qr_code {
+	.zl_receive_address_content {
+		.zl_receive_address_qr_code {
 			background: $color20;
 		}
-		.zl_recive_copy_address_content {
+		.zl_receive_copy_address_content {
 			button {
 				background: $color20;
 				svg {

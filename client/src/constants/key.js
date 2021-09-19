@@ -8,3 +8,4 @@ const config = () => {
 
 export const { MOTE_RATE, TESTNET_RPC_URL } = config();
 export const KEY_PREFIX = ['account-hash-', 'uref-'];
+export const MIN_TRANSFER = 2.5;

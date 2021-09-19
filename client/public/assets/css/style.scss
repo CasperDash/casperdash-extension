@@ -1529,7 +1529,7 @@ table {
 		margin-top: 0;
 		margin-right: auto;
 	}
-	.zl_wallet_chart_send_recive_btn {
+	.zl_wallet_chart_send_receive_btn {
 		display: flex;
 		align-items: center;
 		margin-left: 10px;
@@ -1565,7 +1565,7 @@ table {
 		button.zl_wallet_chart_send_btn {
 			margin-right: 20px;
 		}
-		button.zl_wallet_chart_recive_btn {
+		button.zl_wallet_chart_receive_btn {
 			svg {
 				transform: rotate(180deg);
 			}
@@ -1618,9 +1618,9 @@ table {
 		}
 	}
 }
-.zl_send_recive_content {
-	.zl_send_recive_inner_content {
-		.zl_send_recive_heading.zl_recive_heading {
+.zl_send_receive_content {
+	.zl_send_receive_inner_content {
+		.zl_send_receive_heading.zl_receive_heading {
 			svg {
 				transform: rotate(180deg);
 			}
@@ -1629,7 +1629,7 @@ table {
 		border-radius: 10px;
 		padding: 66px 66px 46px;
 		height: 100%;
-		.zl_send_recive_heading {
+		.zl_send_receive_heading {
 			font-weight: bold;
 			font-size: 22px;
 			line-height: 27px;
@@ -1642,12 +1642,12 @@ table {
 			}
 		}
 	}
-	.zl_send_recive_content_row {
+	.zl_send_receive_content_row {
 		display: flex;
 		flex-wrap: wrap;
 		margin: 0 -12px;
 	}
-	.zl_send_recive_content_column {
+	.zl_send_receive_content_column {
 		max-width: 50%;
 		width: 100%;
 		padding: 0 12px;
@@ -1657,20 +1657,19 @@ table {
 	.zl_all_page_comman_content {
 		display: none;
 	}
-	.zl_send_recive_content {
+	.zl_send_receive_content {
 		display: block;
 	}
 }
 .zl_chart_component {
 	padding-top: 10px;
-	.zl_send_recive_content {
+	.zl_send_receive_content {
 		display: none;
 	}
 }
 .zl_send_qr_address {
 	background: $color12;
 	border-radius: 10px;
-	display: flex;
 	align-items: center;
 	padding: 30px;
 	padding-left: 36px;
@@ -1770,15 +1769,15 @@ table {
 		margin-bottom: 0;
 	}
 }
-.zl_recive_address_content {
-	.zl_recive_address_heading {
+.zl_receive_address_content {
+	.zl_receive_address_heading {
 		font-size: 18px;
 		line-height: 22px;
 		color: $color3;
 		margin-bottom: 21px;
 		word-break: break-word;
 	}
-	.zl_recive_copy_address_content {
+	.zl_receive_copy_address_content {
 		display: flex;
 		align-items: center;
 		button {
@@ -1805,7 +1804,7 @@ table {
 			word-break: break-all;
 		}
 	}
-	.zl_recive_address_qr_code {
+	.zl_receive_address_qr_code {
 		margin-top: 32px;
 		width: 226px;
 		height: 226px;
@@ -2243,8 +2242,8 @@ table {
 	}
 }
 @media (max-width: 1300px) {
-	.zl_send_recive_content {
-		.zl_send_recive_inner_content {
+	.zl_send_receive_content {
+		.zl_send_receive_inner_content {
 			padding: 45px 20px;
 		}
 	}
@@ -2328,12 +2327,12 @@ table {
 	.zl_all_page_heading_section {
 		padding-left: 55px;
 	}
-	.zl_send_recive_content {
-		.zl_send_recive_content_column {
+	.zl_send_receive_content {
+		.zl_send_receive_content_column {
 			max-width: 100%;
 		}
 	}
-	.zl_send_recive_content_row {
+	.zl_send_receive_content_row {
 		row-gap: 24px;
 	}
 	.zl_wallets_page {
@@ -2412,7 +2411,7 @@ table {
 	}
 	.zl_wallet_chart_bottom_content {
 		display: block;
-		.zl_wallet_chart_send_recive_btn {
+		.zl_wallet_chart_send_receive_btn {
 			margin-left: 0;
 			margin-top: 20px;
 			justify-content: center;
@@ -2501,7 +2500,7 @@ table {
 		}
 	}
 	.zl_wallet_chart_bottom_content {
-		.zl_wallet_chart_send_recive_btn {
+		.zl_wallet_chart_send_receive_btn {
 			display: block;
 			button {
 				display: block;

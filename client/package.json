@@ -17,6 +17,7 @@
 		"casper-js-sdk": "^2.5.1",
 		"cookie": "^0.4.1",
 		"dayjs": "^1.8.29",
+		"formik": "^2.2.9",
 		"immutable": "^4.0.0-rc.12",
 		"loadash": "^1.0.0",
 		"lodash-es": "^4.17.21",
@@ -46,7 +47,8 @@
 		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
 		"typescript": "^3.9.6",
-		"url-join": "^4.0.1"
+		"url-join": "^4.0.1",
+		"yup": "^0.32.9"
 	},
 	"reactSnapshot": {
 		"exclude": [
