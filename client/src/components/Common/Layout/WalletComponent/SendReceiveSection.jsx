@@ -1,22 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import { validateTransferForm } from '../../../../helpers/validator';
+import { deployTransfer } from '../../../../services/userServices';
+import { ConfirmModal } from './ConfirmModal';
 
 //TODO: get prize from api
 export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddress, prize = 0.13 }) => {
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [transactionDetails, setTransactionDetails] = useState({});
 	const setBalance = (percent, setFieldValue) => {
 		const amount = displayBalance / percent;
 		setFieldValue('sendAmount', amount);
 	};
 
-	const handleSubmit = (event) => {
-		const form = event.currentTarget;
-		if (form.checkValidity() === false) {
-			event.preventDefault();
-			event.stopPropagation();
+	const onConfirmTransaction = async () => {
+		await deployTransfer(transactionDetails);
+	};
+
+	const handleSubmit = (event, values, isValid) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (isValid) {
+			setTransactionDetails({
+				fromAddress: fromAddress,
+				toAddress: values.toAddress,
+				amount: values.sendAmount,
+			});
+			setShowConfirmModal(true);
 		}
+	};
+
+	const onCloseConfirmModal = () => {
+		setShowConfirmModal(false);
 	};
 
 	return (
@@ -28,8 +46,8 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 							initialValues={{ sendAmount: 0, toAddress: '' }}
 							validate={(values) => validateTransferForm(values, displayBalance)}
 						>
-							{({ errors, touched, values, isValidating, handleChange, setFieldValue }) => (
-								<Form noValidate onSubmit={handleSubmit}>
+							{({ errors, touched, values, isValidating, handleChange, setFieldValue, isValid }) => (
+								<Form noValidate onSubmit={(event) => handleSubmit(event, values, isValid)}>
 									<h3 className="zl_send_receive_heading">
 										<svg
 											width="15"
@@ -165,6 +183,14 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 					</div>
 				</div>
 			</div>
+			<ConfirmModal
+				show={showConfirmModal}
+				onClose={onCloseConfirmModal}
+				onConfirm={onConfirmTransaction}
+				{...transactionDetails}
+				fee={0.16}
+				prize={0.13}
+			/>
 		</div>
 	);
 };

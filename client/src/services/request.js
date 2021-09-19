@@ -19,3 +19,12 @@ export const request = async (options) => {
 	const response = await requester(options);
 	return response.data;
 };
+
+export const putDeploy = async (data) => {
+	const response = await requester({
+		method: 'post',
+		url: '/deploy',
+		data: data,
+	});
+	return response.data;
+};

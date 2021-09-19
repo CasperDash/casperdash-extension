@@ -11,11 +11,11 @@ import {
 	CLValueBuilder,
 } from 'casper-js-sdk';
 
-const NETWORK_NAME = 'casper-net-1';
+const NETWORK_NAME = 'casper-test';
 const PAYMENT_AMOUNT = 100000000000;
 const TESTNET_RPC_URL = 'http://16.162.124.124:7777/rpc';
 
-const client = new CasperClient(TESTNET_RPC_URL);
+export const client = new CasperClient(TESTNET_RPC_URL);
 
 // Builds key-manager deploy that takes entrypoint and args
 const buildKeyManagerDeploy = (baseAccount, entrypoint, args) => {
@@ -97,4 +97,11 @@ export const putDeploy = async (deploy) => {
 	const deployHash = await client.putDeploy(deploy);
 	await printDeploy(deployHash);
 	return deployHash;
+};
+
+export const getTransferDeploy = (fromAccount, toAccount, amount) => {
+	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
+	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, 1);
+	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
+	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };
