@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import { validateTransferForm } from '../../../../helpers/validator';
 import { deployTransfer } from '../../../../services/userServices';
+import { MIN_TRANSFER } from '../../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 
 //TODO: get prize from api
@@ -43,7 +44,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 				<div className="zl_send_receive_content_column">
 					<div className="zl_send_receive_inner_content">
 						<Formik
-							initialValues={{ sendAmount: 0, toAddress: '' }}
+							initialValues={{ sendAmount: MIN_TRANSFER, toAddress: '' }}
 							validate={(values) => validateTransferForm(values, displayBalance)}
 						>
 							{({ errors, touched, values, isValidating, handleChange, setFieldValue, isValid }) => (
@@ -63,8 +64,10 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 										</svg>
 										Send
 									</h3>
-									<div>
-										<h3>Balance:{displayBalance}</h3>
+
+									<div className="zl_send_balance_content">
+										<span className="zl_send_balance_heading">Total Balance</span>
+										<span className="zl_send_balance_value">{displayBalance}</span>
 									</div>
 									<div className="zl_send_qr_address">
 										<FormControl
@@ -141,7 +144,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 						<div className="zl_receive_address_content">
 							<p className="zl_receive_address_heading">Address</p>
 							<div className="zl_receive_copy_address_content">
-								<Button onClick={() => navigator.clipboard.writeText('EYdNhC7hGgHuL2sF20p2dLv')}>
+								<Button onClick={() => navigator.clipboard.writeText(fromAddress)}>
 									<svg
 										width="20"
 										height="20"

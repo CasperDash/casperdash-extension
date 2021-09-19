@@ -265,6 +265,11 @@
 	.zl_send_receive_content {
 		.zl_send_receive_inner_content {
 			border-color: $color20;
+			.zl_send_balance_content {
+				.zl_send_balance_value {
+					color: $color12;
+				}
+			}
 		}
 	}
 	.zl_custom_currency_checkbox.custom-switch {

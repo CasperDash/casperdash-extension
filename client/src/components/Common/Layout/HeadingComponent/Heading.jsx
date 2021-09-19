@@ -68,9 +68,15 @@ const HeadingModule = (props) => {
 
 				<div className="zl_all_page_notify_logout_btn">
 					{!isConnected ? (
-						<Button onClick={handleConnectCasper}>{`Connect Casper`}</Button>
+						<Button
+							className="zl_btn_primary_active"
+							onClick={handleConnectCasper}
+						>{`Connect Casper`}</Button>
 					) : !isUnlocked ? (
-						<Button onClick={handleConnectCasper}>{`Unlock Casper`}</Button>
+						<Button
+							className="zl_btn_primary_active"
+							onClick={handleConnectCasper}
+						>{`Unlock Casper`}</Button>
 					) : (
 						<span className="zl_public_key">
 							<p title={publicKey}>{publicKey}</p>
