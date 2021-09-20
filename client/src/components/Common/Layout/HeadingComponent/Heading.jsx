@@ -9,7 +9,7 @@ import {
 	handleUnlockSigner,
 	handleLockSigner,
 } from '../../../../actions/signerActions';
-import { updatePublicKeyFromSigner } from '../../../../actions/userActions';
+import { updatePublicKeyFromSigner, getUserDetails } from '../../../../actions/userActions';
 
 const SIGNER_EVENTS = {
 	connected: 'signer:connected',
@@ -47,12 +47,17 @@ const HeadingModule = (props) => {
 		});
 	}, [isConnected, dispatch]);
 
+	useEffect(() => {
+		if (publicKey) {
+			dispatch(getUserDetails(publicKey));
+		}
+	}, [publicKey, dispatch]);
+
 	const handleCloseError = () => setShowError(false);
 	const handleShowError = () => setShowError(true);
 
 	const handleConnectCasper = () => {
 		const connectMessage = connectCasper();
-		console.log(connectMessage);
 		if (connectMessage) {
 			handleShowError();
 			setErrorMessage(connectMessage);

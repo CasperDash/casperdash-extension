@@ -1,15 +1,7 @@
 import { CLPublicKey, Signer, DeployUtil } from 'casper-js-sdk';
 import { MOTE_RATE } from '../constants/key';
-import { getTransferDeploy, client } from './casperServices';
-import { request, putDeploy } from './request';
-
-export const fetchUserDetails = async (publicKey) => {
-	if (!publicKey) {
-		return {};
-	}
-	const data = await request(`user/${publicKey}`);
-	return data;
-};
+import { getTransferDeploy } from './casperServices';
+import { putDeploy } from './request';
 
 export const deployTransfer = async (transactionDetail = {}) => {
 	try {

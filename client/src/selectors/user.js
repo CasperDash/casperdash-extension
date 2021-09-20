@@ -1,26 +1,22 @@
+import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
-import { getAsyncSelectorResult } from './asyncSelector';
-import { fetchUserDetails } from '../services/userServices';
 import { convertBalanceFromHex } from '../helpers/balance';
+import { USERS } from '../store/actionTypes';
 
 export const getPublicKey = ({ user }) => {
 	return user.publicKey;
 };
 
-export const [getUserDetails, isWaitingUserDetails, userDetailsError] = getAsyncSelectorResult(
-	{
-		async: fetchUserDetails,
-		id: 'UserDetails',
-	},
-	[getPublicKey],
-);
+const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
 
-export const getMassagedUserDetails = createSelector(getUserDetails, (userDetails) => {
-	const hexBalance = userDetails && userDetails.balance ? userDetails.balance.hex : 0;
+export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {
+	console.log(userDetails);
+	const data = userDetails.data || {};
+	const hexBalance = data && data.balance ? data.balance.hex : 0;
 	return {
-		...userDetails,
+		...data,
 		balance: {
-			...userDetails.balance,
+			...data.balance,
 			mote: parseInt(hexBalance),
 			displayBalance: convertBalanceFromHex(hexBalance),
 		},

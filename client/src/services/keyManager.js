@@ -1,26 +1,5 @@
-import { request } from './request';
-import { setKeyWeightDeploy, putDeploy, printAccount } from './casperServices';
+import { setKeyWeightDeploy } from './casperServices';
 import { Signer, CLPublicKey } from 'casper-js-sdk';
-
-export const getKeyManagerData = async (publicKey) => {
-	if (!publicKey) {
-		return {};
-	}
-
-	const data = await request(`keyManager/${publicKey}`);
-
-	return data;
-};
-
-export const getWeightDeploy = async (weight, mainAccount, secondAccount) => {
-	if (!mainAccount || !weight) {
-		return {};
-	}
-	const deploy = await request(
-		`keyManager/weight/getDeploy?mainAccount=${mainAccount}&secondAccount=${secondAccount}&weight=${weight}`,
-	);
-	return deploy;
-};
 
 export const setKeyWeight = async (weight, mainAccount, secondAccount) => {
 	const setAccount = secondAccount || mainAccount;

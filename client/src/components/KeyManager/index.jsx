@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
 import { getPublicKey } from '../../selectors/user';
-import { keyManagerResult } from '../../selectors/keyManager';
+import { keyManagerDetailsSelector } from '../../selectors/keyManager';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { getWeightByAccountHash } from '../../helpers/keyManager';
-import { getWeightDeploy, setKeyWeight } from '../../services/keyManager';
+import { setKeyWeight } from '../../services/keyManager';
+import { fetchKeyManagerDetails } from '../../actions/keyManagerActions';
 import { EditModal } from './EditModal';
 
 const KeyManager = () => {
 	const publicKey = useSelector(getPublicKey);
-	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = useSelector(keyManagerResult);
+	const dispatch = useDispatch();
+	const { data: keyManagerData = {} } = useSelector(keyManagerDetailsSelector);
+	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
 	const accountWeight = getWeightByAccountHash(_accountHash, associatedKeys);
 	const [editField, setEditField] = useState('');
 	const [editValue, setEditValue] = useState();
 	const [showEditModal, setShowEditModal] = useState(false);
+
+	useEffect(() => {
+		if (publicKey) {
+			dispatch(fetchKeyManagerDetails(publicKey));
+		}
+	}, [publicKey, dispatch]);
 
 	const onEdit = (field, value) => {
 		setEditField(field);
@@ -85,7 +94,7 @@ const KeyManager = () => {
 											{'   '}
 											{actionThresholds.deployment && (
 												<i
-													class="bi bi-pencil-fill"
+													className="bi bi-pencil-fill"
 													onClick={() => onEdit('deployment', actionThresholds.deployment)}
 												></i>
 											)}
@@ -96,7 +105,7 @@ const KeyManager = () => {
 										<td>
 											{actionThresholds.keyManagement}
 											{'   '}
-											{actionThresholds.keyManagement && <i class="bi bi-pencil-fill"></i>}
+											{actionThresholds.keyManagement && <i className="bi bi-pencil-fill"></i>}
 										</td>
 										<td></td>
 									</tr>
