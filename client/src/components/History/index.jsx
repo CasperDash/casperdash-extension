@@ -24,7 +24,7 @@ const PortfolioModule = () => {
 											<img
 												src="assets/image/cspr.png"
 												alt="currency-icon"
-												class="zl_currency_img"
+												className="zl_currency_img"
 											/>
 										</div>
 										<Sparklines

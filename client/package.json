@@ -11,7 +11,6 @@
 		"@testing-library/user-event": "^7.2.1",
 		"antd": "^4.4.1",
 		"apexcharts": "^3.26.3",
-		"async-selector": "^1.0.26",
 		"axios": "^0.19.2",
 		"bootstrap": "^4.5.0",
 		"bootstrap-icons": "^1.5.0",

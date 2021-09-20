@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { getPublicKey } from '../../../../selectors/user';
@@ -27,15 +27,33 @@ const HeadingModule = (props) => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		window.addEventListener(SIGNER_EVENTS.unlocked, (event) => {
+	const dispatchUnlockSinger = useCallback(
+		(event) => {
 			dispatch(handleUnlockSigner(event.detail));
-		});
-		[SIGNER_EVENTS.locked, SIGNER_EVENTS.disconnected].forEach((event) =>
-			window.addEventListener(event, (e) => {
-				dispatch(handleLockSigner());
-			}),
+		},
+		[dispatch],
+	);
+
+	const dispatchDisconnectedSinger = useCallback(() => {
+		dispatch(handleLockSigner());
+	}, [dispatch]);
+
+	useEffect(() => {
+		[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged].forEach((event) =>
+			window.addEventListener(event, dispatchUnlockSinger),
 		);
+		[SIGNER_EVENTS.locked, SIGNER_EVENTS.disconnected].forEach((event) =>
+			window.addEventListener(event, dispatchDisconnectedSinger),
+		);
+
+		return () => {
+			[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged].forEach((event) =>
+				window.removeEventListener(event, dispatchUnlockSinger),
+			);
+			[SIGNER_EVENTS.locked, SIGNER_EVENTS.disconnected].forEach((event) =>
+				window.removeEventListener(event, dispatchDisconnectedSinger),
+			);
+		};
 	});
 
 	useEffect(() => {
