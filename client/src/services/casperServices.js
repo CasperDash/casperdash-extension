@@ -99,9 +99,9 @@ export const putDeploy = async (deploy) => {
 	return deployHash;
 };
 
-export const getTransferDeploy = (fromAccount, toAccount, amount) => {
+export const getTransferDeploy = (fromAccount, toAccount, amount, transactionId) => {
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
-	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, 1);
+	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transactionId);
 	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
 	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };

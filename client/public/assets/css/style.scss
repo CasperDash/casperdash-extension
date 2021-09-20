@@ -2254,6 +2254,9 @@ table {
 			.zl_confirm_modal_value {
 				color: $color12;
 			}
+			.zl_confirm_modal_value_success {
+				color: $color34;
+			}
 		}
 		.zl_confirm_modal_row_single {
 			display: flex;
@@ -2266,6 +2269,11 @@ table {
 	}
 	.zl_confirm_modal_footer {
 		border-top: none !important;
+		justify-content: space-between !important;
+		flex-basis: auto;
+		.zl_confirm_modal_error {
+			color: $color32;
+		}
 	}
 }
 

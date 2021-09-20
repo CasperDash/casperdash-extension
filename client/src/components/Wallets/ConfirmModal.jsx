@@ -1,7 +1,19 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export const ConfirmModal = ({ show, onClose, fromAddress, toAddress, amount, fee, prize, onConfirm }) => {
+export const ConfirmModal = ({
+	show,
+	onClose,
+	fromAddress,
+	toAddress,
+	amount,
+	fee,
+	prize,
+	onConfirm,
+	deployHash,
+	deployError,
+	isDeploying,
+}) => {
 	return (
 		<Modal
 			show={show}
@@ -42,11 +54,24 @@ export const ConfirmModal = ({ show, onClose, fromAddress, toAddress, amount, fe
 				<div className="zl_confirm_modal_row_single">
 					<span className="zl_confirm_modal_value">${parseFloat((amount + fee) * prize).toFixed(2)}</span>
 				</div>
+				{deployHash && (
+					<div className="zl_confirm_modal_row">
+						<span className="zl_confirm_modal_label">Transaction Hash</span>
+						<span className="zl_confirm_modal_value_success">{deployHash}</span>
+					</div>
+				)}
 			</Modal.Body>
 			<Modal.Footer className="zl_confirm_modal_footer">
-				<Button className="zl_btn_primary_active" onClick={onConfirm}>
-					Confirm
-				</Button>
+				<span className="zl_confirm_modal_error">{deployError}</span>
+				{deployHash ? (
+					<Button className="zl_btn_primary_active" onClick={onClose}>
+						Close
+					</Button>
+				) : (
+					<Button className="zl_btn_primary_active" onClick={onConfirm} disabled={isDeploying}>
+						{isDeploying ? 'Confirming...' : 'Confirm'}
+					</Button>
+				)}
 			</Modal.Footer>
 		</Modal>
 	);

@@ -1,30 +1,41 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
-import { validateTransferForm } from '../../../../helpers/validator';
-import { deployTransfer } from '../../../../services/userServices';
-import { MIN_TRANSFER } from '../../../../constants/key';
+import { validateTransferForm } from '../../helpers/validator';
+import { getSignedTransferDeploy } from '../../services/userServices';
+import { putDeploy } from '.././../actions/deployActions';
+import { deploySelector } from '../../selectors/deploy';
+import { MIN_TRANSFER } from '../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 
 //TODO: get prize from api
 export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddress, prize = 0.13 }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
+	const dispatch = useDispatch();
+	const [singedError, setSignerError] = useState(null);
+	const [deployHash, setDeployHash] = useState(null);
+	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+
 	const setBalance = (percent, setFieldValue) => {
 		const amount = displayBalance / percent;
 		setFieldValue('sendAmount', amount);
 	};
 
 	const onConfirmTransaction = async () => {
-		await deployTransfer(transactionDetails);
+		const signedDeploy = await getSignedTransferDeploy(transactionDetails);
+		if (!signedDeploy.error) {
+			const { data: hash } = await dispatch(putDeploy(signedDeploy));
+			setDeployHash(hash.deployHash);
+		} else {
+			setSignerError(signedDeploy.error.message);
+		}
 	};
 
-	const handleSubmit = (event, values, isValid) => {
-		event.preventDefault();
-		event.stopPropagation();
-
-		if (isValid) {
+	const handleSubmit = (values) => {
+		if (fromAddress && values.toAddress && values.sendAmount) {
 			setTransactionDetails({
 				fromAddress: fromAddress,
 				toAddress: values.toAddress,
@@ -35,6 +46,8 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 	};
 
 	const onCloseConfirmModal = () => {
+		setSignerError(null);
+		setDeployHash(null);
 		setShowConfirmModal(false);
 	};
 
@@ -45,10 +58,11 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 					<div className="zl_send_receive_inner_content">
 						<Formik
 							initialValues={{ sendAmount: MIN_TRANSFER, toAddress: '' }}
-							validate={(values) => validateTransferForm(values, displayBalance)}
+							validate={(values) => validateTransferForm({ ...values, displayBalance })}
+							onSubmit={handleSubmit}
 						>
-							{({ errors, touched, values, isValidating, handleChange, setFieldValue, isValid }) => (
-								<Form noValidate onSubmit={(event) => handleSubmit(event, values, isValid)}>
+							{({ errors, touched, values, handleChange, setFieldValue, isValid, handleSubmit }) => (
+								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="zl_send_receive_heading">
 										<svg
 											width="15"
@@ -193,6 +207,9 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 				{...transactionDetails}
 				fee={0.16}
 				prize={0.13}
+				deployHash={deployHash}
+				deployError={deployHash ? '' : deployError || singedError}
+				isDeploying={isDeploying}
 			/>
 		</div>
 	);

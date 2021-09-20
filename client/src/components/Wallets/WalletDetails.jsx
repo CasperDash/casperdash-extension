@@ -3,21 +3,26 @@ import { useSelector } from 'react-redux';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import AllTransactionList from '../TransactionList/AllTransactionList';
+import AllTransactionList from '../Common/Layout/TransactionList/AllTransactionList';
 import { SendReceiveSection } from './SendReceiveSection';
-import { getMassagedUserDetails, getPublicKey } from '../../../../selectors/user';
-import { formatKeyByPrefix } from '../../../../helpers/key';
+import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
+import { formatKeyByPrefix } from '../../helpers/key';
+import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 
-const MainComponent = ({ name, value, updown, price }) => {
+const WalletDetails = ({ name, value, updown, price }) => {
 	// send btn
 	const [send, setSend] = useState(false);
-
-	const handleToggle = () => {
-		setSend(!send);
-	};
-
+	const [showError, setShowError] = useState(false);
 	const userDetails = useSelector(getMassagedUserDetails);
 	const publicKey = useSelector(getPublicKey);
+
+	const handleToggle = () => {
+		if (publicKey) {
+			setSend(!send);
+		} else {
+			setShowError(true);
+		}
+	};
 
 	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
 
@@ -107,8 +112,14 @@ const MainComponent = ({ name, value, updown, price }) => {
 					<AllTransactionList value={value} />
 				</div>
 			</div>
+			<MessageModal
+				type="Error"
+				message="Unlock your Signer!"
+				show={showError}
+				handleClose={() => setShowError(false)}
+			/>
 		</>
 	);
 };
 
-export default MainComponent;
+export default WalletDetails;

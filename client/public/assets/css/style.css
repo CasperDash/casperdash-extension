@@ -2021,6 +2021,9 @@ table td {
 .zl_confirm_modal_content .zl_confirm_modal_body .zl_confirm_modal_row .zl_confirm_modal_value {
   color: #3D476A;
 }
+.zl_confirm_modal_content .zl_confirm_modal_body .zl_confirm_modal_row .zl_confirm_modal_value_success {
+  color: #0EE6B6;
+}
 .zl_confirm_modal_content .zl_confirm_modal_body .zl_confirm_modal_row_single {
   display: flex;
   justify-content: end;
@@ -2031,6 +2034,11 @@ table td {
 }
 .zl_confirm_modal_content .zl_confirm_modal_footer {
   border-top: none !important;
+  justify-content: space-between !important;
+  flex-basis: auto;
+}
+.zl_confirm_modal_content .zl_confirm_modal_footer .zl_confirm_modal_error {
+  color: #b5395c;
 }
 
 @media (max-width: 1350px) {

@@ -10,22 +10,21 @@ const isValidPublicKey = (publicKey) => {
 	}
 };
 
-export const validateTransferForm = (values, props) => {
-	const { displayBalance } = props;
+export const validateTransferForm = ({ displayBalance, toAddress, sendAmount }) => {
 	let errors = {};
 	// to address
-	if (!values.toAddress) {
+	if (!toAddress) {
 		errors.toAddress = 'Required.';
 	}
-	if (!errors.toAddress && !isValidPublicKey(values.toAddress)) {
+	if (!errors.toAddress && !isValidPublicKey(toAddress)) {
 		errors.toAddress = 'Invalid address.';
 	}
 	// send amount
 
-	if (values.sendAmount < MIN_TRANSFER) {
+	if (sendAmount < MIN_TRANSFER) {
 		errors.sendAmount = 'Amount must be at least 2.5 CSPR.';
 	}
-	if (!errors.sendAmount && values.sendAmount > displayBalance) {
+	if (!errors.sendAmount && sendAmount > displayBalance) {
 		errors.sendAmount = 'Not enough balance.';
 	}
 	return errors;
