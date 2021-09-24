@@ -9,7 +9,7 @@ module.exports = function (app) {
 	app.route('/user/:publicKey').get(userController.get);
 	// Key Manager
 	app.route('/keyManager/:publicKey').get(keyManagerController.get);
-	app.route('/getKeyManagerDeploySession').get(keyManagerController.getKeyManagerContractDeploySession);
+	app.route('/getKeysManagerDeploy').get(keyManagerController.getKeyManagerContractDeploy);
 	app.route('/deployKeyManagerContract').post(keyManagerController.deployKeyManagerContract);
 	// Deploy
 	app.route('/deploy').post(deployController.deploy);

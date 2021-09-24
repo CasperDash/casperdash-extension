@@ -14,7 +14,7 @@ module.exports = {
 			res.status(401).json({ message: error.message });
 		}
 	},
-	getKeyManagerContractDeploySession: async (req, res) => {
+	getKeyManagerContractDeploy: async (req, res) => {
 		try {
 			res.json(await getKeyManagerDeploy());
 		} catch (error) {

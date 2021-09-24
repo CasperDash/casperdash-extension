@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
 import { getPublicKey } from '../../selectors/user';
 import { keyManagerDetailsSelector, deploySelector, isKeyManagerContractAvailable } from '../../selectors/keyManager';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { getWeightByAccountHash } from '../../helpers/keyManager';
-import { getAccountWeightDeploy, getKeyManagerContractDeploy } from '../../services/keyManager';
+import {
+	getSignedAccountWeightDeploy,
+	getKeyManagerContractDeploy,
+	getSignedAccountDeploymentDeploy,
+	getSignedKeyManagementThresholdDeploy,
+} from '../../services/keyManager';
 import { fetchKeyManagerDetails, putWeightDeploy, deployKeyManagerContract } from '../../actions/keyManagerActions';
 import { DeployConfirmModal } from './ConfirmDeployModal';
 import { AttributeRow } from './AttributeRow';
@@ -30,14 +35,22 @@ const KeyManager = () => {
 	const [deployHash, setDeployHash] = useState();
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [confirmMessage, setConfirmMessage] = useState(null);
+	const [deployError, setDeployError] = useState('');
 
-	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	//const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(fetchKeyManagerDetails(publicKey));
 		}
 	}, [publicKey, dispatch]);
+
+	const clearState = () => {
+		setDeployError('');
+		setDeployHash('');
+		setEditValue();
+		setEditField('');
+	};
 
 	const onEdit = (field, value) => {
 		setEditField(field);
@@ -47,6 +60,7 @@ const KeyManager = () => {
 
 	const handleCloseEditModal = () => {
 		setShowEditModal(false);
+		clearState();
 	};
 
 	const handleEditValue = (value) => {
@@ -78,23 +92,28 @@ const KeyManager = () => {
 
 	const handleConfirmDeployContract = async () => {
 		const deploy = await getKeyManagerContractDeploy(publicKey);
-		const hash = await dispatch(deployKeyManagerContract(deploy));
+		const { data: hash } = await dispatch(deployKeyManagerContract(deploy));
 	};
 
 	const handleSummitChange = async () => {
 		let deploy;
 		switch (editField) {
 			case 'deployment':
-				deploy = await getAccountWeightDeploy(editValue, publicKey, publicKey);
-				console.log(deploy);
+				deploy = await getSignedAccountDeploymentDeploy(editValue, publicKey);
 				break;
 			case 'weight':
-				deploy = await getAccountWeightDeploy(editValue, publicKey, publicKey);
-				const { data: hash } = await dispatch(putWeightDeploy(deploy));
-				setDeployHash(hash);
+				deploy = await getSignedAccountWeightDeploy(editValue, publicKey, publicKey);
 				break;
+			case 'keyManagement':
+				deploy = await getSignedKeyManagementThresholdDeploy(editValue, publicKey);
 			default:
 				break;
+		}
+		if (deploy.error) {
+			setDeployError(deploy.error.message);
+		} else {
+			const { data: hash, error } = await dispatch(putWeightDeploy(deploy));
+			error ? setDeployError(error) : setDeployHash(hash.deployHash);
 		}
 	};
 
@@ -166,17 +185,19 @@ const KeyManager = () => {
 						<div className="zl_transaction_list_main_heading">
 							Associated Keys
 							<div className="zl_transaction_list_main_heading_action">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									class="bi bi-plus-circle"
-									viewBox="0 0 16 16"
-								>
-									<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-								</svg>
+								<OverlayTrigger placement="top" overlay={<Tooltip>Add</Tooltip>}>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-plus-circle"
+										viewBox="0 0 16 16"
+									>
+										<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+									</svg>
+								</OverlayTrigger>
 							</div>
 						</div>
 					</div>
@@ -190,6 +211,8 @@ const KeyManager = () => {
 				handleClose={handleCloseEditModal}
 				handleEditValue={handleEditValue}
 				handleSummitChange={handleSummitChange}
+				deployError={deployError}
+				deployHash={deployHash}
 			/>
 			<DeployConfirmModal
 				show={showConfirmModal}

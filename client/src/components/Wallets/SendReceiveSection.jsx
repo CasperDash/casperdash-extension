@@ -15,7 +15,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
 	const dispatch = useDispatch();
-	const [singedError, setSignerError] = useState(null);
+	const [signedError, setSignerError] = useState(null);
 	const [deployHash, setDeployHash] = useState(null);
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
@@ -208,7 +208,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 				fee={0.16}
 				prize={0.13}
 				deployHash={deployHash}
-				deployError={deployHash ? '' : deployError || singedError}
+				deployError={deployHash ? '' : deployError || signedError}
 				isDeploying={isDeploying}
 			/>
 		</div>

@@ -2307,7 +2307,6 @@ table {
 .zl_edit_modal_content {
 	.zl_edit_modal_header {
 		color: $color3;
-		border-bottom: none !important;
 	}
 	.zl_edit_modal_body {
 		.zl_edit_modal_row {
@@ -2335,11 +2334,10 @@ table {
 			}
 		}
 	}
-	.zl_confirm_modal_footer {
-		border-top: none !important;
+	.zl_edit_modal_footer {
 		justify-content: space-between !important;
 		flex-basis: auto;
-		.zl_confirm_modal_error {
+		.zl_edit_modal_error {
 			color: $color32;
 		}
 	}
