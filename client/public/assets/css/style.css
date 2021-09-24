@@ -1706,6 +1706,13 @@ table td {
   text-decoration: none;
   color: #70B2FF;
 }
+.zl_transaction_list_main_heading .zl_transaction_list_main_heading_action {
+  padding-left: 20px;
+  cursor: pointer;
+}
+.zl_transaction_list_main_heading .zl_transaction_list_main_heading_action:hover {
+  color: #70B2FF;
+}
 
 .zl_all_currency_content.active {
   color: #FFFFFF;
@@ -1820,6 +1827,10 @@ table td {
 }
 .zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph p span {
   font-weight: normal;
+}
+.zl_setting_list .zl_setting_list_items .zl_setting_items_heading_peregraph .zl_error_text {
+  color: #b5395c;
+  font-size: 0.8em;
 }
 .zl_setting_list .zl_setting_list_items .zl_setting_items_right_text {
   display: flex;
@@ -2003,6 +2014,13 @@ table td {
   color: #828CAE;
   min-width: 200px;
 }
+.zl_account_info_table .zl_account_info_table_action {
+  padding-left: 10px;
+  cursor: pointer;
+}
+.zl_account_info_table .zl_account_info_table_action:hover {
+  color: #70B2FF;
+}
 
 .zl_confirm_modal_content .zl_confirm_modal_header {
   color: #828CAE;
@@ -2038,6 +2056,11 @@ table td {
   flex-basis: auto;
 }
 .zl_confirm_modal_content .zl_confirm_modal_footer .zl_confirm_modal_error {
+  color: #b5395c;
+}
+
+.zl_key_manger_contract_confirm_modal .zl_key_manger_contract_confirm_content .zl_key_manager_contract_confirm_notice {
+  font-size: 0.7em;
   color: #b5395c;
 }
 

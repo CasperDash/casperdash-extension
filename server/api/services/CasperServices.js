@@ -12,14 +12,26 @@ const getStateRootHash = async () => {
 };
 
 const putDeploy = async (deployJson) => {
-	const deploy = DeployUtil.deployFromJson(deployJson);
-	console.log(deploy);
-	const hash = await casperClient.putDeploy(deploy.val);
-	return hash;
+	try {
+		console.log('deployJson', deployJson);
+		const deploy = DeployUtil.deployFromJson(deployJson);
+		console.log(deploy);
+		const hash = await casperClient.putDeploy(deploy.val);
+		return hash;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const getDeployJson = async (deployHash) => {
+	const deploy = await casperClient.getDeploy(deployHash);
+	const jsonDeploy = DeployUtil.deployToJson(deploy[0]);
+	return jsonDeploy;
 };
 
 module.exports = {
 	getStateRootHash,
 	casperServiceRPC,
 	putDeploy,
+	getDeployJson,
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export const EditModal = ({ field, value, show, handleClose, handleEditValue, handleSumitChange }) => {
+export const EditModal = ({ field, value, show, handleClose, handleEditValue, handleSummitChange }) => {
 	const handleInputChange = (e) => {
 		if (typeof handleEditValue === 'function') {
 			handleEditValue(e.target.value);
@@ -24,7 +24,7 @@ export const EditModal = ({ field, value, show, handleClose, handleEditValue, ha
 				<Button variant="secondary" onClick={handleClose}>
 					Close
 				</Button>
-				<Button variant="primary" onClick={handleSumitChange}>
+				<Button variant="primary" onClick={handleSummitChange}>
 					Save
 				</Button>
 			</Modal.Footer>

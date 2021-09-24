@@ -1920,6 +1920,13 @@ table {
 			color: $color16;
 		}
 	}
+	.zl_transaction_list_main_heading_action {
+		padding-left: 20px;
+		cursor: pointer;
+		&:hover {
+			color: $color16;
+		}
+	}
 }
 .zl_all_currency_content.active {
 	color: $color5;
@@ -2029,6 +2036,10 @@ table {
 				span {
 					font-weight: normal;
 				}
+			}
+			.zl_error_text {
+				color: $color32;
+				font-size: 0.8em;
 			}
 		}
 		.zl_setting_items_right_text {
@@ -2234,6 +2245,13 @@ table {
 			min-width: 200px;
 		}
 	}
+	.zl_account_info_table_action {
+		padding-left: 10px;
+		cursor: pointer;
+		&:hover {
+			color: $color16;
+		}
+	}
 }
 
 .zl_confirm_modal_content {
@@ -2272,6 +2290,15 @@ table {
 		justify-content: space-between !important;
 		flex-basis: auto;
 		.zl_confirm_modal_error {
+			color: $color32;
+		}
+	}
+}
+
+.zl_key_manger_contract_confirm_modal {
+	.zl_key_manger_contract_confirm_content {
+		.zl_key_manager_contract_confirm_notice {
+			font-size: 0.7em;
 			color: $color32;
 		}
 	}

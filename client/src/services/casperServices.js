@@ -105,3 +105,23 @@ export const getTransferDeploy = (fromAccount, toAccount, amount, transactionId)
 	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
 	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };
+
+const getContractBuffer = async (contractName) => {
+	const response = await fetch(`assets/contract/${contractName}.wasm`);
+	const reader = response.body.getReader();
+	let result;
+	while (!(result = await reader.read()).done) {
+		console.log(result);
+		return result.value;
+	}
+	//return contract;
+};
+
+export const buildContractInstallDeploy = async (baseAccount, session, args = {}) => {
+	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
+	const runtimeArgs = RuntimeArgs.fromMap(args);
+	//const sessionModule = DeployUtil.ExecutableDeployItem.newModuleBytes(session.moduleBytes, runtimeArgs);
+	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
+
+	return DeployUtil.makeDeploy(deployParams, session, payment);
+};

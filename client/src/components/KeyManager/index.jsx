@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
 import { getPublicKey } from '../../selectors/user';
-import { keyManagerDetailsSelector } from '../../selectors/keyManager';
+import { keyManagerDetailsSelector, deploySelector, isKeyManagerContractAvailable } from '../../selectors/keyManager';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { getWeightByAccountHash } from '../../helpers/keyManager';
-import { setKeyWeight } from '../../services/keyManager';
-import { fetchKeyManagerDetails } from '../../actions/keyManagerActions';
+import { getAccountWeightDeploy, getKeyManagerContractDeploy } from '../../services/keyManager';
+import { fetchKeyManagerDetails, putWeightDeploy, deployKeyManagerContract } from '../../actions/keyManagerActions';
+import { DeployConfirmModal } from './ConfirmDeployModal';
+
 import { EditModal } from './EditModal';
 
 const KeyManager = () => {
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
+	//selector value
 	const { data: keyManagerData = {} } = useSelector(keyManagerDetailsSelector);
+	const isContractAvailable = useSelector(isKeyManagerContractAvailable) && publicKey;
 	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
 	const accountWeight = getWeightByAccountHash(_accountHash, associatedKeys);
+
 	const [editField, setEditField] = useState('');
 	const [editValue, setEditValue] = useState();
 	const [showEditModal, setShowEditModal] = useState(false);
+	const [deployHash, setDeployHash] = useState();
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [confirmMessage, setConfirmMessage] = useState(null);
+
+	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
 	useEffect(() => {
 		if (publicKey) {
@@ -41,14 +51,46 @@ const KeyManager = () => {
 		setEditValue(value);
 	};
 
-	const handleSumitChange = async () => {
+	const handleCloseConfirmModal = () => {
+		setShowConfirmModal(false);
+	};
+
+	const handleDeployTextClick = () => {
+		const confirmMessageContent = (
+			<div className="zl_key_manger_contract_confirm_content">
+				<p>Deploy keys manager contract *.</p>
+				<p className="zl_key_manager_contract_confirm_notice">
+					*By confirm this, a keys manager contract will be deploy on your account.
+				</p>
+				<p className="zl_key_manager_contract_confirm_notice">
+					The contract was built based on{' '}
+					<a href="https://github.com/casper-ecosystem/keys-manager" target="_blank">
+						https://github.com/casper-ecosystem/keys-manager.
+					</a>
+				</p>
+			</div>
+		);
+		setConfirmMessage(confirmMessageContent);
+		setShowConfirmModal(true);
+	};
+
+	const handleConfirmDeployContract = async () => {
+		const deploy = await getKeyManagerContractDeploy(publicKey);
+		const hash = await dispatch(deployKeyManagerContract(deploy));
+	};
+
+	const handleSummitChange = async () => {
 		let deploy;
 		switch (editField) {
 			case 'deployment':
-				deploy = await setKeyWeight(editValue, publicKey, publicKey);
+				deploy = await getAccountWeightDeploy(editValue, publicKey, publicKey);
 				console.log(deploy);
 				break;
-
+			case 'weight':
+				deploy = await getAccountWeightDeploy(editValue, publicKey, publicKey);
+				const { data: hash } = await dispatch(putWeightDeploy(deploy));
+				setDeployHash(hash);
+				break;
 			default:
 				break;
 		}
@@ -61,6 +103,14 @@ const KeyManager = () => {
 				<div className="zl_setting_list">
 					<div className="zl_setting_list_items">
 						<div className="zl_setting_items_heading_peregraph">
+							{!isContractAvailable && (
+								<div className="zl_error_text">
+									Your account haven't deployed keys manager contract yet.{' '}
+									<a href="#" onClick={handleDeployTextClick}>
+										Click to deploy.
+									</a>
+								</div>
+							)}
 							<h3>Account Info</h3>
 							<Table className="zl_account_info_table">
 								<tbody>
@@ -76,7 +126,16 @@ const KeyManager = () => {
 									</tr>
 									<tr>
 										<td>Weight</td>
-										<td>{accountWeight}</td>
+										<td>
+											{accountWeight}
+											{'   '}
+											{accountWeight && isContractAvailable && (
+												<i
+													className="bi bi-pencil-fill zl_account_info_table_action"
+													onClick={() => onEdit('weight', accountWeight)}
+												></i>
+											)}
+										</td>
 									</tr>
 								</tbody>
 							</Table>
@@ -92,9 +151,9 @@ const KeyManager = () => {
 										<td>
 											{actionThresholds.deployment}
 											{'   '}
-											{actionThresholds.deployment && (
+											{actionThresholds.deployment && isContractAvailable && (
 												<i
-													className="bi bi-pencil-fill"
+													className="bi bi-pencil-fill zl_account_info_table_action"
 													onClick={() => onEdit('deployment', actionThresholds.deployment)}
 												></i>
 											)}
@@ -105,7 +164,9 @@ const KeyManager = () => {
 										<td>
 											{actionThresholds.keyManagement}
 											{'   '}
-											{actionThresholds.keyManagement && <i className="bi bi-pencil-fill"></i>}
+											{actionThresholds.keyManagement && isContractAvailable && (
+												<i className="bi bi-pencil-fill zl_account_info_table_action"></i>
+											)}
 										</td>
 										<td></td>
 									</tr>
@@ -115,7 +176,24 @@ const KeyManager = () => {
 					</div>
 				</div>
 				<div className="zl_transaction_list">
-					<h3 className="zl_transaction_list_main_heading">Associated Keys</h3>
+					<div>
+						<div className="zl_transaction_list_main_heading">
+							Associated Keys
+							<div className="zl_transaction_list_main_heading_action">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									class="bi bi-plus-circle"
+									viewBox="0 0 16 16"
+								>
+									<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+								</svg>
+							</div>
+						</div>
+					</div>
 					<KeyList associatedKeys={associatedKeys} />
 				</div>
 			</section>
@@ -125,7 +203,13 @@ const KeyManager = () => {
 				show={showEditModal}
 				handleClose={handleCloseEditModal}
 				handleEditValue={handleEditValue}
-				handleSumitChange={handleSumitChange}
+				handleSummitChange={handleSummitChange}
+			/>
+			<DeployConfirmModal
+				show={showConfirmModal}
+				handleClose={handleCloseConfirmModal}
+				message={confirmMessage}
+				onDeploy={handleConfirmDeployContract}
 			/>
 		</>
 	);
