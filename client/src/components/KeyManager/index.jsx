@@ -10,6 +10,8 @@ import { getWeightByAccountHash } from '../../helpers/keyManager';
 import { getAccountWeightDeploy, getKeyManagerContractDeploy } from '../../services/keyManager';
 import { fetchKeyManagerDetails, putWeightDeploy, deployKeyManagerContract } from '../../actions/keyManagerActions';
 import { DeployConfirmModal } from './ConfirmDeployModal';
+import { AttributeRow } from './AttributeRow';
+import { KEYS_MANAGER_ATTRS } from '../../constants/keysManager';
 
 import { EditModal } from './EditModal';
 
@@ -124,19 +126,13 @@ const KeyManager = () => {
 										<td>Account Hash</td>
 										<td>{formatKeyByPrefix(_accountHash)}</td>
 									</tr>
-									<tr>
-										<td>Weight</td>
-										<td>
-											{accountWeight}
-											{'   '}
-											{accountWeight && isContractAvailable && (
-												<i
-													className="bi bi-pencil-fill zl_account_info_table_action"
-													onClick={() => onEdit('weight', accountWeight)}
-												></i>
-											)}
-										</td>
-									</tr>
+									<AttributeRow
+										valueKey="weight"
+										value={accountWeight}
+										label="Weight"
+										canEdit={isContractAvailable}
+										onEdit={onEdit}
+									/>
 								</tbody>
 							</Table>
 						</div>
@@ -146,30 +142,20 @@ const KeyManager = () => {
 							<h3>Action Thresholds</h3>
 							<Table className="zl_account_info_table">
 								<tbody>
-									<tr>
-										<td>Deployment</td>
-										<td>
-											{actionThresholds.deployment}
-											{'   '}
-											{actionThresholds.deployment && isContractAvailable && (
-												<i
-													className="bi bi-pencil-fill zl_account_info_table_action"
-													onClick={() => onEdit('deployment', actionThresholds.deployment)}
-												></i>
-											)}
-										</td>
-									</tr>
-									<tr>
-										<td>Key Management</td>
-										<td>
-											{actionThresholds.keyManagement}
-											{'   '}
-											{actionThresholds.keyManagement && isContractAvailable && (
-												<i className="bi bi-pencil-fill zl_account_info_table_action"></i>
-											)}
-										</td>
-										<td></td>
-									</tr>
+									<AttributeRow
+										valueKey="deployment"
+										value={actionThresholds.deployment}
+										label="Deployment"
+										canEdit={isContractAvailable}
+										onEdit={onEdit}
+									/>
+									<AttributeRow
+										valueKey="keyManagement"
+										value={actionThresholds.keyManagement}
+										label="Key Management"
+										canEdit={isContractAvailable}
+										onEdit={onEdit}
+									/>
 								</tbody>
 							</Table>
 						</div>

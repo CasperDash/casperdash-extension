@@ -2064,6 +2064,43 @@ table td {
   color: #b5395c;
 }
 
+.zl_edit_modal_content .zl_edit_modal_header {
+  color: #828CAE;
+  border-bottom: none !important;
+}
+.zl_edit_modal_content .zl_edit_modal_body .zl_edit_modal_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-basis: auto;
+  padding: 10px;
+}
+.zl_edit_modal_content .zl_edit_modal_body .zl_edit_modal_row .zl_edit_modal_label {
+  color: #828CAE;
+}
+.zl_edit_modal_content .zl_edit_modal_body .zl_edit_modal_row .zl_edit_modal_value {
+  color: #3D476A;
+}
+.zl_edit_modal_content .zl_edit_modal_body .zl_edit_modal_row .zl_edit_modal_value_success {
+  color: #0EE6B6;
+}
+.zl_edit_modal_content .zl_edit_modal_body .zl_edit_modal_row_single {
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+}
+.zl_edit_modal_content .zl_edit_modal_body .zl_edit_modal_row_single .zl_edit_modal_value {
+  color: #3D476A;
+}
+.zl_edit_modal_content .zl_confirm_modal_footer {
+  border-top: none !important;
+  justify-content: space-between !important;
+  flex-basis: auto;
+}
+.zl_edit_modal_content .zl_confirm_modal_footer .zl_confirm_modal_error {
+  color: #b5395c;
+}
+
 @media (max-width: 1350px) {
   .zl_add_currency_row .zl_add_currency_column {
     max-width: 25%;

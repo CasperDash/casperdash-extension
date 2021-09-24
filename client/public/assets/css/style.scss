@@ -2304,6 +2304,47 @@ table {
 	}
 }
 
+.zl_edit_modal_content {
+	.zl_edit_modal_header {
+		color: $color3;
+		border-bottom: none !important;
+	}
+	.zl_edit_modal_body {
+		.zl_edit_modal_row {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			flex-basis: auto;
+			padding: 10px;
+			.zl_edit_modal_label {
+				color: $color3;
+			}
+			.zl_edit_modal_value {
+				color: $color12;
+			}
+			.zl_edit_modal_value_success {
+				color: $color34;
+			}
+		}
+		.zl_edit_modal_row_single {
+			display: flex;
+			justify-content: end;
+			padding: 10px;
+			.zl_edit_modal_value {
+				color: $color12;
+			}
+		}
+	}
+	.zl_confirm_modal_footer {
+		border-top: none !important;
+		justify-content: space-between !important;
+		flex-basis: auto;
+		.zl_confirm_modal_error {
+			color: $color32;
+		}
+	}
+}
+
 @media (max-width: 1350px) {
 	.zl_add_currency_row {
 		.zl_add_currency_column {
