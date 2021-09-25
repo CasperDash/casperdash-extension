@@ -924,6 +924,7 @@ table td {
 }
 .zl_add_currency_row .zl_add_currency_column .zl_add_currency_inner_content .zl_add_currency_right_price {
   text-align: right;
+  margin-top: auto;
 }
 .zl_add_currency_row .zl_add_currency_column .zl_add_currency_btn_content {
   border: 1px dashed #3A4562;

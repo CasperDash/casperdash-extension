@@ -1,11 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import { Tab, Nav } from 'react-bootstrap';
+import { getMassagedUserDetails } from '../../selectors/user';
 import AllList from '../Common/Layout/TransactionList/AllTransactionList';
+import { getCurrentPrice } from '../../selectors/price';
 
 const PortfolioModule = () => {
+	const userDetails = useSelector(getMassagedUserDetails);
+	const currentPrice = useSelector(getCurrentPrice);
+
+	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
 	return (
 		<>
 			<section className="zl_history_page">
@@ -27,47 +32,14 @@ const PortfolioModule = () => {
 												className="zl_currency_img"
 											/>
 										</div>
-										<Sparklines
-											data={[14, 12, 15, 0, 5, 0]}
-											margin={6}
-											className="zl_add_currency_mini_chart"
-										>
-											<SparklinesLine
-												style={{
-													strokeWidth: 10,
-													stroke: '#A330FF',
-													fill: 'none',
-													curve: 'smooth',
-												}}
-											/>
-											<SparklinesSpots
-												size={4}
-												style={{ stroke: '#A330FF', strokeWidth: 3, fill: 'white' }}
-											/>
-										</Sparklines>
 									</div>
 									<div className="zl_add_currency_price">
 										<div className="zl_add_currency_left_price">
 											<h3>CSPR</h3>
-											<p>3.2134</p>
+											<p>{displayBalance}</p>
 										</div>
 										<div className="zl_add_currency_right_price">
-											<span className="zl_add_currency_down_price">
-												<svg
-													width="6"
-													height="6"
-													viewBox="0 0 6 6"
-													fill="none"
-													xmlns="http://www.w3.org/2000/svg"
-												>
-													<path
-														d="M3.60609 2.39391L2.69695 1.48477C2.36222 1.15004 1.81951 1.15004 1.48477 1.48477C1.15004 1.81951 1.15004 2.36222 1.48477 2.69695L2.39391 3.60609L0 6H6V0L3.60609 2.39391Z"
-														fill="#E3507A"
-													/>
-												</svg>
-												-5.23%
-											</span>
-											<p>$3,452.1</p>
+											<p>${displayBalance * currentPrice}</p>
 										</div>
 									</div>
 								</Nav.Link>
@@ -85,4 +57,4 @@ const PortfolioModule = () => {
 	);
 };
 
-export default connect(null, null)(PortfolioModule);
+export default PortfolioModule;
