@@ -34,12 +34,36 @@ export const updateKeysManagerLocalStorage = (publicKey, patch, value, action) =
 	};
 };
 
+export const updateKeysManagerDeployStatus = (publicKey, path, listHash) => {
+	return (dispatch) => {
+		const deployStorageValue = getLocalStorageValue(publicKey, path);
+		const updatedValue = Object.keys(deployStorageValue).reduce((out, key) => {
+			out[key] = deployStorageValue[key].map((value) => {
+				const deployStatus = listHash.find((h) => h.hash === value.hash);
+				return { ...value, status: deployStatus ? deployStatus.status : value.status };
+			});
+			return out;
+		}, {});
+		dispatch(updateKeysManagerLocalStorage(publicKey, path, updatedValue, 'set'));
+	};
+};
+
 export const getKeysManagerLocalStorage = (publicKey) => {
 	return (dispatch) => {
 		const item = getLocalStorageValue(publicKey, 'keysManager');
 		dispatch({
 			type: KEY_MANAGER.GET_LOCAL_STORAGE,
-			payload: item,
+			payload: item ? item : { deploys: {} },
 		});
 	};
 };
+
+export const getKeysManagerPendingDeploys = (deployHash) => ({
+	type: KEY_MANAGER.GET_DEPLOYS_STATUS,
+	request: {
+		url: '/deploysStatus',
+		params: {
+			deployHash,
+		},
+	},
+});

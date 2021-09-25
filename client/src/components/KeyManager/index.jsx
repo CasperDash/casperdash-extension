@@ -9,6 +9,7 @@ import {
 	deploySelector,
 	isKeyManagerContractAvailable,
 	getPendingDeploys,
+	getPendingDeployHashes,
 } from '../../selectors/keyManager';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { getWeightByAccountHash } from '../../helpers/keyManager';
@@ -24,6 +25,8 @@ import {
 	deployKeyManagerContract,
 	updateKeysManagerLocalStorage,
 	getKeysManagerLocalStorage,
+	getKeysManagerPendingDeploys,
+	updateKeysManagerDeployStatus,
 } from '../../actions/keyManagerActions';
 import { DeployConfirmModal } from './ConfirmDeployModal';
 import { AttributeRow } from './AttributeRow';
@@ -36,6 +39,7 @@ const KeyManager = () => {
 	const dispatch = useDispatch();
 	//selector value
 	const pendingDeploys = useSelector(getPendingDeploys);
+	const pendingDeployHashes = useSelector(getPendingDeployHashes);
 	const { data: keyManagerData = {} } = useSelector(keyManagerDetailsSelector);
 	const isContractAvailable = useSelector(isKeyManagerContractAvailable) && publicKey;
 	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
@@ -57,6 +61,18 @@ const KeyManager = () => {
 			dispatch(getKeysManagerLocalStorage(publicKey));
 		}
 	}, [publicKey, dispatch]);
+
+	useEffect(() => {
+		console.log(pendingDeployHashes);
+
+		if (pendingDeployHashes.length) {
+			(async () => {
+				const { data } = await dispatch(getKeysManagerPendingDeploys(pendingDeployHashes));
+				dispatch(updateKeysManagerDeployStatus(publicKey, 'keysManager.deploys', data));
+				console.log(data);
+			})();
+		}
+	}, [JSON.stringify(pendingDeployHashes), dispatch]);
 
 	const clearState = () => {
 		setDeployError('');

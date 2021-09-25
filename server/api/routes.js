@@ -13,4 +13,5 @@ module.exports = function (app) {
 	app.route('/deployKeyManagerContract').post(keyManagerController.deployKeyManagerContract);
 	// Deploy
 	app.route('/deploy').post(deployController.deploy);
+	app.route('/deploysStatus').get(deployController.getDeploysStatus);
 };

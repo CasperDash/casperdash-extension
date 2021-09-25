@@ -25,3 +25,15 @@ export const getPendingDeploys = ({ keysManager }) => {
 	}, {});
 	return pendingDeploys;
 };
+
+export const getPendingDeployHashes = createSelector(getPendingDeploys, (pendingDeploys) => {
+	if (!pendingDeploys) {
+		return [];
+	}
+	return Object.keys(pendingDeploys).reduce((out, key) => {
+		if (!pendingDeploys[key].length) {
+			return out;
+		}
+		return out.concat(pendingDeploys[key].map((deploy) => deploy.hash));
+	}, []);
+});

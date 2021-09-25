@@ -20,13 +20,13 @@ export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit }) => {
 						></i>
 					</OverlayTrigger>
 				)}
-				{pendingDeploys[valueKey] &&
-					pendingDeploys[valueKey].length &&
-					pendingDeploys[valueKey].map((deploy) => (
-						<OverlayTrigger placement="top" overlay={<Tooltip>{deploy.hash}</Tooltip>}>
-							<i class="bi bi-arrow-clockwise"></i>
-						</OverlayTrigger>
-					))}
+				{pendingDeploys[valueKey] && pendingDeploys[valueKey].length
+					? pendingDeploys[valueKey].map((deploy) => (
+							<OverlayTrigger placement="top" overlay={<Tooltip>{deploy.hash}</Tooltip>}>
+								<i class="bi bi-arrow-clockwise"></i>
+							</OverlayTrigger>
+					  ))
+					: null}
 			</td>
 		</tr>
 	);

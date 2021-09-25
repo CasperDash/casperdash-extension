@@ -23,10 +23,46 @@ const putDeploy = async (deployJson) => {
 	}
 };
 
+const getDeployResultJson = async (deployHash) => {
+	const deploy = await casperClient.getDeploy(deployHash);
+
+	return deploy[1];
+};
+
 const getDeployJson = async (deployHash) => {
 	const deploy = await casperClient.getDeploy(deployHash);
 	const jsonDeploy = DeployUtil.deployToJson(deploy[0]);
+
 	return jsonDeploy;
+};
+
+const getDeploysResult = async (deployHash) => {
+	const hashes = Array.isArray(deployHash) ? deployHash : [deployHash];
+	const deploys = await Promise.all(
+		hashes.map(async (hash) => {
+			const deployJson = await getDeployResultJson(hash);
+			return deployJson;
+		}),
+	);
+	console.log(deploys);
+	return deploys;
+};
+
+const getDeploysStatus = async (deployHash) => {
+	const deploysResult = await getDeploysResult(deployHash);
+	return deploysResult.length
+		? deploysResult.map((result) => {
+				const { execution_results, deploy } = result;
+				return {
+					hash: deploy.hash,
+					status: !execution_results.length
+						? 'pending'
+						: execution_results.some((rs) => rs.result.Failure)
+						? 'fail'
+						: 'success',
+				};
+		  })
+		: [];
 };
 
 module.exports = {
@@ -34,4 +70,6 @@ module.exports = {
 	casperServiceRPC,
 	putDeploy,
 	getDeployJson,
+	getDeploysResult,
+	getDeploysStatus,
 };
