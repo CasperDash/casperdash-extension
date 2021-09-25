@@ -4,7 +4,12 @@ import { Table, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
 import { getPublicKey } from '../../selectors/user';
-import { keyManagerDetailsSelector, deploySelector, isKeyManagerContractAvailable } from '../../selectors/keyManager';
+import {
+	keyManagerDetailsSelector,
+	deploySelector,
+	isKeyManagerContractAvailable,
+	getPendingDeploys,
+} from '../../selectors/keyManager';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { getWeightByAccountHash } from '../../helpers/keyManager';
 import {
@@ -13,7 +18,13 @@ import {
 	getSignedAccountDeploymentDeploy,
 	getSignedKeyManagementThresholdDeploy,
 } from '../../services/keyManager';
-import { fetchKeyManagerDetails, putWeightDeploy, deployKeyManagerContract } from '../../actions/keyManagerActions';
+import {
+	fetchKeyManagerDetails,
+	putWeightDeploy,
+	deployKeyManagerContract,
+	updateKeysManagerLocalStorage,
+	getKeysManagerLocalStorage,
+} from '../../actions/keyManagerActions';
 import { DeployConfirmModal } from './ConfirmDeployModal';
 import { AttributeRow } from './AttributeRow';
 import { KEYS_MANAGER_ATTRS } from '../../constants/keysManager';
@@ -24,6 +35,7 @@ const KeyManager = () => {
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
 	//selector value
+	const pendingDeploys = useSelector(getPendingDeploys);
 	const { data: keyManagerData = {} } = useSelector(keyManagerDetailsSelector);
 	const isContractAvailable = useSelector(isKeyManagerContractAvailable) && publicKey;
 	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
@@ -42,6 +54,7 @@ const KeyManager = () => {
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(fetchKeyManagerDetails(publicKey));
+			dispatch(getKeysManagerLocalStorage(publicKey));
 		}
 	}, [publicKey, dispatch]);
 
@@ -119,6 +132,14 @@ const KeyManager = () => {
 		} else {
 			const { data: hash, error } = await dispatch(putWeightDeploy(deploy));
 			error ? setDeployError(error) : setDeployHash(hash.deployHash);
+			dispatch(
+				updateKeysManagerLocalStorage(
+					publicKey,
+					`keysManager.deploys.${editField}`,
+					{ hash: hash.deployHash, status: 'pending' },
+					'push',
+				),
+			);
 		}
 	};
 

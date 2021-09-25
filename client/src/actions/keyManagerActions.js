@@ -1,3 +1,4 @@
+import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
 import { KEY_MANAGER } from '../store/actionTypes';
 
 export const fetchKeyManagerDetails = (publicKey) => ({
@@ -22,3 +23,23 @@ export const deployKeyManagerContract = (signedDeploy) => ({
 		data: signedDeploy,
 	},
 });
+
+export const updateKeysManagerLocalStorage = (publicKey, patch, value, action) => {
+	return (dispatch) => {
+		const { keysManager } = setLocalStorageValue(publicKey, patch, value, action);
+		dispatch({
+			type: KEY_MANAGER.UPDATE_LOCAL_STORAGE,
+			payload: keysManager,
+		});
+	};
+};
+
+export const getKeysManagerLocalStorage = (publicKey) => {
+	return (dispatch) => {
+		const item = getLocalStorageValue(publicKey, 'keysManager');
+		dispatch({
+			type: KEY_MANAGER.GET_LOCAL_STORAGE,
+			payload: item,
+		});
+	};
+};

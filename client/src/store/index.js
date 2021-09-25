@@ -16,6 +16,7 @@ export const initialState = {
 		isUnlocked: true,
 		error: null,
 	},
+	keysManager: {},
 };
 
 const { requestsReducer, requestsMiddleware } = handleRequests({
@@ -29,6 +30,7 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 const main = combineReducers({
 	user: reducers.userReducer,
 	signer: reducers.signerReducer,
+	keysManager: reducers.keysManagerReducer,
 	requests: requestsReducer,
 });
 

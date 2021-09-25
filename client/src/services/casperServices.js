@@ -30,7 +30,6 @@ export const getTransferDeploy = (fromAccount, toAccount, amount, transactionId)
  */
 export const buildContractInstallDeploy = async (baseAccount, session, args = {}) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
-	const runtimeArgs = RuntimeArgs.fromMap(args);
 	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
 	return DeployUtil.makeDeploy(deployParams, session, payment);
 };

@@ -12,3 +12,16 @@ export const isKeyManagerContractAvailable = createSelector(keyManagerDetailsSel
 	}
 	return data.namedKeys.some((namedKey) => namedKey.name === 'keys_manager');
 });
+
+export const getPendingDeploys = ({ keysManager }) => {
+	if (!keysManager || !keysManager.deploys) {
+		return {};
+	}
+	const pendingDeploys = Object.keys(keysManager.deploys).reduce((out, key) => {
+		out[key] = Array.isArray(keysManager.deploys[key])
+			? keysManager.deploys[key].filter((deploy) => deploy.status === 'pending')
+			: [];
+		return out;
+	}, {});
+	return pendingDeploys;
+};
