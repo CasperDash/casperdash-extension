@@ -37,7 +37,8 @@ export const EditModal = ({
 							<div className="zl_edit_modal_label">{attr.label}</div>
 							<div className="zl_edit_modal_value">
 								<input
-									type="number"
+									className={attr.className}
+									type={attr.type || 'number'}
 									value={value}
 									onChange={(e) => handleInputChange(e)}
 									disabled={deployHash}

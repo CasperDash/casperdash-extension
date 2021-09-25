@@ -15,4 +15,10 @@ export const KEYS_MANAGER_ATTRS = {
 		key: 'keyManagement',
 		label: 'Key Management',
 	},
+	associatedKey: {
+		type: 'text',
+		key: 'associatedKey',
+		label: 'Key',
+		className: 'zl_edit_modal_value_long',
+	},
 };
