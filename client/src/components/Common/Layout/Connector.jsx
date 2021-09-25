@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchPrizeHistory } from '../../../actions/prizeActions';
 import SideBar from '../SideBar';
 
 const Layout = (props) => {
+	const dispatch = useDispatch();
 	const [color, setColor] = useState('zl_light_theme_active');
 
+	useEffect(() => {
+		dispatch(fetchPrizeHistory());
+	}, [dispatch]);
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			setColor(localStorage.getItem('themColor'));

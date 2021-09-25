@@ -211,6 +211,9 @@
 	.zl_all_page_comman_total_price {
 		.zl_all_page_total_price_text {
 			color: $color12;
+			.zl_all_page_total_price_value {
+				color: $color3;
+			}
 		}
 	}
 	.zl_add_currency_row {

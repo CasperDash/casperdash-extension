@@ -8,7 +8,7 @@ export const ConfirmModal = ({
 	toAddress,
 	amount,
 	fee,
-	prize,
+	price,
 	onConfirm,
 	deployHash,
 	deployError,
@@ -52,7 +52,7 @@ export const ConfirmModal = ({
 					<span className="zl_confirm_modal_value">{amount + fee}</span>
 				</div>
 				<div className="zl_confirm_modal_row_single">
-					<span className="zl_confirm_modal_value">${parseFloat((amount + fee) * prize).toFixed(2)}</span>
+					<span className="zl_confirm_modal_value">${parseFloat((amount + fee) * price).toFixed(2)}</span>
 				</div>
 				{deployHash && (
 					<div className="zl_confirm_modal_row">

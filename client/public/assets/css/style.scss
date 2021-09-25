@@ -822,6 +822,11 @@ table {
 		color: $color1;
 		margin-right: auto;
 		margin-bottom: 0;
+		.zl_current_prize {
+			font-weight: 500;
+			font-size: 20px;
+			color: $color3;
+		}
 	}
 }
 .zl_dashboard_chart {
@@ -852,6 +857,11 @@ table {
 		color: $color1;
 		margin-bottom: 8px;
 		word-break: break-all;
+		.zl_all_page_total_price_value {
+			color: $color3;
+			font-size: 20px;
+			font-weight: 500;
+		}
 	}
 	.zl_all_page_total_price_up_text {
 		display: flex;

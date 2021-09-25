@@ -763,6 +763,11 @@ table td {
   margin-right: auto;
   margin-bottom: 0;
 }
+.zl_chart_box_heading_date .zl_chart_box_heading .zl_current_prize {
+  font-weight: 500;
+  font-size: 20px;
+  color: #828CAE;
+}
 
 .zl_dashboard_chart tspan {
   fill: #828CAE;
@@ -792,6 +797,11 @@ table td {
   color: #C0C3CC;
   margin-bottom: 8px;
   word-break: break-all;
+}
+.zl_all_page_comman_total_price .zl_all_page_total_price_text .zl_all_page_total_price_value {
+  color: #828CAE;
+  font-size: 20px;
+  font-weight: 500;
 }
 .zl_all_page_comman_total_price .zl_all_page_total_price_up_text {
   display: flex;

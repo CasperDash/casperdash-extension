@@ -10,8 +10,8 @@ import { deploySelector } from '../../selectors/deploy';
 import { MIN_TRANSFER } from '../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 
-//TODO: get prize from api
-export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddress, prize = 0.13 }) => {
+//TODO: get price from api
+export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddress, currentPrice }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
 	const dispatch = useDispatch();
@@ -116,7 +116,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 									</div>
 									<div className="zl_send_currency_text_type">
 										<h3 className="zl_send_currency_text">
-											${parseFloat(values.sendAmount * 0.13).toFixed(2)}
+											${parseFloat(values.sendAmount * currentPrice).toFixed(2)}
 										</h3>
 										<h3 className="zl_send_currency_type">USD</h3>
 									</div>
@@ -206,7 +206,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 				onConfirm={onConfirmTransaction}
 				{...transactionDetails}
 				fee={0.16}
-				prize={0.13}
+				price={0.13}
 				deployHash={deployHash}
 				deployError={deployHash ? '' : deployError || signedError}
 				isDeploying={isDeploying}

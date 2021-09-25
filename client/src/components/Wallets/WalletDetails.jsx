@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -8,13 +8,17 @@ import { SendReceiveSection } from './SendReceiveSection';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
+import { ChartLine } from '../Common/Layout/Chart';
+import { getPriceHistory, getCurrentPrice } from '../../selectors/price';
 
-const WalletDetails = ({ name, value, updown, price }) => {
+const WalletDetails = ({ name, value }) => {
 	// send btn
 	const [send, setSend] = useState(false);
 	const [showError, setShowError] = useState(false);
 	const userDetails = useSelector(getMassagedUserDetails);
 	const publicKey = useSelector(getPublicKey);
+	const priceHistory = useSelector(getPriceHistory);
+	const currentPrice = useSelector(getCurrentPrice);
 
 	const handleToggle = () => {
 		if (publicKey) {
@@ -51,19 +55,28 @@ const WalletDetails = ({ name, value, updown, price }) => {
 			</div>
 			<div className={`zl_chart_component ${send ? 'active' : ''}`}>
 				<div className="zl_all_page_comman_content">
+					<div className="zl_dashboard_chart">
+						<ChartLine data={priceHistory} />
+					</div>
 					<div className="zl_chart_box_heading_date">
 						<h2 className="zl_chart_box_heading">
 							<div className="zl_add_currency_icon_chart">
 								<img src="assets/image/cspr.png" alt="currency-icon" />
 							</div>
-							{name}
+							<div>{name}</div>
+							<div className="zl_current_prize">{currentPrice}$</div>
 						</h2>
 					</div>
 
 					<div className="zl_wallet_chart_bottom_content">
 						<div className="zl_all_page_comman_total_price">
 							<p className="zl_all_page_total_price_heading">Total Balance</p>
-							<h2 className="zl_all_page_total_price_text">{displayBalance}</h2>
+							<h2 className="zl_all_page_total_price_text">
+								{displayBalance}{' '}
+								<span className="zl_all_page_total_price_value">
+									({parseFloat(displayBalance * currentPrice).toFixed(2)}$)
+								</span>
+							</h2>
 						</div>
 						<div className="zl_wallet_chart_send_receive_btn">
 							<Button className="zl_wallet_chart_send_btn" onClick={handleToggle}>
@@ -103,6 +116,7 @@ const WalletDetails = ({ name, value, updown, price }) => {
 					handleToggle={handleToggle}
 					displayBalance={displayBalance}
 					fromAddress={publicKey}
+					currentPrice={currentPrice}
 				/>
 				<div className="zl_transaction_list">
 					<h3 className="zl_transaction_list_main_heading">
