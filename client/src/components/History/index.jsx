@@ -48,7 +48,7 @@ const PortfolioModule = () => {
 									</div>
 									<div className="zl_add_currency_price">
 										<div className="zl_add_currency_left_price">
-											<h3>ETH</h3>
+											<h3>CSPR</h3>
 											<p>3.2134</p>
 										</div>
 										<div className="zl_add_currency_right_price">

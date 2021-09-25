@@ -7,10 +7,9 @@ import { validateTransferForm } from '../../helpers/validator';
 import { getSignedTransferDeploy } from '../../services/userServices';
 import { putDeploy } from '.././../actions/deployActions';
 import { deploySelector } from '../../selectors/deploy';
-import { MIN_TRANSFER } from '../../constants/key';
+import { MIN_TRANSFER, TRANSFER_FEE } from '../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 
-//TODO: get price from api
 export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddress, currentPrice }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
@@ -129,7 +128,8 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 										</Button>
 										<div className="zl_send_currency_text">
 											<p>
-												Network Fee<span>$0.16</span>
+												Network Fee
+												<span>{TRANSFER_FEE} CSPR</span>
 											</p>
 										</div>
 									</div>
@@ -205,8 +205,8 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 				onClose={onCloseConfirmModal}
 				onConfirm={onConfirmTransaction}
 				{...transactionDetails}
-				fee={0.16}
-				price={0.13}
+				fee={TRANSFER_FEE}
+				currentPrise={currentPrice}
 				deployHash={deployHash}
 				deployError={deployHash ? '' : deployError || signedError}
 				isDeploying={isDeploying}
