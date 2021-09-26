@@ -36,7 +36,7 @@ const Layout = (props) => {
 
 	return (
 		<div className={`zl_all_pages_content ${color === null ? 'zl_light_theme_active' : color}`}>
-			<SideBar title={title} />
+			<SideBar title={title || 'dashboard'} />
 			<div className="zl_all_pages_inner_content">{props.children}</div>
 		</div>
 	);

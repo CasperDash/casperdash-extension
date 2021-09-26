@@ -33,7 +33,6 @@ const main = combineReducers({
 	user: userReducer,
 	signer: signerReducer,
 	keysManager: keysManagerReducer,
-
 	requests: requestsReducer,
 });
 
