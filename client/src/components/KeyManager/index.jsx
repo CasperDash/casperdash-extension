@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
-import { getLatestBlockHash } from '../../selectors/deploy';
+import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import { getPublicKey, getMassagedUserDetails } from '../../selectors/user';
 import {
-	keyManagerDetailsSelector,
 	deploySelector,
 	isKeyManagerContractAvailable,
 	getPendingDeploys,
@@ -42,7 +41,6 @@ const KeyManager = () => {
 	const pendingDeploys = useSelector(getPendingDeploys);
 	const pendingDeployHashes = useSelector(getPendingDeployHashes);
 	const keyManagerData = useSelector(getMassagedUserDetails);
-	const latestBlockHash = useSelector(getLatestBlockHash);
 	const isContractAvailable = useSelector(isKeyManagerContractAvailable) && publicKey;
 	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
 	const accountWeight = getWeightByAccountHash(_accountHash, associatedKeys);
@@ -64,7 +62,7 @@ const KeyManager = () => {
 		}
 	}, [publicKey, dispatch]);
 
-	useEffect(() => {
+	useAutoRefreshEffect(() => {
 		if (pendingDeployHashes.length) {
 			(async () => {
 				const { data } = await dispatch(getKeysManagerPendingDeploys(pendingDeployHashes));
@@ -72,7 +70,7 @@ const KeyManager = () => {
 				console.log(data);
 			})();
 		}
-	}, [JSON.stringify(pendingDeployHashes), dispatch, latestBlockHash]);
+	}, [JSON.stringify(pendingDeployHashes), dispatch]);
 
 	const clearState = () => {
 		setDeployError('');

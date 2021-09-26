@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
+import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { isConnectedCasper, getSignerStatus } from '../../../../selectors/signer';
-import { getLatestBlockHash } from '../../../../selectors/deploy';
 import {
 	connectCasper,
 	updateConnectStatus,
@@ -23,7 +23,6 @@ const SIGNER_EVENTS = {
 
 const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
-	const latestBlockHash = useSelector(getLatestBlockHash);
 	const { isUnlocked, isConnected } = useSelector(getSignerStatus);
 	const [showError, setShowError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -67,11 +66,11 @@ const HeadingModule = (props) => {
 		});
 	}, [isConnected, dispatch]);
 
-	useEffect(() => {
+	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
 		}
-	}, [publicKey, dispatch, latestBlockHash]);
+	}, [publicKey, dispatch]);
 
 	const handleCloseError = () => setShowError(false);
 	const handleShowError = () => setShowError(true);
