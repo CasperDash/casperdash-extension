@@ -1,5 +1,5 @@
 import { RuntimeArgs, DeployUtil, Signer } from 'casper-js-sdk';
-import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE } from '../constants/key';
+import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, TRANSFER_FEE } from '../constants/key';
 
 /**
  * Get Transfer deploy
@@ -11,13 +11,8 @@ import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE } from '../constants/key';
  */
 export const getTransferDeploy = (fromAccount, toAccount, amount, transactionId) => {
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
-	const transferParams = DeployUtil.ExecutableDeployItem.newTransferWithOptionalTransferId(
-		amount,
-		toAccount,
-		null,
-		transactionId,
-	);
-	const payment = DeployUtil.standardPayment(0.001 * MOTE_RATE);
+	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transactionId);
+	const payment = DeployUtil.standardPayment(TRANSFER_FEE * MOTE_RATE);
 	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };
 
