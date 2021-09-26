@@ -14,4 +14,5 @@ module.exports = function (app) {
 	// Deploy
 	app.route('/deploy').post(deployController.deploy);
 	app.route('/deploysStatus').get(deployController.getDeploysStatus);
+	app.route('/getLatestBlockHash').get(deployController.getLatestBlockHash);
 };

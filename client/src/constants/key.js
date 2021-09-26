@@ -6,3 +6,4 @@ export const KEY_PREFIX = ['account-hash-', 'uref-'];
 export const MIN_TRANSFER = 2.5;
 export const BASE_API_URL = 'http://localhost:3001';
 export const NETWORK_NAME = 'casper-test';
+export const REFRESH_TIME = 2 * 60 * 1000;

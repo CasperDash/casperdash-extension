@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchPrizeHistory } from '../../../actions/prizeActions';
+import { fetchPrizeHistory } from '../../../actions/priceActions';
+import { getLatestBlockHash } from '../../../actions/deployActions';
+import { REFRESH_TIME } from '../../../constants';
 import SideBar from '../SideBar';
 
 const Layout = (props) => {
@@ -8,8 +10,14 @@ const Layout = (props) => {
 	const [color, setColor] = useState('zl_light_theme_active');
 
 	useEffect(() => {
+		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
+		return () => clearInterval(refreshStateRootHash);
+	}, dispatch);
+
+	useEffect(() => {
 		dispatch(fetchPrizeHistory());
 	}, [dispatch]);
+
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			setColor(localStorage.getItem('themColor'));

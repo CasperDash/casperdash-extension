@@ -11,6 +11,11 @@ const getStateRootHash = async () => {
 	return stateRootHash;
 };
 
+const getLatestBlockHash = async () => {
+	const latestBlockInfo = await casperServiceRPC.getLatestBlockInfo();
+	return latestBlockInfo.block.hash;
+};
+
 const putDeploy = async (deployJson) => {
 	try {
 		console.log('deployJson', deployJson);
@@ -72,4 +77,5 @@ module.exports = {
 	getDeployJson,
 	getDeploysResult,
 	getDeploysStatus,
+	getLatestBlockHash,
 };

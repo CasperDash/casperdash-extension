@@ -64,7 +64,7 @@ const WalletDetails = ({ name, value }) => {
 								<img src="assets/image/cspr.png" alt="currency-icon" />
 							</div>
 							<div>{name}</div>
-							<div className="zl_current_prize">${currentPrice}</div>
+							<div className="zl_current_price">${currentPrice}</div>
 						</h2>
 					</div>
 

@@ -1,4 +1,4 @@
-const { putDeploy, getDeploysStatus } = require('../services/CasperServices');
+const { putDeploy, getDeploysStatus, getLatestBlockHash } = require('../services/CasperServices');
 
 module.exports = {
 	deploy: async (req, res) => {
@@ -13,6 +13,14 @@ module.exports = {
 			res.json(deploys);
 		} catch (error) {
 			console.log('error');
+			res.status(500).json({ message: error.message });
+		}
+	},
+	getLatestBlockHash: async (req, res) => {
+		try {
+			const latestBlockHash = await getLatestBlockHash();
+			res.json({ latestBlockHash });
+		} catch (error) {
 			res.status(500).json({ message: error.message });
 		}
 	},

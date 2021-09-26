@@ -8,3 +8,10 @@ export const putDeploy = (signedDeploy) => ({
 		data: signedDeploy,
 	},
 });
+
+export const getLatestBlockHash = () => ({
+	type: DEPLOY.GET_LATEST_BLOCK_HASH,
+	request: {
+		url: '/getLatestBlockHash',
+	},
+});
