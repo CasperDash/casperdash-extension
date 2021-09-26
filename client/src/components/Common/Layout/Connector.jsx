@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchPrizeHistory } from '../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../actions/deployActions';
-import { REFRESH_TIME } from '../../../constants';
+import { REFRESH_TIME } from '../../../constants/key';
 import SideBar from '../SideBar';
 
 const Layout = (props) => {
