@@ -10,7 +10,6 @@ export const getPublicKey = ({ user }) => {
 const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
 
 export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {
-	console.log(userDetails);
 	const data = userDetails.data || {};
 	const hexBalance = data && data.balance ? data.balance.hex : 0;
 	return {

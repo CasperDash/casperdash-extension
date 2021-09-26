@@ -23,7 +23,10 @@ export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit, onShowDe
 				{pendingDeploys[valueKey] && pendingDeploys[valueKey].length
 					? pendingDeploys[valueKey].map((deploy) => (
 							<OverlayTrigger placement="top" overlay={<Tooltip>{deploy.hash}</Tooltip>}>
-								<i onClick={() => onShowDeployHash(deploy.hash)} class="bi bi-arrow-clockwise"></i>
+								<i
+									onClick={() => onShowDeployHash(deploy.hash)}
+									class="bi bi-arrow-clockwise zl_account_info_table_action"
+								></i>
 							</OverlayTrigger>
 					  ))
 					: null}

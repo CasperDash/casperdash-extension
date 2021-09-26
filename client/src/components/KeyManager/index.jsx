@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
-import { getPublicKey } from '../../selectors/user';
+import { getLatestBlockHash } from '../../selectors/deploy';
+import { getPublicKey, getMassagedUserDetails } from '../../selectors/user';
 import {
 	keyManagerDetailsSelector,
 	deploySelector,
@@ -40,7 +41,8 @@ const KeyManager = () => {
 	//selector value
 	const pendingDeploys = useSelector(getPendingDeploys);
 	const pendingDeployHashes = useSelector(getPendingDeployHashes);
-	const { data: keyManagerData = {} } = useSelector(keyManagerDetailsSelector);
+	const keyManagerData = useSelector(getMassagedUserDetails);
+	const latestBlockHash = useSelector(getLatestBlockHash);
 	const isContractAvailable = useSelector(isKeyManagerContractAvailable) && publicKey;
 	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
 	const accountWeight = getWeightByAccountHash(_accountHash, associatedKeys);
@@ -70,7 +72,7 @@ const KeyManager = () => {
 				console.log(data);
 			})();
 		}
-	}, [JSON.stringify(pendingDeployHashes), dispatch]);
+	}, [JSON.stringify(pendingDeployHashes), dispatch, latestBlockHash]);
 
 	const clearState = () => {
 		setDeployError('');

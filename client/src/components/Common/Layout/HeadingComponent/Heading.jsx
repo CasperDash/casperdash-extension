@@ -71,7 +71,7 @@ const HeadingModule = (props) => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
 		}
-	}, [publicKey, dispatch, getLatestBlockHash]);
+	}, [publicKey, dispatch, latestBlockHash]);
 
 	const handleCloseError = () => setShowError(false);
 	const handleShowError = () => setShowError(true);
