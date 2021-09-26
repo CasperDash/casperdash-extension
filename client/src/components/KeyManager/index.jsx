@@ -63,8 +63,6 @@ const KeyManager = () => {
 	}, [publicKey, dispatch]);
 
 	useEffect(() => {
-		console.log(pendingDeployHashes);
-
 		if (pendingDeployHashes.length) {
 			(async () => {
 				const { data } = await dispatch(getKeysManagerPendingDeploys(pendingDeployHashes));
@@ -90,6 +88,11 @@ const KeyManager = () => {
 	const handleCloseEditModal = () => {
 		setShowEditModal(false);
 		clearState();
+	};
+
+	const onShowDeployHash = (deployHash) => {
+		setShowEditModal(true);
+		setDeployHash(deployHash);
 	};
 
 	const handleEditValue = (value) => {
@@ -147,15 +150,19 @@ const KeyManager = () => {
 			setDeployError(deploy.error.message);
 		} else {
 			const { data: hash, error } = await dispatch(putWeightDeploy(deploy));
-			error ? setDeployError(error) : setDeployHash(hash.deployHash);
-			dispatch(
-				updateKeysManagerLocalStorage(
-					publicKey,
-					`keysManager.deploys.${editField}`,
-					{ hash: hash.deployHash, status: 'pending' },
-					'push',
-				),
-			);
+			if (!error) {
+				setDeployHash(hash.deployHash);
+				dispatch(
+					updateKeysManagerLocalStorage(
+						publicKey,
+						`keysManager.deploys.${editField}`,
+						{ hash: hash.deployHash, status: 'pending' },
+						'push',
+					),
+				);
+			} else {
+				setDeployError(error);
+			}
 		}
 	};
 
@@ -193,6 +200,7 @@ const KeyManager = () => {
 										label="Weight"
 										canEdit={isContractAvailable}
 										onEdit={onEdit}
+										onShowDeployHash={onShowDeployHash}
 									/>
 								</tbody>
 							</Table>
@@ -209,6 +217,7 @@ const KeyManager = () => {
 										label="Deployment"
 										canEdit={isContractAvailable}
 										onEdit={onEdit}
+										onShowDeployHash={onShowDeployHash}
 									/>
 									<AttributeRow
 										valueKey="keyManagement"
@@ -216,6 +225,7 @@ const KeyManager = () => {
 										label="Key Management"
 										canEdit={isContractAvailable}
 										onEdit={onEdit}
+										onShowDeployHash={onShowDeployHash}
 									/>
 								</tbody>
 							</Table>

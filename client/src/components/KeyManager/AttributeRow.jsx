@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { getPendingDeploys } from '../../selectors/keyManager';
 
-export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit }) => {
+export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit, onShowDeployHash }) => {
 	const pendingDeploys = useSelector(getPendingDeploys);
-
+	const editAble = value && canEdit && !(pendingDeploys[valueKey] && pendingDeploys[valueKey].length);
 	return (
 		<tr>
 			<td>{label}</td>
 			<td>
 				{value}
 				{'   '}
-				{value && canEdit && (
+				{editAble && (
 					<OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
 						<i
 							className="bi bi-pencil-fill zl_account_info_table_action"
@@ -23,7 +23,7 @@ export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit }) => {
 				{pendingDeploys[valueKey] && pendingDeploys[valueKey].length
 					? pendingDeploys[valueKey].map((deploy) => (
 							<OverlayTrigger placement="top" overlay={<Tooltip>{deploy.hash}</Tooltip>}>
-								<i class="bi bi-arrow-clockwise"></i>
+								<i onClick={() => onShowDeployHash(deploy.hash)} class="bi bi-arrow-clockwise"></i>
 							</OverlayTrigger>
 					  ))
 					: null}
