@@ -15,27 +15,19 @@ const SideBar = (props) => {
 			<section className={`zl_page_sidebar ${showSideBar ? 'zl_hide_sidebar' : ''}`} title={props.title}>
 				<div className="zl_page_sidebar_content">
 					<div className="zl_page_sidebar_logo">
-						<button className="zl_page_sidebar_toggle_btn" onClick={handleToggle}>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								className="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M6 18L18 6M6 6l12 12"
-								/>
-							</svg>
-						</button>
 						<Link to={'/dashboard'}>
-							<img src="assets/image/Logo.svg" alt="logo" className="img-fluid zl_main_logo" />
-							<img src="assets/image/cspr.png" alt="logo" className="img-fluid zl_mini_sidebar_logo" />
 							<img
-								src="assets/image/Logo-light.svg"
+								src="assets/image/casper-dash-beta-red-black.png"
+								alt="logo"
+								className="img-fluid zl_main_logo"
+							/>
+							<img
+								src="assets/image/Logo-only-beta.png"
+								alt="logo"
+								className="img-fluid zl_mini_sidebar_logo"
+							/>
+							<img
+								src="assets/image/casper-dash-beta-red-black.png"
 								alt="light-logo"
 								className="img-fluid zl_light_theme_logo d-none"
 							/>
