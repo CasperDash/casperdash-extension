@@ -41,3 +41,11 @@ export const signDeploy = async (deploy, mainAccountHex, setAccountHex) => {
 	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
 	return signedDeploy;
 };
+
+export const connectCasperSigner = () => {
+	try {
+		Signer.sendConnectionRequest();
+	} catch (error) {
+		return error.message;
+	}
+};

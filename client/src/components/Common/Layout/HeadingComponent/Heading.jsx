@@ -11,6 +11,7 @@ import {
 	handleLockSigner,
 } from '../../../../actions/signerActions';
 import { updatePublicKeyFromSigner, getUserDetails } from '../../../../actions/userActions';
+import { connectCasperSigner } from '../../../../services/casperServices';
 
 const SIGNER_EVENTS = {
 	connected: 'signer:connected',
@@ -76,7 +77,7 @@ const HeadingModule = (props) => {
 	const handleShowError = () => setShowError(true);
 
 	const handleConnectCasper = () => {
-		const connectMessage = connectCasper();
+		const connectMessage = connectCasperSigner();
 		if (connectMessage) {
 			handleShowError();
 			setErrorMessage(connectMessage);
