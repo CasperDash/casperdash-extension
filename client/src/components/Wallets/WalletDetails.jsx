@@ -32,11 +32,11 @@ const WalletDetails = ({ name, value }) => {
 
 	return (
 		<>
-			<div className="zl_setting_list">
-				<div className="zl_setting_list_items">
-					<div className="zl_setting_items_heading_peregraph">
+			<div className="cd_setting_list">
+				<div className="cd_setting_list_items">
+					<div className="cd_setting_items_heading_peregraph">
 						<h3>Account Info</h3>
-						<Table className="zl_account_info_table">
+						<Table className="cd_account_info_table">
 							<tbody>
 								<tr>
 									<td>Public Key</td>
@@ -53,33 +53,33 @@ const WalletDetails = ({ name, value }) => {
 					</div>
 				</div>
 			</div>
-			<div className={`zl_chart_component ${send ? 'active' : ''}`}>
-				<div className="zl_all_page_comman_content">
-					<div className="zl_dashboard_chart">
+			<div className={`cd_chart_component ${send ? 'active' : ''}`}>
+				<div className="cd_all_page_comman_content">
+					<div className="cd_dashboard_chart">
 						<ChartLine data={priceHistory} />
 					</div>
-					<div className="zl_chart_box_heading_date">
-						<h2 className="zl_chart_box_heading">
-							<div className="zl_add_token_icon_chart">
+					<div className="cd_chart_box_heading_date">
+						<h2 className="cd_chart_box_heading">
+							<div className="cd_add_token_icon_chart">
 								<img src="assets/image/cspr.png" alt="currency-icon" />
 							</div>
 							<div>{name}</div>
-							<div className="zl_current_price">${currentPrice}</div>
+							<div className="cd_current_price">${currentPrice}</div>
 						</h2>
 					</div>
 
-					<div className="zl_wallet_chart_bottom_content">
-						<div className="zl_all_page_comman_total_price">
-							<p className="zl_all_page_total_price_heading">Total Balance</p>
-							<h2 className="zl_all_page_total_price_text">
+					<div className="cd_wallet_chart_bottom_content">
+						<div className="cd_all_page_comman_total_price">
+							<p className="cd_all_page_total_price_heading">Total Balance</p>
+							<h2 className="cd_all_page_total_price_text">
 								{displayBalance}{' '}
-								<span className="zl_all_page_total_price_value">
+								<span className="cd_all_page_total_price_value">
 									(${parseFloat(displayBalance * currentPrice).toFixed(2)})
 								</span>
 							</h2>
 						</div>
-						<div className="zl_wallet_chart_send_receive_btn">
-							<Button className="zl_wallet_chart_send_btn" onClick={handleToggle}>
+						<div className="cd_wallet_chart_send_receive_btn">
+							<Button className="cd_wallet_chart_send_btn" onClick={handleToggle}>
 								<svg
 									width="15"
 									height="15"
@@ -94,7 +94,7 @@ const WalletDetails = ({ name, value }) => {
 								</svg>
 								Send
 							</Button>
-							<Button className="zl_wallet_chart_receive_btn" onClick={handleToggle}>
+							<Button className="cd_wallet_chart_receive_btn" onClick={handleToggle}>
 								<svg
 									width="15"
 									height="15"
@@ -118,8 +118,8 @@ const WalletDetails = ({ name, value }) => {
 					fromAddress={publicKey}
 					currentPrice={currentPrice}
 				/>
-				<div className="zl_transaction_list">
-					<h3 className="zl_transaction_list_main_heading">
+				<div className="cd_transaction_list">
+					<h3 className="cd_transaction_list_main_heading">
 						Transaction
 						<Link to={'/history'}>See All</Link>
 					</h3>

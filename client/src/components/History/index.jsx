@@ -13,32 +13,32 @@ const PortfolioModule = () => {
 	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
 	return (
 		<>
-			<section className="zl_history_page">
+			<section className="cd_history_page">
 				<HeadingModule name={'History'} />
 				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
-					<div className="zl_add_token_content">
-						<h3 className="zl_bottom_content_heading">Activities</h3>
-						<Nav className="zl_add_token_row row">
-							<Nav.Item className="zl_add_token_column col">
+					<div className="cd_add_token_content">
+						<h3 className="cd_bottom_content_heading">Activities</h3>
+						<Nav className="cd_add_token_row row">
+							<Nav.Item className="cd_add_token_column col">
 								<Nav.Link
 									eventKey="tab1"
-									className="zl_add_token_inner_content zl_add_ethereum_currency"
+									className="cd_add_token_inner_content cd_add_ethereum_currency"
 								>
-									<div className="zl_add_token_icon_chart">
-										<div className="zl_currency_icon">
+									<div className="cd_add_token_icon_chart">
+										<div className="cd_currency_icon">
 											<img
 												src="assets/image/cspr.png"
 												alt="currency-icon"
-												className="zl_currency_img"
+												className="cd_currency_img"
 											/>
 										</div>
 									</div>
-									<div className="zl_add_token_price">
-										<div className="zl_add_token_left_price">
+									<div className="cd_add_token_price">
+										<div className="cd_add_token_left_price">
 											<h3>CSPR</h3>
 											<p>{displayBalance}</p>
 										</div>
-										<div className="zl_add_token_right_price">
+										<div className="cd_add_token_right_price">
 											<p>${displayBalance * currentPrice}</p>
 										</div>
 									</div>

@@ -51,10 +51,10 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 	};
 
 	return (
-		<div className="zl_send_receive_content">
-			<div className="zl_send_receive_content_row">
-				<div className="zl_send_receive_content_column">
-					<div className="zl_send_receive_inner_content">
+		<div className="cd_send_receive_content">
+			<div className="cd_send_receive_content_row">
+				<div className="cd_send_receive_content_column">
+					<div className="cd_send_receive_inner_content">
 						<Formik
 							initialValues={{ sendAmount: MIN_TRANSFER, toAddress: '' }}
 							validate={(values) => validateTransferForm({ ...values, displayBalance })}
@@ -62,7 +62,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 						>
 							{({ errors, touched, values, handleChange, setFieldValue, isValid, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
-									<h3 className="zl_send_receive_heading">
+									<h3 className="cd_send_receive_heading">
 										<svg
 											width="15"
 											height="15"
@@ -78,11 +78,11 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 										Send
 									</h3>
 
-									<div className="zl_send_balance_content">
-										<span className="zl_send_balance_heading">Total Balance</span>
-										<span className="zl_send_balance_value">{displayBalance}</span>
+									<div className="cd_send_balance_content">
+										<span className="cd_send_balance_heading">Total Balance</span>
+										<span className="cd_send_balance_value">{displayBalance}</span>
 									</div>
-									<div className="zl_send_qr_address">
+									<div className="cd_send_qr_address">
 										<FormControl
 											required
 											placeholder="Insert address"
@@ -93,18 +93,18 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 										/>
 										<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
 									</div>
-									<div className="zl_send_currency_input_content">
+									<div className="cd_send_currency_input_content">
 										<FormControl
 											value={values.sendAmount}
 											name="sendAmount"
 											required
 											type="number"
-											className="zl_send_currency_input"
+											className="cd_send_currency_input"
 											onChange={handleChange}
 											isInvalid={errors.sendAmount}
 										/>
 
-										<div className="zl_send_currency_input_btns">
+										<div className="cd_send_currency_input_btns">
 											<Button onClick={() => setBalance(4, setFieldValue)}>1/4</Button>
 											<Button onClick={() => setBalance(2, setFieldValue)}>Half</Button>
 											<Button onClick={() => setBalance(1, setFieldValue)}>All</Button>
@@ -113,20 +113,20 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 											{errors.sendAmount}
 										</Form.Control.Feedback>
 									</div>
-									<div className="zl_send_currency_text_type">
-										<h3 className="zl_send_currency_text">
+									<div className="cd_send_currency_text_type">
+										<h3 className="cd_send_currency_text">
 											${parseFloat(values.sendAmount * currentPrice).toFixed(2)}
 										</h3>
-										<h3 className="zl_send_currency_type">USD</h3>
+										<h3 className="cd_send_currency_type">USD</h3>
 									</div>
-									<div className="zl_send_currency_btn_text">
-										<Button className="zl_send_currency_btn" onClick={handleToggle}>
+									<div className="cd_send_currency_btn_text">
+										<Button className="cd_send_currency_btn" onClick={handleToggle}>
 											Back
 										</Button>
-										<Button className="zl_send_currency_btn" type="submit">
+										<Button className="cd_send_currency_btn" type="submit">
 											Send
 										</Button>
-										<div className="zl_send_currency_text">
+										<div className="cd_send_currency_text">
 											<p>
 												Network Fee
 												<span>{TRANSFER_FEE} CSPR</span>
@@ -138,9 +138,9 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 						</Formik>
 					</div>
 				</div>
-				<div className="zl_send_receive_content_column">
-					<div className="zl_send_receive_inner_content">
-						<h3 className="zl_send_receive_heading zl_receive_heading">
+				<div className="cd_send_receive_content_column">
+					<div className="cd_send_receive_inner_content">
+						<h3 className="cd_send_receive_heading cd_receive_heading">
 							<svg
 								width="15"
 								height="15"
@@ -155,9 +155,9 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 							</svg>
 							Receive
 						</h3>
-						<div className="zl_receive_address_content">
-							<p className="zl_receive_address_heading">Address</p>
-							<div className="zl_receive_copy_address_content">
+						<div className="cd_receive_address_content">
+							<p className="cd_receive_address_heading">Address</p>
+							<div className="cd_receive_copy_address_content">
 								<Button onClick={() => navigator.clipboard.writeText(fromAddress)}>
 									<svg
 										width="20"
@@ -179,20 +179,20 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 								<p>{fromAddress ? fromAddress : 'Please connect with Casper Sign'}</p>
 							</div>
 							{fromAddress && (
-								<div className="zl_receive_address_qr_code">
+								<div className="cd_receive_address_qr_code">
 									<QRCode
 										value={fromAddress}
 										bgColor={'transparent'}
 										fgColor={'#CAD3F2'}
 										size={166}
-										className="zl_dark_theme_qrcode"
+										className="cd_dark_theme_qrcode"
 									/>
 									<QRCode
 										value={fromAddress}
 										bgColor={'transparent'}
 										fgColor={'#3D476A'}
 										size={166}
-										className="zl_light_theme_qrcode"
+										className="cd_light_theme_qrcode"
 									/>
 								</div>
 							)}

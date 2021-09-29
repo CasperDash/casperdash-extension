@@ -86,24 +86,24 @@ const HeadingModule = (props) => {
 
 	return (
 		<>
-			<div className="zl_all_page_heading_section">
-				<div className="zl_all_page_heading">
+			<div className="cd_all_page_heading_section">
+				<div className="cd_all_page_heading">
 					<h2>{props.name}</h2>
 				</div>
 
-				<div className="zl_all_page_notify_logout_btn">
+				<div className="cd_all_page_notify_logout_btn">
 					{!isConnected ? (
 						<Button
-							className="zl_btn_primary_active"
+							className="cd_btn_primary_active"
 							onClick={handleConnectCasper}
 						>{`Connect Casper`}</Button>
 					) : !isUnlocked ? (
 						<Button
-							className="zl_btn_primary_active"
+							className="cd_btn_primary_active"
 							onClick={handleConnectCasper}
 						>{`Unlock Casper`}</Button>
 					) : (
-						<span className="zl_public_key">
+						<span className="cd_public_key">
 							<p title={publicKey}>{publicKey}</p>
 						</span>
 					)}

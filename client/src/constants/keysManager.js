@@ -19,6 +19,6 @@ export const KEYS_MANAGER_ATTRS = {
 		type: 'text',
 		key: 'associatedKey',
 		label: 'Key',
-		className: 'zl_edit_modal_value_long',
+		className: 'cd_edit_modal_value_long',
 	},
 };

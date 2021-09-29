@@ -15,7 +15,7 @@ export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit, onShowDe
 				{editAble && (
 					<OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
 						<i
-							className="bi bi-pencil-fill zl_account_info_table_action"
+							className="bi bi-pencil-fill cd_account_info_table_action"
 							onClick={() => onEdit(valueKey, value)}
 						></i>
 					</OverlayTrigger>
@@ -25,7 +25,7 @@ export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit, onShowDe
 							<OverlayTrigger placement="top" overlay={<Tooltip>{deploy.hash}</Tooltip>}>
 								<i
 									onClick={() => onShowDeployHash(deploy.hash)}
-									class="bi bi-arrow-clockwise zl_account_info_table_action"
+									class="bi bi-arrow-clockwise cd_account_info_table_action"
 								></i>
 							</OverlayTrigger>
 					  ))

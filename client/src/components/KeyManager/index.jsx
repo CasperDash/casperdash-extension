@@ -105,12 +105,12 @@ const KeyManager = () => {
 
 	const handleDeployTextClick = () => {
 		const confirmMessageContent = (
-			<div className="zl_key_manger_contract_confirm_content">
+			<div className="cd_key_manger_contract_confirm_content">
 				<p>Deploy keys manager contract *.</p>
-				<p className="zl_key_manager_contract_confirm_notice">
+				<p className="cd_key_manager_contract_confirm_notice">
 					*By confirm this, a keys manager contract will be deploy on your account.
 				</p>
-				<p className="zl_key_manager_contract_confirm_notice">
+				<p className="cd_key_manager_contract_confirm_notice">
 					The contract was built based on{' '}
 					<a href="https://github.com/casper-ecosystem/keys-manager" target="_blank">
 						https://github.com/casper-ecosystem/keys-manager.
@@ -168,13 +168,13 @@ const KeyManager = () => {
 
 	return (
 		<>
-			<section className="zl_key_manager_page">
+			<section className="cd_key_manager_page">
 				<HeadingModule name={'Key Manager'} />
-				<div className="zl_setting_list">
-					<div className="zl_setting_list_items">
-						<div className="zl_setting_items_heading_peregraph">
+				<div className="cd_setting_list">
+					<div className="cd_setting_list_items">
+						<div className="cd_setting_items_heading_peregraph">
 							{!isContractAvailable && (
-								<div className="zl_error_text">
+								<div className="cd_error_text">
 									Your account haven't deployed keys manager contract yet.{' '}
 									<a href="#" onClick={handleDeployTextClick}>
 										Click to deploy.
@@ -182,7 +182,7 @@ const KeyManager = () => {
 								</div>
 							)}
 							<h3>Account Info</h3>
-							<Table className="zl_account_info_table">
+							<Table className="cd_account_info_table">
 								<tbody>
 									<tr>
 										<td>Public Key</td>
@@ -206,10 +206,10 @@ const KeyManager = () => {
 							</Table>
 						</div>
 					</div>
-					<div className="zl_setting_list_items">
-						<div className="zl_setting_items_heading_peregraph">
+					<div className="cd_setting_list_items">
+						<div className="cd_setting_items_heading_peregraph">
 							<h3>Action Thresholds</h3>
-							<Table className="zl_account_info_table">
+							<Table className="cd_account_info_table">
 								<tbody>
 									<AttributeRow
 										valueKey="deployment"
@@ -232,12 +232,12 @@ const KeyManager = () => {
 						</div>
 					</div>
 				</div>
-				<div className="zl_transaction_list">
+				<div className="cd_transaction_list">
 					<div>
-						<div className="zl_transaction_list_main_heading">
+						<div className="cd_transaction_list_main_heading">
 							Associated Keys
 							{isContractAvailable && (
-								<div className="zl_transaction_list_main_heading_action">
+								<div className="cd_transaction_list_main_heading_action">
 									<OverlayTrigger placement="top" overlay={<Tooltip>Add</Tooltip>}>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"

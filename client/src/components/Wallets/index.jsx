@@ -20,7 +20,7 @@ const PortfolioModule = () => {
 	});
 	return (
 		<>
-			<section className="zl_wallets_page">
+			<section className="cd_wallets_page">
 				<HeadingModule name={'Dashboard'} />
 				<WalletDetails {...currency} />
 			</section>

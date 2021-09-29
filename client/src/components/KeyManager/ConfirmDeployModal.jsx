@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 export const DeployConfirmModal = ({ show, handleClose, message, onDeploy }) => {
 	return (
-		<Modal show={show} onHide={handleClose} centered className="zl_key_manger_contract_confirm_modal">
+		<Modal show={show} onHide={handleClose} centered className="cd_key_manger_contract_confirm_modal">
 			<Modal.Header closeButton>
 				<Modal.Title>Confirm Deploy</Modal.Title>
 			</Modal.Header>

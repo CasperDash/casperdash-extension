@@ -75,10 +75,10 @@ const SideBar = (props) => {
 
 	return (
 		<>
-			<section className={`zl_page_sidebar ${showSideBar ? 'zl_hide_sidebar' : ''}`} title={props.title}>
-				<div className="zl_page_sidebar_content">
-					<div className="zl_page_sidebar_logo">
-						<button className="zl_page_sidebar_toggle_btn" onClick={handleToggle}>
+			<section className={`cd_page_sidebar ${showSideBar ? 'cd_hide_sidebar' : ''}`} title={props.title}>
+				<div className="cd_page_sidebar_content">
+					<div className="cd_page_sidebar_logo">
+						<button className="cd_page_sidebar_toggle_btn" onClick={handleToggle}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								className="h-6 w-6"
@@ -98,36 +98,36 @@ const SideBar = (props) => {
 							<img
 								src="assets/image/casper-dash-beta-red-black.png"
 								alt="logo"
-								className="img-fluid zl_main_logo"
+								className="img-fluid cd_main_logo"
 							/>
 							<img
 								src="assets/image/Logo-only-beta.png"
 								alt="logo"
-								className="img-fluid zl_mini_sidebar_logo"
+								className="img-fluid cd_mini_sidebar_logo"
 							/>
 							<img
 								src="assets/image/casper-dash-beta-red-black.png"
 								alt="light-logo"
-								className="img-fluid zl_light_theme_logo d-none"
+								className="img-fluid cd_light_theme_logo d-none"
 							/>
 						</Link>
 					</div>
-					<ul className="zl_page_sidebar_nav">
+					<ul className="cd_page_sidebar_nav">
 						{SIDEBAR_ITEMS.map(({ key, name, path, icon }) => (
-							<li className="zl_page_sidebar_items" title={key} key={key}>
-								<Link to={path} className="zl_page_sidebar_link position-relative">
+							<li className="cd_page_sidebar_items" title={key} key={key}>
+								<Link to={path} className="cd_page_sidebar_link position-relative">
 									{icon}
-									<span className="zl_pagesidebar_text">{name}</span>
+									<span className="cd_pagesidebar_text">{name}</span>
 								</Link>
 							</li>
 						))}
 					</ul>
-					<button className="zl_page_sidebar_toggle_icon" onClick={handleToggle}>
+					<button className="cd_page_sidebar_toggle_icon" onClick={handleToggle}>
 						<img src="assets/image/right-two-arrow.svg" alt="right-two-arrow" />
 					</button>
 				</div>
 			</section>
-			<button className="zl_page_sidebar_toggle_btn" onClick={handleToggle}>
+			<button className="cd_page_sidebar_toggle_btn" onClick={handleToggle}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					className="h-6 w-6"

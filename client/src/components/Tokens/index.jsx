@@ -12,7 +12,7 @@ const cuurency = [
 		ratio: '1.9678',
 		updown: '+12,5%',
 		price: '$6,541.1',
-		class: 'zl_add_bitcoin_currency',
+		class: 'cd_add_bitcoin_currency',
 		value: 'Bitcoin',
 	},
 	{
@@ -21,7 +21,7 @@ const cuurency = [
 		ratio: '3.2134',
 		updown: '-5.23%',
 		price: '$3,452.1',
-		class: 'zl_add_ethereum_currency',
+		class: 'cd_add_ethereum_currency',
 		value: 'Ethereum',
 	},
 	{
@@ -30,26 +30,26 @@ const cuurency = [
 		ratio: '38.234',
 		updown: '+39.69%',
 		price: '$346.31',
-		class: 'zl_add_litecoin_currency',
+		class: 'cd_add_litecoin_currency',
 		value: 'Dash Parr',
 	},
 ];
 const Tokens = () => {
 	return (
 		<>
-			<section className="zl_wallets_page">
+			<section className="cd_wallets_page">
 				<HeadingModule name={'Tokens'} />
 				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
-					<div className="zl_add_token_content">
-						<Nav className="zl_add_token_row row">
-							<div className="zl_currency_column_sub_row">
-								<Nav.Item className="zl_add_token_column col">
+					<div className="cd_add_token_content">
+						<Nav className="cd_add_token_row row">
+							<div className="cd_currency_column_sub_row">
+								<Nav.Item className="cd_add_token_column col">
 									<Nav.Link
 										eventKey="tab1"
-										className="zl_add_token_inner_content zl_add_bitcoin_currency"
+										className="cd_add_token_inner_content cd_add_bitcoin_currency"
 									>
-										<div className="zl_add_token_icon_chart">
-											<div className="zl_currency_icon">
+										<div className="cd_add_token_icon_chart">
+											<div className="cd_currency_icon">
 												<svg viewBox="0 0 34 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<g>
 														<path
@@ -68,12 +68,12 @@ const Tokens = () => {
 												</svg>
 											</div>
 										</div>
-										<div className="zl_add_token_price">
-											<div className="zl_add_token_left_price">
+										<div className="cd_add_token_price">
+											<div className="cd_add_token_left_price">
 												<h3>BTC</h3>
 												<p>1.9678</p>
 											</div>
-											<div className="zl_add_token_right_price">
+											<div className="cd_add_token_right_price">
 												<span>
 													<svg
 														width="6"
@@ -94,13 +94,13 @@ const Tokens = () => {
 										</div>
 									</Nav.Link>
 								</Nav.Item>
-								<Nav.Item className="zl_add_token_column col">
+								<Nav.Item className="cd_add_token_column col">
 									<Nav.Link
 										eventKey="tab2"
-										className="zl_add_token_inner_content zl_add_ethereum_currency"
+										className="cd_add_token_inner_content cd_add_ethereum_currency"
 									>
-										<div className="zl_add_token_icon_chart">
-											<div className="zl_currency_icon">
+										<div className="cd_add_token_icon_chart">
+											<div className="cd_currency_icon">
 												<svg viewBox="0 0 17 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path
 														fillRule="evenodd"
@@ -140,13 +140,13 @@ const Tokens = () => {
 												</svg>
 											</div>
 										</div>
-										<div className="zl_add_token_price">
-											<div className="zl_add_token_left_price">
+										<div className="cd_add_token_price">
+											<div className="cd_add_token_left_price">
 												<h3>ETH</h3>
 												<p>3.2134</p>
 											</div>
-											<div className="zl_add_token_right_price">
-												<span className="zl_add_token_down_price">
+											<div className="cd_add_token_right_price">
+												<span className="cd_add_token_down_price">
 													<svg
 														width="6"
 														height="6"
@@ -166,13 +166,13 @@ const Tokens = () => {
 										</div>
 									</Nav.Link>
 								</Nav.Item>
-								<Nav.Item className="zl_add_token_column col">
+								<Nav.Item className="cd_add_token_column col">
 									<Nav.Link
 										eventKey="tab3"
-										className="zl_add_token_inner_content zl_add_litecoin_currency"
+										className="cd_add_token_inner_content cd_add_litecoin_currency"
 									>
-										<div className="zl_add_token_icon_chart">
-											<div className="zl_currency_icon">
+										<div className="cd_add_token_icon_chart">
+											<div className="cd_currency_icon">
 												<svg
 													width="16"
 													height="22"
@@ -191,12 +191,12 @@ const Tokens = () => {
 												</svg>
 											</div>
 										</div>
-										<div className="zl_add_token_price">
-											<div className="zl_add_token_left_price">
+										<div className="cd_add_token_price">
+											<div className="cd_add_token_left_price">
 												<h3>DASH</h3>
 												<p>38.234</p>
 											</div>
-											<div className="zl_add_token_right_price">
+											<div className="cd_add_token_right_price">
 												<span>
 													<svg
 														width="6"
@@ -218,8 +218,8 @@ const Tokens = () => {
 									</Nav.Link>
 								</Nav.Item>
 							</div>
-							<div className="zl_add_token_column zl_add_token_btn_col col">
-								<div className="zl_add_token_btn_content">+ Add Token</div>
+							<div className="cd_add_token_column cd_add_token_btn_col col">
+								<div className="cd_add_token_btn_content">+ Add Token</div>
 							</div>
 						</Nav>
 					</div>

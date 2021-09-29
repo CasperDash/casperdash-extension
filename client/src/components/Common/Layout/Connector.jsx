@@ -7,7 +7,7 @@ import SideBar from '../SideBar';
 
 const Layout = (props) => {
 	const dispatch = useDispatch();
-	const [color, setColor] = useState('zl_light_theme_active');
+	const [color, setColor] = useState('cd_light_theme_active');
 
 	useEffect(() => {
 		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
@@ -25,9 +25,9 @@ const Layout = (props) => {
 	}, []);
 
 	const themHandler = (val) => {
-		setColor(val ? 'zl_light_theme_active' : 'zl_page_dark_mode');
+		setColor(val ? 'cd_light_theme_active' : 'cd_page_dark_mode');
 		if (typeof window !== 'undefined') {
-			localStorage.setItem('themColor', val ? 'zl_light_theme_active' : 'zl_page_dark_mode');
+			localStorage.setItem('themColor', val ? 'cd_light_theme_active' : 'cd_page_dark_mode');
 		}
 	};
 
@@ -35,9 +35,9 @@ const Layout = (props) => {
 	const title = url.split('/')[1];
 
 	return (
-		<div className={`zl_all_pages_content ${color === null ? 'zl_light_theme_active' : color}`}>
+		<div className={`cd_all_pages_content ${color === null ? 'cd_light_theme_active' : color}`}>
 			<SideBar title={title || 'dashboard'} />
-			<div className="zl_all_pages_inner_content">{props.children}</div>
+			<div className="cd_all_pages_inner_content">{props.children}</div>
 		</div>
 	);
 };

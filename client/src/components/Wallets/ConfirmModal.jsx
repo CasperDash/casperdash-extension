@@ -18,59 +18,59 @@ export const ConfirmModal = ({
 		<Modal
 			show={show}
 			size="lg"
-			className="zl_confirm_modal_content"
+			className="cd_confirm_modal_content"
 			aria-labelledby="contained-modal-title-vcenter"
 			centered
 			onHide={onClose}
 		>
-			<Modal.Header closeButton className="zl_confirm_modal_header">
+			<Modal.Header closeButton className="cd_confirm_modal_header">
 				<Modal.Title id="contained-modal-title-vcenter">Confirm transaction</Modal.Title>
 			</Modal.Header>
-			<Modal.Body className="zl_confirm_modal_body">
-				<div className="zl_confirm_modal_row">
-					<span className="zl_confirm_modal_label">Sender</span>
-					<span className="zl_confirm_modal_value">{fromAddress}</span>
+			<Modal.Body className="cd_confirm_modal_body">
+				<div className="cd_confirm_modal_row">
+					<span className="cd_confirm_modal_label">Sender</span>
+					<span className="cd_confirm_modal_value">{fromAddress}</span>
 				</div>
 
-				<div className="zl_confirm_modal_row">
-					<span className="zl_confirm_modal_label">Recipient</span>
-					<span className="zl_confirm_modal_value">{toAddress}</span>
+				<div className="cd_confirm_modal_row">
+					<span className="cd_confirm_modal_label">Recipient</span>
+					<span className="cd_confirm_modal_value">{toAddress}</span>
 				</div>
 
-				<div className="zl_confirm_modal_row">
-					<span className="zl_confirm_modal_label">Amount</span>
-					<span className="zl_confirm_modal_value">{amount}</span>
+				<div className="cd_confirm_modal_row">
+					<span className="cd_confirm_modal_label">Amount</span>
+					<span className="cd_confirm_modal_value">{amount}</span>
 				</div>
 
-				<div className="zl_confirm_modal_row">
-					<span className="zl_confirm_modal_label">Fee</span>
-					<span className="zl_confirm_modal_value">{fee}</span>
+				<div className="cd_confirm_modal_row">
+					<span className="cd_confirm_modal_label">Fee</span>
+					<span className="cd_confirm_modal_value">{fee}</span>
 				</div>
 				<hr />
-				<div className="zl_confirm_modal_row">
-					<span className="zl_confirm_modal_label">Total</span>
-					<span className="zl_confirm_modal_value">{amount + fee}</span>
+				<div className="cd_confirm_modal_row">
+					<span className="cd_confirm_modal_label">Total</span>
+					<span className="cd_confirm_modal_value">{amount + fee}</span>
 				</div>
-				<div className="zl_confirm_modal_row_single">
-					<span className="zl_confirm_modal_value">
+				<div className="cd_confirm_modal_row_single">
+					<span className="cd_confirm_modal_value">
 						${parseFloat((amount + fee) * currentPrise).toFixed(2)}
 					</span>
 				</div>
 				{deployHash && (
-					<div className="zl_confirm_modal_row">
-						<span className="zl_confirm_modal_label">Transaction Hash</span>
-						<span className="zl_confirm_modal_value_success">{deployHash}</span>
+					<div className="cd_confirm_modal_row">
+						<span className="cd_confirm_modal_label">Transaction Hash</span>
+						<span className="cd_confirm_modal_value_success">{deployHash}</span>
 					</div>
 				)}
 			</Modal.Body>
-			<Modal.Footer className="zl_confirm_modal_footer">
-				<span className="zl_confirm_modal_error">{deployError}</span>
+			<Modal.Footer className="cd_confirm_modal_footer">
+				<span className="cd_confirm_modal_error">{deployError}</span>
 				{deployHash ? (
-					<Button className="zl_btn_primary_active" onClick={onClose}>
+					<Button className="cd_btn_primary_active" onClick={onClose}>
 						Close
 					</Button>
 				) : (
-					<Button className="zl_btn_primary_active" onClick={onConfirm} disabled={isDeploying}>
+					<Button className="cd_btn_primary_active" onClick={onConfirm} disabled={isDeploying}>
 						{isDeploying ? 'Confirming...' : 'Confirm'}
 					</Button>
 				)}

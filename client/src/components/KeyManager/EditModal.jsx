@@ -23,19 +23,19 @@ export const EditModal = ({
 			show={show}
 			onHide={handleClose}
 			centered
-			className="zl_edit_modal_content"
+			className="cd_edit_modal_content"
 			size={deployHash ? 'lg' : ''}
 		>
-			<Modal.Header closeButton className="zl_edit_modal_header">
+			<Modal.Header closeButton className="cd_edit_modal_header">
 				<Modal.Title>Edit {attr.label}</Modal.Title>
 			</Modal.Header>
 
-			<Modal.Body className="zl_edit_modal_body">
-				<div className="zl_edit_modal_row">
+			<Modal.Body className="cd_edit_modal_body">
+				<div className="cd_edit_modal_row">
 					{!deployHash ? (
 						<>
-							<div className="zl_edit_modal_label">{attr.label}</div>
-							<div className="zl_edit_modal_value">
+							<div className="cd_edit_modal_label">{attr.label}</div>
+							<div className="cd_edit_modal_value">
 								<input
 									className={attr.className}
 									type={attr.type || 'number'}
@@ -47,15 +47,15 @@ export const EditModal = ({
 						</>
 					) : (
 						<>
-							<div className="zl_edit_modal_label">Deploy Hash</div>
-							<div className="zl_edit_modal_value_success">{deployHash}</div>
+							<div className="cd_edit_modal_label">Deploy Hash</div>
+							<div className="cd_edit_modal_value_success">{deployHash}</div>
 						</>
 					)}
 				</div>
 			</Modal.Body>
 
-			<Modal.Footer className="zl_edit_modal_footer">
-				<div className="zl_edit_modal_error">
+			<Modal.Footer className="cd_edit_modal_footer">
+				<div className="cd_edit_modal_error">
 					<span>{deployError}</span>
 				</div>
 				{!deployHash ? (
