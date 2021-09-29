@@ -60,7 +60,7 @@ const WalletDetails = ({ name, value }) => {
 					</div>
 					<div className="zl_chart_box_heading_date">
 						<h2 className="zl_chart_box_heading">
-							<div className="zl_add_currency_icon_chart">
+							<div className="zl_add_token_icon_chart">
 								<img src="assets/image/cspr.png" alt="currency-icon" />
 							</div>
 							<div>{name}</div>

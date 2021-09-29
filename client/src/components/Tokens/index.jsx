@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import { Link } from 'react-router-dom';
@@ -35,23 +34,21 @@ const cuurency = [
 		value: 'Dash Parr',
 	},
 ];
-const PortfolioModule = () => {
+const Tokens = () => {
 	return (
 		<>
 			<section className="zl_wallets_page">
 				<HeadingModule name={'Tokens'} />
 				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
-					<div className="zl_add_currency_content">
-						<h3 className="zl_bottom_content_heading">crypto currencies</h3>
-						<Nav className="zl_add_currency_row row">
+					<div className="zl_add_token_content">
+						<Nav className="zl_add_token_row row">
 							<div className="zl_currency_column_sub_row">
-								<Nav.Item className="zl_add_currency_column col">
+								<Nav.Item className="zl_add_token_column col">
 									<Nav.Link
 										eventKey="tab1"
-										className="zl_add_currency_inner_content zl_add_bitcoin_currency"
+										className="zl_add_token_inner_content zl_add_bitcoin_currency"
 									>
-										<div className="zl_add_currency_icon_chart">
-											{/* <img src="assets/image/Bitcoin.svg" alt="currency-icon" /> */}
+										<div className="zl_add_token_icon_chart">
 											<div className="zl_currency_icon">
 												<svg viewBox="0 0 34 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<g>
@@ -70,31 +67,13 @@ const PortfolioModule = () => {
 													</g>
 												</svg>
 											</div>
-											<Sparklines
-												data={[0, 5, 0, 15, 12, 14]}
-												margin={6}
-												className="zl_add_currency_mini_chart"
-											>
-												<SparklinesLine
-													style={{
-														strokeWidth: 10,
-														stroke: '#fec74f',
-														fill: 'none',
-														curve: 'smooth',
-													}}
-												/>
-												<SparklinesSpots
-													size={4}
-													style={{ stroke: '#fec74f', strokeWidth: 3, fill: 'white' }}
-												/>
-											</Sparklines>
 										</div>
-										<div className="zl_add_currency_price">
-											<div className="zl_add_currency_left_price">
+										<div className="zl_add_token_price">
+											<div className="zl_add_token_left_price">
 												<h3>BTC</h3>
 												<p>1.9678</p>
 											</div>
-											<div className="zl_add_currency_right_price">
+											<div className="zl_add_token_right_price">
 												<span>
 													<svg
 														width="6"
@@ -115,12 +94,12 @@ const PortfolioModule = () => {
 										</div>
 									</Nav.Link>
 								</Nav.Item>
-								<Nav.Item className="zl_add_currency_column col">
+								<Nav.Item className="zl_add_token_column col">
 									<Nav.Link
 										eventKey="tab2"
-										className="zl_add_currency_inner_content zl_add_ethereum_currency"
+										className="zl_add_token_inner_content zl_add_ethereum_currency"
 									>
-										<div className="zl_add_currency_icon_chart">
+										<div className="zl_add_token_icon_chart">
 											<div className="zl_currency_icon">
 												<svg viewBox="0 0 17 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path
@@ -160,32 +139,14 @@ const PortfolioModule = () => {
 													/>
 												</svg>
 											</div>
-											<Sparklines
-												data={[14, 12, 15, 0, 5, 0]}
-												margin={6}
-												className="zl_add_currency_mini_chart"
-											>
-												<SparklinesLine
-													style={{
-														strokeWidth: 10,
-														stroke: '#A330FF',
-														fill: 'none',
-														curve: 'smooth',
-													}}
-												/>
-												<SparklinesSpots
-													size={4}
-													style={{ stroke: '#A330FF', strokeWidth: 3, fill: 'white' }}
-												/>
-											</Sparklines>
 										</div>
-										<div className="zl_add_currency_price">
-											<div className="zl_add_currency_left_price">
+										<div className="zl_add_token_price">
+											<div className="zl_add_token_left_price">
 												<h3>ETH</h3>
 												<p>3.2134</p>
 											</div>
-											<div className="zl_add_currency_right_price">
-												<span className="zl_add_currency_down_price">
+											<div className="zl_add_token_right_price">
+												<span className="zl_add_token_down_price">
 													<svg
 														width="6"
 														height="6"
@@ -205,12 +166,12 @@ const PortfolioModule = () => {
 										</div>
 									</Nav.Link>
 								</Nav.Item>
-								<Nav.Item className="zl_add_currency_column col">
+								<Nav.Item className="zl_add_token_column col">
 									<Nav.Link
 										eventKey="tab3"
-										className="zl_add_currency_inner_content zl_add_litecoin_currency"
+										className="zl_add_token_inner_content zl_add_litecoin_currency"
 									>
-										<div className="zl_add_currency_icon_chart">
+										<div className="zl_add_token_icon_chart">
 											<div className="zl_currency_icon">
 												<svg
 													width="16"
@@ -229,31 +190,13 @@ const PortfolioModule = () => {
 													/>
 												</svg>
 											</div>
-											<Sparklines
-												data={[0, 5, 0, 15, 12, 14]}
-												margin={6}
-												className="zl_add_currency_mini_chart"
-											>
-												<SparklinesLine
-													style={{
-														strokeWidth: 10,
-														stroke: '#309AFF',
-														fill: 'none',
-														curve: 'smooth',
-													}}
-												/>
-												<SparklinesSpots
-													size={4}
-													style={{ stroke: '#309AFF', strokeWidth: 3, fill: 'white' }}
-												/>
-											</Sparklines>
 										</div>
-										<div className="zl_add_currency_price">
-											<div className="zl_add_currency_left_price">
+										<div className="zl_add_token_price">
+											<div className="zl_add_token_left_price">
 												<h3>DASH</h3>
 												<p>38.234</p>
 											</div>
-											<div className="zl_add_currency_right_price">
+											<div className="zl_add_token_right_price">
 												<span>
 													<svg
 														width="6"
@@ -275,10 +218,8 @@ const PortfolioModule = () => {
 									</Nav.Link>
 								</Nav.Item>
 							</div>
-							<div className="zl_add_currency_column zl_add_currency_btn_col col">
-								<Link to={'/addcurrency'} className="zl_add_currency_btn_content">
-									+ Add Currency
-								</Link>
+							<div className="zl_add_token_column zl_add_token_btn_col col">
+								<div className="zl_add_token_btn_content">+ Add Token</div>
 							</div>
 						</Nav>
 					</div>
@@ -304,4 +245,4 @@ const PortfolioModule = () => {
 	);
 };
 
-export default connect(null, null)(PortfolioModule);
+export default Tokens;

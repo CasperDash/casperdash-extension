@@ -1,9 +1,9 @@
 @import './theme-config.scss';
 
-/* .zl_wallets_page .zl_add_currency_inner_content.zl_add_litecoin_currency:hover .zl_add_currency_icon_chart .zl_currency_icon svg path:first-child,
-.zl_wallets_page .zl_add_currency_inner_content.zl_add_litecoin_currency.active .zl_add_currency_icon_chart .zl_currency_icon svg path:first-child,
-.zl_history_page .zl_add_currency_inner_content.zl_add_litecoin_currency:hover .zl_add_currency_icon_chart .zl_currency_icon svg path:first-child,
-.zl_history_page .zl_add_currency_inner_content.zl_add_litecoin_currency.active .zl_add_currency_icon_chart .zl_currency_icon svg path:first-child{
+/* .zl_wallets_page .zl_add_token_inner_content.zl_add_litecoin_currency:hover .zl_add_token_icon_chart .zl_currency_icon svg path:first-child,
+.zl_wallets_page .zl_add_token_inner_content.zl_add_litecoin_currency.active .zl_add_token_icon_chart .zl_currency_icon svg path:first-child,
+.zl_history_page .zl_add_token_inner_content.zl_add_litecoin_currency:hover .zl_add_token_icon_chart .zl_currency_icon svg path:first-child,
+.zl_history_page .zl_add_token_inner_content.zl_add_litecoin_currency.active .zl_add_token_icon_chart .zl_currency_icon svg path:first-child{
     fill: #fff;
 } */
 
@@ -874,7 +874,7 @@ table {
 			margin-right: 7px;
 		}
 	}
-	.zl_add_currency_down_price {
+	.zl_add_token_down_price {
 		display: flex;
 		align-items: center;
 		font-size: 12px;
@@ -888,23 +888,23 @@ table {
 	}
 }
 .zl_all_page_comman_content {
-	+ .zl_add_currency_content {
+	+ .zl_add_token_content {
 		padding-top: 27px;
 	}
 }
-.zl_add_currency_row.row {
+.zl_add_token_row.row {
 	margin-top: 21px;
 	margin-left: -10px;
 	margin-right: -10px;
 }
-.zl_add_currency_row {
+.zl_add_token_row {
 	.zl_currency_column_sub_row {
 		display: flex;
 		min-width: 80%;
 		max-width: 80%;
 		overflow-x: auto;
 		padding-bottom: 15px;
-		.zl_add_currency_column {
+		.zl_add_token_column {
 			max-width: 25%;
 			min-width: 25%;
 		}
@@ -922,17 +922,17 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_column {
+	.zl_add_token_column {
 		max-width: 20%;
 		min-width: 20%;
 		flex-basis: auto;
 		padding: 0 10px;
-		.zl_add_currency_inner_content {
+		.zl_add_token_inner_content {
 			padding: 22px 16px;
 			border: 1px solid $color21;
 			border-radius: 10px;
 			position: relative;
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				display: flex;
 				align-items: center;
 				margin-bottom: 14px;
@@ -952,10 +952,10 @@ table {
 					}
 				}
 			}
-			.zl_add_currency_price {
+			.zl_add_token_price {
 				display: flex;
 				align-items: flex-start;
-				.zl_add_currency_left_price {
+				.zl_add_token_left_price {
 					margin-right: auto;
 					display: flex;
 					flex-direction: column;
@@ -981,16 +981,16 @@ table {
 						margin-right: 7px;
 					}
 				}
-				span.zl_add_currency_down_price {
+				span.zl_add_token_down_price {
 					color: $color10;
 				}
 			}
-			.zl_add_currency_right_price {
+			.zl_add_token_right_price {
 				text-align: right;
 				margin-top: auto;
 			}
 		}
-		.zl_add_currency_btn_content {
+		.zl_add_token_btn_content {
 			border: 1px dashed $color21;
 			border-radius: 10px;
 			padding: 15px;
@@ -1007,17 +1007,17 @@ table {
 	}
 }
 .zl_wallets_page {
-	.zl_add_currency_row {
-		.zl_add_currency_column {
-			.zl_add_currency_btn_content {
+	.zl_add_token_row {
+		.zl_add_token_column {
+			.zl_add_token_btn_content {
 				height: calc(100% - 15px);
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_bitcoin_currency {
+	.zl_add_token_inner_content.zl_add_bitcoin_currency {
 		&:hover {
 			background: $gradian-color6;
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					svg {
 						path {
@@ -1028,12 +1028,12 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_bitcoin_currency.active {
+	.zl_add_token_inner_content.zl_add_bitcoin_currency.active {
 		background: $gradian-color6;
 		&::before {
 			background: $gradian-color7;
 		}
-		.zl_add_currency_icon_chart {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				svg {
 					path {
@@ -1043,7 +1043,7 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content {
+	.zl_add_token_inner_content {
 		&::before {
 			content: '';
 			position: absolute;
@@ -1056,7 +1056,7 @@ table {
 			z-index: -1;
 		}
 		&:hover {
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					background: $color13;
 					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.0744452);
@@ -1067,7 +1067,7 @@ table {
 					}
 				}
 			}
-			.zl_add_currency_price {
+			.zl_add_token_price {
 				h3 {
 					color: $color5;
 					opacity: 0.5;
@@ -1083,16 +1083,16 @@ table {
 						}
 					}
 				}
-				span.zl_add_currency_down_price {
+				span.zl_add_token_down_price {
 					color: $color13;
 				}
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_litecoin_currency {
+	.zl_add_token_inner_content.zl_add_litecoin_currency {
 		&:hover {
 			background: $gradian-color8;
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					svg {
 						path {
@@ -1103,12 +1103,12 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_litecoin_currency.active {
+	.zl_add_token_inner_content.zl_add_litecoin_currency.active {
 		background: $gradian-color8;
 		&::before {
 			background: $gradian-color9;
 		}
-		.zl_add_currency_icon_chart {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				svg {
 					path {
@@ -1118,10 +1118,10 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_ethereum_currency {
+	.zl_add_token_inner_content.zl_add_ethereum_currency {
 		&:hover {
 			background: $gradian-color10;
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					svg {
 						.left-shap {
@@ -1135,12 +1135,12 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_ethereum_currency.active {
+	.zl_add_token_inner_content.zl_add_ethereum_currency.active {
 		background: $gradian-color10;
 		&::before {
 			background: $gradian-color11;
 		}
-		.zl_add_currency_icon_chart {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				svg {
 					.left-shap {
@@ -1153,8 +1153,8 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.active {
-		.zl_add_currency_icon_chart {
+	.zl_add_token_inner_content.active {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				background: $color13;
 				box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.0744452);
@@ -1165,7 +1165,7 @@ table {
 				}
 			}
 		}
-		.zl_add_currency_price {
+		.zl_add_token_price {
 			h3 {
 				color: $color5;
 				opacity: 0.5;
@@ -1181,7 +1181,7 @@ table {
 					}
 				}
 			}
-			span.zl_add_currency_down_price {
+			span.zl_add_token_down_price {
 				color: $color13;
 			}
 		}
@@ -1190,28 +1190,28 @@ table {
 		margin-top: 27px;
 	}
 }
-.zl_add_currency_page {
+.zl_add_token_page {
 	.zl_all_page_comman_content {
 		padding: 4px 21px 21px;
 		border-radius: 10px;
 	}
-	.zl_add_currency_row {
+	.zl_add_token_row {
 		margin: 0 -10px;
-		.zl_add_currency_column {
+		.zl_add_token_column {
 			margin-top: 20px;
 			padding: 0 10px;
 		}
-		.zl_add_currency_inner_content {
+		.zl_add_token_inner_content {
 			display: flex;
 			align-items: center;
 		}
 	}
 }
-.zl_add_currency_search {
+.zl_add_token_search {
 	position: relative;
 	padding-left: 34px;
 	border-bottom: 1px solid $color26;
-	.zl_add_currency_search_icon {
+	.zl_add_token_search_icon {
 		background: transparent;
 		border: 0;
 		border-radius: 0;
@@ -1274,7 +1274,7 @@ table {
 		}
 	}
 }
-.zl_add_currency_text {
+.zl_add_token_text {
 	margin-right: auto;
 	padding-left: 15px;
 	h3 {
@@ -1302,7 +1302,7 @@ table {
 	}
 	margin-top: 9px;
 }
-.zl_add_currency_content {
+.zl_add_token_content {
 	+ .zl_all_page_comman_content {
 		margin-top: 27px;
 	}
@@ -1331,10 +1331,10 @@ table {
 	}
 }
 .zl_history_page {
-	.zl_add_currency_inner_content.zl_add_bitcoin_currency {
+	.zl_add_token_inner_content.zl_add_bitcoin_currency {
 		&:hover {
 			background: $gradian-color6;
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					svg {
 						path {
@@ -1345,12 +1345,12 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_bitcoin_currency.active {
+	.zl_add_token_inner_content.zl_add_bitcoin_currency.active {
 		background: $gradian-color6;
 		&::before {
 			background: $gradian-color7;
 		}
-		.zl_add_currency_icon_chart {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				svg {
 					path {
@@ -1360,7 +1360,7 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content {
+	.zl_add_token_inner_content {
 		&::before {
 			content: '';
 			position: absolute;
@@ -1373,7 +1373,7 @@ table {
 			z-index: -1;
 		}
 		&:hover {
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					background: $color13;
 					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.0744452);
@@ -1384,7 +1384,7 @@ table {
 					}
 				}
 			}
-			.zl_add_currency_price {
+			.zl_add_token_price {
 				h3 {
 					color: $color5;
 					opacity: 0.5;
@@ -1400,16 +1400,16 @@ table {
 						}
 					}
 				}
-				span.zl_add_currency_down_price {
+				span.zl_add_token_down_price {
 					color: $color13;
 				}
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_litecoin_currency {
+	.zl_add_token_inner_content.zl_add_litecoin_currency {
 		&:hover {
 			background: $gradian-color8;
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					svg {
 						path {
@@ -1420,12 +1420,12 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_litecoin_currency.active {
+	.zl_add_token_inner_content.zl_add_litecoin_currency.active {
 		background: $gradian-color8;
 		&::before {
 			background: $gradian-color9;
 		}
-		.zl_add_currency_icon_chart {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				svg {
 					path {
@@ -1435,10 +1435,10 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_ethereum_currency {
+	.zl_add_token_inner_content.zl_add_ethereum_currency {
 		&:hover {
 			background: $gradian-color10;
-			.zl_add_currency_icon_chart {
+			.zl_add_token_icon_chart {
 				.zl_currency_icon {
 					svg {
 						.left-shap {
@@ -1452,12 +1452,12 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.zl_add_ethereum_currency.active {
+	.zl_add_token_inner_content.zl_add_ethereum_currency.active {
 		background: $gradian-color10;
 		&::before {
 			background: $gradian-color11;
 		}
-		.zl_add_currency_icon_chart {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				svg {
 					.left-shap {
@@ -1470,8 +1470,8 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_inner_content.active {
-		.zl_add_currency_icon_chart {
+	.zl_add_token_inner_content.active {
+		.zl_add_token_icon_chart {
 			.zl_currency_icon {
 				background: $color13;
 				box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.0744452);
@@ -1482,7 +1482,7 @@ table {
 				}
 			}
 		}
-		.zl_add_currency_price {
+		.zl_add_token_price {
 			h3 {
 				color: $color5;
 				opacity: 0.5;
@@ -1498,7 +1498,7 @@ table {
 					}
 				}
 			}
-			span.zl_add_currency_down_price {
+			span.zl_add_token_down_price {
 				color: $color13;
 			}
 		}
@@ -2071,8 +2071,8 @@ table {
 	}
 }
 .zl_portfolio_page {
-	.zl_add_currency_inner_content {
-		.zl_add_currency_mini_chart {
+	.zl_add_token_inner_content {
+		.zl_add_token_mini_chart {
 			svg {
 				margin-top: 10px;
 				filter: drop-shadow(0px 10px 5px rgba(12, 10, 32, 0.15));
@@ -2108,8 +2108,8 @@ table {
 	}
 }
 .zl_currency_page {
-	.zl_add_currency_row {
-		.zl_add_currency_column {
+	.zl_add_token_row {
+		.zl_add_token_column {
 			&:nth-last-child(4) {
 				margin-bottom: 0;
 			}
@@ -2122,13 +2122,13 @@ table {
 			&:nth-last-child(1) {
 				margin-bottom: 0;
 			}
-			.zl_add_currency_inner_content {
+			.zl_add_token_inner_content {
 				padding: 21px;
 				display: flex;
 				align-items: center;
 				position: relative;
 				height: 100%;
-				.zl_add_currency_img {
+				.zl_add_token_img {
 					img {
 						filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
 					}
@@ -2138,8 +2138,8 @@ table {
 			padding: 0 10px;
 			margin-bottom: 20px;
 		}
-		.zl_add_currency_column.active {
-			.zl_add_currency_inner_content {
+		.zl_add_token_column.active {
+			.zl_add_token_inner_content {
 				background: $color21;
 				&::before {
 					content: '';
@@ -2160,7 +2160,7 @@ table {
 		border-radius: 10px;
 		padding: 4px 21px 21px;
 	}
-	.zl_add_currency_row.row {
+	.zl_add_token_row.row {
 		margin: 0 -10px;
 		margin-top: 21px;
 	}
@@ -2198,7 +2198,7 @@ table {
 }
 
 .zl_history_page {
-	.zl_add_currency_row {
+	.zl_add_token_row {
 		&.nav {
 			flex-wrap: nowrap;
 			overflow-x: auto;
@@ -2217,7 +2217,7 @@ table {
 				}
 			}
 		}
-		.zl_add_currency_column {
+		.zl_add_token_column {
 			margin-bottom: 0 !important;
 		}
 	}
@@ -2358,13 +2358,13 @@ table {
 }
 
 @media (max-width: 1350px) {
-	.zl_add_currency_row {
-		.zl_add_currency_column {
+	.zl_add_token_row {
+		.zl_add_token_column {
 			max-width: 25%;
 			min-width: 25%;
 		}
 		.zl_currency_column_sub_row {
-			.zl_add_currency_column {
+			.zl_add_token_column {
 				min-width: 307px;
 			}
 			min-width: 100%;
@@ -2372,13 +2372,13 @@ table {
 		}
 	}
 	.zl_wallets_page {
-		.zl_add_currency_row {
-			.zl_add_currency_column {
-				.zl_add_currency_btn_content {
+		.zl_add_token_row {
+			.zl_add_token_column {
+				.zl_add_token_btn_content {
 					height: 100%;
 				}
 			}
-			.zl_add_currency_column.zl_add_currency_btn_col {
+			.zl_add_token_column.zl_add_token_btn_col {
 				max-width: 100%;
 				margin-top: 10px;
 			}
@@ -2393,8 +2393,8 @@ table {
 	}
 }
 @media (max-width: 1150px) {
-	.zl_add_currency_row {
-		.zl_add_currency_column {
+	.zl_add_token_row {
+		.zl_add_token_column {
 			max-width: 33.333333%;
 			min-width: 33.333333%;
 			margin-bottom: 30px;
@@ -2403,9 +2403,9 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_page {
-		.zl_add_currency_row {
-			.zl_add_currency_column {
+	.zl_add_token_page {
+		.zl_add_token_row {
+			.zl_add_token_column {
 				margin-bottom: 0;
 			}
 		}
@@ -2414,8 +2414,8 @@ table {
 		padding: 18px;
 	}
 	.zl_wallets_page {
-		.zl_add_currency_row {
-			.zl_add_currency_column {
+		.zl_add_token_row {
+			.zl_add_token_column {
 				margin-bottom: 0;
 			}
 		}
@@ -2456,8 +2456,8 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_row {
-		.zl_add_currency_column {
+	.zl_add_token_row {
+		.zl_add_token_column {
 			max-width: 50%;
 			min-width: 50%;
 			&:nth-last-child(1) {
@@ -2480,8 +2480,8 @@ table {
 		row-gap: 24px;
 	}
 	.zl_wallets_page {
-		.zl_add_currency_row {
-			.zl_add_currency_column.zl_add_currency_btn_col {
+		.zl_add_token_row {
+			.zl_add_token_column.zl_add_token_btn_col {
 				margin-top: 0;
 			}
 		}
@@ -2522,8 +2522,8 @@ table {
 			}
 		}
 	}
-	.zl_add_currency_row {
-		.zl_add_currency_column {
+	.zl_add_token_row {
+		.zl_add_token_column {
 			max-width: 100%;
 			min-width: 100%;
 			&:nth-last-child(2) {
@@ -2562,15 +2562,15 @@ table {
 		}
 	}
 	.zl_wallets_page {
-		.zl_add_currency_row {
-			.zl_add_currency_column {
+		.zl_add_token_row {
+			.zl_add_token_column {
 				margin-bottom: 0;
 			}
 		}
 	}
-	.zl_add_currency_page {
-		.zl_add_currency_row {
-			.zl_add_currency_column {
+	.zl_add_token_page {
+		.zl_add_token_row {
+			.zl_add_token_column {
 				&:nth-last-child(2) {
 					margin-bottom: 0;
 				}

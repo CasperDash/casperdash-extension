@@ -16,15 +16,15 @@ const PortfolioModule = () => {
 			<section className="zl_history_page">
 				<HeadingModule name={'History'} />
 				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
-					<div className="zl_add_currency_content">
+					<div className="zl_add_token_content">
 						<h3 className="zl_bottom_content_heading">Activities</h3>
-						<Nav className="zl_add_currency_row row">
-							<Nav.Item className="zl_add_currency_column col">
+						<Nav className="zl_add_token_row row">
+							<Nav.Item className="zl_add_token_column col">
 								<Nav.Link
 									eventKey="tab1"
-									className="zl_add_currency_inner_content zl_add_ethereum_currency"
+									className="zl_add_token_inner_content zl_add_ethereum_currency"
 								>
-									<div className="zl_add_currency_icon_chart">
+									<div className="zl_add_token_icon_chart">
 										<div className="zl_currency_icon">
 											<img
 												src="assets/image/cspr.png"
@@ -33,12 +33,12 @@ const PortfolioModule = () => {
 											/>
 										</div>
 									</div>
-									<div className="zl_add_currency_price">
-										<div className="zl_add_currency_left_price">
+									<div className="zl_add_token_price">
+										<div className="zl_add_token_left_price">
 											<h3>CSPR</h3>
 											<p>{displayBalance}</p>
 										</div>
-										<div className="zl_add_currency_right_price">
+										<div className="zl_add_token_right_price">
 											<p>${displayBalance * currentPrice}</p>
 										</div>
 									</div>
