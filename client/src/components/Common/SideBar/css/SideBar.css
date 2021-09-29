@@ -80,6 +80,11 @@
 	.zl_page_sidebar_nav
 	.zl_page_sidebar_items[title='keyManager']
 	.zl_page_sidebar_link::before,
+.zl_page_sidebar[title='tokens']
+	.zl_page_sidebar_content
+	.zl_page_sidebar_nav
+	.zl_page_sidebar_items[title='tokens']
+	.zl_page_sidebar_link::before,
 .zl_page_sidebar[title='settings']
 	.zl_page_sidebar_content
 	.zl_page_sidebar_nav
@@ -117,6 +122,11 @@
 	.zl_page_sidebar_nav
 	.zl_page_sidebar_items[title='history']
 	.zl_page_sidebar_link::after,
+.zl_page_sidebar[title='tokens']
+	.zl_page_sidebar_content
+	.zl_page_sidebar_nav
+	.zl_page_sidebar_items[title='tokens']
+	.zl_page_sidebar_link::after,
 .zl_page_sidebar[title='keyManager']
 	.zl_page_sidebar_content
 	.zl_page_sidebar_nav
@@ -138,6 +148,11 @@
 	);
 }
 
+.zl_page_sidebar[title='tokens']
+	.zl_page_sidebar_content
+	.zl_page_sidebar_nav
+	.zl_page_sidebar_items[title='tokens']
+	.zl_page_sidebar_link,
 .zl_page_sidebar[title='dashboard']
 	.zl_page_sidebar_content
 	.zl_page_sidebar_nav
@@ -191,6 +206,13 @@
 	.zl_page_sidebar_content
 	.zl_page_sidebar_nav
 	.zl_page_sidebar_items[title='history']
+	.zl_page_sidebar_link
+	svg
+	path,
+.zl_page_sidebar[title='tokens']
+	.zl_page_sidebar_content
+	.zl_page_sidebar_nav
+	.zl_page_sidebar_items[title='tokens']
 	.zl_page_sidebar_link
 	svg
 	path,

@@ -60,7 +60,8 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build && react-snapshot",
-		"test": "react-scripts test"
+		"test": "react-scripts test",
+		"publish":"react-scripts build && "
 	},
 	"eslintConfig": {
 		"extends": "react-app"
