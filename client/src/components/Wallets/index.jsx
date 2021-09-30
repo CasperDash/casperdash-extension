@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { Tab } from 'react-bootstrap';
-import WalletDetails from '../Common/Layout/WalletComponent/main';
+import WalletDetails from './WalletDetails';
 import { getBalance } from '../../actions/userActions';
 
-const currency = [
-	{
-		id: 1,
-		name: 'CSPR',
-		ratio: '1.9678',
-		updown: '+12,5%',
-		price: '$6,541.1',
-		value: 'cspr',
-	},
-];
+const currency = {
+	id: 1,
+	name: 'CSPR',
+	ratio: '1.9678',
+	updown: '+12,5%',
+	price: '$6,541.1',
+	value: 'cspr',
+};
+
 const PortfolioModule = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -22,20 +20,12 @@ const PortfolioModule = () => {
 	});
 	return (
 		<>
-			<section className="zl_wallets_page">
+			<section className="cd_wallets_page">
 				<HeadingModule name={'Dashboard'} />
-				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
-					<Tab.Content>
-						{currency.map((item) => (
-							<Tab.Pane eventKey={`tab${item.id}`} key={item.id}>
-								<WalletDetails {...item} />
-							</Tab.Pane>
-						))}
-					</Tab.Content>
-				</Tab.Container>
+				<WalletDetails {...currency} />
 			</section>
 		</>
 	);
 };
 
-export default connect(null, null)(PortfolioModule);
+export default PortfolioModule;

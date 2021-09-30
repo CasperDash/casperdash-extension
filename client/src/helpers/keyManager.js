@@ -3,5 +3,5 @@ export const getWeightByAccountHash = (accountHash = '', associatedKeys = []) =>
 	if (associatedKey) {
 		return associatedKey.weight;
 	}
-	return '-';
+	return '';
 };

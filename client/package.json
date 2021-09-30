@@ -4,12 +4,13 @@
 	"private": true,
 	"dependencies": {
 		"@auth0/auth0-react": "^1.0.0",
+		"@redux-requests/axios": "^1.1.1",
+		"@redux-requests/core": "^1.6.2",
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
 		"antd": "^4.4.1",
 		"apexcharts": "^3.26.3",
-		"async-selector": "^1.0.26",
 		"axios": "^0.19.2",
 		"bootstrap": "^4.5.0",
 		"bootstrap-icons": "^1.5.0",
@@ -48,7 +49,8 @@
 		"sass": "^1.26.10",
 		"typescript": "^3.9.6",
 		"url-join": "^4.0.1",
-		"yup": "^0.32.9"
+		"yup": "^0.32.9",
+		"dotenv": "^10.0.0"
 	},
 	"reactSnapshot": {
 		"exclude": [
@@ -58,7 +60,8 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build && react-snapshot",
-		"test": "react-scripts test"
+		"test": "react-scripts test",
+		"publish":"react-scripts build && "
 	},
 	"eslintConfig": {
 		"extends": "react-app"

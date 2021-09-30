@@ -11,6 +11,12 @@ const getAccountBalanceByUref = async (uref, stateRootHash) => {
 	}
 };
 
+/**
+ * Get the current state of the account
+ * @param {CLPublicKey} fromAccount main account public key
+ * @param {String} stateRootHash
+ * @returns {Object} account state
+ */
 const getAccount = async (publicKey, stateRootHash) => {
 	try {
 		const rootHash = stateRootHash || (await getStateRootHash());

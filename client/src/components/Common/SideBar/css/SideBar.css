@@ -1,6 +1,6 @@
 /* page sidebar css */
 
-.zl_page_sidebar {
+.cd_page_sidebar {
 	background: #252f47;
 	max-width: 250px;
 	width: 100%;
@@ -14,33 +14,33 @@
 	z-index: 99999999;
 }
 
-.zl_page_sidebar::-webkit-scrollbar {
+.cd_page_sidebar::-webkit-scrollbar {
 	width: 0;
 }
 
-.zl_page_sidebar .zl_page_sidebar_content {
+.cd_page_sidebar .cd_page_sidebar_content {
 	min-height: 100vh;
 	padding-bottom: 100px;
 	position: relative;
 }
 
-.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_logo a {
-	max-width: 152px;
+.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_logo a {
+	max-width: 250px;
 	display: block;
 }
 
-.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_logo {
+.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_logo {
 	padding: 23px 25px 28px;
 	position: relative;
 }
 
-.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_logo .zl_page_sidebar_toggle_btn {
+.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_logo .cd_page_sidebar_toggle_btn {
 	top: 15px;
 	right: 20px;
 	left: auto;
 }
 
-.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items .zl_page_sidebar_link {
+.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items .cd_page_sidebar_link {
 	display: flex;
 	align-items: center;
 	font-weight: 600;
@@ -51,45 +51,50 @@
 	text-decoration: none;
 }
 
-.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_nav .zl_page_sidebar_items .zl_page_sidebar_link svg {
+.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items .cd_page_sidebar_link svg {
 	margin-right: 32px;
 }
 
-.zl_page_sidebar[title='dashboard']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='dashboard']
-	.zl_page_sidebar_link::before,
-.zl_page_sidebar[title='portfolio']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='portfolio']
-	.zl_page_sidebar_link::before,
-.zl_page_sidebar[title='wallets']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='wallets']
-	.zl_page_sidebar_link::before,
-.zl_page_sidebar[title='history']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='history']
-	.zl_page_sidebar_link::before,
-.zl_page_sidebar[title='keyManager']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='keyManager']
-	.zl_page_sidebar_link::before,
-.zl_page_sidebar[title='settings']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='settings']
-	.zl_page_sidebar_link::before,
-.zl_page_sidebar[title='accountsupport']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='accountsupport']
-	.zl_page_sidebar_link::before {
+.cd_page_sidebar[title='dashboard']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='dashboard']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='portfolio']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='portfolio']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='wallets']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='wallets']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='history']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='history']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='keyManager']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='keyManager']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='tokens']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='tokens']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='settings']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='settings']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='accountsupport']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='accountsupport']
+	.cd_page_sidebar_link::before {
 	content: '';
 	position: absolute;
 	left: -6px;
@@ -102,26 +107,31 @@
 	box-shadow: 0px 0px 5px #1f1c45;
 }
 
-.zl_page_sidebar[title='dashboard']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='dashboard']
-	.zl_page_sidebar_link::after,
-.zl_page_sidebar[title='wallets']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='wallets']
-	.zl_page_sidebar_link::after,
-.zl_page_sidebar[title='history']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='history']
-	.zl_page_sidebar_link::after,
-.zl_page_sidebar[title='keyManager']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='keyManager']
-	.zl_page_sidebar_link::after {
+.cd_page_sidebar[title='dashboard']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='dashboard']
+	.cd_page_sidebar_link::after,
+.cd_page_sidebar[title='wallets']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='wallets']
+	.cd_page_sidebar_link::after,
+.cd_page_sidebar[title='history']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='history']
+	.cd_page_sidebar_link::after,
+.cd_page_sidebar[title='tokens']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='tokens']
+	.cd_page_sidebar_link::after,
+.cd_page_sidebar[title='keyManager']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='keyManager']
+	.cd_page_sidebar_link::after {
 	content: '';
 	position: absolute;
 	left: -17px;
@@ -138,106 +148,118 @@
 	);
 }
 
-.zl_page_sidebar[title='dashboard']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='dashboard']
-	.zl_page_sidebar_link,
-.zl_page_sidebar[title='portfolio']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='portfolio']
-	.zl_page_sidebar_link,
-.zl_page_sidebar[title='wallets']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='wallets']
-	.zl_page_sidebar_link,
-.zl_page_sidebar[title='history']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='history']
-	.zl_page_sidebar_link,
-.zl_page_sidebar[title='keyManager']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='keyManager']
-	.zl_page_sidebar_link {
+.cd_page_sidebar[title='tokens']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='tokens']
+	.cd_page_sidebar_link,
+.cd_page_sidebar[title='dashboard']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='dashboard']
+	.cd_page_sidebar_link,
+.cd_page_sidebar[title='portfolio']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='portfolio']
+	.cd_page_sidebar_link,
+.cd_page_sidebar[title='wallets']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='wallets']
+	.cd_page_sidebar_link,
+.cd_page_sidebar[title='history']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='history']
+	.cd_page_sidebar_link,
+.cd_page_sidebar[title='keyManager']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='keyManager']
+	.cd_page_sidebar_link {
 	color: #53b9ea;
 }
 
-.zl_page_sidebar[title='dashboard']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='dashboard']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='dashboard']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='dashboard']
+	.cd_page_sidebar_link
 	svg
 	rect,
-.zl_page_sidebar[title='accountsupport']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='accountsupport']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='accountsupport']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='accountsupport']
+	.cd_page_sidebar_link
 	svg
 	path,
-.zl_page_sidebar[title='keyManager']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='keyManager']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='keyManager']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='keyManager']
+	.cd_page_sidebar_link
 	svg
 	path,
-.zl_page_sidebar[title='history']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='history']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='history']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='history']
+	.cd_page_sidebar_link
 	svg
 	path,
-.zl_page_sidebar[title='wallets']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='wallets']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='tokens']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='tokens']
+	.cd_page_sidebar_link
+	svg
+	path,
+.cd_page_sidebar[title='wallets']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='wallets']
+	.cd_page_sidebar_link
 	svg
 	path {
 	fill: #53b9ea;
 }
 
-.zl_page_sidebar[title='keyManager']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='keyManager']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='keyManager']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='keyManager']
+	.cd_page_sidebar_link
 	svg
 	path
 	+ path {
 	fill: #252f47;
 }
 
-.zl_page_sidebar[title='portfolio']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='portfolio']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='portfolio']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='portfolio']
+	.cd_page_sidebar_link
 	svg
 	path,
-.zl_page_sidebar[title='settings']
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items[title='settings']
-	.zl_page_sidebar_link
+.cd_page_sidebar[title='settings']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='settings']
+	.cd_page_sidebar_link
 	svg
 	path {
 	stroke: #53b9ea;
 }
 
-.zl_page_sidebar
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items
-	.zl_page_sidebar_link
-	.zl_page_sidebar_notification_dot {
+.cd_page_sidebar
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items
+	.cd_page_sidebar_link
+	.cd_page_sidebar_notification_dot {
 	width: 6px;
 	height: 6px;
 	display: block;
@@ -248,7 +270,7 @@
 	margin-left: auto;
 }
 
-.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_toggle_icon {
+.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_toggle_icon {
 	position: absolute;
 	right: 20px;
 	bottom: 69px;
@@ -264,20 +286,20 @@
 	transform: rotate(180deg);
 }
 
-.zl_page_sidebar.zl_hide_sidebar .zl_page_sidebar_content .zl_page_sidebar_toggle_icon {
+.cd_page_sidebar.cd_hide_sidebar .cd_page_sidebar_content .cd_page_sidebar_toggle_icon {
 	transform: rotate(0);
 }
 
-.zl_page_sidebar
-	.zl_page_sidebar_content
-	.zl_page_sidebar_nav
-	.zl_page_sidebar_items
-	.zl_page_sidebar_link
-	.zl_pagesidebar_text {
+.cd_page_sidebar
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items
+	.cd_page_sidebar_link
+	.cd_pagesidebar_text {
 	display: block;
 }
 
-.zl_page_sidebar_toggle_btn {
+.cd_page_sidebar_toggle_btn {
 	display: block;
 	padding: 0;
 	width: 35px;
@@ -292,114 +314,114 @@
 	outline: 0 !important;
 }
 
-.zl_page_sidebar_toggle_btn svg {
+.cd_page_sidebar_toggle_btn svg {
 	width: 24px;
 	height: 24px;
 }
 
-.zl_all_pages_content .zl_page_sidebar[title='login'] ~ .zl_page_sidebar_toggle_btn,
-.zl_all_pages_content .zl_page_sidebar[title=''] ~ .zl_page_sidebar_toggle_btn {
+.cd_all_pages_content .cd_page_sidebar[title='login'] ~ .cd_page_sidebar_toggle_btn,
+.cd_all_pages_content .cd_page_sidebar[title=''] ~ .cd_page_sidebar_toggle_btn {
 	display: none;
 }
 
 @media (min-width: 992px) {
 	/* hide show sidebar */
-	.zl_page_sidebar.zl_hide_sidebar {
+	.cd_page_sidebar.cd_hide_sidebar {
 		max-width: 90px;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar
-		.zl_page_sidebar_content
-		.zl_page_sidebar_nav
-		.zl_page_sidebar_items
-		.zl_page_sidebar_link
+	.cd_page_sidebar.cd_hide_sidebar
+		.cd_page_sidebar_content
+		.cd_page_sidebar_nav
+		.cd_page_sidebar_items
+		.cd_page_sidebar_link
 		svg {
 		margin: 0 auto;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar
-		.zl_page_sidebar_content
-		.zl_page_sidebar_nav
-		.zl_page_sidebar_items
-		.zl_page_sidebar_link
-		.zl_pagesidebar_text,
-	.zl_page_sidebar.zl_hide_sidebar
-		.zl_page_sidebar_content
-		.zl_page_sidebar_nav
-		.zl_page_sidebar_items
-		.zl_page_sidebar_link
-		.zl_page_sidebar_notification_dot,
-	.zl_page_sidebar.zl_hide_sidebar .zl_main_logo,
-	.zl_page_sidebar .zl_mini_sidebar_logo,
-	.zl_page_sidebar_toggle_btn {
+	.cd_page_sidebar.cd_hide_sidebar
+		.cd_page_sidebar_content
+		.cd_page_sidebar_nav
+		.cd_page_sidebar_items
+		.cd_page_sidebar_link
+		.cd_pagesidebar_text,
+	.cd_page_sidebar.cd_hide_sidebar
+		.cd_page_sidebar_content
+		.cd_page_sidebar_nav
+		.cd_page_sidebar_items
+		.cd_page_sidebar_link
+		.cd_page_sidebar_notification_dot,
+	.cd_page_sidebar.cd_hide_sidebar .cd_main_logo,
+	.cd_page_sidebar .cd_mini_sidebar_logo,
+	.cd_page_sidebar_toggle_btn {
 		display: none;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar
-		.zl_page_sidebar_content
-		.zl_page_sidebar_nav
-		.zl_page_sidebar_items
-		.zl_page_sidebar_link {
+	.cd_page_sidebar.cd_hide_sidebar
+		.cd_page_sidebar_content
+		.cd_page_sidebar_nav
+		.cd_page_sidebar_items
+		.cd_page_sidebar_link {
 		padding: 25px 12px;
 		justify-content: center;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar .zl_mini_sidebar_logo {
+	.cd_page_sidebar.cd_hide_sidebar .cd_mini_sidebar_logo {
 		display: block;
 		margin: 0 auto;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar .zl_page_sidebar_content .zl_page_sidebar_logo {
+	.cd_page_sidebar.cd_hide_sidebar .cd_page_sidebar_content .cd_page_sidebar_logo {
 		padding: 0;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar .zl_page_sidebar_content .zl_page_sidebar_logo a {
+	.cd_page_sidebar.cd_hide_sidebar .cd_page_sidebar_content .cd_page_sidebar_logo a {
 		padding: 25px 12px;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar
-		.zl_page_sidebar_content
-		.zl_page_sidebar_nav
-		.zl_page_sidebar_items
-		.zl_page_sidebar_link:hover {
+	.cd_page_sidebar.cd_hide_sidebar
+		.cd_page_sidebar_content
+		.cd_page_sidebar_nav
+		.cd_page_sidebar_items
+		.cd_page_sidebar_link:hover {
 		background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
 	}
 
-	.zl_light_theme_active
-		.zl_page_sidebar.zl_hide_sidebar
-		.zl_page_sidebar_content
-		.zl_page_sidebar_nav
-		.zl_page_sidebar_items
-		.zl_page_sidebar_link:hover {
+	.cd_light_theme_active
+		.cd_page_sidebar.cd_hide_sidebar
+		.cd_page_sidebar_content
+		.cd_page_sidebar_nav
+		.cd_page_sidebar_items
+		.cd_page_sidebar_link:hover {
 		background: #eff0f2;
 	}
 }
 
 @media (max-width: 991px) {
-	.zl_page_sidebar {
+	.cd_page_sidebar {
 		left: -100%;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar {
+	.cd_page_sidebar.cd_hide_sidebar {
 		left: 0;
 		max-width: 270px;
 	}
 
-	.zl_page_sidebar.zl_hide_sidebar .zl_mini_sidebar_logo,
-	.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_toggle_icon {
+	.cd_page_sidebar.cd_hide_sidebar .cd_mini_sidebar_logo,
+	.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_toggle_icon {
 		display: none;
 	}
 
-	.zl_page_sidebar .zl_page_sidebar_content .zl_page_sidebar_logo {
+	.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_logo {
 		padding: 55px 25px 28px;
 	}
-	.zl_page_sidebar .zl_page_sidebar_content {
+	.cd_page_sidebar .cd_page_sidebar_content {
 		padding-bottom: 50px;
 	}
 }
 
 @media (max-width: 767px) {
-	.zl_page_sidebar_toggle_btn {
+	.cd_page_sidebar_toggle_btn {
 		left: 15px;
 	}
 }

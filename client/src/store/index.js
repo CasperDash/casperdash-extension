@@ -1,6 +1,12 @@
+import axios from 'axios';
+import { handleRequests } from '@redux-requests/core';
+import { createDriver } from '@redux-requests/axios';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { BASE_API_URL } from '../constants/key';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import userReducer from './reducers/userReducer';
+import signerReducer from './reducers/signerReducer';
+import keysManagerReducer from './reducers/keysManager';
 
 export const initialState = {
 	user: {
@@ -12,17 +18,23 @@ export const initialState = {
 		isUnlocked: true,
 		error: null,
 	},
-	AsyncSelectorLog: null,
+	keysManager: {},
 };
-// const main = combineReducers({
-// 	reducers,
-// 	AsyncSelectorLog: (state, action) => {
-// 		if (action.type === 'RERENDER_APP') {
-// 			return { ...state, [action.key]: action.value };
-// 		}
-// 		return state;
-// 	},
-// });
+
+const { requestsReducer, requestsMiddleware } = handleRequests({
+	driver: createDriver(
+		axios.create({
+			baseURL: BASE_API_URL,
+		}),
+	),
+});
+
+const main = combineReducers({
+	user: userReducer,
+	signer: signerReducer,
+	keysManager: keysManagerReducer,
+	requests: requestsReducer,
+});
 
 const logger = (store) => (next) => (action) => {
 	console.log('dispatching', action);
@@ -31,5 +43,5 @@ const logger = (store) => (next) => (action) => {
 	return result;
 };
 
-var store = createStore(reducers, initialState, applyMiddleware(thunk, logger));
+var store = createStore(main, initialState, applyMiddleware(thunk, logger, ...requestsMiddleware));
 export default store;

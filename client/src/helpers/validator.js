@@ -1,5 +1,4 @@
 import { CLPublicKey } from 'casper-js-sdk';
-import { MIN_TRANSFER } from '../constants/key';
 
 const isValidPublicKey = (publicKey) => {
 	try {
@@ -10,22 +9,23 @@ const isValidPublicKey = (publicKey) => {
 	}
 };
 
-export const validateTransferForm = (values, props) => {
-	const { displayBalance } = props;
+export const validateTransferForm = ({ displayBalance, toAddress, sendAmount, tokenSymbol, minAmount }) => {
 	let errors = {};
 	// to address
-	if (!values.toAddress) {
+	if (!toAddress) {
 		errors.toAddress = 'Required.';
 	}
-	if (!errors.toAddress && !isValidPublicKey(values.toAddress)) {
+	if (!errors.toAddress && !isValidPublicKey(toAddress)) {
 		errors.toAddress = 'Invalid address.';
 	}
 	// send amount
-
-	if (values.sendAmount < MIN_TRANSFER) {
-		errors.sendAmount = 'Amount must be at least 2.5 CSPR.';
+	if (sendAmount < minAmount) {
+		errors.sendAmount = `Amount must be at least ${minAmount} ${tokenSymbol}.`;
 	}
-	if (!errors.sendAmount && values.sendAmount > displayBalance) {
+	if (sendAmount <= 0) {
+		errors.sendAmount = `Amount must be more than 0 ${tokenSymbol}.`;
+	}
+	if (!errors.sendAmount && sendAmount > displayBalance) {
 		errors.sendAmount = 'Not enough balance.';
 	}
 	return errors;
