@@ -10,15 +10,17 @@ const { ERC20_TOKEN_ATTRS } = require('../../constants');
  */
 const getTokenInfo = async (contractAddress, stateRootHash) => {
 	try {
+		const rootHash = stateRootHash || (await getStateRootHash());
 		const formattedAddressHash = `hash-${contractAddress}`;
 		const tokenInfo = await Promise.all(
 			ERC20_TOKEN_ATTRS.map(async (attr) => {
-				return { [attr]: await getStateKeyValue(stateRootHash, formattedAddressHash, attr) };
+				return { [attr]: await getStateKeyValue(rootHash, formattedAddressHash, attr) };
 			}),
 		);
 		return tokenInfo.reduce((out, tokenAttr) => ({ ...out, ...tokenAttr }), { address: contractAddress });
 	} catch (err) {
-		throw err;
+		console.error(err);
+		return {};
 	}
 };
 

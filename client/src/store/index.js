@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
+import tokensReducer from './reducers/tokens';
 
 export const initialState = {
 	user: {
@@ -19,6 +20,9 @@ export const initialState = {
 		error: null,
 	},
 	keysManager: {},
+	tokens: {
+		address: [],
+	},
 };
 
 const { requestsReducer, requestsMiddleware } = handleRequests({
@@ -33,6 +37,7 @@ const main = combineReducers({
 	user: userReducer,
 	signer: signerReducer,
 	keysManager: keysManagerReducer,
+	tokens: tokensReducer,
 	requests: requestsReducer,
 });
 
