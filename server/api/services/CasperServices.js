@@ -70,6 +70,22 @@ const getDeploysStatus = async (deployHash) => {
 		: [];
 };
 
+/**
+ * Returns value of a key associated with global storage.
+ * @param {String} stateRootHash - Root hash of global state at a recent block.
+ * @param {String} stateKey - Key of an item within global state.
+ * @param {String} statePath - Path of data associated with a key within a global state.
+ * @return {Object} On-chain account information.
+ */
+const getStateKeyValue = async (stateRootHash, stateKey, statePath) => {
+	// Chain query: get global state key value.
+	const {
+		CLValue: { data: value },
+	} = await casperClient.nodeClient.getBlockState(stateRootHash, stateKey, [statePath]);
+
+	return value;
+};
+
 module.exports = {
 	getStateRootHash,
 	casperServiceRPC,
@@ -78,4 +94,5 @@ module.exports = {
 	getDeploysResult,
 	getDeploysStatus,
 	getLatestBlockHash,
+	getStateKeyValue,
 };
