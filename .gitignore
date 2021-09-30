@@ -1,7 +1,4 @@
 node_modules
 .vscode
-<<<<<<< HEAD
 *.db
-=======
 .env
->>>>>>> 0ee8b34382563186f6cc2bfa924544ba0d07a55e
