@@ -19,3 +19,5 @@ npm i
 npm run dev
 
 ```
+
+You can view the developement database in event-handler/developement_sqlite.db
