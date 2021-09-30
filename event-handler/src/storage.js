@@ -45,15 +45,16 @@ class Storage {
 
 	async onDeployProccessed(event) {
 		console.log('On deployed', event);
-		const { deploy_hash: deployHash, account, execution_result } = event;
+		const { deploy_hash: deployHash, block_hash: blockHash, account, execution_result } = event;
 		let cost = 0;
-		let error_message = '';
+		let errorMessage = '';
 		if (execution_result.Success) {
 			cost = execution_result.Success.cost;
 		} else if (execution_result.Failure) {
-			const failture = execution_result.Failure;
-			cost = failture.cost;
-			error_message = failture.error_message;
+			const failure = execution_result.Failure;
+			cost = failure.cost;
+			errorMessage = failure.error_message;
+			console.log('Error mess', errorMessage);
 		}
 
 		await this.models.Deploy.create({
@@ -61,6 +62,8 @@ class Storage {
 			account,
 			state: 'processed',
 			cost,
+			errorMessage,
+			blockHash,
 		});
 	}
 
