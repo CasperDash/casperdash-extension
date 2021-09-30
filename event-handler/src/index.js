@@ -1,4 +1,5 @@
 console.log('-- Welcome to casper event handler --');
+const { EventName, EventStream } = require('casper-js-sdk');
 const stream = require('stream');
 const { promisify } = require('util');
 const got = require('got');
@@ -22,73 +23,13 @@ if (env === 'production') {
 class EventHandler {
 	constructor() {}
 
-	async createInputStream(url) {
-		try {
-			const readStream = got.stream(url);
-			return readStream;
-		} catch (err) {
-			if (err instanceof got.stream.RequestError) {
-				throw new Error('Connection Failed - check the status of the node:\n' + err);
-			} else {
-				throw new Error(err);
-			}
-		}
-	}
-
-	async createOutputStream() {
-		let outputStream = new stream.Writable();
-		// Initialise storage
+	listener(eventStreamAdress) {
+		const es = new EventStream(eventStreamAdress);
 		let storage = new Storage(models);
-
-		outputStream._write = async (chunk, encoding, done) => {
-			// Removes 'data:' prefix from the event to convert it to JSON
-			let jsonData;
-			try {
-				jsonData = JSON.parse(chunk.toString().split('\n')[0].substr(5));
-
-				console.log('JSON Data', jsonData);
-				if (jsonData == undefined) {
-					throw new Error('Not a json after all');
-				}
-			} catch (err) {
-				done();
-				return;
-			}
-
-			// Uncomment to get JSON output from event stream to stdout
-			// console.log(jsonData);
-
-			if (jsonData.DeployProcessed) {
-				await storage.onDeployProccessed(jsonData.DeployProcessed);
-				console.log('\nSaved Processed Deploys...'); // For debugging
-			} else if (jsonData.DeployAccepted) {
-				await storage.onDeployAccepted(jsonData.DeployAccepted);
-				console.log('\nSaved Accepted Deploys...'); // For debugging
-			} else if (jsonData.BlockAdded) {
-				await storage.onBlockAdded(jsonData.BlockAdded);
-			}
-
-			done();
-		};
-
-		return outputStream;
-	}
-
-	/**
-	 * Attempts to create a streaming pipeline given an input and output stream.
-	 *
-	 * @param {stream.Readable} inputStream
-	 * @param {stream.Writable} outputStream
-	 */
-	async createPipeline(inputStream, outputStream) {
-		// initialise pipeline
-		const pipeline = promisify(stream.pipeline);
-
-		try {
-			await pipeline(inputStream, outputStream);
-		} catch (err) {
-			console.error(err);
-		}
+		es.subscribe(EventName.DeployProcessed, async (value) => {
+			await storage.onDeployProccessed(value.body.DeployProcessed);
+		});
+		es.start();
 	}
 
 	formURL(protocol, domain, port, path) {
@@ -110,16 +51,8 @@ class EventHandler {
 
 initEventHandler = async () => {
 	const mainEventHandler = new EventHandler();
-	const mainEventUrl = await mainEventHandler.formURL();
-	const mainEventStream = await mainEventHandler.createInputStream(mainEventUrl);
-	const storageMainStream = await mainEventHandler.createOutputStream();
-	mainEventHandler.createPipeline(mainEventStream, storageMainStream);
-
-	const deployEventHandler = new EventHandler();
-	const deployEventUrl = await deployEventHandler.formURL(undefined, undefined, undefined, 'events/deploys');
-	const deployEventStream = await deployEventHandler.createInputStream(deployEventUrl);
-	const storageDeployStream = await deployEventHandler.createOutputStream();
-	deployEventHandler.createPipeline(deployEventStream, storageDeployStream);
+	const mainEventUrl = mainEventHandler.formURL();
+	mainEventHandler.listener(mainEventUrl);
 };
 initEventHandler();
 
