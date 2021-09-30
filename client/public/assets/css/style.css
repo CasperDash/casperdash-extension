@@ -845,8 +845,8 @@ table td {
   padding-bottom: 15px;
 }
 .cd_add_token_row .cd_currency_column_sub_row .cd_add_token_column {
-  max-width: 25%;
-  min-width: 25%;
+  max-width: 20%;
+  min-width: 20%;
 }
 .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar {
   width: 5px;
@@ -1009,7 +1009,7 @@ table td {
   fill: #345D9D;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover {
-  background: linear-gradient(135deg, #E3507A 0%, #E3507A 19.24%, #BC3DCB 68.64%, #BC3DCB 81.77%, #A330FF 100%);
+  background: linear-gradient(113.91deg, #70B2FF 0%, rgba(83, 185, 234, 0.0001) 82.9%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
   fill: #E3507A;
@@ -2115,15 +2115,15 @@ table td {
 
 @media (max-width: 1350px) {
   .cd_add_token_row .cd_add_token_column {
-    max-width: 25%;
-    min-width: 25%;
+    max-width: 20%;
+    min-width: 20%;
   }
   .cd_add_token_row .cd_currency_column_sub_row {
     min-width: 100%;
     max-width: 100%;
   }
   .cd_add_token_row .cd_currency_column_sub_row .cd_add_token_column {
-    min-width: 307px;
+    min-width: 200px;
   }
 
   .cd_wallets_page .cd_add_token_row .cd_add_token_column .cd_add_token_btn_content {

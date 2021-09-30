@@ -7,10 +7,17 @@ import { validateTransferForm } from '../../helpers/validator';
 import { getSignedTransferDeploy } from '../../services/userServices';
 import { putDeploy } from '.././../actions/deployActions';
 import { deploySelector } from '../../selectors/deploy';
-import { MIN_TRANSFER, TRANSFER_FEE } from '../../constants/key';
+import { TRANSFER_FEE } from '../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 
-export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddress, currentPrice }) => {
+export const SendReceiveSection = ({
+	handleToggle,
+	displayBalance = 0,
+	fromAddress,
+	currentPrice,
+	tokenSymbol = 'CSPR',
+	minAmount = 2.5,
+}) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
 	const dispatch = useDispatch();
@@ -56,8 +63,8 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 				<div className="cd_send_receive_content_column">
 					<div className="cd_send_receive_inner_content">
 						<Formik
-							initialValues={{ sendAmount: MIN_TRANSFER, toAddress: '' }}
-							validate={(values) => validateTransferForm({ ...values, displayBalance })}
+							initialValues={{ sendAmount: minAmount, toAddress: '' }}
+							validate={(values) => validateTransferForm({ ...values, displayBalance, tokenSymbol })}
 							onSubmit={handleSubmit}
 						>
 							{({ errors, touched, values, handleChange, setFieldValue, isValid, handleSubmit }) => (
@@ -75,7 +82,7 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 												fill="#53B9EA"
 											/>
 										</svg>
-										Send
+										Send {tokenSymbol}
 									</h3>
 
 									<div className="cd_send_balance_content">
@@ -114,10 +121,14 @@ export const SendReceiveSection = ({ handleToggle, displayBalance = 0, fromAddre
 										</Form.Control.Feedback>
 									</div>
 									<div className="cd_send_currency_text_type">
-										<h3 className="cd_send_currency_text">
-											${parseFloat(values.sendAmount * currentPrice).toFixed(2)}
-										</h3>
-										<h3 className="cd_send_currency_type">USD</h3>
+										{currentPrice ? (
+											<>
+												<h3 className="cd_send_currency_text">
+													${parseFloat(values.sendAmount * currentPrice).toFixed(2)}
+												</h3>
+												<h3 className="cd_send_currency_type">USD</h3>
+											</>
+										) : null}
 									</div>
 									<div className="cd_send_currency_btn_text">
 										<Button className="cd_send_currency_btn" onClick={handleToggle}>

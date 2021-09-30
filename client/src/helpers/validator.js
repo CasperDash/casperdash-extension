@@ -10,7 +10,7 @@ const isValidPublicKey = (publicKey) => {
 	}
 };
 
-export const validateTransferForm = ({ displayBalance, toAddress, sendAmount }) => {
+export const validateTransferForm = ({ displayBalance, toAddress, sendAmount, tokenSymbol, minAmount }) => {
 	let errors = {};
 	// to address
 	if (!toAddress) {
@@ -22,7 +22,7 @@ export const validateTransferForm = ({ displayBalance, toAddress, sendAmount }) 
 	// send amount
 
 	if (sendAmount < MIN_TRANSFER) {
-		errors.sendAmount = 'Amount must be at least 2.5 CSPR.';
+		errors.sendAmount = `Amount must be at least ${minAmount} ${tokenSymbol}.`;
 	}
 	if (!errors.sendAmount && sendAmount > displayBalance) {
 		errors.sendAmount = 'Not enough balance.';

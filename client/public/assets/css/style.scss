@@ -905,8 +905,8 @@ table {
 		overflow-x: auto;
 		padding-bottom: 15px;
 		.cd_add_token_column {
-			max-width: 25%;
-			min-width: 25%;
+			max-width: 20%;
+			min-width: 20%;
 		}
 		&::-webkit-scrollbar {
 			width: 5px;
@@ -1120,7 +1120,7 @@ table {
 	}
 	.cd_add_token_inner_content.cd_add_ethereum_currency {
 		&:hover {
-			background: $gradian-color10;
+			background: $gradian-color12;
 			.cd_add_token_icon_chart {
 				.cd_currency_icon {
 					svg {
@@ -2360,12 +2360,12 @@ table {
 @media (max-width: 1350px) {
 	.cd_add_token_row {
 		.cd_add_token_column {
-			max-width: 25%;
-			min-width: 25%;
+			max-width: 20%;
+			min-width: 20%;
 		}
 		.cd_currency_column_sub_row {
 			.cd_add_token_column {
-				min-width: 307px;
+				min-width: 200px;
 			}
 			min-width: 100%;
 			max-width: 100%;
