@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AllTransactionList from '../Common/Layout/TransactionList/AllTransactionList';
-import { SendReceiveSection } from './SendReceiveSection';
+import { SendReceiveSection } from '../Common/SendReceive';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';

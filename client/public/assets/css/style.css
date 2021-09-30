@@ -845,6 +845,7 @@ table td {
   padding-bottom: 15px;
 }
 .cd_add_token_row .cd_currency_column_sub_row .cd_add_token_column {
+  cursor: pointer;
   max-width: 20%;
   min-width: 20%;
 }
@@ -862,6 +863,7 @@ table td {
   background: #96A0C2;
 }
 .cd_add_token_row .cd_add_token_column {
+  cursor: pointer;
   max-width: 20%;
   min-width: 20%;
   flex-basis: auto;
@@ -1445,6 +1447,10 @@ table td {
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading svg {
   margin-right: 11px;
+}
+.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading .cd_send_receive_token_symbol {
+  padding-left: 10px;
+  color: #3A4562;
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content {
   margin-bottom: 21px;
@@ -2130,6 +2136,7 @@ table td {
     height: 100%;
   }
   .cd_wallets_page .cd_add_token_row .cd_add_token_column.cd_add_token_btn_col {
+    cursor: pointer;
     max-width: 100%;
     margin-top: 10px;
   }
@@ -2213,6 +2220,7 @@ table td {
   }
 
   .cd_wallets_page .cd_add_token_row .cd_add_token_column.cd_add_token_btn_col {
+    cursor: pointer;
     margin-top: 0;
   }
 }

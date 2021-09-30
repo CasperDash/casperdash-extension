@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import { Tab } from 'react-bootstrap';
-import { SendReceiveSection } from '../Wallets/SendReceiveSection';
+import { SendReceiveSection } from '../Common/SendReceive';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 import { fetchTokensInfo } from '../../actions/tokensActions';
 import { getMassagedTokenData } from '../../selectors/tokens';
+import { useEffect } from 'react';
 
 const TOKENS = [
 	{
@@ -14,21 +15,20 @@ const TOKENS = [
 		name: 'Casper Dash',
 		address: 'dac9b9520fbb96d2c50dca5cd99113d19f096cde575407c1b8a457e544338064',
 	},
-	{
-		symbol: 'BTC',
-		name: 'Bitcoin',
-	},
-	{
-		symbol: 'ETH',
-		name: 'Ethereum',
-	},
 ];
 const Tokens = () => {
 	const dispatch = useDispatch();
 	const tokensInfo = useSelector(getMassagedTokenData);
-	const [selectedToken, setSelectedToken] = useState(TOKENS[0] || {});
+	const [selectedToken, setSelectedToken] = useState({});
 	const userDetails = useSelector(getMassagedUserDetails);
 	const publicKey = useSelector(getPublicKey);
+
+	useEffect(() => {
+		if (tokensInfo.length) {
+			const tokenInfo = tokensInfo.find((token) => token.address === selectedToken.address) || tokensInfo[0];
+			setSelectedToken(tokenInfo);
+		}
+	}, [tokensInfo]);
 
 	useAutoRefreshEffect(() => {
 		dispatch(
@@ -42,7 +42,7 @@ const Tokens = () => {
 	const onTokenClick = (address) => {
 		setSelectedToken(tokensInfo.find((token) => token.address === address));
 	};
-	console.log(tokensInfo);
+
 	return (
 		<>
 			<section className="cd_wallets_page">
@@ -69,7 +69,7 @@ const Tokens = () => {
 													<p>{balance && balance.displayValue}</p>
 												</div>
 												<div className="cd_add_token_right_price">
-													<p>$???</p>
+													<p>$--</p>
 												</div>
 											</div>
 										</div>
@@ -85,9 +85,10 @@ const Tokens = () => {
 					<Tab.Content>
 						<SendReceiveSection
 							tokenSymbol={selectedToken.symbol}
-							displayBalance={10}
 							fromAddress={publicKey}
-						></SendReceiveSection>
+							displayBalance={selectedToken.balance && selectedToken.balance.displayValue}
+							minAmount={0}
+						/>
 					</Tab.Content>
 				</Tab.Container>
 			</section>

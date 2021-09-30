@@ -20,9 +20,11 @@ export const validateTransferForm = ({ displayBalance, toAddress, sendAmount, to
 		errors.toAddress = 'Invalid address.';
 	}
 	// send amount
-
-	if (sendAmount < MIN_TRANSFER) {
+	if (sendAmount < minAmount) {
 		errors.sendAmount = `Amount must be at least ${minAmount} ${tokenSymbol}.`;
+	}
+	if (sendAmount <= 0) {
+		errors.sendAmount = `Amount must be more than 0 ${tokenSymbol}.`;
 	}
 	if (!errors.sendAmount && sendAmount > displayBalance) {
 		errors.sendAmount = 'Not enough balance.';

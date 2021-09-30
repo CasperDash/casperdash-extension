@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
-import { validateTransferForm } from '../../helpers/validator';
-import { getSignedTransferDeploy } from '../../services/userServices';
-import { putDeploy } from '.././../actions/deployActions';
-import { deploySelector } from '../../selectors/deploy';
-import { TRANSFER_FEE } from '../../constants/key';
+import { validateTransferForm } from '../../../helpers/validator';
+import { getSignedTransferDeploy } from '../../../services/userServices';
+import { putDeploy } from '../.././../actions/deployActions';
+import { deploySelector } from '../../../selectors/deploy';
+import { TRANSFER_FEE } from '../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -17,6 +17,7 @@ export const SendReceiveSection = ({
 	currentPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
+	transferFee = TRANSFER_FEE,
 }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
@@ -64,7 +65,9 @@ export const SendReceiveSection = ({
 					<div className="cd_send_receive_inner_content">
 						<Formik
 							initialValues={{ sendAmount: minAmount, toAddress: '' }}
-							validate={(values) => validateTransferForm({ ...values, displayBalance, tokenSymbol })}
+							validate={(values) =>
+								validateTransferForm({ ...values, minAmount, displayBalance, tokenSymbol })
+							}
 							onSubmit={handleSubmit}
 						>
 							{({ errors, touched, values, handleChange, setFieldValue, isValid, handleSubmit }) => (
@@ -82,12 +85,14 @@ export const SendReceiveSection = ({
 												fill="#53B9EA"
 											/>
 										</svg>
-										Send {tokenSymbol}
+										Send <span className="cd_send_receive_token_symbol">{tokenSymbol}</span>
 									</h3>
 
 									<div className="cd_send_balance_content">
 										<span className="cd_send_balance_heading">Total Balance</span>
-										<span className="cd_send_balance_value">{displayBalance}</span>
+										<span className="cd_send_balance_value">
+											{displayBalance - values.sendAmount}
+										</span>
 									</div>
 									<div className="cd_send_qr_address">
 										<FormControl
@@ -140,7 +145,7 @@ export const SendReceiveSection = ({
 										<div className="cd_send_currency_text">
 											<p>
 												Network Fee
-												<span>{TRANSFER_FEE} CSPR</span>
+												<span>{transferFee} CSPR</span>
 											</p>
 										</div>
 									</div>

@@ -905,6 +905,7 @@ table {
 		overflow-x: auto;
 		padding-bottom: 15px;
 		.cd_add_token_column {
+			cursor: pointer;
 			max-width: 20%;
 			min-width: 20%;
 		}
@@ -923,6 +924,7 @@ table {
 		}
 	}
 	.cd_add_token_column {
+		cursor: pointer;
 		max-width: 20%;
 		min-width: 20%;
 		flex-basis: auto;
@@ -1655,6 +1657,10 @@ table {
 			svg {
 				margin-right: 11px;
 			}
+			.cd_send_receive_token_symbol {
+				padding-left: 10px;
+				color: $color21;
+			}
 		}
 		.cd_send_balance_content {
 			margin-bottom: 21px;
@@ -2379,6 +2385,7 @@ table {
 				}
 			}
 			.cd_add_token_column.cd_add_token_btn_col {
+				cursor: pointer;
 				max-width: 100%;
 				margin-top: 10px;
 			}
@@ -2482,6 +2489,7 @@ table {
 	.cd_wallets_page {
 		.cd_add_token_row {
 			.cd_add_token_column.cd_add_token_btn_col {
+				cursor: pointer;
 				margin-top: 0;
 			}
 		}
