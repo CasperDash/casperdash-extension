@@ -5,8 +5,8 @@ module.exports = {
 	getTokens: async (req, res) => {
 		try {
 			const { tokenAddress, publicKey } = req.query;
-			if (!tokenAddress || !publicKey) {
-				throw 'error';
+			if (!tokenAddress) {
+				res.json([]);
 			}
 
 			const balances = await getTokensBalanceByPublicKey(tokenAddress, publicKey);

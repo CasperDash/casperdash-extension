@@ -49,12 +49,12 @@ const getListTokenInfo = async (tokenAddressList, stateRootHash) => {
  * @returns {Object} token balance
  */
 const getTokensBalanceByPublicKey = async (tokenAddressList, publicKey) => {
+	const addresses = Array.isArray(tokenAddressList) ? tokenAddressList : [tokenAddressList];
 	try {
 		const stateRootHash = await getStateRootHash();
 		const publicKeyCL = CLPublicKey.fromHex(publicKey);
 		const accountHash = publicKeyCL.toAccountHashStr().replace('account-hash-', '');
 		const balanceKey = `balances_${accountHash}`;
-		const addresses = Array.isArray(tokenAddressList) ? tokenAddressList : [tokenAddressList];
 		return await Promise.all(
 			addresses.map(async (address) => {
 				const formattedAddress = `hash-${address}`;
@@ -71,7 +71,10 @@ const getTokensBalanceByPublicKey = async (tokenAddressList, publicKey) => {
 			}),
 		);
 	} catch (error) {
-		console.error(error);
+		return addresses.map((address) => ({
+			address,
+			balance: 0,
+		}));
 	}
 };
 

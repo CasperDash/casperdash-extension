@@ -29,3 +29,7 @@ export const KEY_MANAGER = {
 export const PRICE = {
 	FETCH_PRIZE_HISTORY: 'PRICE.FETCH_PRIZE_HISTORY',
 };
+
+export const TOKENS = {
+	FETCH_TOKENS_INFO: 'TOKENS.FETCH_TOKENS_INFO',
+};
