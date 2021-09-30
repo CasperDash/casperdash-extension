@@ -17,5 +17,5 @@ module.exports = function (app) {
 	app.route('/deploysStatus').get(deployController.getDeploysStatus);
 	app.route('/getLatestBlockHash').get(deployController.getLatestBlockHash);
 	//Token
-	app.route('/tokens').get(tokenController.getTokens);
+	app.route('/getTokensInfo').get(tokenController.getTokens);
 };
