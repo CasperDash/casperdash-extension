@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import KeyList from './KeyList';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import { getPublicKey, getMassagedUserDetails } from '../../selectors/user';
-import {
-	deploySelector,
-	isKeyManagerContractAvailable,
-	getPendingDeploys,
-	getPendingDeployHashes,
-} from '../../selectors/keyManager';
+import { isKeyManagerContractAvailable, getPendingDeploys, getPendingDeployHashes } from '../../selectors/keyManager';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { getWeightByAccountHash } from '../../helpers/keyManager';
 import {
@@ -30,7 +25,6 @@ import {
 } from '../../actions/keyManagerActions';
 import { DeployConfirmModal } from './ConfirmDeployModal';
 import { AttributeRow } from './AttributeRow';
-import { KEYS_MANAGER_ATTRS } from '../../constants/keysManager';
 
 import { EditModal } from './EditModal';
 
@@ -112,7 +106,11 @@ const KeyManager = () => {
 				</p>
 				<p className="cd_key_manager_contract_confirm_notice">
 					The contract was built based on{' '}
-					<a href="https://github.com/casper-ecosystem/keys-manager" target="_blank">
+					<a
+						href="https://github.com/casper-ecosystem/keys-manager"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						https://github.com/casper-ecosystem/keys-manager.
 					</a>
 				</p>

@@ -1,5 +1,4 @@
 import { CLPublicKey } from 'casper-js-sdk';
-import { MIN_TRANSFER } from '../constants/key';
 
 const isValidPublicKey = (publicKey) => {
 	try {

@@ -28,7 +28,7 @@ const Tokens = () => {
 			const tokenInfo = tokensInfo.find((token) => token.address === selectedToken.address) || tokensInfo[0];
 			setSelectedToken(tokenInfo);
 		}
-	}, [tokensInfo]);
+	}, [tokensInfo, selectedToken.address]);
 
 	useAutoRefreshEffect(() => {
 		dispatch(
@@ -42,6 +42,8 @@ const Tokens = () => {
 	const onTokenClick = (address) => {
 		setSelectedToken(tokensInfo.find((token) => token.address === address));
 	};
+
+	const onAddNewTokenAddress = () => {};
 
 	return (
 		<>
@@ -77,7 +79,7 @@ const Tokens = () => {
 								);
 							})}
 						</div>
-						<div className="cd_add_token_column cd_add_token_btn_col col">
+						<div className="cd_add_token_column cd_add_token_btn_col col" onClick={onAddNewTokenAddress}>
 							<div className="cd_add_token_btn_content">+ Add Token</div>
 						</div>
 					</div>

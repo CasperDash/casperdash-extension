@@ -39,7 +39,6 @@ export const ChartLine = ({ data }) => {
 			{
 				type: 'area',
 				name: 'Price',
-				type: 'datetime',
 				data: data,
 			},
 		],

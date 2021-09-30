@@ -12,7 +12,7 @@ const Layout = (props) => {
 	useEffect(() => {
 		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
 		return () => clearInterval(refreshStateRootHash);
-	}, dispatch);
+	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(fetchPrizeHistory());

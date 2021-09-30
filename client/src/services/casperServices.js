@@ -1,5 +1,5 @@
 import { DeployUtil, Signer } from 'casper-js-sdk';
-import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, TRANSFER_FEE, TESTNET_RPC_URL } from '../constants/key';
+import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, TRANSFER_FEE } from '../constants/key';
 
 /**
  * Get Transfer deploy

@@ -4,12 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { isConnectedCasper, getSignerStatus } from '../../../../selectors/signer';
-import {
-	connectCasper,
-	updateConnectStatus,
-	handleUnlockSigner,
-	handleLockSigner,
-} from '../../../../actions/signerActions';
+import { updateConnectStatus, handleUnlockSigner, handleLockSigner } from '../../../../actions/signerActions';
 import { updatePublicKeyFromSigner, getUserDetails } from '../../../../actions/userActions';
 import { connectCasperSigner } from '../../../../services/casperServices';
 
