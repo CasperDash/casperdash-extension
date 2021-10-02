@@ -44,14 +44,14 @@ export const ConfirmModal = ({
 				<div className="cd_confirm_modal_row">
 					<span className="cd_confirm_modal_label">Amount</span>
 					<span className="cd_confirm_modal_value">
-						{amount} <b>{tokenSymbol}</b>
+						{toFormattedNumber(amount)} <b>{tokenSymbol}</b>
 					</span>
 				</div>
 
 				<div className="cd_confirm_modal_row">
 					<span className="cd_confirm_modal_label">Fee</span>
 					<span className="cd_confirm_modal_value">
-						{fee} <b>CSPR</b>
+						{toFormattedNumber(fee)} <b>CSPR</b>
 					</span>
 				</div>
 				<hr />
@@ -59,7 +59,7 @@ export const ConfirmModal = ({
 					<div className="cd_confirm_modal_row">
 						<span className="cd_confirm_modal_label">Total</span>
 						<span className="cd_confirm_modal_value">
-							{amount + fee} <b>CSPR</b>
+							{toFormattedNumber(amount + fee)} <b>CSPR</b>
 						</span>
 					</div>
 				)}
@@ -68,7 +68,7 @@ export const ConfirmModal = ({
 						<div className="cd_confirm_modal_row">
 							<span className="cd_confirm_modal_label">Total</span>
 							<span className="cd_confirm_modal_value">
-								{amount} <b>{tokenSymbol}</b>
+								{toFormattedNumber(amount)} <b>{tokenSymbol}</b>
 							</span>
 						</div>
 						<div className="cd_confirm_modal_row_single">
