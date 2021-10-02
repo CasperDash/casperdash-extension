@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { toFormattedNumber } from '../../../helpers/format';
 
 export const ConfirmModal = ({
 	show,
@@ -12,7 +13,10 @@ export const ConfirmModal = ({
 	deployHash,
 	deployError,
 	isDeploying,
-	currentPrise,
+	currentPrice,
+	csprPrice,
+	tokenSymbol,
+	isTokenTransfer,
 }) => {
 	return (
 		<Modal
@@ -39,23 +43,52 @@ export const ConfirmModal = ({
 
 				<div className="cd_confirm_modal_row">
 					<span className="cd_confirm_modal_label">Amount</span>
-					<span className="cd_confirm_modal_value">{amount}</span>
+					<span className="cd_confirm_modal_value">
+						{amount} <b>{tokenSymbol}</b>
+					</span>
 				</div>
 
 				<div className="cd_confirm_modal_row">
 					<span className="cd_confirm_modal_label">Fee</span>
-					<span className="cd_confirm_modal_value">{fee}</span>
-				</div>
-				<hr />
-				<div className="cd_confirm_modal_row">
-					<span className="cd_confirm_modal_label">Total</span>
-					<span className="cd_confirm_modal_value">{amount + fee}</span>
-				</div>
-				<div className="cd_confirm_modal_row_single">
 					<span className="cd_confirm_modal_value">
-						${parseFloat((amount + fee) * currentPrise).toFixed(2)}
+						{fee} <b>CSPR</b>
 					</span>
 				</div>
+				<hr />
+				{!isTokenTransfer && (
+					<div className="cd_confirm_modal_row">
+						<span className="cd_confirm_modal_label">Total</span>
+						<span className="cd_confirm_modal_value">
+							{amount + fee} <b>CSPR</b>
+						</span>
+					</div>
+				)}
+				{isTokenTransfer && (
+					<>
+						<div className="cd_confirm_modal_row">
+							<span className="cd_confirm_modal_label">Total</span>
+							<span className="cd_confirm_modal_value">
+								{amount} <b>{tokenSymbol}</b>
+							</span>
+						</div>
+						<div className="cd_confirm_modal_row_single">
+							<span className="cd_confirm_modal_value">
+								{fee} <b>CSPR</b>
+							</span>
+						</div>
+					</>
+				)}
+				{currentPrice && csprPrice && (
+					<div className="cd_confirm_modal_row_single">
+						<span className="cd_confirm_modal_value">
+							{toFormattedNumber(amount * currentPrice + csprPrice * fee, undefined, {
+								style: 'currency',
+								currency: 'USD',
+							})}
+						</span>
+					</div>
+				)}
+
 				{deployHash && (
 					<div className="cd_confirm_modal_row">
 						<span className="cd_confirm_modal_label">Transaction Hash</span>

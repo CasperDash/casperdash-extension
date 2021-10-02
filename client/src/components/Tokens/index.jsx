@@ -14,14 +14,8 @@ import {
 import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
 import { AddTokenModal } from './AddTokenModal';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
+import { toFormattedNumber } from '../../helpers/format';
 
-const TOKENS = [
-	{
-		symbol: 'CDAS',
-		name: 'Casper Dash',
-		address: 'dac9b9520fbb96d2c50dca5cd99113d19f096cde575407c1b8a457e544338064',
-	},
-];
 const Tokens = () => {
 	const dispatch = useDispatch();
 	const tokensInfo = useSelector(getMassagedTokenData);
@@ -101,7 +95,7 @@ const Tokens = () => {
 											<div className="cd_add_token_price">
 												<div className="cd_add_token_left_price">
 													<h3>{symbol}</h3>
-													<p>{balance && balance.displayValue}</p>
+													<p>{balance && toFormattedNumber(balance.displayValue)}</p>
 												</div>
 												<div className="cd_add_token_right_price">
 													<p>$--</p>

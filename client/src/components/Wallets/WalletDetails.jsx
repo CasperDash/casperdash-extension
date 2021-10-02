@@ -10,6 +10,7 @@ import { formatKeyByPrefix } from '../../helpers/key';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { ChartLine } from '../Common/Layout/Chart';
 import { getPriceHistory, getCurrentPrice } from '../../selectors/price';
+import { toFormattedNumber } from '../../helpers/format';
 
 const WalletDetails = ({ name, value }) => {
 	// send btn
@@ -72,9 +73,14 @@ const WalletDetails = ({ name, value }) => {
 						<div className="cd_all_page_comman_total_price">
 							<p className="cd_all_page_total_price_heading">Total Balance</p>
 							<h2 className="cd_all_page_total_price_text">
-								{displayBalance}{' '}
+								{toFormattedNumber(displayBalance)}{' '}
 								<span className="cd_all_page_total_price_value">
-									(${parseFloat(displayBalance * currentPrice).toFixed(2)})
+									(
+									{toFormattedNumber(displayBalance * currentPrice, undefined, {
+										style: 'currency',
+										currency: 'USD',
+									})}
+									)
 								</span>
 							</h2>
 						</div>
@@ -116,7 +122,7 @@ const WalletDetails = ({ name, value }) => {
 					handleToggle={handleToggle}
 					displayBalance={displayBalance}
 					fromAddress={publicKey}
-					currentPrice={currentPrice}
+					csprPrice={currentPrice}
 				/>
 				<div className="cd_transaction_list">
 					<h3 className="cd_transaction_list_main_heading">

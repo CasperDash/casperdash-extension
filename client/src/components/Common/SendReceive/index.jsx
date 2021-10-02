@@ -9,12 +9,14 @@ import { putDeploy } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
 import { TRANSFER_FEE } from '../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
+import { toFormattedNumber } from '../../../helpers/format';
 
 export const SendReceiveSection = ({
 	handleToggle,
 	displayBalance = 0,
 	fromAddress,
 	currentPrice,
+	csprPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
 	transferFee = TRANSFER_FEE,
@@ -25,7 +27,7 @@ export const SendReceiveSection = ({
 	const [signedError, setSignerError] = useState(null);
 	const [deployHash, setDeployHash] = useState(null);
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-
+	const isTokenTransfer = tokenSymbol !== 'CSPR';
 	const setBalance = (percent, setFieldValue) => {
 		const amount = displayBalance / percent;
 		setFieldValue('sendAmount', amount);
@@ -91,7 +93,7 @@ export const SendReceiveSection = ({
 									<div className="cd_send_balance_content">
 										<span className="cd_send_balance_heading">Total Balance</span>
 										<span className="cd_send_balance_value">
-											{displayBalance - values.sendAmount}
+											{toFormattedNumber(displayBalance - values.sendAmount)}
 										</span>
 									</div>
 									<div className="cd_send_qr_address">
@@ -222,10 +224,13 @@ export const SendReceiveSection = ({
 				onConfirm={onConfirmTransaction}
 				{...transactionDetails}
 				fee={TRANSFER_FEE}
-				currentPrise={currentPrice}
+				csprPrice={csprPrice}
 				deployHash={deployHash}
 				deployError={deployHash ? '' : deployError || signedError}
 				isDeploying={isDeploying}
+				tokenSymbol={tokenSymbol}
+				isTokenTransfer={isTokenTransfer}
+				currentPrice={isTokenTransfer ? currentPrice : csprPrice}
 			/>
 		</div>
 	);

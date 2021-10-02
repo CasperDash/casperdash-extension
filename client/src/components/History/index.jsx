@@ -5,6 +5,7 @@ import { Tab, Nav } from 'react-bootstrap';
 import { getMassagedUserDetails } from '../../selectors/user';
 import AllList from '../Common/Layout/TransactionList/AllTransactionList';
 import { getCurrentPrice } from '../../selectors/price';
+import { toFormattedNumber } from '../../helpers/format';
 
 const PortfolioModule = () => {
 	const userDetails = useSelector(getMassagedUserDetails);
@@ -36,10 +37,15 @@ const PortfolioModule = () => {
 									<div className="cd_add_token_price">
 										<div className="cd_add_token_left_price">
 											<h3>CSPR</h3>
-											<p>{displayBalance}</p>
+											<p>{toFormattedNumber(displayBalance)}</p>
 										</div>
 										<div className="cd_add_token_right_price">
-											<p>${displayBalance * currentPrice}</p>
+											<p>
+												{toFormattedNumber(displayBalance * currentPrice, undefined, {
+													style: 'currency',
+													currency: 'USD',
+												})}
+											</p>
 										</div>
 									</div>
 								</Nav.Link>
