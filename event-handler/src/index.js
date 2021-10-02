@@ -1,8 +1,5 @@
 console.log('-- Welcome to casper event handler --');
 const { EventName, EventStream } = require('casper-js-sdk');
-const stream = require('stream');
-const { promisify } = require('util');
-const got = require('got');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/eh-config.json')[env];
