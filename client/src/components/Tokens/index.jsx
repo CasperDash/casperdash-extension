@@ -117,6 +117,7 @@ const Tokens = () => {
 							fromAddress={publicKey}
 							displayBalance={selectedToken.balance && selectedToken.balance.displayValue}
 							minAmount={0}
+							tokenInfo={selectedToken}
 						/>
 					</Tab.Content>
 				</Tab.Container>

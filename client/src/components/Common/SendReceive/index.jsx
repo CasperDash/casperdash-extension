@@ -10,6 +10,7 @@ import { deploySelector } from '../../../selectors/deploy';
 import { TRANSFER_FEE } from '../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 import { toFormattedNumber } from '../../../helpers/format';
+import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
 
 export const SendReceiveSection = ({
 	handleToggle,
@@ -20,6 +21,7 @@ export const SendReceiveSection = ({
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
 	transferFee = TRANSFER_FEE,
+	tokenInfo,
 }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
@@ -34,7 +36,9 @@ export const SendReceiveSection = ({
 	};
 
 	const onConfirmTransaction = async () => {
-		const signedDeploy = await getSignedTransferDeploy(transactionDetails);
+		const signedDeploy = !isTokenTransfer
+			? await getSignedTransferDeploy(transactionDetails)
+			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
