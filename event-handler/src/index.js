@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/eh-config.json')[env];
 
 const Storage = require('./storage');
-const models = require('../src/models/index');
+const models = require('../../common/models/index');
 
 if (env === 'production') {
 	(async () => {
