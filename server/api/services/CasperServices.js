@@ -18,9 +18,7 @@ const getLatestBlockHash = async () => {
 
 const putDeploy = async (deployJson) => {
 	try {
-		console.log('deployJson', deployJson);
 		const deploy = DeployUtil.deployFromJson(deployJson);
-		console.log(deploy);
 		const hash = await casperClient.putDeploy(deploy.val);
 		return hash;
 	} catch (error) {
@@ -49,7 +47,7 @@ const getDeploysResult = async (deployHash) => {
 			return deployJson;
 		}),
 	);
-	console.log(deploys);
+
 	return deploys;
 };
 

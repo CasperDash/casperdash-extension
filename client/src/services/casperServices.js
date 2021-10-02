@@ -1,5 +1,5 @@
-import { DeployUtil, Signer } from 'casper-js-sdk';
-import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, TRANSFER_FEE } from '../constants/key';
+import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
+import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, TRANSFER_FEE, DEPLOY_TTL_MS } from '../constants/key';
 
 /**
  * Get Transfer deploy
@@ -40,6 +40,29 @@ export const signDeploy = async (deploy, mainAccountHex, setAccountHex) => {
 	const deployObj = DeployUtil.deployToJson(deploy);
 	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
 	return signedDeploy;
+};
+
+/**
+ * Get Transfer Token deploy
+ * @param {CLPublicKey} fromAccount from account public key
+ * @param {CLPublicKey} toAccount to account public key
+ * @param {Number} amount transfer amount
+ * @param {String} contractHash token contract hash
+ * @returns {Deploy} transfer deploy
+ */
+export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash) => {
+	const contractHashAsByteArray = [...Buffer.from(contractHash, 'hex')];
+	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME, 1, DEPLOY_TTL_MS);
+	const transferParams = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
+		contractHashAsByteArray,
+		'transfer',
+		RuntimeArgs.fromMap({
+			amount: CLValueBuilder.u256(amount),
+			recipient: CLValueBuilder.byteArray(toAccount.toAccountHash()),
+		}),
+	);
+	const payment = DeployUtil.standardPayment(1 * MOTE_RATE);
+	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };
 
 export const connectCasperSigner = () => {

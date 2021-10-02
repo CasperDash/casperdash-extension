@@ -18,10 +18,8 @@ const getKeyManagerDeploy = async () => {
 };
 
 const deployKeyManagerContract = async (signedDeploy) => {
-	console.log('signedDeploy', signedDeploy);
 	const keyManagerDeploy = await getKeyManagerDeploy();
 	const deployJson = { deploy: { ...signedDeploy.deploy, session: keyManagerDeploy.deploy.session } };
-	console.log('deployJson.deploy.session', deployJson.deploy.session);
 	const hash = await putDeploy(deployJson);
 	return hash;
 };

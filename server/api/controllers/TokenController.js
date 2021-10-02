@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { getTokensBalanceByPublicKey, getListTokenInfo } = require('../services/TokenServices');
+const { getTokensBalanceByPublicKey, getListTokenInfo, getTokenInfo } = require('../services/TokenServices');
 
 module.exports = {
 	getTokens: async (req, res) => {
@@ -10,10 +10,18 @@ module.exports = {
 			}
 
 			const balances = await getTokensBalanceByPublicKey(tokenAddress, publicKey);
-			const tokenInfo = await getListTokenInfo(tokenAddress);
-
-			res.json(_.merge(balances, tokenInfo));
+			const tokensInfo = await getListTokenInfo(tokenAddress);
+			res.json(_.merge(balances, tokensInfo).filter((token) => token.name));
 		} catch (err) {
+			res.json(err);
+		}
+	},
+	getToken: async (req, res) => {
+		try {
+			const { tokenAddress } = req.params;
+			const tokenInfo = await getTokenInfo(tokenAddress);
+			res.json(tokenInfo);
+		} catch (error) {
 			res.json(err);
 		}
 	},

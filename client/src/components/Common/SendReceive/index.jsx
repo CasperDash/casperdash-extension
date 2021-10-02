@@ -9,15 +9,19 @@ import { putDeploy } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
 import { TRANSFER_FEE } from '../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
+import { toFormattedNumber } from '../../../helpers/format';
+import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
 
 export const SendReceiveSection = ({
 	handleToggle,
 	displayBalance = 0,
 	fromAddress,
 	currentPrice,
+	csprPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
 	transferFee = TRANSFER_FEE,
+	tokenInfo,
 }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
@@ -25,14 +29,16 @@ export const SendReceiveSection = ({
 	const [signedError, setSignerError] = useState(null);
 	const [deployHash, setDeployHash] = useState(null);
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-
+	const isTokenTransfer = tokenSymbol !== 'CSPR';
 	const setBalance = (percent, setFieldValue) => {
 		const amount = displayBalance / percent;
 		setFieldValue('sendAmount', amount);
 	};
 
 	const onConfirmTransaction = async () => {
-		const signedDeploy = await getSignedTransferDeploy(transactionDetails);
+		const signedDeploy = !isTokenTransfer
+			? await getSignedTransferDeploy(transactionDetails)
+			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
@@ -91,7 +97,7 @@ export const SendReceiveSection = ({
 									<div className="cd_send_balance_content">
 										<span className="cd_send_balance_heading">Total Balance</span>
 										<span className="cd_send_balance_value">
-											{displayBalance - values.sendAmount}
+											{toFormattedNumber(displayBalance - values.sendAmount)}
 										</span>
 									</div>
 									<div className="cd_send_qr_address">
@@ -222,10 +228,13 @@ export const SendReceiveSection = ({
 				onConfirm={onConfirmTransaction}
 				{...transactionDetails}
 				fee={TRANSFER_FEE}
-				currentPrise={currentPrice}
+				csprPrice={csprPrice}
 				deployHash={deployHash}
 				deployError={deployHash ? '' : deployError || signedError}
 				isDeploying={isDeploying}
+				tokenSymbol={tokenSymbol}
+				isTokenTransfer={isTokenTransfer}
+				currentPrice={isTokenTransfer ? currentPrice : csprPrice}
 			/>
 		</div>
 	);

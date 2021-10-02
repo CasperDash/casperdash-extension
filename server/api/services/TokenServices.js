@@ -10,15 +10,17 @@ const { ERC20_TOKEN_ATTRS } = require('../../constants');
  */
 const getTokenInfo = async (contractAddress, stateRootHash) => {
 	try {
+		const rootHash = stateRootHash || (await getStateRootHash());
 		const formattedAddressHash = `hash-${contractAddress}`;
 		const tokenInfo = await Promise.all(
 			ERC20_TOKEN_ATTRS.map(async (attr) => {
-				return { [attr]: await getStateKeyValue(stateRootHash, formattedAddressHash, attr) };
+				return { [attr]: await getStateKeyValue(rootHash, formattedAddressHash, attr) };
 			}),
 		);
 		return tokenInfo.reduce((out, tokenAttr) => ({ ...out, ...tokenAttr }), { address: contractAddress });
 	} catch (err) {
-		throw err;
+		console.error(err);
+		return {};
 	}
 };
 
@@ -33,12 +35,14 @@ const getListTokenInfo = async (tokenAddressList, stateRootHash) => {
 		const addresses = Array.isArray(tokenAddressList) ? tokenAddressList : [tokenAddressList];
 		const rootHash = stateRootHash || (await getStateRootHash());
 		return await Promise.all(
-			addresses.map(async (address) => {
-				return await getTokenInfo(address, rootHash);
-			}),
+			addresses
+				.filter((addr) => addr)
+				.map(async (address) => {
+					return await getTokenInfo(address, rootHash);
+				}),
 		);
 	} catch (err) {
-		throw err;
+		console.log(err);
 	}
 };
 
@@ -56,19 +60,21 @@ const getTokensBalanceByPublicKey = async (tokenAddressList, publicKey) => {
 		const accountHash = publicKeyCL.toAccountHashStr().replace('account-hash-', '');
 		const balanceKey = `balances_${accountHash}`;
 		return await Promise.all(
-			addresses.map(async (address) => {
-				const formattedAddress = `hash-${address}`;
-				let balance;
-				try {
-					balance = await getStateKeyValue(stateRootHash, formattedAddress, balanceKey);
-				} catch (error) {
-					balance = 0;
-				}
-				return {
-					address: address,
-					balance,
-				};
-			}),
+			addresses
+				.filter((addr) => addr)
+				.map(async (address) => {
+					const formattedAddress = `hash-${address}`;
+					let balance;
+					try {
+						balance = await getStateKeyValue(stateRootHash, formattedAddress, balanceKey);
+					} catch (error) {
+						balance = 0;
+					}
+					return {
+						address: address,
+						balance,
+					};
+				}),
 		);
 	} catch (error) {
 		return addresses.map((address) => ({

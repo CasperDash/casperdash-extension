@@ -2363,6 +2363,40 @@ table {
 	}
 }
 
+.cd_add_token_modal_content {
+	.cd_add_token_modal_header {
+		color: $color3;
+	}
+	.cd_add_token_modal_body {
+		.cd_add_token_modal_row {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			flex-basis: auto;
+			padding: 10px;
+			flex-wrap: wrap;
+			.cd_add_token_modal_label {
+				flex-grow: 1;
+				color: $color3;
+			}
+			.cd_add_token_modal_value {
+				flex-grow: 2;
+				color: $color12;
+				input {
+					width: 100%;
+				}
+			}
+		}
+	}
+	.cd_add_token_modal_footer {
+		justify-content: space-between !important;
+		flex-basis: auto;
+		.cd_add_token_modal_error {
+			color: $color32;
+		}
+	}
+}
+
 @media (max-width: 1350px) {
 	.cd_add_token_row {
 		.cd_add_token_column {

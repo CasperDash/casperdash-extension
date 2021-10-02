@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import { Tab } from 'react-bootstrap';
 import { SendReceiveSection } from '../Common/SendReceive';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
-import { fetchTokensInfo } from '../../actions/tokensActions';
-import { getMassagedTokenData } from '../../selectors/tokens';
-import { useEffect } from 'react';
+import {
+	fetchTokensInfoWithBalance,
+	getTokenInfo,
+	addCustomTokenAddressToLocalStorage,
+	getTokenAddressFromLocalStorage,
+} from '../../actions/tokensActions';
+import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
+import { AddTokenModal } from './AddTokenModal';
+import { MessageModal } from '../Common/Layout/Modal/MessageModal';
+import { toFormattedNumber } from '../../helpers/format';
 
-const TOKENS = [
-	{
-		symbol: 'CDAS',
-		name: 'Casper Dash',
-		address: 'dac9b9520fbb96d2c50dca5cd99113d19f096cde575407c1b8a457e544338064',
-	},
-];
 const Tokens = () => {
 	const dispatch = useDispatch();
 	const tokensInfo = useSelector(getMassagedTokenData);
+	const tokensAddressList = useSelector(getTokensAddressList);
+	console.log(tokensInfo);
 	const [selectedToken, setSelectedToken] = useState({});
+	const [showAddTokenModal, setShowAddTokenModal] = useState(false);
+	const [addTokenError, setAddTokenError] = useState('');
+	const [showError, setShowError] = useState(false);
+
 	const userDetails = useSelector(getMassagedUserDetails);
 	const publicKey = useSelector(getPublicKey);
+
+	useEffect(() => {
+		if (publicKey) {
+			dispatch(getTokenAddressFromLocalStorage(publicKey));
+		}
+	}, [publicKey, dispatch]);
 
 	useEffect(() => {
 		if (tokensInfo.length) {
@@ -31,19 +43,34 @@ const Tokens = () => {
 	}, [tokensInfo, selectedToken.address]);
 
 	useAutoRefreshEffect(() => {
-		dispatch(
-			fetchTokensInfo(
-				TOKENS.map((token) => token.address).filter((addr) => addr),
-				publicKey,
-			),
-		);
-	}, [publicKey]);
+		dispatch(fetchTokensInfoWithBalance(tokensAddressList, publicKey));
+	}, [publicKey, JSON.stringify(tokensAddressList)]);
 
 	const onTokenClick = (address) => {
 		setSelectedToken(tokensInfo.find((token) => token.address === address));
 	};
 
-	const onAddNewTokenAddress = () => {};
+	// Token modal
+	const onAddNewTokenAddress = () => {
+		if (!publicKey) {
+			setShowError(true);
+		} else {
+			setShowAddTokenModal(true);
+		}
+	};
+
+	const onCloseTokenModal = () => {
+		setShowAddTokenModal(false);
+	};
+
+	const handleAddToken = async (tokenAddress) => {
+		const { data, error } = await dispatch(getTokenInfo(tokenAddress));
+		if (error) {
+			setAddTokenError(error);
+		} else {
+			data.name && dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
+		}
+	};
 
 	return (
 		<>
@@ -68,7 +95,7 @@ const Tokens = () => {
 											<div className="cd_add_token_price">
 												<div className="cd_add_token_left_price">
 													<h3>{symbol}</h3>
-													<p>{balance && balance.displayValue}</p>
+													<p>{balance && toFormattedNumber(balance.displayValue)}</p>
 												</div>
 												<div className="cd_add_token_right_price">
 													<p>$--</p>
@@ -90,9 +117,22 @@ const Tokens = () => {
 							fromAddress={publicKey}
 							displayBalance={selectedToken.balance && selectedToken.balance.displayValue}
 							minAmount={0}
+							tokenInfo={selectedToken}
 						/>
 					</Tab.Content>
 				</Tab.Container>
+				<AddTokenModal
+					show={showAddTokenModal}
+					handleClose={onCloseTokenModal}
+					handleAddToken={handleAddToken}
+					error={addTokenError}
+				/>
+				<MessageModal
+					type="Error"
+					message="Unlock your Signer!"
+					show={showError}
+					handleClose={() => setShowError(false)}
+				/>
 			</section>
 		</>
 	);
