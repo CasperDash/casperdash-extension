@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { Tab } from 'react-bootstrap';
+import { Tab, Table } from 'react-bootstrap';
 import { SendReceiveSection } from '../Common/SendReceive';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 import {
@@ -79,7 +79,7 @@ const Tokens = () => {
 				<Tab.Container id="left-tabs-example" defaultActiveKey="tab1">
 					<div className="cd_add_token_content cd_add_token_row row">
 						<div className="cd_currency_column_sub_row">
-							{tokensInfo.map(({ symbol, address, balance }) => {
+							{tokensInfo.map(({ symbol, address, balance, name, total_supply }) => {
 								const isSelected = selectedToken.address === address;
 								return (
 									<div
@@ -110,7 +110,44 @@ const Tokens = () => {
 							<div className="cd_add_token_btn_content">+ Add Token</div>
 						</div>
 					</div>
-
+					<div className="cd_setting_list">
+						<div className="cd_setting_list_items">
+							<div className="cd_setting_items_heading_peregraph">
+								<h3>Token Info</h3>
+								<Table className="cd_account_info_table">
+									<tbody>
+										<tr>
+											<td>Name</td>
+											<td>
+												<span>{selectedToken.name}</span>
+											</td>
+										</tr>
+										<tr>
+											<td>Symbol</td>
+											<td>
+												<span>{selectedToken.symbol}</span>
+											</td>
+										</tr>
+										<tr>
+											<td>Address</td>
+											<td>
+												<span>{selectedToken.address}</span>
+											</td>
+										</tr>
+										<tr>
+											<td>Total Supply</td>
+											<td>
+												{toFormattedNumber(
+													selectedToken.total_supply &&
+														selectedToken.total_supply.displayValue,
+												)}
+											</td>
+										</tr>
+									</tbody>
+								</Table>
+							</div>
+						</div>
+					</div>
 					<Tab.Content>
 						<SendReceiveSection
 							tokenSymbol={selectedToken.symbol}

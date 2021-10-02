@@ -28,7 +28,10 @@ export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) =>
 						: { displayValue: datum.balance },
 				total_supply: {
 					...datum.total_supply,
-					displayValue: datum.total_supply && datum.total_supply.hex ? parseInt(datum.total_supply.hex) : 0,
+					displayValue:
+						datum.total_supply && datum.total_supply.hex
+							? parseInt(datum.total_supply.hex / 10 ** decimals)
+							: 0,
 				},
 				decimals: {
 					...datum.decimals,
