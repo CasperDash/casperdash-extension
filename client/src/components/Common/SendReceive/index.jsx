@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getSignedTransferDeploy } from '../../../services/userServices';
-import { putDeploy } from '../.././../actions/deployActions';
+import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
@@ -42,6 +42,16 @@ export const SendReceiveSection = ({
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
+			dispatch(
+				pushTransferToLocalStorage(fromAddress, {
+					...transactionDetails,
+					deployHash: hash.deployHash,
+					status: 'pending',
+					timestamp: signedDeploy.deploy.header.timestamp,
+					...tokenInfo,
+					symbol: tokenSymbol,
+				}),
+			);
 		} else {
 			setSignerError(signedDeploy.error.message);
 		}

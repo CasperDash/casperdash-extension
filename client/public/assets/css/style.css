@@ -1694,6 +1694,9 @@ table td {
 .cd_transaction_list_table .cd_transaction_failed::before {
   background: #E2507A;
 }
+.cd_transaction_list_table .cd_transaction_pending::before {
+  background: #F9A22A;
+}
 .cd_transaction_list_table .cd_transaction_list_type img {
   width: 22px;
   height: 22px;

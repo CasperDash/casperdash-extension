@@ -10,3 +10,8 @@ export const getLatestBlockHash = createSelector(
 	getLatestBlockHashSelector,
 	({ data }) => (data && data.latestBlockHash) || '',
 );
+
+export const getTransfersDeploy = ({ deploys = {} }) => {
+	console.log(deploys);
+	return deploys.transfers || [];
+};

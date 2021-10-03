@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AllTransactionList from '../Common/Layout/TransactionList/AllTransactionList';
@@ -11,8 +10,11 @@ import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { ChartLine } from '../Common/Layout/Chart';
 import { getPriceHistory, getCurrentPrice } from '../../selectors/price';
 import { toFormattedNumber } from '../../helpers/format';
+import { getTransfersFromLocalStorage } from '../../actions/deployActions';
+import { getTransfersDeploy } from '../../selectors/deploy';
 
 const WalletDetails = ({ name, value }) => {
+	const dispatch = useDispatch();
 	// send btn
 	const [send, setSend] = useState(false);
 	const [showError, setShowError] = useState(false);
@@ -20,6 +22,7 @@ const WalletDetails = ({ name, value }) => {
 	const publicKey = useSelector(getPublicKey);
 	const priceHistory = useSelector(getPriceHistory);
 	const currentPrice = useSelector(getCurrentPrice);
+	const transfersDeployList = useSelector(getTransfersDeploy);
 
 	const handleToggle = () => {
 		if (publicKey) {
@@ -28,6 +31,10 @@ const WalletDetails = ({ name, value }) => {
 			setShowError(true);
 		}
 	};
+
+	useEffect(() => {
+		dispatch(getTransfersFromLocalStorage(publicKey));
+	}, [dispatch, publicKey]);
 
 	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
 
@@ -129,7 +136,7 @@ const WalletDetails = ({ name, value }) => {
 						Transaction
 						<Link to={'/history'}>See All</Link>
 					</h3>
-					<AllTransactionList value={value} />
+					<AllTransactionList value={value} transfersDeployList={transfersDeployList} />
 				</div>
 			</div>
 			<MessageModal

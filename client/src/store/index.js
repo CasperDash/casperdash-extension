@@ -8,6 +8,7 @@ import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
 import tokensReducer from './reducers/tokens';
+import deployReducer from './reducers/deploys';
 
 export const initialState = {
 	user: {
@@ -22,6 +23,9 @@ export const initialState = {
 	keysManager: {},
 	tokens: {
 		address: [],
+	},
+	deploys: {
+		transfers: [],
 	},
 };
 
@@ -39,6 +43,7 @@ const main = combineReducers({
 	keysManager: keysManagerReducer,
 	tokens: tokensReducer,
 	requests: requestsReducer,
+	deploys: deployReducer,
 });
 
 const logger = (store) => (next) => (action) => {
