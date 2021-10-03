@@ -898,6 +898,13 @@ table {
 	margin-right: -10px;
 }
 .cd_add_token_row {
+	.cd_currency_column_sub_row_full {
+		display: flex;
+		min-width: 100%;
+		max-width: 100%;
+		overflow-x: scroll;
+		padding-bottom: 15px;
+	}
 	.cd_currency_column_sub_row {
 		display: flex;
 		min-width: 80%;

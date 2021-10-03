@@ -1,4 +1,4 @@
-@import "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap";
+@import 'https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap';
 /* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
@@ -10,7 +10,7 @@ body {
 }
 
 .cd_page_dark_mode {
-  background: linear-gradient(180deg, #3D476A -100%, #252F47 100%);
+  background: linear-gradient(180deg, #3d476a -100%, #252f47 100%);
   min-height: 100vh;
 }
 
@@ -69,14 +69,14 @@ ul {
 }
 .cd_all_pages_content .react-datepicker__input-container input {
   background: transparent;
-  border: 1px solid #3A4562;
+  border: 1px solid #3a4562;
   border-radius: 4px;
   outline: 0;
   padding: 8px 35px 8px 16px;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.25px;
-  color: #C0C3CC;
+  color: #c0c3cc;
   position: relative;
   z-index: 9;
   font-weight: 600;
@@ -95,7 +95,7 @@ ul {
   display: none;
 }
 .cd_all_pages_content .react-datepicker {
-  background: linear-gradient(210.96deg, #2A314D 0.01%, #212840 42.05%, #20233D 104.81%);
+  background: linear-gradient(210.96deg, #2a314d 0.01%, #212840 42.05%, #20233d 104.81%);
   box-shadow: 0px 48px 69px rgba(23, 18, 43, 0.85);
   border: 0;
   font-family: "Montserrat", sans-serif !important;
@@ -105,29 +105,29 @@ ul {
   border: 0;
 }
 .cd_all_pages_content .react-datepicker__current-month {
-  color: #C0C3CC;
+  color: #c0c3cc;
   font-weight: 400;
 }
 .cd_all_pages_content .react-datepicker-time__header {
-  color: #C0C3CC;
+  color: #c0c3cc;
   font-weight: 400;
 }
 .cd_all_pages_content .react-datepicker-year-header {
-  color: #C0C3CC;
+  color: #c0c3cc;
   font-weight: 400;
 }
 .cd_all_pages_content .react-datepicker__day-name {
-  color: #C0C3CC;
+  color: #c0c3cc;
 }
 .cd_all_pages_content .react-datepicker__day {
-  color: #C0C3CC;
+  color: #c0c3cc;
 }
 .cd_all_pages_content .react-datepicker__day:hover {
   color: #000;
   background: #fff;
 }
 .cd_all_pages_content .react-datepicker__time-name {
-  color: #C0C3CC;
+  color: #c0c3cc;
 }
 .cd_all_pages_content .react-datepicker__day--keyboard-selected {
   background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
@@ -225,7 +225,7 @@ ul {
 
 .cd_all_page_comman_content {
   padding: 32px;
-  border: 1px solid #3A4562;
+  border: 1px solid #3a4562;
   border-radius: 4px;
 }
 
@@ -234,7 +234,7 @@ ul {
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  color: #C0C3CC;
+  color: #c0c3cc;
 }
 
 input::-webkit-outer-spin-button {
@@ -285,13 +285,13 @@ table td {
   margin-right: 5px;
 }
 .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:first-child[title="1"] {
-  background: #C4C4C4;
+  background: #c4c4c4;
 }
 .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="2"] {
-  background: #C4C4C4;
+  background: #c4c4c4;
 }
 .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(3)[title="3"] {
-  background: #C4C4C4;
+  background: #c4c4c4;
 }
 .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="1"] {
   background: #c4c4c499;
@@ -314,14 +314,14 @@ table td {
 .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_peregraph {
   font-size: 13px;
   line-height: 16px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 47px;
   text-align: center;
   order: 4;
 }
 .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_step_btns {
   margin: 0 auto;
-  background: #828CAE;
+  background: #828cae;
   border-radius: 10px;
   display: block;
   max-width: 180px;
@@ -331,7 +331,7 @@ table td {
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
-  color: #252F47;
+  color: #252f47;
   text-align: center;
   text-decoration: none;
   outline: 0;
@@ -355,7 +355,7 @@ table td {
   font-weight: 600;
   font-size: 13px;
   line-height: 16px;
-  color: #828CAE;
+  color: #828cae;
   margin-top: 21px;
   text-align: center;
   order: 6;
@@ -406,7 +406,7 @@ table td {
 .cd_login_section .cd_login_content .cd_login_heading_text .cd_login_heading {
   font-size: 17px;
   line-height: 21px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.7;
   margin-bottom: 14px;
 }
@@ -415,7 +415,7 @@ table td {
   font-size: 12px;
   line-height: 15px;
   text-align: center;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 17px;
 }
 .cd_login_section .cd_login_content .cd_login_row {
@@ -456,7 +456,7 @@ table td {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 15px;
 }
 .cd_login_section .cd_login_content .cd_login_input_content .cd_login_input {
@@ -475,14 +475,14 @@ table td {
   padding-top: 60px;
 }
 .cd_login_section .cd_login_content .cd_login_btn a {
-  background: #828CAE;
+  background: #828cae;
   border-radius: 10px;
   padding: 16px 28px;
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
   text-align: center;
-  color: #252F47;
+  color: #252f47;
   max-width: 180px;
   display: block;
   text-decoration: none;
@@ -521,10 +521,10 @@ table td {
   font-weight: 600;
   font-size: 12px;
   line-height: 15px;
-  color: #FFFFFF;
-  background: linear-gradient(136.67deg, #FF409A 8.34%, #C438EF 95.26%);
+  color: #ffffff;
+  background: linear-gradient(136.67deg, #ff409a 8.34%, #c438ef 95.26%);
   opacity: 0.8;
-  box-shadow: 0px 4px 31px #BA1358;
+  box-shadow: 0px 4px 31px #ba1358;
   border-radius: 14px;
   border: 0;
   margin-right: 25px;
@@ -536,20 +536,20 @@ table td {
   display: none;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .show > .btn-primary.dropdown-toggle:focus {
-  box-shadow: 0px 4px 31px #BA1358;
+  box-shadow: 0px 4px 31px #ba1358;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .btn-primary:not(:disabled):not(.disabled):active:focus {
-  box-shadow: 0px 4px 31px #BA1358;
+  box-shadow: 0px 4px 31px #ba1358;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_all_page_logout_btn {
   font-weight: 600;
   font-size: 13px;
   line-height: 16px;
-  color: #828CAE;
+  color: #828cae;
   text-decoration: none;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu {
-  background: linear-gradient(210.96deg, #2A314D 0.01%, #212840 42.05%, #20233D 104.81%);
+  background: linear-gradient(210.96deg, #2a314d 0.01%, #212840 42.05%, #20233d 104.81%);
   box-shadow: 0px 48px 69px rgba(23, 18, 43, 0.845335);
   backdrop-filter: blur(20px);
   border-radius: 10px;
@@ -568,7 +568,7 @@ table td {
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  color: #C0C3CC;
+  color: #c0c3cc;
   padding: 0 25px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list {
@@ -624,34 +624,34 @@ table td {
   font-weight: bold;
   font-size: 15px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.8;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list div.cd_all_page_notification_user_img.cd_user_green_bg {
-  background: linear-gradient(213.66deg, #16B4EB 4.85%, #23E73C 119.17%);
+  background: linear-gradient(213.66deg, #16b4eb 4.85%, #23e73c 119.17%);
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list div.cd_all_page_notification_user_img.cd_user_pink_bg {
-  background: linear-gradient(136.67deg, #FF409A 8.34%, #C438EF 95.26%);
+  background: linear-gradient(136.67deg, #ff409a 8.34%, #c438ef 95.26%);
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_heading {
   font-weight: bold;
   font-size: 14px;
   line-height: 17px;
-  color: #C0C3CC;
+  color: #c0c3cc;
   opacity: 0.7;
   margin-bottom: 7px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_heading span {
   font-size: 11px;
   line-height: 13px;
-  color: #828CAE;
+  color: #828cae;
   padding-left: 9px;
   font-weight: 500;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_peregraph {
   font-size: 12px;
   line-height: 15px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 9px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_price {
@@ -662,14 +662,14 @@ table td {
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_price p {
   font-size: 13px;
   line-height: 16px;
-  color: #50E3C2;
+  color: #50e3c2;
   margin-bottom: 0;
   margin-right: auto;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_price p span {
   font-size: 12px;
   line-height: 15px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.2;
   font-weight: bold;
   margin-left: 6px;
@@ -685,12 +685,12 @@ table td {
   font-size: 12px;
   line-height: 15px;
   text-decoration-line: underline;
-  color: #53B9EA;
+  color: #53b9ea;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_time {
   font-size: 11px;
   line-height: 13px;
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_more_list_btn {
   text-align: center;
@@ -700,7 +700,7 @@ table td {
   text-decoration: none;
   font-size: 12px;
   line-height: 14px;
-  color: #53B9EA;
+  color: #53b9ea;
 }
 .cd_all_page_heading_section .cd_all_page_heading {
   margin-right: 15px;
@@ -709,7 +709,7 @@ table td {
   font-weight: 600;
   font-size: 30px;
   line-height: 37px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.9;
   font-style: normal;
   margin-bottom: 6px;
@@ -717,7 +717,7 @@ table td {
 .cd_all_page_heading_section .cd_all_page_heading p {
   font-size: 13px;
   line-height: 16px;
-  color: #828CAE;
+  color: #828cae;
   margin: 0;
 }
 
@@ -727,8 +727,8 @@ table td {
 }
 
 .cd_btn_primary_active {
-  background-color: #53B9EA !important;
-  border-color: #53B9EA !important;
+  background-color: #53b9ea !important;
+  border-color: #53b9ea !important;
 }
 
 .cd_currency_icon {
@@ -759,18 +759,18 @@ table td {
 .cd_chart_box_heading_date .cd_chart_box_heading {
   font-weight: 600;
   font-size: 24px;
-  color: #C0C3CC;
+  color: #c0c3cc;
   margin-right: auto;
   margin-bottom: 0;
 }
 .cd_chart_box_heading_date .cd_chart_box_heading .cd_current_price {
   font-weight: 500;
   font-size: 20px;
-  color: #828CAE;
+  color: #828cae;
 }
 
 .cd_dashboard_chart tspan {
-  fill: #828CAE;
+  fill: #828cae;
   font-weight: 600;
   font-size: 12px;
   font-family: "Montserrat", sans-serif !important;
@@ -787,19 +787,19 @@ table td {
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.4px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 0;
 }
 .cd_all_page_comman_total_price .cd_all_page_total_price_text {
   font-weight: 600;
   font-size: 24px;
   line-height: 132%;
-  color: #C0C3CC;
+  color: #c0c3cc;
   margin-bottom: 8px;
   word-break: break-all;
 }
 .cd_all_page_comman_total_price .cd_all_page_total_price_text .cd_all_page_total_price_value {
-  color: #828CAE;
+  color: #828cae;
   font-size: 20px;
   font-weight: 500;
 }
@@ -809,7 +809,7 @@ table td {
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.4px;
-  color: #50E2C2;
+  color: #50e2c2;
 }
 .cd_all_page_comman_total_price .cd_all_page_total_price_up_text svg {
   margin-right: 7px;
@@ -820,8 +820,8 @@ table td {
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.4px;
-  color: #50E2C2;
-  color: #E3507A;
+  color: #50e2c2;
+  color: #e3507a;
 }
 .cd_all_page_comman_total_price .cd_add_token_down_price svg {
   margin-right: 7px;
@@ -837,6 +837,13 @@ table td {
   margin-right: -10px;
 }
 
+.cd_add_token_row .cd_currency_column_sub_row_full {
+  display: flex;
+  min-width: 100%;
+  max-width: 100%;
+  overflow-x: scroll;
+  padding-bottom: 15px;
+}
 .cd_add_token_row .cd_currency_column_sub_row {
   display: flex;
   min-width: 80%;
@@ -854,13 +861,13 @@ table td {
   height: 5px;
 }
 .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar-track {
-  background: #3A4562;
+  background: #3a4562;
 }
 .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar-thumb {
-  background: #96A0C2;
+  background: #96a0c2;
 }
 .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar-thumb:hover {
-  background: #96A0C2;
+  background: #96a0c2;
 }
 .cd_add_token_row .cd_add_token_column {
   cursor: pointer;
@@ -871,7 +878,7 @@ table td {
 }
 .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content {
   padding: 22px 16px;
-  border: 1px solid #3A4562;
+  border: 1px solid #3a4562;
   border-radius: 10px;
   position: relative;
 }
@@ -904,32 +911,32 @@ table td {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_price p {
   font-size: 17px;
   line-height: 21px;
-  color: #C0C3CB;
+  color: #c0c3cb;
   margin-top: auto;
   margin-bottom: 0;
 }
 .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_price span {
   font-size: 11px;
   line-height: 13px;
-  color: #50E2C2;
+  color: #50e2c2;
 }
 .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_price span svg {
   margin-right: 7px;
 }
 .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_price span.cd_add_token_down_price {
-  color: #E3507A;
+  color: #e3507a;
 }
 .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_right_price {
   text-align: right;
   margin-top: auto;
 }
 .cd_add_token_row .cd_add_token_column .cd_add_token_btn_content {
-  border: 1px dashed #3A4562;
+  border: 1px dashed #3a4562;
   border-radius: 10px;
   padding: 15px;
   height: 100%;
@@ -939,7 +946,7 @@ table td {
   font-weight: 600;
   font-size: 13px;
   line-height: 16px;
-  color: #828CAE;
+  color: #828cae;
   text-decoration: none;
 }
 
@@ -947,19 +954,19 @@ table td {
   height: calc(100% - 15px);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover {
-  background: linear-gradient(135deg, #FFCB54 0%, #FFCB54 19.24%, #F7931A 68.64%, #F7931A 81.77%, #F7931A 100%);
+  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #F9A22A;
+  fill: #f9a22a;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active {
-  background: linear-gradient(135deg, #FFCB54 0%, #FFCB54 19.24%, #F7931A 68.64%, #F7931A 81.77%, #F7931A 100%);
+  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active::before {
-  background: linear-gradient(113.91deg, #FFCB54 0%, rgba(247, 147, 26, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #ffcb54 0%, rgba(247, 147, 26, 0.0001) 82.9%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #F9A22A;
+  fill: #f9a22a;
 }
 .cd_wallets_page .cd_add_token_inner_content::before {
   content: "";
@@ -980,7 +987,7 @@ table td {
   stroke: #fff !important;
 }
 .cd_wallets_page .cd_add_token_inner_content:hover .cd_add_token_price h3 {
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.5;
 }
 .cd_wallets_page .cd_add_token_inner_content:hover .cd_add_token_price p {
@@ -996,37 +1003,37 @@ table td {
   color: #fff;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover {
-  background: linear-gradient(135deg, #309AFF 0%, #309AFF 19.24%, #345D9D 68.64%, #345D9D 81.77%, #345D9D 100%);
+  background: linear-gradient(135deg, #309aff 0%, #309aff 19.24%, #345d9d 68.64%, #345d9d 81.77%, #345d9d 100%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #345D9D;
+  fill: #345d9d;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active {
-  background: linear-gradient(135deg, #309AFF 0%, #309AFF 19.24%, #345D9D 68.64%, #345D9D 81.77%, #345D9D 100%);
+  background: linear-gradient(135deg, #309aff 0%, #309aff 19.24%, #345d9d 68.64%, #345d9d 81.77%, #345d9d 100%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active::before {
-  background: linear-gradient(113.91deg, #55ACFF 0%, rgba(52, 93, 157, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #55acff 0%, rgba(52, 93, 157, 0.0001) 82.9%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #345D9D;
+  fill: #345d9d;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover {
-  background: linear-gradient(113.91deg, #70B2FF 0%, rgba(83, 185, 234, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #70b2ff 0%, rgba(83, 185, 234, 0.0001) 82.9%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #E3507A;
+  fill: #e3507a;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
   fill: #b5395c;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active {
-  background: linear-gradient(135deg, #E3507A 0%, #E3507A 19.24%, #BC3DCB 68.64%, #BC3DCB 81.77%, #A330FF 100%);
+  background: linear-gradient(135deg, #e3507a 0%, #e3507a 19.24%, #bc3dcb 68.64%, #bc3dcb 81.77%, #a330ff 100%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active::before {
-  background: linear-gradient(113.91deg, #E3507A 0%, rgba(52, 93, 157, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #e3507a 0%, rgba(52, 93, 157, 0.0001) 82.9%);
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #E3507A;
+  fill: #e3507a;
 }
 .cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
   fill: #b5395c;
@@ -1039,7 +1046,7 @@ table td {
   stroke: #fff !important;
 }
 .cd_wallets_page .cd_add_token_inner_content.active .cd_add_token_price h3 {
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.5;
 }
 .cd_wallets_page .cd_add_token_inner_content.active .cd_add_token_price p {
@@ -1098,7 +1105,7 @@ table td {
   padding: 18px 12px;
   font-size: 17px;
   line-height: 21px;
-  color: #828CAE;
+  color: #828cae;
   background: transparent;
   border: 0;
   outline: 0;
@@ -1111,7 +1118,7 @@ table td {
   outline: 0;
   background: transparent;
   box-shadow: none;
-  color: #828CAE;
+  color: #828cae;
 }
 
 .cd_custom_currency_checkbox.custom-switch .custom-control-label::before {
@@ -1125,14 +1132,14 @@ table td {
   border: 0;
   left: -23px;
   top: 5px;
-  background: #53B9EA;
+  background: #53b9ea;
 }
 .cd_custom_currency_checkbox.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
   left: -14px;
   transform: translateX(0);
 }
 .cd_custom_currency_checkbox.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
-  background: #53B9EA;
+  background: #53b9ea;
 }
 
 .cd_add_token_text {
@@ -1143,13 +1150,13 @@ table td {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 3px;
 }
 .cd_add_token_text p {
   font-size: 10px;
   line-height: 12px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 0;
 }
 
@@ -1173,7 +1180,7 @@ table td {
   display: flex !important;
 }
 .apexcharts-legend-series .apexcharts-legend-text {
-  color: #3D476A !important;
+  color: #3d476a !important;
   font-weight: 600 !important;
   font-size: 12px !important;
   padding-left: 10px;
@@ -1191,19 +1198,19 @@ table td {
 }
 
 .cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover {
-  background: linear-gradient(135deg, #FFCB54 0%, #FFCB54 19.24%, #F7931A 68.64%, #F7931A 81.77%, #F7931A 100%);
+  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #F9A22A;
+  fill: #f9a22a;
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active {
-  background: linear-gradient(135deg, #FFCB54 0%, #FFCB54 19.24%, #F7931A 68.64%, #F7931A 81.77%, #F7931A 100%);
+  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active::before {
-  background: linear-gradient(113.91deg, #FFCB54 0%, rgba(247, 147, 26, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #ffcb54 0%, rgba(247, 147, 26, 0.0001) 82.9%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #F9A22A;
+  fill: #f9a22a;
 }
 .cd_history_page .cd_add_token_inner_content::before {
   content: "";
@@ -1224,7 +1231,7 @@ table td {
   stroke: #fff !important;
 }
 .cd_history_page .cd_add_token_inner_content:hover .cd_add_token_price h3 {
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.5;
 }
 .cd_history_page .cd_add_token_inner_content:hover .cd_add_token_price p {
@@ -1240,37 +1247,37 @@ table td {
   color: #fff;
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover {
-  background: linear-gradient(135deg, #309AFF 0%, #309AFF 19.24%, #345D9D 68.64%, #345D9D 81.77%, #345D9D 100%);
+  background: linear-gradient(135deg, #309aff 0%, #309aff 19.24%, #345d9d 68.64%, #345d9d 81.77%, #345d9d 100%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #345D9D;
+  fill: #345d9d;
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency.active {
-  background: linear-gradient(135deg, #309AFF 0%, #309AFF 19.24%, #345D9D 68.64%, #345D9D 81.77%, #345D9D 100%);
+  background: linear-gradient(135deg, #309aff 0%, #309aff 19.24%, #345d9d 68.64%, #345d9d 81.77%, #345d9d 100%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency.active::before {
-  background: linear-gradient(113.91deg, #55ACFF 0%, rgba(52, 93, 157, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #55acff 0%, rgba(52, 93, 157, 0.0001) 82.9%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #345D9D;
+  fill: #345d9d;
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover {
-  background: linear-gradient(135deg, #E3507A 0%, #E3507A 19.24%, #BC3DCB 68.64%, #BC3DCB 81.77%, #A330FF 100%);
+  background: linear-gradient(135deg, #e3507a 0%, #e3507a 19.24%, #bc3dcb 68.64%, #bc3dcb 81.77%, #a330ff 100%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #E3507A;
+  fill: #e3507a;
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
   fill: #b5395c;
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active {
-  background: linear-gradient(135deg, #E3507A 0%, #E3507A 19.24%, #BC3DCB 68.64%, #BC3DCB 81.77%, #A330FF 100%);
+  background: linear-gradient(135deg, #e3507a 0%, #e3507a 19.24%, #bc3dcb 68.64%, #bc3dcb 81.77%, #a330ff 100%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active::before {
-  background: linear-gradient(113.91deg, #E3507A 0%, rgba(52, 93, 157, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #e3507a 0%, rgba(52, 93, 157, 0.0001) 82.9%);
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #E3507A;
+  fill: #e3507a;
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
   fill: #b5395c;
@@ -1283,7 +1290,7 @@ table td {
   stroke: #fff !important;
 }
 .cd_history_page .cd_add_token_inner_content.active .cd_add_token_price h3 {
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.5;
 }
 .cd_history_page .cd_add_token_inner_content.active .cd_add_token_price p {
@@ -1303,7 +1310,7 @@ table td {
 }
 
 .cd_all_currency_content {
-  border: 1px solid #3A4562;
+  border: 1px solid #3a4562;
   border-radius: 10px;
   padding: 15px !important;
   height: 100%;
@@ -1313,7 +1320,7 @@ table td {
   font-weight: bold;
   font-size: 13px;
   line-height: 16px;
-  color: #828CAE;
+  color: #828cae;
   position: relative;
 }
 .cd_all_currency_content::before {
@@ -1328,8 +1335,8 @@ table td {
   z-index: -1;
 }
 .cd_all_currency_content:hover {
-  color: #FFFFFF;
-  background: linear-gradient(135deg, #70B2FF 0%, #70B2FF 19.24%, #53B9EA 68.64%, #53B9EA 81.77%, #53B9EA 100%);
+  color: #ffffff;
+  background: linear-gradient(135deg, #70b2ff 0%, #70b2ff 19.24%, #53b9ea 68.64%, #53b9ea 81.77%, #53b9ea 100%);
 }
 
 .cd_wallet_chart_bottom_content {
@@ -1348,12 +1355,12 @@ table td {
 }
 .cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button {
   border: 0;
-  background-color: #828CAE !important;
+  background-color: #828cae !important;
   border-radius: 10px;
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #252F47 !important;
+  color: #252f47 !important;
   padding: 17px;
   max-width: 180px;
   min-width: 180px;
@@ -1361,12 +1368,12 @@ table td {
 }
 .cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button:active {
   border: 0;
-  background-color: #828CAE !important;
+  background-color: #828cae !important;
   border-radius: 10px;
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #252F47 !important;
+  color: #252f47 !important;
   padding: 17px;
   max-width: 180px;
   min-width: 180px;
@@ -1390,12 +1397,12 @@ table td {
 }
 .cd_send_currency_btn_text .cd_send_currency_btn {
   border: 0;
-  background-color: #828CAE !important;
+  background-color: #828cae !important;
   border-radius: 10px;
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #252F47 !important;
+  color: #252f47 !important;
   padding: 17px;
   max-width: 180px;
   min-width: 180px;
@@ -1404,12 +1411,12 @@ table td {
 }
 .cd_send_currency_btn_text .cd_send_currency_btn:active {
   border: 0;
-  background-color: #828CAE !important;
+  background-color: #828cae !important;
   border-radius: 10px;
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #252F47 !important;
+  color: #252f47 !important;
   padding: 17px;
   max-width: 180px;
   min-width: 180px;
@@ -1418,11 +1425,11 @@ table td {
 .cd_send_currency_btn_text .cd_send_currency_text p {
   font-size: 14px;
   line-height: 20px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 0;
 }
 .cd_send_currency_btn_text .cd_send_currency_text p span {
-  color: #CAD3F2;
+  color: #cad3f2;
   display: block;
   font-weight: 600;
 }
@@ -1431,7 +1438,7 @@ table td {
 }
 
 .cd_send_receive_content .cd_send_receive_inner_content {
-  border: 1px solid #3A4562;
+  border: 1px solid #3a4562;
   border-radius: 10px;
   padding: 66px 66px 46px;
   height: 100%;
@@ -1443,7 +1450,7 @@ table td {
   font-weight: bold;
   font-size: 22px;
   line-height: 27px;
-  color: #53B9EA;
+  color: #53b9ea;
   display: flex;
   align-items: center;
   margin-bottom: 27px;
@@ -1453,7 +1460,7 @@ table td {
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading .cd_send_receive_token_symbol {
   padding-left: 10px;
-  color: #3A4562;
+  color: #3a4562;
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content {
   margin-bottom: 21px;
@@ -1461,7 +1468,7 @@ table td {
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content .cd_send_balance_heading {
   font-size: 18px;
   line-height: 22px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 21px;
   word-break: break-word;
 }
@@ -1470,7 +1477,7 @@ table td {
   font-weight: 600;
   font-size: 20px;
   line-height: 132%;
-  color: #C0C3CC;
+  color: #c0c3cc;
   margin-bottom: 8px;
   word-break: break-all;
 }
@@ -1500,7 +1507,7 @@ table td {
 }
 
 .cd_send_qr_address {
-  background: #3D476A;
+  background: #3d476a;
   border-radius: 10px;
   align-items: center;
   padding: 30px;
@@ -1511,7 +1518,7 @@ table td {
   margin-right: auto;
   font-size: 16px;
   line-height: 20px;
-  color: #CAD3F2;
+  color: #cad3f2;
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -1522,14 +1529,14 @@ table td {
   margin-right: auto;
   font-size: 16px;
   line-height: 20px;
-  color: #CAD3F2;
+  color: #cad3f2;
   background: transparent;
   border: 0;
   box-shadow: none;
   padding: 0;
 }
 .cd_send_qr_address input::placeholder {
-  color: #CAD3F2;
+  color: #cad3f2;
 }
 
 .cd_send_currency_input_content {
@@ -1538,7 +1545,7 @@ table td {
   flex-wrap: wrap;
   row-gap: 10px;
   padding: 25px 0 16px 5px;
-  border-bottom: 3px solid #3D476A;
+  border-bottom: 3px solid #3d476a;
 }
 .cd_send_currency_input_content .cd_send_currency_input {
   margin-right: 12px;
@@ -1549,7 +1556,7 @@ table td {
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
-  color: #CAD3F2;
+  color: #cad3f2;
   outline: 0;
   height: auto;
   padding: 0;
@@ -1557,7 +1564,7 @@ table td {
 .cd_send_currency_input_content .cd_send_currency_input:focus {
   background: transparent;
   box-shadow: none;
-  color: #CAD3F2;
+  color: #cad3f2;
 }
 .cd_send_currency_input_content .cd_send_currency_input_btns {
   min-width: 189px;
@@ -1566,17 +1573,17 @@ table td {
   padding: 9px 11px;
   font-size: 16px;
   line-height: 20px;
-  border: 1px solid #3A4562;
+  border: 1px solid #3a4562;
   border-radius: 10px;
-  color: #828CAE;
+  color: #828cae;
   background: transparent;
   width: 55px;
   margin-right: 12px;
 }
 .cd_send_currency_input_content .cd_send_currency_input_btns button:active {
-  border: 1px solid #3A4562 !important;
+  border: 1px solid #3a4562 !important;
   background: transparent !important;
-  color: #828CAE !important;
+  color: #828cae !important;
 }
 .cd_send_currency_input_content .cd_send_currency_input_btns button:last-child {
   margin-right: 0;
@@ -1592,7 +1599,7 @@ table td {
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
-  color: #CAD3F2;
+  color: #cad3f2;
   margin-bottom: 0;
   margin-right: auto;
 }
@@ -1600,14 +1607,14 @@ table td {
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 0;
 }
 
 .cd_receive_address_content .cd_receive_address_heading {
   font-size: 18px;
   line-height: 22px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 21px;
   word-break: break-word;
 }
@@ -1616,7 +1623,7 @@ table td {
   align-items: center;
 }
 .cd_receive_address_content .cd_receive_copy_address_content button {
-  background: #3D476A;
+  background: #3d476a;
   border-radius: 10px;
   border: 0;
   padding: 5px;
@@ -1629,12 +1636,12 @@ table td {
   margin-right: 20px;
 }
 .cd_receive_address_content .cd_receive_copy_address_content button:active {
-  background: #3D476A !important;
+  background: #3d476a !important;
 }
 .cd_receive_address_content .cd_receive_copy_address_content p {
   font-size: 16px;
   line-height: 20px;
-  color: #CAD3F2;
+  color: #cad3f2;
   margin-bottom: 0;
   word-break: break-all;
 }
@@ -1642,7 +1649,7 @@ table td {
   margin-top: 32px;
   width: 226px;
   height: 226px;
-  background: #3D476A;
+  background: #3d476a;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -1662,20 +1669,20 @@ table td {
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  color: #CAD3F2;
+  color: #cad3f2;
   text-align: center;
 }
 .cd_transaction_list_table tr td {
   font-size: 12px;
   line-height: 15px;
   text-align: center;
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_transaction_list_table .cd_transaction_pluse {
-  color: #50E3C2;
+  color: #50e3c2;
 }
 .cd_transaction_list_table .cd_transaction_minas {
-  color: #E3507A;
+  color: #e3507a;
 }
 .cd_transaction_list_table .cd_transaction_list_status {
   display: flex;
@@ -1686,19 +1693,19 @@ table td {
   content: "";
   width: 5px;
   height: 5px;
-  background: #828CAE;
+  background: #828cae;
   border-radius: 10px;
   display: inline-block;
   margin-right: 5px;
 }
 .cd_transaction_list_table .cd_transaction_completed::before {
-  background: #50E2C2;
+  background: #50e2c2;
 }
 .cd_transaction_list_table .cd_transaction_failed::before {
-  background: #E2507A;
+  background: #e2507a;
 }
 .cd_transaction_list_table .cd_transaction_pending::before {
-  background: #F9A22A;
+  background: #f9a22a;
 }
 .cd_transaction_list_table .cd_transaction_list_type img {
   width: 22px;
@@ -1715,34 +1722,34 @@ table td {
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  color: #B1AFCD;
+  color: #b1afcd;
 }
 .cd_transaction_list_main_heading a {
   margin-left: auto;
   font-size: 12px;
   line-height: 15px;
-  color: #70B2FF;
+  color: #70b2ff;
   text-transform: capitalize;
   font-weight: 400;
 }
 .cd_transaction_list_main_heading a:hover {
   text-decoration: none;
-  color: #70B2FF;
+  color: #70b2ff;
 }
 .cd_transaction_list_main_heading .cd_transaction_list_main_heading_action {
   padding-left: 20px;
   cursor: pointer;
 }
 .cd_transaction_list_main_heading .cd_transaction_list_main_heading_action:hover {
-  color: #70B2FF;
+  color: #70b2ff;
 }
 
 .cd_all_currency_content.active {
-  color: #FFFFFF;
-  background: linear-gradient(135deg, #70B2FF 0%, #70B2FF 19.24%, #53B9EA 68.64%, #53B9EA 81.77%, #53B9EA 100%);
+  color: #ffffff;
+  background: linear-gradient(135deg, #70b2ff 0%, #70b2ff 19.24%, #53b9ea 68.64%, #53b9ea 81.77%, #53b9ea 100%);
 }
 .cd_all_currency_content.active::before {
-  background: linear-gradient(113.91deg, #70B2FF 0%, rgba(83, 185, 234, 0.0001) 82.9%);
+  background: linear-gradient(113.91deg, #70b2ff 0%, rgba(83, 185, 234, 0.0001) 82.9%);
 }
 
 .cd_SecureBackup_heading h3 {
@@ -1750,7 +1757,7 @@ table td {
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  color: #B1AFCD;
+  color: #b1afcd;
   margin-bottom: 0;
 }
 
@@ -1772,7 +1779,7 @@ table td {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 13px;
 }
 .cd_securebackup_input_content .cd_securebackup_input {
@@ -1780,13 +1787,13 @@ table td {
   border: 0;
   font-size: 17px;
   line-height: 21px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.7;
   outline: 0;
   padding: 0;
 }
 .cd_securebackup_input_content .cd_securebackup_input::placeholder {
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.7;
 }
 
@@ -1794,7 +1801,7 @@ table td {
   margin-top: 60px;
 }
 .cd_securebackup_btn a {
-  background: #828CAE;
+  background: #828cae;
   border-radius: 10px;
   min-width: 180px;
   max-width: 180px;
@@ -1803,12 +1810,12 @@ table td {
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #252F47;
+  color: #252f47;
   text-align: center;
 }
 .cd_securebackup_btn a:hover {
   text-decoration: none;
-  color: #252F47;
+  color: #252f47;
 }
 
 .cd_setting_list .cd_setting_list_items {
@@ -1829,7 +1836,7 @@ table td {
 .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph h3 {
   font-size: 17px;
   line-height: 21px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.7;
   margin-bottom: 13px;
   margin-top: 13px;
@@ -1837,7 +1844,7 @@ table td {
 .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph h4 {
   font-size: 15px;
   line-height: 21px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.7;
   margin-bottom: 8px;
 }
@@ -1845,7 +1852,7 @@ table td {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 15px;
 }
 .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph p span {
@@ -1863,7 +1870,7 @@ table td {
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 0;
   margin-right: 18px;
 }
@@ -1930,14 +1937,14 @@ table td {
   filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
 }
 .cd_currency_page .cd_add_token_row .cd_add_token_column.active .cd_add_token_inner_content {
-  background: #3A4562;
+  background: #3a4562;
 }
 .cd_currency_page .cd_add_token_row .cd_add_token_column.active .cd_add_token_inner_content::before {
   content: "";
   position: absolute;
-  background: linear-gradient(180deg, #40FFD5 0%, #4CE4C3 100%);
+  background: linear-gradient(180deg, #40ffd5 0%, #4ce4c3 100%);
   opacity: 0.8;
-  box-shadow: 0px 0px 5px #0EE6B6;
+  box-shadow: 0px 0px 5px #0ee6b6;
   width: 6px;
   height: 6px;
   right: 11px;
@@ -1965,13 +1972,13 @@ table td {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #828CAE;
+  color: #828cae;
   margin-bottom: 13px;
 }
 .cd_account_support_input_list .cd_account_support_input_items .form-control {
   font-size: 17px;
   line-height: 21px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.7;
   background: transparent;
   border: 0;
@@ -1981,7 +1988,7 @@ table td {
   height: auto;
 }
 .cd_account_support_input_list .cd_account_support_input_items .form-control::placeholder {
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.7;
 }
 
@@ -1995,13 +2002,13 @@ table td {
   height: 5px;
 }
 .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-track {
-  background: #3A4562;
+  background: #3a4562;
 }
 .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-thumb {
-  background: #96A0C2;
+  background: #96a0c2;
 }
 .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-thumb:hover {
-  background: #96A0C2;
+  background: #96a0c2;
 }
 .cd_history_page .cd_add_token_row .cd_add_token_column {
   margin-bottom: 0 !important;
@@ -2017,14 +2024,14 @@ table td {
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  color: #CAD3F2;
+  color: #cad3f2;
   text-align: center;
 }
 .cd_key_list_table tr td {
   font-size: 12px;
   line-height: 15px;
   text-align: center;
-  color: #828CAE;
+  color: #828cae;
 }
 
 .cd_account_info_table {
@@ -2034,7 +2041,7 @@ table td {
 .cd_account_info_table tr td {
   font-size: 12px;
   line-height: 10px;
-  color: #828CAE;
+  color: #828cae;
   min-width: 200px;
 }
 .cd_account_info_table .cd_account_info_table_action {
@@ -2042,11 +2049,11 @@ table td {
   cursor: pointer;
 }
 .cd_account_info_table .cd_account_info_table_action:hover {
-  color: #70B2FF;
+  color: #70b2ff;
 }
 
 .cd_confirm_modal_content .cd_confirm_modal_header {
-  color: #828CAE;
+  color: #828cae;
   border-bottom: none !important;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row {
@@ -2057,13 +2064,13 @@ table td {
   padding: 10px;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_label {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_value {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_value_success {
-  color: #0EE6B6;
+  color: #0ee6b6;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row_single {
   display: flex;
@@ -2071,7 +2078,7 @@ table td {
   padding: 10px;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row_single .cd_confirm_modal_value {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_confirm_modal_content .cd_confirm_modal_footer {
   border-top: none !important;
@@ -2088,7 +2095,7 @@ table td {
 }
 
 .cd_edit_modal_content .cd_edit_modal_header {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row {
   display: flex;
@@ -2098,16 +2105,16 @@ table td {
   padding: 10px;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row .cd_edit_modal_label {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row .cd_edit_modal_value {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row .cd_edit_modal_value_long {
   width: 300px;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row .cd_edit_modal_value_success {
-  color: #0EE6B6;
+  color: #0ee6b6;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row_single {
   display: flex;
@@ -2115,7 +2122,7 @@ table td {
   padding: 10px;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row_single .cd_edit_modal_value {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_edit_modal_content .cd_edit_modal_footer {
   justify-content: space-between !important;
@@ -2126,7 +2133,7 @@ table td {
 }
 
 .cd_add_token_modal_content .cd_add_token_modal_header {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_add_token_modal_content .cd_add_token_modal_body .cd_add_token_modal_row {
   display: flex;
@@ -2138,11 +2145,11 @@ table td {
 }
 .cd_add_token_modal_content .cd_add_token_modal_body .cd_add_token_modal_row .cd_add_token_modal_label {
   flex-grow: 1;
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_add_token_modal_content .cd_add_token_modal_body .cd_add_token_modal_row .cd_add_token_modal_value {
   flex-grow: 2;
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_add_token_modal_content .cd_add_token_modal_body .cd_add_token_modal_row .cd_add_token_modal_value input {
   width: 100%;

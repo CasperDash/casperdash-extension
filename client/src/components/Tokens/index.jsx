@@ -16,7 +16,7 @@ import { AddTokenModal } from './AddTokenModal';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { TOKEN_TRANSFER_FEE } from '../../constants/key';
 import { TokenList } from '../Common/TokenList';
-import { TokenInfoSection } from './TokenInfoSection';
+import { TokenInfo } from './TokenInfo';
 
 const Tokens = () => {
 	const dispatch = useDispatch();
@@ -78,12 +78,14 @@ const Tokens = () => {
 			<section className="cd_wallets_page">
 				<HeadingModule name={'Tokens'} />
 				<div className="cd_add_token_content cd_add_token_row row">
-					<TokenList tokensInfo={tokensInfo} selectedToken={selectedToken} onTokenClick={onTokenClick} />
+					<div className="cd_currency_column_sub_row">
+						<TokenList tokensInfo={tokensInfo} selectedToken={selectedToken} onTokenClick={onTokenClick} />
+					</div>
 					<div className="cd_add_token_column cd_add_token_btn_col col" onClick={onAddNewTokenAddress}>
 						<div className="cd_add_token_btn_content">+ Add Token</div>
 					</div>
 				</div>
-				<TokenInfoSection selectedToken={selectedToken} />
+				<TokenInfo selectedToken={selectedToken} />
 				<Tab.Content>
 					<SendReceiveSection
 						tokenSymbol={selectedToken.symbol}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import { toFormattedNumber } from '../../helpers/format';
 
-export const TokenInfoSection = ({ selectedToken }) => {
+export const TokenInfo = ({ selectedToken }) => {
 	return (
 		<div className="cd_setting_list">
 			<div className="cd_setting_list_items">

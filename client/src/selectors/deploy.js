@@ -11,6 +11,7 @@ export const getLatestBlockHash = createSelector(
 	({ data }) => (data && data.latestBlockHash) || '',
 );
 
+//TODO: Should check by address, token may have same symbol
 export const getTransfersDeploy = (symbol) => ({ deploys = {} }) => {
 	const transfers = deploys.transfers || [];
 	return transfers.filter((transfer) => (symbol ? transfer.symbol === symbol : true));

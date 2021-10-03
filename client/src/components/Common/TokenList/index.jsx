@@ -3,8 +3,8 @@ import { toFormattedNumber } from '../../../helpers/format';
 
 export const TokenList = ({ tokensInfo, onTokenClick, selectedToken }) => {
 	return (
-		<div className="cd_currency_column_sub_row">
-			{tokensInfo.map(({ symbol, address, balance }) => {
+		<>
+			{tokensInfo.map(({ symbol, address, balance, price }) => {
 				const isSelected = selectedToken.address === address;
 				return (
 					<div className="cd_add_token_column col" key={address} onClick={() => onTokenClick(address)}>
@@ -19,13 +19,20 @@ export const TokenList = ({ tokensInfo, onTokenClick, selectedToken }) => {
 									<p>{balance && toFormattedNumber(balance.displayValue)}</p>
 								</div>
 								<div className="cd_add_token_right_price">
-									<p>$--</p>
+									<p>
+										{price
+											? toFormattedNumber(balance.displayValue * price, undefined, {
+													style: 'currency',
+													currency: 'USD',
+											  })
+											: '$--'}
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
 				);
 			})}
-		</div>
+		</>
 	);
 };
