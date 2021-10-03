@@ -1,5 +1,5 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
-import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, TRANSFER_FEE, DEPLOY_TTL_MS } from '../constants/key';
+import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
 
 /**
  * Get Transfer deploy
@@ -9,10 +9,10 @@ import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, TRANSFER_FEE, DEPLOY_TTL_MS } 
  * @param {Number} transactionId transfer id. This parameter is optional
  * @returns {Deploy} transfer deploy
  */
-export const getTransferDeploy = (fromAccount, toAccount, amount, transactionId) => {
+export const getTransferDeploy = (fromAccount, toAccount, amount, transactionId, fee) => {
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
 	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transactionId);
-	const payment = DeployUtil.standardPayment(TRANSFER_FEE * MOTE_RATE);
+	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
 	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };
 
@@ -50,7 +50,7 @@ export const signDeploy = async (deploy, mainAccountHex, setAccountHex) => {
  * @param {String} contractHash token contract hash
  * @returns {Deploy} transfer deploy
  */
-export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash) => {
+export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee) => {
 	const contractHashAsByteArray = [...Buffer.from(contractHash, 'hex')];
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME, 1, DEPLOY_TTL_MS);
 	const transferParams = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
@@ -61,7 +61,7 @@ export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractH
 			recipient: CLValueBuilder.byteArray(toAccount.toAccountHash()),
 		}),
 	);
-	const payment = DeployUtil.standardPayment(1 * MOTE_RATE);
+	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
 	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };
 

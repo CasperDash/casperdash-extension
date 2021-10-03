@@ -15,6 +15,7 @@ import { getMassagedTokenData, getTokensAddressList } from '../../selectors/toke
 import { AddTokenModal } from './AddTokenModal';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { toFormattedNumber } from '../../helpers/format';
+import { TOKEN_TRANSFER_FEE } from '../../constants/key';
 
 const Tokens = () => {
 	const dispatch = useDispatch();
@@ -155,6 +156,7 @@ const Tokens = () => {
 							displayBalance={selectedToken.balance && selectedToken.balance.displayValue}
 							minAmount={0}
 							tokenInfo={selectedToken}
+							transferFee={TOKEN_TRANSFER_FEE}
 						/>
 					</Tab.Content>
 				</Tab.Container>

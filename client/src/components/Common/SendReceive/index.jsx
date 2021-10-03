@@ -7,7 +7,7 @@ import { validateTransferForm } from '../../../helpers/validator';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
-import { TRANSFER_FEE } from '../../../constants/key';
+import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 import { toFormattedNumber } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
@@ -20,7 +20,7 @@ export const SendReceiveSection = ({
 	csprPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
-	transferFee = TRANSFER_FEE,
+	transferFee = CSPR_TRANSFER_FEE,
 	tokenInfo,
 }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -53,6 +53,7 @@ export const SendReceiveSection = ({
 				fromAddress: fromAddress,
 				toAddress: values.toAddress,
 				amount: values.sendAmount,
+				fee: transferFee,
 			});
 			setShowConfirmModal(true);
 		}
@@ -227,7 +228,7 @@ export const SendReceiveSection = ({
 				onClose={onCloseConfirmModal}
 				onConfirm={onConfirmTransaction}
 				{...transactionDetails}
-				fee={TRANSFER_FEE}
+				fee={transferFee}
 				csprPrice={csprPrice}
 				deployHash={deployHash}
 				deployError={deployHash ? '' : deployError || signedError}
