@@ -9,6 +9,8 @@ import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
 import tokensReducer from './reducers/tokens';
 import deployReducer from './reducers/deploys';
+import requestReducer from './reducers/request';
+import { REQUEST } from './actionTypes';
 
 export const initialState = {
 	user: {
@@ -27,7 +29,12 @@ export const initialState = {
 	deploys: {
 		transfers: [],
 	},
+	request: {
+		isLoading: false,
+	},
 };
+
+const setLoadingStatus = (status) => ({ type: REQUEST.SET_REQUEST_STATUS, payload: status });
 
 const { requestsReducer, requestsMiddleware } = handleRequests({
 	driver: createDriver(
@@ -35,6 +42,21 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 			baseURL: BASE_API_URL,
 		}),
 	),
+	onRequest: (request, action, store) => {
+		store.dispatch(setLoadingStatus(true));
+		return request;
+	},
+	onSuccess: (response, action, store) => {
+		store.dispatch(setLoadingStatus(false));
+		return response;
+	},
+	onError: (error, action, store) => {
+		store.dispatch(setLoadingStatus(false));
+		return error;
+	},
+	onAbort: (action, store) => {
+		store.dispatch(setLoadingStatus(false));
+	},
 });
 
 const main = combineReducers({
@@ -44,6 +66,7 @@ const main = combineReducers({
 	tokens: tokensReducer,
 	requests: requestsReducer,
 	deploys: deployReducer,
+	request: requestReducer,
 });
 
 const logger = (store) => (next) => (action) => {
