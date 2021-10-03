@@ -11,7 +11,7 @@ export const getLatestBlockHash = createSelector(
 	({ data }) => (data && data.latestBlockHash) || '',
 );
 
-export const getTransfersDeploy = ({ deploys = {} }) => {
-	console.log(deploys);
-	return deploys.transfers || [];
+export const getTransfersDeploy = (symbol) => ({ deploys = {} }) => {
+	const transfers = deploys.transfers || [];
+	return transfers.filter((transfer) => (symbol ? transfer.symbol === symbol : true));
 };

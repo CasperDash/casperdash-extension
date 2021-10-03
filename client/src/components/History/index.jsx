@@ -1,15 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import { Tab, Nav } from 'react-bootstrap';
 import { getMassagedUserDetails } from '../../selectors/user';
 import AllList from '../Common/Layout/TransactionList/AllTransactionList';
 import { getCurrentPrice } from '../../selectors/price';
 import { toFormattedNumber } from '../../helpers/format';
+import { getTransfersFromLocalStorage } from '../../actions/deployActions';
+import { getTransfersDeploy } from '../../selectors/deploy';
+import { getPublicKey } from '../../selectors/user';
 
 const PortfolioModule = () => {
+	const dispatch = useDispatch();
 	const userDetails = useSelector(getMassagedUserDetails);
 	const currentPrice = useSelector(getCurrentPrice);
+	const publicKey = useSelector(getPublicKey);
+	const transferList = useSelector(getTransfersDeploy());
+
+	useEffect(() => {
+		dispatch(getTransfersFromLocalStorage(publicKey));
+	}, [dispatch, publicKey]);
 
 	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
 	return (
@@ -54,7 +64,7 @@ const PortfolioModule = () => {
 					</div>
 					<Tab.Content>
 						<Tab.Pane eventKey="tab1">
-							<AllList value="" />
+							<AllList transfersDeployList={transferList} />
 						</Tab.Pane>
 					</Tab.Content>
 				</Tab.Container>

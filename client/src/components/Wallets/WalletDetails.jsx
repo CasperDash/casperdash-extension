@@ -22,7 +22,7 @@ const WalletDetails = ({ name, value }) => {
 	const publicKey = useSelector(getPublicKey);
 	const priceHistory = useSelector(getPriceHistory);
 	const currentPrice = useSelector(getCurrentPrice);
-	const transfersDeployList = useSelector(getTransfersDeploy);
+	const transfersDeployList = useSelector(getTransfersDeploy('CSPR'));
 
 	const handleToggle = () => {
 		if (publicKey) {
