@@ -1426,6 +1426,9 @@ table td {
   display: block;
   font-weight: 600;
 }
+.cd_send_currency_btn_text .cd_send_currency_text p .cd_send_currency_error_msg {
+  display: block !important;
+}
 
 .cd_send_receive_content .cd_send_receive_inner_content {
   border: 1px solid #3A4562;

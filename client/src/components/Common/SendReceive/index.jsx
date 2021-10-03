@@ -22,6 +22,7 @@ export const SendReceiveSection = ({
 	minAmount = 2.5,
 	transferFee = CSPR_TRANSFER_FEE,
 	tokenInfo,
+	csprBalance,
 }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
@@ -83,7 +84,14 @@ export const SendReceiveSection = ({
 						<Formik
 							initialValues={{ sendAmount: minAmount, toAddress: '' }}
 							validate={(values) =>
-								validateTransferForm({ ...values, minAmount, displayBalance, tokenSymbol })
+								validateTransferForm({
+									...values,
+									minAmount,
+									displayBalance,
+									tokenSymbol,
+									csprBalance,
+									transferFee,
+								})
 							}
 							onSubmit={handleSubmit}
 						>
@@ -162,7 +170,15 @@ export const SendReceiveSection = ({
 										<div className="cd_send_currency_text">
 											<p>
 												Network Fee
-												<span>{transferFee} CSPR</span>
+												<span>
+													{transferFee} CSPR{' '}
+													<Form.Control.Feedback
+														type="invalid"
+														className="cd_send_currency_error_msg"
+													>
+														{errors.transferFee}
+													</Form.Control.Feedback>
+												</span>
 											</p>
 										</div>
 									</div>
