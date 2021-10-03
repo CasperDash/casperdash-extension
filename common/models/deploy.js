@@ -3,7 +3,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
 	class Deploy extends Model {
 		async toJSON() {
-			let block = await this.getBlock();
 			return {
 				deployHash: this.deployHash,
 				account: this.account,
