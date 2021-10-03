@@ -1,6 +1,6 @@
 class Storage {
-	constructor(models, pubsub = null) {
-		this.models = models;
+	constructor(db, pubsub = null) {
+		this.db = db;
 		this.pubsub = pubsub;
 	}
 
@@ -57,14 +57,7 @@ class Storage {
 			console.log('Error mess', errorMessage);
 		}
 
-		await this.models.Deploy.create({
-			deployHash,
-			account,
-			state: 'processed',
-			cost,
-			errorMessage,
-			blockHash,
-		});
+		await this.db.collection('deploys').insertOne(event);
 	}
 
 	async onDeployAccepted(event) {
