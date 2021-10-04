@@ -6,7 +6,6 @@ import { Tab, Nav } from 'react-bootstrap';
 import { getMassagedUserDetails } from '../../selectors/user';
 import AllList from '../Common/Layout/TransactionList/AllTransactionList';
 import { getCurrentPrice } from '../../selectors/price';
-import { toFormattedNumber } from '../../helpers/format';
 import { getTransfersFromLocalStorage } from '../../actions/deployActions';
 import { getTransfersDeploy } from '../../selectors/deploy';
 import { getPublicKey } from '../../selectors/user';
@@ -29,7 +28,7 @@ const PortfolioModule = () => {
 	const userDetails = useSelector(getMassagedUserDetails);
 	const currentPrice = useSelector(getCurrentPrice);
 	const publicKey = useSelector(getPublicKey);
-	const transferList = useDeploysWidthStatus({ symbol: selectedToken.symbol, publicKey }); //useSelector(getTransfersDeploy(selectedToken.symbol));
+	const transferList = useDeploysWidthStatus({ symbol: selectedToken.symbol, publicKey });
 	const tokensInfo = useSelector(getMassagedTokenData);
 	const tokensAddressList = useSelector(getTokensAddressList);
 
@@ -43,10 +42,6 @@ const PortfolioModule = () => {
 	useAutoRefreshEffect(() => {
 		dispatch(fetchTokensInfoWithBalance(tokensAddressList, publicKey));
 	}, [publicKey, JSON.stringify(tokensAddressList)]);
-
-	useEffect(() => {
-		dispatch(getTransfersFromLocalStorage(publicKey));
-	}, [dispatch, publicKey]);
 
 	// Functions
 	const onTokenClick = (address) => {

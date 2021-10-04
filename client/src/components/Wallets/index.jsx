@@ -17,7 +17,7 @@ import {
 import { formatKeyByPrefix } from '../../helpers/key';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { ChartLine } from '../Common/Layout/Chart';
-import { toFormattedNumber } from '../../helpers/format';
+import { toFormattedNumber, toFormattedCurrency } from '../../helpers/format';
 
 const WalletDetails = () => {
 	const dispatch = useDispatch();
@@ -104,12 +104,7 @@ const WalletDetails = () => {
 								<h2 className="cd_all_page_total_price_text">
 									{toFormattedNumber(displayBalance)}{' '}
 									<span className="cd_all_page_total_price_value">
-										(
-										{toFormattedNumber(displayBalance * currentPrice, undefined, {
-											style: 'currency',
-											currency: 'USD',
-										})}
-										)
+										({toFormattedCurrency(displayBalance * currentPrice)})
 									</span>
 								</h2>
 							</div>
