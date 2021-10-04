@@ -12,6 +12,7 @@ const Layout = (props) => {
 	const ref = useRef(null);
 	// State
 	const [color, setColor] = useState('cd_light_theme_active');
+	const [isShowingLoading, setIsShowingLoading] = useState(false);
 
 	// Selector
 	const isLoading = useSelector(isLoadingRequest);
@@ -33,9 +34,11 @@ const Layout = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (isLoading) {
+		if (isLoading && !isShowingLoading) {
+			setIsShowingLoading(true);
 			ref.current.continuousStart();
 		} else {
+			setIsShowingLoading(false);
 			ref.current.complete();
 		}
 	}, [isLoading]);
