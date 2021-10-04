@@ -13,6 +13,9 @@ export const ChartLine = ({ data }) => {
 			borderColor: '#999',
 			yAxisIndex: 0,
 			type: 'datetime',
+			tooltip: {
+				enabled: false,
+			},
 		},
 		tooltip: {
 			x: {

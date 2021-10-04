@@ -1698,7 +1698,7 @@ table td {
   display: inline-block;
   margin-right: 5px;
 }
-.cd_transaction_list_table .cd_transaction_completed::before {
+.cd_transaction_list_table .cd_transaction_success::before {
   background: #50e2c2;
 }
 .cd_transaction_list_table .cd_transaction_failed::before {

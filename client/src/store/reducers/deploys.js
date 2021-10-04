@@ -9,6 +9,8 @@ export default function userReducer(state = { transfers: [] }, action) {
 		case DEPLOY.GET_TRANSFERS_FROM_LOCAL_STORAGE:
 			const items = getLocalStorageValue(action.payload, 'deploys.transfers');
 			return { ...state, transfers: items };
+		case DEPLOY.UPDATE_TRANSFER_LOCAL_STORAGE:
+			return { ...state, transfers: action.payload };
 		default:
 			return state;
 	}

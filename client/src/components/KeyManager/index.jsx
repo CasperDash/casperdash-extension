@@ -29,16 +29,9 @@ import { AttributeRow } from './AttributeRow';
 import { EditModal } from './EditModal';
 
 const KeyManager = () => {
-	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
-	//selector value
-	const pendingDeploys = useSelector(getPendingDeploys);
-	const pendingDeployHashes = useSelector(getPendingDeployHashes);
-	const keyManagerData = useSelector(getMassagedUserDetails);
-	const isContractAvailable = useSelector(isKeyManagerContractAvailable) && publicKey;
-	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
-	const accountWeight = getWeightByAccountHash(_accountHash, associatedKeys);
 
+	// State
 	const [editField, setEditField] = useState('');
 	const [editValue, setEditValue] = useState();
 	const [showEditModal, setShowEditModal] = useState(false);
@@ -47,8 +40,16 @@ const KeyManager = () => {
 	const [confirmMessage, setConfirmMessage] = useState(null);
 	const [deployError, setDeployError] = useState('');
 
-	//const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	//Selector
+	const publicKey = useSelector(getPublicKey);
+	const pendingDeploys = useSelector(getPendingDeploys);
+	const pendingDeployHashes = useSelector(getPendingDeployHashes);
+	const keyManagerData = useSelector(getMassagedUserDetails);
+	const isContractAvailable = useSelector(isKeyManagerContractAvailable) && publicKey;
+	const { actionThresholds = {}, associatedKeys = [], _accountHash = '' } = keyManagerData || {};
+	const accountWeight = getWeightByAccountHash(_accountHash, associatedKeys);
 
+	// Effect
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(fetchKeyManagerDetails(publicKey));
@@ -61,11 +62,11 @@ const KeyManager = () => {
 			(async () => {
 				const { data } = await dispatch(getKeysManagerPendingDeploys(pendingDeployHashes));
 				dispatch(updateKeysManagerDeployStatus(publicKey, 'keysManager.deploys', data));
-				console.log(data);
 			})();
 		}
 	}, [JSON.stringify(pendingDeployHashes), dispatch]);
 
+	// Function
 	const clearState = () => {
 		setDeployError('');
 		setDeployHash('');
