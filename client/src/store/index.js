@@ -30,11 +30,17 @@ export const initialState = {
 		transfers: [],
 	},
 	request: {
-		isLoading: false,
+		isLoading: [],
 	},
 };
 
-const setLoadingStatus = (status) => ({ type: REQUEST.SET_REQUEST_STATUS, payload: status });
+const setLoadingStatus = (actionType) => {
+	return { type: REQUEST.ADD_REQUEST_LOADING_STATUS, payload: actionType };
+};
+
+const removeLoadingStatus = (actionType) => {
+	return { type: REQUEST.REMOVE_REQUEST_LOADING_STATUS, payload: actionType };
+};
 
 const { requestsReducer, requestsMiddleware } = handleRequests({
 	driver: createDriver(
@@ -43,19 +49,20 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 		}),
 	),
 	onRequest: (request, action, store) => {
-		store.dispatch(setLoadingStatus(true));
+		console.log('request actions', store.getState());
+		store.dispatch(setLoadingStatus(action.type));
 		return request;
 	},
 	onSuccess: (response, action, store) => {
-		store.dispatch(setLoadingStatus(false));
+		store.dispatch(removeLoadingStatus(action.type));
 		return response;
 	},
 	onError: (error, action, store) => {
-		store.dispatch(setLoadingStatus(false));
+		store.dispatch(removeLoadingStatus(action.type));
 		return error;
 	},
 	onAbort: (action, store) => {
-		store.dispatch(setLoadingStatus(false));
+		store.dispatch(removeLoadingStatus(action.type));
 	},
 });
 
