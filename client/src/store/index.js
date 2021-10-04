@@ -49,7 +49,6 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 		}),
 	),
 	onRequest: (request, action, store) => {
-		console.log('request actions', store.getState());
 		store.dispatch(setLoadingStatus(action.type));
 		return request;
 	},
@@ -83,5 +82,5 @@ const logger = (store) => (next) => (action) => {
 	return result;
 };
 
-var store = createStore(main, initialState, applyMiddleware(thunk, logger, ...requestsMiddleware));
+var store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
 export default store;

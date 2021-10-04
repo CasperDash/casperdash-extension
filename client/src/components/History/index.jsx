@@ -13,6 +13,7 @@ import { getPublicKey } from '../../selectors/user';
 import { TokenList } from '../Common/TokenList';
 import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
 import { fetchTokensInfoWithBalance } from '../../actions/tokensActions';
+import { useDeploysWidthStatus } from '../hooks/useTransferDeploys';
 
 const CSPR_INFO = {
 	symbol: 'CSPR',
@@ -28,7 +29,7 @@ const PortfolioModule = () => {
 	const userDetails = useSelector(getMassagedUserDetails);
 	const currentPrice = useSelector(getCurrentPrice);
 	const publicKey = useSelector(getPublicKey);
-	const transferList = useSelector(getTransfersDeploy(selectedToken.symbol));
+	const transferList = useDeploysWidthStatus({ symbol: selectedToken.symbol, publicKey }); //useSelector(getTransfersDeploy(selectedToken.symbol));
 	const tokensInfo = useSelector(getMassagedTokenData);
 	const tokensAddressList = useSelector(getTokensAddressList);
 

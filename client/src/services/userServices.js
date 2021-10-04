@@ -12,7 +12,6 @@ export const getSignedTransferDeploy = async (transactionDetail = {}) => {
 
 		return signedDeploy;
 	} catch (error) {
-		console.log(error);
 		return { error: { message: error.message } };
 	}
 };
