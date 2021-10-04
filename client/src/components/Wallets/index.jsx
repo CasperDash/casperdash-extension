@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import AllTransactionList from '../Common/Layout/TransactionList/AllTransactionList';
 import { SendReceiveSection } from '../Common/SendReceive';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 import { getPriceHistory, getCurrentPrice } from '../../selectors/price';
-import { getTransfersDeploy, getPendingTransferDeployHash } from '../../selectors/deploy';
-import {
-	getTransfersFromLocalStorage,
-	getTransferDeploysStatus,
-	updateTransferDeployStatus,
-} from '../../actions/deployActions';
 import { formatKeyByPrefix } from '../../helpers/key';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { ChartLine } from '../Common/Layout/Chart';
 import { toFormattedNumber, toFormattedCurrency } from '../../helpers/format';
+import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
 
 const WalletDetails = () => {
-	const dispatch = useDispatch();
 	// State
 	const [send, setSend] = useState(false);
 	const [showError, setShowError] = useState(false);
@@ -30,22 +23,7 @@ const WalletDetails = () => {
 	const publicKey = useSelector(getPublicKey);
 	const priceHistory = useSelector(getPriceHistory);
 	const currentPrice = useSelector(getCurrentPrice);
-	const transfersDeployList = useSelector(getTransfersDeploy('CSPR'));
-	const pendingTransferDeployHash = useSelector(getPendingTransferDeployHash('CSPR'));
-
-	// Effect
-	useEffect(() => {
-		dispatch(getTransfersFromLocalStorage(publicKey));
-	}, [dispatch, publicKey]);
-
-	useAutoRefreshEffect(() => {
-		if (pendingTransferDeployHash.length) {
-			(async () => {
-				const { data } = await dispatch(getTransferDeploysStatus(pendingTransferDeployHash));
-				dispatch(updateTransferDeployStatus(publicKey, 'deploys.transfers', data));
-			})();
-		}
-	}, [JSON.stringify(pendingTransferDeployHash), dispatch]);
+	const transfersDeployList = useDeploysWithStatus({ symbol: 'CSPR', publicKey });
 
 	// Function
 	const handleToggle = () => {

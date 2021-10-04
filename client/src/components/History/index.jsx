@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { Tab, Nav } from 'react-bootstrap';
+import { Tab } from 'react-bootstrap';
 import { getMassagedUserDetails } from '../../selectors/user';
 import AllList from '../Common/Layout/TransactionList/AllTransactionList';
 import { getCurrentPrice } from '../../selectors/price';
-import { getTransfersFromLocalStorage } from '../../actions/deployActions';
-import { getTransfersDeploy } from '../../selectors/deploy';
 import { getPublicKey } from '../../selectors/user';
 import { TokenList } from '../Common/TokenList';
 import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
 import { fetchTokensInfoWithBalance } from '../../actions/tokensActions';
-import { useDeploysWidthStatus } from '../hooks/useTransferDeploys';
+import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
 
 const CSPR_INFO = {
 	symbol: 'CSPR',
@@ -28,7 +26,7 @@ const PortfolioModule = () => {
 	const userDetails = useSelector(getMassagedUserDetails);
 	const currentPrice = useSelector(getCurrentPrice);
 	const publicKey = useSelector(getPublicKey);
-	const transferList = useDeploysWidthStatus({ symbol: selectedToken.symbol, publicKey });
+	const transferList = useDeploysWithStatus({ symbol: selectedToken.symbol, publicKey });
 	const tokensInfo = useSelector(getMassagedTokenData);
 	const tokensAddressList = useSelector(getTokensAddressList);
 

@@ -8,7 +8,7 @@ import {
 } from '../../actions/deployActions';
 import { getTransfersDeploy, getPendingTransferDeployHash } from '../../selectors/deploy';
 
-export const useDeploysWidthStatus = ({ symbol, publicKey }) => {
+export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 	const dispatch = useDispatch();
 
 	const transfersDeployList = useSelector(getTransfersDeploy(symbol));
