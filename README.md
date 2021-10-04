@@ -1,34 +1,55 @@
 # Welcome to Casper Dash 👋
 
-> A wallet for Casper blockchain
+![](https://i.imgur.com/S9p3Aob.png)
 
-### 🏠 [Homepage](casperdash.io)
+> A web wallet for Casper blockchain
 
-### ✨ [Demo](casperdash.io)
+### 🏠 [casperdash.io ](casperdash.io) ( beta )
 
-## Install
+### Built With
+
+-   [React.js](https://reactjs.org/)
+-   [Nodejs](https://nodejs.org/)
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+### Prerequisites
+
+-   npm >= 7.24
+-   nodejs >= 12
+
+# Client
+
+### Install
 
 ```sh
+cd YOUR_WORKING_DIRECTORY/casper-dashboad/client
 npm install
 ```
 
-## Usage
+### Usage
+
+Update API endpoint at `src/constants/key.js`
+
+```shell
+npm start
+```
+
+# API
+
+### Install
+
+```sh
+cd YOUR_WORKING_DIRECTORY/casper-dashboad/server
+npm install
+```
+
+### Usage
+
+RPC url can be updated at `.env` or `constants/index.js`
 
 ```sh
 npm start
 ```
-
-## Author
-
-👤 **kien nguyen**
-
-* Github: [@djhahe](https://github.com/djhahe)
-* LinkedIn: [@kiennguyen167](https://linkedin.com/in/kiennguyen167)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
