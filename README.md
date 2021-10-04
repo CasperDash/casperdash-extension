@@ -1,12 +1,34 @@
-## Available Scripts
+# Welcome to Casper Dash 👋
 
-In the project directory, you can run:
+> A wallet for Casper blockchain
 
-### `npm start`
+### 🏠 [Homepage](casperdash.io)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### ✨ [Demo](casperdash.io)
 
-### `npm run build`
+## Install
 
-Builds the app for production to the `build` folder.<br />
+```sh
+npm install
+```
+
+## Usage
+
+```sh
+npm start
+```
+
+## Author
+
+👤 **kien nguyen**
+
+* Github: [@djhahe](https://github.com/djhahe)
+* LinkedIn: [@kiennguyen167](https://linkedin.com/in/kiennguyen167)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

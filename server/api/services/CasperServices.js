@@ -1,7 +1,6 @@
-const { CasperServiceByJsonRPC, CasperClient, CLPublicKey, DeployUtil } = require('casper-js-sdk');
+const { CasperServiceByJsonRPC, CasperClient, DeployUtil } = require('casper-js-sdk');
+const { TESTNET_RPC_URL } = require('../../constants');
 
-const RPC_URL = 'https://node-clarity-testnet.make.services/rpc';
-const TESTNET_RPC_URL = 'http://16.162.124.124:7777/rpc';
 const casperServiceRPC = new CasperServiceByJsonRPC(TESTNET_RPC_URL);
 const casperClient = new CasperClient(TESTNET_RPC_URL);
 
