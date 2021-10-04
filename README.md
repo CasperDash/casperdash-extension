@@ -6,6 +6,38 @@
 
 ### 🏠 [casperdash.io ](casperdash.io) ( beta )
 
+## Features/Road map
+
+-   [x] Integrate with Casper Singer
+-   [x] Dashboad
+    -   [x] View CSPR balance
+    -   [x] Send/Receive CRPR
+    -   [x] CRPS price chart
+-   [x] Tokens (ERC20)
+    -   [x] View token info/balance
+    -   [x] Send/Receive tokens
+    -   [x] Add custom token by contract hash
+-   [x] History
+    -   [x] View transfer transactions history
+-   [ ] Keys Manager
+    -   [x] Deploy keys manager contract
+    -   [x] Edit account weight
+    -   [x] Edit Deployment/ Key management threshold
+    -   [x] Add new associated key
+    -   [ ] Edit associated account weight
+-   [ ] Stacking
+    -   [ ] Stacking CSPR
+-   [ ] Account management
+    -   [ ] Create/update/manage public/private keys
+    -   [ ] Import/backup account from private key file or mnemonic words
+    -   [ ] Provide method to sign contract from external site
+
+#### Will be on separated repository
+
+-   [ ] Web extension wallet
+-   [ ] IOS app
+-   [ ] Android app
+
 ### Built With
 
 -   [React.js](https://reactjs.org/)
