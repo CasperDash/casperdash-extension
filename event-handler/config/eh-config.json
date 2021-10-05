@@ -1,22 +1,22 @@
 {
-  "development": {
-    "EH_STREAM_PROTOCOL": "http",
-    "EH_STREAM_DOMAIN": "16.162.124.124",
-    "EH_STREAM_PORT": 9999,
-    "EH_STREAM_PATH": "events/main",
-    "EH_STREAM_DEPLOY_PATH": "events/deploys"
-  },
-  "test": {
-    "EH_STREAM_PROTOCOL": "http",
-    "EH_STREAM_DOMAIN": "localhost",
-    "EH_STREAM_PORT": 50101,
-    "EH_STREAM_PATH": "events"
-  },
-  "production": {
-    "EH_STREAM_PROTOCOL": "http",
-    "EH_STREAM_DOMAIN": "16.162.124.124",
-    "EH_STREAM_PORT": 9999,
-    "EH_STREAM_PATH": "events/main",
-    "EH_STREAM_DEPLOY_PATH": "events/deploys"
-  }
+	"development": {
+		"EH_STREAM_PROTOCOL": "http",
+		"EH_STREAM_DOMAIN": "159.65.118.250",
+		"EH_STREAM_PORT": 9999,
+		"EH_STREAM_PATH": "events/main",
+		"EH_STREAM_DEPLOY_PATH": "events/deploys"
+	},
+	"test": {
+		"EH_STREAM_PROTOCOL": "http",
+		"EH_STREAM_DOMAIN": "localhost",
+		"EH_STREAM_PORT": 50101,
+		"EH_STREAM_PATH": "events"
+	},
+	"production": {
+		"EH_STREAM_PROTOCOL": "http",
+		"EH_STREAM_DOMAIN": "159.65.118.250",
+		"EH_STREAM_PORT": 9999,
+		"EH_STREAM_PATH": "events/main",
+		"EH_STREAM_DEPLOY_PATH": "events/deploys"
+	}
 }

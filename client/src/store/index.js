@@ -8,6 +8,9 @@ import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
 import tokensReducer from './reducers/tokens';
+import deployReducer from './reducers/deploys';
+import requestReducer from './reducers/request';
+import { REQUEST } from './actionTypes';
 
 export const initialState = {
 	user: {
@@ -23,6 +26,20 @@ export const initialState = {
 	tokens: {
 		address: [],
 	},
+	deploys: {
+		transfers: [],
+	},
+	request: {
+		isLoading: [],
+	},
+};
+
+const setLoadingStatus = (actionType) => {
+	return { type: REQUEST.ADD_REQUEST_LOADING_STATUS, payload: actionType };
+};
+
+const removeLoadingStatus = (actionType) => {
+	return { type: REQUEST.REMOVE_REQUEST_LOADING_STATUS, payload: actionType };
 };
 
 const { requestsReducer, requestsMiddleware } = handleRequests({
@@ -31,6 +48,21 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 			baseURL: BASE_API_URL,
 		}),
 	),
+	onRequest: (request, action, store) => {
+		store.dispatch(setLoadingStatus(action.type));
+		return request;
+	},
+	onSuccess: (response, action, store) => {
+		store.dispatch(removeLoadingStatus(action.type));
+		return response;
+	},
+	onError: (error, action, store) => {
+		store.dispatch(removeLoadingStatus(action.type));
+		return error;
+	},
+	onAbort: (action, store) => {
+		store.dispatch(removeLoadingStatus(action.type));
+	},
 });
 
 const main = combineReducers({
@@ -39,6 +71,8 @@ const main = combineReducers({
 	keysManager: keysManagerReducer,
 	tokens: tokensReducer,
 	requests: requestsReducer,
+	deploys: deployReducer,
+	request: requestReducer,
 });
 
 const logger = (store) => (next) => (action) => {
@@ -48,5 +82,5 @@ const logger = (store) => (next) => (action) => {
 	return result;
 };
 
-var store = createStore(main, initialState, applyMiddleware(thunk, logger, ...requestsMiddleware));
+var store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
 export default store;

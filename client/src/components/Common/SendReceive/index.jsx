@@ -5,9 +5,9 @@ import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getSignedTransferDeploy } from '../../../services/userServices';
-import { putDeploy } from '../.././../actions/deployActions';
+import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
-import { TRANSFER_FEE } from '../../../constants/key';
+import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { ConfirmModal } from './ConfirmModal';
 import { toFormattedNumber } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
@@ -20,8 +20,9 @@ export const SendReceiveSection = ({
 	csprPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
-	transferFee = TRANSFER_FEE,
+	transferFee = CSPR_TRANSFER_FEE,
 	tokenInfo,
+	csprBalance,
 }) => {
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
@@ -42,6 +43,16 @@ export const SendReceiveSection = ({
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
+			dispatch(
+				pushTransferToLocalStorage(fromAddress, {
+					...transactionDetails,
+					deployHash: hash.deployHash,
+					status: 'pending',
+					timestamp: signedDeploy.deploy.header.timestamp,
+					...tokenInfo,
+					symbol: tokenSymbol,
+				}),
+			);
 		} else {
 			setSignerError(signedDeploy.error.message);
 		}
@@ -53,6 +64,7 @@ export const SendReceiveSection = ({
 				fromAddress: fromAddress,
 				toAddress: values.toAddress,
 				amount: values.sendAmount,
+				fee: transferFee,
 			});
 			setShowConfirmModal(true);
 		}
@@ -72,7 +84,14 @@ export const SendReceiveSection = ({
 						<Formik
 							initialValues={{ sendAmount: minAmount, toAddress: '' }}
 							validate={(values) =>
-								validateTransferForm({ ...values, minAmount, displayBalance, tokenSymbol })
+								validateTransferForm({
+									...values,
+									minAmount,
+									displayBalance,
+									tokenSymbol,
+									csprBalance,
+									transferFee,
+								})
 							}
 							onSubmit={handleSubmit}
 						>
@@ -151,7 +170,15 @@ export const SendReceiveSection = ({
 										<div className="cd_send_currency_text">
 											<p>
 												Network Fee
-												<span>{transferFee} CSPR</span>
+												<span>
+													{transferFee} CSPR{' '}
+													<Form.Control.Feedback
+														type="invalid"
+														className="cd_send_currency_error_msg"
+													>
+														{errors.transferFee}
+													</Form.Control.Feedback>
+												</span>
 											</p>
 										</div>
 									</div>
@@ -227,7 +254,7 @@ export const SendReceiveSection = ({
 				onClose={onCloseConfirmModal}
 				onConfirm={onConfirmTransaction}
 				{...transactionDetails}
-				fee={TRANSFER_FEE}
+				fee={transferFee}
 				csprPrice={csprPrice}
 				deployHash={deployHash}
 				deployError={deployHash ? '' : deployError || signedError}

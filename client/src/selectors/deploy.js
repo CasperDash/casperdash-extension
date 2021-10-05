@@ -10,3 +10,14 @@ export const getLatestBlockHash = createSelector(
 	getLatestBlockHashSelector,
 	({ data }) => (data && data.latestBlockHash) || '',
 );
+
+//TODO: Should check by address, token may have same symbol
+export const getTransfersDeploy = (symbol) => ({ deploys = {} }) => {
+	const transfers = deploys.transfers || [];
+	return transfers.filter((transfer) => (symbol ? transfer.symbol === symbol : true));
+};
+
+export const getPendingTransferDeployHash = (symbol) =>
+	createSelector(getTransfersDeploy(symbol), (pendingTransferDeploys) => {
+		return pendingTransferDeploys.map((deploy) => deploy.deployHash);
+	});

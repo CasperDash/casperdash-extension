@@ -6,16 +6,6 @@ export const getUserDetails = (publicKey) => ({
 	request: { url: `/user/${publicKey}` },
 });
 
-export const getBalance = () => {
-	return async (dispatch, getState) => {
-		const state = getState();
-		console.log(state);
-		if (state.user.publicAddress) {
-			dispatch({ type: USERS.GET_ACCOUNT_BALANCE, payload: { balance: 0 } });
-		}
-	};
-};
-
 export const updatePublicKeyFromSigner = () => {
 	return async (dispatch) => {
 		let publicKey;

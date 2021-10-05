@@ -898,6 +898,13 @@ table {
 	margin-right: -10px;
 }
 .cd_add_token_row {
+	.cd_currency_column_sub_row_full {
+		display: flex;
+		min-width: 100%;
+		max-width: 100%;
+		overflow-x: scroll;
+		padding-bottom: 15px;
+	}
 	.cd_currency_column_sub_row {
 		display: flex;
 		min-width: 80%;
@@ -1632,6 +1639,9 @@ table {
 				display: block;
 				font-weight: 600;
 			}
+			.cd_send_currency_error_msg {
+				display: block !important;
+			}
 		}
 	}
 }
@@ -1897,7 +1907,7 @@ table {
 			margin-right: 5px;
 		}
 	}
-	.cd_transaction_completed {
+	.cd_transaction_success {
 		&::before {
 			background: $color9;
 		}
@@ -1905,6 +1915,11 @@ table {
 	.cd_transaction_failed {
 		&::before {
 			background: $color33;
+		}
+	}
+	.cd_transaction_pending {
+		&::before {
+			background: $color30;
 		}
 	}
 	.cd_transaction_list_type {

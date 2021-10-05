@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { toFormattedNumber } from '../../../helpers/format';
+import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 
 export const ConfirmModal = ({
 	show,
@@ -81,10 +81,7 @@ export const ConfirmModal = ({
 				{currentPrice && csprPrice && (
 					<div className="cd_confirm_modal_row_single">
 						<span className="cd_confirm_modal_value">
-							{toFormattedNumber(amount * currentPrice + csprPrice * fee, undefined, {
-								style: 'currency',
-								currency: 'USD',
-							})}
+							{toFormattedCurrency(amount * currentPrice + csprPrice * fee)}
 						</span>
 					</div>
 				)}
