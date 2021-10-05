@@ -2,28 +2,39 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-//require('dotenv').load()
-const port = 3001;
 
-var allowCrossDomain = function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-	res.header('Access-Control-Allow-Headers', 'Content-Type');
-	next();
-};
-app.use(allowCrossDomain);
+const env = process.env.NODE_ENV || 'development';
+const dbConfig = require(__dirname + '/../common/config/db-config.json')[env];
+const { url, dbName } = dbConfig;
+const { initDb } = require(__dirname + '/../common/db');
 
-app.options('*', cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+initDb(url, dbName)
+	.then(() => {
+		const port = 3001;
 
-let routes = require('./api/routes'); //importing route
-routes(app);
+		var allowCrossDomain = function (req, res, next) {
+			res.header('Access-Control-Allow-Origin', '*');
+			res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+			res.header('Access-Control-Allow-Headers', 'Content-Type');
+			next();
+		};
+		app.use(allowCrossDomain);
 
-app.use(function (req, res) {
-	res.status(404).send({ url: req.originalUrl + ' not found' });
-});
+		app.options('*', cors());
+		app.use(bodyParser.urlencoded({ extended: true }));
+		app.use(bodyParser.json());
 
-app.listen(port);
+		let routes = require('./api/routes'); //importing route
+		routes(app);
 
-console.log('RESTful API server started on: ' + port);
+		app.use(function (req, res) {
+			res.status(404).send({ url: req.originalUrl + ' not found' });
+		});
+
+		app.listen(port);
+
+		console.log('RESTful API server started on: ' + port);
+	})
+	.catch((error) => {
+		console.error('Cannot connect to mongodb', error);
+	});
