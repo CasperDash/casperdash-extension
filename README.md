@@ -1,28 +1,3 @@
-<<<<<<< HEAD
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-
-### Step to run event handler
-
-```
-cd event-handler
-npm i
-npm run dev
-
-```
-
-You can view the developement database in event-handler/developement_sqlite.db
-=======
 # Welcome to Casper Dash 👋
 
 ![](https://i.imgur.com/S9p3Aob.png)
@@ -110,4 +85,3 @@ RPC url can be updated at `.env` or `constants/index.js`
 ```sh
 npm start
 ```
->>>>>>> df2e9c5a379e100819665c76a1fc037437144319
