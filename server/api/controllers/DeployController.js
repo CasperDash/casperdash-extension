@@ -1,5 +1,5 @@
 const { putDeploy, getDeploysStatus, getLatestBlockHash } = require('../services/CasperServices');
-const { getTransactionsByAccount } = require('../services/DeployService');
+const { getDeployTransactionsByAccount } = require('../services/DeployService');
 
 module.exports = {
 	deploy: async (req, res) => {
@@ -29,12 +29,16 @@ module.exports = {
 		try {
 			const { params } = req;
 			const { publicKey } = params;
-			const transfers = await getTransactionsByAccount(publicKey);
-			console.log(
-				'transfers',
-				transfers.map((account) => account),
-			);
-			res.json(transfers);
+			const deploys = await getDeployTransactionsByAccount(publicKey);
+			const result = deploys.map((deploy) => {
+				const { transfers, effect } = deploy.execution_result.Success;
+				const { transforms } = effect;
+				return transfers.map((t) => {
+					const transfer = transforms.find((transform) => transform.key === t);
+					return transfer && transfer.transform.WriteTransfer ? transfer.transform.WriteTransfer : {};
+				});
+			});
+			res.json(result);
 		} catch (error) {
 			res.status(500).json({ message: error.message });
 		}
