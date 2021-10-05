@@ -36,7 +36,7 @@ const HeadingModule = (props) => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged].forEach((event) =>
+		[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged, SIGNER_EVENTS.connected].forEach((event) =>
 			window.addEventListener(event, dispatchUnlockSinger),
 		);
 		[SIGNER_EVENTS.locked, SIGNER_EVENTS.disconnected].forEach((event) =>
@@ -44,7 +44,7 @@ const HeadingModule = (props) => {
 		);
 
 		return () => {
-			[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged].forEach((event) =>
+			[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged, SIGNER_EVENTS.connected].forEach((event) =>
 				window.removeEventListener(event, dispatchUnlockSinger),
 			);
 			[SIGNER_EVENTS.locked, SIGNER_EVENTS.disconnected].forEach((event) =>

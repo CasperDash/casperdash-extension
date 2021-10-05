@@ -33,7 +33,6 @@ const Layout = (props) => {
 	}, []);
 
 	useEffect(() => {
-		console.log(isLoading);
 		if (isLoading) {
 			ref.current.continuousStart();
 		} else {

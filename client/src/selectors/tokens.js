@@ -47,5 +47,5 @@ export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) =>
 
 export const getTokensAddressList = ({ tokens }) => {
 	const tokensAddress = (tokens && tokens.address) || [];
-	return [...new Set([...DEFAULT_TOKENS_ADDRESS_LIST, tokensAddress])];
+	return [...new Set([...DEFAULT_TOKENS_ADDRESS_LIST, ...tokensAddress])];
 };

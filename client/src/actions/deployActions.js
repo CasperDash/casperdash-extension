@@ -51,7 +51,7 @@ export const updateTransferDeploysLocalStorage = (publicKey, patch, value, actio
 	};
 };
 
-export const updateTransferDeployStatus = (publicKey, path, listHash) => {
+export const updateTransferDeployStatus = (publicKey, path, listHash = []) => {
 	return (dispatch) => {
 		const deployStorageValue = getLocalStorageValue(publicKey, path) || [];
 		const updatedValue = deployStorageValue.map((deploy) => {
