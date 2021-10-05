@@ -16,7 +16,7 @@ module.exports = function (app) {
 	app.route('/deploy').post(deployController.deploy);
 	app.route('/deploysStatus').get(deployController.getDeploysStatus);
 	app.route('/getLatestBlockHash').get(deployController.getLatestBlockHash);
-	app.route('/getDeploys/:publicKey').get(deployController.getDeploys);
+	app.route('/getTrans/:publicKey').get(deployController.getTransfers);
 	//Token
 	app.route('/tokens/getTokensInfo').get(tokenController.getTokens);
 	app.route('/token/:tokenAddress').get(tokenController.getToken);

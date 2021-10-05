@@ -1,5 +1,5 @@
 const { putDeploy, getDeploysStatus, getLatestBlockHash } = require('../services/CasperServices');
-const { getDeploysByAccount } = require('../services/DeployService');
+const { getTransactionsByAccount } = require('../services/DeployService');
 
 module.exports = {
 	deploy: async (req, res) => {
@@ -25,13 +25,16 @@ module.exports = {
 			res.status(500).json({ message: error.message });
 		}
 	},
-	getDeploys: async (req, res) => {
+	getTransfers: async (req, res) => {
 		try {
 			const { params } = req;
 			const { publicKey } = params;
-			const deploys = await getDeploysByAccount(publicKey);
-			console.log('Deploys', deploys[0].dataValues);
-			res.json({ deploys: deploys.map((deploy) => deploy.dataValues) });
+			const transfers = await getTransactionsByAccount(publicKey);
+			console.log(
+				'transfers',
+				transfers.map((account) => account),
+			);
+			res.json(transfers);
 		} catch (error) {
 			res.status(500).json({ message: error.message });
 		}
