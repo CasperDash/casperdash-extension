@@ -4,15 +4,12 @@
 		"logging": false
 	},
 	"development": {
-		"dialect": "sqlite",
 		"logging": false,
-		"storage": "../developement_sqlite.db"
+		"url": "mongodb://localhost:27017",
+		"dbName": "casper_data"
 	},
 	"production": {
-		"username": "root",
-		"password": null,
-		"database": "database_production",
-		"host": "127.0.0.1",
-		"dialect": "mysql"
+		"database": "casper-db",
+		"url": "mongodb+srv://casper-db:5CPye2ZzTXLjnL5x@cluster0.gflfm.mongodb.net/casper_data?retryWrites=true&w=majority"
 	}
 }
