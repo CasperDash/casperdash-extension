@@ -5,8 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "NODE_ENV=production nodemon server.js",
-		"dev": "NODE_ENV=production nodemon server.js"
+		"start": "NODE_ENV=production PORT=3001  nodemon server.js",
+		"dev": "NODE_ENV=production PORT=3001 nodemon server.js"
 	},
 	"author": "",
 	"license": "ISC",
