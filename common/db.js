@@ -2,6 +2,13 @@ const { MongoClient } = require('mongodb');
 
 const env = process.env.NODE_ENV || 'development';
 let _db;
+/**
+ * Connect to mongodb server.
+ *
+ * @param {String} connectionString MongoDB connection string URL
+ * @param {String} dbName DB name
+ * @returns
+ */
 const initDb = async (connectionString, dbName) => {
 	let client;
 	if ('production' === env) {
@@ -18,6 +25,11 @@ const initDb = async (connectionString, dbName) => {
 	return _db;
 };
 
+/**
+ * Get the DB instance.
+ *
+ * @returns
+ */
 const getDb = () => {
 	return _db;
 };
