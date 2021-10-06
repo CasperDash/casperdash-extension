@@ -99,7 +99,7 @@ npm install
 
 ### Usage
 
-Change your MongoDB configuration in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config/db-config.json file.
+Create your MongoDB configuration file db-config.json in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config by copying the template file db-config.json.sample.
 
 ```sh
 npm start
