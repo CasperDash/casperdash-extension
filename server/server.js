@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const env = process.env.NODE_ENV || 'development';
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 const dbConfig = require(__dirname + '/../common/config/db-config.json')[env];
 const { url, dbName } = dbConfig;
 const { initDb } = require(__dirname + '/../common/db');
@@ -30,7 +30,7 @@ initDb(url, dbName)
 			res.status(404).send({ url: req.originalUrl + ' not found' });
 		});
 
-		if ('development' === env) {
+		if (port) {
 			app.listen(port);
 		}
 
