@@ -6,7 +6,7 @@ const env = process.env.NODE_ENV || 'development';
 console.log('Env', env);
 
 const config = require(__dirname + '/../config/eh-config.json')[env];
-const dbConfig = require(__dirname + '/../config/db-config.json')[env];
+const dbConfig = require(__dirname + '/../../common/config/db-config.json')[env];
 
 const Storage = require('./storage');
 
