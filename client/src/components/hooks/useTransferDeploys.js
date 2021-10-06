@@ -6,13 +6,20 @@ import {
 	updateTransferDeployStatus,
 	getTransfersFromLocalStorage,
 } from '../../actions/deployActions';
-import { getTransfersDeploy, getPendingTransferDeployHash } from '../../selectors/deploy';
+import { getTransfersDeploy, getPendingTransferDeployHash, getMassagedTransfers } from '../../selectors/deploy';
 
+const mergeDeploys = (localList, remoteList) => {
+	const localIds = localList.map((l) => l.deployHash);
+	return [...localList, ...remoteList.filter((r) => localIds.indexOf(r.deployHash) < 0)];
+};
 export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 	const dispatch = useDispatch();
 
 	const transfersDeployList = useSelector(getTransfersDeploy(symbol));
 	const pendingTransferDeployHash = useSelector(getPendingTransferDeployHash(symbol));
+	const historyTransfersDeploy = useSelector(getMassagedTransfers);
+
+	console.log('History Transfer', historyTransfersDeploy);
 
 	useEffect(() => {
 		dispatch(getTransfersFromLocalStorage(publicKey));
@@ -27,5 +34,5 @@ export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 		}
 	}, [JSON.stringify(pendingTransferDeployHash), dispatch]);
 
-	return transfersDeployList;
+	return mergeDeploys(transfersDeployList, historyTransfersDeploy);
 };
