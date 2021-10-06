@@ -1,6 +1,7 @@
 import { getMutationSelector, getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { DEPLOY } from '../store/actionTypes';
+import { MOTE_RATE, KEY_PREFIX, CSPR_TRANSFER_FEE } from '../constants/key';
 
 export const deploySelector = getMutationSelector({ type: DEPLOY.PUT_DEPLOY });
 
@@ -9,18 +10,19 @@ export const getLatestBlockHashSelector = getQuerySelector({ type: DEPLOY.GET_LA
 const getTransfersSelector = getQuerySelector({ type: DEPLOY.GET_DEPLOY_TRANSFERS });
 
 export const getMassagedTransfers = createSelector(getTransfersSelector, (transfer) => {
+	const accountHashPrefix = KEY_PREFIX[1];
 	return transfer.data
 		? transfer.data.map((d) => {
-				const { deploy_hash: deployHash, amount, from, to } = d;
+				const { deploy_hash: deployHash, amount, from, to, timestamp } = d;
 				return {
-					amount: amount / 1000000000,
+					amount: amount / MOTE_RATE,
 					deployHash,
-					fee: 0.00001,
-					fromAddress: from.replace('account-hash-', ''),
+					fee: CSPR_TRANSFER_FEE,
+					fromAddress: from.replace(accountHashPrefix, ''),
 					status: 'success',
 					symbol: 'CSPR',
-					timestamp: '2021-10-05T09:09:00.625Z',
-					toAddress: to.replace('account-hash-', ''),
+					timestamp,
+					toAddress: to.replace(accountHashPrefix, ''),
 				};
 		  })
 		: [];
