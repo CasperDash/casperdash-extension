@@ -91,12 +91,15 @@ npm start
 ### Install
 
 ````sh
+cd YOUR_WORKING_DIRECTORY/casper-dashboad/common
+npm install
+
 cd YOUR_WORKING_DIRECTORY/casper-dashboad/event-handler
 npm install
 
 ### Usage
 
-Change your MongoDB configuration in config/db-config.json file.
+Change your MongoDB configuration in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config/db-config.json file.
 
 ```sh
 npm start
