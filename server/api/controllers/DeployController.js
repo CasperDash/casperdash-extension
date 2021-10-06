@@ -30,12 +30,15 @@ module.exports = {
 			const { params } = req;
 			const { publicKey } = params;
 			const deploys = await getDeployTransactionsByAccount(publicKey);
-			const result = deploys.map((deploy) => {
+			const result = [];
+			deploys.forEach((deploy) => {
 				const { transfers, effect } = deploy.execution_result.Success;
 				const { transforms } = effect;
-				return transfers.map((t) => {
+				transfers.forEach((t) => {
 					const transfer = transforms.find((transform) => transform.key === t);
-					return transfer && transfer.transform.WriteTransfer ? transfer.transform.WriteTransfer : {};
+					const writeTransfer =
+						transfer && transfer.transform.WriteTransfer ? transfer.transform.WriteTransfer : {};
+					result.push(writeTransfer);
 				});
 			});
 			res.json(result);
