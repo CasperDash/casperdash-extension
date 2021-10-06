@@ -85,3 +85,19 @@ RPC url can be updated at `.env` or `constants/index.js`
 ```sh
 npm start
 ```
+
+# Event Handler
+
+### Install
+
+````sh
+cd YOUR_WORKING_DIRECTORY/casper-dashboad/event-handler
+npm install
+
+### Usage
+
+Change your MongoDB configuration in config/db-config.json file.
+
+```sh
+npm start
+````
