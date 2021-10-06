@@ -11,7 +11,7 @@ const DEFAULT_OPTIONS = {
 };
 const requester = axios.create({
 	baseURL: DEFAULT_API,
-	timeout: 1000,
+	timeout: 20000,
 	...DEFAULT_OPTIONS,
 });
 

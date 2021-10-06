@@ -5,14 +5,14 @@ import { getPendingDeploys } from '../../selectors/keyManager';
 
 export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit, onShowDeployHash }) => {
 	const pendingDeploys = useSelector(getPendingDeploys);
-	const editAble = value && canEdit && !(pendingDeploys[valueKey] && pendingDeploys[valueKey].length);
+	const editable = value && canEdit && !(pendingDeploys[valueKey] && pendingDeploys[valueKey].length);
 	return (
 		<tr>
 			<td>{label}</td>
 			<td>
 				{value}
 				{'   '}
-				{editAble && (
+				{editable && (
 					<OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
 						<i
 							className="bi bi-pencil-fill cd_account_info_table_action"
