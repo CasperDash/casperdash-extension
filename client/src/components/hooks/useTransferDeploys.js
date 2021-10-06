@@ -19,8 +19,6 @@ export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 	const pendingTransferDeployHash = useSelector(getPendingTransferDeployHash(symbol));
 	const historyTransfersDeploy = useSelector(getMassagedTransfers);
 
-	console.log('History Transfer', historyTransfersDeploy);
-
 	useEffect(() => {
 		dispatch(getTransfersFromLocalStorage(publicKey));
 	}, [dispatch, publicKey]);
