@@ -8,10 +8,21 @@ import {
 } from '../../actions/deployActions';
 import { getTransfersDeploy, getPendingTransferDeployHash, getMassagedTransfers } from '../../selectors/deploy';
 
+/**
+ *
+ * Merge local and remote deploys without duplication by deployHash.
+ *
+ * @param {Array} localList
+ * @param {Array} remoteList
+ * @returns
+ */
 const mergeDeploys = (localList, remoteList) => {
 	const localIds = localList.map((l) => l.deployHash);
 	return [...localList, ...remoteList.filter((r) => localIds.indexOf(r.deployHash) < 0)];
 };
+
+const sortByTimeStampDesc = (a, b) => b.timestamp.localeCompare(a.timestamp);
+
 export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 	const dispatch = useDispatch();
 
@@ -32,5 +43,5 @@ export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 		}
 	}, [JSON.stringify(pendingTransferDeployHash), dispatch]);
 
-	return mergeDeploys(transfersDeployList, historyTransfersDeploy);
+	return mergeDeploys(transfersDeployList, historyTransfersDeploy).sort(sortByTimeStampDesc);
 };
