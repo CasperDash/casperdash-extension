@@ -33,13 +33,14 @@ module.exports = {
 			const result = [];
 			// TODO: improvement the Big O
 			deploys.forEach((deploy) => {
-				const { transfers, effect } = deploy.execution_result.Success;
+				const { timestamp, execution_result } = deploy;
+				const { transfers, effect } = execution_result.Success;
 				const { transforms } = effect;
 				transfers.forEach((t) => {
 					const transfer = transforms.find((transform) => transform.key === t);
 					const writeTransfer =
 						transfer && transfer.transform.WriteTransfer ? transfer.transform.WriteTransfer : {};
-					result.push(writeTransfer);
+					result.push({ ...writeTransfer, timestamp });
 				});
 			});
 			res.json(result);
