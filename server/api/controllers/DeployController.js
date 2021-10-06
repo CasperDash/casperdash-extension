@@ -31,6 +31,7 @@ module.exports = {
 			const { publicKey } = params;
 			const deploys = await getDeployTransactionsByAccount(publicKey);
 			const result = [];
+			// TODO: improvement the Big O
 			deploys.forEach((deploy) => {
 				const { transfers, effect } = deploy.execution_result.Success;
 				const { transforms } = effect;
