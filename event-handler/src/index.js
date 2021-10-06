@@ -60,7 +60,7 @@ initEventHandler = async () => {
 		const mainEventUrl = mainEventHandler.formURL();
 		mainEventHandler.listener(mainEventUrl, db);
 	} catch (error) {
-		console.log('There is an error when connecitng to MongoDB', error);
+		console.log('There is an error when connecting to MongoDB', error);
 	}
 };
 initEventHandler();
