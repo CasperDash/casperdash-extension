@@ -49,6 +49,7 @@
 
 ### Prerequisites
 
+-   mongodb > 4.4
 -   npm >= 7.24
 -   nodejs >= 12
 
