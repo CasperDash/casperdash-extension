@@ -12,7 +12,6 @@ const KeyList = ({ associatedKeys }) => {
 							<th className="cd_key_list_table_heading">No</th>
 							<th className="cd_key_list_table_heading">account hash</th>
 							<th className="cd_key_list_table_heading">weight</th>
-							<th className="cd_key_list_table_heading">action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -21,7 +20,6 @@ const KeyList = ({ associatedKeys }) => {
 								<td className="cd_key_list_no">{i + 1}</td>
 								<td className="cd_key_list_key">{formatKeyByPrefix(key.accountHash)}</td>
 								<td className="cd_key_list_weight">{key.weight}</td>
-								<td className="cd_key_list_action">edit</td>
 							</tr>
 						))}
 					</tbody>

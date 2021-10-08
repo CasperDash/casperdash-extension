@@ -34,7 +34,7 @@ export const updateKeysManagerLocalStorage = (publicKey, patch, value, action) =
 	};
 };
 
-export const updateKeysManagerDeployStatus = (publicKey, path, listHash) => {
+export const updateKeysManagerDeployStatus = (publicKey, path, listHash = []) => {
 	return (dispatch) => {
 		const deployStorageValue = getLocalStorageValue(publicKey, path);
 		const updatedValue = Object.keys(deployStorageValue).reduce((out, key) => {

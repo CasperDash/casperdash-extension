@@ -70,6 +70,7 @@ const Tokens = () => {
 			setAddTokenError(error);
 		} else {
 			data.name && dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
+			setShowAddTokenModal(false);
 		}
 	};
 

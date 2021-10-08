@@ -96,6 +96,7 @@ const KeyManager = () => {
 
 	const handleCloseConfirmModal = () => {
 		setShowConfirmModal(false);
+		clearState();
 	};
 
 	const handleDeployTextClick = () => {
@@ -123,7 +124,26 @@ const KeyManager = () => {
 
 	const handleConfirmDeployContract = async () => {
 		const deploy = await getKeyManagerContractDeploy(publicKey);
-		const { data: hash } = await dispatch(deployKeyManagerContract(deploy));
+		if (deploy.error) {
+			setDeployError(deploy.error.message);
+			console.log(deploy.error.message);
+			return;
+		}
+		const { data: hash, error } = await dispatch(deployKeyManagerContract(deploy));
+		if (!error && hash.deployHash) {
+			setDeployHash(hash.deployHash);
+			dispatch(
+				updateKeysManagerLocalStorage(
+					publicKey,
+					`keysManager.deploys.installContract`,
+					{ hash: hash.deployHash, status: 'pending' },
+					'push',
+				),
+			);
+			handleCloseConfirmModal();
+		} else {
+			setDeployError(error);
+		}
 	};
 
 	const handleSummitChange = async () => {
@@ -172,12 +192,16 @@ const KeyManager = () => {
 				<div className="cd_setting_list">
 					<div className="cd_setting_list_items">
 						<div className="cd_setting_items_heading_peregraph">
-							{!isContractAvailable && (
+							{!isContractAvailable && publicKey && (
 								<div className="cd_error_text">
 									Your account haven't deployed keys manager contract yet.{' '}
-									<a href="#" onClick={handleDeployTextClick}>
-										Click to deploy.
-									</a>
+									{pendingDeploys.installContract && pendingDeploys.installContract.length ? (
+										'Installing Contract...'
+									) : (
+										<a href="#" onClick={handleDeployTextClick}>
+											Click to deploy.
+										</a>
+									)}
 								</div>
 							)}
 							<h3>Account Info</h3>
@@ -236,22 +260,49 @@ const KeyManager = () => {
 						<div className="cd_transaction_list_main_heading">
 							Associated Keys
 							{isContractAvailable && (
-								<div className="cd_transaction_list_main_heading_action">
-									<OverlayTrigger placement="top" overlay={<Tooltip>Add</Tooltip>}>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="16"
-											height="16"
-											fill="currentColor"
-											class="bi bi-plus-circle"
-											viewBox="0 0 16 16"
-											onClick={() => onEdit('associatedKey', '')}
-										>
-											<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-											<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-										</svg>
-									</OverlayTrigger>
-								</div>
+								<>
+									<div className="cd_transaction_list_main_heading_action">
+										{pendingDeploys.associatedKey && pendingDeploys.associatedKey.length ? (
+											pendingDeploys.associatedKey.map((deploy) => (
+												<OverlayTrigger
+													placement="top"
+													overlay={<Tooltip>{deploy.hash}</Tooltip>}
+												>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														width="16"
+														height="16"
+														fill="currentColor"
+														class="bi bi-arrow-clockwise"
+														viewBox="0 0 16 16"
+														onClick={() => onShowDeployHash(deploy.hash)}
+													>
+														<path
+															fill-rule="evenodd"
+															d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+														/>
+														<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+													</svg>
+												</OverlayTrigger>
+											))
+										) : (
+											<OverlayTrigger placement="top" overlay={<Tooltip>Add</Tooltip>}>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="16"
+													fill="currentColor"
+													class="bi bi-plus-circle"
+													viewBox="0 0 16 16"
+													onClick={() => onEdit('associatedKey', '')}
+												>
+													<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+													<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+												</svg>
+											</OverlayTrigger>
+										)}
+									</div>
+								</>
 							)}
 						</div>
 					</div>
@@ -273,6 +324,7 @@ const KeyManager = () => {
 				handleClose={handleCloseConfirmModal}
 				message={confirmMessage}
 				onDeploy={handleConfirmDeployContract}
+				error={deployError}
 			/>
 		</>
 	);
