@@ -6,13 +6,29 @@ import {
 	updateTransferDeployStatus,
 	getTransfersFromLocalStorage,
 } from '../../actions/deployActions';
-import { getTransfersDeploy, getPendingTransferDeployHash } from '../../selectors/deploy';
+import { getTransfersDeploy, getPendingTransferDeployHash, getMassagedTransfers } from '../../selectors/deploy';
+
+/**
+ *
+ * Merge local and remote deploys without duplication by deployHash.
+ *
+ * @param {Array} localList
+ * @param {Array} remoteList
+ * @returns
+ */
+const mergeDeploys = (localList, remoteList) => {
+	const remoteIds = remoteList.map((r) => r.deployHash);
+	return [...remoteList, ...localList.filter((l) => remoteIds.indexOf(l.deployHash) < 0)];
+};
+
+const sortByTimeStampDesc = (a, b) => b.timestamp.localeCompare(a.timestamp);
 
 export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 	const dispatch = useDispatch();
 
 	const transfersDeployList = useSelector(getTransfersDeploy(symbol));
 	const pendingTransferDeployHash = useSelector(getPendingTransferDeployHash(symbol));
+	const historyTransfersDeploy = useSelector(getMassagedTransfers);
 
 	useEffect(() => {
 		dispatch(getTransfersFromLocalStorage(publicKey));
@@ -27,5 +43,5 @@ export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 		}
 	}, [JSON.stringify(pendingTransferDeployHash), dispatch]);
 
-	return transfersDeployList;
+	return mergeDeploys(transfersDeployList, historyTransfersDeploy).sort(sortByTimeStampDesc);
 };

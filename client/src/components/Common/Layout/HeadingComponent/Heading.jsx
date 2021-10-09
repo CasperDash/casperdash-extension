@@ -7,6 +7,7 @@ import { isConnectedCasper, getSignerStatus } from '../../../../selectors/signer
 import { updateConnectStatus, handleUnlockSigner, handleLockSigner } from '../../../../actions/signerActions';
 import { updatePublicKeyFromSigner, getUserDetails } from '../../../../actions/userActions';
 import { connectCasperSigner } from '../../../../services/casperServices';
+import { getTransferDeploys } from '../../../../services/deployServices';
 
 const SIGNER_EVENTS = {
 	connected: 'signer:connected',
@@ -65,6 +66,7 @@ const HeadingModule = (props) => {
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
+			dispatch(getTransferDeploys(publicKey));
 		}
 	}, [publicKey, dispatch]);
 

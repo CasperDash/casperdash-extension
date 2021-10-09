@@ -49,6 +49,7 @@
 
 ### Prerequisites
 
+-   mongodb > 4.4
 -   npm >= 7.24
 -   nodejs >= 12
 
@@ -85,3 +86,22 @@ RPC url can be updated at `.env` or `constants/index.js`
 ```sh
 npm start
 ```
+
+# Event Handler
+
+### Install
+
+````sh
+cd YOUR_WORKING_DIRECTORY/casper-dashboad/common
+npm install
+
+cd YOUR_WORKING_DIRECTORY/casper-dashboad/event-handler
+npm install
+
+### Usage
+
+Create your MongoDB configuration file db-config.json in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config by copying the template file db-config.json.sample.
+
+```sh
+npm start
+````
