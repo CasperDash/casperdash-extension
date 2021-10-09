@@ -11,7 +11,7 @@ const getTransfersSelector = getQuerySelector({ type: DEPLOY.GET_DEPLOY_TRANSFER
 
 export const getMassagedTransfers = createSelector(getTransfersSelector, (transfer) => {
 	const accountHashPrefix = KEY_PREFIX[1];
-	return transfer.data
+	return transfer && transfer.data
 		? transfer.data.map((d) => {
 				const { deploy_hash: deployHash, amount, from, to, timestamp } = d;
 				return {
