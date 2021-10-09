@@ -6,4 +6,4 @@ echo "Installing packages!"
 npm install
 
 echo "Restart services!"
-forever restart bin/www
+NODE_ENV=production PORT=3001 forever restart bin/www
