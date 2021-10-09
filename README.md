@@ -43,9 +43,33 @@
 -   [React.js](https://reactjs.org/)
 -   [Nodejs](https://nodejs.org/)
 
+## Architecture
+
+![Casperdash architecture view](/doc/assets/architecture.png)
+
+### Event Handler
+
+Event handler is a NodeJS program that offers these following features:
+
+-   Listen to the DeployProcessed event from a Casper Node.
+
+-   Parse events and send them to MongoDB
+
+-   [WIP] Retry the Casper Node connection if it drops
+
+### Web Server
+
+Web server is implemented in [Express.js](https://expressjs.com/). It allows us to create read-only data pipeline for clients.
+
+Having multiple Web Servers helps to scale horizontally by serving equally the incoming traffic among instances.
+
+### Client
+
+React web app provides user a simple and convenient dashboard to explore the blocks and manipulate the wallets.
+
 <!-- GETTING STARTED -->
 
-## Getting Started
+## Development
 
 ### Prerequisites
 
@@ -91,17 +115,20 @@ npm start
 
 ### Install
 
-````sh
+Create your MongoDB configuration file db-config.json in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config by copying the template file db-config.json.sample.
+
+```sh
 cd YOUR_WORKING_DIRECTORY/casper-dashboad/common
 npm install
 
 cd YOUR_WORKING_DIRECTORY/casper-dashboad/event-handler
 npm install
 
-### Usage
+```
 
-Create your MongoDB configuration file db-config.json in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config by copying the template file db-config.json.sample.
+### Usage
 
 ```sh
 npm start
-````
+
+```
