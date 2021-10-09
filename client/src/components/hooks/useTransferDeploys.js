@@ -17,8 +17,8 @@ import { getTransfersDeploy, getPendingTransferDeployHash, getMassagedTransfers 
  * @returns
  */
 const mergeDeploys = (localList, remoteList) => {
-	const localIds = localList.map((l) => l.deployHash);
-	return [...localList, ...remoteList.filter((r) => localIds.indexOf(r.deployHash) < 0)];
+	const remoteIds = remoteList.map((r) => r.deployHash);
+	return [...remoteList, ...localList.filter((l) => remoteIds.indexOf(l.deployHash) < 0)];
 };
 
 const sortByTimeStampDesc = (a, b) => b.timestamp.localeCompare(a.timestamp);
