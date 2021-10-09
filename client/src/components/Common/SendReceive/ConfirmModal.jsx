@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 
@@ -18,6 +18,13 @@ export const ConfirmModal = ({
 	tokenSymbol,
 	isTokenTransfer,
 }) => {
+	const [transferId, setTransferId] = useState();
+
+	const onConfirmTransaction = () => {
+		if (typeof onConfirm === 'function') {
+			onConfirm(transferId);
+		}
+	};
 	return (
 		<Modal
 			show={show}
@@ -54,6 +61,22 @@ export const ConfirmModal = ({
 						{toFormattedNumber(fee)} <b>CSPR</b>
 					</span>
 				</div>
+				{!isTokenTransfer && (
+					<div className="cd_confirm_modal_row">
+						<span className="cd_confirm_modal_label">Transfer Id (optional)</span>
+						<div className="cd_confirm_modal_value">
+							{!deployHash ? (
+								<input
+									type="number"
+									value={transferId}
+									onChange={(e) => setTransferId(e.target.value)}
+								></input>
+							) : (
+								<span className="cd_confirm_modal_value">{transferId}</span>
+							)}
+						</div>
+					</div>
+				)}
 				<hr />
 				{!isTokenTransfer && (
 					<div className="cd_confirm_modal_row">
@@ -100,7 +123,7 @@ export const ConfirmModal = ({
 						Close
 					</Button>
 				) : (
-					<Button className="cd_btn_primary_active" onClick={onConfirm} disabled={isDeploying}>
+					<Button className="cd_btn_primary_active" onClick={onConfirmTransaction} disabled={isDeploying}>
 						{isDeploying ? 'Confirming...' : 'Confirm'}
 					</Button>
 				)}

@@ -36,9 +36,9 @@ export const SendReceiveSection = ({
 		setFieldValue('sendAmount', amount);
 	};
 
-	const onConfirmTransaction = async () => {
+	const onConfirmTransaction = async (transferId) => {
 		const signedDeploy = !isTokenTransfer
-			? await getSignedTransferDeploy(transactionDetails)
+			? await getSignedTransferDeploy({ ...transactionDetails, transferId })
 			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
@@ -49,6 +49,7 @@ export const SendReceiveSection = ({
 					deployHash: hash.deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
+					transferId: transferId,
 					...tokenInfo,
 					symbol: tokenSymbol,
 				}),

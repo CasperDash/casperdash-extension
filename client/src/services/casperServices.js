@@ -6,12 +6,12 @@ import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../const
  * @param {CLPublicKey} fromAccount main account public key
  * @param {CLPublicKey} toAccount public key of target account
  * @param {Number} amount transfer amount
- * @param {Number} transactionId transfer id. This parameter is optional
+ * @param {Number} transferId transfer id. This parameter is optional
  * @returns {Deploy} transfer deploy
  */
-export const getTransferDeploy = (fromAccount, toAccount, amount, transactionId, fee) => {
+export const getTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
-	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transactionId);
+	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transferId);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
 	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };

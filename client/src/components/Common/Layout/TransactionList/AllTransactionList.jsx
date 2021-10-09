@@ -12,7 +12,8 @@ const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 						<tr>
 							<th className="cd_transaction_list_table_heading">name</th>
 							<th className="cd_transaction_list_table_heading">type</th>
-							<th className="cd_transaction_list_table_heading">transaction id</th>
+							<th className="cd_transaction_list_table_heading">transaction hash</th>
+							<th className="cd_transaction_list_table_heading">transfer id</th>
 							<th className="cd_transaction_list_table_heading">value</th>
 							<th className="cd_transaction_list_table_heading">status</th>
 							<th className="cd_transaction_list_table_heading">date</th>
@@ -24,6 +25,7 @@ const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 								<td className="cd_transaction_list_name">{transfer.symbol}</td>
 								<td className="cd_transaction_list_type">Transfer</td>
 								<td className="cd_transaction_list_id">{transfer.deployHash}</td>
+								<td className="cd_transaction_list_id">{transfer.transferId}</td>
 								<td className={`cd_transaction_minas cd_transaction_list_value`}>-{transfer.amount}</td>
 								<td
 									className={`cd_transaction_${

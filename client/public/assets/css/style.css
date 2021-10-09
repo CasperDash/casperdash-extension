@@ -2069,6 +2069,9 @@ table td {
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_value {
   color: #3d476a;
 }
+.cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_value input {
+  text-align: right;
+}
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_value_success {
   color: #0ee6b6;
 }

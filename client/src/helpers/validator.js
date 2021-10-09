@@ -36,6 +36,9 @@ export const validateTransferForm = ({
 	if (!errors.sendAmount && sendAmount > displayBalance) {
 		errors.sendAmount = 'Not enough balance.';
 	}
+	if (!errors.sendAmount && tokenSymbol === 'CSPR' && sendAmount + transferFee > displayBalance) {
+		errors.sendAmount = 'Not enough balance.';
+	}
 	//cspr balance
 	if (csprBalance < transferFee) {
 		errors.transferFee = 'Not enough CSPR balance.';

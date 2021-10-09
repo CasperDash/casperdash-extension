@@ -13,7 +13,7 @@ export const getMassagedTransfers = createSelector(getTransfersSelector, (transf
 	const accountHashPrefix = KEY_PREFIX[1];
 	return transfer && transfer.data
 		? transfer.data.map((d) => {
-				const { deploy_hash: deployHash, amount, from, to, timestamp } = d;
+				const { deploy_hash: deployHash, amount, from, to, timestamp, id } = d;
 				return {
 					amount: amount / MOTE_RATE,
 					deployHash,
@@ -23,6 +23,7 @@ export const getMassagedTransfers = createSelector(getTransfersSelector, (transf
 					symbol: 'CSPR',
 					timestamp,
 					toAddress: to.replace(accountHashPrefix, ''),
+					transferId: id,
 				};
 		  })
 		: [];
@@ -34,12 +35,10 @@ export const getLatestBlockHash = createSelector(
 );
 
 //TODO: Should check by address, token may have same symbol
-export const getTransfersDeploy =
-	(symbol) =>
-	({ deploys = {} }) => {
-		const transfers = deploys.transfers || [];
-		return transfers.filter((transfer) => (symbol ? transfer.symbol === symbol : true));
-	};
+export const getTransfersDeploy = (symbol) => ({ deploys = {} }) => {
+	const transfers = deploys.transfers || [];
+	return transfers.filter((transfer) => (symbol ? transfer.symbol === symbol : true));
+};
 
 export const getPendingTransferDeployHash = (symbol) =>
 	createSelector(getTransfersDeploy(symbol), (pendingTransferDeploys) => {

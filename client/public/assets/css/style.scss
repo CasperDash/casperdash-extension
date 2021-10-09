@@ -2303,6 +2303,9 @@ table {
 			}
 			.cd_confirm_modal_value {
 				color: $color12;
+				input {
+					text-align: right;
+				}
 			}
 			.cd_confirm_modal_value_success {
 				color: $color34;
