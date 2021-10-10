@@ -4,4 +4,7 @@ export const routes = {
 	tokens: '/tokens',
 	historypage: '/history',
 	keyManager: '/keyManager',
+	nfts: '/NFTs',
+	stacking: '/stacking',
+	accountManager: '/accountManager',
 };

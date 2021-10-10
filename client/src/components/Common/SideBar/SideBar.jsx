@@ -31,6 +31,7 @@ const SIDEBAR_ITEMS = [
 			</svg>
 		),
 	},
+
 	{
 		key: 'history',
 		path: '/history',
@@ -45,6 +46,18 @@ const SIDEBAR_ITEMS = [
 				/>
 			</svg>
 		),
+	},
+	{
+		key: 'NFTs',
+		path: '/NFTs',
+		name: 'NFTs',
+		icon: <img style={{ width: 15 }} src="assets/image/nft.png" alt="currency-icon" />,
+	},
+	{
+		key: 'stacking',
+		path: '/stacking',
+		name: 'Stacking',
+		icon: <img style={{ width: 15 }} src="assets/image/stacking.png" alt="currency-icon" />,
 	},
 	{
 		key: 'keyManager',
@@ -62,6 +75,12 @@ const SIDEBAR_ITEMS = [
 				/>
 			</svg>
 		),
+	},
+	{
+		key: 'accountManager',
+		path: '/accountManager',
+		name: 'Account Manager',
+		icon: <img style={{ width: 15 }} src="assets/image/account.png" alt="account-icon" />,
 	},
 ];
 
