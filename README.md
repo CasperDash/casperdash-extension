@@ -77,6 +77,19 @@ React web app provides user a simple and convenient dashboard to explore the blo
 -   npm >= 7.24
 -   nodejs >= 12
 
+# Common
+
+Shared components and utils between the folders
+
+Create your MongoDB configuration file db-config.json in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config by copying the template file db-config.json.sample.
+
+### Install
+
+```sh
+cd YOUR_WORKING_DIRECTORY/casper-dashboad/common
+npm install
+```
+
 # Client
 
 ### Install
@@ -114,8 +127,6 @@ npm start
 # Event Handler
 
 ### Install
-
-Create your MongoDB configuration file db-config.json in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config by copying the template file db-config.json.sample.
 
 ```sh
 cd YOUR_WORKING_DIRECTORY/casper-dashboad/common
