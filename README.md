@@ -6,6 +6,8 @@
 
 ### 🏠 [casperdash.io ](casperdash.io) ( beta )
 
+### <i class="fa fa-book fa-fw"></i> Document https://hackmd.io/@casperdash/r1wtIVYVt
+
 ## Features/Road map
 
 -   [x] Integrate with Casper Singer
