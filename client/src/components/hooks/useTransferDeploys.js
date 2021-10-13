@@ -43,5 +43,7 @@ export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 		}
 	}, [JSON.stringify(pendingTransferDeployHash), dispatch]);
 
-	return mergeDeploys(transfersDeployList, historyTransfersDeploy).sort(sortByTimeStampDesc);
+	return mergeDeploys(transfersDeployList, historyTransfersDeploy)
+		.filter((transfer) => (symbol ? transfer.symbol === symbol : true))
+		.sort(sortByTimeStampDesc);
 };
