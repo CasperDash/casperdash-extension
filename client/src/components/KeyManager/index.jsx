@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
+import HeadingModule from '../Common/HeadingComponent/Heading';
 import KeyList from './KeyList';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import { getPublicKey, getMassagedUserDetails } from '../../selectors/user';

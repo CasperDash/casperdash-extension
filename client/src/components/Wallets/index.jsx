@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import AllTransactionList from '../Common/Layout/TransactionList/AllTransactionList';
+import HeadingModule from '../Common/HeadingComponent/Heading';
+import AllTransactionList from '../Common/TransactionList/AllTransactionList';
 import { SendReceiveSection } from '../Common/SendReceive';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 import { getPriceHistory, getCurrentPrice } from '../../selectors/price';
 import { formatKeyByPrefix } from '../../helpers/key';
-import { MessageModal } from '../Common/Layout/Modal/MessageModal';
-import { ChartLine } from '../Common/Layout/Chart';
+import { MessageModal } from '../Common/Modal/MessageModal';
+import { ChartLine } from '../Common/Chart';
 import { toFormattedNumber, toFormattedCurrency } from '../../helpers/format';
 import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
 

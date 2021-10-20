@@ -159,6 +159,11 @@ ul {
 .cd_all_pages_content {
   position: relative;
 }
+.cd_all_pages_content .cd_wrapper_logo {
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+}
 .cd_all_pages_content .cd_all_pages_inner_content {
   padding: 26px 20px 20px 270px;
   min-height: 100vh;
