@@ -10,16 +10,14 @@ try {
 	features = undefined;
 }
 
-const defaultRoutes = {
-	home: '/',
-	dashboard: '/dashboard',
-	tokens: '/tokens',
-	history: '/history',
-	keyManager: '/keyManager',
-};
+const getAvailableRoutes = (routes) =>
+	routes.reduce((out, route) => {
+		const conf = { [route]: `/${route}` };
+		return !features || features.includes(route) ? { ...out, ...conf } : out;
+	});
 
-export const routes = features
-	? Object.keys(defaultRoutes).reduce((out, route) => {
-			return features.includes(route) ? { ...out, [route]: defaultRoutes[route] } : out;
-	  }, {})
-	: defaultRoutes;
+// Routes which have sidebar
+export const mainRoutes = getAvailableRoutes(['dashboard', 'tokens', 'history', 'keyManager']);
+
+// Routes which don't have sidebar
+export const wrapperRoutes = getAvailableRoutes(['/', 'newwallet']);

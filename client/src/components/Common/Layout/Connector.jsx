@@ -4,6 +4,7 @@ import LoadingBar from 'react-top-loading-bar';
 import { fetchPrizeHistory } from '../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../actions/deployActions';
 import { REFRESH_TIME } from '../../../constants/key';
+import { mainRoutes } from '../../../shared/constants';
 import SideBar from '../SideBar';
 import { isLoadingRequest } from '../../../selectors/request';
 
@@ -54,7 +55,7 @@ const Layout = (props) => {
 	return (
 		<div className={`cd_all_pages_content ${color === null ? 'cd_light_theme_active' : color}`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} />
-			<SideBar title={title || 'dashboard'} modules={props.modules} />
+			{Object.keys(mainRoutes).includes(title) && <SideBar title={title} />}
 			<div className="cd_all_pages_inner_content">{props.children}</div>
 		</div>
 	);
