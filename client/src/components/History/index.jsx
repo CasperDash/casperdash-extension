@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
+import HeadingModule from '../Common/HeadingComponent/Heading';
 import { Tab } from 'react-bootstrap';
 import { getMassagedUserDetails } from '../../selectors/user';
-import AllList from '../Common/Layout/TransactionList/AllTransactionList';
+import AllList from '../Common/TransactionList/AllTransactionList';
 import { getCurrentPrice } from '../../selectors/price';
 import { getPublicKey } from '../../selectors/user';
 import { TokenList } from '../Common/TokenList';

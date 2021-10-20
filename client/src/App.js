@@ -5,7 +5,7 @@ import store from './store';
 import { mainModules, wrapperModules } from './components';
 import Page404 from './components/Common/Page404';
 import Layout from './components/Common/Layout';
-
+import { WrapperLayout } from './components/Common/Layout/WrapperLayout';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -22,8 +22,14 @@ const App = () => {
 			<BrowserRouter>
 				<Layout>
 					<Switch>
-						{routes}
-						{wrapperRoutes}
+						<Route path={Object.keys(mainModules)} exact>
+							<Switch>{routes}</Switch>
+						</Route>
+						<Route path={Object.keys(wrapperModules)} exact>
+							<WrapperLayout>
+								<Switch>{wrapperRoutes}</Switch>
+							</WrapperLayout>
+						</Route>
 						<Route component={Page404} />
 					</Switch>
 				</Layout>

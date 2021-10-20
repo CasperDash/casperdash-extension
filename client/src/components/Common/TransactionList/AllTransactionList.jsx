@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
-import { toFormattedDate } from '../../../../helpers/format';
+import { toFormattedDate } from '../../../helpers/format';
 
 const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 	return (

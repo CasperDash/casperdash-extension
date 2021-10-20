@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
+import HeadingModule from '../Common/HeadingComponent/Heading';
 import { Tab } from 'react-bootstrap';
 import { SendReceiveSection } from '../Common/SendReceive';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
@@ -13,7 +13,7 @@ import {
 } from '../../actions/tokensActions';
 import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
 import { AddTokenModal } from './AddTokenModal';
-import { MessageModal } from '../Common/Layout/Modal/MessageModal';
+import { MessageModal } from '../Common/Modal/MessageModal';
 import { TOKEN_TRANSFER_FEE } from '../../constants/key';
 import { TokenList } from '../Common/TokenList';
 import { TokenInfo } from './TokenInfo';
