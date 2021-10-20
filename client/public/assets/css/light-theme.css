@@ -338,6 +338,9 @@
 .cd_light_theme_active .cd_securebackup_btn a {
   color: #fff;
 }
+.cd_light_theme_active .cd_create_wallet_btn button {
+  color: #fff;
+}
 .cd_light_theme_active .cd_SecureBackup_heading h3 {
   color: #828cae;
 }

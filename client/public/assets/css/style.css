@@ -107,6 +107,9 @@
   border: 1px solid #828cae26;
   border-radius: 10px;
 }
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list .cd_create_wallet_input_items.no-border {
+  border: 0px;
+}
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list .cd_create_wallet_input_items .form-label {
   font-weight: bold;
   font-size: 12px;
@@ -130,7 +133,40 @@
   color: #ffffff;
   opacity: 0.7;
 }
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list .cd_create_wallet_input_items .cd_create_wallet_error_msg {
+  display: block !important;
+}
 
+.cd_create_wallet_btn {
+  margin-top: 60px;
+}
+.cd_create_wallet_btn a {
+  background: #828cae;
+  border-radius: 10px;
+  min-width: 180px;
+  max-width: 180px;
+  display: block;
+  padding: 18px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  color: #252f47;
+  text-align: center;
+  cursor: pointer;
+}
+.cd_create_wallet_btn a:hover {
+  text-decoration: none;
+  color: #252f47;
+}
+.cd_create_wallet_btn a.disabled {
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .cd_create_wallet_btn button {
+    max-width: 100%;
+  }
+}
 /* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
