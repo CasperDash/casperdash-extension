@@ -10,3 +10,4 @@ export const KEY_PREFIX = ['account-hash-', 'uref-'];
 export const NETWORK_NAME = APP_CONFIGS.NETWORK_NAME;
 export const BASE_API_URL = 'http://localhost:3001';
 export const DEPLOY_TTL_MS = 1800000;
+export const TESTNET_NODE_URL = process.env.TESTNET_NODE_URL || 'http://65.21.237.50:7777/rpc';

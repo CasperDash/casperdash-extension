@@ -1,6 +1,8 @@
-import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
-import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
+import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CasperClient } from 'casper-js-sdk';
+import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS, TESTNET_NODE_URL } from '../constants/key';
+import * as bip39 from 'bip39';
 
+const client = new CasperClient(TESTNET_NODE_URL);
 /**
  * Get Transfer deploy
  * @param {CLPublicKey} fromAccount main account public key
@@ -70,4 +72,9 @@ export const connectCasperSigner = () => {
 	} catch (error) {
 		return error.message;
 	}
+};
+
+export const createNewHDWallet = (passPhase) => {
+	const seed = bip39.mnemonicToSeedSync(passPhase);
+	return client.newHdWallet(seed);
 };

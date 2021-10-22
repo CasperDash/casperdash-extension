@@ -7,6 +7,10 @@ export const getPublicKey = ({ user }) => {
 	return user.publicKey;
 };
 
+export const getCryptoInstance = ({ user }) => {
+	return user.cryptoInstance;
+};
+
 const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
 
 export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {
