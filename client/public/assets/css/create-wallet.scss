@@ -1,12 +1,12 @@
 .cd_create_wallet_section {
-	padding: 165px 15px;
+	padding: 50px 15px;
 	.cd_create_wallet_content.container {
 		max-width: 1240px;
 	}
 	.cd_create_wallet_content {
 		border: 1px solid $color25;
 		border-radius: 10px;
-		padding: 25px 25px 94px;
+		padding: 25px 25px 50px;
 		.cd_create_wallet_heading_text {
 			text-align: center;
 			border-bottom: 1px solid $color25;
@@ -96,12 +96,20 @@
 				max-width: 280px;
 				display: block;
 				text-decoration: none;
+				cursor: pointer;
+				&:hover {
+					text-decoration: none;
+					color: $color4;
+				}
+				&.disabled {
+					cursor: not-allowed;
+				}
 			}
 		}
 		.cd_create_wallet_input_list {
 			margin-top: 21px;
 			.cd_create_wallet_input_items {
-				padding: 15px 19px 21px;
+				padding: 15px 19px 25px;
 				border: 1px solid $color26;
 				border-radius: 10px;
 				&.no-border {
@@ -132,33 +140,9 @@
 				}
 				.cd_create_wallet_error_msg {
 					display: block !important;
+					line-height: 21px;
 				}
 			}
-		}
-	}
-}
-
-.cd_create_wallet_btn {
-	margin-top: 60px;
-	a {
-		background: $color3;
-		border-radius: 10px;
-		min-width: 180px;
-		max-width: 180px;
-		display: block;
-		padding: 18px;
-		font-weight: bold;
-		font-size: 20px;
-		line-height: 24px;
-		color: $color4;
-		text-align: center;
-		cursor: pointer;
-		&:hover {
-			text-decoration: none;
-			color: $color4;
-		}
-		&.disabled {
-			cursor: not-allowed;
 		}
 	}
 }

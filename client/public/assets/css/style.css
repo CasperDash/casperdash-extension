@@ -1,6 +1,6 @@
 @import 'https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap';
 .cd_create_wallet_section {
-  padding: 165px 15px;
+  padding: 50px 15px;
 }
 .cd_create_wallet_section .cd_create_wallet_content.container {
   max-width: 1240px;
@@ -8,7 +8,7 @@
 .cd_create_wallet_section .cd_create_wallet_content {
   border: 1px solid #848eae26;
   border-radius: 10px;
-  padding: 25px 25px 94px;
+  padding: 25px 25px 50px;
 }
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_heading_text {
   text-align: center;
@@ -98,12 +98,20 @@
   max-width: 280px;
   display: block;
   text-decoration: none;
+  cursor: pointer;
+}
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn a:hover {
+  text-decoration: none;
+  color: #252f47;
+}
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn a.disabled {
+  cursor: not-allowed;
 }
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list {
   margin-top: 21px;
 }
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list .cd_create_wallet_input_items {
-  padding: 15px 19px 21px;
+  padding: 15px 19px 25px;
   border: 1px solid #828cae26;
   border-radius: 10px;
 }
@@ -135,31 +143,7 @@
 }
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list .cd_create_wallet_input_items .cd_create_wallet_error_msg {
   display: block !important;
-}
-
-.cd_create_wallet_btn {
-  margin-top: 60px;
-}
-.cd_create_wallet_btn a {
-  background: #828cae;
-  border-radius: 10px;
-  min-width: 180px;
-  max-width: 180px;
-  display: block;
-  padding: 18px;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 24px;
-  color: #252f47;
-  text-align: center;
-  cursor: pointer;
-}
-.cd_create_wallet_btn a:hover {
-  text-decoration: none;
-  color: #252f47;
-}
-.cd_create_wallet_btn a.disabled {
-  cursor: not-allowed;
+  line-height: 21px;
 }
 
 @media (max-width: 600px) {
