@@ -17,7 +17,12 @@ export default class Crypto {
 	}
 
 	decrypt(value) {
-		return CryptoJS.AES.decrypt(value, this.passWord).toString(CryptoJS.enc.Utf8);
+		try {
+			return CryptoJS.AES.decrypt(value, this.passWord).toString(CryptoJS.enc.Utf8);
+		} catch (err) {
+			console.error(err);
+			return '';
+		}
 	}
 
 	decryptJson(value) {
@@ -26,6 +31,7 @@ export default class Crypto {
 			return JSON.parse(decryptedValue);
 		} catch {
 			console.error('Invalid JSON');
+			return '';
 		}
 	}
 }

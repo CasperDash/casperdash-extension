@@ -17,11 +17,11 @@ export const CreateWallet = () => {
 	const [finalPassword, setFinalPassword] = useState('');
 	const disabled = hasError || !finalPassword;
 
-	const onCreateWallet = (passPhase) => {
-		const hdWallet = createNewHDWallet(passPhase);
+	const onCreateWallet = (mnemonicPhase) => {
+		const hdWallet = createNewHDWallet(mnemonicPhase);
 		const wallet = hdWallet.deriveIndex(1);
 		dispatch(updateCryptoInstance(finalPassword));
-		dispatch(updateStorageWalletInfo(passPhase));
+		dispatch(updateStorageWalletInfo({ mnemonicPhase }));
 		dispatch(setSelectedWallet(wallet));
 		history.push('/dashboard');
 	};

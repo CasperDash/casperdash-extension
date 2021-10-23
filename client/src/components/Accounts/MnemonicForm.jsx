@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import * as bip39 from 'bip39';
 
 export const MnemonicForm = ({ onCreateWallet }) => {
-	const passPhase = bip39.generateMnemonic(256);
-	const passPhaseArr = passPhase.split(' ');
+	const mnemonicPhase = bip39.generateMnemonic(256);
+	const passPhaseArr = mnemonicPhase.split(' ');
 
 	return (
 		<>
@@ -29,7 +29,7 @@ export const MnemonicForm = ({ onCreateWallet }) => {
 				))}
 			</div>
 			<div className="cd_create_wallet_btn">
-				<Link to={'#'} className="mx-auto" onClick={() => onCreateWallet(passPhase)}>
+				<Link to={'#'} className="mx-auto" onClick={() => onCreateWallet(mnemonicPhase)}>
 					I wrote down my mnemonic
 				</Link>
 			</div>

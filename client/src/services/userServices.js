@@ -1,4 +1,5 @@
 import { CLPublicKey } from 'casper-js-sdk';
+import * as bip39 from 'bip39';
 import { MOTE_RATE } from '../constants/key';
 import { getTransferDeploy, signDeploy } from './casperServices';
 import { getLocalStorageValue, setLocalStorageValue } from './localStorage';
@@ -37,7 +38,19 @@ export const getStorageWallet = (cryptoInstance) => {
 	return cryptoInstance.decryptJson(encryptedValue);
 };
 
-export const hasWallet = () => {
+export const checkExistWallet = () => {
 	const encryptedValue = getLocalStorageValue('encrypted', 'data');
 	return Boolean(encryptedValue);
+};
+
+export const convertPassPhaseToHex = (passPhase) => {
+	return bip39.mnemonicToSeedSync(passPhase).toString('hex');
+};
+
+export const convertPassPhaseFromHex = (passPhaseHex) => {
+	return bip39.entropyToMnemonic(passPhaseHex);
+};
+
+export const convertPassPhaseToSeed = (passPhase) => {
+	return bip39.mnemonicToSeedSync(passPhase);
 };

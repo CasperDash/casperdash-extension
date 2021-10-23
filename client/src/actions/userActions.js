@@ -12,11 +12,12 @@ export const updateCryptoInstance = (password) => ({
 	payload: getCryptoInstance(password),
 });
 
-export const updateStorageWalletInfo = (value) => {
+export const updateStorageWalletInfo = (value = {}) => {
 	return (dispatch, getState) => {
 		const { user } = getState();
 		const { cryptoInstance } = user;
-		updateStorageWallet(cryptoInstance, value);
+
+		updateStorageWallet(cryptoInstance, JSON.stringify(value));
 	};
 };
 
