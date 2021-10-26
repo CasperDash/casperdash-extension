@@ -16,10 +16,10 @@ const Home = () => {
 					<Login />
 				) : (
 					<>
-						<Link to={'/newwallet'} className="cd_welcome_slide_step_btns">
+						<Link to={'/newwallet/create'} className="cd_welcome_slide_step_btns">
 							Create Wallet
 						</Link>
-						<Link to={'/newwallet'} className="cd_welcome_slide_already_wallet">
+						<Link to={'/newwallet/restore'} className="cd_welcome_slide_already_wallet">
 							I already have wallet
 						</Link>
 					</>

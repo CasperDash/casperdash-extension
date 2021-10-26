@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { createNewHDWallet } from '../../services/casperServices';
-import { getCryptoInstance, getStorageWallet } from '../../services/userServices';
+import { getCryptoInstance, getStorageWallet, deserializeKeys } from '../../services/userServices';
 import { setSelectedWallet, updateCryptoInstance } from '../../actions/userActions';
 
 export const Login = ({}) => {
@@ -18,14 +18,21 @@ export const Login = ({}) => {
 	const onLogin = () => {
 		const cryptoInstance = getCryptoInstance(password);
 		const walletInfo = getStorageWallet(cryptoInstance);
-
 		if (!walletInfo.mnemonicPhase) {
 			setErrors({ password: 'Incorrect Password' });
 		} else {
-			const hdWallet = createNewHDWallet(walletInfo.mnemonicPhase);
-			const wallet = hdWallet.deriveIndex(1);
+			let selectedWallet;
+			if (walletInfo.derivedWallets && walletInfo.derivedWallets.length) {
+				debugger;
+				const deserializedKeys = deserializeKeys(walletInfo.derivedWallets);
+				console.log(deserializedKeys);
+				selectedWallet = deserializedKeys[0];
+			} else {
+				const hdWallet = createNewHDWallet(walletInfo.mnemonicPhase);
+				selectedWallet = hdWallet.deriveIndex(0);
+			}
 			dispatch(updateCryptoInstance(password));
-			dispatch(setSelectedWallet(wallet));
+			dispatch(setSelectedWallet(selectedWallet));
 			history.push('/dashboard');
 		}
 	};
