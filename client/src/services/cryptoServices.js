@@ -20,7 +20,7 @@ export default class Crypto {
 			return CryptoJS.AES.decrypt(value, this.passWord).toString(CryptoJS.enc.Utf8);
 		} catch (err) {
 			console.error(err);
-			return '';
+			return undefined;
 		}
 	}
 
@@ -30,7 +30,7 @@ export default class Crypto {
 			return JSON.parse(decryptedValue);
 		} catch {
 			console.error('Invalid JSON');
-			return '';
+			return undefined;
 		}
 	}
 }
