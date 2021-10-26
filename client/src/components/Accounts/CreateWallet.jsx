@@ -23,14 +23,16 @@ export const CreateWallet = (props) => {
 	const onCreateWallet = (mnemonicPhase) => {
 		const hdWallet = createNewHDWallet(mnemonicPhase);
 		const wallet = hdWallet.deriveIndex(0);
+		const selectedWallet = { wallet, deriveIndex: 0, name: 'Main Account' };
 		dispatch(updateCryptoInstance(finalPassword));
 		dispatch(
 			updateStorageWalletInfo({
 				mnemonicPhase,
-				derivedWallets: [{ wallet, deriveIndex: 0, name: 'Main Account' }],
+				derivedWallets: [selectedWallet],
 			}),
 		);
-		dispatch(setSelectedWallet(wallet));
+
+		dispatch(setSelectedWallet(selectedWallet));
 		history.push('/dashboard');
 	};
 	return (
