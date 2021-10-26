@@ -30,6 +30,24 @@
   color: #828cae;
   margin-bottom: 17px;
 }
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_error {
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: red;
+  margin-top: 17px;
+}
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_copy_mnemonic {
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #53b9ea;
+  margin-top: 17px;
+  cursor: pointer;
+}
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_row {
   margin: 0 -11px;
 }
@@ -147,7 +165,7 @@
 }
 
 @media (max-width: 600px) {
-  .cd_create_wallet_btn button {
+  .cd_create_wallet_btn a {
     max-width: 100%;
   }
 }

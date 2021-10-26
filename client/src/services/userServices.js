@@ -1,4 +1,4 @@
-import { CLPublicKey } from 'casper-js-sdk';
+import { CLPublicKey, Keys } from 'casper-js-sdk';
 import * as bip39 from 'bip39';
 import { MOTE_RATE } from '../constants/key';
 import { getTransferDeploy, signDeploy } from './casperServices';
@@ -43,14 +43,31 @@ export const checkExistWallet = () => {
 	return Boolean(encryptedValue);
 };
 
-export const convertPassPhaseToHex = (passPhase) => {
-	return bip39.mnemonicToSeedSync(passPhase).toString('hex');
+export const convertPassPhaseToHex = (mnemonic) => {
+	return bip39.mnemonicToSeedSync(mnemonic).toString('hex');
 };
 
-export const convertPassPhaseFromHex = (passPhaseHex) => {
-	return bip39.entropyToMnemonic(passPhaseHex);
+export const convertPassPhaseFromHex = (mnemonic) => {
+	return bip39.entropyToMnemonic(mnemonic);
 };
 
-export const convertPassPhaseToSeed = (passPhase) => {
-	return bip39.mnemonicToSeedSync(passPhase);
+export const convertPassPhaseToSeed = (mnemonic) => {
+	return bip39.mnemonicToSeedSync(mnemonic);
+};
+
+export const validateMnemonicPhase = (mnemonic) => {
+	return bip39.validateMnemonic(mnemonic);
+};
+
+export const deserializeKeyPair = (keyPair) => {
+	const { publicKey, privateKey, signatureAlgorithm } = keyPair;
+	const pbKeyArray = new Uint8Array(Object.keys(publicKey.data).map((key) => publicKey.data[key]));
+	const privateKeyArray = new Uint8Array(Object.entries(privateKey).map((value) => value[1]));
+	return new Keys.AsymmetricKey(pbKeyArray, privateKeyArray, signatureAlgorithm);
+};
+
+export const deserializeKeys = (keyPairs = []) => {
+	return keyPairs.map((keyPair) => {
+		return { ...keyPair, wallet: deserializeKeyPair(keyPair.wallet) };
+	});
 };

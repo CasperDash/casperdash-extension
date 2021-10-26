@@ -13,7 +13,7 @@ const validate = (password, repeatPassword) => {
 	return {};
 };
 
-export const CreatePassword = ({ setHasError, finalPassword, setFinalPassword }) => {
+export const CreatePassword = ({ setHasError, finalPassword, setFinalPassword, mode }) => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [password, setPassword] = useState(finalPassword);
 	const [repeatPassword, setRepeatPassword] = useState(finalPassword);
@@ -45,8 +45,8 @@ export const CreatePassword = ({ setHasError, finalPassword, setFinalPassword })
 	return (
 		<>
 			<p className="cd_create_wallet_paragraph">
-				To create a wallet, please pick a password first. This password will be used to guard access to
-				CasperDash wallet.
+				{`To ${mode} a wallet, please pick a password first. This password will be used to guard access to
+				CasperDash wallet.`}
 			</p>
 
 			<div className="cd_create_wallet_input_list">
