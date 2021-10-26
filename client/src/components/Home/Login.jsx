@@ -18,7 +18,7 @@ export const Login = ({}) => {
 	const onLogin = () => {
 		const cryptoInstance = getCryptoInstance(password);
 		const walletInfo = getStorageWallet(cryptoInstance);
-		if (!walletInfo.mnemonicPhase) {
+		if (!walletInfo || !walletInfo.mnemonicPhase) {
 			setErrors({ password: 'Incorrect Password' });
 		} else {
 			let selectedWallet;
