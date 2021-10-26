@@ -1,4 +1,3 @@
-// NIO_COMPONENT ui.packages.nio-crypto
 import CryptoJS from 'crypto-js';
 
 export default class Crypto {
