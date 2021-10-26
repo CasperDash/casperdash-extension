@@ -23,9 +23,7 @@ export const Login = ({}) => {
 		} else {
 			let selectedWallet;
 			if (walletInfo.derivedWallets && walletInfo.derivedWallets.length) {
-				debugger;
 				const deserializedKeys = deserializeKeys(walletInfo.derivedWallets);
-				console.log(deserializedKeys);
 				selectedWallet = deserializedKeys[0];
 			} else {
 				const hdWallet = createNewHDWallet(walletInfo.mnemonicPhase);
