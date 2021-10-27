@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { mainModules, wrapperModules } from './components';
-
 import Page404 from './components/Common/Page404';
 import Layout from './components/Common/Layout';
 import { WrapperLayout } from './components/Common/Layout/WrapperLayout';
+import { WithLoggedIn } from './components/Common/Layout/WithLogin';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -24,7 +24,9 @@ const App = (props) => {
 				<Layout>
 					<Switch>
 						<Route path={Object.keys(mainModules)} exact>
-							<Switch>{routes}</Switch>
+							<WithLoggedIn>
+								<Switch>{routes}</Switch>
+							</WithLoggedIn>
 						</Route>
 						<Route path={Object.keys(wrapperModules)} exact>
 							<WrapperLayout>
