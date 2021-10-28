@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { createNewHDWallet } from '../../services/casperServices';
 import { getCryptoInstance, getStorageWallet, deserializeKeys } from '../../services/userServices';
 import { setSelectedWallet, updateCryptoInstance } from '../../actions/userActions';
+import { getCurrentQuery } from '../../helpers/query';
 
 export const Login = ({}) => {
 	const dispatch = useDispatch();
@@ -14,6 +15,17 @@ export const Login = ({}) => {
 	const [errors, setErrors] = useState({});
 
 	const passwordFieldType = showPassword ? 'text' : 'password';
+
+	const redirect = () => {
+		const { path } = getCurrentQuery();
+		try {
+			const redirectPath = window.atob(path);
+			history.push(redirectPath);
+		} catch (err) {
+			console.error(err);
+			history.push('/dashboard');
+		}
+	};
 
 	const onLogin = () => {
 		const cryptoInstance = getCryptoInstance(password);
@@ -31,7 +43,7 @@ export const Login = ({}) => {
 			}
 			dispatch(updateCryptoInstance(password));
 			dispatch(setSelectedWallet(selectedWallet));
-			history.push('/dashboard');
+			redirect();
 		}
 	};
 	return (

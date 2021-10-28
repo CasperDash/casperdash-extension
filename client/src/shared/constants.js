@@ -17,6 +17,7 @@ const getAvailableRoutes = (routes) =>
 	});
 
 // Routes which have sidebar
+
 export const mainRoutes = getAvailableRoutes([
 	{ name: 'dashboard', route: '/dashboard' },
 	{ name: 'tokens', route: '/tokens' },
@@ -27,5 +28,6 @@ export const mainRoutes = getAvailableRoutes([
 // Routes which don't have sidebar
 export const wrapperRoutes = getAvailableRoutes([
 	{ name: 'home', route: '/' },
+	{ name: 'login', route: '/login' },
 	{ name: 'newwallet', route: '/newwallet/:mode' },
 ]);

@@ -15,6 +15,7 @@ const mainModulesMapping = {
 
 const wrapperModulesMapping = {
 	[wrapperRoutes.home]: Home,
+	[wrapperRoutes.login]: Home,
 	[wrapperRoutes.newwallet]: CreateWallet,
 };
 

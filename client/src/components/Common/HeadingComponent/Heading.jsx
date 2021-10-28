@@ -89,12 +89,12 @@ const HeadingModule = (props) => {
 				</div>
 
 				<div className="cd_all_page_notify_logout_btn">
-					{!isConnected ? (
+					{!isConnected && !publicKey ? (
 						<Button
 							className="cd_btn_primary_active"
 							onClick={handleConnectCasper}
 						>{`Connect Casper`}</Button>
-					) : !isUnlocked ? (
+					) : !isUnlocked && !publicKey ? (
 						<Button
 							className="cd_btn_primary_active"
 							onClick={handleConnectCasper}
