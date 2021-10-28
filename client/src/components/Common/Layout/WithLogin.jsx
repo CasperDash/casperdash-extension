@@ -6,7 +6,8 @@ export const WithLoggedIn = ({ children }) => {
 	const publicKey = useSelector(getPublicKey);
 	const history = useHistory();
 	if (!publicKey) {
-		history.push('/');
+		const currentPath = window.btoa(`${history.location.pathname}${history.location.search}`.trim());
+		history.push(`/login?path=${currentPath}`);
 		return null;
 	}
 

@@ -15,5 +15,6 @@ export const mainModules = {
 
 export const wrapperModules = {
 	[wrapperRoutes.home]: Home,
+	[wrapperRoutes.login]: Home,
 	[wrapperRoutes.newwallet]: CreateWallet,
 };

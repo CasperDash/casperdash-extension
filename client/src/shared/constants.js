@@ -9,5 +9,6 @@ export const mainRoutes = {
 // Routes which have sidebar
 export const wrapperRoutes = {
 	home: '/',
+	login: '/login',
 	newwallet: '/newwallet/:mode',
 };
