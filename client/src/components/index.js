@@ -5,12 +5,14 @@ import Wallets from './Wallets';
 import History from './History';
 import KeyManager from './KeyManager';
 import Tokens from './Tokens';
+import Connector from './Connector';
 
 export const mainModules = {
 	[mainRoutes.dashboard]: Wallets,
 	[mainRoutes.tokens]: Tokens,
 	[mainRoutes.history]: History,
 	[mainRoutes.keyManager]: KeyManager,
+	[mainRoutes.connector]: Connector,
 };
 
 export const wrapperModules = {

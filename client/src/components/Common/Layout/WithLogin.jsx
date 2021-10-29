@@ -5,8 +5,9 @@ import { getPublicKey } from '../../../selectors/user';
 export const WithLoggedIn = ({ children }) => {
 	const publicKey = useSelector(getPublicKey);
 	const history = useHistory();
+
 	if (!publicKey) {
-		const currentPath = window.btoa(`${history.location.pathname}${history.location.search}`.trim());
+		const currentPath = window.btoa(JSON.stringify(history.location));
 		history.push(`/login?path=${currentPath}`);
 		return null;
 	}

@@ -104,7 +104,7 @@
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn {
   padding-top: 60px;
 }
-.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn a {
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn .btn {
   background: #828cae;
   border-radius: 10px;
   padding: 16px 28px;
@@ -116,13 +116,12 @@
   max-width: 280px;
   display: block;
   text-decoration: none;
-  cursor: pointer;
 }
-.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn a:hover {
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn .btn:hover {
   text-decoration: none;
   color: #252f47;
 }
-.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn a.disabled {
+.cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn .btn.disabled {
   cursor: not-allowed;
 }
 .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list {
@@ -165,10 +164,45 @@
 }
 
 @media (max-width: 600px) {
-  .cd_create_wallet_btn a {
+  .cd_create_wallet_btn .btn {
     max-width: 100%;
   }
 }
+.cd_wallet_connector .cd_wallet_connector_content {
+  padding-top: 50px;
+  text-align: center;
+}
+.cd_wallet_connector .cd_wallet_connector_content .cd_wallet_connector_message {
+  padding: 20px 20px;
+}
+.cd_wallet_connector .cd_wallet_connector_content .cd_wallet_connector_message .cd_wallet_connector_key {
+  overflow-wrap: break-word;
+}
+.cd_wallet_connector .cd_wallet_connector_content .cd_wallet_connector_button {
+  padding-top: 50px;
+  display: flex;
+}
+.cd_wallet_connector .btn {
+  background: #828cae;
+  border-radius: 10px;
+  padding: 16px 28px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #252f47;
+  max-width: 280px;
+  display: block;
+  text-decoration: none;
+}
+.cd_wallet_connector .btn:hover {
+  text-decoration: none;
+  color: #252f47;
+}
+.cd_wallet_connector .btn.disabled {
+  cursor: not-allowed;
+}
+
 /* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,

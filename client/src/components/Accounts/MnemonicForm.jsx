@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import * as bip39 from 'bip39';
 
 export const MnemonicForm = ({ onCreateWallet, mode, setHasError }) => {
@@ -70,17 +69,17 @@ export const MnemonicForm = ({ onCreateWallet, mode, setHasError }) => {
 			</div>
 			{mode === 'create' && (
 				<p
-					class="cd_create_wallet_copy_mnemonic"
+					className="cd_create_wallet_copy_mnemonic"
 					onClick={() => navigator.clipboard.writeText(mnemonicPhaseArr.join(' '))}
 				>
 					Copy mnemonic phase
 				</p>
 			)}
-			{errors.mnemonicPhase && <p class="cd_create_wallet_error">{errors.mnemonicPhase}</p>}
+			{errors.mnemonicPhase && <p className="cd_create_wallet_error">{errors.mnemonicPhase}</p>}
 			<div className="cd_create_wallet_btn">
-				<Link to={'#'} className="mx-auto" onClick={onSubmitPhase}>
+				<button to={'#'} className="mx-auto btn" onClick={onSubmitPhase}>
 					{mode === 'create' ? 'I wrote down my mnemonic' : 'Restore'}
-				</Link>{' '}
+				</button>{' '}
 			</div>
 		</>
 	);

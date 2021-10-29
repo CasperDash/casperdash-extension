@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { createNewHDWallet } from '../../services/casperServices';
 import { getCryptoInstance, getStorageWallet, deserializeKeys } from '../../services/userServices';
 import { setSelectedWallet, updateCryptoInstance } from '../../actions/userActions';
-import { getCurrentQuery } from '../../helpers/query';
+import { getCurrentQuery, parseQuery } from '../../helpers/query';
 
-export const Login = ({}) => {
+export const Login = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +19,7 @@ export const Login = ({}) => {
 	const redirect = () => {
 		const { path } = getCurrentQuery();
 		try {
-			const redirectPath = window.atob(path);
+			const redirectPath = JSON.parse(window.atob(path));
 			history.push(redirectPath);
 		} catch (err) {
 			console.error(err);
@@ -80,9 +80,9 @@ export const Login = ({}) => {
 						/>
 					</Form.Group>
 					<div className="cd_create_wallet_btn">
-						<Link to={'#'} className="mx-auto" onClick={onLogin}>
+						<button className="mx-auto btn" onClick={onLogin}>
 							Login
-						</Link>
+						</button>
 					</div>
 				</div>
 			</div>

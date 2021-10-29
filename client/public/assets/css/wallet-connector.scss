@@ -1,0 +1,36 @@
+.cd_wallet_connector {
+	.cd_wallet_connector_content {
+		padding-top: 50px;
+		text-align: center;
+		.cd_wallet_connector_message {
+			padding: 20px 20px;
+			.cd_wallet_connector_key {
+				overflow-wrap: break-word;
+			}
+		}
+		.cd_wallet_connector_button {
+			padding-top: 50px;
+			display: flex;
+		}
+	}
+	.btn {
+		background: $color3;
+		border-radius: 10px;
+		padding: 16px 28px;
+		font-weight: bold;
+		font-size: 20px;
+		line-height: 24px;
+		text-align: center;
+		color: $color4;
+		max-width: 280px;
+		display: block;
+		text-decoration: none;
+		&:hover {
+			text-decoration: none;
+			color: $color4;
+		}
+		&.disabled {
+			cursor: not-allowed;
+		}
+	}
+}

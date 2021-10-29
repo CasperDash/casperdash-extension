@@ -4,6 +4,7 @@ export const mainRoutes = {
 	tokens: '/tokens',
 	history: '/history',
 	keyManager: '/keyManager',
+	connector: '/connector',
 };
 
 // Routes which have sidebar

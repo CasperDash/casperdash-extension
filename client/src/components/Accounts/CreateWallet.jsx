@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { createNewHDWallet } from '../../services/casperServices';
+import { setSelectedWallet, updateStorageWalletInfo, updateCryptoInstance } from '../../actions/userActions';
 import { CreatePassword } from './CreatePassword';
 import { MnemonicForm } from './MnemonicForm';
-import { Link, useHistory } from 'react-router-dom';
-import { createNewHDWallet } from '../../services/casperServices';
-import { validateMnemonicPhase } from '../../services/userServices';
-import { setSelectedWallet, updateStorageWalletInfo, updateCryptoInstance } from '../../actions/userActions';
 
 const STEPS = [CreatePassword, MnemonicForm];
 
@@ -54,25 +53,23 @@ export const CreateWallet = (props) => {
 
 				<div className="cd_create_wallet_btn">
 					{step > 0 && (
-						<Link
-							to={'#'}
-							className="mx-auto"
+						<button
+							className="mx-auto btn"
 							onClick={() => {
 								setHasError(false);
 								setStep(step - 1);
 							}}
 						>
 							Back
-						</Link>
+						</button>
 					)}
 					{step < STEPS.length - 1 && (
-						<Link
-							to={'#'}
-							className={`mx-auto ${disabled ? 'disabled' : ''}`}
+						<button
+							className={`mx-auto btn ${disabled ? 'disabled' : ''}`}
 							onClick={() => !disabled && setStep(step + 1)}
 						>
 							Next
-						</Link>
+						</button>
 					)}
 				</div>
 			</div>

@@ -102,7 +102,7 @@
 		}
 		.cd_create_wallet_btn {
 			padding-top: 60px;
-			a {
+			.btn {
 				background: $color3;
 				border-radius: 10px;
 				padding: 16px 28px;
@@ -114,7 +114,6 @@
 				max-width: 280px;
 				display: block;
 				text-decoration: none;
-				cursor: pointer;
 				&:hover {
 					text-decoration: none;
 					color: $color4;
@@ -166,7 +165,7 @@
 }
 
 @media (max-width: 600px) {
-	.cd_create_wallet_btn a {
+	.cd_create_wallet_btn .btn {
 		max-width: 100%;
 	}
 }
