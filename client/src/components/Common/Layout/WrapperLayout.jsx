@@ -6,9 +6,7 @@ export const WrapperLayout = ({ children }) => {
 	return (
 		<>
 			<div className="cd_wrapper_logo">
-				<Link to={'/'}>
-					<img src="assets/image/casper-dash-beta-red-black.png" alt="round-shap" className="logo" />
-				</Link>
+				<img src="assets/image/casper-dash-beta-red-black.png" alt="round-shap" className="logo" />
 			</div>
 			{children}
 		</>

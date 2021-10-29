@@ -17,7 +17,6 @@ const getAvailableRoutes = (routes) =>
 	});
 
 // Routes which have sidebar
-
 export const mainRoutes = getAvailableRoutes([
 	{ name: 'dashboard', route: '/dashboard' },
 	{ name: 'tokens', route: '/tokens' },

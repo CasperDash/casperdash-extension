@@ -58,7 +58,7 @@
 .cd_light_theme_active .cd_login_section .cd_login_content .cd_login_input_content::before {
   display: none;
 }
-.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn a {
+.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn .btn {
   color: #fff;
 }
 .cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_heading_text .cd_create_wallet_heading {
