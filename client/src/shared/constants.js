@@ -30,3 +30,5 @@ export const wrapperRoutes = getAvailableRoutes([
 	{ name: 'login', route: '/login' },
 	{ name: 'newwallet', route: '/newwallet/:mode' },
 ]);
+
+export const publicRoutes = getAvailableRoutes([{ name: 'connector', route: '/connector' }]);

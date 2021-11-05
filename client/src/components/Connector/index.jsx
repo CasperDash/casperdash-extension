@@ -1,9 +1,11 @@
 import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { getSelectedWallet, getPublicKey } from '../../selectors/user';
 import { Connect } from './Connect';
 
 export const Connector = ({ opener = window.opener }) => {
+	const history = useHistory();
 	const publicKey = useSelector(getPublicKey);
 	const selectedWallet = useSelector(getSelectedWallet);
 
@@ -21,6 +23,12 @@ export const Connector = ({ opener = window.opener }) => {
 		},
 		[opener, origin],
 	);
+
+	useEffect(() => {
+		if (!window.opener) {
+			history.push('/dashboard');
+		}
+	});
 
 	//handle disconnect wallet when close popup window
 	useEffect(() => {
