@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createNewHDWallet } from '../../services/casperServices';
 import { setSelectedWallet, updateStorageWalletInfo, updateCryptoInstance } from '../../actions/userActions';
+import { getRedirectPath } from '../../selectors/user';
 import { CreatePassword } from './CreatePassword';
 import { MnemonicForm } from './MnemonicForm';
 
@@ -12,6 +13,7 @@ export const CreateWallet = (props) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
+	const redirectPath = useSelector(getRedirectPath);
 	const mode = props.match.params.mode;
 	const [step, setStep] = useState(0);
 	const CurrentStepComp = STEPS[step] || STEPS[0];
@@ -32,7 +34,12 @@ export const CreateWallet = (props) => {
 		);
 
 		dispatch(setSelectedWallet(selectedWallet));
-		history.push('/dashboard');
+		try {
+			const path = JSON.parse(window.atob(redirectPath));
+			history.push(path);
+		} catch {
+			history.push('/dashboard');
+		}
 	};
 	return (
 		<section className="cd_create_wallet_section">

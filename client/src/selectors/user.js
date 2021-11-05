@@ -27,3 +27,5 @@ export const getMassagedUserDetails = createSelector(userDetailsSelector, (userD
 });
 
 export const getSelectedWallet = ({ user }) => user.selectedWallet;
+
+export const getRedirectPath = ({ user }) => user.redirectPath;

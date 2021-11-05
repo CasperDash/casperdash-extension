@@ -4,15 +4,15 @@ export default function userReducer(
 		publicKey: '',
 		selectedWallet: {},
 		cryptoInstance: null,
+		redirectPath: '',
 	},
 	action,
 ) {
 	switch (action.type) {
 		case USERS.SET_USER_ADDRESS:
 			return { ...state, publicKey: action.payload.publicKey };
-		case USERS.SET_SELECTED_WALLET:
+		case USERS.SET_SELECTED_WALLET: {
 			const selectedWallet = action.payload;
-
 			return {
 				...state,
 				publicKey:
@@ -21,8 +21,12 @@ export default function userReducer(
 						: '',
 				selectedWallet: selectedWallet,
 			};
+		}
 		case USERS.UPDATE_CRYPTO_INSTANCE:
 			return { ...state, cryptoInstance: action.payload };
+		case USERS.SET_REDIRECT_PATH: {
+			return { ...state, redirectPath: action.payload };
+		}
 		default:
 			return state;
 	}

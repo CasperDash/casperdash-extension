@@ -38,3 +38,8 @@ export const setSelectedWallet = (wallet) => {
 		dispatch({ type: USERS.SET_SELECTED_WALLET, payload: wallet });
 	};
 };
+
+export const setRedirectPath = (path) => ({
+	type: USERS.SET_REDIRECT_PATH,
+	payload: path,
+});
