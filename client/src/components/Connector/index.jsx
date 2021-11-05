@@ -50,13 +50,17 @@ export const Connector = ({ opener = window.opener }) => {
 		setConnectedWallet(selectedWallet);
 	};
 
+	const onDeny = () => {
+		window.close();
+	};
+
 	return (
 		<div className="cd_wallet_connector">
 			<div className="cd_wrapper_logo">
 				<img src="assets/image/casper-dash-beta-red-black.png" alt="round-shap" className="logo" />
 			</div>
 			<div className="cd_wallet_connector_content">
-				{!connectedWallet && <Connect origin={origin} onConnect={onConnect} />}
+				{!connectedWallet && <Connect origin={origin} onConnect={onConnect} onDeny={onDeny} />}
 				{connectedWallet && <div>Please keep this window open in background.</div>}
 			</div>
 		</div>
