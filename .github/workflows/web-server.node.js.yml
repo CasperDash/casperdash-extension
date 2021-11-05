@@ -21,8 +21,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, World!
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
