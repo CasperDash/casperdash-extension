@@ -36,6 +36,7 @@ export const Connector = ({ opener = window.opener }) => {
 		}
 	}, [connectedWallet, postMessage]);
 
+	// connect wallet
 	const onConnect = () => {
 		postMessage({ method: 'connected', params: { publicKey } });
 		setConnectedWallet(selectedWallet);

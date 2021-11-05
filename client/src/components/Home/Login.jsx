@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { createNewHDWallet } from '../../services/casperServices';
 import { getCryptoInstance, getStorageWallet, deserializeKeys } from '../../services/userServices';
 import { setSelectedWallet, updateCryptoInstance } from '../../actions/userActions';
-import { getCurrentQuery, parseQuery } from '../../helpers/query';
+import { getRedirectPath } from '../../selectors/user';
 
 export const Login = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const redirectPath = useSelector(getRedirectPath);
 	const [showPassword, setShowPassword] = useState(false);
 	const [password, setPassword] = useState('');
 	const [errors, setErrors] = useState({});
@@ -17,10 +18,11 @@ export const Login = () => {
 	const passwordFieldType = showPassword ? 'text' : 'password';
 
 	const redirect = () => {
-		const { path } = getCurrentQuery();
+		//const { path } = getCurrentQuery();
 		try {
-			const redirectPath = JSON.parse(window.atob(path));
-			history.push(redirectPath);
+			//const redirectPath = JSON.parse(redirectPath);
+			const path = JSON.parse(window.atob(redirectPath));
+			history.push(path);
 		} catch (err) {
 			console.error(err);
 			history.push('/dashboard');

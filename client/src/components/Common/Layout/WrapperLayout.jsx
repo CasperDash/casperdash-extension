@@ -1,6 +1,5 @@
 //Layout for wrapper pages e.g home,create wallet
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export const WrapperLayout = ({ children }) => {
 	return (
