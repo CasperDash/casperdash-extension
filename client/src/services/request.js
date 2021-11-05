@@ -11,11 +11,20 @@ const DEFAULT_OPTIONS = {
 };
 const requester = axios.create({
 	baseURL: DEFAULT_API,
-	timeout: 1000,
+	timeout: 20000,
 	...DEFAULT_OPTIONS,
 });
 
 export const request = async (options) => {
 	const response = await requester(options);
+	return response.data;
+};
+
+export const putDeploy = async (data) => {
+	const response = await requester({
+		method: 'post',
+		url: '/deploy',
+		data: data,
+	});
 	return response.data;
 };

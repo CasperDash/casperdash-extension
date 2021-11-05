@@ -1,14 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { isWaitingForConfigurationData, configurationDataError, getConfigurationData } from '../../../selectors/config';
-
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPrizeHistory } from '../../../actions/priceActions';
+import { getLatestBlockHash } from '../../../actions/deployActions';
+import { REFRESH_TIME } from '../../../constants/key';
 import SideBar from '../SideBar';
+import { isLoadingRequest } from '../../../selectors/request';
+import LoadingBar from 'react-top-loading-bar';
 
 const Layout = (props) => {
-	const [color, setColor] = useState('zl_light_theme_active');
-	const isWaitingForConfiguration = useSelector(isWaitingForConfigurationData);
-	const configError = useSelector(configurationDataError);
-	const configurationData = useSelector(getConfigurationData);
+	const dispatch = useDispatch();
+	const ref = useRef(null);
+	// State
+	const [color, setColor] = useState('cd_light_theme_active');
+
+	// Selector
+	const isLoading = useSelector(isLoadingRequest);
+
+	// Effect
+	useEffect(() => {
+		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
+		return () => clearInterval(refreshStateRootHash);
+	}, [dispatch]);
+
+	useEffect(() => {
+		dispatch(fetchPrizeHistory());
+	}, [dispatch]);
+
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			setColor(localStorage.getItem('themColor'));
@@ -16,15 +33,18 @@ const Layout = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (configurationData) {
-			localStorage.setItem('configuration', JSON.stringify(configurationData));
+		if (isLoading) {
+			ref.current.continuousStart();
+		} else {
+			ref.current.complete();
 		}
-	}, [configurationData]);
+	}, [isLoading]);
 
+	// Function
 	const themHandler = (val) => {
-		setColor(val ? 'zl_light_theme_active' : 'zl_page_dark_mode');
+		setColor(val ? 'cd_light_theme_active' : 'cd_page_dark_mode');
 		if (typeof window !== 'undefined') {
-			localStorage.setItem('themColor', val ? 'zl_light_theme_active' : 'zl_page_dark_mode');
+			localStorage.setItem('themColor', val ? 'cd_light_theme_active' : 'cd_page_dark_mode');
 		}
 	};
 
@@ -32,11 +52,10 @@ const Layout = (props) => {
 	const title = url.split('/')[1];
 
 	return (
-		<div className={`zl_all_pages_content ${color === null ? 'zl_light_theme_active' : color}`}>
-			<SideBar title={title} />
-			{!isWaitingForConfiguration && !configError && (
-				<div className="zl_all_pages_inner_content">{props.children}</div>
-			)}
+		<div className={`cd_all_pages_content ${color === null ? 'cd_light_theme_active' : color}`}>
+			<LoadingBar ref={ref} color="#53b9ea" height={5} />
+			<SideBar title={title || 'dashboard'} />
+			<div className="cd_all_pages_inner_content">{props.children}</div>
 		</div>
 	);
 };

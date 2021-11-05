@@ -1,0 +1,11 @@
+{
+	"development": {
+		"logging": false,
+		"url": "mongodb://localhost:27017",
+		"dbName": "casper_data"
+	},
+	"production": {
+		"database": "casper-db",
+		"url": ""
+	}
+}

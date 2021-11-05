@@ -1,15 +1,10 @@
 import { USERS, SIGNER } from '../store/actionTypes';
 import { Signer } from 'casper-js-sdk';
 
-export const getBalance = () => {
-	return async (dispatch, getState) => {
-		const state = getState();
-		console.log(state);
-		if (state.user.publicAddress) {
-			dispatch({ type: USERS.GET_ACCOUNT_BALANCE, payload: { balance: 0 } });
-		}
-	};
-};
+export const getUserDetails = (publicKey) => ({
+	type: USERS.FETCH_USER_DETAILS,
+	request: { url: `/user/${publicKey}` },
+});
 
 export const updatePublicKeyFromSigner = () => {
 	return async (dispatch) => {

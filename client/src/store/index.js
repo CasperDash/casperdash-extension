@@ -1,6 +1,16 @@
+import axios from 'axios';
+import { handleRequests } from '@redux-requests/core';
+import { createDriver } from '@redux-requests/axios';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { BASE_API_URL } from '../constants/key';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import userReducer from './reducers/userReducer';
+import signerReducer from './reducers/signerReducer';
+import keysManagerReducer from './reducers/keysManager';
+import tokensReducer from './reducers/tokens';
+import deployReducer from './reducers/deploys';
+import requestReducer from './reducers/request';
+import { REQUEST } from './actionTypes';
 
 export const initialState = {
 	user: {
@@ -12,17 +22,58 @@ export const initialState = {
 		isUnlocked: true,
 		error: null,
 	},
-	AsyncSelectorLog: null,
+	keysManager: {},
+	tokens: {
+		address: [],
+	},
+	deploys: {
+		transfers: [],
+	},
+	request: {
+		isLoading: [],
+	},
 };
-// const main = combineReducers({
-// 	reducers,
-// 	AsyncSelectorLog: (state, action) => {
-// 		if (action.type === 'RERENDER_APP') {
-// 			return { ...state, [action.key]: action.value };
-// 		}
-// 		return state;
-// 	},
-// });
+
+const setLoadingStatus = (actionType) => {
+	return { type: REQUEST.ADD_REQUEST_LOADING_STATUS, payload: actionType };
+};
+
+const removeLoadingStatus = (actionType) => {
+	return { type: REQUEST.REMOVE_REQUEST_LOADING_STATUS, payload: actionType };
+};
+
+const { requestsReducer, requestsMiddleware } = handleRequests({
+	driver: createDriver(
+		axios.create({
+			baseURL: BASE_API_URL,
+		}),
+	),
+	onRequest: (request, action, store) => {
+		store.dispatch(setLoadingStatus(action.type));
+		return request;
+	},
+	onSuccess: (response, action, store) => {
+		store.dispatch(removeLoadingStatus(action.type));
+		return response;
+	},
+	onError: (error, action, store) => {
+		store.dispatch(removeLoadingStatus(action.type));
+		return error;
+	},
+	onAbort: (action, store) => {
+		store.dispatch(removeLoadingStatus(action.type));
+	},
+});
+
+const main = combineReducers({
+	user: userReducer,
+	signer: signerReducer,
+	keysManager: keysManagerReducer,
+	tokens: tokensReducer,
+	requests: requestsReducer,
+	deploys: deployReducer,
+	request: requestReducer,
+});
 
 const logger = (store) => (next) => (action) => {
 	console.log('dispatching', action);
@@ -31,5 +82,5 @@ const logger = (store) => (next) => (action) => {
 	return result;
 };
 
-var store = createStore(reducers, initialState, applyMiddleware(thunk, logger));
+var store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
 export default store;

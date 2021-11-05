@@ -1,100 +1,74 @@
-import {
-	CasperClient,
-	CasperServiceByJsonRPC,
-	PublicKey,
-	Keys,
-	RuntimeArgs,
-	DeployUtil,
-	AccountHash,
-	KeyValue,
-	CLTypedAndToBytesHelper,
-	CLValueBuilder,
-} from 'casper-js-sdk';
+import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
+import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
 
-const NETWORK_NAME = 'casper-net-1';
-const PAYMENT_AMOUNT = 100000000000;
-const TESTNET_RPC_URL = 'http://16.162.124.124:7777/rpc';
+/**
+ * Get Transfer deploy
+ * @param {CLPublicKey} fromAccount main account public key
+ * @param {CLPublicKey} toAccount public key of target account
+ * @param {Number} amount transfer amount
+ * @param {Number} transferId transfer id. This parameter is optional
+ * @returns {Deploy} transfer deploy
+ */
+export const getTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
+	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
+	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transferId);
+	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
+	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
+};
 
-const client = new CasperClient(TESTNET_RPC_URL);
-
-// Builds key-manager deploy that takes entrypoint and args
-const buildKeyManagerDeploy = (baseAccount, entrypoint, args) => {
+/**
+ * Build deploy for contract
+ * @param {CLPublicKey} baseAccount main account public key
+ * @param {Object} session hash contract content
+ * @param {Object} args contract's arguments
+ * @returns {Deploy} deploy of the contract
+ */
+export const buildContractInstallDeploy = async (baseAccount, session, args = {}) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
-	const runtimeArgs = RuntimeArgs.fromMap(args);
-	const sessionModule = DeployUtil.ExecutableDeployItem.newStoredContractByName(
-		'keys_manager',
-		entrypoint,
-		runtimeArgs,
-	);
 	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
-	return DeployUtil.makeDeploy(deployParams, sessionModule, payment);
+	return DeployUtil.makeDeploy(deployParams, session, payment);
 };
 
-// Sets key with a specified weight
-export const setKeyWeightDeploy = (fromAccount, account, weight) => {
-	return buildKeyManagerDeploy(fromAccount, 'set_key_weight', {
-		account: account,
-		weight: CLValueBuilder.u8(weight),
-	});
+/**
+ * Sign a deploy by singer
+ * @param {Deploy} deploy main account public key
+ * @param {String} mainAccountHex hash contract content
+ * @param {String} setAccountHex contract's arguments
+ * @returns {Deploy} Signed deploy
+ */
+export const signDeploy = async (deploy, mainAccountHex, setAccountHex) => {
+	const deployObj = DeployUtil.deployToJson(deploy);
+	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
+	return signedDeploy;
 };
 
-function sleep(ms) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-}
+/**
+ * Get Transfer Token deploy
+ * @param {CLPublicKey} fromAccount from account public key
+ * @param {CLPublicKey} toAccount to account public key
+ * @param {Number} amount transfer amount
+ * @param {String} contractHash token contract hash
+ * @returns {Deploy} transfer deploy
+ */
+export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee) => {
+	const contractHashAsByteArray = [...Buffer.from(contractHash, 'hex')];
+	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME, 1, DEPLOY_TTL_MS);
+	const transferParams = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
+		contractHashAsByteArray,
+		'transfer',
+		RuntimeArgs.fromMap({
+			amount: CLValueBuilder.u256(amount),
+			recipient: CLValueBuilder.byteArray(toAccount.toAccountHash()),
+		}),
+	);
+	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
+	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
+};
 
-// Helper method for geting a deploy in a defined time period (30s)
-async function getDeploy(deployHash) {
-	let i = 300;
-	while (i !== 0) {
-		const [deploy, raw] = await client.getDeploy(deployHash);
-		if (raw.execution_results.length !== 0) {
-			if (raw.execution_results[0].result.Success) {
-				return deploy;
-			} else {
-				throw Error('Contract execution: ' + raw.execution_results[0].result.Failure.error_message);
-			}
-		} else {
-			i--;
-			await sleep(1000);
-			continue;
-		}
+export const connectCasperSigner = () => {
+	try {
+		Signer.sendConnectionRequest();
+	} catch (error) {
+		return error.message;
 	}
-	throw Error('Timeout after ' + i + "s. Something's wrong");
-}
-
-// Helper method for printing deploy result
-const printDeploy = async (deployHash) => {
-	console.log('Deploy hash: ' + deployHash);
-	console.log('Deploy result:');
-	console.log(DeployUtil.deployToJson(await getDeploy(deployHash)));
-};
-
-// Helper method for getting the current state of the account
-const getAccount = async (publicKey) => {
-	const c = new CasperServiceByJsonRPC(TESTNET_RPC_URL);
-	const stateRootHash = (await c.getLatestBlockInfo()).block.header.state_root_hash;
-	const account = await c.getBlockState(stateRootHash, publicKey.toAccountHashStr(), []).then((res) => res.Account);
-	return account;
-};
-
-// Helper method for printing account info
-export const printAccount = async (account) => {
-	console.log('\n[x] Current state of the account:');
-	console.log(JSON.parse(JSON.stringify(await getAccount(account.publicKey), null, 2)));
-};
-
-// Helper method for sending deploy and displaying signing keys
-export const sendDeploy = async (deploy, signingKeys) => {
-	for (let key of signingKeys) {
-		console.log(`Signed by: ${key.publicKey.toAccountHashStr()}`);
-		deploy = client.signDeploy(deploy, key);
-	}
-	const deployHash = await client.putDeploy(deploy);
-	await printDeploy(deployHash);
-};
-
-export const putDeploy = async (deploy) => {
-	const deployHash = await client.putDeploy(deploy);
-	await printDeploy(deployHash);
-	return deployHash;
 };
