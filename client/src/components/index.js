@@ -1,4 +1,4 @@
-import { mainRoutes, wrapperRoutes } from '../shared/constants';
+import { mainRoutes, wrapperRoutes, publicRoutes } from '../shared/constants';
 import Home from './Home';
 import { CreateWallet } from './Accounts/CreateWallet';
 import Wallets from './Wallets';
@@ -12,11 +12,14 @@ export const mainModules = {
 	[mainRoutes.tokens]: Tokens,
 	[mainRoutes.history]: History,
 	[mainRoutes.keyManager]: KeyManager,
-	[mainRoutes.connector]: Connector,
 };
 
 export const wrapperModules = {
 	[wrapperRoutes.home]: Home,
 	[wrapperRoutes.login]: Home,
 	[wrapperRoutes.newwallet]: CreateWallet,
+};
+
+export const publicModules = {
+	[publicRoutes.connector]: Connector,
 };

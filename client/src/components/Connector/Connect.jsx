@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getSelectedWallet, getPublicKey } from '../../selectors/user';
 
-export const Connect = ({ onConnect, origin }) => {
+export const Connect = ({ onConnect, origin, onDeny }) => {
 	const publicKey = useSelector(getPublicKey);
 	const wallet = useSelector(getSelectedWallet);
 	return (
@@ -17,7 +17,7 @@ export const Connect = ({ onConnect, origin }) => {
 				<div>Only connect with sites you trust.</div>
 			</div>
 			<div className="cd_wallet_connector_button">
-				<button className="btn mx-auto" onClick={() => {}}>
+				<button className="btn mx-auto" onClick={onDeny}>
 					Deny
 				</button>
 				<button className="btn mx-auto" onClick={onConnect}>
