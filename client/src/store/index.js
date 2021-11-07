@@ -2,7 +2,7 @@ import axios from 'axios';
 import { handleRequests } from '@redux-requests/core';
 import { createDriver } from '@redux-requests/axios';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import { BASE_API_URL } from '../constants/key';
+import APP_CONFIGS from '../config';
 import thunk from 'redux-thunk';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
@@ -45,7 +45,7 @@ const removeLoadingStatus = (actionType) => {
 const { requestsReducer, requestsMiddleware } = handleRequests({
 	driver: createDriver(
 		axios.create({
-			baseURL: BASE_API_URL,
+			baseURL: APP_CONFIGS.API_ROOT,
 		}),
 	),
 	onRequest: (request, action, store) => {
