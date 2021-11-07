@@ -1,5 +1,6 @@
 import axios from 'axios';
-const DEFAULT_API = 'http://localhost:3001/';
+import APP_CONFIGS from '../config';
+const baseUrl = APP_CONFIGS.API_ROOT;
 const DEFAULT_OPTIONS = {
 	mode: 'no-cors', // no-cors, *cors, same-origin
 	cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -10,7 +11,7 @@ const DEFAULT_OPTIONS = {
 	},
 };
 const requester = axios.create({
-	baseURL: DEFAULT_API,
+	baseUrl,
 	timeout: 20000,
 	...DEFAULT_OPTIONS,
 });
