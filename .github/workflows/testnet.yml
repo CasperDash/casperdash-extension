@@ -36,7 +36,7 @@ jobs:
       working-directory: ./client
       run: |
         npm ci
-        npm run build --if-present
-        aws s3 sync ./build/ s3://casperdash.io --delete
+        npm run publish-testnet --if-present
+        aws s3 sync ./build/ s3://testnet.casperdash.io/ --delete
       env:
         CI: false 
