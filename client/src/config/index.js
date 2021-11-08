@@ -20,7 +20,7 @@ const CONFIG_OPTIONS = {
 		default: 'local',
 	},
 	NETWORK_NAME: {
-		env: 'NETWORL_NAME',
+		env: 'NETWORK_NAME',
 		default: 'casper-test',
 	},
 	AVAILABLE_FEATURES: {
