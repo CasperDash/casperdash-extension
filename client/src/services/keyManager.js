@@ -1,7 +1,7 @@
 import { CLPublicKey, DeployUtil, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
+import { MOTE_RATE, PAYMENT_AMOUNT, NETWORK_NAME } from '../constants/key';
 import { buildContractInstallDeploy, signDeploy } from './casperServices';
 import { request } from './request';
-import { MOTE_RATE, PAYMENT_AMOUNT, NETWORK_NAME } from '../constants/key';
 
 const DEPLOY_PAYMENT_AMOUNT = 1 * MOTE_RATE;
 
