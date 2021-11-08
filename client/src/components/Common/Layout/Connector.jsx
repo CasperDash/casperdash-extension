@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import LoadingBar from 'react-top-loading-bar';
 import { fetchPrizeHistory } from '../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../actions/deployActions';
 import { REFRESH_TIME } from '../../../constants/key';
 import SideBar from '../SideBar';
 import { isLoadingRequest } from '../../../selectors/request';
-import LoadingBar from 'react-top-loading-bar';
 
 const Layout = (props) => {
 	const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const Layout = (props) => {
 	return (
 		<div className={`cd_all_pages_content ${color === null ? 'cd_light_theme_active' : color}`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} />
-			<SideBar title={title || 'dashboard'} />
+			<SideBar title={title || 'dashboard'} modules={props.modules} />
 			<div className="cd_all_pages_inner_content">{props.children}</div>
 		</div>
 	);

@@ -1,5 +1,5 @@
-import { USERS, SIGNER } from '../store/actionTypes';
 import { Signer } from 'casper-js-sdk';
+import { USERS, SIGNER } from '../store/actionTypes';
 
 export const getUserDetails = (publicKey) => ({
 	type: USERS.FETCH_USER_DETAILS,

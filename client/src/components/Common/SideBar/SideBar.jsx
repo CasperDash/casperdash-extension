@@ -65,7 +65,7 @@ const SIDEBAR_ITEMS = [
 	},
 ];
 
-const SideBar = (props) => {
+const SideBar = ({ title, modules }) => {
 	// hide show header
 	const [showSideBar, setShowSideBar] = useState(false);
 
@@ -73,9 +73,11 @@ const SideBar = (props) => {
 		setShowSideBar(!showSideBar);
 	};
 
+	const sideBarItems = SIDEBAR_ITEMS.filter((item) => modules.includes(item.path));
+
 	return (
 		<>
-			<section className={`cd_page_sidebar ${showSideBar ? 'cd_hide_sidebar' : ''}`} title={props.title}>
+			<section className={`cd_page_sidebar ${showSideBar ? 'cd_hide_sidebar' : ''}`} title={title}>
 				<div className="cd_page_sidebar_content">
 					<div className="cd_page_sidebar_logo">
 						<button className="cd_page_sidebar_toggle_btn" onClick={handleToggle}>
@@ -113,7 +115,7 @@ const SideBar = (props) => {
 						</Link>
 					</div>
 					<ul className="cd_page_sidebar_nav">
-						{SIDEBAR_ITEMS.map(({ key, name, path, icon }) => (
+						{sideBarItems.map(({ key, name, path, icon }) => (
 							<li className="cd_page_sidebar_items" title={key} key={key}>
 								<Link to={path} className="cd_page_sidebar_link position-relative">
 									{icon}

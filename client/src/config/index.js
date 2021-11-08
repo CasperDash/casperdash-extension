@@ -19,6 +19,14 @@ const CONFIG_OPTIONS = {
 		env: 'APP_ENVIRONMENT',
 		default: 'local',
 	},
+	NETWORK_NAME: {
+		env: 'NETWORL_NAME',
+		default: 'casper-test',
+	},
+	AVAILABLE_FEATURES: {
+		env: 'AVAILABLE_FEATURES',
+		default: undefined,
+	},
 };
 
 const getConfigOption = (option) => {

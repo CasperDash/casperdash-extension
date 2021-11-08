@@ -2,8 +2,8 @@ import axios from 'axios';
 import { handleRequests } from '@redux-requests/core';
 import { createDriver } from '@redux-requests/axios';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import APP_CONFIGS from '../config';
 import thunk from 'redux-thunk';
+import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
@@ -75,12 +75,5 @@ const main = combineReducers({
 	request: requestReducer,
 });
 
-const logger = (store) => (next) => (action) => {
-	console.log('dispatching', action);
-	let result = next(action);
-	console.log('next state', store.getState());
-	return result;
-};
-
-var store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
+const store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
 export default store;

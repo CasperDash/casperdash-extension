@@ -9,10 +9,11 @@ export const setLocalStorageValue = (key, path, value, action) => {
 			case 'set':
 				updatedItem = _set(item, path, value);
 				break;
-			case 'push':
+			case 'push': {
 				const currentValue = _get(item, path, []);
 				updatedItem = _set(item, path, [...new Set([...currentValue, value])]); // unique array
 				break;
+			}
 			default:
 				updatedItem = item;
 				break;

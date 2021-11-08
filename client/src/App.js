@@ -5,6 +5,7 @@ import store from './store';
 import modules from './components';
 import Page404 from './components/Common/Page404';
 import Layout from './components/Common/Layout';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -16,7 +17,7 @@ const App = () => {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
-				<Layout>
+				<Layout modules={Object.keys(modules)}>
 					<Switch>
 						{routes}
 						<Route component={Page404} />
