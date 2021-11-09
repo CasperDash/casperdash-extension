@@ -20,11 +20,11 @@ const CONFIG_OPTIONS = {
 		default: 'local',
 	},
 	NETWORK_NAME: {
-		env: 'NETWORK_NAME',
+		env: 'REACT_APP_NETWORK_NAME',
 		default: 'casper-test',
 	},
 	AVAILABLE_FEATURES: {
-		env: 'AVAILABLE_FEATURES',
+		env: 'REACT_APP_AVAILABLE_FEATURES',
 		default: undefined,
 	},
 };
