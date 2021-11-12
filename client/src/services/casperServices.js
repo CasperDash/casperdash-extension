@@ -1,4 +1,4 @@
-import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
+import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey } from 'casper-js-sdk';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
 
 /**
@@ -57,7 +57,7 @@ export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractH
 		'transfer',
 		RuntimeArgs.fromMap({
 			amount: CLValueBuilder.u256(amount),
-			recipient: CLValueBuilder.byteArray(toAccount.toAccountHash()),
+			recipient: new CLKey(new CLAccountHash(toAccount.toAccountHash())),
 		}),
 	);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
