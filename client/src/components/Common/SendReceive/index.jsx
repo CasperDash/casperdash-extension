@@ -8,9 +8,9 @@ import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
-import { ConfirmModal } from './ConfirmModal';
 import { toFormattedNumber } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
 	handleToggle,
@@ -24,13 +24,20 @@ export const SendReceiveSection = ({
 	tokenInfo,
 	csprBalance,
 }) => {
+	const dispatch = useDispatch();
+
+	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
-	const dispatch = useDispatch();
 	const [signedError, setSignerError] = useState(null);
 	const [deployHash, setDeployHash] = useState(null);
+
+	//Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
+
+	// Functions
 	const setBalance = (percent, setFieldValue) => {
 		const amount = displayBalance / percent;
 		setFieldValue('sendAmount', amount);
@@ -96,7 +103,7 @@ export const SendReceiveSection = ({
 							}
 							onSubmit={handleSubmit}
 						>
-							{({ errors, touched, values, handleChange, setFieldValue, isValid, handleSubmit }) => (
+							{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="cd_send_receive_heading">
 										<svg
@@ -162,9 +169,11 @@ export const SendReceiveSection = ({
 										) : null}
 									</div>
 									<div className="cd_send_currency_btn_text">
-										<Button className="cd_send_currency_btn" onClick={handleToggle}>
-											Back
-										</Button>
+										{!isTokenTransfer && (
+											<Button className="cd_send_currency_btn" onClick={handleToggle}>
+												Back
+											</Button>
+										)}
 										<Button className="cd_send_currency_btn" type="submit">
 											Send
 										</Button>
