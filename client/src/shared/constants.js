@@ -14,7 +14,7 @@ const getAvailableRoutes = (routes) =>
 	routes.reduce((out, { name, route }) => {
 		const conf = { [name]: route };
 		return !features || features.includes(route) ? { ...out, ...conf } : out;
-	});
+	}, {});
 
 // Routes which have sidebar
 export const mainRoutes = getAvailableRoutes([

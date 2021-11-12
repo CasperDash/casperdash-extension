@@ -65,7 +65,7 @@ const SIDEBAR_ITEMS = [
 	},
 ];
 
-const SideBar = ({ title, modules }) => {
+const SideBar = ({ title, routes, children }) => {
 	// hide show header
 	const [showSideBar, setShowSideBar] = useState(false);
 
@@ -73,7 +73,9 @@ const SideBar = ({ title, modules }) => {
 		setShowSideBar(!showSideBar);
 	};
 
-	const sideBarItems = SIDEBAR_ITEMS.filter((item) => modules.includes(item.path));
+	const sideBarItems = routes
+		? SIDEBAR_ITEMS.filter((item) => Object.keys(routes).some((route) => routes[route] === item.path))
+		: SIDEBAR_ITEMS;
 
 	return (
 		<>
@@ -140,7 +142,7 @@ const SideBar = ({ title, modules }) => {
 					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
 				</svg>
 			</button>
-			{props.children}
+			{children}
 		</>
 	);
 };
