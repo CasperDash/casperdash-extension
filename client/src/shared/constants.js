@@ -1,18 +1,34 @@
-// Routes which don't have sidebar
-export const mainRoutes = {
-	dashboard: '/dashboard',
-	tokens: '/tokens',
-	history: '/history',
-	keyManager: '/keyManager',
-};
+import APP_CONFIGS from '../config';
+
+let features;
+try {
+	features =
+		typeof APP_CONFIGS.AVAILABLE_FEATURES === 'string'
+			? JSON.parse(APP_CONFIGS.AVAILABLE_FEATURES)
+			: APP_CONFIGS.AVAILABLE_FEATURES;
+} catch (error) {
+	features = undefined;
+}
+
+const getAvailableRoutes = (routes) =>
+	routes.reduce((out, { name, route }) => {
+		const conf = { [name]: route };
+		return !features || features.includes(route) ? { ...out, ...conf } : out;
+	}, {});
 
 // Routes which have sidebar
-export const wrapperRoutes = {
-	home: '/',
-	login: '/login',
-	newwallet: '/newwallet/:mode',
-};
+export const mainRoutes = getAvailableRoutes([
+	{ name: 'dashboard', route: '/dashboard' },
+	{ name: 'tokens', route: '/tokens' },
+	{ name: 'history', route: '/history' },
+	{ name: 'keyManager', route: '/keyManager' },
+]);
 
-export const publicRoutes = {
-	connector: '/connector',
-};
+// Routes which don't have sidebar
+export const wrapperRoutes = getAvailableRoutes([
+	{ name: 'home', route: '/' },
+	{ name: 'login', route: '/login' },
+	{ name: 'newwallet', route: '/newwallet/:mode' },
+]);
+
+export const publicRoutes = getAvailableRoutes([{ name: 'connector', route: '/connector' }]);

@@ -22,10 +22,9 @@ export const getTransferDeploy = (fromAccount, toAccount, amount, transferId, fe
  * Build deploy for contract
  * @param {CLPublicKey} baseAccount main account public key
  * @param {Object} session hash contract content
- * @param {Object} args contract's arguments
  * @returns {Deploy} deploy of the contract
  */
-export const buildContractInstallDeploy = async (baseAccount, session, args = {}) => {
+export const buildContractInstallDeploy = async (baseAccount, session) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
 	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
 	return DeployUtil.makeDeploy(deployParams, session, payment);

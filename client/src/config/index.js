@@ -19,6 +19,14 @@ const CONFIG_OPTIONS = {
 		env: 'APP_ENVIRONMENT',
 		default: 'local',
 	},
+	NETWORK_NAME: {
+		env: 'REACT_APP_NETWORK_NAME',
+		default: 'casper-test',
+	},
+	AVAILABLE_FEATURES: {
+		env: 'REACT_APP_AVAILABLE_FEATURES',
+		default: undefined,
+	},
 };
 
 const getConfigOption = (option) => {

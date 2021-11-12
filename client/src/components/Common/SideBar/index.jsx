@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-
 import SideBar from './SideBar';
 
 const mapStateToProps = (state) => {

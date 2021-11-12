@@ -65,7 +65,7 @@ const SIDEBAR_ITEMS = [
 	},
 ];
 
-const SideBar = (props) => {
+const SideBar = ({ title, routes, children }) => {
 	// hide show header
 	const [showSideBar, setShowSideBar] = useState(false);
 
@@ -73,9 +73,13 @@ const SideBar = (props) => {
 		setShowSideBar(!showSideBar);
 	};
 
+	const sideBarItems = routes
+		? SIDEBAR_ITEMS.filter((item) => Object.keys(routes).some((route) => routes[route] === item.path))
+		: SIDEBAR_ITEMS;
+
 	return (
 		<>
-			<section className={`cd_page_sidebar ${showSideBar ? 'cd_hide_sidebar' : ''}`} title={props.title}>
+			<section className={`cd_page_sidebar ${showSideBar ? 'cd_hide_sidebar' : ''}`} title={title}>
 				<div className="cd_page_sidebar_content">
 					<div className="cd_page_sidebar_logo">
 						<button className="cd_page_sidebar_toggle_btn" onClick={handleToggle}>
@@ -113,7 +117,7 @@ const SideBar = (props) => {
 						</Link>
 					</div>
 					<ul className="cd_page_sidebar_nav">
-						{SIDEBAR_ITEMS.map(({ key, name, path, icon }) => (
+						{sideBarItems.map(({ key, name, path, icon }) => (
 							<li className="cd_page_sidebar_items" title={key} key={key}>
 								<Link to={path} className="cd_page_sidebar_link position-relative">
 									{icon}
@@ -138,7 +142,7 @@ const SideBar = (props) => {
 					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
 				</svg>
 			</button>
-			{props.children}
+			{children}
 		</>
 	);
 };
