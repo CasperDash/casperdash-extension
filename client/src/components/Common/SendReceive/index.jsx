@@ -106,18 +106,7 @@ export const SendReceiveSection = ({
 							{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="cd_send_receive_heading">
-										<svg
-											width="15"
-											height="15"
-											viewBox="0 0 6 6"
-											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M3.60609 3.60609L2.69695 4.51523C2.36222 4.84996 1.81951 4.84996 1.48477 4.51523C1.15004 4.18049 1.15004 3.63778 1.48477 3.30305L2.39391 2.39391L0 0H6V6L3.60609 3.60609Z"
-												fill="#53B9EA"
-											/>
-										</svg>
+										<img src="assets/image/receive-heading-icon.svg" />
 										Send <span className="cd_send_receive_token_symbol">{tokenSymbol}</span>
 									</h3>
 
@@ -200,18 +189,7 @@ export const SendReceiveSection = ({
 				<div className="cd_send_receive_content_column">
 					<div className="cd_send_receive_inner_content">
 						<h3 className="cd_send_receive_heading cd_receive_heading">
-							<svg
-								width="15"
-								height="15"
-								viewBox="0 0 6 6"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M3.60609 3.60609L2.69695 4.51523C2.36222 4.84996 1.81951 4.84996 1.48477 4.51523C1.15004 4.18049 1.15004 3.63778 1.48477 3.30305L2.39391 2.39391L0 0H6V6L3.60609 3.60609Z"
-									fill="#53B9EA"
-								/>
-							</svg>
+							<img src="assets/image/receive-heading-icon.svg" />
 							Receive
 						</h3>
 						<div className="cd_receive_address_content">

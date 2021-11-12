@@ -1648,7 +1648,7 @@ table {
 .cd_send_receive_content {
 	.cd_send_receive_inner_content {
 		.cd_send_receive_heading.cd_receive_heading {
-			svg {
+			img {
 				transform: rotate(180deg);
 			}
 		}
@@ -1664,7 +1664,7 @@ table {
 			display: flex;
 			align-items: center;
 			margin-bottom: 27px;
-			svg {
+			img {
 				margin-right: 11px;
 			}
 			.cd_send_receive_token_symbol {
