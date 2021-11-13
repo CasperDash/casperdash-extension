@@ -16,6 +16,7 @@ const defaultRoutes = {
 	tokens: '/tokens',
 	history: '/history',
 	keyManager: '/keyManager',
+	staking: '/staking',
 };
 
 export const routes = features
