@@ -19,7 +19,7 @@ const SelectField = ({ options, field, form }) => (
 	/>
 );
 
-const StakingForm = () => {
+const StakingForm = ({ handleToggle }) => {
 	const options = [
 		{ value: 'chocolate', label: 'Chocolate' },
 		{ value: 'strawberry', label: 'Strawberry' },
@@ -41,9 +41,14 @@ const StakingForm = () => {
 						<Form.Group className="mb-3" controlId="cd-staking-validator">
 							<Field name={'example'} component={SelectField} options={options} />
 						</Form.Group>
-						<Button variant="secondary" type="submit">
-							Stake
-						</Button>
+						<div className="cd_send_currency_btn_text">
+							<Button className="cd_send_currency_btn" variant="primary" type="submit">
+								Stake
+							</Button>
+							<Button className="cd_send_currency_btn" variant="secondary" onClick={handleToggle}>
+								Back
+							</Button>
+						</div>
 					</Form>
 				)}
 			</Formik>
