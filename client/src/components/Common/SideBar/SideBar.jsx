@@ -31,6 +31,7 @@ const SIDEBAR_ITEMS = [
 			</svg>
 		),
 	},
+
 	{
 		key: 'history',
 		path: '/history',
@@ -45,6 +46,12 @@ const SIDEBAR_ITEMS = [
 				/>
 			</svg>
 		),
+	},
+	{
+		key: 'NFTs',
+		path: '/NFTs',
+		name: 'NFTs',
+		icon: <img style={{ width: 15 }} src="assets/image/nft.png" alt="currency-icon" />,
 	},
 	{
 		key: 'keyManager',
