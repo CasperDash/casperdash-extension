@@ -1443,7 +1443,7 @@ table td {
   padding: 66px 66px 46px;
   height: 100%;
 }
-.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading.cd_receive_heading svg {
+.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading.cd_receive_heading img {
   transform: rotate(180deg);
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading {
@@ -1455,7 +1455,7 @@ table td {
   align-items: center;
   margin-bottom: 27px;
 }
-.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading svg {
+.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading img {
   margin-right: 11px;
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading .cd_send_receive_token_symbol {

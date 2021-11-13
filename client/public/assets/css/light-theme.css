@@ -1,6 +1,6 @@
-@import "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap";
+@import 'https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap';
 .cd_light_theme_active {
-  background: linear-gradient(180deg, #FFFFFF -100%, #FFFFFF 100%);
+  background: linear-gradient(180deg, #ffffff -100%, #ffffff 100%);
 }
 .cd_light_theme_active .cd_dark_theme_slide_img {
   display: none;
@@ -12,35 +12,35 @@
   display: none;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items {
-  background: #3B445A;
+  background: #3b445a;
   opacity: 0.3;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:first-child[title="1"] {
-  background: #3B445A;
+  background: #3b445a;
   opacity: 1;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="2"] {
-  background: #3B445A;
+  background: #3b445a;
   opacity: 1;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(3)[title="3"] {
-  background: #3B445A;
+  background: #3b445a;
   opacity: 1;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="1"] {
-  background: #3B445A;
+  background: #3b445a;
   opacity: 0.6;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(3)[title="2"] {
-  background: #3B445A;
+  background: #3b445a;
   opacity: 0.6;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="3"] {
-  background: #3B445A;
+  background: #3b445a;
   opacity: 0.6;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_heading {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_step_btns {
   color: #fff;
@@ -49,11 +49,11 @@
   color: #fff;
 }
 .cd_light_theme_active .cd_login_section .cd_login_content .cd_login_heading_text .cd_login_heading {
-  color: #252F47;
+  color: #252f47;
   opacity: 1;
 }
 .cd_light_theme_active .cd_login_section .cd_login_content .cd_login_input_content .cd_login_input {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_login_section .cd_login_content .cd_login_input_content::before {
   display: none;
@@ -71,114 +71,114 @@
   background: linear-gradient(180deg, rgba(241, 245, 255, 0.38) 0%, rgba(230, 235, 249, 0.31) 57.44%, rgba(252, 253, 255, 0.57) 100%);
 }
 .cd_light_theme_active .cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items .cd_page_sidebar_link {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items .cd_page_sidebar_link svg path {
-  fill: #3D476A;
+  fill: #3d476a;
 }
 .cd_light_theme_active .cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items .cd_page_sidebar_link svg rect {
-  fill: #3D476A;
+  fill: #3d476a;
 }
 .cd_light_theme_active .cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items:nth-child(5) .cd_page_sidebar_link svg path:last-child {
-  fill: #FFFFFF;
+  fill: #ffffff;
 }
 .cd_light_theme_active .cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items:nth-child(6) .cd_page_sidebar_link svg path {
   fill: none;
-  stroke: #3D476A;
+  stroke: #3d476a;
 }
 .cd_light_theme_active .cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items:nth-child(2) .cd_page_sidebar_link svg path {
-  stroke: #3D476A;
+  stroke: #3d476a;
 }
 .cd_light_theme_active .cd_page_sidebar_toggle_btn {
-  background: #ECEEF3;
-  border: 1px solid #ECEEF3;
-  color: #3D476A;
+  background: #eceef3;
+  border: 1px solid #eceef3;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_heading h2 {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_all_page_logout_btn {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu {
-  background: linear-gradient(210.96deg, #FFFFFF 0.01%, #FFFFFF 42.05%, #FFFFFF 104.81%);
+  background: linear-gradient(210.96deg, #ffffff 0.01%, #ffffff 42.05%, #ffffff 104.81%);
   box-shadow: -10px 48.6px 140px rgba(23, 18, 43, 0.2);
   backdrop-filter: blur(19px);
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_heading {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .cd_all_page_notification_list_body .cd_all_page_notification_list_heading {
   color: #3d476ab3;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list:hover {
-  background: linear-gradient(224.09deg, #EFF0F2 0%, #EFF0F2 98.47%);
+  background: linear-gradient(224.09deg, #eff0f2 0%, #eff0f2 98.47%);
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list:hover .cd_all_page_notification_list_body .cd_all_page_notification_list_heading {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list:hover .cd_all_page_notification_list_more_btn svg {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle {
   box-shadow: 0px 5px 34px rgba(186, 19, 88, 0.42);
 }
 .cd_light_theme_active .react-datepicker__navigation-icon::before {
-  border-color: #252F47;
+  border-color: #252f47;
 }
 .cd_light_theme_active .react-datepicker__year-read-view--down-arrow {
-  border-color: #252F47;
+  border-color: #252f47;
 }
 .cd_light_theme_active .react-datepicker__month-read-view--down-arrow {
-  border-color: #252F47;
+  border-color: #252f47;
 }
 .cd_light_theme_active .react-datepicker__month-year-read-view--down-arrow {
-  border-color: #252F47;
+  border-color: #252f47;
 }
 .cd_light_theme_active .cd_all_page_comman_content {
-  border-color: #EFF0F2;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active .cd_chart_box_heading_date .cd_chart_box_heading {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_all_page_comman_total_price .cd_all_page_total_price_text {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_all_page_comman_total_price .cd_all_page_total_price_text .cd_all_page_total_price_value {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content {
-  border-color: #EFF0F2;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_price p {
-  color: #3D476A;
+  color: #3d476a;
   opacity: 0.7;
 }
 .cd_light_theme_active .cd_add_token_row .cd_add_token_column .cd_add_token_btn_content {
-  color: #3D476A;
-  border-color: #EFF0F2;
+  color: #3d476a;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar-track {
-  background: #EFF0F2;
+  background: #eff0f2;
 }
 .cd_light_theme_active .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar-thumb {
-  background: #828CAE;
+  background: #828cae;
 }
 .cd_light_theme_active .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar-thumb:hover {
-  background: #828CAE;
+  background: #828cae;
 }
 .cd_light_theme_active .cd_portfolio_page .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_price p {
-  color: #3D476A;
+  color: #3d476a;
   opacity: 1;
 }
 .cd_light_theme_active .cd_currency_icon svg path[fill="#2E3855"] {
   fill: #fff;
 }
 .cd_light_theme_active .cd_send_receive_content .cd_send_receive_inner_content {
-  border-color: #EFF0F2;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active .cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content .cd_send_balance_value {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_custom_currency_checkbox.custom-switch .custom-control-label::before {
   filter: drop-shadow(2px 3px 7px rgba(0, 0, 0, 0.12));
@@ -220,92 +220,92 @@
   color: #fff !important;
 }
 .cd_light_theme_active .cd_send_currency_btn_text .cd_send_currency_text p span {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_transaction_list_main_heading {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_transaction_list_table .cd_transaction_list_table_heading {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_key_list_main_heading {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_key_list_table .cd_key_list_table_heading {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_send_qr_address {
-  background: #EFF0F2;
+  background: #eff0f2;
 }
 .cd_light_theme_active .cd_send_qr_address input {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_send_qr_address input:focus {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_send_qr_address input::placeholder {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_receive_address_content .cd_receive_address_qr_code {
-  background: #EFF0F2;
+  background: #eff0f2;
 }
 .cd_light_theme_active .cd_receive_address_content .cd_receive_copy_address_content button {
-  background: #EFF0F2;
+  background: #eff0f2;
 }
 .cd_light_theme_active .cd_receive_address_content .cd_receive_copy_address_content button svg path {
-  fill: #3D476A;
+  fill: #3d476a;
 }
 .cd_light_theme_active .cd_receive_address_content .cd_receive_copy_address_content button:active {
-  background: #EFF0F2 !important;
+  background: #eff0f2 !important;
 }
 .cd_light_theme_active .cd_receive_address_content .cd_receive_copy_address_content p {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_send_currency_input_content {
-  border-color: #EFF0F2;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active .cd_send_currency_input_content .cd_send_currency_input {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_send_currency_input_content .cd_send_currency_input_btns button {
-  border-color: #EFF0F2;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active .cd_send_currency_text_type .cd_send_currency_text {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_send_currency_text_type .cd_send_currency_type {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_all_currency_content {
-  color: #3D476A;
-  border-color: #EFF0F2;
+  color: #3d476a;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active .cd_all_currency_content:hover {
   color: #fff;
 }
 .cd_light_theme_active .cd_securebackup_input_content .cd_securebackup_input {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_securebackup_input_content .cd_securebackup_input::placeholder {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_setting_list .cd_setting_list_items .cd_setting_items_right_text h3 {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_setting_list .cd_setting_list_items .cd_setting_items_right_text svg path {
-  stroke: #3D476A;
+  stroke: #3d476a;
 }
 .cd_light_theme_active .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph h3 {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph h4 {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_account_support_input_list .cd_account_support_input_items .form-control {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_account_support_input_list .cd_account_support_input_items .form-control::placeholder {
-  color: #3D476A;
+  color: #3d476a;
 }
 .cd_light_theme_active .cd_dark_theme_qrcode {
   display: none;
@@ -320,21 +320,21 @@
   color: #fff;
 }
 .cd_light_theme_active .cd_SecureBackup_heading h3 {
-  color: #828CAE;
+  color: #828cae;
 }
 .cd_light_theme_active .cd_currency_page .cd_add_token_row .cd_add_token_column.active .cd_add_token_inner_content {
-  background: #ECEEF3;
+  background: #eceef3;
 }
 
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__input-container input {
-  color: #3D476A;
-  border-color: #EFF0F2;
+  color: #3d476a;
+  border-color: #eff0f2;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__input-container::before {
   background-image: url(../image/calender-dark-icon.svg);
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker {
-  background: linear-gradient(210.96deg, #FFFFFF 0.01%, #FFFFFF 42.05%, #FFFFFF 104.81%);
+  background: linear-gradient(210.96deg, #ffffff 0.01%, #ffffff 42.05%, #ffffff 104.81%);
   box-shadow: -10px 48.6px 140px rgba(23, 18, 43, 0.2);
   backdrop-filter: blur(19px);
 }
@@ -345,34 +345,34 @@
   border-bottom-color: #fff;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__day-name {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__day {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__day:hover {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__time-name {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__month-text:hover {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__quarter-text:hover {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__year-text:hover {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__current-month {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker-time__header {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker-year-header {
-  color: #252F47;
+  color: #252f47;
 }
 .cd_light_theme_active.cd_all_pages_content .react-datepicker__day--keyboard-selected {
   color: #fff;
@@ -424,18 +424,18 @@
 }
 
 .cd_light_theme_active .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-track {
-  background: #EFF0F2;
+  background: #eff0f2;
 }
 .cd_light_theme_active .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-thumb {
-  background: #828CAE;
+  background: #828cae;
 }
 .cd_light_theme_active .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-thumb:hover {
-  background: #828CAE;
+  background: #828cae;
 }
 
 @media (max-width: 991px) {
   .cd_light_theme_active .cd_page_sidebar {
-    background: linear-gradient(180deg, #F9FBFF 0%, #F7F9FD 57.44%, #FDFEFF 100%);
+    background: linear-gradient(180deg, #f9fbff 0%, #f7f9fd 57.44%, #fdfeff 100%);
   }
   .cd_light_theme_active .cd_page_sidebar.cd_hide_sidebar .cd_light_theme_logo {
     display: block !important;
