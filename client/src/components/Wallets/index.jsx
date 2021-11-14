@@ -54,7 +54,9 @@ const WalletDetails = () => {
 									</tr>
 									<tr>
 										<td>Account Hash</td>
-										<td>{formatKeyByPrefix(userDetails._accountHash)}</td>
+										<td>
+											<span>{formatKeyByPrefix(userDetails._accountHash)}</span>
+										</td>
 									</tr>
 								</tbody>
 							</Table>

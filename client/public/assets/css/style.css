@@ -591,12 +591,6 @@ table td {
 .cd_all_page_heading_section .cd_public_key_view {
   margin-left: auto;
 }
-.cd_all_page_heading_section .cd_public_key_view input {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  outline: 0px;
-}
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn {
   display: flex;
   align-items: center;
@@ -2452,6 +2446,10 @@ table td {
     display: block;
     margin-bottom: 20px;
   }
+  .cd_all_page_heading_section .cd_public_key_view {
+    margin-top: 20px;
+    margin-left: -55px;
+  }
   .cd_all_page_heading_section .cd_all_page_notify_logout_btn {
     margin-top: 20px;
     margin-left: -55px;
@@ -2532,6 +2530,30 @@ table td {
 
   .cd_welcome_slide_section .cd_welcome_slide_content.container {
     padding: 0;
+  }
+
+  .cd_account_info_table {
+    width: auto !important;
+    margin-bottom: 0 !important;
+  }
+  .cd_account_info_table tr td {
+    font-size: 12px;
+    line-height: 10px;
+    color: #828cae;
+    max-width: 150px !important;
+    min-width: 150px !important;
+  }
+  .cd_account_info_table tr td span {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .cd_account_info_table .cd_account_info_table_action {
+    padding-left: 10px;
+    cursor: pointer;
+  }
+  .cd_account_info_table .cd_account_info_table_action:hover {
+    color: #70b2ff;
   }
 }
 @media (max-width: 450px) {
