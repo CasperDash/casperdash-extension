@@ -16,7 +16,7 @@
 				margin-top: 13px;
 			}
 			.cd_nft_image {
-				height: 350px;
+				height: 250px;
 				img {
 					max-width: 100%;
 					max-height: 100%;
@@ -29,6 +29,21 @@
 				background: #f5f5f5e6;
 				cursor: pointer;
 			}
+		}
+	}
+	.cd_nft_empty {
+		margin: auto;
+		img {
+			width: 20%;
+			padding-bottom: 50px;
+			max-width: 100%;
+			max-height: 100%;
+			margin-left: auto;
+			margin-right: auto;
+			display: block;
+		}
+		.cd_no_nft_message {
+			text-align: center;
 		}
 	}
 }

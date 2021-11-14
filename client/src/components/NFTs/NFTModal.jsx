@@ -7,7 +7,7 @@ export const NFTModal = ({ show, handleClose, metadata = [] }) => {
 	return (
 		<Modal show={show} onHide={handleClose} centered className="cd_edit_modal_content" size="lg">
 			<Modal.Header closeButton className="cd_edit_modal_header">
-				<Modal.Title>{name.value}</Modal.Title>
+				<Modal.Title>{name ? name.value : 'NFT'}</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body className="cd_nft_modal_body">
