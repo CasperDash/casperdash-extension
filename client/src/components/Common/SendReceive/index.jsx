@@ -169,16 +169,14 @@ export const SendReceiveSection = ({
 										<div className="cd_send_currency_text">
 											<p>
 												Network Fee
-												<span>
-													{transferFee} CSPR{' '}
-													<Form.Control.Feedback
-														type="invalid"
-														className="cd_send_currency_error_msg"
-													>
-														{errors.transferFee}
-													</Form.Control.Feedback>
-												</span>
+												<span>{transferFee} CSPR </span>
 											</p>
+											<Form.Control.Feedback
+												type="invalid"
+												className="cd_send_currency_error_msg"
+											>
+												{errors.transferFee}
+											</Form.Control.Feedback>
 										</div>
 									</div>
 								</Form>

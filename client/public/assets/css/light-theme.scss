@@ -647,6 +647,21 @@
 	}
 }
 
+.cd_nft_modal_body {
+	.cd_nft_modal_row {
+		.cd_nft_modal_metadata {
+			.cd_nft_metadata_row {
+				.cd_nft_metadata_name {
+					color: $color3;
+				}
+				.cd_nft_metadata_value {
+					color: $color3;
+				}
+			}
+		}
+	}
+}
+
 @media (max-width: 991px) {
 	.cd_light_theme_active {
 		.cd_page_sidebar {

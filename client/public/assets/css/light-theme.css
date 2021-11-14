@@ -433,6 +433,13 @@
   background: #828cae;
 }
 
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .cd_nft_metadata_name {
+  color: #828cae;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .cd_nft_metadata_value {
+  color: #828cae;
+}
+
 @media (max-width: 991px) {
   .cd_light_theme_active .cd_page_sidebar {
     background: linear-gradient(180deg, #f9fbff 0%, #f7f9fd 57.44%, #fdfeff 100%);
