@@ -1,4 +1,99 @@
 @import 'https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap';
+.cd_nft_row.row {
+  margin: 0 -12px;
+  padding-top: 20px;
+}
+.cd_nft_row.row .cd_nft_col {
+  padding-bottom: 40px;
+}
+.cd_nft_row.row .cd_nft_col .cd_nft_content {
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid #828cae26;
+  border-radius: 10px;
+  padding: 15px 20px;
+}
+.cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_content_text {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #828cae;
+  margin-top: 13px;
+}
+.cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image {
+  height: 250px;
+}
+.cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image img {
+  max-width: 100%;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.cd_nft_row.row .cd_nft_col .cd_nft_content:hover {
+  background: #f5f5f5e6;
+  cursor: pointer;
+}
+.cd_nft_row.row .cd_nft_empty {
+  margin: auto;
+}
+.cd_nft_row.row .cd_nft_empty img {
+  width: 20%;
+  padding-bottom: 50px;
+  max-width: 100%;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.cd_nft_row.row .cd_nft_empty .cd_no_nft_message {
+  text-align: center;
+}
+
+.cd_nft_modal_body .cd_nft_modal_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-basis: auto;
+  padding: 10px;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_image {
+  height: 400px;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_image img {
+  max-width: 100%;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .column {
+  width: 50%;
+  padding: 10px;
+  float: left;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .cd_nft_metadata_name {
+  text-align: right;
+  font-size: 15px;
+  line-height: 21px;
+  color: #ffffff;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .cd_nft_metadata_value {
+  color: #ffffff;
+}
+
 /* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
@@ -1443,7 +1538,7 @@ table td {
   padding: 66px 66px 46px;
   height: 100%;
 }
-.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading.cd_receive_heading svg {
+.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading.cd_receive_heading img {
   transform: rotate(180deg);
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading {
@@ -1455,7 +1550,7 @@ table td {
   align-items: center;
   margin-bottom: 27px;
 }
-.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading svg {
+.cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading img {
   margin-right: 11px;
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading .cd_send_receive_token_symbol {
