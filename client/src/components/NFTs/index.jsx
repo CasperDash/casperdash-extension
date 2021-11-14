@@ -22,7 +22,7 @@ const NFTs = () => {
 	// Effect
 	useAutoRefreshEffect(() => {
 		dispatch(fetchNFTInfo(NFTAddressList, publicKey));
-	}, [dispatch, JSON.stringify(NFTAddressList)]);
+	}, [dispatch, JSON.stringify(NFTAddressList), publicKey]);
 
 	// Functions
 	const onCloseModal = () => {
