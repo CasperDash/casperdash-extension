@@ -1,6 +1,7 @@
+/* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
 
-const isValidPublicKey = (publicKey) => {
+export const isValidPublicKey = (publicKey) => {
 	try {
 		const pbKey = CLPublicKey.fromHex(publicKey);
 		return pbKey ? true : false;

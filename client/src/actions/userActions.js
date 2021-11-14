@@ -17,3 +17,10 @@ export const updatePublicKeyFromSigner = () => {
 		}
 	};
 };
+
+export const setPublicKey = (publicKey) => {
+	return {
+		type: USERS.SET_USER_ADDRESS,
+		payload: { publicKey },
+	};
+};

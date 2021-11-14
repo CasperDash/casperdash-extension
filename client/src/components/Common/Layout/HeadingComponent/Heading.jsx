@@ -5,8 +5,10 @@ import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { isConnectedCasper, getSignerStatus } from '../../../../selectors/signer';
 import { updateConnectStatus, handleUnlockSigner, handleLockSigner } from '../../../../actions/signerActions';
-import { updatePublicKeyFromSigner, getUserDetails } from '../../../../actions/userActions';
+import { updatePublicKeyFromSigner, getUserDetails, setPublicKey } from '../../../../actions/userActions';
 import { connectCasperSigner } from '../../../../services/casperServices';
+import { isValidPublicKey } from '../../../../helpers/validator';
+import { AddPublicKeyModal } from './AddPublicKeyModal';
 
 const SIGNER_EVENTS = {
 	connected: 'signer:connected',
@@ -19,9 +21,13 @@ const SIGNER_EVENTS = {
 
 const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
-	const { isUnlocked, isConnected } = useSelector(getSignerStatus);
+	const { isUnlocked, isConnected, isAvailable } = useSelector(getSignerStatus);
+
 	const [showError, setShowError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
+	const [showPublicKeyInput, setShowPublicKeyInput] = useState(false);
+	const [publicKeyError, setPublicKeyError] = useState('');
+
 	const dispatch = useDispatch();
 
 	const dispatchUnlockSinger = useCallback(
@@ -79,13 +85,36 @@ const HeadingModule = (props) => {
 		}
 	};
 
+	const onClickViewMode = () => {
+		setShowPublicKeyInput(true);
+	};
+
+	const onClosePublicKeyModal = () => {
+		setShowPublicKeyInput(false);
+	};
+
+	const handleAddPublicKey = (pk) => {
+		if (isValidPublicKey(pk)) {
+			dispatch(setPublicKey(pk));
+			onClosePublicKeyModal();
+		} else {
+			setPublicKeyError('Invalid public key');
+		}
+	};
+
 	return (
 		<>
 			<div className="cd_all_page_heading_section">
 				<div className="cd_all_page_heading">
 					<h2>{props.name}</h2>
 				</div>
-
+				<div className="cd_public_key_view">
+					{!publicKey && !isAvailable && (
+						<Button className="cd_btn_primary_active" onClick={onClickViewMode}>
+							View Mode
+						</Button>
+					)}
+				</div>
 				<div className="cd_all_page_notify_logout_btn">
 					{!isConnected ? (
 						<Button
@@ -116,6 +145,12 @@ const HeadingModule = (props) => {
 						<Button onClick={handleCloseError}>Close</Button>
 					</Modal.Footer>
 				</Modal>
+				<AddPublicKeyModal
+					show={showPublicKeyInput}
+					handleClose={onClosePublicKeyModal}
+					handleAddPublicKey={handleAddPublicKey}
+					error={publicKeyError}
+				/>
 			</div>
 		</>
 	);
