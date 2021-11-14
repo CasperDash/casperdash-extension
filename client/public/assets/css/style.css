@@ -588,10 +588,19 @@ table td {
   display: flex;
   align-items: center;
 }
+.cd_all_page_heading_section .cd_public_key_view {
+  margin-left: auto;
+}
+.cd_all_page_heading_section .cd_public_key_view input {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  outline: 0px;
+}
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn {
   display: flex;
   align-items: center;
-  margin-left: auto;
+  margin-left: 20px;
   min-width: 130px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key {
