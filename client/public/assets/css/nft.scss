@@ -94,3 +94,15 @@
 		}
 	}
 }
+
+@media (max-width: 600px) {
+	.cd_nft_modal_body {
+		.cd_nft_modal_row {
+			display: flex;
+			flex-direction: column;
+			.cd_nft_image {
+				height: 250px;
+			}
+		}
+	}
+}

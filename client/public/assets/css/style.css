@@ -94,6 +94,15 @@
   color: #ffffff;
 }
 
+@media (max-width: 600px) {
+  .cd_nft_modal_body .cd_nft_modal_row {
+    display: flex;
+    flex-direction: column;
+  }
+  .cd_nft_modal_body .cd_nft_modal_row .cd_nft_image {
+    height: 250px;
+  }
+}
 /* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
