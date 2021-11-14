@@ -16,6 +16,7 @@ const defaultRoutes = {
 	tokens: '/tokens',
 	history: '/history',
 	keyManager: '/keyManager',
+	nfts: '/NFTs',
 };
 
 export const routes = features

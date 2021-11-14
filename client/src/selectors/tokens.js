@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { TOKENS } from '../store/actionTypes';
