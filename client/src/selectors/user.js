@@ -4,7 +4,7 @@ import { convertBalanceFromHex } from '../helpers/balance';
 import { USERS } from '../store/actionTypes';
 
 export const getPublicKey = ({ user }) => {
-	return user.publicKey;
+	return user.publicKey || '016e9ade231b1a0039a4a498247dde38aec011fe3b55ca7798a9341899b65e474b';
 };
 
 const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });

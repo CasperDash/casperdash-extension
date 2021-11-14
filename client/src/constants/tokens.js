@@ -1,1 +1,2 @@
 export const DEFAULT_TOKENS_ADDRESS_LIST = ['43f01f0a9798e64837e7244eafd7b1e6462ebd2023336feb9505ae59c4af3bf8'];
+export const DEFAULT_NFT_ADDRESS_LIST = ['6cdf5a5e23eedb6b79cfe52d16fa07cbdece9516b13dde03e6c28b288d5c3a7c'];

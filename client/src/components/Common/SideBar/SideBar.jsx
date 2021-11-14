@@ -51,7 +51,7 @@ const SIDEBAR_ITEMS = [
 		key: 'NFTs',
 		path: '/NFTs',
 		name: 'NFTs',
-		icon: <img style={{ width: 15 }} src="assets/image/nft.png" alt="currency-icon" />,
+		icon: <img style={{ width: 18 }} src="assets/image/nft-icon.png" alt="currency-icon" />,
 	},
 	{
 		key: 'keyManager',
