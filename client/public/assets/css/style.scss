@@ -521,10 +521,13 @@ table {
 	margin-bottom: 26px;
 	display: flex;
 	align-items: center;
+	.cd_public_key_view {
+		margin-left: auto;
+	}
 	.cd_all_page_notify_logout_btn {
 		display: flex;
 		align-items: center;
-		margin-left: auto;
+		margin-left: 20px;
 		min-width: 130px;
 		.cd_public_key {
 			position: relative;
@@ -2643,6 +2646,10 @@ table {
 	.cd_all_page_heading_section {
 		display: block;
 		margin-bottom: 20px;
+		.cd_public_key_view {
+			margin-top: 20px;
+			margin-left: -55px;
+		}
 		.cd_all_page_notify_logout_btn {
 			.cd_all_page_logout_btn {
 				margin-left: auto;
@@ -2739,6 +2746,31 @@ table {
 	.cd_welcome_slide_section {
 		.cd_welcome_slide_content.container {
 			padding: 0;
+		}
+	}
+	.cd_account_info_table {
+		width: auto !important;
+		margin-bottom: 0 !important;
+		tr {
+			td {
+				font-size: 12px;
+				line-height: 10px;
+				color: $color3;
+				max-width: 150px !important;
+				min-width: 150px !important;
+				span {
+					display: block;
+					text-overflow: ellipsis;
+					overflow: hidden;
+				}
+			}
+		}
+		.cd_account_info_table_action {
+			padding-left: 10px;
+			cursor: pointer;
+			&:hover {
+				color: $color16;
+			}
 		}
 	}
 }

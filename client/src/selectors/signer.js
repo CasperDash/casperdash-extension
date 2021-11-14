@@ -22,5 +22,6 @@ export const getConnectError = ({ signer }) => {
 };
 
 export const getSignerStatus = ({ signer }) => {
-	return { isUnlocked: signer.isUnlocked, isConnected: signer.isConnected };
+	const isAvailable = Boolean(window.casperlabsHelper);
+	return { isUnlocked: signer.isUnlocked, isConnected: signer.isConnected, isAvailable };
 };
