@@ -16,7 +16,6 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 				<tr>
 					<th className="cd_transaction_list_table_heading">Validator</th>
 					<th className="cd_transaction_list_table_heading">Amount</th>
-					<th className="cd_transaction_list_table_heading">Status</th>
 					<th className="cd_transaction_list_table_heading">Actions</th>
 				</tr>
 			</thead>
@@ -25,9 +24,6 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 					<tr key={staking.validator}>
 						<td className="cd_transaction_list_validator">{staking.validator}</td>
 						<td className="cd_transaction_list_amount">{toFormattedNumber(staking.amount)}</td>
-						<td className={`cd_transaction_${staking.status || 'pending'} cd_transaction_list_status`}>
-							{staking.status || 'pending'}
-						</td>
 						<td className="cd_transaction_list_action">
 							<Button size="sm" variant="danger">
 								Undelegate
