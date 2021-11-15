@@ -37,8 +37,12 @@ export const buildContractInstallDeploy = async (baseAccount, session) => {
  */
 export const signDeploy = async (deploy, mainAccountHex, setAccountHex) => {
 	const deployObj = DeployUtil.deployToJson(deploy);
-	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
-	return signedDeploy;
+	try {
+		const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
+		return signedDeploy;
+	} catch (error) {
+		throw error;
+	}
 };
 
 /**
