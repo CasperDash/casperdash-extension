@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
-import { Container, Row, Button, Form, FormControl } from 'react-bootstrap';
+import { Button, Form, FormControl } from 'react-bootstrap';
 import Select from 'react-select';
+
+import ConfirmationModal from './Modal';
+
+import { CSPR_TRANSFER_FEE } from '../../../../constants/key';
+import { useDispatch } from 'react-redux';
+import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 
 /**
  * Wrap releact-select to work with Formik.
@@ -19,16 +25,52 @@ const SelectField = ({ options, field, form }) => (
 	/>
 );
 
-const StakingForm = ({ handleToggle }) => {
+const StakingForm = ({ fromAddress, handleToggle, fee = CSPR_TRANSFER_FEE, csprPrice }) => {
+	// State
+	const [stakeDetails, setStakeDetails] = useState({});
+	const [deployHash, setDeployHash] = useState(null);
+	const [showModal, setShowModal] = useState(false);
+	const dispatch = useDispatch();
+
 	const options = [
-		{ value: 'chocolate', label: 'Chocolate' },
+		{
+			value: '0196948158bf5b35c0c84f680f110b8debaa4e7628e13ba336a95651a214d3b9bd',
+			label: '0196948158bf5b35c0c84f680f110b8debaa4e7628e13ba336a95651a214d3b9bd',
+		},
 		{ value: 'strawberry', label: 'Strawberry' },
 		{ value: 'vanilla', label: 'Vanilla' },
 	];
 
-	const handleSubmit = (values) => {
-		console.log('Submit', values);
+	// Function
+	const onCloseModal = () => {
+		setShowModal(false);
 	};
+
+	const handleSubmit = async (values) => {
+		const { validator, amount } = values;
+		console.log('Input', validator, amount, fromAddress);
+		if (fromAddress && validator && amount) {
+			setStakeDetails({
+				fromAddress,
+				validator,
+				amount,
+				fee,
+			});
+
+			setShowModal(true);
+			// const signedDeploy = await dispatch(
+			// 	getSignedStakeDeploy({
+			// 		fromAddress,
+			// 		validator,
+			// 		amount,
+			// 		fee,
+			// 	}),
+			// );
+			// console.log('Signed Deploy', signedDeploy);
+		}
+	};
+
+	const onComfirm = async () => {};
 
 	return (
 		<div>
@@ -39,10 +81,15 @@ const StakingForm = ({ handleToggle }) => {
 							<FormControl name="amount" type="number" placeholder="Amount" required />
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="cd-staking-validator">
-							<Field name={'example'} component={SelectField} options={options} />
+							<Field name={'validator'} component={SelectField} options={options} />
 						</Form.Group>
 						<div className="cd_send_currency_btn_text">
-							<Button className="cd_send_currency_btn" variant="primary" type="submit">
+							<Button
+								className="cd_send_currency_btn"
+								variant="primary"
+								type="submit"
+								onClick={handleSubmit}
+							>
 								Stake
 							</Button>
 							<Button className="cd_send_currency_btn" variant="secondary" onClick={handleToggle}>
@@ -52,6 +99,16 @@ const StakingForm = ({ handleToggle }) => {
 					</Form>
 				)}
 			</Formik>
+			<ConfirmationModal
+				title="Confirm delegation"
+				show={showModal}
+				validator={stakeDetails.validator}
+				fromAddress={stakeDetails.fromAddress}
+				amount={stakeDetails.amount}
+				fee={stakeDetails.fee}
+				currentPrice={csprPrice}
+				onClose={onCloseModal}
+			/>
 		</div>
 	);
 };

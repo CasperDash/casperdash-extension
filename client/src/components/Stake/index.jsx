@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
@@ -11,14 +11,25 @@ import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 
 import './style.scss';
+import { getTokenAddressFromLocalStorage } from '../../actions/tokensActions';
+import { getCurrentPrice } from '../../selectors/price';
 
 const Stake = () => {
+	const dispatch = useDispatch();
+
 	// State
 	const [send, setSend] = useState(false);
 	const [showError, setShowError] = useState(false);
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
+	const currentPrice = useSelector(getCurrentPrice);
+
+	useEffect(() => {
+		if (publicKey) {
+			dispatch(getTokenAddressFromLocalStorage(publicKey));
+		}
+	}, [publicKey, dispatch]);
 
 	// Function
 	const handleToggle = () => {
@@ -48,7 +59,7 @@ const Stake = () => {
 					</Button>
 					<div className="cd_staking_form">
 						<h3 className="cd_transaction_list_main_heading">How much would you like to stake?</h3>
-						<StakingForm handleToggle={handleToggle} />
+						<StakingForm handleToggle={handleToggle} fromAddress={publicKey} csprPrice={currentPrice} />
 					</div>
 					<h3 className="cd_transaction_list_main_heading">
 						Your Delegations
