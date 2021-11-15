@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import StakingAccountList from '../Common/Layout/Stake/AllStakingAccountList';
+import StakingAccountList from '../Common/Layout/Stake/Table';
 import StakingForm from '../Common/Layout/Stake/Form';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 
-import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
+import { getPublicKey } from '../../selectors/user';
 
 import './style.scss';
 import { getTokenAddressFromLocalStorage } from '../../actions/tokensActions';
 import { getCurrentPrice } from '../../selectors/price';
+import { useStakeWithStatus } from '../hooks/useStakeDeploys';
 
 const Stake = () => {
 	const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const Stake = () => {
 	// Selector
 	const publicKey = useSelector(getPublicKey);
 	const currentPrice = useSelector(getCurrentPrice);
-
+	const stakingDeployList = useStakeWithStatus(publicKey);
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(getTokenAddressFromLocalStorage(publicKey));
@@ -40,14 +41,6 @@ const Stake = () => {
 		}
 	};
 
-	const stakingDeployList = [
-		{
-			validator: '123',
-			amount: '1000',
-			status: 'peding',
-		},
-	];
-
 	const toggleStakingForm = send ? 'toggle_form' : '';
 	return (
 		<>
@@ -58,14 +51,13 @@ const Stake = () => {
 						Stake Your CSPR
 					</Button>
 					<div className="cd_staking_form">
-						<h3 className="cd_transaction_list_main_heading">How much would you like to stake?</h3>
 						<StakingForm handleToggle={handleToggle} fromAddress={publicKey} csprPrice={currentPrice} />
 					</div>
 					<h3 className="cd_transaction_list_main_heading">
 						Your Delegations
 						<Link to={'/history'}>View rewards</Link>
 					</h3>
-					<StakingAccountList stakingDeployList={stakingDeployList} />
+					<StakingAccountList stakingDeployList={stakingDeployList.stakes} />
 				</div>
 				<MessageModal
 					type="Error"
