@@ -27,6 +27,10 @@ const CONFIG_OPTIONS = {
 		env: 'REACT_APP_AVAILABLE_FEATURES',
 		default: undefined,
 	},
+	AUCTION_HASH: {
+		env: 'REACT_APP_AUCTION_HASH',
+		default: undefined, //testnet auction contract hash.
+	},
 };
 
 const getConfigOption = (option) => {
