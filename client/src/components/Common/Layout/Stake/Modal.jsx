@@ -11,6 +11,13 @@ const ModalRow = ({ label, value, customClass }) => (
 	</div>
 );
 
+const SuccessRow = ({ label, value, customClass }) => (
+	<div className={`cd_confirm_modal_row ${customClass}`}>
+		<span className="cd_confirm_modal_label">{label}</span>
+		<span className="cd_confirm_modal_value_success">{value}</span>
+	</div>
+);
+
 const SingleCurrencyRow = ({ amount }) => (
 	<div className="cd_confirm_modal_row_single">
 		<span className="cd_confirm_modal_value">{amount}</span>
@@ -64,12 +71,15 @@ export const ConfirmationModal = ({
 				<CurrencyModalRow label="Transaction fee" amount={fee} currentPrice={currentPrice} />
 				<hr />
 				<CurrencyModalRow label="Total" amount={totalCspr} currentPrice={currentPrice} customClass="total" />
+				{deployHash && <SuccessRow label="Deploy hash" value={deployHash} />}
 			</Modal.Body>
 			<Modal.Footer className="cd_confirm_modal_footer">
 				<span className="cd_confirm_modal_error">{deployError}</span>
-				<Button variant="danger" onClick={onClose}>
-					Confirm and delegate stake
-				</Button>
+				{!deployHash && (
+					<Button variant="danger" onClick={onConfirm}>
+						Confirm and delegate stake
+					</Button>
+				)}
 			</Modal.Footer>
 		</Modal>
 	);
