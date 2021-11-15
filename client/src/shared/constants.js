@@ -16,11 +16,8 @@ const defaultRoutes = {
 	tokens: '/tokens',
 	history: '/history',
 	keyManager: '/keyManager',
-<<<<<<< HEAD
 	staking: '/staking',
-=======
 	nfts: '/NFTs',
->>>>>>> 20d8437760f420a6aaa2a0b399bf84e0d3483eea
 };
 
 export const routes = features
@@ -28,3 +25,7 @@ export const routes = features
 			return features.includes(route) ? { ...out, [route]: defaultRoutes[route] } : out;
 	  }, {})
 	: defaultRoutes;
+
+export const contractHashs = {
+	auction: Uint8Array.from(Buffer.from(APP_CONFIGS.AUCTION_HASH, 'hex')),
+};
