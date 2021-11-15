@@ -5,24 +5,28 @@
 import { signDeploy } from './casperServices';
 
 const { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } = require('casper-js-sdk');
-const { NETWORK_NAME, MOTE_RATE } = require('../constants/key');
+const { NETWORK_NAME, MOTE_RATE, ENTRY_POINT_DELEGATE } = require('../constants/key');
+const { contractHashs } = require('../shared/constants');
 
-// Entry Point	delegate
 const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
 	const runTimeArgs = RuntimeArgs.fromMap(args);
-	const session = DeployUtil.ExecutableDeployItem.newStoredContractByName('delegate.wasm', entryPoint, runTimeArgs);
+	const session = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
+		contractHashs.auction,
+		entryPoint,
+		runTimeArgs,
+	);
 	const payment = DeployUtil.standardPayment(paymentAmount);
 	return DeployUtil.makeDeploy(deployParams, session, payment);
 };
 
-const getStakeDeploy = (fromAccount, validator, fee, amount) => {
+const getStakeDeploy = (delegator, validator, fee, amount) => {
 	return buildStakeDeploy(
-		fromAccount,
-		'delegate',
+		delegator,
+		ENTRY_POINT_DELEGATE,
 		{
-			validator: CLValueBuilder.byteArray(validator.toAccountHash()),
-			delegator: CLValueBuilder.byteArray(fromAccount.toAccountHash()),
+			delegator,
+			validator,
 			amount: CLValueBuilder.u512(amount),
 		},
 		fee,
