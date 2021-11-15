@@ -6,11 +6,13 @@ import Select from 'react-select';
 import ConfirmationModal from './Modal';
 
 import { CSPR_AUCTION_FEE } from '../../../../constants/key';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
-import { putDeploy, pushTransferToLocalStorage } from '../../../../actions/deployActions';
+import { putDeploy } from '../../../../actions/deployActions';
+import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 
 import './Form.scss';
+import { deploySelector } from '../../../../selectors/deploy';
 /**
  * Wrap releact-select to work with Formik.
  *
@@ -33,7 +35,12 @@ const StakingForm = ({ fromAddress, handleToggle, fee = CSPR_AUCTION_FEE, csprPr
 	const [stakeDetails, setStakeDetails] = useState({});
 	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
+	const [signedError, setSignerError] = useState(null);
+
 	const dispatch = useDispatch();
+
+	// Selector
+	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
 	const options = [
 		{
@@ -49,12 +56,13 @@ const StakingForm = ({ fromAddress, handleToggle, fee = CSPR_AUCTION_FEE, csprPr
 
 	// Function
 	const onCloseModal = () => {
+		setDeployHash(null);
+		setStakeDetails({});
 		setShowModal(false);
 	};
 
 	const handleSubmit = async (values) => {
 		const { validator, amount } = values;
-		console.log('Input', validator, amount, fromAddress, values);
 		if (fromAddress && validator && amount) {
 			setStakeDetails({
 				fromAddress,
@@ -68,16 +76,30 @@ const StakingForm = ({ fromAddress, handleToggle, fee = CSPR_AUCTION_FEE, csprPr
 	};
 
 	const onComfirm = async () => {
-		const signedDeploy = await getSignedStakeDeploy(stakeDetails);
-		if (signedDeploy.error) {
-			console.log('Signed error', signedDeploy.error.message);
-		} else {
-			const { data } = await dispatch(putDeploy(signedDeploy));
-			setDeployHash(data.deployHash);
-			console.log('Signed Deploy', signedDeploy, data);
+		try {
+			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
+			if (signedDeploy.error) {
+				setSignerError(signedDeploy.error.message);
+			} else {
+				const deployResult = await dispatch(putDeploy(signedDeploy));
+				// Handle exception
+				const { data } = deployResult;
+				setDeployHash(data.deployHash);
+				dispatch(
+					pushStakeToLocalStorage(stakeDetails.fromAddress, {
+						...stakeDetails,
+						deployHash: data.deployHash,
+						status: 'pending',
+						timestamp: signedDeploy.deploy.header.timestamp,
+					}),
+				);
+			}
+		} catch (error) {
+			setSignerError(error.message);
 		}
 	};
 
+	const error = deployHash ? '' : deployError || signedError;
 	return (
 		<div className="cd_setting_list">
 			<div className="cd_setting_list_items">
@@ -136,6 +158,7 @@ const StakingForm = ({ fromAddress, handleToggle, fee = CSPR_AUCTION_FEE, csprPr
 							onClose={onCloseModal}
 							onConfirm={onComfirm}
 							deployHash={deployHash}
+							error={error}
 						/>
 					</div>
 				</div>
