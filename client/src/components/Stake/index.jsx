@@ -57,7 +57,7 @@ const Stake = () => {
 						Your Delegations
 						<Link to={'/history'}>View rewards</Link>
 					</h3>
-					<StakingAccountList stakingDeployList={stakingDeployList.stakes} />
+					<StakingAccountList stakingDeployList={stakingDeployList} />
 				</div>
 				<MessageModal
 					type="Error"
