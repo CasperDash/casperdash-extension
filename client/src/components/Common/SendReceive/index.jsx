@@ -8,9 +8,9 @@ import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
-import { ConfirmModal } from './ConfirmModal';
 import { toFormattedNumber } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
 	handleToggle,
@@ -24,13 +24,20 @@ export const SendReceiveSection = ({
 	tokenInfo,
 	csprBalance,
 }) => {
+	const dispatch = useDispatch();
+
+	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
-	const dispatch = useDispatch();
 	const [signedError, setSignerError] = useState(null);
 	const [deployHash, setDeployHash] = useState(null);
+
+	//Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
+
+	// Functions
 	const setBalance = (percent, setFieldValue) => {
 		const amount = displayBalance / percent;
 		setFieldValue('sendAmount', amount);
@@ -96,21 +103,10 @@ export const SendReceiveSection = ({
 							}
 							onSubmit={handleSubmit}
 						>
-							{({ errors, touched, values, handleChange, setFieldValue, isValid, handleSubmit }) => (
+							{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="cd_send_receive_heading">
-										<svg
-											width="15"
-											height="15"
-											viewBox="0 0 6 6"
-											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M3.60609 3.60609L2.69695 4.51523C2.36222 4.84996 1.81951 4.84996 1.48477 4.51523C1.15004 4.18049 1.15004 3.63778 1.48477 3.30305L2.39391 2.39391L0 0H6V6L3.60609 3.60609Z"
-												fill="#53B9EA"
-											/>
-										</svg>
+										<img src="assets/image/receive-heading-icon.svg" />
 										Send <span className="cd_send_receive_token_symbol">{tokenSymbol}</span>
 									</h3>
 
@@ -162,25 +158,25 @@ export const SendReceiveSection = ({
 										) : null}
 									</div>
 									<div className="cd_send_currency_btn_text">
-										<Button className="cd_send_currency_btn" onClick={handleToggle}>
-											Back
-										</Button>
+										{!isTokenTransfer && (
+											<Button className="cd_send_currency_btn" onClick={handleToggle}>
+												Back
+											</Button>
+										)}
 										<Button className="cd_send_currency_btn" type="submit">
 											Send
 										</Button>
 										<div className="cd_send_currency_text">
 											<p>
 												Network Fee
-												<span>
-													{transferFee} CSPR{' '}
-													<Form.Control.Feedback
-														type="invalid"
-														className="cd_send_currency_error_msg"
-													>
-														{errors.transferFee}
-													</Form.Control.Feedback>
-												</span>
+												<span>{transferFee} CSPR </span>
 											</p>
+											<Form.Control.Feedback
+												type="invalid"
+												className="cd_send_currency_error_msg"
+											>
+												{errors.transferFee}
+											</Form.Control.Feedback>
 										</div>
 									</div>
 								</Form>
@@ -191,18 +187,7 @@ export const SendReceiveSection = ({
 				<div className="cd_send_receive_content_column">
 					<div className="cd_send_receive_inner_content">
 						<h3 className="cd_send_receive_heading cd_receive_heading">
-							<svg
-								width="15"
-								height="15"
-								viewBox="0 0 6 6"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M3.60609 3.60609L2.69695 4.51523C2.36222 4.84996 1.81951 4.84996 1.48477 4.51523C1.15004 4.18049 1.15004 3.63778 1.48477 3.30305L2.39391 2.39391L0 0H6V6L3.60609 3.60609Z"
-									fill="#53B9EA"
-								/>
-							</svg>
+							<img src="assets/image/receive-heading-icon.svg" />
 							Receive
 						</h3>
 						<div className="cd_receive_address_content">

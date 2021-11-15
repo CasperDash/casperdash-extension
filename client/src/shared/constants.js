@@ -16,7 +16,11 @@ const defaultRoutes = {
 	tokens: '/tokens',
 	history: '/history',
 	keyManager: '/keyManager',
+<<<<<<< HEAD
 	staking: '/staking',
+=======
+	nfts: '/NFTs',
+>>>>>>> 20d8437760f420a6aaa2a0b399bf84e0d3483eea
 };
 
 export const routes = features

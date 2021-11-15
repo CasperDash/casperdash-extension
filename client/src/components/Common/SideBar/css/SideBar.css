@@ -54,6 +54,9 @@
 .cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items .cd_page_sidebar_link svg {
 	margin-right: 32px;
 }
+.cd_page_sidebar .cd_page_sidebar_content .cd_page_sidebar_nav .cd_page_sidebar_items .cd_page_sidebar_link img {
+	margin-right: 32px;
+}
 
 .cd_page_sidebar[title='dashboard']
 	.cd_page_sidebar_content
@@ -79,6 +82,11 @@
 	.cd_page_sidebar_content
 	.cd_page_sidebar_nav
 	.cd_page_sidebar_items[title='keyManager']
+	.cd_page_sidebar_link::before,
+.cd_page_sidebar[title='NFTs']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='NFTs']
 	.cd_page_sidebar_link::before,
 .cd_page_sidebar[title='tokens']
 	.cd_page_sidebar_content
@@ -127,6 +135,11 @@
 	.cd_page_sidebar_nav
 	.cd_page_sidebar_items[title='tokens']
 	.cd_page_sidebar_link::after,
+.cd_page_sidebar[title='NFTs']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='NFTS']
+	.cd_page_sidebar_link::after,
 .cd_page_sidebar[title='keyManager']
 	.cd_page_sidebar_content
 	.cd_page_sidebar_nav
@@ -173,6 +186,11 @@
 	.cd_page_sidebar_nav
 	.cd_page_sidebar_items[title='history']
 	.cd_page_sidebar_link,
+.cd_page_sidebar[title='NFTs']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='NFTs']
+	.cd_page_sidebar_link,
 .cd_page_sidebar[title='keyManager']
 	.cd_page_sidebar_content
 	.cd_page_sidebar_nav
@@ -199,6 +217,13 @@
 	.cd_page_sidebar_content
 	.cd_page_sidebar_nav
 	.cd_page_sidebar_items[title='keyManager']
+	.cd_page_sidebar_link
+	svg
+	path,
+.cd_page_sidebar[title='NFTs']
+	.cd_page_sidebar_content
+	.cd_page_sidebar_nav
+	.cd_page_sidebar_items[title='NFTs']
 	.cd_page_sidebar_link
 	svg
 	path,

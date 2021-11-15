@@ -70,7 +70,7 @@ export const ConfirmModal = ({
 									type="number"
 									value={transferId}
 									onChange={(e) => setTransferId(e.target.value)}
-								></input>
+								/>
 							) : (
 								<span className="cd_confirm_modal_value">{transferId}</span>
 							)}
