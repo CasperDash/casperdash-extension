@@ -37,7 +37,10 @@ export const getSignedStakeDeploy = async ({ fromAddress, validator, fee, amount
 	const fromAccPk = CLPublicKey.fromHex(fromAddress);
 	const validatorPk = CLPublicKey.fromHex(validator);
 	const deploy = getStakeDeploy(fromAccPk, validatorPk, fee * MOTE_RATE, amount * MOTE_RATE);
-	const signedDeploy = await signDeploy(deploy, fromAddress, validator);
-
-	return signedDeploy;
+	try {
+		const signedDeploy = await signDeploy(deploy, fromAddress, validator);
+		return signedDeploy;
+	} catch (error) {
+		throw error;
+	}
 };
