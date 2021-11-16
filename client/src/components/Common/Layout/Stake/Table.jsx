@@ -28,7 +28,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 					<th className="cd_transaction_list_table_heading">Validator</th>
 					<th className="cd_transaction_list_table_heading">Staked Amount</th>
 					<th className="cd_transaction_list_table_heading">Pending Amount</th>
-					<th className="cd_transaction_list_table_heading">Actions</th>
+					{/* <th className="cd_transaction_list_table_heading">Actions</th> */}
 				</tr>
 			</thead>
 			<tbody>
@@ -41,11 +41,11 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 						<td className="cd_transaction_list_amount">
 							{displayNaN(toFormattedNumber(staking.pendingAmount))}
 						</td>
-						<td className="cd_transaction_list_action">
+						{/* <td className="cd_transaction_list_action">
 							<Button size="sm" variant="danger">
 								Undelegate
 							</Button>
-						</td>
+						</td> */}
 					</tr>
 				))}
 				<tr>

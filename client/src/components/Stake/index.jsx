@@ -3,6 +3,8 @@ import { Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import APP_CONFIGS from '../../config';
+
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import StakingAccountList from '../Common/Layout/Stake/Table';
 import StakingForm from '../Common/Layout/Stake/Form';
@@ -41,7 +43,7 @@ const ConfirmingTransactionsInfo = (transactions) => {
 				<Alert.Link
 					rel="noopner noreferrer"
 					target="_blank"
-					href={`https://testnet.cspr.live/deploy/${transactions[0]}`}
+					href={`${APP_CONFIGS.EXPLORER_ROOT_LINK}/deploy/${transactions[0]}`}
 				>
 					View on explorer
 				</Alert.Link>
