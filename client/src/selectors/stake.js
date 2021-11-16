@@ -31,8 +31,8 @@ export const getPendingStakes =
 	() =>
 	({ stakes = {} }) => {
 		if (!stakes.stakes) {
-			return stakes;
+			return [];
 		}
 
-		return stakes.stakes.filter((stake) => stake.status !== 'success').map((stake) => stake.deployHash);
+		return stakes.stakes.filter((stake) => stake.status === 'pending').map((stake) => stake.deployHash);
 	};
