@@ -32,7 +32,15 @@ const SelectField = ({ options, field, form }) => (
 	/>
 );
 
-const StakingForm = ({ fromAddress, validators, balance, handleToggle, fee = CSPR_AUCTION_FEE, csprPrice }) => {
+const StakingForm = ({
+	fromAddress,
+	validators,
+	tokenSymbol,
+	balance,
+	handleToggle,
+	fee = CSPR_AUCTION_FEE,
+	csprPrice,
+}) => {
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
 	const [deployHash, setDeployHash] = useState(null);
@@ -109,7 +117,7 @@ const StakingForm = ({ fromAddress, validators, balance, handleToggle, fee = CSP
 								validateStakeForm({
 									...values,
 									balance,
-									tokenSymbol: 'CSPR',
+									tokenSymbol,
 									fee,
 								})
 							}
@@ -128,7 +136,9 @@ const StakingForm = ({ fromAddress, validators, balance, handleToggle, fee = CSP
 											isInvalid={errors.amount}
 										/>
 										<Form.Control.Feedback type="invalid">{errors.amount}</Form.Control.Feedback>
-										<Form.Text className="text-muted">{toFormattedNumber(balance)} </Form.Text>
+										<Form.Text className="text-muted">
+											{toFormattedNumber(balance)} {tokenSymbol}{' '}
+										</Form.Text>
 									</Form.Group>
 									<Form.Group className="mb-3" controlId="cd-staking-validator">
 										<Field name={'validator'} component={SelectField} options={options} />

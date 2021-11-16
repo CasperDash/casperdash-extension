@@ -67,6 +67,7 @@ const Stake = () => {
 							fromAddress={publicKey}
 							csprPrice={currentPrice}
 							balance={displayBalance}
+							tokenSymbol="CSPR"
 						/>
 					</div>
 					<h3 className="cd_transaction_list_main_heading">
