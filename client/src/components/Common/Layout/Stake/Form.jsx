@@ -98,6 +98,7 @@ const StakingForm = ({
 						timestamp: signedDeploy.deploy.header.timestamp,
 					}),
 				);
+				handleToggle();
 			}
 		} catch (error) {
 			setSignerError(error.message);
