@@ -5,9 +5,20 @@ import { Table, Button } from 'react-bootstrap';
 import './Table.scss';
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 
+const EmptyDelegation = () => (
+	<div className="cd_empty_delegation_row row">
+		<div className="cd_empty_delegation_section position-relative">
+			<img src="assets/image/no-staking-icon.svg" alt="empty-cspr-stake" />
+			<div className="cd_empty_delegation_message">
+				You do not have any delegations yet. Stake CSPR, earn rewards and help Capser become more secure!
+			</div>
+		</div>
+	</div>
+);
+
 const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 	if (!stakingDeployList.length) {
-		return <>Stake CSPR, earn rewards and help Capser become more secure!</>;
+		return <EmptyDelegation />;
 	}
 	const total = stakingDeployList.map((stake) => stake.successAmount).reduce((prev, next) => prev + next);
 	return (
