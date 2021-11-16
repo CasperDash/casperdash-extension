@@ -13,6 +13,8 @@ import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 
 import './Form.scss';
 import { deploySelector } from '../../../../selectors/deploy';
+import { toFormattedNumber } from '../../../../helpers/format';
+import { validateStakeForm } from '../../../../helpers/validator';
 /**
  * Wrap releact-select to work with Formik.
  *
@@ -23,14 +25,14 @@ const SelectField = ({ options, field, form }) => (
 	<Select
 		options={options}
 		name={field.name}
-		value={options ? options.find((option) => option.value === field.value) : ''}
+		value={options ? options.find((option) => option.value === field.value) : null}
 		onChange={(option) => form.setFieldValue(field.name, option.value)}
 		onBlur={field.onBlur}
 		placeholder="Validator"
 	/>
 );
 
-const StakingForm = ({ fromAddress, validators, handleToggle, fee = CSPR_AUCTION_FEE, csprPrice }) => {
+const StakingForm = ({ fromAddress, validators, balance, handleToggle, fee = CSPR_AUCTION_FEE, csprPrice }) => {
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
 	const [deployHash, setDeployHash] = useState(null);
@@ -101,7 +103,18 @@ const StakingForm = ({ fromAddress, validators, handleToggle, fee = CSPR_AUCTION
 				<div className="cd_setting_items_heading_peregraph cd_setting_items_form">
 					<div>
 						<h3 className="cd_transaction_list_main_heading">How much would you like to stake?</h3>
-						<Formik initialValues={{ amount: 1 }} onSubmit={handleSubmit}>
+						<Formik
+							initialValues={{ amount: 1 }}
+							validate={(values) =>
+								validateStakeForm({
+									...values,
+									balance,
+									tokenSymbol: 'CSPR',
+									fee,
+								})
+							}
+							onSubmit={handleSubmit}
+						>
 							{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
 								<Form noValidate onSubmit={handleSubmit} className="cd-staking-form">
 									<Form.Group className="mb-3" controlId="cd-staking-amount">
@@ -112,21 +125,25 @@ const StakingForm = ({ fromAddress, validators, handleToggle, fee = CSPR_AUCTION
 											type="number"
 											placeholder="Amount"
 											required
+											isInvalid={errors.amount}
 										/>
+										<Form.Control.Feedback type="invalid">{errors.amount}</Form.Control.Feedback>
+										<Form.Text className="text-muted">{toFormattedNumber(balance)} </Form.Text>
 									</Form.Group>
 									<Form.Group className="mb-3" controlId="cd-staking-validator">
-										<Field
-											name={'validator'}
-											onChange={handleChange}
-											component={SelectField}
-											options={options}
-										/>
+										<Field name={'validator'} component={SelectField} options={options} />
+										<Form.Text className="text-muted">
+											<a className="cd-form-text-link" href="https://casperstats.io/validators">
+												Help me choose
+											</a>
+										</Form.Text>
 									</Form.Group>
 									<div className="cd_send_currency_btn_text">
 										<Button
 											className="cd_send_currency_btn"
 											variant="primary"
 											type="submit"
+											disabled={!values.amount || !values.validator}
 											onClick={handleSubmit}
 										>
 											Stake
