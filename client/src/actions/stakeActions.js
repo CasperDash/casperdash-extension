@@ -1,4 +1,4 @@
-import { DEPLOY } from '../store/actionTypes';
+import { DEPLOY, VALIDATORS } from '../store/actionTypes';
 import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
 
 const LOCAL_STORAGE_STAKE_PATH = 'deploys.stakes';
@@ -11,4 +11,11 @@ export const pushStakeToLocalStorage = (publicKey, value) => (dispatch) => {
 export const getStakeFromLocalStorage = (publicKey) => ({
 	type: DEPLOY.GET_STAKES_FROM_LOCAL_STORAGE,
 	payload: publicKey,
+});
+
+export const fetchValidators = () => ({
+	type: VALIDATORS.FETCH_ACTIVE_VALIDATORS,
+	request: {
+		url: '/validators',
+	},
 });
