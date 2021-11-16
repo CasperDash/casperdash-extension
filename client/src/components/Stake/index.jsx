@@ -8,7 +8,7 @@ import StakingAccountList from '../Common/Layout/Stake/Table';
 import StakingForm from '../Common/Layout/Stake/Form';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 
-import { getPublicKey } from '../../selectors/user';
+import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 
 import './style.scss';
 import { getTokenAddressFromLocalStorage } from '../../actions/tokensActions';
@@ -28,6 +28,7 @@ const Stake = () => {
 	const publicKey = useSelector(getPublicKey);
 	const currentPrice = useSelector(getCurrentPrice);
 	const validators = useSelector(getValidators);
+	const userDetails = useSelector(getMassagedUserDetails);
 
 	const stakingDeployList = useStakeWithStatus(publicKey);
 	useEffect(() => {
@@ -50,6 +51,7 @@ const Stake = () => {
 	};
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
+	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
 	return (
 		<>
 			<section className="cd_staking_page">
@@ -64,6 +66,7 @@ const Stake = () => {
 							handleToggle={handleToggle}
 							fromAddress={publicKey}
 							csprPrice={currentPrice}
+							balance={displayBalance}
 						/>
 					</div>
 					<h3 className="cd_transaction_list_main_heading">
