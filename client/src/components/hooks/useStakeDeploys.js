@@ -1,14 +1,30 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { getTransferDeploysStatus, updateTransferDeployStatus } from '../../actions/deployActions';
 import { getStakeFromLocalStorage } from '../../actions/stakeActions';
-import { getStakeDeploysGroupByValidator } from '../../selectors/stake';
+import { getConfirmedStakesGroupByValidator, getPendingStakes } from '../../selectors/stake';
+import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 export const useStakeWithStatus = (publicKey) => {
 	const dispatch = useDispatch();
 
-	const pendingStakes = useSelector(getStakeDeploysGroupByValidator());
+	const confirmedStakes = useSelector(getConfirmedStakesGroupByValidator());
+
+	const pendingDelegations = useSelector(getPendingStakes());
+
 	useEffect(() => {
 		dispatch(getStakeFromLocalStorage(publicKey));
 	}, [dispatch, publicKey]);
-	return pendingStakes;
+
+	useAutoRefreshEffect(() => {
+		if (!pendingDelegations.length) {
+			return;
+		}
+		(async () => {
+			const { data } = await dispatch(getTransferDeploysStatus(pendingDelegations));
+			dispatch(updateTransferDeployStatus(publicKey, 'deploys.stakes', data));
+		})();
+	}, [JSON.stringify(pendingDelegations), dispatch]);
+
+	return confirmedStakes;
 };
