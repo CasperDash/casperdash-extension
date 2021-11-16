@@ -52,7 +52,7 @@ export const validateTransferForm = ({
 	return errors;
 };
 
-export const validateStakeForm = ({ amount, validator, tokenSymbol, balance, fee }) => {
+export const validateStakeForm = ({ amount, tokenSymbol, balance, fee }) => {
 	let errors = {};
 	if (amount <= 0) {
 		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
