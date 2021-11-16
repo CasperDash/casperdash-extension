@@ -16,6 +16,7 @@ import { getCurrentPrice } from '../../selectors/price';
 import { useStakeWithStatus } from '../hooks/useStakeDeploys';
 import { getValidators } from '../../selectors/validator';
 import { fetchValidators } from '../../actions/stakeActions';
+import { getPendingStakes } from '../../selectors/stake';
 
 const UnlockSingerWarning = ({ title, message }) => (
 	<section className="cd_staking_page">
@@ -27,6 +28,33 @@ const UnlockSingerWarning = ({ title, message }) => (
 		</div>
 	</section>
 );
+
+const ConfirmingTransactionsInfo = (transactions) => {
+	if (!transactions || !transactions.length) {
+		return;
+	}
+
+	if (transactions.length === 1) {
+		return (
+			<Alert variant={'info'} show={!!transactions.length}>
+				Confirming transaction ...{' '}
+				<Alert.Link
+					rel="noopner noreferrer"
+					target="_blank"
+					href={`https://testnet.cspr.live/deploy/${transactions[0]}`}
+				>
+					View on explorer
+				</Alert.Link>
+			</Alert>
+		);
+	}
+
+	return (
+		<Alert variant={'info'} show={!!transactions.length}>
+			Confirming transactions ...{' '}
+		</Alert>
+	);
+};
 const Stake = () => {
 	const dispatch = useDispatch();
 
@@ -39,8 +67,9 @@ const Stake = () => {
 	const currentPrice = useSelector(getCurrentPrice);
 	const validators = useSelector(getValidators);
 	const userDetails = useSelector(getMassagedUserDetails);
-
+	const pendingStakes = useSelector(getPendingStakes());
 	const stakingDeployList = useStakeWithStatus(publicKey);
+
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(getTokenAddressFromLocalStorage(publicKey));
@@ -74,11 +103,14 @@ const Stake = () => {
 	return (
 		<>
 			<section className="cd_staking_page">
+				{ConfirmingTransactionsInfo(pendingStakes)}
 				<HeadingModule name={'Staking'} />
 				<div className={`cd_staking_component ${toggleStakingForm}`}>
-					<Button variant="outline-danger" className="cd_btn_stake_cspr" onClick={handleToggle}>
-						Stake Your CSPR
-					</Button>
+					{!pendingStakes.length && (
+						<Button variant="outline-danger" className="cd_btn_stake_cspr" onClick={handleToggle}>
+							Stake Your CSPR
+						</Button>
+					)}
 					<div className="cd_staking_form">
 						<StakingForm
 							validators={validators}
