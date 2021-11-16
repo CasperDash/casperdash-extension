@@ -3,19 +3,20 @@ import { connect } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 
 import './Table.scss';
-import { toFormattedNumber } from '../../../../helpers/format';
+import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 
 const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 	if (!stakingDeployList.length) {
 		return <>Stake CSPR, earn rewards and help Capser become more secure!</>;
 	}
-	const total = stakingDeployList.map((stake) => stake.amount).reduce((prev, next) => prev + next);
+	const total = stakingDeployList.map((stake) => stake.successAmount).reduce((prev, next) => prev + next);
 	return (
 		<Table className="cd_transaction_list_table cd_stake_table">
 			<thead>
 				<tr>
 					<th className="cd_transaction_list_table_heading">Validator</th>
-					<th className="cd_transaction_list_table_heading">Amount</th>
+					<th className="cd_transaction_list_table_heading">Staked Amount</th>
+					<th className="cd_transaction_list_table_heading">Pending Amount</th>
 					<th className="cd_transaction_list_table_heading">Actions</th>
 				</tr>
 			</thead>
@@ -23,7 +24,12 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 				{stakingDeployList.map((staking) => (
 					<tr key={staking.validator}>
 						<td className="cd_transaction_list_validator">{staking.validator}</td>
-						<td className="cd_transaction_list_amount">{toFormattedNumber(staking.amount)}</td>
+						<td className="cd_transaction_list_amount">
+							{displayNaN(toFormattedNumber(staking.successAmount))}
+						</td>
+						<td className="cd_transaction_list_amount">
+							{displayNaN(toFormattedNumber(staking.pendingAmount))}
+						</td>
 						<td className="cd_transaction_list_action">
 							<Button size="sm" variant="danger">
 								Undelegate
