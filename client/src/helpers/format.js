@@ -23,3 +23,7 @@ export const toFormattedDate = (
 	}
 	return new Intl.DateTimeFormat(locales, options).format(date);
 };
+
+export const displayNaN = (value) => {
+	return Number.isNaN(value) || 'NaN' === value ? '-' : value;
+};
