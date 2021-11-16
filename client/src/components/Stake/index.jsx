@@ -14,6 +14,8 @@ import './style.scss';
 import { getTokenAddressFromLocalStorage } from '../../actions/tokensActions';
 import { getCurrentPrice } from '../../selectors/price';
 import { useStakeWithStatus } from '../hooks/useStakeDeploys';
+import { getValidators } from '../../selectors/validator';
+import { fetchValidators } from '../../actions/stakeActions';
 
 const Stake = () => {
 	const dispatch = useDispatch();
@@ -25,12 +27,18 @@ const Stake = () => {
 	// Selector
 	const publicKey = useSelector(getPublicKey);
 	const currentPrice = useSelector(getCurrentPrice);
+	const validators = useSelector(getValidators);
+
 	const stakingDeployList = useStakeWithStatus(publicKey);
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(getTokenAddressFromLocalStorage(publicKey));
 		}
 	}, [publicKey, dispatch]);
+
+	useEffect(() => {
+		dispatch(fetchValidators());
+	}, [dispatch]);
 
 	// Function
 	const handleToggle = () => {
@@ -51,7 +59,12 @@ const Stake = () => {
 						Stake Your CSPR
 					</Button>
 					<div className="cd_staking_form">
-						<StakingForm handleToggle={handleToggle} fromAddress={publicKey} csprPrice={currentPrice} />
+						<StakingForm
+							validators={validators}
+							handleToggle={handleToggle}
+							fromAddress={publicKey}
+							csprPrice={currentPrice}
+						/>
 					</div>
 					<h3 className="cd_transaction_list_main_heading">
 						Your Delegations
