@@ -30,7 +30,7 @@ const SelectField = ({ options, field, form }) => (
 	/>
 );
 
-const StakingForm = ({ fromAddress, handleToggle, fee = CSPR_AUCTION_FEE, csprPrice }) => {
+const StakingForm = ({ fromAddress, validators, handleToggle, fee = CSPR_AUCTION_FEE, csprPrice }) => {
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
 	const [deployHash, setDeployHash] = useState(null);
@@ -42,17 +42,12 @@ const StakingForm = ({ fromAddress, handleToggle, fee = CSPR_AUCTION_FEE, csprPr
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
-	const options = [
-		{
-			value: '0196948158bf5b35c0c84f680f110b8debaa4e7628e13ba336a95651a214d3b9bd',
-			label: '0196948158bf5b35c0c84f680f110b8debaa4e7628e13ba336a95651a214d3b9bd',
-		},
-		{
-			value: '0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca',
-			label: '0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca',
-		},
-		{ value: 'vanilla', label: 'Vanilla' },
-	];
+	const options = validators
+		? validators.map((validator) => ({
+				value: validator.public_key,
+				label: validator.public_key,
+		  }))
+		: [];
 
 	// Function
 	const onCloseModal = () => {
