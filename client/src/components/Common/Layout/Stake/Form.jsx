@@ -153,6 +153,7 @@ const StakingForm = ({ fromAddress, validators, handleToggle, fee = CSPR_AUCTION
 							onClose={onCloseModal}
 							onConfirm={onComfirm}
 							deployHash={deployHash}
+							isDeploying={isDeploying}
 							error={error}
 						/>
 					</div>
