@@ -166,6 +166,14 @@ const StakingForm = ({
 										>
 											Back
 										</Button>
+										<div className="cd_send_currency_text">
+											<p>
+												Network Fee
+												<span>
+													{fee} {tokenSymbol}{' '}
+												</span>
+											</p>
+										</div>
 									</div>
 								</Form>
 							)}
