@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
