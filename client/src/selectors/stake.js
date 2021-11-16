@@ -5,17 +5,21 @@ export const getConfirmedStakesGroupByValidator =
 			let groupByValidators = [];
 			stakes.stakes.forEach((stake) => {
 				const { validator, amount, status } = stake;
-				if ('success' !== status) {
-					return;
-				}
 				const foundValidator = groupByValidators.findIndex((item) => validator === item.validator);
+				const amountKey = `${status}Amount`;
 				if (foundValidator < 0) {
+					const amountObj = {};
+					amountObj[amountKey] = amount;
 					groupByValidators.push({
 						validator,
-						amount,
+						...amountObj,
 					});
 				} else {
-					groupByValidators[foundValidator].amount += amount;
+					if (!groupByValidators[foundValidator][amountKey]) {
+						groupByValidators[foundValidator][amountKey] = 0 + amount;
+					} else {
+						groupByValidators[foundValidator][amountKey] += amount;
+					}
 				}
 			});
 			return groupByValidators;
