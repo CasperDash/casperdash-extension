@@ -10,6 +10,11 @@ export const isValidPublicKey = (publicKey) => {
 	}
 };
 
+const COMMON_ERROR_MESSAGE = {
+	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
+	NOT_ENOUGH_BALANCE: 'Not enough balance.',
+};
+
 export const validateTransferForm = ({
 	displayBalance,
 	toAddress,
@@ -44,5 +49,16 @@ export const validateTransferForm = ({
 	if (csprBalance < transferFee) {
 		errors.transferFee = 'Not enough CSPR balance.';
 	}
+	return errors;
+};
+
+export const validateStakeForm = ({ amount, validator, tokenSymbol, balance, fee }) => {
+	let errors = {};
+	if (amount <= 0) {
+		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
+	} else if (amount + fee > balance) {
+		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
+	}
+
 	return errors;
 };
