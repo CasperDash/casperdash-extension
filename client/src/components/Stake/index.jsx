@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -17,6 +17,16 @@ import { useStakeWithStatus } from '../hooks/useStakeDeploys';
 import { getValidators } from '../../selectors/validator';
 import { fetchValidators } from '../../actions/stakeActions';
 
+const UnlockSingerWarning = ({ title, message }) => (
+	<section className="cd_staking_page">
+		<HeadingModule name={title} />
+		<div className="cd_staking_capser_locked">
+			<div className="cd_main_message">
+				<Alert variant="danger">{message}</Alert>
+			</div>
+		</div>
+	</section>
+);
 const Stake = () => {
 	const dispatch = useDispatch();
 
@@ -52,6 +62,15 @@ const Stake = () => {
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
 	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
+	if (!publicKey) {
+		return (
+			<UnlockSingerWarning
+				title={'Staking'}
+				message={'Please unlock your Casper Signer to see your delegations'}
+			/>
+		);
+	}
+
 	return (
 		<>
 			<section className="cd_staking_page">
@@ -70,15 +89,17 @@ const Stake = () => {
 							tokenSymbol="CSPR"
 						/>
 					</div>
-					<h3 className="cd_transaction_list_main_heading">
-						Your Delegations
-						<Link to={'/history'}>View rewards</Link>
-					</h3>
+					{stakingDeployList && stakingDeployList.length && (
+						<h3 className="cd_transaction_list_main_heading">
+							Your Delegations
+							<Link to={'/history'}>View Staking History</Link>
+						</h3>
+					)}
 					<StakingAccountList stakingDeployList={stakingDeployList} />
 				</div>
 				<MessageModal
 					type="Error"
-					message="Unlock your Signer!"
+					message="Please unlock your Casper Signer"
 					show={showError}
 					handleClose={() => setShowError(false)}
 				/>
