@@ -3,8 +3,7 @@ import { Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import APP_CONFIGS from '../../config';
-
+import { EXPLORER_URL, CASPER_SYMBOL } from '../../constants/key';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import StakingAccountList from '../Common/Layout/Stake/Table';
 import StakingForm from '../Common/Layout/Stake/Form';
@@ -38,11 +37,7 @@ const ConfirmingTransactionsInfo = (transactions) => {
 		return (
 			<Alert variant={'info'} show={!!transactions.length}>
 				Confirming transaction ...{' '}
-				<Alert.Link
-					rel="noopner noreferrer"
-					target="_blank"
-					href={`${APP_CONFIGS.EXPLORER_ROOT_LINK}/deploy/${transactions[0]}`}
-				>
+				<Alert.Link rel="noopner noreferrer" target="_blank" href={`${EXPLORER_URL}/deploy/${transactions[0]}`}>
 					View on explorer
 				</Alert.Link>
 			</Alert>
@@ -112,7 +107,7 @@ const Stake = () => {
 							fromAddress={publicKey}
 							csprPrice={currentPrice}
 							balance={displayBalance}
-							tokenSymbol="CSPR"
+							tokenSymbol={CASPER_SYMBOL}
 						/>
 					</div>
 					{stakingDeployList && stakingDeployList.length > 0 && (

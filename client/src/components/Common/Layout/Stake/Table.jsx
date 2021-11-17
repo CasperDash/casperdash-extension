@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
-import './Table.scss';
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
+
+import './Table.scss';
 
 const EmptyDelegation = () => (
 	<div className="cd_empty_delegation_row row">
