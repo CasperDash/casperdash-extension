@@ -1,7 +1,3 @@
-//delegator	016ab2...d638e1
-// validator	013cf6...b43507
-// amount	1 000 000 000
-
 import { signDeploy } from './casperServices';
 
 const { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } = require('casper-js-sdk');
