@@ -1,4 +1,4 @@
-### Sumarry (Please recap what you changed or fixed)
+### Summary (Please recap what you changed or fixed)
 
 ### Checklist (If you won't pass this checklist please comment why)
 
