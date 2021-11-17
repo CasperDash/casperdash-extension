@@ -909,6 +909,10 @@ table {
 		overflow-x: scroll;
 		padding-bottom: 15px;
 	}
+	.no_token_message {
+		padding-left: 10px;
+		color: $color27;
+	}
 	.cd_currency_column_sub_row {
 		display: flex;
 		min-width: 80%;

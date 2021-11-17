@@ -47,6 +47,7 @@
 }
 .cd_nft_row.row .cd_nft_empty .cd_no_nft_message {
   text-align: center;
+  color: #ba1358;
 }
 
 .cd_nft_modal_body .cd_nft_modal_row {
@@ -950,6 +951,10 @@ table td {
   max-width: 100%;
   overflow-x: scroll;
   padding-bottom: 15px;
+}
+.cd_add_token_row .no_token_message {
+  padding-left: 10px;
+  color: #ba1358;
 }
 .cd_add_token_row .cd_currency_column_sub_row {
   display: flex;
