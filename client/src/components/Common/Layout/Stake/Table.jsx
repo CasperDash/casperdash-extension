@@ -54,7 +54,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 					</td>
 					<td colSpan="2">
 						<span>
-							<b>{toFormattedNumber(total)}</b>
+							<b>{displayNaN(toFormattedNumber(total))}</b>
 						</span>
 					</td>
 				</tr>
