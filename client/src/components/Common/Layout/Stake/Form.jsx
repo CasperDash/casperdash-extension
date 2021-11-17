@@ -11,10 +11,14 @@ import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 
-import './Form.scss';
 import { deploySelector } from '../../../../selectors/deploy';
 import { toFormattedNumber } from '../../../../helpers/format';
 import { validateStakeForm } from '../../../../helpers/validator';
+
+import { EXPLORER_URL } from '../../../../constants/key';
+
+import './Form.scss';
+
 /**
  * Wrap releact-select to work with Formik.
  *
@@ -144,7 +148,12 @@ const StakingForm = ({
 									<Form.Group className="mb-3" controlId="cd-staking-validator">
 										<Field name={'validator'} component={SelectField} options={options} />
 										<Form.Text className="text-muted">
-											<a className="cd-form-text-link" href="https://casperstats.io/validators">
+											<a
+												className="cd-form-text-link"
+												target="_blank"
+												rel="noopener noreferrer"
+												href={`${EXPLORER_URL}/validators`}
+											>
 												Help me choose
 											</a>
 										</Form.Text>
