@@ -47,6 +47,7 @@
 }
 .cd_nft_row.row .cd_nft_empty .cd_no_nft_message {
   text-align: center;
+  color: #ba1358;
 }
 
 .cd_nft_modal_body .cd_nft_modal_row {
@@ -950,6 +951,10 @@ table td {
   max-width: 100%;
   overflow-x: scroll;
   padding-bottom: 15px;
+}
+.cd_add_token_row .no_token_message {
+  padding-left: 10px;
+  color: #ba1358;
 }
 .cd_add_token_row .cd_currency_column_sub_row {
   display: flex;
@@ -2294,6 +2299,11 @@ table td {
     margin-top: 10px;
   }
 }
+.cd_btn_copy,
+.cd_btn_explorer {
+  padding-left: 5px;
+}
+
 @media (max-width: 1300px) {
   .cd_send_receive_content .cd_send_receive_inner_content {
     padding: 45px 20px;
@@ -2556,6 +2566,11 @@ table td {
     display: block;
     text-overflow: ellipsis;
     overflow: hidden;
+  }
+  .cd_account_info_table tr td.cd_account_table_action {
+    max-width: 65px !important;
+    min-width: 65px !important;
+    display: inline-block;
   }
   .cd_account_info_table .cd_account_info_table_action {
     padding-left: 10px;
