@@ -2,5 +2,9 @@ import { MOTE_RATE } from '../constants/key';
 
 export const convertBalanceFromHex = (balanceHex) => {
 	const balance = parseInt(balanceHex);
-	return parseFloat(balance / MOTE_RATE);
+	return moteToCspr(balance);
+};
+
+export const moteToCspr = (balanceInCSPR) => {
+	return parseFloat(balanceInCSPR / MOTE_RATE);
 };
