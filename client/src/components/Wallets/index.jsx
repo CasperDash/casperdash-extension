@@ -12,6 +12,7 @@ import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { ChartLine } from '../Common/Layout/Chart';
 import { toFormattedNumber, toFormattedCurrency } from '../../helpers/format';
 import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
+import CommonAction from '../Common/Button/CommonAction';
 
 const WalletDetails = () => {
 	// State
@@ -51,11 +52,22 @@ const WalletDetails = () => {
 										<td>
 											<span>{publicKey}</span>
 										</td>
+										<td className="cd_account_table_action">
+											{publicKey && <CommonAction type="account" value={publicKey} />}
+										</td>
 									</tr>
 									<tr>
 										<td>Account Hash</td>
 										<td>
 											<span>{formatKeyByPrefix(userDetails._accountHash)}</span>
+										</td>
+										<td className="cd_account_table_action">
+											{userDetails._accountHash && (
+												<CommonAction
+													type="account"
+													value={formatKeyByPrefix(userDetails._accountHash)}
+												/>
+											)}
 										</td>
 									</tr>
 								</tbody>

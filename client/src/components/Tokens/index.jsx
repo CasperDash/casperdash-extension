@@ -80,13 +80,23 @@ const Tokens = () => {
 	};
 
 	return (
-		<>
-			<section className="cd_wallets_page">
-				<HeadingModule name={'Tokens'} />
+		<section className="cd_wallets_page">
+			<HeadingModule name={'Tokens'} />
+			<>
 				<div className="cd_add_token_content cd_add_token_row row">
-					<div className="cd_currency_column_sub_row">
-						<TokenList tokensInfo={tokensInfo} selectedToken={selectedToken} onTokenClick={onTokenClick} />
-					</div>
+					{!tokensInfo.length ? (
+						<div className="cd_currency_column_sub_row no_token_message">
+							You do not have any Tokens yet.
+						</div>
+					) : (
+						<div className="cd_currency_column_sub_row">
+							<TokenList
+								tokensInfo={tokensInfo}
+								selectedToken={selectedToken}
+								onTokenClick={onTokenClick}
+							/>
+						</div>
+					)}
 					<div className="cd_add_token_column cd_add_token_btn_col col" onClick={onAddNewTokenAddress}>
 						<div className="cd_add_token_btn_content">+ Add Token</div>
 					</div>
@@ -116,8 +126,8 @@ const Tokens = () => {
 					show={showError}
 					handleClose={() => setShowError(false)}
 				/>
-			</section>
-		</>
+			</>
+		</section>
 	);
 };
 

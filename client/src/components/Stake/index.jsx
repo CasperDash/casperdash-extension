@@ -11,15 +11,13 @@ import StakingForm from '../Common/Layout/Stake/Form';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
-
-import './style.scss';
-import { getTokenAddressFromLocalStorage } from '../../actions/tokensActions';
 import { getCurrentPrice } from '../../selectors/price';
-import { useStakeWithStatus } from '../hooks/useStakeDeploys';
 import { getValidators } from '../../selectors/validator';
 import { fetchValidators } from '../../actions/stakeActions';
 import { getPendingStakes } from '../../selectors/stake';
+import { useStakeWithStatus } from '../hooks/useStakeDeploys';
 
+import './style.scss';
 const UnlockSingerWarning = ({ title, message }) => (
 	<section className="cd_staking_page">
 		<HeadingModule name={title} />
