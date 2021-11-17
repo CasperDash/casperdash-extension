@@ -73,12 +73,6 @@ const Stake = () => {
 	const stakingDeployList = useStakeWithStatus(publicKey);
 
 	useEffect(() => {
-		if (publicKey) {
-			dispatch(getTokenAddressFromLocalStorage(publicKey));
-		}
-	}, [publicKey, dispatch]);
-
-	useEffect(() => {
 		dispatch(fetchValidators());
 	}, [dispatch]);
 

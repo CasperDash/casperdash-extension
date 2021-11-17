@@ -1,7 +1,6 @@
 export const getConfirmedStakesGroupByValidator =
 	() =>
 	({ stakes = {} }) => {
-		console.log('DEployyys', stakes);
 		if (stakes.delegations) {
 			let groupByValidators = [];
 			stakes.delegations.forEach((stake) => {
