@@ -104,7 +104,6 @@ const StakingForm = ({
 				setSignerError(signedDeploy.error.message);
 			} else {
 				const deployResult = await dispatch(putDeploy(signedDeploy));
-				// Handle exception
 				const { data } = deployResult;
 				setDeployHash(data.deployHash);
 				dispatch(
