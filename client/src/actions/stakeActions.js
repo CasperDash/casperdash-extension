@@ -1,5 +1,5 @@
 import { DEPLOY, VALIDATORS } from '../store/actionTypes';
-import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
+import { setLocalStorageValue } from '../services/localStorage';
 
 const LOCAL_STORAGE_STAKE_PATH = 'deploys.stakes';
 
