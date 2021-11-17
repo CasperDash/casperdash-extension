@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import { toFormattedDate } from '../../../../helpers/format';
+import CommonAction from '../../Button/CommonAction';
 
 const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 	return (
@@ -20,11 +20,13 @@ const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 						</tr>
 					</thead>
 					<tbody>
-						{transfersDeployList.map((transfer, i) => (
+						{transfersDeployList.map((transfer) => (
 							<tr key={transfer.deployHash}>
 								<td className="cd_transaction_list_name">{transfer.symbol}</td>
 								<td className="cd_transaction_list_type">Transfer</td>
-								<td className="cd_transaction_list_id">{transfer.deployHash}</td>
+								<td className="cd_transaction_list_id">
+									{transfer.deployHash} <CommonAction type="deploy" value={transfer.deployHash} />
+								</td>
 								<td className="cd_transaction_list_id">{transfer.transferId}</td>
 								<td className={`cd_transaction_minas cd_transaction_list_value`}>-{transfer.amount}</td>
 								<td
@@ -44,4 +46,4 @@ const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 	);
 };
 
-export default connect(null, null)(AllTransactionListComponent);
+export default AllTransactionListComponent;
