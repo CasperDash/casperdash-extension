@@ -3,10 +3,10 @@ import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import Select from 'react-select';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import ConfirmationModal from './Modal';
 
-import { CSPR_AUCTION_FEE } from '../../../../constants/key';
-import { useDispatch, useSelector } from 'react-redux';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
@@ -15,6 +15,7 @@ import { deploySelector } from '../../../../selectors/deploy';
 import { toFormattedNumber } from '../../../../helpers/format';
 import { validateStakeForm } from '../../../../helpers/validator';
 
+import { CSPR_AUCTION_FEE } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 
 import './Form.scss';
@@ -33,6 +34,16 @@ const SelectField = ({ options, field, form }) => (
 		onChange={(option) => form.setFieldValue(field.name, option.value)}
 		onBlur={field.onBlur}
 		placeholder="Validator"
+		getOptionLabel={(e) => (
+			<div>
+				<div>
+					{e.icon} {e.label}
+				</div>
+				<div>
+					<small>Rate: {e.rate}%</small>
+				</div>
+			</div>
+		)}
 	/>
 );
 
@@ -57,9 +68,11 @@ const StakingForm = ({
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
 	const options = validators
-		? validators.map((validator) => ({
-				value: validator.public_key,
-				label: validator.public_key,
+		? validators.map(({ public_key: publicKey, bid }) => ({
+				value: publicKey,
+				label: publicKey,
+				rate: bid.bid.delegation_rate,
+				icon: <i class="bi bi-person"></i>,
 		  }))
 		: [];
 
