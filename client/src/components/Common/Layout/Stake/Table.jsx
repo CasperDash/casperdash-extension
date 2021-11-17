@@ -21,7 +21,11 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 	if (!stakingDeployList.length) {
 		return <EmptyDelegation />;
 	}
-	const total = stakingDeployList.map((stake) => stake.successAmount).reduce((prev, next) => prev + next);
+	const total = stakingDeployList
+		.filter((stake) => !!stake.successAmount)
+		.map((stake) => stake.successAmount)
+		.reduce((prev, next) => prev + next);
+
 	return (
 		<Table className="cd_transaction_list_table cd_stake_table">
 			<thead>
@@ -29,7 +33,6 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 					<th className="cd_transaction_list_table_heading">Validator</th>
 					<th className="cd_transaction_list_table_heading">Staked Amount</th>
 					<th className="cd_transaction_list_table_heading">Pending Amount</th>
-					{/* <th className="cd_transaction_list_table_heading">Actions</th> */}
 				</tr>
 			</thead>
 			<tbody>
@@ -42,11 +45,6 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 						<td className="cd_transaction_list_amount">
 							{displayNaN(toFormattedNumber(staking.pendingAmount))}
 						</td>
-						{/* <td className="cd_transaction_list_action">
-							<Button size="sm" variant="danger">
-								Undelegate
-							</Button>
-						</td> */}
 					</tr>
 				))}
 				<tr>
@@ -55,7 +53,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 					</td>
 					<td colSpan="2">
 						<span>
-							<b>{displayNaN(toFormattedNumber(total))}</b>
+							<b>{toFormattedNumber(total)}</b>
 						</span>
 					</td>
 				</tr>
