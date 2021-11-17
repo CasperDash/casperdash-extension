@@ -1,16 +1,14 @@
 import { getLocalStorageValue } from '../../services/localStorage';
 import { DEPLOY } from '../actionTypes';
 
-export default function userReducer(state = { stakes: [] }, action) {
+export default function userReducer(state = { delegations: [] }, action) {
 	switch (action.type) {
 		case DEPLOY.PUSH_STAKE_TO_LOCAL_STORAGE:
-			const stakes = state.stakes || [];
-			return { ...state, stakes: [...stakes, action.payload] };
+			const delegations = state.delegations || [];
+			return { ...state, delegations: [...delegations, action.payload] };
 		case DEPLOY.GET_STAKES_FROM_LOCAL_STORAGE:
 			const items = getLocalStorageValue(action.payload, 'deploys.stakes');
-			return { ...state, stakes: items };
-		// case DEPLOY.UPDATE_TRANSFER_LOCAL_STORAGE:
-		// 	return { ...state, stakes: action.payload };
+			return { ...state, delegations: items };
 		default:
 			return state;
 	}

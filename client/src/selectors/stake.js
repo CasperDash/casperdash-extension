@@ -1,9 +1,10 @@
 export const getConfirmedStakesGroupByValidator =
 	() =>
 	({ stakes = {} }) => {
-		if (stakes.stakes) {
+		console.log('DEployyys', stakes);
+		if (stakes.delegations) {
 			let groupByValidators = [];
-			stakes.stakes.forEach((stake) => {
+			stakes.delegations.forEach((stake) => {
 				const { validator, amount, status } = stake;
 				const foundValidator = groupByValidators.findIndex((item) => validator === item.validator);
 				const amountKey = `${status}Amount`;
@@ -24,15 +25,15 @@ export const getConfirmedStakesGroupByValidator =
 			});
 			return groupByValidators;
 		}
-		return stakes;
+		return [];
 	};
 
 export const getPendingStakes =
 	() =>
 	({ stakes = {} }) => {
-		if (!stakes.stakes) {
+		if (!stakes.delegations) {
 			return [];
 		}
 
-		return stakes.stakes.filter((stake) => stake.status === 'pending').map((stake) => stake.deployHash);
+		return stakes.delegations.filter((stake) => stake.status === 'pending').map((stake) => stake.deployHash);
 	};

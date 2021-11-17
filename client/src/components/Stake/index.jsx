@@ -108,7 +108,7 @@ const Stake = () => {
 				{ConfirmingTransactionsInfo(pendingStakes)}
 				<HeadingModule name={'Staking'} />
 				<div className={`cd_staking_component ${toggleStakingForm}`}>
-					{!pendingStakes.length && (
+					{pendingStakes && pendingStakes.length === 0 && (
 						<Button variant="outline-danger" className="cd_btn_stake_cspr" onClick={handleToggle}>
 							Stake Your CSPR
 						</Button>
@@ -123,7 +123,7 @@ const Stake = () => {
 							tokenSymbol="CSPR"
 						/>
 					</div>
-					{stakingDeployList && stakingDeployList.length && (
+					{stakingDeployList && stakingDeployList.length > 0 && (
 						<h3 className="cd_transaction_list_main_heading">
 							Your Delegations
 							<Link to={'/history'}>View Staking History</Link>
