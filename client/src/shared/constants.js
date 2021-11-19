@@ -10,17 +10,25 @@ try {
 	features = undefined;
 }
 
-const defaultRoutes = {
-	home: '/',
-	dashboard: '/dashboard',
-	tokens: '/tokens',
-	history: '/history',
-	keyManager: '/keyManager',
-	nfts: '/NFTs',
-};
+const getAvailableRoutes = (routes) =>
+	routes.reduce((out, { name, route }) => {
+		const conf = { [name]: route };
+		return !features || features.includes(route) ? { ...out, ...conf } : out;
+	}, {});
 
-export const routes = features
-	? Object.keys(defaultRoutes).reduce((out, route) => {
-			return features.includes(route) ? { ...out, [route]: defaultRoutes[route] } : out;
-	  }, {})
-	: defaultRoutes;
+// Routes which have sidebar
+export const mainRoutes = getAvailableRoutes([
+	{ name: 'dashboard', route: '/dashboard' },
+	{ name: 'tokens', route: '/tokens' },
+	{ name: 'history', route: '/history' },
+	{ name: 'keyManager', route: '/keyManager' },
+]);
+
+// Routes which don't have sidebar
+export const wrapperRoutes = getAvailableRoutes([
+	{ name: 'home', route: '/' },
+	{ name: 'login', route: '/login' },
+	{ name: 'newwallet', route: '/newwallet/:mode' },
+]);
+
+export const publicRoutes = getAvailableRoutes([{ name: 'connector', route: '/connector' }]);

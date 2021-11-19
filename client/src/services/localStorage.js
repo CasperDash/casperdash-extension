@@ -1,7 +1,7 @@
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
 
-export const setLocalStorageValue = (key, path, value, action) => {
+export const setLocalStorageValue = (key, path, value, action = 'set') => {
 	try {
 		const item = JSON.parse(localStorage.getItem(key)) || {};
 		let updatedItem;

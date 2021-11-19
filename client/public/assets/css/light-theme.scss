@@ -74,6 +74,39 @@
 			}
 		}
 	}
+	.cd_create_wallet_section {
+		.cd_create_wallet_content {
+			.cd_create_wallet_btn {
+				.btn {
+					color: $color13;
+				}
+			}
+			.cd_create_wallet_heading_text {
+				.cd_create_wallet_heading {
+					color: $color4;
+					opacity: 1;
+				}
+			}
+			.cd_create_wallet_input_content {
+				.cd_create_wallet_input {
+					color: $color12;
+				}
+				&::before {
+					display: none;
+				}
+			}
+			.cd_create_wallet_input_list {
+				.cd_create_wallet_input_items {
+					.form-control {
+						color: $color12;
+						&::placeholder {
+							color: $color12;
+						}
+					}
+				}
+			}
+		}
+	}
 	.cd_light_theme_logo {
 		display: block !important;
 	}
@@ -500,6 +533,11 @@
 	}
 	.cd_securebackup_btn {
 		a {
+			color: $color13;
+		}
+	}
+	.cd_create_wallet_btn {
+		button {
 			color: $color13;
 		}
 	}

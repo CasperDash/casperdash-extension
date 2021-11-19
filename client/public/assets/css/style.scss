@@ -1,13 +1,12 @@
 @import './theme-config.scss';
-@import './nft.scss';
-
+@import './create-wallet.scss';
+@import './wallet-connector.scss';
 /* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child{
     fill: #fff;
 } */
-
 body {
 	font-family: $fontfamily !important;
 }
@@ -29,6 +28,11 @@ ul {
 }
 .cd_all_pages_content {
 	position: relative;
+	.cd_wrapper_logo {
+		margin-top: auto;
+		margin-bottom: auto;
+		text-align: center;
+	}
 	.cd_all_pages_inner_content {
 		padding: 26px 20px 20px 270px;
 		min-height: 100vh;
@@ -521,13 +525,10 @@ table {
 	margin-bottom: 26px;
 	display: flex;
 	align-items: center;
-	.cd_public_key_view {
-		margin-left: auto;
-	}
 	.cd_all_page_notify_logout_btn {
 		display: flex;
 		align-items: center;
-		margin-left: 20px;
+		margin-left: auto;
 		min-width: 130px;
 		.cd_public_key {
 			position: relative;
@@ -908,10 +909,6 @@ table {
 		max-width: 100%;
 		overflow-x: scroll;
 		padding-bottom: 15px;
-	}
-	.no_token_message {
-		padding-left: 10px;
-		color: $color27;
 	}
 	.cd_currency_column_sub_row {
 		display: flex;
@@ -1656,7 +1653,7 @@ table {
 .cd_send_receive_content {
 	.cd_send_receive_inner_content {
 		.cd_send_receive_heading.cd_receive_heading {
-			img {
+			svg {
 				transform: rotate(180deg);
 			}
 		}
@@ -1672,7 +1669,7 @@ table {
 			display: flex;
 			align-items: center;
 			margin-bottom: 27px;
-			img {
+			svg {
 				margin-right: 11px;
 			}
 			.cd_send_receive_token_symbol {
@@ -2452,12 +2449,6 @@ table {
 		}
 	}
 }
-
-.cd_btn_copy,
-.cd_btn_explorer {
-	padding-left: 5px;
-}
-
 @media (max-width: 1300px) {
 	.cd_send_receive_content {
 		.cd_send_receive_inner_content {
@@ -2656,10 +2647,6 @@ table {
 	.cd_all_page_heading_section {
 		display: block;
 		margin-bottom: 20px;
-		.cd_public_key_view {
-			margin-top: 20px;
-			margin-left: -55px;
-		}
 		.cd_all_page_notify_logout_btn {
 			.cd_all_page_logout_btn {
 				margin-left: auto;
@@ -2756,36 +2743,6 @@ table {
 	.cd_welcome_slide_section {
 		.cd_welcome_slide_content.container {
 			padding: 0;
-		}
-	}
-	.cd_account_info_table {
-		width: auto !important;
-		margin-bottom: 0 !important;
-		tr {
-			td {
-				font-size: 12px;
-				line-height: 10px;
-				color: $color3;
-				max-width: 150px !important;
-				min-width: 150px !important;
-				span {
-					display: block;
-					text-overflow: ellipsis;
-					overflow: hidden;
-				}
-			}
-			td.cd_account_table_action {
-				max-width: 65px !important;
-				min-width: 65px !important;
-				display: inline-block;
-			}
-		}
-		.cd_account_info_table_action {
-			padding-left: 10px;
-			cursor: pointer;
-			&:hover {
-				color: $color16;
-			}
 		}
 	}
 }

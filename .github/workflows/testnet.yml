@@ -8,7 +8,6 @@ on:
         branches: [feature/account-management]
     pull_request:
         branches: [feature/account-management]
-
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -26,7 +25,6 @@ jobs:
                   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   aws-region: ap-southeast-1
-
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v2
               with:

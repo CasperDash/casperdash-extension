@@ -12,11 +12,13 @@
 		"antd": "^4.4.1",
 		"apexcharts": "^3.26.3",
 		"axios": "^0.19.2",
+		"bip39": "^3.0.4",
 		"bootstrap": "^4.5.0",
 		"bootstrap-icons": "^1.5.0",
 		"browserslist": "^4.13.0",
 		"casper-js-sdk": "^2.5.1",
 		"cookie": "^0.4.1",
+		"crypto-js": "^4.1.1",
 		"dayjs": "^1.8.29",
 		"dotenv": "^10.0.0",
 		"formik": "^2.2.9",
@@ -26,7 +28,7 @@
 		"node-sass": "^4.14.1",
 		"prop-types": "^15.7.2",
 		"qrcode.react": "^1.0.1",
-		"qs": "^6.9.4",
+		"qs": "^6.10.1",
 		"react": "^16.13.1",
 		"react-apexcharts": "^1.3.9",
 		"react-autobind": "^1.0.6",
@@ -36,7 +38,7 @@
 		"react-helmet": "^6.1.0",
 		"react-highlight-words": "^0.16.0",
 		"react-redux": "^7.2.0",
-		"react-router-dom": "^5.2.0",
+		"react-router-dom": "^5.3.0",
 		"react-script-tag": "^1.1.2",
 		"react-scripts": "3.4.1",
 		"react-snapshot": "^1.3.0",
@@ -61,13 +63,16 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build && react-snapshot",
-		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
+		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io REACT_APP_AVAILABLE_FEATURES=['home','dashboard','history']  react-scripts build && react-snapshot",
 		"test": "react-scripts test",
 		"publish": "react-scripts build",
-		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build"
+		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io REACT_APP_AVAILABLE_FEATURES=['home','dashboard','history'] react-scripts build"
 	},
 	"eslintConfig": {
-		"extends": "react-app"
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
 	},
 	"browserslist": {
 		"production": [

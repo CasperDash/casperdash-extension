@@ -58,6 +58,25 @@
 .cd_light_theme_active .cd_login_section .cd_login_content .cd_login_input_content::before {
   display: none;
 }
+.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_btn .btn {
+  color: #fff;
+}
+.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_heading_text .cd_create_wallet_heading {
+  color: #252f47;
+  opacity: 1;
+}
+.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_content .cd_create_wallet_input {
+  color: #3d476a;
+}
+.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_content::before {
+  display: none;
+}
+.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list .cd_create_wallet_input_items .form-control {
+  color: #3d476a;
+}
+.cd_light_theme_active .cd_create_wallet_section .cd_create_wallet_content .cd_create_wallet_input_list .cd_create_wallet_input_items .form-control::placeholder {
+  color: #3d476a;
+}
 .cd_light_theme_active .cd_light_theme_logo {
   display: block !important;
 }
@@ -319,6 +338,9 @@
 .cd_light_theme_active .cd_securebackup_btn a {
   color: #fff;
 }
+.cd_light_theme_active .cd_create_wallet_btn button {
+  color: #fff;
+}
 .cd_light_theme_active .cd_SecureBackup_heading h3 {
   color: #828cae;
 }
@@ -431,13 +453,6 @@
 }
 .cd_light_theme_active .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-thumb:hover {
   background: #828cae;
-}
-
-.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .cd_nft_metadata_name {
-  color: #828cae;
-}
-.cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .cd_nft_metadata_value {
-  color: #828cae;
 }
 
 @media (max-width: 991px) {
