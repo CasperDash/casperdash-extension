@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 import {
 	getTransferDeploysStatus,
 	updateTransferDeployStatus,
 	getTransfersFromLocalStorage,
 } from '../../actions/deployActions';
 import { getTransfersDeploy, getPendingTransferDeployHash, getMassagedTransfers } from '../../selectors/deploy';
+import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 /**
  *

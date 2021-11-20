@@ -36,7 +36,7 @@ const getConfigOption = (option) => {
 		return null;
 	}
 
-	if (process.env.hasOwnProperty(item.env)) {
+	if (Object.prototype.hasOwnProperty.call(process.env, item.env)) {
 		return process.env[item.env];
 	}
 
