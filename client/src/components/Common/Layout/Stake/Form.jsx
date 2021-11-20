@@ -72,7 +72,7 @@ const StakingForm = ({
 				value: publicKey,
 				label: publicKey,
 				rate: bid.bid.delegation_rate,
-				icon: <i class="bi bi-person"></i>,
+				icon: <i className="bi bi-person"></i>,
 		  }))
 		: [];
 
