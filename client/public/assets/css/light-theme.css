@@ -5,46 +5,6 @@
 .cd_light_theme_active .cd_dark_theme_slide_img {
   display: none;
 }
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .round_shap_img_one {
-  display: none;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .round_shap_img_two {
-  display: none;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items {
-  background: #3b445a;
-  opacity: 0.3;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:first-child[title="1"] {
-  background: #3b445a;
-  opacity: 1;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="2"] {
-  background: #3b445a;
-  opacity: 1;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(3)[title="3"] {
-  background: #3b445a;
-  opacity: 1;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="1"] {
-  background: #3b445a;
-  opacity: 0.6;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(3)[title="2"] {
-  background: #3b445a;
-  opacity: 0.6;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="3"] {
-  background: #3b445a;
-  opacity: 0.6;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_heading {
-  color: #252f47;
-}
-.cd_light_theme_active .cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_step_btns {
-  color: #fff;
-}
 .cd_light_theme_active .cd_login_section .cd_login_content .cd_login_btn a {
   color: #fff;
 }
@@ -154,10 +114,6 @@
 }
 .cd_light_theme_active .cd_add_token_row .cd_currency_column_sub_row::-webkit-scrollbar-thumb:hover {
   background: #828cae;
-}
-.cd_light_theme_active .cd_portfolio_page .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_price p {
-  color: #3d476a;
-  opacity: 1;
 }
 .cd_light_theme_active .cd_currency_icon svg path[fill="#2E3855"] {
   fill: #fff;
@@ -289,12 +245,6 @@
 .cd_light_theme_active .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph h4 {
   color: #828cae;
 }
-.cd_light_theme_active .cd_account_support_input_list .cd_account_support_input_items .form-control {
-  color: #3d476a;
-}
-.cd_light_theme_active .cd_account_support_input_list .cd_account_support_input_items .form-control::placeholder {
-  color: #3d476a;
-}
 .cd_light_theme_active .cd_dark_theme_qrcode {
   display: none;
 }
@@ -309,9 +259,6 @@
 }
 .cd_light_theme_active .cd_SecureBackup_heading h3 {
   color: #828cae;
-}
-.cd_light_theme_active .cd_currency_page .cd_add_token_row .cd_add_token_column.active .cd_add_token_inner_content {
-  background: #eceef3;
 }
 
 .cd_light_theme_active .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-track {

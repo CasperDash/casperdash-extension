@@ -1,13 +1,6 @@
 @import './theme-config.scss';
 @import './nft.scss';
 
-/* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
-.cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
-.cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
-.cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child{
-    fill: #fff;
-} */
-
 body {
 	font-family: $fontfamily !important;
 }
@@ -94,113 +87,7 @@ table {
 		border: 0 !important;
 	}
 }
-.cd_welcome_slide_section {
-	.cd_welcome_slide_content.container {
-		max-width: 600px;
-		display: flex;
-		flex-direction: column;
-		position: relative;
-	}
-	padding: 102px 0;
-	.cd_welcome_slide_content {
-		.cd_welcome_slide_img {
-			img {
-				filter: drop-shadow(0px 50px 50px rgba(0, 0, 0, 0.1));
-				order: 1;
-			}
-		}
-		.cd_welcome_slide_indicator {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 41px 0 31px !important;
-			order: 2;
-			.cd_welcome_slide_indicator_items {
-				width: 6px;
-				height: 6px;
-				background: $color22;
-				border-radius: 10px;
-				margin-right: 5px;
-				&:first-child[title='1'] {
-					background: $color23;
-				}
-				&:nth-child(2)[title='2'] {
-					background: $color23;
-				}
-				&:nth-child(3)[title='3'] {
-					background: $color23;
-				}
-				&:nth-child(2)[title='1'] {
-					background: $color24;
-				}
-				&:nth-child(3)[title='2'] {
-					background: $color24;
-				}
-				&:nth-child(2)[title='3'] {
-					background: $color24;
-				}
-			}
-		}
-		.cd_welcome_slide_heading {
-			font-weight: 600;
-			font-size: 30px;
-			line-height: 37px;
-			color: $color2;
-			text-align: center;
-			margin-bottom: 10px;
-			order: 3;
-		}
-		.cd_welcome_slide_peregraph {
-			font-size: 13px;
-			line-height: 16px;
-			color: $color3;
-			margin-bottom: 47px;
-			text-align: center;
-			order: 4;
-		}
-		.cd_welcome_slide_step_btns {
-			margin: 0 auto;
-			background: $color3;
-			border-radius: 10px;
-			display: block;
-			max-width: 180px;
-			width: 100%;
-			border: 0;
-			padding: 18px 10px;
-			font-weight: 600;
-			font-size: 20px;
-			line-height: 24px;
-			color: $color4;
-			text-align: center;
-			text-decoration: none;
-			outline: 0;
-			order: 5;
-		}
-		.round_shap_img_one {
-			position: absolute;
-			top: 330px;
-			right: -75px;
-			z-index: 0;
-			width: 150px;
-		}
-		.round_shap_img_two {
-			position: absolute;
-			top: -78px;
-			left: -154px;
-			width: 309px;
-			z-index: 0;
-		}
-		.cd_welcome_slide_already_wallet {
-			font-weight: 600;
-			font-size: 13px;
-			line-height: 16px;
-			color: $color3;
-			margin-top: 21px;
-			text-align: center;
-			order: 6;
-		}
-	}
-}
+
 .round_shap_light_img_two,
 .round_shap_light_img_one,
 .cd_light_theme_slide_img {
@@ -615,25 +502,7 @@ table {
 	background-color: $color7 !important;
 	border-color: $color7 !important;
 }
-.cd_currency_icon {
-	width: 30px;
-	height: 30px;
-	border-radius: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-right: auto;
-	svg {
-		width: auto !important;
-		height: 25px;
-		filter: none !important;
-	}
-	img {
-		width: 25px !important;
-		height: 25px;
-		filter: none !important;
-	}
-}
+
 .cd_chart_box_heading_date {
 	display: flex;
 	align-items: center;
@@ -849,35 +718,6 @@ table {
 			}
 		}
 	}
-	.cd_add_token_inner_content.cd_add_bitcoin_currency {
-		&:hover {
-			background: $gradian-color6;
-			.cd_add_token_icon_chart {
-				.cd_currency_icon {
-					svg {
-						path {
-							fill: $color30;
-						}
-					}
-				}
-			}
-		}
-	}
-	.cd_add_token_inner_content.cd_add_bitcoin_currency.active {
-		background: $gradian-color6;
-		&::before {
-			background: $gradian-color7;
-		}
-		.cd_add_token_icon_chart {
-			.cd_currency_icon {
-				svg {
-					path {
-						fill: $color30;
-					}
-				}
-			}
-		}
-	}
 	.cd_add_token_inner_content {
 		&::before {
 			content: '';
@@ -948,41 +788,6 @@ table {
 				svg {
 					path {
 						fill: $color31;
-					}
-				}
-			}
-		}
-	}
-	.cd_add_token_inner_content.cd_add_ethereum_currency {
-		&:hover {
-			background: $gradian-color12;
-			.cd_add_token_icon_chart {
-				.cd_currency_icon {
-					svg {
-						.left-shap {
-							fill: $color10;
-						}
-						.right-shap {
-							fill: $color32;
-						}
-					}
-				}
-			}
-		}
-	}
-	.cd_add_token_inner_content.cd_add_ethereum_currency.active {
-		background: $gradian-color10;
-		&::before {
-			background: $gradian-color11;
-		}
-		.cd_add_token_icon_chart {
-			.cd_currency_icon {
-				svg {
-					.left-shap {
-						fill: $color10;
-					}
-					.right-shap {
-						fill: $color32;
 					}
 				}
 			}
@@ -1025,90 +830,7 @@ table {
 		margin-top: 27px;
 	}
 }
-.cd_add_token_page {
-	.cd_all_page_comman_content {
-		padding: 4px 21px 21px;
-		border-radius: 10px;
-	}
-	.cd_add_token_row {
-		margin: 0 -10px;
-		.cd_add_token_column {
-			margin-top: 20px;
-			padding: 0 10px;
-		}
-		.cd_add_token_inner_content {
-			display: flex;
-			align-items: center;
-		}
-	}
-}
-.cd_add_token_search {
-	position: relative;
-	padding-left: 34px;
-	border-bottom: 1px solid $color26;
-	.cd_add_token_search_icon {
-		background: transparent;
-		border: 0;
-		border-radius: 0;
-		padding: 0;
-		width: 28px;
-		height: 28px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: absolute;
-		left: 0;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-	.form-control {
-		padding: 18px 12px;
-		font-size: 17px;
-		line-height: 21px;
-		color: $color3;
-		background: transparent;
-		border: 0;
-		outline: 0;
-		height: auto;
-		&::placeholder {
-			opacity: 0.3;
-		}
-		&:focus {
-			outline: 0;
-			background: transparent;
-			box-shadow: none;
-			color: $color3;
-		}
-	}
-}
-.cd_custom_currency_checkbox.custom-switch {
-	.custom-control-label {
-		&::before {
-			width: 23px;
-			height: 14px;
-			border: 0;
-		}
-		&::after {
-			width: 12px;
-			height: 12px;
-			border: 0;
-			left: -23px;
-			top: 5px;
-			background: $color7;
-		}
-	}
-	.custom-control-input {
-		&:checked ~ .custom-control-label {
-			&::after {
-				left: -14px;
-				transform: translateX(0);
-			}
-			&::before {
-				background: $color7;
-			}
-		}
-	}
-}
+
 .cd_add_token_text {
 	margin-right: auto;
 	padding-left: 15px;
@@ -1126,17 +848,7 @@ table {
 		margin-bottom: 0;
 	}
 }
-.cd_protfolio_mini_chart {
-	svg {
-		filter: drop-shadow(0px 10px 4px rgba(12, 10, 32, 0.54362));
-		g {
-			&:last-child {
-				display: none;
-			}
-		}
-	}
-	margin-top: 9px;
-}
+
 .cd_add_token_content {
 	+ .cd_all_page_comman_content {
 		margin-top: 27px;
@@ -1154,47 +866,8 @@ table {
 		font-family: $fontfamily !important;
 	}
 }
-.cd_protfolio_main_chart {
-	.cd_chart_box_heading_date {
-		margin-bottom: 0;
-		position: relative;
-		z-index: 9999;
-	}
-	.cd_chart_date_picker {
-		margin-bottom: -30px;
-		margin-left: auto;
-	}
-}
+
 .cd_history_page {
-	.cd_add_token_inner_content.cd_add_bitcoin_currency {
-		&:hover {
-			background: $gradian-color6;
-			.cd_add_token_icon_chart {
-				.cd_currency_icon {
-					svg {
-						path {
-							fill: $color30;
-						}
-					}
-				}
-			}
-		}
-	}
-	.cd_add_token_inner_content.cd_add_bitcoin_currency.active {
-		background: $gradian-color6;
-		&::before {
-			background: $gradian-color7;
-		}
-		.cd_add_token_icon_chart {
-			.cd_currency_icon {
-				svg {
-					path {
-						fill: $color30;
-					}
-				}
-			}
-		}
-	}
 	.cd_add_token_inner_content {
 		&::before {
 			content: '';
@@ -1265,41 +938,6 @@ table {
 				svg {
 					path {
 						fill: $color31;
-					}
-				}
-			}
-		}
-	}
-	.cd_add_token_inner_content.cd_add_ethereum_currency {
-		&:hover {
-			background: $gradian-color10;
-			.cd_add_token_icon_chart {
-				.cd_currency_icon {
-					svg {
-						.left-shap {
-							fill: $color10;
-						}
-						.right-shap {
-							fill: $color32;
-						}
-					}
-				}
-			}
-		}
-	}
-	.cd_add_token_inner_content.cd_add_ethereum_currency.active {
-		background: $gradian-color10;
-		&::before {
-			background: $gradian-color11;
-		}
-		.cd_add_token_icon_chart {
-			.cd_currency_icon {
-				svg {
-					.left-shap {
-						fill: $color10;
-					}
-					.right-shap {
-						fill: $color32;
 					}
 				}
 			}
@@ -1917,21 +1555,7 @@ table {
 		align-items: center;
 	}
 }
-.cd_portfolio_page {
-	.cd_add_token_inner_content {
-		.cd_add_token_mini_chart {
-			svg {
-				margin-top: 10px;
-				filter: drop-shadow(0px 10px 5px rgba(12, 10, 32, 0.15));
-				g {
-					&:last-child {
-						display: none;
-					}
-				}
-			}
-		}
-	}
-}
+
 .cd_restore_wallet_input_content {
 	padding: 22px 22px 54px;
 	border: 1px solid $color26;
@@ -1951,95 +1575,6 @@ table {
 		}
 		&:nth-last-child(1) {
 			margin-bottom: 0;
-		}
-	}
-}
-.cd_currency_page {
-	.cd_add_token_row {
-		.cd_add_token_column {
-			&:nth-last-child(4) {
-				margin-bottom: 0;
-			}
-			&:nth-last-child(3) {
-				margin-bottom: 0;
-			}
-			&:nth-last-child(2) {
-				margin-bottom: 0;
-			}
-			&:nth-last-child(1) {
-				margin-bottom: 0;
-			}
-			.cd_add_token_inner_content {
-				padding: 21px;
-				display: flex;
-				align-items: center;
-				position: relative;
-				height: 100%;
-				.cd_add_token_img {
-					img {
-						filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
-					}
-				}
-			}
-			max-width: 25%;
-			padding: 0 10px;
-			margin-bottom: 20px;
-		}
-		.cd_add_token_column.active {
-			.cd_add_token_inner_content {
-				background: $color21;
-				&::before {
-					content: '';
-					position: absolute;
-					background: $gradian-color13;
-					opacity: 0.8;
-					box-shadow: 0px 0px 5px $color34;
-					width: 6px;
-					height: 6px;
-					right: 11px;
-					top: 11px;
-					border-radius: 10px;
-				}
-			}
-		}
-	}
-	.cd_all_page_comman_content {
-		border-radius: 10px;
-		padding: 4px 21px 21px;
-	}
-	.cd_add_token_row.row {
-		margin: 0 -10px;
-		margin-top: 21px;
-	}
-}
-.cd_account_support_input_list {
-	margin-top: 21px;
-	.cd_account_support_input_items {
-		padding: 15px 19px 21px;
-		border: 1px solid $color26;
-		border-radius: 10px;
-		.form-label {
-			font-weight: bold;
-			font-size: 12px;
-			line-height: 15px;
-			color: $color3;
-			margin-bottom: 13px;
-		}
-		.form-control {
-			font-size: 17px;
-			line-height: 21px;
-			color: $color5;
-			opacity: 0.7;
-			background: transparent;
-			border: 0;
-			outline: 0;
-			box-shadow: none;
-			padding: 0;
-			height: auto;
-			&::placeholder {
-				color: $color5;
-				opacity: 0.7;
-			}
 		}
 	}
 }
@@ -2294,13 +1829,7 @@ table {
 			}
 		}
 	}
-	.cd_add_token_page {
-		.cd_add_token_row {
-			.cd_add_token_column {
-				margin-bottom: 0;
-			}
-		}
-	}
+
 	.cd_send_qr_address {
 		padding: 18px;
 	}
@@ -2440,11 +1969,7 @@ table {
 	.cd_all_page_comman_content {
 		padding: 25px 20px;
 	}
-	.cd_protfolio_main_chart {
-		.cd_chart_date_picker {
-			margin-bottom: 0;
-		}
-	}
+
 	.cd_wallet_chart_bottom_content {
 		display: block;
 		.cd_wallet_chart_send_receive_btn {
@@ -2457,15 +1982,6 @@ table {
 		.cd_add_token_row {
 			.cd_add_token_column {
 				margin-bottom: 0;
-			}
-		}
-	}
-	.cd_add_token_page {
-		.cd_add_token_row {
-			.cd_add_token_column {
-				&:nth-last-child(2) {
-					margin-bottom: 0;
-				}
 			}
 		}
 	}

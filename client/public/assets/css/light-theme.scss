@@ -5,52 +5,6 @@
 	.cd_dark_theme_slide_img {
 		display: none;
 	}
-	.cd_welcome_slide_section {
-		.cd_welcome_slide_content {
-			.round_shap_img_one {
-				display: none;
-			}
-			.round_shap_img_two {
-				display: none;
-			}
-			.cd_welcome_slide_indicator {
-				.cd_welcome_slide_indicator_items {
-					background: $color35;
-					opacity: 0.3;
-					&:first-child[title='1'] {
-						background: $color35;
-						opacity: 1;
-					}
-					&:nth-child(2)[title='2'] {
-						background: $color35;
-						opacity: 1;
-					}
-					&:nth-child(3)[title='3'] {
-						background: $color35;
-						opacity: 1;
-					}
-					&:nth-child(2)[title='1'] {
-						background: $color35;
-						opacity: 0.6;
-					}
-					&:nth-child(3)[title='2'] {
-						background: $color35;
-						opacity: 0.6;
-					}
-					&:nth-child(2)[title='3'] {
-						background: $color35;
-						opacity: 0.6;
-					}
-				}
-			}
-			.cd_welcome_slide_heading {
-				color: $color4;
-			}
-			.cd_welcome_slide_step_btns {
-				color: $color13;
-			}
-		}
-	}
 	.cd_login_section {
 		.cd_login_content {
 			.cd_login_btn {
@@ -229,20 +183,7 @@
 			}
 		}
 	}
-	.cd_portfolio_page {
-		.cd_add_token_row {
-			.cd_add_token_column {
-				.cd_add_token_inner_content {
-					.cd_add_token_price {
-						p {
-							color: $color12;
-							opacity: 1;
-						}
-					}
-				}
-			}
-		}
-	}
+
 	.cd_currency_icon {
 		svg {
 			path[fill='#2E3855'] {
@@ -465,16 +406,7 @@
 			}
 		}
 	}
-	.cd_account_support_input_list {
-		.cd_account_support_input_items {
-			.form-control {
-				color: $color12;
-				&::placeholder {
-					color: $color12;
-				}
-			}
-		}
-	}
+
 	.cd_dark_theme_qrcode {
 		display: none;
 	}
@@ -492,15 +424,6 @@
 	.cd_SecureBackup_heading {
 		h3 {
 			color: $color3;
-		}
-	}
-	.cd_currency_page {
-		.cd_add_token_row {
-			.cd_add_token_column.active {
-				.cd_add_token_inner_content {
-					background: $color36;
-				}
-			}
 		}
 	}
 }
