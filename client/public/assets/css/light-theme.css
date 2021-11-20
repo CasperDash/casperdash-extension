@@ -123,18 +123,6 @@
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle {
   box-shadow: 0px 5px 34px rgba(186, 19, 88, 0.42);
 }
-.cd_light_theme_active .react-datepicker__navigation-icon::before {
-  border-color: #252f47;
-}
-.cd_light_theme_active .react-datepicker__year-read-view--down-arrow {
-  border-color: #252f47;
-}
-.cd_light_theme_active .react-datepicker__month-read-view--down-arrow {
-  border-color: #252f47;
-}
-.cd_light_theme_active .react-datepicker__month-year-read-view--down-arrow {
-  border-color: #252f47;
-}
 .cd_light_theme_active .cd_all_page_comman_content {
   border-color: #eff0f2;
 }
@@ -324,103 +312,6 @@
 }
 .cd_light_theme_active .cd_currency_page .cd_add_token_row .cd_add_token_column.active .cd_add_token_inner_content {
   background: #eceef3;
-}
-
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__input-container input {
-  color: #3d476a;
-  border-color: #eff0f2;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__input-container::before {
-  background-image: url(../image/calender-dark-icon.svg);
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker {
-  background: linear-gradient(210.96deg, #ffffff 0.01%, #ffffff 42.05%, #ffffff 104.81%);
-  box-shadow: -10px 48.6px 140px rgba(23, 18, 43, 0.2);
-  backdrop-filter: blur(19px);
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {
-  border-bottom-color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {
-  border-bottom-color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__day-name {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__day {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__day:hover {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__time-name {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__month-text:hover {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__quarter-text:hover {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__year-text:hover {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__current-month {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker-time__header {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker-year-header {
-  color: #252f47;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__day--keyboard-selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__month-text--keyboard-selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__quarter-text--keyboard-selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__year-text--keyboard-selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__day--selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__day--in-selecting-range {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__day--in-range {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__month-text--selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__month-text--in-selecting-range {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__month-text--in-range {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__quarter-text--selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__quarter-text--in-selecting-range {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__quarter-text--in-range {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__year-text--selected {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__year-text--in-selecting-range {
-  color: #fff;
-}
-.cd_light_theme_active.cd_all_pages_content .react-datepicker__year-text--in-range {
-  color: #fff;
 }
 
 .cd_light_theme_active .cd_history_page .cd_add_token_row.nav::-webkit-scrollbar-track {
