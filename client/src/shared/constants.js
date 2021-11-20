@@ -26,6 +26,6 @@ export const routes = features
 	  }, {})
 	: defaultRoutes;
 
-export const contractHashs = {
+export const contractHashes = {
 	auction: Uint8Array.from(Buffer.from(APP_CONFIGS.AUCTION_HASH, 'hex')),
 };

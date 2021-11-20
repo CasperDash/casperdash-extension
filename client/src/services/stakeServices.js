@@ -2,13 +2,13 @@ import { signDeploy } from './casperServices';
 
 const { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } = require('casper-js-sdk');
 const { NETWORK_NAME, MOTE_RATE, ENTRY_POINT_DELEGATE } = require('../constants/key');
-const { contractHashs } = require('../shared/constants');
+const { contractHashes } = require('../shared/constants');
 
 const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
 	const runTimeArgs = RuntimeArgs.fromMap(args);
 	const session = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
-		contractHashs.auction,
+		contractHashes.auction,
 		entryPoint,
 		runTimeArgs,
 	);
