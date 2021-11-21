@@ -13,7 +13,7 @@ export const NFTModal = ({ show, handleClose, metadata = [] }) => {
 			<Modal.Body className="cd_nft_modal_body">
 				<div className="cd_nft_modal_row">
 					<div className="cd_nft_image">
-						<img src={image ? image.value : 'assets/image/nft6.jpeg'} />
+						<img src={image ? image.value : 'assets/image/nft-empty.png'} alt="nft-detail-image" />
 					</div>
 					<div className="cd_nft_modal_metadata">
 						{metadata &&
