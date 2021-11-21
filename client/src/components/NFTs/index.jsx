@@ -14,7 +14,6 @@ const NFTs = () => {
 	const publicKey = useSelector(getPublicKey);
 	const NFTAddressList = useSelector(getNFTAddressList);
 	const NFTInfo = useSelector(getNFTInfo);
-
 	// State
 	const [showModal, setShowModal] = useState(false);
 	const [selectedMetadata, setSelectedMetadata] = useState(false);
@@ -27,6 +26,7 @@ const NFTs = () => {
 	// Functions
 	const onCloseModal = () => {
 		setShowModal(false);
+		setSelectedMetadata([]);
 	};
 
 	const onOpenModal = (metadata) => {
@@ -40,7 +40,7 @@ const NFTs = () => {
 				<HeadingModule name={'NFTs'} />
 
 				<div className="cd_nft_row row">
-					{NFTInfo.length ? (
+					{NFTInfo && NFTInfo.length ? (
 						NFTInfo.map(({ tokenId, metadata = [] }) => {
 							const image = metadata.find((meta) => meta.key === 'image');
 							const tokenName = metadata.find((meta) => meta.key === 'name');
@@ -52,7 +52,10 @@ const NFTs = () => {
 								>
 									<div className="cd_nft_content position-relative">
 										<div className="cd_nft_image">
-											<img src={image ? image.value : 'assets/image/nft-empty.png'} />
+											<img
+												src={image ? image.value : 'assets/image/nft-empty.png'}
+												alt="nft-image"
+											/>
 										</div>
 										<div className="cd_nft_content_text">{tokenName ? tokenName.value : 'NFT'}</div>
 									</div>
@@ -61,7 +64,7 @@ const NFTs = () => {
 						})
 					) : (
 						<div className="cd_nft_empty">
-							<img src="assets/image/nft-empty.png" alt="nft-image" />
+							<img src="assets/image/nft-empty.png" alt="no-nft-image" />
 							<div className="cd_no_nft_message">You do not have any NFT collectables yet.</div>
 						</div>
 					)}

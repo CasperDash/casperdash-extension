@@ -1,7 +1,7 @@
 {
 	"name": "frontend",
 	"version": "1.0.2",
-	"private": true,
+	"private": "false",
 	"dependencies": {
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
@@ -45,9 +45,6 @@
 		"test": "react-scripts test",
 		"publish": "react-scripts build",
 		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
 	},
 	"browserslist": {
 		"production": [
