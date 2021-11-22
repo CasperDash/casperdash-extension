@@ -47,6 +47,7 @@ const SelectField = ({ options, field, form }) => (
 
 const StakingForm = ({
 	fromAddress,
+	defaultValidator,
 	validators,
 	tokenSymbol,
 	balance,
@@ -127,7 +128,8 @@ const StakingForm = ({
 					<div>
 						<h3 className="cd_transaction_list_main_heading">How much would you like to stake?</h3>
 						<Formik
-							initialValues={{ amount: 1 }}
+							enableReinitialize
+							initialValues={{ amount: 1, validator: defaultValidator }}
 							validate={(values) =>
 								validateStakeForm({
 									...values,
