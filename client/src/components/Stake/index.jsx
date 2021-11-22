@@ -95,9 +95,11 @@ const Stake = () => {
 				<HeadingModule name={'Staking'} />
 				<div className={`cd_staking_component ${toggleStakingForm}`}>
 					{pendingStakes && pendingStakes.length === 0 && (
-						<Button variant="outline-danger" className="cd_btn_stake_cspr" onClick={handleToggle}>
-							Stake Your CSPR
-						</Button>
+						<div className="cd_send_currency_btn_text cd_btn_stake_cspr">
+							<Button className=" cd_send_currency_btn" onClick={handleToggle}>
+								Stake CSPR
+							</Button>
+						</div>
 					)}
 					<div className="cd_staking_form">
 						<StakingForm
