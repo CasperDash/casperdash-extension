@@ -22,41 +22,46 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 	const total = stakingDeployList
 		.filter((stake) => !!stake.successAmount)
 		.map((stake) => stake.successAmount)
-		.reduce((prev, next) => prev + next);
+		.reduce((prev, next) => prev + next, 0);
 
 	return (
-		<Table className="cd_transaction_list_table cd_stake_table">
-			<thead>
-				<tr>
-					<th className="cd_transaction_list_table_heading">Validator</th>
-					<th className="cd_transaction_list_table_heading">Staked Amount</th>
-					<th className="cd_transaction_list_table_heading">Pending Amount</th>
-				</tr>
-			</thead>
-			<tbody>
-				{stakingDeployList.map((staking) => (
-					<tr key={staking.validator}>
-						<td className="cd_transaction_list_validator">{staking.validator}</td>
-						<td className="cd_transaction_list_amount">
-							{displayNaN(toFormattedNumber(staking.successAmount))}
+		<div className="overflow-auto">
+			<Table className="cd_transaction_list_table cd_stake_table">
+				<thead>
+					<tr>
+						<th className="cd_transaction_list_table_heading">No</th>
+						<th className="cd_transaction_list_table_heading">Validator</th>
+						<th className="cd_transaction_list_table_heading">Pending Amount</th>
+						<th className="cd_transaction_list_table_heading">Staked Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					{stakingDeployList.map((staking, i) => (
+						<tr key={staking.validator}>
+							<td className="cd_transaction_list_no">{i + 1}</td>
+							<td className="cd_transaction_list_validator">{staking.validator}</td>
+							<td className="cd_transaction_list_amount">
+								{displayNaN(toFormattedNumber(staking.pendingAmount))}
+							</td>
+							<td className="cd_transaction_list_amount">
+								{displayNaN(toFormattedNumber(staking.successAmount))}
+							</td>
+						</tr>
+					))}
+					<tr>
+						<td colSpan="1">
+							<b>Total</b>
 						</td>
-						<td className="cd_transaction_list_amount">
-							{displayNaN(toFormattedNumber(staking.pendingAmount))}
+						<td colSpan="2" />
+						<td colSpan="1">
+							<span>
+								<b>{toFormattedNumber(total)}</b>
+							</span>
 						</td>
 					</tr>
-				))}
-				<tr>
-					<td>
-						<b>Total</b>
-					</td>
-					<td colSpan="2">
-						<span>
-							<b>{toFormattedNumber(total)}</b>
-						</span>
-					</td>
-				</tr>
-			</tbody>
-		</Table>
+				</tbody>
+			</Table>
+		</div>
 	);
 };
 
