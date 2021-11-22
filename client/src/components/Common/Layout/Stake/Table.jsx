@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
+import CommonAction from '../../Button/CommonAction';
 
 const EmptyDelegation = () => (
 	<div className="cd_empty_delegation_row row">
@@ -39,7 +40,9 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 					{stakingDeployList.map((staking, i) => (
 						<tr key={staking.validator}>
 							<td className="cd_transaction_list_no">{i + 1}</td>
-							<td className="cd_transaction_list_validator">{staking.validator}</td>
+							<td className="cd_transaction_list_validator">
+								{staking.validator} <CommonAction type="account" value={staking.validator} />
+							</td>
 							<td className="cd_transaction_list_amount">
 								{displayNaN(toFormattedNumber(staking.pendingAmount))}
 							</td>
