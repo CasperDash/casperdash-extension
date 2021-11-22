@@ -74,11 +74,11 @@ export const ConfirmationModal = ({
 			<Modal.Footer className="cd_confirm_modal_footer">
 				<span className="cd_confirm_modal_error">{error}</span>
 				{deployHash ? (
-					<Button variant="secondary" onClick={onClose}>
+					<Button className="cd_btn_primary_active" onClick={onClose}>
 						Close
 					</Button>
 				) : (
-					<Button variant="danger" onClick={onConfirm}>
+					<Button className="cd_btn_primary_active" onClick={onConfirm}>
 						{isDeploying ? 'Confirming...' : 'Confirm and delegate stake'}
 					</Button>
 				)}
