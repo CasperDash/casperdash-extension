@@ -2,8 +2,6 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { toFormattedNumber, toFormattedCurrency } from '../../../../helpers/format';
 
-import './Modal.scss';
-
 const ModalRow = ({ label, value, customClass }) => (
 	<div className={`cd_confirm_modal_row ${customClass}`}>
 		<span className="cd_confirm_modal_label">{label}</span>

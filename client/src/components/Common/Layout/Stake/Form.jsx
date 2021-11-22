@@ -18,8 +18,6 @@ import { validateStakeForm } from '../../../../helpers/validator';
 import { CSPR_AUCTION_FEE } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 
-import './Form.scss';
-
 /**
  * Wrap releact-select to work with Formik.
  *

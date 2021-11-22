@@ -4,8 +4,6 @@ import { Table } from 'react-bootstrap';
 
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 
-import './Table.scss';
-
 const EmptyDelegation = () => (
 	<div className="cd_empty_delegation_row row">
 		<div className="cd_empty_delegation_section position-relative">

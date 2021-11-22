@@ -16,7 +16,6 @@ import { fetchValidators } from '../../actions/stakeActions';
 import { getPendingStakes } from '../../selectors/stake';
 import { useStakeWithStatus } from '../hooks/useStakeDeploys';
 
-import './style.scss';
 const UnlockSingerWarning = ({ title, message }) => (
 	<section className="cd_staking_page">
 		<HeadingModule name={title} />

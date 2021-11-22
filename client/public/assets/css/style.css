@@ -104,6 +104,47 @@
     height: 250px;
   }
 }
+.cd_setting_list_items .cd_setting_items_form {
+  width: 100%;
+}
+
+.cd-staking-form .cd-form-text-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cd_confirm_modal_row.total .cd_confirm_modal_label {
+  font-size: large;
+  font-weight: bold;
+}
+
+.cd_stake_table tr td {
+  text-align: left;
+}
+
+.cd_stake_table .cd_transaction_list_table_heading {
+  text-align: left;
+}
+.cd_stake_table .cd_transaction_list_status {
+  justify-content: left;
+}
+
+.cd_empty_delegation_row .cd_empty_delegation_section {
+  margin: auto;
+  text-align: center;
+}
+
+.cd_staking_component.toggle_form .cd_btn_stake_cspr {
+  display: none;
+}
+.cd_staking_component.toggle_form .cd_staking_form {
+  display: block;
+}
+
+.cd_staking_component .cd_staking_form {
+  display: none;
+}
+
 /* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,

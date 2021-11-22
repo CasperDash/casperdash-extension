@@ -65,7 +65,8 @@
 		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
 		"test": "react-scripts test",
 		"publish": "react-scripts build",
-		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build"
+		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build",
+		"build-style": "sass public/assets/css/style.scss public/assets/css/style.css"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
