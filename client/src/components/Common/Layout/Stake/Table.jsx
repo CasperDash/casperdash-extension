@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Table } from 'react-bootstrap';
+import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 import CommonAction from '../../Button/CommonAction';
@@ -16,7 +16,21 @@ const EmptyDelegation = () => (
 	</div>
 );
 
-const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
+const TableActions = ({ validator, delegateFunc, unDelegateFunc }) => {
+	return (
+		<>
+			<OverlayTrigger placement="top" overlay={<Tooltip>Delegate</Tooltip>}>
+				<i className="bi bi-plus-square" onClick={() => delegateFunc(validator)} />
+			</OverlayTrigger>
+
+			<OverlayTrigger placement="top" overlay={<Tooltip>Undelegate</Tooltip>}>
+				<i className="bi bi-x-square" onClick={() => unDelegateFunc(validator)} />
+			</OverlayTrigger>
+		</>
+	);
+};
+
+const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unDelegateFunc }) => {
 	if (!stakingDeployList.length) {
 		return <EmptyDelegation />;
 	}
@@ -34,6 +48,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 						<th className="cd_transaction_list_table_heading">Validator</th>
 						<th className="cd_transaction_list_table_heading">Pending Amount</th>
 						<th className="cd_transaction_list_table_heading">Staked Amount</th>
+						<th className="cd_transaction_list_table_heading">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -48,6 +63,13 @@ const StakingAccountListComponent = ({ stakingDeployList = [] }) => {
 							</td>
 							<td className="cd_transaction_list_amount">
 								{displayNaN(toFormattedNumber(staking.successAmount))}
+							</td>
+							<td className="cd_stake_table_actions">
+								<TableActions
+									validator={staking.validator}
+									delegateFunc={delegateFunc}
+									unDelegateFunc={delegateFunc}
+								/>
 							</td>
 						</tr>
 					))}
