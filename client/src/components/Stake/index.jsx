@@ -112,10 +112,7 @@ const Stake = () => {
 						/>
 					</div>
 					{stakingDeployList && stakingDeployList.length > 0 && (
-						<h3 className="cd_transaction_list_main_heading">
-							Your Delegations
-							<Link to={'/history'}>View Staking History</Link>
-						</h3>
+						<h3 className="cd_transaction_list_main_heading">Your Delegations</h3>
 					)}
 					<StakingAccountList stakingDeployList={stakingDeployList} />
 				</div>
