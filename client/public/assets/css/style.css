@@ -121,6 +121,11 @@
 .cd_stake_table {
   min-width: auto !important;
 }
+.cd_stake_table .cd_transaction_list_validator,
+.cd_stake_table .cd_stake_table_actions i {
+  cursor: pointer;
+  padding-left: 5px;
+}
 
 .cd_empty_delegation_row .cd_empty_delegation_section {
   margin: auto;
