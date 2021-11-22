@@ -55,6 +55,7 @@ const Stake = () => {
 	// State
 	const [send, setSend] = useState(false);
 	const [showError, setShowError] = useState(false);
+	const [defaultValidator, setDefaultValidator] = useState(null);
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
@@ -75,6 +76,15 @@ const Stake = () => {
 		} else {
 			setShowError(true);
 		}
+	};
+
+	const delegate = (validator) => {
+		setDefaultValidator(validator);
+		if (!send) {
+			setSend(true);
+		}
+		handleToggle();
+		console.log('Val', validator);
 	};
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
@@ -103,6 +113,7 @@ const Stake = () => {
 					)}
 					<div className="cd_staking_form">
 						<StakingForm
+							defaultValidator={defaultValidator}
 							validators={validators}
 							handleToggle={handleToggle}
 							fromAddress={publicKey}
@@ -114,7 +125,10 @@ const Stake = () => {
 					{stakingDeployList && stakingDeployList.length > 0 && (
 						<h3 className="cd_transaction_list_main_heading">Your Delegations</h3>
 					)}
-					<StakingAccountList stakingDeployList={stakingDeployList} />
+					<StakingAccountList
+						stakingDeployList={stakingDeployList}
+						delegateFunc={(validator) => delegate(validator)}
+					/>
 				</div>
 				<MessageModal
 					type="Error"
