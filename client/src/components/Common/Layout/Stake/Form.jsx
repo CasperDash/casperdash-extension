@@ -24,7 +24,7 @@ import { EXPLORER_URL } from '../../../../constants/key';
  * @param {Object}
  * @returns
  */
-const SelectField = ({ options, field, form }) => (
+const SelectField = ({ options, field, form, tokenSymbol }) => (
 	<Select
 		options={options}
 		name={field.name}
@@ -38,8 +38,15 @@ const SelectField = ({ options, field, form }) => (
 					{e.icon} {e.label}
 				</div>
 				<div>
-					<small>Rate: {e.rate}%</small>
+					<small>Fee: {e.rate}%</small>
 				</div>
+				{e.stakedAmount && (
+					<div>
+						<small>
+							Stacked Amount: {toFormattedNumber(e.stakedAmount)} {tokenSymbol}{' '}
+						</small>
+					</div>
+				)}
 			</div>
 		)}
 	/>
@@ -58,12 +65,19 @@ const getValidatorSelectOpts = (validators, action, defaultValidator) => {
 		return [];
 	}
 
-	let massagedValidators = validators;
 	if (ENTRY_POINT_UNDELEGATE === action) {
-		massagedValidators = validators.filter(({ public_key: publicKey }) => defaultValidator === publicKey);
+		return validators
+			.filter(({ public_key: publicKey }) => defaultValidator && defaultValidator.validator === publicKey)
+			.map(({ public_key: publicKey, bid }) => ({
+				value: publicKey,
+				label: publicKey,
+				rate: bid.bid.delegation_rate,
+				stakedAmount: defaultValidator.successAmount,
+				icon: <i className="bi bi-person"></i>,
+			}));
 	}
 
-	return massagedValidators.map(({ public_key: publicKey, bid }) => ({
+	return validators.map(({ public_key: publicKey, bid }) => ({
 		value: publicKey,
 		label: publicKey,
 		rate: bid.bid.delegation_rate,
@@ -142,6 +156,7 @@ const StakingForm = ({
 	const error = deployHash ? '' : deployError || signedError;
 	const modalTitle = ENTRY_POINT_DELEGATE === action ? 'Confirm delegation' : 'Confirm undelegation';
 	const options = getValidatorSelectOpts(validators, action, defaultValidator);
+	const displayBalance = balance.accountBalance;
 
 	return (
 		<div className="cd_setting_list">
@@ -151,13 +166,14 @@ const StakingForm = ({
 						<h3 className="cd_transaction_list_main_heading">How much would you like to {action} stake?</h3>
 						<Formik
 							enableReinitialize
-							initialValues={{ amount: 1, validator: defaultValidator }}
+							initialValues={{ amount: 1, validator: defaultValidator ? defaultValidator.validator : '' }}
 							validate={(values) =>
 								validateStakeForm({
 									...values,
 									balance,
 									tokenSymbol,
 									fee,
+									action,
 								})
 							}
 							onSubmit={handleSubmit}
@@ -176,11 +192,16 @@ const StakingForm = ({
 										/>
 										<Form.Control.Feedback type="invalid">{errors.amount}</Form.Control.Feedback>
 										<Form.Text className="text-muted">
-											{toFormattedNumber(balance)} {tokenSymbol}{' '}
+											{toFormattedNumber(displayBalance)} {tokenSymbol}{' '}
 										</Form.Text>
 									</Form.Group>
 									<Form.Group className="mb-3" controlId="cd-staking-validator">
-										<Field name={'validator'} component={SelectField} options={options} />
+										<Field
+											name={'validator'}
+											component={SelectField}
+											options={options}
+											tokenSymbol={tokenSymbol}
+										/>
 										<Form.Text className="text-muted">
 											<a
 												className="cd-form-text-link"
