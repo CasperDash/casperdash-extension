@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
+import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE } from '../constants/key';
 
 export const isValidPublicKey = (publicKey) => {
 	try {
@@ -52,12 +53,16 @@ export const validateTransferForm = ({
 	return errors;
 };
 
-export const validateStakeForm = ({ amount, tokenSymbol, balance, fee }) => {
+export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, action }) => {
 	let errors = {};
 	if (amount <= 0) {
 		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
-	} else if (amount + fee > balance) {
+	} else if (ENTRY_POINT_DELEGATE === action && amount + fee > balance.accountBalance) {
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
+	} else if (ENTRY_POINT_UNDELEGATE === action) {
+		if (fee > balance.accountBalance || amount > balance.validatorStakedBalance) {
+			errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
+		}
 	}
 
 	return errors;
