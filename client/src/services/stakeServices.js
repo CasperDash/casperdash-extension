@@ -16,10 +16,10 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 	return DeployUtil.makeDeploy(deployParams, session, payment);
 };
 
-const getStakeDeploy = (delegator, validator, fee, amount) => {
+const getStakeDeploy = (delegator, validator, fee, amount, entryPoint) => {
 	return buildStakeDeploy(
 		delegator,
-		ENTRY_POINT_DELEGATE,
+		entryPoint,
 		{
 			delegator,
 			validator,
@@ -29,10 +29,16 @@ const getStakeDeploy = (delegator, validator, fee, amount) => {
 	);
 };
 
-export const getSignedStakeDeploy = async ({ fromAddress, validator, fee, amount }) => {
+export const getSignedStakeDeploy = async ({
+	fromAddress,
+	validator,
+	fee,
+	amount,
+	entryPoint = ENTRY_POINT_DELEGATE,
+}) => {
 	const fromAccPk = CLPublicKey.fromHex(fromAddress);
 	const validatorPk = CLPublicKey.fromHex(validator);
-	const deploy = getStakeDeploy(fromAccPk, validatorPk, fee * MOTE_RATE, amount * MOTE_RATE);
+	const deploy = getStakeDeploy(fromAccPk, validatorPk, fee * MOTE_RATE, amount * MOTE_RATE, entryPoint);
 	try {
 		const signedDeploy = await signDeploy(deploy, fromAddress, validator);
 		return signedDeploy;
