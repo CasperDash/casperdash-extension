@@ -129,6 +129,13 @@
   cursor: pointer;
   padding-left: 5px;
 }
+.cd_stake_table .cd_stake_table_actions i {
+  font-size: medium;
+}
+.cd_stake_table .cd_stake_table_actions .cd_disabled_icon {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 .cd_empty_delegation_row .cd_empty_delegation_section {
   margin: auto;
