@@ -17,21 +17,22 @@ const EmptyDelegation = () => (
 	</div>
 );
 
-const TableActions = ({ validator, delegateFunc, unDelegateFunc }) => {
+const TableActions = ({ validator, delegateFunc, unDelegateFunc, enable }) => {
+	const disableActionsClass = enable ? '' : 'cd_disabled_icon';
 	return (
 		<>
 			<OverlayTrigger placement="top" overlay={<Tooltip>Delegate</Tooltip>}>
-				<i className="bi bi-plus-square" onClick={() => delegateFunc(validator)} />
+				<i className={`bi bi-plus-square ${disableActionsClass}`} onClick={() => delegateFunc(validator)} />
 			</OverlayTrigger>
 
 			<OverlayTrigger placement="top" overlay={<Tooltip>Undelegate</Tooltip>}>
-				<i className="bi bi-x-square" onClick={() => unDelegateFunc(validator)} />
+				<i className={`bi bi-x-square ${disableActionsClass}`} onClick={() => unDelegateFunc(validator)} />
 			</OverlayTrigger>
 		</>
 	);
 };
 
-const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unDelegateFunc }) => {
+const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unDelegateFunc, enableTableActions }) => {
 	if (!stakingDeployList.length) {
 		return <EmptyDelegation />;
 	}
@@ -76,6 +77,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unD
 							<td className="cd_stake_table_actions">
 								<TableActions
 									validator={staking}
+									enable={enableTableActions}
 									delegateFunc={delegateFunc}
 									unDelegateFunc={unDelegateFunc}
 								/>

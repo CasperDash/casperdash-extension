@@ -194,6 +194,7 @@ const Stake = () => {
 						stakingDeployList={stakingDeployList}
 						delegateFunc={(validator) => delegate(validator)}
 						unDelegateFunc={(validator) => undelegate(validator)}
+						enableTableActions={!pendingStakes || !pendingStakes.length}
 					/>
 				</div>
 				<MessageModal
