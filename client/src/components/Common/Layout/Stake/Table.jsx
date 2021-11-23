@@ -5,6 +5,7 @@ import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 import CommonAction from '../../Button/CommonAction';
 
+const minimumFractionDigits = 5; // Refer to cspr.live
 const EmptyDelegation = () => (
 	<div className="cd_empty_delegation_row row">
 		<div className="cd_empty_delegation_section position-relative">
@@ -59,14 +60,22 @@ const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unD
 								{staking.validator} <CommonAction type="account" value={staking.validator} />
 							</td>
 							<td className="cd_transaction_list_amount">
-								{displayNaN(toFormattedNumber(staking.pendingAmount))}
+								{displayNaN(
+									toFormattedNumber(staking.pendingAmount, undefined, {
+										minimumFractionDigits,
+									}),
+								)}
 							</td>
 							<td className="cd_transaction_list_amount">
-								{displayNaN(toFormattedNumber(staking.successAmount))}
+								{displayNaN(
+									toFormattedNumber(staking.successAmount, undefined, {
+										minimumFractionDigits,
+									}),
+								)}
 							</td>
 							<td className="cd_stake_table_actions">
 								<TableActions
-									validator={staking.validator}
+									validator={staking}
 									delegateFunc={delegateFunc}
 									unDelegateFunc={unDelegateFunc}
 								/>
@@ -80,7 +89,11 @@ const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unD
 						<td colSpan="2" />
 						<td colSpan="1">
 							<span>
-								<b>{toFormattedNumber(total)}</b>
+								<b>
+									{toFormattedNumber(total, undefined, {
+										minimumFractionDigits,
+									})}
+								</b>
 							</span>
 						</td>
 					</tr>
