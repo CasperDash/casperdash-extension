@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { ENTRY_POINT_DELEGATE } from '../../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../../helpers/format';
 
 const ModalRow = ({ label, value, customClass }) => (
@@ -30,11 +31,16 @@ const CurrencyModalRow = ({ label, amount, currency = 'CSPR', currentPrice, cust
 				{toFormattedNumber(amount)} <b>{currency}</b>
 			</span>
 		</div>
-		<SingleCurrencyRow amount={toFormattedCurrency(amount * currentPrice)} />
+		<SingleCurrencyRow
+			amount={toFormattedCurrency(amount * currentPrice, undefined, {
+				minimumFractionDigits: 8,
+			})}
+		/>
 	</>
 );
 
 export const ConfirmationModal = ({
+	action = ENTRY_POINT_DELEGATE,
 	title,
 	show,
 	fromAddress,
@@ -64,7 +70,7 @@ export const ConfirmationModal = ({
 			<Modal.Body className="cd_confirm_modal_body">
 				<ModalRow label="Account" value={fromAddress} />
 				<ModalRow label="Validator" value={validator} />
-				<CurrencyModalRow label="You'll delegate" amount={amount} currentPrice={currentPrice} />
+				<CurrencyModalRow label={`You'll ${action}`} amount={amount} currentPrice={currentPrice} />
 				<hr />
 				<CurrencyModalRow label="Transaction fee" amount={fee} currentPrice={currentPrice} />
 				<hr />
@@ -79,7 +85,7 @@ export const ConfirmationModal = ({
 					</Button>
 				) : (
 					<Button className="cd_btn_primary_active" onClick={onConfirm}>
-						{isDeploying ? 'Confirming...' : 'Confirm and delegate stake'}
+						{isDeploying ? 'Confirming...' : `Confirm and ${action} stake`}
 					</Button>
 				)}
 			</Modal.Footer>

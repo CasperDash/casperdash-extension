@@ -15,7 +15,7 @@ import { deploySelector } from '../../../../selectors/deploy';
 import { toFormattedNumber } from '../../../../helpers/format';
 import { validateStakeForm } from '../../../../helpers/validator';
 
-import { CSPR_AUCTION_FEE } from '../../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE, ENTRY_POINT_DELEGATE } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 
 /**
@@ -46,13 +46,14 @@ const SelectField = ({ options, field, form }) => (
 );
 
 const StakingForm = ({
+	action = ENTRY_POINT_DELEGATE,
 	fromAddress,
 	defaultValidator,
 	validators,
 	tokenSymbol,
 	balance,
 	handleToggle,
-	fee = CSPR_AUCTION_FEE,
+	fee = CSPR_AUCTION_DELEGATE_FEE,
 	csprPrice,
 }) => {
 	// State
@@ -90,6 +91,7 @@ const StakingForm = ({
 				validator,
 				amount,
 				fee,
+				entryPoint: action,
 			});
 
 			setShowModal(true);
@@ -121,12 +123,14 @@ const StakingForm = ({
 	};
 
 	const error = deployHash ? '' : deployError || signedError;
+	const modalTitle = ENTRY_POINT_DELEGATE === action ? 'Confirm delegation' : 'Confirm undelegation';
+
 	return (
 		<div className="cd_setting_list">
 			<div className="cd_setting_list_items">
 				<div className="cd_setting_items_heading_peregraph cd_setting_items_form">
 					<div>
-						<h3 className="cd_transaction_list_main_heading">How much would you like to stake?</h3>
+						<h3 className="cd_transaction_list_main_heading">How much would you like to {action} stake?</h3>
 						<Formik
 							enableReinitialize
 							initialValues={{ amount: 1, validator: defaultValidator }}
@@ -172,13 +176,13 @@ const StakingForm = ({
 									</Form.Group>
 									<div className="cd_send_currency_btn_text">
 										<Button
-											className="cd_send_currency_btn"
+											className="cd_send_currency_btn cd_stake_btn"
 											variant="primary"
 											type="submit"
 											disabled={!values.amount || !values.validator}
 											onClick={handleSubmit}
 										>
-											Stake
+											{action}
 										</Button>
 										<Button
 											className="cd_send_currency_btn"
@@ -200,8 +204,9 @@ const StakingForm = ({
 							)}
 						</Formik>
 						<ConfirmationModal
-							title="Confirm delegation"
+							title={modalTitle}
 							show={showModal}
+							action={action}
 							validator={stakeDetails.validator}
 							fromAddress={stakeDetails.fromAddress}
 							amount={stakeDetails.amount}

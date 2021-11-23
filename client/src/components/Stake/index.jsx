@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-
-import { EXPLORER_URL, CASPER_SYMBOL } from '../../constants/key';
+import {
+	EXPLORER_URL,
+	CASPER_SYMBOL,
+	CSPR_AUCTION_DELEGATE_FEE,
+	CSPR_AUCTION_UNDELEGATE_FEE,
+	ENTRY_POINT_DELEGATE,
+	ENTRY_POINT_UNDELEGATE,
+} from '../../constants/key';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import StakingAccountList from '../Common/Layout/Stake/Table';
 import StakingForm from '../Common/Layout/Stake/Form';
@@ -49,6 +54,10 @@ const ConfirmingTransactionsInfo = (transactions) => {
 		</Alert>
 	);
 };
+
+const getStakeFee = (action) =>
+	ENTRY_POINT_DELEGATE === action ? CSPR_AUCTION_DELEGATE_FEE : CSPR_AUCTION_UNDELEGATE_FEE;
+
 const Stake = () => {
 	const dispatch = useDispatch();
 
@@ -56,6 +65,7 @@ const Stake = () => {
 	const [send, setSend] = useState(false);
 	const [showError, setShowError] = useState(false);
 	const [defaultValidator, setDefaultValidator] = useState(null);
+	const [stakeAction, setStakeAction] = useState(ENTRY_POINT_DELEGATE);
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
@@ -70,21 +80,30 @@ const Stake = () => {
 	}, [dispatch]);
 
 	// Function
-	const handleToggle = () => {
-		if (publicKey) {
-			setSend(!send);
-		} else {
+	const handleToggle = ({ forceOpen = false }) => {
+		if (!publicKey) {
 			setShowError(true);
+			return;
 		}
+
+		if (forceOpen) {
+			setSend(true);
+			return;
+		}
+
+		setSend(!send);
 	};
 
 	const delegate = (validator) => {
 		setDefaultValidator(validator);
-		if (!send) {
-			setSend(true);
-		}
-		handleToggle();
-		console.log('Val', validator);
+		setStakeAction(ENTRY_POINT_DELEGATE);
+		handleToggle({ forceOpen: true });
+	};
+
+	const undelegate = (validator) => {
+		setDefaultValidator(validator);
+		setStakeAction(ENTRY_POINT_UNDELEGATE);
+		handleToggle({ forceOpen: true });
 	};
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
@@ -113,6 +132,7 @@ const Stake = () => {
 					)}
 					<div className="cd_staking_form">
 						<StakingForm
+							action={stakeAction}
 							defaultValidator={defaultValidator}
 							validators={validators}
 							handleToggle={handleToggle}
@@ -120,6 +140,7 @@ const Stake = () => {
 							csprPrice={currentPrice}
 							balance={displayBalance}
 							tokenSymbol={CASPER_SYMBOL}
+							fee={getStakeFee(stakeAction)}
 						/>
 					</div>
 					{stakingDeployList && stakingDeployList.length > 0 && (
@@ -128,6 +149,7 @@ const Stake = () => {
 					<StakingAccountList
 						stakingDeployList={stakingDeployList}
 						delegateFunc={(validator) => delegate(validator)}
+						unDelegateFunc={(validator) => undelegate(validator)}
 					/>
 				</div>
 				<MessageModal

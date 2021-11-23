@@ -1,3 +1,5 @@
+import { ENTRY_POINT_UNDELEGATE } from '../constants/key';
+
 export const getConfirmedStakesGroupByValidator =
 	() =>
 	({ stakes = {} }) => {
@@ -7,7 +9,7 @@ export const getConfirmedStakesGroupByValidator =
 		let groupByValidators = [];
 		stakes.delegations.forEach((stake) => {
 			const { validator, amount, status, entryPoint } = stake;
-			const realAmount = 'undelegate' === entryPoint ? -1 * amount : amount;
+			const realAmount = ENTRY_POINT_UNDELEGATE === entryPoint ? -1 * amount : amount;
 			const foundValidator = groupByValidators.findIndex((item) => validator === item.validator);
 			const amountKey = `${status}Amount`;
 
