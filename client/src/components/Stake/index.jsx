@@ -59,9 +59,7 @@ const getStakeFee = (action) =>
 	ENTRY_POINT_DELEGATE === action ? CSPR_AUCTION_DELEGATE_FEE : CSPR_AUCTION_UNDELEGATE_FEE;
 
 /**
- * Get display balance belongs to stake action.
- * If delegate action then the balance is account balance
- * Otherwise the balance is staked amount on the selected validator.
+ * Get account balance  and stacked amount by the specific validator
  *
  * @param {String} action
  * @param {Object} userDetails
@@ -69,17 +67,21 @@ const getStakeFee = (action) =>
  * @param {String} selectedValidator
  * @returns
  */
-const getDisplayBalance = (action, userDetails, stakingDeployList, selectedValidator) => {
+const getBalances = (action, userDetails, stakingDeployList, selectedValidator) => {
+	let displayBalance = {
+		accountBalance: userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0,
+		validatorStakedBalance: 0,
+	};
 	if (ENTRY_POINT_DELEGATE === action) {
-		return userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
-	} else {
-		if (stakingDeployList) {
-			const foundItem = stakingDeployList.find((item) => selectedValidator === item.validator);
-			return foundItem ? foundItem.successAmount : 0;
-		}
+		return displayBalance;
 	}
 
-	return 0;
+	if (stakingDeployList) {
+		const foundItem = stakingDeployList.find((item) => selectedValidator.validator === item.validator);
+		return foundItem ? { ...displayBalance, validatorStakedBalance: foundItem.successAmount } : displayBalance;
+	}
+
+	return displayBalance;
 };
 
 const Stake = () => {
@@ -88,6 +90,7 @@ const Stake = () => {
 	// State
 	const [send, setSend] = useState(false);
 	const [showError, setShowError] = useState(false);
+	// Used when user selects the validator from table to delegate or undelegate
 	const [defaultValidator, setDefaultValidator] = useState(null);
 	const [stakeAction, setStakeAction] = useState(ENTRY_POINT_DELEGATE);
 
@@ -104,13 +107,20 @@ const Stake = () => {
 	}, [dispatch]);
 
 	// Function
-	const handleToggle = ({ forceOpen = false }) => {
+
+	/**
+	 * Show/hide stake form
+	 *
+	 * @param {Object} props
+	 * @returns
+	 */
+	const handleToggle = (props) => {
 		if (!publicKey) {
 			setShowError(true);
 			return;
 		}
 
-		if (forceOpen) {
+		if (props && props.forceOpen) {
 			setSend(true);
 			return;
 		}
@@ -118,21 +128,30 @@ const Stake = () => {
 		setSend(!send);
 	};
 
+	/**
+	 * Delegate callback to set the default validator to delegate
+	 *
+	 * @param {Object} validator
+	 */
 	const delegate = (validator) => {
 		setDefaultValidator(validator);
 		setStakeAction(ENTRY_POINT_DELEGATE);
 		handleToggle({ forceOpen: true });
 	};
 
+	/**
+	 * Undelegate callback to set the default validator to undelegate
+	 *
+	 * @param {Object} validator
+	 */
 	const undelegate = (validator) => {
 		setDefaultValidator(validator);
 		setStakeAction(ENTRY_POINT_UNDELEGATE);
 		handleToggle({ forceOpen: true });
 	};
 
+	const displayBalance = getBalances(stakeAction, userDetails, stakingDeployList, defaultValidator);
 	const toggleStakingForm = send ? 'toggle_form' : '';
-	const displayBalance = getDisplayBalance(stakeAction, userDetails, stakingDeployList, defaultValidator);
-
 	if (!publicKey) {
 		return (
 			<UnlockSingerWarning
