@@ -38,7 +38,7 @@ const SelectField = ({ options, field, form, tokenSymbol }) => (
 					{e.icon} {e.label}
 				</div>
 				<div>
-					<small>Fee: {e.rate}%</small>
+					<small>Commission Rate: {e.rate}%</small>
 				</div>
 				{e.stakedAmount && (
 					<div>
