@@ -15,7 +15,7 @@ import { deploySelector } from '../../../../selectors/deploy';
 import { toFormattedNumber } from '../../../../helpers/format';
 import { validateStakeForm } from '../../../../helpers/validator';
 
-import { CSPR_AUCTION_DELEGATE_FEE, ENTRY_POINT_DELEGATE } from '../../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE, ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 
 /**
@@ -45,6 +45,32 @@ const SelectField = ({ options, field, form }) => (
 	/>
 );
 
+/**
+ * Map the select options from the validators.
+ *
+ * @param {Array} validators
+ * @param {String} action
+ * @param {String} defaultValidator
+ * @returns
+ */
+const getValidatorSelectOpts = (validators, action, defaultValidator) => {
+	if (!validators) {
+		return [];
+	}
+
+	let massagedValidators = validators;
+	if (ENTRY_POINT_UNDELEGATE === action) {
+		massagedValidators = validators.filter(({ public_key: publicKey }) => defaultValidator === publicKey);
+	}
+
+	return massagedValidators.map(({ public_key: publicKey, bid }) => ({
+		value: publicKey,
+		label: publicKey,
+		rate: bid.bid.delegation_rate,
+		icon: <i className="bi bi-person"></i>,
+	}));
+};
+
 const StakingForm = ({
 	action = ENTRY_POINT_DELEGATE,
 	fromAddress,
@@ -66,15 +92,6 @@ const StakingForm = ({
 
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-
-	const options = validators
-		? validators.map(({ public_key: publicKey, bid }) => ({
-				value: publicKey,
-				label: publicKey,
-				rate: bid.bid.delegation_rate,
-				icon: <i className="bi bi-person"></i>,
-		  }))
-		: [];
 
 	// Function
 	const onCloseModal = () => {
@@ -124,6 +141,7 @@ const StakingForm = ({
 
 	const error = deployHash ? '' : deployError || signedError;
 	const modalTitle = ENTRY_POINT_DELEGATE === action ? 'Confirm delegation' : 'Confirm undelegation';
+	const options = getValidatorSelectOpts(validators, action, defaultValidator);
 
 	return (
 		<div className="cd_setting_list">
