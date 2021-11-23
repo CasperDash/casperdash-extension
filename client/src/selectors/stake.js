@@ -30,7 +30,7 @@ export const getConfirmedStakesGroupByValidator =
 
 			groupByValidators[foundValidator][amountKey] += realAmount;
 		});
-		return groupByValidators;
+		return groupByValidators.filter((validator) => validator.successAmount > 0);
 	};
 
 export const getPendingStakes =
