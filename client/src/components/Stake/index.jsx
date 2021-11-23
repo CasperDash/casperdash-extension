@@ -58,6 +58,30 @@ const ConfirmingTransactionsInfo = (transactions) => {
 const getStakeFee = (action) =>
 	ENTRY_POINT_DELEGATE === action ? CSPR_AUCTION_DELEGATE_FEE : CSPR_AUCTION_UNDELEGATE_FEE;
 
+/**
+ * Get display balance belongs to stake action.
+ * If delegate action then the balance is account balance
+ * Otherwise the balance is staked amount on the selected validator.
+ *
+ * @param {String} action
+ * @param {Object} userDetails
+ * @param {Array} stakingDeployList
+ * @param {String} selectedValidator
+ * @returns
+ */
+const getDisplayBalance = (action, userDetails, stakingDeployList, selectedValidator) => {
+	if (ENTRY_POINT_DELEGATE === action) {
+		return userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
+	} else {
+		if (stakingDeployList) {
+			const foundItem = stakingDeployList.find((item) => selectedValidator === item.validator);
+			return foundItem ? foundItem.successAmount : 0;
+		}
+	}
+
+	return 0;
+};
+
 const Stake = () => {
 	const dispatch = useDispatch();
 
@@ -107,7 +131,8 @@ const Stake = () => {
 	};
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
-	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
+	const displayBalance = getDisplayBalance(stakeAction, userDetails, stakingDeployList, defaultValidator);
+
 	if (!publicKey) {
 		return (
 			<UnlockSingerWarning
