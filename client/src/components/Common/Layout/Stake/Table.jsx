@@ -68,7 +68,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unD
 								<TableActions
 									validator={staking.validator}
 									delegateFunc={delegateFunc}
-									unDelegateFunc={delegateFunc}
+									unDelegateFunc={unDelegateFunc}
 								/>
 							</td>
 						</tr>
