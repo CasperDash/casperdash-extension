@@ -5,29 +5,22 @@ import { getValidators } from '../../selectors/validator';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 import { getTransferDeploysStatus, updateTransferDeployStatus } from '../../actions/deployActions';
 
-export const useStakeFromValidators = (publicKey) => {
-	const dispatch = useDispatch();
-
-	const validators = useSelector(getValidators);
-	const pendingStakes = useSelector(getPendingStakes());
-
-	useAutoRefreshEffect(() => {
-		if (!pendingStakes.length) {
-			return;
-		}
-		(async () => {
-			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
-			dispatch(updateTransferDeployStatus(publicKey, 'deploys.stakes', data));
-		})();
-	}, [JSON.stringify(pendingStakes), dispatch]);
-
+/**
+ * Get staked validators and add the pending amount.
+ *
+ * @param {Array} validators
+ * @param {Array} pendingStakes
+ * @param {String} publicKey
+ * @returns
+ */
+const getStakedValidators = (validators, pendingStakes, publicKey) => {
 	let stakedValidators = [];
 	validators.forEach((validator) => {
 		if (!validator.bidInfo) {
 			return;
 		}
 		const foundDelegator = validator.bidInfo.bid.delegators.find(
-			(delegator) => publicKey.toLowerCase() == delegator.public_key.toLowerCase(),
+			(delegator) => publicKey.toLowerCase() == delegator.public_key.toLowerCase(), // TODO: need to double check that the public key is non case sensitive
 		);
 
 		if (!foundDelegator) {
@@ -46,5 +39,27 @@ export const useStakeFromValidators = (publicKey) => {
 
 		stakedValidators.push(stakedValidator);
 	});
+
+	return stakedValidators;
+};
+
+export const useStakeFromValidators = (publicKey) => {
+	const dispatch = useDispatch();
+
+	const validators = useSelector(getValidators);
+	const pendingStakes = useSelector(getPendingStakes());
+
+	useAutoRefreshEffect(() => {
+		if (!pendingStakes.length) {
+			return;
+		}
+		(async () => {
+			if (!publicKey) return;
+			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
+			dispatch(updateTransferDeployStatus(publicKey, 'deploys.stakes', data));
+		})();
+	}, [JSON.stringify(pendingStakes), dispatch]);
+
+	const stakedValidators = getStakedValidators(validators, pendingStakes, publicKey);
 	return stakedValidators;
 };
