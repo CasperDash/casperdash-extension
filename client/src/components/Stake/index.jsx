@@ -61,6 +61,11 @@ const Stake = () => {
 	const publicKey = useSelector(getPublicKey);
 	const currentPrice = useSelector(getCurrentPrice);
 	const validators = useSelector(getValidators);
+	const delegators = validators.filter(
+		(validator) => !!validator.bid.bid.delegators.find((delegator) => delegator.public_key === publicKey),
+	);
+
+	console.log('Validators', publicKey, delegators);
 	const userDetails = useSelector(getMassagedUserDetails);
 	const pendingStakes = useSelector(getPendingStakes());
 	const stakingDeployList = useStakeWithStatus(publicKey);
@@ -84,7 +89,6 @@ const Stake = () => {
 			setSend(true);
 		}
 		handleToggle();
-		console.log('Val', validator);
 	};
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
