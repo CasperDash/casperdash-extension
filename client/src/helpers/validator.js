@@ -13,6 +13,7 @@ export const isValidPublicKey = (publicKey) => {
 const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
 	NOT_ENOUGH_BALANCE: 'Not enough balance.',
+	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
 };
 
 export const validateTransferForm = ({
@@ -57,6 +58,19 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee }) => {
 	if (amount <= 0) {
 		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
 	} else if (amount + fee > balance) {
+		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
+	}
+
+	return errors;
+};
+
+export const validateUndelegateForm = ({ amount, tokenSymbol, balance, fee, stakedAmount }) => {
+	let errors = {};
+	if (amount <= 0) {
+		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
+	} else if (amount > stakedAmount) {
+		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_STAKED_AMOUNT;
+	} else if (fee > balance) {
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
 	}
 

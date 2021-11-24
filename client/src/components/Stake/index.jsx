@@ -97,7 +97,6 @@ const Stake = () => {
 		if (!send) {
 			setSend(true);
 		}
-		//handleToggle();
 	};
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
@@ -127,6 +126,7 @@ const Stake = () => {
 					<div className="cd_staking_form">
 						{defaultValidator ? (
 							<UndelegateForm
+								fromAddress={publicKey}
 								csprPrice={currentPrice}
 								handleToggle={handleUndelegateToggle}
 								balance={displayBalance}

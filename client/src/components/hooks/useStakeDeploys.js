@@ -4,6 +4,7 @@ import { getPendingStakes } from '../../selectors/stake';
 import { getValidators } from '../../selectors/validator';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 import { getTransferDeploysStatus, updateTransferDeployStatus } from '../../actions/deployActions';
+import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
 
 /**
  * Get staked validators and add the pending amount.
@@ -34,7 +35,8 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 			stakedAmount: moteToCspr(foundDelegator.staked_amount),
 		};
 		if (pendingStake) {
-			stakedValidator.pendingAmount = pendingStake.amount;
+			stakedValidator.pendingAmount =
+				pendingStake.entryPoint === ENTRY_POINT_UNDELEGATE ? -pendingStake.amount : pendingStake.amount;
 		}
 
 		stakedValidators.push(stakedValidator);
