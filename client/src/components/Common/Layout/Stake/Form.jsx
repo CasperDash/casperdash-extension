@@ -67,10 +67,10 @@ const StakingForm = ({
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
 	const options = validators
-		? validators.map(({ public_key: publicKey, bid }) => ({
+		? validators.map(({ public_key: publicKey, bidInfo }) => ({
 				value: publicKey,
 				label: publicKey,
-				rate: bid.bid.delegation_rate,
+				rate: bidInfo.bid.delegation_rate,
 				icon: <i className="bi bi-person"></i>,
 		  }))
 		: [];
