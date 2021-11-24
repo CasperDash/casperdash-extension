@@ -29,7 +29,13 @@ export const AddPublicKeyModal = ({ show, handleClose, handleAddPublicKey, error
 				<div className="cd_add_token_modal_row">
 					<div className="cd_add_token_modal_label">Public Key</div>
 					<div className="cd_add_token_modal_value">
-						<input type="text" value={publicKey} onChange={(e) => handleInputChange(e)} />
+						<input
+							name="publicKey"
+							type="text"
+							value={publicKey}
+							onChange={(e) => handleInputChange(e)}
+							placeholder="Public key"
+						/>
 					</div>
 				</div>
 			</Modal.Body>

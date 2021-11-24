@@ -31,7 +31,7 @@ export const KEY_MANAGER = {
 };
 
 export const PRICE = {
-	FETCH_PRIZE_HISTORY: 'PRICE.FETCH_PRIZE_HISTORY',
+	FETCH_PRICE_HISTORY: 'PRICE.FETCH_PRICE_HISTORY',
 };
 
 export const TOKENS = {

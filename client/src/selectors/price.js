@@ -2,7 +2,7 @@ import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { PRICE } from '../store/actionTypes';
 
-export const priceSelector = getQuerySelector({ type: PRICE.FETCH_PRIZE_HISTORY });
+export const priceSelector = getQuerySelector({ type: PRICE.FETCH_PRICE_HISTORY });
 
 export const getPriceHistory = createSelector(priceSelector, ({ data }) => {
 	if (!data) {
