@@ -6,7 +6,6 @@ import thunk from 'redux-thunk';
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
-import keysManagerReducer from './reducers/keysManager';
 import tokensReducer from './reducers/tokens';
 import deployReducer from './reducers/deploys';
 import requestReducer from './reducers/request';
@@ -68,7 +67,6 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 const main = combineReducers({
 	user: userReducer,
 	signer: signerReducer,
-	keysManager: keysManagerReducer,
 	tokens: tokensReducer,
 	requests: requestsReducer,
 	deploys: deployReducer,

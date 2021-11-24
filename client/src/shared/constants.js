@@ -15,7 +15,6 @@ const defaultRoutes = {
 	dashboard: '/dashboard',
 	tokens: '/tokens',
 	history: '/history',
-	keyManager: '/keyManager',
 	nfts: '/NFTs',
 };
 
