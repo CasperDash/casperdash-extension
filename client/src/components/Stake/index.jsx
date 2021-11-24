@@ -36,7 +36,11 @@ const ConfirmingTransactionsInfo = (transactions) => {
 		return (
 			<Alert variant={'info'} show={!!transactions.length}>
 				Confirming transaction ...{' '}
-				<Alert.Link rel="noopner noreferrer" target="_blank" href={`${EXPLORER_URL}/deploy/${transactions[0]}`}>
+				<Alert.Link
+					rel="noopner noreferrer"
+					target="_blank"
+					href={`${EXPLORER_URL}/deploy/${transactions[0].deployHash}`}
+				>
 					View on explorer
 				</Alert.Link>
 			</Alert>
