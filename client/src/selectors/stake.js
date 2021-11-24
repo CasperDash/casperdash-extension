@@ -34,5 +34,5 @@ export const getPendingStakes =
 			return [];
 		}
 
-		return stakes.delegations.filter((stake) => stake.status === 'pending').map((stake) => stake.deployHash);
+		return stakes.delegations.filter((stake) => stake.status === 'pending');
 	};
