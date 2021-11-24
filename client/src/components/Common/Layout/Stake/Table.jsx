@@ -16,7 +16,7 @@ const EmptyDelegation = () => (
 	</div>
 );
 
-const TableActions = ({ validator, delegateFunc, unDelegateFunc }) => {
+const TableActions = ({ validator, unDelegateFunc }) => {
 	return (
 		<>
 			<OverlayTrigger placement="top" overlay={<Tooltip>Undelegate</Tooltip>}>
@@ -26,7 +26,7 @@ const TableActions = ({ validator, delegateFunc, unDelegateFunc }) => {
 	);
 };
 
-const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unDelegateFunc }) => {
+const StakingAccountListComponent = ({ stakingDeployList = [], unDelegateFunc }) => {
 	if (!stakingDeployList.length) {
 		return <EmptyDelegation />;
 	}
@@ -61,11 +61,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unD
 								{displayNaN(toFormattedNumber(staking.stakedAmount))}
 							</td>
 							<td className="cd_stake_table_actions">
-								<TableActions
-									validator={staking.validator}
-									delegateFunc={delegateFunc}
-									unDelegateFunc={delegateFunc}
-								/>
+								<TableActions validator={staking} unDelegateFunc={unDelegateFunc} />
 							</td>
 						</tr>
 					))}

@@ -1632,13 +1632,24 @@ table td {
   margin-bottom: 8px;
   word-break: break-all;
 }
+.cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content .cd_send_balance_label {
+  padding-left: 20px;
+  color: #c0c3cc;
+  margin-bottom: 8px;
+  word-break: break-all;
+}
 .cd_send_receive_content .cd_send_receive_content_row {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -12px;
 }
-.cd_send_receive_content .cd_send_receive_content_column {
-  max-width: 50%;
+.cd_send_receive_content .cd_send_receive_content_column .cd_send_receive_content_full_column {
+  max-width: 100%;
+  width: 100%;
+  padding: 0 12px;
+}
+.cd_send_receive_content .cd_send_receive_content_full_column {
+  max-width: 100%;
   width: 100%;
   padding: 0 12px;
 }

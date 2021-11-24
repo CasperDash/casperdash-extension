@@ -15,6 +15,7 @@ import { getValidators } from '../../selectors/validator';
 import { fetchValidators } from '../../actions/stakeActions';
 import { getPendingStakes } from '../../selectors/stake';
 import { useStakeFromValidators } from '../hooks/useStakeDeploys';
+import UndelegateForm from '../Common/Layout/Stake/UnDelegateForm';
 
 const UnlockSingerWarning = ({ title, message }) => (
 	<section className="cd_staking_page">
@@ -83,12 +84,20 @@ const Stake = () => {
 		}
 	};
 
-	const delegate = (validator) => {
+	const handleUndelegateToggle = () => {
+		if (send) {
+			setDefaultValidator(null);
+		}
+
+		handleToggle();
+	};
+
+	const undelegate = (validator) => {
 		setDefaultValidator(validator);
 		if (!send) {
 			setSend(true);
 		}
-		handleToggle();
+		//handleToggle();
 	};
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
@@ -116,22 +125,32 @@ const Stake = () => {
 						</div>
 					)}
 					<div className="cd_staking_form">
-						<StakingForm
-							defaultValidator={defaultValidator}
-							validators={validators}
-							handleToggle={handleToggle}
-							fromAddress={publicKey}
-							csprPrice={currentPrice}
-							balance={displayBalance}
-							tokenSymbol={CASPER_SYMBOL}
-						/>
+						{defaultValidator ? (
+							<UndelegateForm
+								csprPrice={currentPrice}
+								handleToggle={handleUndelegateToggle}
+								balance={displayBalance}
+								tokenSymbol={CASPER_SYMBOL}
+								stakedValidator={defaultValidator}
+							/>
+						) : (
+							<StakingForm
+								defaultValidator={defaultValidator}
+								validators={validators}
+								handleToggle={handleToggle}
+								fromAddress={publicKey}
+								csprPrice={currentPrice}
+								balance={displayBalance}
+								tokenSymbol={CASPER_SYMBOL}
+							/>
+						)}
 					</div>
 					{stakingDeployList && stakingDeployList.length > 0 && (
 						<h3 className="cd_transaction_list_main_heading">Your Delegations</h3>
 					)}
 					<StakingAccountList
 						stakingDeployList={stakingDeployList}
-						delegateFunc={(validator) => delegate(validator)}
+						unDelegateFunc={(validator) => undelegate(validator)}
 					/>
 				</div>
 				<MessageModal
