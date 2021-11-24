@@ -27,15 +27,6 @@ jest.mock('../SideBar', () => {
 	};
 });
 
-// jest.mock('react-top-loading-bar', () => {
-// 	return {
-// 		__esModule: true,
-// 		default: () => {
-// 			return <div>Loading</div>;
-// 		},
-// 	};
-// });
-
 jest.mock('../../../actions/deployActions', () => {
 	return {
 		__esModule: true,
