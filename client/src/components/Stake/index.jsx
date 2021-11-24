@@ -14,7 +14,7 @@ import { getCurrentPrice } from '../../selectors/price';
 import { getValidators } from '../../selectors/validator';
 import { fetchValidators } from '../../actions/stakeActions';
 import { getPendingStakes } from '../../selectors/stake';
-import { useStakeWithStatus } from '../hooks/useStakeDeploys';
+import { useStakeFromValidators } from '../hooks/useStakeDeploys';
 
 const UnlockSingerWarning = ({ title, message }) => (
 	<section className="cd_staking_page">
@@ -64,7 +64,7 @@ const Stake = () => {
 
 	const userDetails = useSelector(getMassagedUserDetails);
 	const pendingStakes = useSelector(getPendingStakes());
-	const stakingDeployList = useStakeWithStatus(publicKey);
+	const stakingDeployList = useStakeFromValidators(publicKey);
 
 	useEffect(() => {
 		dispatch(fetchValidators());
