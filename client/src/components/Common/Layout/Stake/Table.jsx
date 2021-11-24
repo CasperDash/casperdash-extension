@@ -19,10 +19,6 @@ const EmptyDelegation = () => (
 const TableActions = ({ validator, delegateFunc, unDelegateFunc }) => {
 	return (
 		<>
-			<OverlayTrigger placement="top" overlay={<Tooltip>Delegate</Tooltip>}>
-				<i className="bi bi-plus-square" onClick={() => delegateFunc(validator)} />
-			</OverlayTrigger>
-
 			<OverlayTrigger placement="top" overlay={<Tooltip>Undelegate</Tooltip>}>
 				<i className="bi bi-x-square" onClick={() => unDelegateFunc(validator)} />
 			</OverlayTrigger>
@@ -35,8 +31,8 @@ const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unD
 		return <EmptyDelegation />;
 	}
 	const total = stakingDeployList
-		.filter((stake) => !!stake.successAmount)
-		.map((stake) => stake.successAmount)
+		.filter((stake) => !!stake.stakedAmount)
+		.map((stake) => stake.stakedAmount)
 		.reduce((prev, next) => prev + next, 0);
 
 	return (
@@ -62,7 +58,7 @@ const StakingAccountListComponent = ({ stakingDeployList = [], delegateFunc, unD
 								{displayNaN(toFormattedNumber(staking.pendingAmount))}
 							</td>
 							<td className="cd_transaction_list_amount">
-								{displayNaN(toFormattedNumber(staking.successAmount))}
+								{displayNaN(toFormattedNumber(staking.stakedAmount))}
 							</td>
 							<td className="cd_stake_table_actions">
 								<TableActions
