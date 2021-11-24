@@ -1,30 +1,19 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getTransferDeploysStatus, updateTransferDeployStatus } from '../../actions/deployActions';
-import { getStakeFromLocalStorage } from '../../actions/stakeActions';
-import { getConfirmedStakesGroupByValidator, getPendingStakes } from '../../selectors/stake';
-import { useAutoRefreshEffect } from './useAutoRefreshEffect';
+import { useSelector } from 'react-redux';
+import { moteToCspr } from '../../helpers/balance';
+import { getValidators } from '../../selectors/validator';
 
 export const useStakeWithStatus = (publicKey) => {
-	const dispatch = useDispatch();
-
-	const confirmedStakes = useSelector(getConfirmedStakesGroupByValidator());
-
-	const pendingDelegations = useSelector(getPendingStakes());
-
-	useEffect(() => {
-		dispatch(getStakeFromLocalStorage(publicKey));
-	}, [dispatch, publicKey]);
-
-	useAutoRefreshEffect(() => {
-		if (!pendingDelegations.length) {
-			return;
+	const validators = useSelector(getValidators);
+	let result = [];
+	if (validators.length > 0) console.log(validators[0].bid.bid.delegators);
+	validators.forEach((validator) => {
+		const foundDelegator = validator.bid.bid.delegators.find((delegator) => publicKey == delegator.public_key);
+		if (foundDelegator) {
+			result.push({
+				validator: validator.public_key,
+				stakedAmount: moteToCspr(foundDelegator.staked_amount),
+			});
 		}
-		(async () => {
-			const { data } = await dispatch(getTransferDeploysStatus(pendingDelegations));
-			dispatch(updateTransferDeployStatus(publicKey, 'deploys.stakes', data));
-		})();
-	}, [JSON.stringify(pendingDelegations), dispatch]);
-
-	return confirmedStakes;
+	});
+	return result;
 };
