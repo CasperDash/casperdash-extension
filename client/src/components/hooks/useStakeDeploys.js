@@ -40,6 +40,15 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 		stakedValidators.push(stakedValidator);
 	});
 
+	pendingStakes
+		.filter((stake) => stakedValidators.findIndex((item) => item.validator === stake.validator) < 0)
+		.forEach((newStakedValidator) =>
+			stakedValidators.push({
+				validator: newStakedValidator.validator,
+				pendingAmount: newStakedValidator.amount,
+			}),
+		);
+
 	return stakedValidators;
 };
 
