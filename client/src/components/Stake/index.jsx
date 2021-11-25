@@ -104,6 +104,8 @@ const Stake = () => {
 
 	const toggleStakingForm = send ? 'toggle_form' : '';
 	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
+	const isConfirmingTrans = pendingStakes && pendingStakes.length > 0;
+
 	if (!publicKey) {
 		return (
 			<UnlockSingerWarning
@@ -119,7 +121,7 @@ const Stake = () => {
 				{ConfirmingTransactionsInfo(pendingStakes)}
 				<HeadingModule name={'Staking'} />
 				<div className={`cd_staking_component ${toggleStakingForm}`}>
-					{pendingStakes && pendingStakes.length === 0 && (
+					{!isConfirmingTrans && (
 						<div className="cd_send_currency_btn_text cd_btn_stake_cspr">
 							<Button className=" cd_send_currency_btn" onClick={handleToggle}>
 								Stake CSPR
@@ -154,6 +156,7 @@ const Stake = () => {
 					<StakingAccountList
 						stakingDeployList={stakingDeployList}
 						isLoading={isLoading}
+						isConfirmingTrans={isConfirmingTrans}
 						unDelegateFunc={(validator) => undelegate(validator)}
 					/>
 				</div>
