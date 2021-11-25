@@ -40,7 +40,6 @@ export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) =>
 				},
 			};
 		} catch (error) {
-			console.error(error);
 			return {};
 		}
 	});

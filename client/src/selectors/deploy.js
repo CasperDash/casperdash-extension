@@ -19,5 +19,7 @@ export const getTransfersDeploy = (symbol) => ({ deploys = {} }) => {
 
 export const getPendingTransferDeployHash = (symbol) =>
 	createSelector(getTransfersDeploy(symbol), (pendingTransferDeploys) => {
-		return pendingTransferDeploys.map((deploy) => deploy.deployHash);
+		return pendingTransferDeploys
+			.filter((deploy) => deploy.status === 'pending')
+			.map((deploy) => deploy.deployHash);
 	});

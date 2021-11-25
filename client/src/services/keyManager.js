@@ -1,7 +1,6 @@
 import { CLPublicKey, DeployUtil, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
 import { MOTE_RATE, PAYMENT_AMOUNT, NETWORK_NAME } from '../constants/key';
 import { buildContractInstallDeploy, signDeploy } from './casperServices';
-import { request } from './request';
 
 const DEPLOY_PAYMENT_AMOUNT = 1 * MOTE_RATE;
 
@@ -136,8 +135,8 @@ export const getSignedKeyManagementThresholdDeploy = async (weight, mainAccount)
  * @returns {Object} signed deploy Json
  */
 const getKeysManagerDeploy = async () => {
-	const data = await request('/getKeysManagerDeploy');
-	return data;
+	//const data = await request('/getKeysManagerDeploy');
+	return {};
 };
 
 /**
