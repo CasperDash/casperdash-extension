@@ -18,20 +18,30 @@ const EmptyDelegation = ({ isLoading }) => (
 	</div>
 );
 
-const TableActions = ({ validator, unDelegateFunc }) => {
+const TableActions = ({ validator, unDelegateFunc, disableAction }) => {
 	return (
 		<>
-			<span className="cd_tbl_action_undelegate" onClick={() => unDelegateFunc(validator)}>
-				undelegate
+			{disableAction}
+			<span
+				className={`cd_tbl_action_undelegate ${disableAction ? 'disabled' : ''}`}
+				onClick={() => unDelegateFunc(validator)}
+			>
+				Undelegate
 			</span>
 		</>
 	);
 };
 
-const StakingAccountListComponent = ({ stakingDeployList = [], unDelegateFunc, isLoading = false }) => {
+const StakingAccountListComponent = ({
+	stakingDeployList = [],
+	unDelegateFunc,
+	isLoading = false,
+	isConfirmingTrans,
+}) => {
 	if (!stakingDeployList.length) {
 		return <EmptyDelegation isLoading={isLoading} />;
 	}
+
 	const total = stakingDeployList
 		.filter((stake) => !!stake.stakedAmount)
 		.map((stake) => stake.stakedAmount)
@@ -63,7 +73,11 @@ const StakingAccountListComponent = ({ stakingDeployList = [], unDelegateFunc, i
 								{displayNaN(toFormattedNumber(staking.stakedAmount))}
 							</td>
 							<td className="cd_stake_table_actions">
-								<TableActions validator={staking} unDelegateFunc={unDelegateFunc} />
+								<TableActions
+									validator={staking}
+									unDelegateFunc={unDelegateFunc}
+									disableAction={isConfirmingTrans}
+								/>
 							</td>
 						</tr>
 					))}
