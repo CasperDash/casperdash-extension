@@ -3,6 +3,7 @@ import { signDeploy } from './casperServices';
 const { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } = require('casper-js-sdk');
 const { NETWORK_NAME, MOTE_RATE, ENTRY_POINT_DELEGATE } = require('../constants/key');
 const { contractHashes } = require('../shared/constants');
+const { toMotes } = require('../helpers/currency');
 
 const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
@@ -36,10 +37,10 @@ export const getSignedStakeDeploy = async ({
 	amount,
 	entryPoint = ENTRY_POINT_DELEGATE,
 }) => {
-	const fromAccPk = CLPublicKey.fromHex(fromAddress);
-	const validatorPk = CLPublicKey.fromHex(validator);
-	const deploy = getStakeDeploy(fromAccPk, validatorPk, fee * MOTE_RATE, amount * MOTE_RATE, entryPoint);
 	try {
+		const fromAccPk = CLPublicKey.fromHex(fromAddress);
+		const validatorPk = CLPublicKey.fromHex(validator);
+		const deploy = getStakeDeploy(fromAccPk, validatorPk, toMotes(fee), toMotes(amount), entryPoint);
 		const signedDeploy = await signDeploy(deploy, fromAddress, validator);
 		return signedDeploy;
 	} catch (error) {
