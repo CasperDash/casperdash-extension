@@ -1,7 +1,7 @@
 import React from 'react';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 
-export const TokenList = ({ tokensInfo, onTokenClick, selectedToken }) => {
+export const TokenList = ({ tokensInfo = [], onTokenClick, selectedToken = {} }) => {
 	return (
 		<>
 			{tokensInfo.map(({ symbol, address, balance, price }) => {
@@ -19,7 +19,9 @@ export const TokenList = ({ tokensInfo, onTokenClick, selectedToken }) => {
 									<p>{balance && toFormattedNumber(balance.displayValue)}</p>
 								</div>
 								<div className="cd_add_token_right_price">
-									<p>{price ? toFormattedCurrency(balance.displayValue * price) : '$--'}</p>
+									<p>
+										{price && balance ? toFormattedCurrency(balance.displayValue * price) : '$--'}
+									</p>
 								</div>
 							</div>
 						</div>

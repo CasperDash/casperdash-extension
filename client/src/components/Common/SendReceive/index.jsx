@@ -8,7 +8,7 @@ import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
-import { toFormattedNumber } from '../../../helpers/format';
+import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
 import { ConfirmModal } from './ConfirmModal';
 
@@ -67,15 +67,13 @@ export const SendReceiveSection = ({
 	};
 
 	const handleSubmit = (values) => {
-		if (fromAddress && values.toAddress && values.sendAmount) {
-			setTransactionDetails({
-				fromAddress: fromAddress,
-				toAddress: values.toAddress,
-				amount: values.sendAmount,
-				fee: transferFee,
-			});
-			setShowConfirmModal(true);
-		}
+		setTransactionDetails({
+			fromAddress: fromAddress,
+			toAddress: values.toAddress,
+			amount: values.sendAmount,
+			fee: transferFee,
+		});
+		setShowConfirmModal(true);
 	};
 
 	const onCloseConfirmModal = () => {
@@ -106,7 +104,7 @@ export const SendReceiveSection = ({
 							{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="cd_send_receive_heading">
-										<img src="assets/image/receive-heading-icon.svg" />
+										<img src="assets/image/receive-heading-icon.svg" alt="receive-icon" />
 										Send <span className="cd_send_receive_token_symbol">{tokenSymbol}</span>
 									</h3>
 
@@ -151,7 +149,7 @@ export const SendReceiveSection = ({
 										{currentPrice ? (
 											<>
 												<h3 className="cd_send_currency_text">
-													${parseFloat(values.sendAmount * currentPrice).toFixed(2)}
+													{toFormattedCurrency(values.sendAmount * currentPrice)}
 												</h3>
 												<h3 className="cd_send_currency_type">USD</h3>
 											</>
@@ -187,7 +185,7 @@ export const SendReceiveSection = ({
 				<div className="cd_send_receive_content_column">
 					<div className="cd_send_receive_inner_content">
 						<h3 className="cd_send_receive_heading cd_receive_heading">
-							<img src="assets/image/receive-heading-icon.svg" />
+							<img src="assets/image/receive-heading-icon.svg" alt="send-icon" />
 							Receive
 						</h3>
 						<div className="cd_receive_address_content">

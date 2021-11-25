@@ -11,7 +11,7 @@ test('Show NFT details modal', () => {
 		{ key: 'attribute', value: 'Test Attribute' },
 	];
 	const { getByText, getByAltText } = render(<NFTModal metadata={metadata} show />);
-	expect(getByAltText('nft-detail-image').src.includes('image/ntf.png')).toBe(true);
+	expect(getByAltText('nft-detail').src.includes('image/ntf.png')).toBe(true);
 	expect(getByText(/CDAS NFT/i).textContent).toBe('CDAS NFT');
 	expect(getByText(/Test Attribute/i).textContent).toBe('Test Attribute');
 });
@@ -31,7 +31,7 @@ test('Display default image if missing image', () => {
 		{ key: 'attribute', value: 'Test Attribute' },
 	];
 	const { getByAltText } = render(<NFTModal metadata={metadata} show />);
-	expect(getByAltText('nft-detail-image').src.includes('assets/image/nft-empty.png')).toBe(true);
+	expect(getByAltText('nft-detail').src.includes('assets/image/nft-empty.png')).toBe(true);
 });
 
 test('Trigger handleClose when closing modal', () => {
@@ -40,5 +40,5 @@ test('Trigger handleClose when closing modal', () => {
 		{ key: 'attribute', value: 'Test Attribute' },
 	];
 	const { getByAltText } = render(<NFTModal metadata={metadata} show handleClose={() => {}} />);
-	expect(getByAltText('nft-detail-image').src.includes('assets/image/nft-empty.png')).toBe(true);
+	expect(getByAltText('nft-detail').src.includes('assets/image/nft-empty.png')).toBe(true);
 });

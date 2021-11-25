@@ -139,6 +139,7 @@ const WalletDetails = () => {
 						displayBalance={displayBalance}
 						fromAddress={publicKey}
 						csprPrice={currentPrice}
+						currentPrice={currentPrice}
 					/>
 					<div className="cd_transaction_list">
 						<h3 className="cd_transaction_list_main_heading">

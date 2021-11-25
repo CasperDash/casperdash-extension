@@ -6,7 +6,8 @@
  * @return {String} Formatted number.
  */
 export const toFormattedNumber = (num, locales, options) => {
-	return new Intl.NumberFormat(locales, { maximumFractionDigits: 9, ...options }).format(num);
+	const number = new Intl.NumberFormat(locales, { maximumFractionDigits: 9, ...options });
+	return number ? number.format(num) : '0';
 };
 
 /**

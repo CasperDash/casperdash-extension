@@ -18,7 +18,7 @@ export const ConfirmModal = ({
 	tokenSymbol,
 	isTokenTransfer,
 }) => {
-	const [transferId, setTransferId] = useState();
+	const [transferId, setTransferId] = useState(0);
 
 	const onConfirmTransaction = () => {
 		if (typeof onConfirm === 'function') {
@@ -70,6 +70,7 @@ export const ConfirmModal = ({
 									type="number"
 									value={transferId}
 									onChange={(e) => setTransferId(e.target.value)}
+									placeholder="Transfer ID"
 								/>
 							) : (
 								<span className="cd_confirm_modal_value">{transferId}</span>

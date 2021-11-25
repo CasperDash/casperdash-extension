@@ -2,7 +2,7 @@
 import React from 'react';
 import * as redux from 'react-redux';
 import { render, cleanup } from '@testing-library/react';
-import Layout from './Connector';
+import Layout from './index';
 
 afterEach(cleanup);
 let spyOnUseDispatch;
