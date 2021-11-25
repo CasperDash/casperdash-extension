@@ -130,6 +130,10 @@
   cursor: pointer;
   color: #53b9ea;
 }
+.cd_stake_table .cd_tbl_action_undelegate.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 .cd_empty_delegation_row .cd_empty_delegation_section {
   margin: auto;

@@ -9,6 +9,10 @@
 		cursor: pointer;
 		color: $color7;
 	}
+	.cd_tbl_action_undelegate.disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
 }
 
 .cd_empty_delegation_row {
