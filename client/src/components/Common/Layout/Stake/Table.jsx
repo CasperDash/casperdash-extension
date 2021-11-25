@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Table, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 import CommonAction from '../../Button/CommonAction';
@@ -19,9 +19,9 @@ const EmptyDelegation = () => (
 const TableActions = ({ validator, unDelegateFunc }) => {
 	return (
 		<>
-			<OverlayTrigger placement="top" overlay={<Tooltip>Undelegate</Tooltip>}>
-				<i className="bi bi-x-square" onClick={() => unDelegateFunc(validator)} />
-			</OverlayTrigger>
+			<span className="cd_tbl_action_undelegate" onClick={() => unDelegateFunc(validator)}>
+				undelegate
+			</span>
 		</>
 	);
 };
