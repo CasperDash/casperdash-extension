@@ -135,6 +135,9 @@
   margin: auto;
   text-align: center;
 }
+.cd_empty_delegation_row .cd_empty_delegation_message {
+  color: #ba1358;
+}
 
 .cd_staking_component.toggle_form .cd_btn_stake_cspr {
   display: none;

@@ -15,6 +15,7 @@ import { fetchValidators } from '../../actions/stakeActions';
 import { getPendingStakes } from '../../selectors/stake';
 import { useStakeFromValidators } from '../hooks/useStakeDeploys';
 import UndelegateForm from '../Common/Layout/Stake/UnDelegateForm';
+import { isLoadingRequest } from '../../selectors/request';
 
 const UnlockSingerWarning = ({ title, message }) => (
 	<section className="cd_staking_page">
@@ -53,6 +54,7 @@ const ConfirmingTransactionsInfo = (transactions) => {
 		</Alert>
 	);
 };
+
 const Stake = () => {
 	const dispatch = useDispatch();
 
@@ -65,6 +67,8 @@ const Stake = () => {
 	const publicKey = useSelector(getPublicKey);
 	const currentPrice = useSelector(getCurrentPrice);
 	const validators = useSelector(getValidators);
+	// Selector
+	const isLoading = useSelector(isLoadingRequest);
 
 	const userDetails = useSelector(getMassagedUserDetails);
 	const pendingStakes = useSelector(getPendingStakes());
@@ -149,6 +153,7 @@ const Stake = () => {
 					)}
 					<StakingAccountList
 						stakingDeployList={stakingDeployList}
+						isLoading={isLoading}
 						unDelegateFunc={(validator) => undelegate(validator)}
 					/>
 				</div>
