@@ -1,5 +1,8 @@
 import { PRICE } from '../store/actionTypes';
 
+/**
+ * @returns
+ */
 export const fetchPriceHistory = () => ({
 	type: PRICE.FETCH_PRICE_HISTORY,
 	request: {
