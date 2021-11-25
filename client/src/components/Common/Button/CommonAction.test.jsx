@@ -19,7 +19,7 @@ test('Should copy value when clicked on copy', async () => {
 	};
 	global.navigator.clipboard = mockClipboard;
 	const { container } = render(<CommonAction />);
-	await act(() => {
+	await act(async () => {
 		fireEvent.click(container.querySelector('.cd_btn_copy'));
 		jest.advanceTimersByTime(1001);
 	});
