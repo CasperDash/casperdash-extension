@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Table, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 import CommonAction from '../../Button/CommonAction';
