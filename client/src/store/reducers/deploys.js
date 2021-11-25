@@ -1,7 +1,7 @@
 import { getLocalStorageValue } from '../../services/localStorage';
 import { DEPLOY } from '../actionTypes';
 
-export default function userReducer(state = { transfers: [] }, action) {
+export default function deployReducer(state = { transfers: [] }, action) {
 	switch (action.type) {
 		case DEPLOY.PUSH_TRANSFER_TO_LOCAL_STORAGE: {
 			const transfers = state.transfers || [];

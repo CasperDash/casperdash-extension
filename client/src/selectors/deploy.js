@@ -1,7 +1,6 @@
 import { getMutationSelector, getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { DEPLOY } from '../store/actionTypes';
-import { MOTE_RATE, KEY_PREFIX, CSPR_TRANSFER_FEE } from '../constants/key';
 
 export const deploySelector = getMutationSelector({ type: DEPLOY.PUT_DEPLOY });
 

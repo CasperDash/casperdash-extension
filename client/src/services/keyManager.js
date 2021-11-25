@@ -150,7 +150,7 @@ export const getKeyManagerContractDeploy = async (mainAccount) => {
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
 		const deploySession = await getKeysManagerDeploy();
 		const deployFromJson = DeployUtil.deployFromJson(deploySession);
-		const deploy = await buildContractInstallDeploy(mainAccountPK, deployFromJson.val.session);
+		const deploy = buildContractInstallDeploy(mainAccountPK, deployFromJson.val.session);
 		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount);
 		delete signedDeploy.deploy.session;
 		return signedDeploy;
