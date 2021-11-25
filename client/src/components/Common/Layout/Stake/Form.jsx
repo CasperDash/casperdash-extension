@@ -12,7 +12,6 @@ import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 
 import { deploySelector } from '../../../../selectors/deploy';
-import { toFormattedNumber } from '../../../../helpers/format';
 import { validateStakeForm } from '../../../../helpers/validator';
 
 import { CSPR_AUCTION_FEE } from '../../../../constants/key';
@@ -96,6 +95,11 @@ const StakingForm = ({
 		}
 	};
 
+	const setBalance = (percent, setFieldValue) => {
+		const amount = balance / percent;
+		setFieldValue('amount', amount);
+	};
+
 	const onComfirm = async () => {
 		try {
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
@@ -122,11 +126,10 @@ const StakingForm = ({
 
 	const error = deployHash ? '' : deployError || signedError;
 	return (
-		<div className="cd_setting_list">
-			<div className="cd_setting_list_items">
-				<div className="cd_setting_items_heading_peregraph cd_setting_items_form">
-					<div>
-						<h3 className="cd_transaction_list_main_heading">How much would you like to stake?</h3>
+		<div className="cd_send_receive_content">
+			<div className="cd_send_receive_content_row">
+				<div className="cd_send_receive_content_full_column">
+					<div className="cd_send_receive_inner_content">
 						<Formik
 							enableReinitialize
 							initialValues={{ amount: 1, validator: defaultValidator }}
@@ -140,23 +143,16 @@ const StakingForm = ({
 							}
 							onSubmit={handleSubmit}
 						>
-							{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+							{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit} className="cd-staking-form">
-									<Form.Group className="mb-3" controlId="cd-staking-amount">
-										<FormControl
-											name="amount"
-											value={values.amount}
-											onChange={handleChange}
-											type="number"
-											placeholder="Amount"
-											required
-											isInvalid={errors.amount}
-										/>
-										<Form.Control.Feedback type="invalid">{errors.amount}</Form.Control.Feedback>
-										<Form.Text className="text-muted">
-											{toFormattedNumber(balance)} {tokenSymbol}{' '}
-										</Form.Text>
-									</Form.Group>
+									<h3 className="cd_send_receive_heading">
+										<img src="assets/image/receive-heading-icon.svg" alt="delegate" />
+										Delegate
+									</h3>
+									<div className="cd_send_balance_content">
+										<span className="cd_send_balance_heading">Balance</span>
+										<span className="cd_send_balance_value">{balance}</span>
+									</div>
 									<Form.Group className="mb-3" controlId="cd-staking-validator">
 										<Field name={'validator'} component={SelectField} options={options} />
 										<Form.Text className="text-muted">
@@ -170,6 +166,33 @@ const StakingForm = ({
 											</a>
 										</Form.Text>
 									</Form.Group>
+									<div className="cd_send_currency_input_content">
+										<FormControl
+											value={values.amount}
+											name="amount"
+											required
+											type="number"
+											className="cd_send_currency_input"
+											onChange={handleChange}
+											isInvalid={errors.amount}
+										/>
+										<div className="cd_send_currency_input_btns">
+											<Button onClick={() => setBalance(4, setFieldValue)}>1/4</Button>
+											<Button onClick={() => setBalance(2, setFieldValue)}>Half</Button>
+											<Button onClick={() => setBalance(1, setFieldValue)}>All</Button>
+										</div>
+										<Form.Control.Feedback type="invalid">{errors.amount}</Form.Control.Feedback>
+									</div>
+									<div className="cd_send_currency_text_type">
+										{csprPrice && !errors.amount ? (
+											<>
+												<h3 className="cd_send_currency_text">
+													${parseFloat(values.amount * csprPrice).toFixed(2)}
+												</h3>
+												<h3 className="cd_send_currency_type">USD</h3>
+											</>
+										) : null}
+									</div>
 									<div className="cd_send_currency_btn_text">
 										<Button
 											className="cd_send_currency_btn"

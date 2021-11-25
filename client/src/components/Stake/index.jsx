@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { EXPLORER_URL, CASPER_SYMBOL } from '../../constants/key';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';

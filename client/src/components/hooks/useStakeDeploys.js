@@ -21,7 +21,7 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 			return;
 		}
 		const foundDelegator = validator.bidInfo.bid.delegators.find(
-			(delegator) => publicKey.toLowerCase() == delegator.public_key.toLowerCase(), // TODO: need to double check that the public key is non case sensitive
+			(delegator) => publicKey.toLowerCase() === delegator.public_key.toLowerCase(),
 		);
 
 		if (!foundDelegator) {

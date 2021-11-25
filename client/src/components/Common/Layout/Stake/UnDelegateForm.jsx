@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Field } from 'formik';
+import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 
 import ConfirmationModal from './Modal';
@@ -111,7 +111,7 @@ const UndelegateForm = ({
 							{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="cd_send_receive_heading">
-										<img src="assets/image/receive-heading-icon.svg" />
+										<img src="assets/image/receive-heading-icon.svg" alt="undelegate" />
 										Undelegate
 									</h3>
 									<div className="cd_send_balance_content">
