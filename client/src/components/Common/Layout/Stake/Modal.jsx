@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { csprToString } from '../../../../helpers/currency';
 import { toFormattedNumber, toFormattedCurrency } from '../../../../helpers/format';
 
 const ModalRow = ({ label, value, customClass }) => (
@@ -22,12 +23,12 @@ const SingleCurrencyRow = ({ amount }) => (
 	</div>
 );
 
-const CurrencyModalRow = ({ label, amount, currency = 'CSPR', currentPrice, customClass }) => (
+const CurrencyModalRow = ({ label, amount = 0, currency = 'CSPR', currentPrice, customClass }) => (
 	<>
 		<div className={`cd_confirm_modal_row ${customClass}`}>
 			<span className="cd_confirm_modal_label">{label}</span>
 			<span className="cd_confirm_modal_value">
-				{toFormattedNumber(amount)} <b>{currency}</b>
+				{csprToString(amount)} <b>{currency}</b>
 			</span>
 		</div>
 		<SingleCurrencyRow amount={toFormattedCurrency(amount * currentPrice)} />
