@@ -80,7 +80,7 @@ export const ConfirmationModal = ({
 					</Button>
 				) : (
 					<Button className="cd_btn_primary_active" onClick={onConfirm}>
-						{isDeploying ? 'Confirming...' : 'Confirm and delegate stake'}
+						{isDeploying ? 'Confirming...' : 'Confirm'}
 					</Button>
 				)}
 			</Modal.Footer>

@@ -105,20 +105,20 @@ const StakingForm = ({
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
 			if (signedDeploy.error) {
 				setSignerError(signedDeploy.error.message);
-			} else {
-				const deployResult = await dispatch(putDeploy(signedDeploy));
-				const { data } = deployResult;
-				setDeployHash(data.deployHash);
-				dispatch(
-					pushStakeToLocalStorage(stakeDetails.fromAddress, {
-						...stakeDetails,
-						deployHash: data.deployHash,
-						status: 'pending',
-						timestamp: signedDeploy.deploy.header.timestamp,
-					}),
-				);
-				handleToggle();
+				return;
 			}
+			const deployResult = await dispatch(putDeploy(signedDeploy));
+			const { data } = deployResult;
+			setDeployHash(data.deployHash);
+			dispatch(
+				pushStakeToLocalStorage(stakeDetails.fromAddress, {
+					...stakeDetails,
+					deployHash: data.deployHash,
+					status: 'pending',
+					timestamp: signedDeploy.deploy.header.timestamp,
+				}),
+			);
+			handleToggle();
 		} catch (error) {
 			setSignerError(error.message);
 		}
