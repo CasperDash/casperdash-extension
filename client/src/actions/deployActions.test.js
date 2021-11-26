@@ -76,7 +76,7 @@ describe('updateTransferDeployStatus', () => {
 	test('Should get local storage value', () => {
 		const mockDispatch = jest.fn();
 		getLocalStorageValue.mockReturnValue([{ deployHash: 'test', status: 'success' }]);
-		updateTransferDeployStatus('pbkeytest', 'local.path', ['test'])(mockDispatch);
+		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch);
 		expect(getLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 

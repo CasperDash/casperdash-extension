@@ -3,7 +3,7 @@ import { NFTS } from '../store/actionTypes';
 /**
  * @param {Array} tokenAddressList
  * @param {string} publicKey
- * @returns
+ * @returns {object}
  */
 export const fetchNFTInfo = (tokenAddressList, publicKey) => ({
 	type: NFTS.FETCH_NFTS_INFO,

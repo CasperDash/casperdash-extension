@@ -1,5 +1,5 @@
 import { Signer } from 'casper-js-sdk';
-import { getUserDetails, updatePublicKeyFromSigner } from './userActions';
+import { getUserDetails, updatePublicKeyFromSigner, setPublicKey } from './userActions';
 
 test('getUserDetails', () => {
 	expect(getUserDetails('test')).toEqual({
@@ -35,5 +35,12 @@ describe('getTokenAddressFromLocalStorage', () => {
 				payload: { isLocked: true },
 			});
 		}
+	});
+});
+
+test('setPublicKey', () => {
+	expect(setPublicKey('test')).toEqual({
+		type: 'USERS.SET_USER_ADDRESS',
+		payload: { publicKey: 'test' },
 	});
 });
