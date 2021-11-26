@@ -1,8 +1,9 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import * as redux from 'react-redux';
-import { render, fireEvent, cleanup, act, getByText } from '@testing-library/react';
+import { render, fireEvent, cleanup, act } from '@testing-library/react';
 import KeyManager from './index';
+import { getSignedAccountWeightDeploy } from '../../services/keyManager';
 
 //Set up
 jest.mock('../../actions/keyManagerActions', () => {
@@ -16,6 +17,14 @@ jest.mock('../../actions/keyManagerActions', () => {
 		getKeysManagerLocalStorage: jest.fn(),
 		getKeysManagerPendingDeploys: jest.fn(),
 		updateKeysManagerDeployStatus: jest.fn(),
+	};
+});
+
+jest.mock('../../services/keyManager', () => {
+	//Mock the default export and named export 'foo'
+	return {
+		__esModule: true,
+		getSignedAccountWeightDeploy: jest.fn(),
 	};
 });
 
@@ -53,7 +62,7 @@ beforeEach(() => {
 
 // Test
 
-test('Show no account with key management info ', () => {
+test('Show no account with key management info ', async () => {
 	spyOnUseSelector.mockReturnValue([]);
 
 	const { getByText, container } = render(<KeyManager />);
@@ -66,6 +75,12 @@ test('Show no account with key management info ', () => {
 	expect(getByText(/Key Management/i).textContent).toBe('Key Management');
 	const addKeyBtn = container.querySelector('.bi-plus-circle');
 	fireEvent.click(addKeyBtn);
+	expect(getByText(/Edit Key/i).textContent).toBe('Edit Key');
+	getSignedAccountWeightDeploy.mockReturnValue({});
+	mockDispatch.mockReturnValue({ data: { hash: 'test' } });
+	await act(async () => {
+		fireEvent.click(getByText(/Save/i));
+	});
 	expect(getByText(/Edit Key/i).textContent).toBe('Edit Key');
 });
 
