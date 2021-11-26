@@ -42,7 +42,8 @@ export const EditModal = ({
 									value={value}
 									onChange={(e) => handleInputChange(e)}
 									disabled={deployHash}
-								></input>
+									placeholder={attr.label}
+								/>
 							</div>
 						</>
 					) : (
