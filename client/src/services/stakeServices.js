@@ -1,7 +1,7 @@
 import { signDeploy } from './casperServices';
 
 const { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } = require('casper-js-sdk');
-const { NETWORK_NAME, MOTE_RATE, ENTRY_POINT_DELEGATE } = require('../constants/key');
+const { NETWORK_NAME, ENTRY_POINT_DELEGATE } = require('../constants/key');
 const { contractHashes } = require('../shared/constants');
 const { toMotes } = require('../helpers/currency');
 
