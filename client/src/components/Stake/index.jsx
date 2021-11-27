@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { EXPLORER_URL, CASPER_SYMBOL } from '../../constants/key';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import StakingAccountList from '../Common/Layout/Stake/Table';
-import StakingForm from '../Common/Layout/Stake/Form';
+import DelegateForm from '../Common/Layout/Stake/DelegateForm';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
@@ -139,7 +139,7 @@ const Stake = () => {
 								stakedValidator={defaultValidator}
 							/>
 						) : (
-							<StakingForm
+							<DelegateForm
 								defaultValidator={defaultValidator}
 								validators={validators}
 								handleToggle={handleToggle}

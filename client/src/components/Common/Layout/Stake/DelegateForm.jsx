@@ -44,7 +44,7 @@ const SelectField = ({ options, field, form }) => (
 	/>
 );
 
-const StakingForm = ({
+const DelegateForm = ({
 	fromAddress,
 	defaultValidator,
 	validators,
@@ -243,4 +243,4 @@ const StakingForm = ({
 	);
 };
 
-export default StakingForm;
+export default DelegateForm;
