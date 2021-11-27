@@ -78,6 +78,7 @@ const UndelegateForm = ({
 		setDeployHash(null);
 		setStakeDetails({});
 		setShowModal(false);
+		setSignerError(null);
 	};
 
 	const setBalance = (percent, setFieldValue) => {
