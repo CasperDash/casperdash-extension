@@ -5,6 +5,7 @@ import { getValidators } from '../../selectors/validator';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 import { getTransferDeploysStatus, updateTransferDeployStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
+import { updateStakeDeployStatus } from '../../actions/stakeActions';
 
 /**
  * Get staked validators and add the pending amount.
@@ -67,7 +68,7 @@ export const useStakeFromValidators = (publicKey) => {
 		(async () => {
 			if (!publicKey) return;
 			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
-			dispatch(updateTransferDeployStatus(publicKey, 'deploys.stakes', data));
+			dispatch(updateStakeDeployStatus(publicKey, 'deploys.stakes', data));
 		})();
 	}, [JSON.stringify(pendingStakes), dispatch]);
 
