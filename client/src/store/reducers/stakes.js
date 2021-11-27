@@ -9,6 +9,8 @@ export default function userReducer(state = { delegations: [] }, action) {
 		case STAKE.GET_STAKES_FROM_LOCAL_STORAGE:
 			const items = getLocalStorageValue(action.payload, 'deploys.stakes');
 			return { ...state, delegations: items };
+		case STAKE.UPDATE_STAKES_LOCAL_STORAGE:
+			return { ...state, delegations: action.payload };
 		default:
 			return state;
 	}
