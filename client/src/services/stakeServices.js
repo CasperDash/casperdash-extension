@@ -18,16 +18,20 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 };
 
 const getStakeDeploy = (delegator, validator, fee, amount, entryPoint) => {
-	return buildStakeDeploy(
-		delegator,
-		entryPoint,
-		{
+	try {
+		return buildStakeDeploy(
 			delegator,
-			validator,
-			amount: CLValueBuilder.u512(amount),
-		},
-		fee,
-	);
+			entryPoint,
+			{
+				delegator,
+				validator,
+				amount: CLValueBuilder.u512(amount),
+			},
+			fee,
+		);
+	} catch (err) {
+		throw err;
+	}
 };
 
 export const getSignedStakeDeploy = async ({

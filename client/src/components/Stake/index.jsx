@@ -115,13 +115,14 @@ const Stake = () => {
 		);
 	}
 
+	const showStakeBtn = !isConfirmingTrans && validators && validators.length > 0;
 	return (
 		<>
 			<section className="cd_staking_page">
 				{ConfirmingTransactionsInfo(pendingStakes)}
 				<HeadingModule name={'Staking'} />
 				<div className={`cd_staking_component ${toggleStakingForm}`}>
-					{!isConfirmingTrans && (
+					{showStakeBtn && (
 						<div className="cd_send_currency_btn_text cd_btn_stake_cspr">
 							<Button className=" cd_send_currency_btn" onClick={handleToggle}>
 								Stake CSPR
