@@ -47,6 +47,7 @@ export const ConfirmationModal = ({
 	isDeploying,
 	onClose,
 	onConfirm,
+	stakeAction = 'delegate',
 }) => {
 	const totalCspr = amount + fee;
 	return (
@@ -64,7 +65,7 @@ export const ConfirmationModal = ({
 			<Modal.Body className="cd_confirm_modal_body">
 				<ModalRow label="Account" value={fromAddress} />
 				<ModalRow label="Validator" value={validator} />
-				<CurrencyModalRow label="You'll delegate" amount={amount} currentPrice={currentPrice} />
+				<CurrencyModalRow label={`You'll ${stakeAction}`} amount={amount} currentPrice={currentPrice} />
 				<hr />
 				<CurrencyModalRow label="Transaction fee" amount={fee} currentPrice={currentPrice} />
 				<hr />

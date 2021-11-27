@@ -187,6 +187,7 @@ const UndelegateForm = ({
 						</Formik>
 						<ConfirmationModal
 							title="Confirm undelegation"
+							stakeAction="undelegate"
 							show={showModal}
 							validator={stakeDetails.validator}
 							fromAddress={stakeDetails.fromAddress}
