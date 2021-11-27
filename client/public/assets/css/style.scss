@@ -1168,11 +1168,13 @@ table {
 		flex-wrap: wrap;
 		margin: 0 -12px;
 	}
-	.cd_send_receive_content_column .cd_send_receive_content_full_column {
-		max-width: 100%;
+
+	.cd_send_receive_content_column {
+		max-width: 50%;
 		width: 100%;
 		padding: 0 12px;
 	}
+
 	.cd_send_receive_content_full_column {
 		max-width: 100%;
 		width: 100%;
