@@ -14,7 +14,7 @@ import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { deploySelector } from '../../../../selectors/deploy';
 import { validateStakeForm } from '../../../../helpers/validator';
 
-import { CSPR_AUCTION_FEE } from '../../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 
 /**
@@ -51,7 +51,7 @@ const DelegateForm = ({
 	tokenSymbol,
 	balance,
 	handleToggle,
-	fee = CSPR_AUCTION_FEE,
+	fee = CSPR_AUCTION_DELEGATE_FEE,
 	csprPrice,
 }) => {
 	// State
