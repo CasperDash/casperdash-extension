@@ -35,7 +35,7 @@ const ValidatorInfo = ({ validator, info, tokenSymbol }) => (
 						{info && info.bidInfo && info.bidInfo.bid && (
 							<>
 								<tr>
-									<td>Commision Rate</td>
+									<td>Commission Rate</td>
 									<td>
 										<span>{info.bidInfo.bid.delegation_rate}%</span>
 									</td>
