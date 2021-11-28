@@ -1,49 +1,17 @@
 import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import Select from 'react-select';
-
 import { useDispatch, useSelector } from 'react-redux';
-
-import ConfirmationModal from './Modal';
-
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-
 import { deploySelector } from '../../../../selectors/deploy';
 import { validateStakeForm } from '../../../../helpers/validator';
-
 import { CSPR_AUCTION_DELEGATE_FEE, MIN_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
-
-/**
- * Wrap releact-select to work with Formik.
- *
- * @param {Object}
- * @returns
- */
-const SelectField = ({ options, field, form }) => (
-	<Select
-		options={options}
-		name={field.name}
-		value={options ? options.find((option) => option.value === field.value) : null}
-		onChange={(option) => form.setFieldValue(field.name, option.value)}
-		onBlur={field.onBlur}
-		placeholder="Validator"
-		getOptionLabel={(e) => (
-			<div>
-				<div>
-					{e.icon} {e.label}
-				</div>
-				<div>
-					<small>Rate: {e.rate}%</small>
-				</div>
-			</div>
-		)}
-	/>
-);
+import ConfirmationModal from './Modal';
+import SelectField from './SelectField';
 
 const DelegateForm = ({
 	fromAddress,
@@ -71,7 +39,7 @@ const DelegateForm = ({
 				value: publicKey,
 				label: publicKey,
 				rate: bidInfo.bid.delegation_rate,
-				icon: <i className="bi bi-person"></i>,
+				icon: <i className="bi bi-person" />,
 		  }))
 		: [];
 

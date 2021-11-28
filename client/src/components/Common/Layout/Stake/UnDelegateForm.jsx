@@ -1,62 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
-import { Button, Form, FormControl, Table } from 'react-bootstrap';
-
-import ConfirmationModal from './Modal';
-
+import { Button, Form, FormControl } from 'react-bootstrap';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-
 import { deploySelector } from '../../../../selectors/deploy';
 import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_TRANSFER } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
-import CommonAction from '../../Button/CommonAction';
-import { toCSPR } from '../../../../helpers/currency';
-import { toFormattedCurrency, toFormattedNumber } from '../../../../helpers/format';
-
-const ValidatorInfo = ({ validator, info, tokenSymbol }) => (
-	<div className="cd_setting_list">
-		<div className="cd_setting_list_items">
-			<div className="cd_setting_items_heading_peregraph">
-				<h3>Validator Info</h3>
-				<Table className="cd_account_info_table">
-					<tbody>
-						<tr>
-							<td>Public Key</td>
-							<td>
-								<span>{validator}</span>
-							</td>
-							<td className="cd_account_table_action">
-								{validator && <CommonAction type="account" value={validator} />}
-							</td>
-						</tr>
-						{info && info.bidInfo && info.bidInfo.bid && (
-							<>
-								<tr>
-									<td>Commission Rate</td>
-									<td>
-										<span>{info.bidInfo.bid.delegation_rate}%</span>
-									</td>
-								</tr>
-								<tr>
-									<td>Self Stake</td>
-									<td>
-										<span>
-											{toFormattedNumber(toCSPR(info.bidInfo.bid.staked_amount).toNumber())}{' '}
-											{tokenSymbol}
-										</span>
-									</td>
-								</tr>
-							</>
-						)}
-					</tbody>
-				</Table>
-			</div>
-		</div>
-	</div>
-);
+import { toFormattedCurrency } from '../../../../helpers/format';
+import ConfirmationModal from './Modal';
+import ValidatorInfo from './ValidatorInfo';
 
 const UndelegateForm = ({
 	balance = 0,

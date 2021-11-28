@@ -1,5 +1,4 @@
 import { signDeploy } from './casperServices';
-
 const { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } = require('casper-js-sdk');
 const { NETWORK_NAME, ENTRY_POINT_DELEGATE } = require('../constants/key');
 const { contractHashes } = require('../shared/constants');
@@ -18,6 +17,8 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 };
 
 const getStakeDeploy = (delegator, validator, fee, amount, entryPoint) => {
+	// It throw exceptions when invoke function CLValueBuilder.u512
+	// eslint-disable-next-line no-useless-catch
 	try {
 		return buildStakeDeploy(
 			delegator,
@@ -41,6 +42,8 @@ export const getSignedStakeDeploy = async ({
 	amount,
 	entryPoint = ENTRY_POINT_DELEGATE,
 }) => {
+	// It throw exceptions when invoke function CLPublicKey.fromHex
+	// eslint-disable-next-line no-useless-catch
 	try {
 		const fromAccPk = CLPublicKey.fromHex(fromAddress);
 		const validatorPk = CLPublicKey.fromHex(validator);

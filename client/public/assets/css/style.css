@@ -183,6 +183,10 @@
   display: none;
 }
 
+.cd_btn_stake_cspr.hide {
+  display: none;
+}
+
 body {
   font-family: "Montserrat", sans-serif !important;
 }
