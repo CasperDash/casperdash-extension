@@ -27,9 +27,9 @@ export const updateStakeDeployStatus = (publicKey, path, listHash = []) => {
 			if (!deploy.deployHash) {
 				return deploy;
 			}
-			const hashStatus = listHash
-				.filter((item) => !!item.hash)
-				.find((item) => item.hash.toLowerCase() === deploy.deployHash.toLowerCase());
+			const hashStatus = listHash.find(
+				(item) => item.hash && item.hash.toLowerCase() === deploy.deployHash.toLowerCase(),
+			);
 			return { ...deploy, status: hashStatus ? hashStatus.status : deploy.status };
 		});
 		dispatch(updateStakeDeploysLocalStorage(publicKey, path, updatedValue, 'set'));
