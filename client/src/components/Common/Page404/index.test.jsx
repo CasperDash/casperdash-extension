@@ -10,6 +10,12 @@ jest.mock('react-router-dom', () => {
 	};
 });
 
+jest.mock('../../../shared/constants', () => {
+	return {
+		routes: { dashboardpage: '/' },
+	};
+});
+
 test('Should return 404 page', () => {
 	const { getByText } = render(<Page404Module />);
 	expect(getByText('Page not found.').textContent).toBe('Page not found.');
