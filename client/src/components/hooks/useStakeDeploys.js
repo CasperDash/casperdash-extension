@@ -3,7 +3,7 @@ import { moteToCspr } from '../../helpers/balance';
 import { getPendingStakes } from '../../selectors/stake';
 import { getValidators } from '../../selectors/validator';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
-import { getTransferDeploysStatus, updateTransferDeployStatus } from '../../actions/deployActions';
+import { getTransferDeploysStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
 import { updateStakeDeployStatus } from '../../actions/stakeActions';
 
