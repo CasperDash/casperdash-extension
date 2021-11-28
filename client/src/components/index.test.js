@@ -31,6 +31,13 @@ jest.mock('./NFTs', () => {
 		default: '',
 	};
 });
+
+jest.mock('./Stake', () => {
+	return {
+		__esModules: true,
+		default: '',
+	};
+});
 jest.mock('../shared/constants', () => {
 	return {
 		routes: { dashboard: '/dashboard', nfts: '/NFTs' },
