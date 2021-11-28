@@ -15,7 +15,6 @@ export const isValidPublicKey = (publicKey) => {
 	}
 };
 
-
 const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
 	NOT_ENOUGH_BALANCE: 'Not enough balance.',
