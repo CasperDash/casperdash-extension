@@ -1,5 +1,6 @@
 @import './theme-config.scss';
 @import './nft.scss';
+@import './stake/style.scss';
 
 body {
 	font-family: $fontfamily !important;
@@ -1154,6 +1155,12 @@ table {
 				margin-bottom: 8px;
 				word-break: break-all;
 			}
+			.cd_send_balance_label {
+				padding-left: 20px;
+				color: $color1;
+				margin-bottom: 8px;
+				word-break: break-all;
+			}
 		}
 	}
 	.cd_send_receive_content_row {
@@ -1161,8 +1168,15 @@ table {
 		flex-wrap: wrap;
 		margin: 0 -12px;
 	}
+
 	.cd_send_receive_content_column {
 		max-width: 50%;
+		width: 100%;
+		padding: 0 12px;
+	}
+
+	.cd_send_receive_content_full_column {
+		max-width: 100%;
 		width: 100%;
 		padding: 0 12px;
 	}
