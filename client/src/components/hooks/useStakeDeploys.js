@@ -5,7 +5,8 @@ import { getValidators } from '../../selectors/validator';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 import { getTransferDeploysStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
-import { updateStakeDeployStatus } from '../../actions/stakeActions';
+import { getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
+import { useEffect } from 'react';
 
 /**
  * Get staked validators and add the pending amount.
@@ -63,6 +64,10 @@ export const useStakeFromValidators = (publicKey) => {
 
 	const validators = useSelector(getValidators);
 	const pendingStakes = useSelector(getPendingStakes());
+
+	useEffect(() => {
+		dispatch(getStakeFromLocalStorage(publicKey));
+	}, [dispatch, publicKey]);
 
 	useAutoRefreshEffect(() => {
 		if (!pendingStakes.length) {
