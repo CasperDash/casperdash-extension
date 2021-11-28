@@ -95,8 +95,13 @@ const Stake = () => {
 		handleToggle();
 	};
 
-	const undelegate = (validator) => {
-		setDefaultValidator(validator);
+	const undelegate = (staking) => {
+		if (!staking || !validators || !validators.length) {
+			return;
+		}
+
+		const info = validators.find(({ public_key: publicKey }) => staking.validator === publicKey);
+		setDefaultValidator({ ...staking, info });
 		if (!send) {
 			setSend(true);
 		}

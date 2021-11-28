@@ -53,7 +53,7 @@ export const validateTransferForm = ({
 	return errors;
 };
 
-export const validateStakeForm = ({ amount, tokenSymbol, balance, fee }) => {
+export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount }) => {
 	let errors = {};
 	if (amount <= 0) {
 		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
@@ -61,10 +61,14 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee }) => {
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
 	}
 
+	if (balance <= minAmount) {
+		errors.amount = `Insufficient balance. System requires ${minAmount} ${tokenSymbol} minimum balance.`;
+	}
+
 	return errors;
 };
 
-export const validateUndelegateForm = ({ amount, tokenSymbol, balance, fee, stakedAmount }) => {
+export const validateUndelegateForm = ({ amount, tokenSymbol, balance, fee, stakedAmount, minAmount }) => {
 	let errors = {};
 	if (amount <= 0) {
 		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
@@ -72,6 +76,10 @@ export const validateUndelegateForm = ({ amount, tokenSymbol, balance, fee, stak
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_STAKED_AMOUNT;
 	} else if (fee > balance) {
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
+	}
+
+	if (balance <= minAmount) {
+		errors.amount = `Insufficient balance. System requires ${minAmount} ${tokenSymbol} minimum balance.`;
 	}
 
 	return errors;
