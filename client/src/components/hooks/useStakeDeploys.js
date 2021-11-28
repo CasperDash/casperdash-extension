@@ -18,7 +18,7 @@ import { useEffect } from 'react';
  */
 const getStakedValidators = (validators, pendingStakes, publicKey) => {
 	let stakedValidators = [];
-	if (!publicKey) {
+	if (!publicKey || !validators.length) {
 		return stakedValidators;
 	}
 	validators.forEach((validator) => {
