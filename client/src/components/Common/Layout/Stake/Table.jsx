@@ -21,7 +21,6 @@ const EmptyDelegation = ({ isLoading }) => (
 const TableActions = ({ validator, unDelegateFunc, disableAction }) => {
 	return (
 		<>
-			{disableAction}
 			<span
 				className={`cd_tbl_action_undelegate ${disableAction ? 'disabled' : ''}`}
 				onClick={() => unDelegateFunc(validator)}

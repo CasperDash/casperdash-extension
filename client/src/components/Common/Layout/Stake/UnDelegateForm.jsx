@@ -14,7 +14,7 @@ import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_TRANSFER } fro
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import CommonAction from '../../Button/CommonAction';
 import { toCSPR } from '../../../../helpers/currency';
-import { toFormattedNumber } from '../../../../helpers/format';
+import { toFormattedCurrency, toFormattedNumber } from '../../../../helpers/format';
 
 const ValidatorInfo = ({ validator, info, tokenSymbol }) => (
 	<div className="cd_setting_list">
@@ -200,7 +200,7 @@ const UndelegateForm = ({
 											{csprPrice && !errors.amount ? (
 												<>
 													<h3 className="cd_send_currency_text">
-														${parseFloat(values.amount * csprPrice).toFixed(2)}
+														{toFormattedCurrency(values.amount * csprPrice)}
 													</h3>
 													<h3 className="cd_send_currency_type">USD</h3>
 												</>

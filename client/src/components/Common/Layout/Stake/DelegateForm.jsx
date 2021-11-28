@@ -16,6 +16,7 @@ import { validateStakeForm } from '../../../../helpers/validator';
 
 import { CSPR_AUCTION_DELEGATE_FEE, MIN_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
+import { toFormattedCurrency } from '../../../../helpers/format';
 
 /**
  * Wrap releact-select to work with Formik.
@@ -188,7 +189,7 @@ const DelegateForm = ({
 										{csprPrice && !errors.amount ? (
 											<>
 												<h3 className="cd_send_currency_text">
-													${parseFloat(values.amount * csprPrice).toFixed(2)}
+													{toFormattedCurrency(values.amount * csprPrice)}
 												</h3>
 												<h3 className="cd_send_currency_type">USD</h3>
 											</>
