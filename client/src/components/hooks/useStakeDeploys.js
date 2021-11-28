@@ -17,12 +17,15 @@ import { updateStakeDeployStatus } from '../../actions/stakeActions';
  */
 const getStakedValidators = (validators, pendingStakes, publicKey) => {
 	let stakedValidators = [];
+	if (!publicKey) {
+		return stakedValidators;
+	}
 	validators.forEach((validator) => {
 		if (!validator.bidInfo) {
 			return;
 		}
 		const foundDelegator = validator.bidInfo.bid.delegators.find(
-			(delegator) => publicKey.toLowerCase() === delegator.public_key.toLowerCase(),
+			(delegator) => delegator.public_key && delegator.public_key.toLowerCase() === publicKey.toLowerCase(),
 		);
 
 		if (!foundDelegator) {
