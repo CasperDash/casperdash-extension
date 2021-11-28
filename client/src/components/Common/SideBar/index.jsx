@@ -70,6 +70,50 @@ const SIDEBAR_ITEMS = [
 			</svg>
 		),
 	},
+	{
+		key: 'staking',
+		path: '/staking',
+		name: 'Staking',
+		icon: (
+			<svg width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M9.49548 17L9.49548 5.92954"
+					stroke="#828CAE"
+					strokeWidth="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				/>
+				<path
+					d="M13.515 17L13.515 2.91033"
+					stroke="#828CAE"
+					strokeWidth="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				/>
+				<path
+					d="M5.47666 17L5.47666 8.94876"
+					stroke="#828CAE"
+					strokeWidth="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				/>
+				<path
+					d="M1.45715 17L1.45715 10.9616"
+					stroke="#828CAE"
+					strokeWidth="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				/>
+				<path
+					d="M1.6745 7.32535L9.40402 1.04169"
+					stroke="#828CAE"
+					strokeWidth="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				/>
+			</svg>
+		),
+	},
 ];
 
 const SideBar = ({ title, modules }) => {

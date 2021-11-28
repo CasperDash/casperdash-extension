@@ -27,6 +27,14 @@ const CONFIG_OPTIONS = {
 		env: 'REACT_APP_AVAILABLE_FEATURES',
 		default: undefined,
 	},
+	AUCTION_HASH: {
+		env: 'REACT_APP_AUCTION_HASH',
+		default: undefined, //testnet auction contract hash.
+	},
+	EXPLORER_ROOT_LINK: {
+		env: 'REACT_APP_EXPLORER_ROOT_LINK',
+		default: 'https://testnet.cspr.live',
+	},
 };
 
 const getConfigOption = (option) => {

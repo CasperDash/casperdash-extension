@@ -9,6 +9,7 @@ import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
 import tokensReducer from './reducers/tokens';
 import deployReducer from './reducers/deploys';
+import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
 import { REQUEST } from './actionTypes';
 
@@ -72,6 +73,7 @@ const main = combineReducers({
 	tokens: tokensReducer,
 	requests: requestsReducer,
 	deploys: deployReducer,
+	stakes: stakeReducer,
 	request: requestReducer,
 });
 

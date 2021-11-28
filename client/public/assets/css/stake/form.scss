@@ -1,0 +1,45 @@
+.cd_setting_list_items {
+	.cd_setting_items_form {
+		width: 100%;
+	}
+}
+
+.cd-staking-form {
+	.cd-form-text-link {
+		color: inherit;
+		text-decoration: none;
+	}
+}
+
+.cd_undelegate_section {
+	margin-top: 27px;
+}
+
+.cd_undelegate_form {
+	.cd_undelegate_form_sub_info_title {
+		font-size: 12px;
+		line-height: 22px;
+		color: $color3;
+		margin-bottom: 21px;
+		word-break: break-word;
+	}
+
+	.cd_undelegate_form_sub_info_value {
+		font-size: 12px;
+		line-height: 22px;
+		color: $color3;
+		margin-bottom: 21px;
+		word-break: break-word;
+		padding-left: 20px;
+	}
+
+	.cd_undelegate_form_sub_info_value_amount {
+		font-size: 12px;
+		line-height: 22px;
+		color: $color3;
+		margin-bottom: 21px;
+		word-break: break-word;
+		padding-left: 20px;
+		font-weight: 600;
+	}
+}

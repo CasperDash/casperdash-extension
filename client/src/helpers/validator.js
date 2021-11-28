@@ -15,11 +15,12 @@ export const isValidPublicKey = (publicKey) => {
 	}
 };
 
-/**
- * Validate transfer form.
- * @param {Object}  - Transfer object.
- * @return {Object} - Error object
- */
+const COMMON_ERROR_MESSAGE = {
+	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
+	NOT_ENOUGH_BALANCE: 'Not enough balance.',
+	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
+};
+
 export const validateTransferForm = ({
 	displayBalance,
 	toAddress,
@@ -54,5 +55,37 @@ export const validateTransferForm = ({
 	if (csprBalance < transferFee) {
 		return { transferFee: 'Not enough CSPR balance.' };
 	}
+	return errors;
+};
+
+export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount }) => {
+	let errors = {};
+	if (amount <= 0) {
+		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
+	} else if (amount + fee > balance) {
+		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
+	}
+
+	if (balance <= minAmount) {
+		errors.amount = `Insufficient balance. System requires ${minAmount} ${tokenSymbol} minimum balance.`;
+	}
+
+	return errors;
+};
+
+export const validateUndelegateForm = ({ amount, tokenSymbol, balance, fee, stakedAmount, minAmount }) => {
+	let errors = {};
+	if (amount <= 0) {
+		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
+	} else if (amount > stakedAmount) {
+		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_STAKED_AMOUNT;
+	} else if (fee > balance) {
+		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
+	}
+
+	if (balance <= minAmount) {
+		errors.amount = `Insufficient balance. System requires ${minAmount} ${tokenSymbol} minimum balance.`;
+	}
+
 	return errors;
 };
