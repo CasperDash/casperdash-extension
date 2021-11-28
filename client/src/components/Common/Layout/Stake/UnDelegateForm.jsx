@@ -95,7 +95,7 @@ const UndelegateForm = ({
 		}
 	};
 
-	const onComfirm = async () => {
+	const onConfirm = async () => {
 		try {
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
 			if (signedDeploy.error) {
@@ -217,7 +217,7 @@ const UndelegateForm = ({
 												disabled={!values.amount}
 												onClick={handleSubmit}
 											>
-												Send
+												Undelegate
 											</Button>
 											<div className="cd_send_currency_text">
 												<p>
@@ -245,7 +245,7 @@ const UndelegateForm = ({
 								fee={stakeDetails.fee}
 								currentPrice={csprPrice}
 								onClose={onCloseModal}
-								onConfirm={onComfirm}
+								onConfirm={onConfirm}
 								deployHash={deployHash}
 								isDeploying={isDeploying}
 								error={error}
