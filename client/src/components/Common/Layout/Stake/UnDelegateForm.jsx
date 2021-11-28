@@ -78,7 +78,6 @@ const UndelegateForm = ({
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
-	console.log('StakdV', stakedValidator);
 	// Func
 	const handleSubmit = async (values) => {
 		const { amount } = values;
