@@ -132,7 +132,7 @@ const DelegateForm = ({
 					<div className="cd_send_receive_inner_content">
 						<Formik
 							enableReinitialize
-							initialValues={{ amount: 1, validator: defaultValidator }}
+							initialValues={{ amount: 0, validator: defaultValidator }}
 							validate={(values) =>
 								validateStakeForm({
 									...values,
