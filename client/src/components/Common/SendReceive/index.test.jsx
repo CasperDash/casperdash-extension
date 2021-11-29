@@ -56,7 +56,7 @@ test('Should display send receive form', () => {
 	expect(queryAllByText('Receive').length).toBe(1);
 });
 
-test('Should set send amount if clicked on preset amount button', () => {
+test('Should set send amount if clicked on preset amount button', async () => {
 	spyOnUseSelector.mockReturnValue([]);
 
 	const { getByText, container } = render(<SendReceiveSection displayBalance={1000} currentPrice={2} />);
@@ -66,13 +66,19 @@ test('Should set send amount if clicked on preset amount button', () => {
 	expect(getByText('997.5').textContent).toBe('997.5');
 	expect(amountInput.value).toBe('2.5');
 	expect(getByText('$5.00').textContent).toBe('$5.00');
-	fireEvent.click(getByText('1/4'));
+	await act(async () => {
+		fireEvent.click(getByText('1/4'));
+	});
 	expect(amountInput.value).toBe('250');
 	expect(getByText('$500.00').textContent).toBe('$500.00');
-	fireEvent.click(getByText('Half'));
+	await act(async () => {
+		fireEvent.click(getByText('Half'));
+	});
 	expect(amountInput.value).toBe('500');
 	expect(getByText('$1,000.00').textContent).toBe('$1,000.00');
-	fireEvent.click(getByText('All'));
+	await act(async () => {
+		fireEvent.click(getByText('All'));
+	});
 	expect(amountInput.value).toBe('1000');
 	expect(getByText('$2,000.00').textContent).toBe('$2,000.00');
 });

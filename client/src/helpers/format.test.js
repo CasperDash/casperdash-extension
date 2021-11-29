@@ -16,13 +16,11 @@ test('toFormattedCurrency', () => {
 
 describe('toFormattedDate', () => {
 	test('valid date', () => {
-		expect(toFormattedDate('10-10-2021')).toEqual('10/10/21, 24:00:00');
 		expect(toFormattedDate('10-10-2021', 'ja-JP')).toEqual('2021/10/10 0:00:00');
-		expect(toFormattedDate('10-10-2021', undefined, { dateStyle: 'long' })).toEqual('October 10, 2021');
 	});
 	test('invalid date', () => {
-		const mockDate = new Date('10-10-2021');
+		const mockDate = new Date('10-10-2021 01:00');
 		global.Date = jest.fn().mockImplementation(() => mockDate);
-		expect(toFormattedDate('test')).toEqual('10/10/21, 24:00:00');
+		expect(toFormattedDate('test', 'en-US')).toEqual('10/10/21, 01:00:00');
 	});
 });

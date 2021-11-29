@@ -25,7 +25,3 @@ export const routes = features
 			return features.includes(route) ? { ...out, [route]: defaultRoutes[route] } : out;
 	  }, {})
 	: defaultRoutes;
-
-export const contractHashes = {
-	auction: Uint8Array.from(Buffer.from(APP_CONFIGS.AUCTION_HASH, 'hex')),
-};
