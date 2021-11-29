@@ -38,7 +38,8 @@ export const toFormattedDate = (
 	options = { dateStyle: 'short', timeStyle: 'medium', hour12: false },
 ) => {
 	let date = new Date(dateString);
-	if (date == 'Invalid Date') {
+
+	if (!(date instanceof Date)) {
 		date = new Date();
 	}
 	return new Intl.DateTimeFormat(locales, options).format(date);
