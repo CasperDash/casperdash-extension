@@ -21,18 +21,3 @@ export const toMotes = (amount) => {
 		return '-';
 	}
 };
-
-/**
- * Convert motes to CSPR
- *
- * @param {Number|String} amount
- * @returns {BigNumberis|String} Return "-" if it's the invalid big number input.
- */
-export const toCSPR = (amount) => {
-	try {
-		const bigAmount = Big(amount).div(MOTE_RATE).round(0, Big.roundDown).toString();
-		return BigNumber.from(bigAmount);
-	} catch (error) {
-		return '-';
-	}
-};
