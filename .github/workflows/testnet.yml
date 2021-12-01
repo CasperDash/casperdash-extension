@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
     push:
-        branches: [develop]
+        branches: [develop, feature/run-ut-on-ci]
 
 jobs:
     build:
@@ -32,12 +32,14 @@ jobs:
             - name: Install eslint
               run : |
                   yarn  
+            - name: Run UT
+              run : |
+                  yarn run test --if-present
             - name: Build react app
               working-directory: ./client
               run: |
                   cp .env.staging.local .env.production.local
                   yarn
                   yarn run publish-testnet --if-present
-                  aws s3 sync ./build/ s3://testnet.casperdash.io/ --delete
               env:
                   CI: false
