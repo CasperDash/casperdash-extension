@@ -10,7 +10,6 @@ describe('toMotes', () => {
 	});
 
 	test('can covert cspr to rounded mote with floating number string having more than 9 decimal places', () => {
-		const expectedMotes = '-';
 		expect(toMotes('10.123456789123').toNumber()).toEqual(10123456789);
 	});
 
