@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
     push:
-        branches: [develop, feature/run-ut-on-ci]
+        branches: [develop]
 
 jobs:
     build:
@@ -31,7 +31,8 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install eslint
               run : |
-                  yarn  
+                  yarn 
+
             - name: Run UT
               working-directory: ./client
               continue-on-error: true
