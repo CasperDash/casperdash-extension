@@ -12,7 +12,7 @@ export const fetchTokensInfoWithBalance = (tokenAddressList, publicKey) => ({
 		url: '/tokens/getTokensInfo',
 		params: {
 			publicKey,
-			tokenAddress: tokenAddressList,
+			tokenAddress: Array.isArray(tokenAddressList) ? tokenAddressList : [tokenAddressList],
 		},
 	},
 });

@@ -7,7 +7,6 @@ test('fetchPriceHistory', () => {
 			url: '/nfts/getNFTsInfo',
 			params: {
 				publicKey: undefined,
-				tokenAddress: undefined,
 			},
 		},
 	});
