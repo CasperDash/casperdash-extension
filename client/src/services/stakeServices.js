@@ -17,22 +17,16 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 };
 
 const getStakeDeploy = (delegator, validator, fee, amount, entryPoint) => {
-	// It throw exceptions when invoke function CLValueBuilder.u512
-	// eslint-disable-next-line no-useless-catch
-	try {
-		return buildStakeDeploy(
+	return buildStakeDeploy(
+		delegator,
+		entryPoint,
+		{
 			delegator,
-			entryPoint,
-			{
-				delegator,
-				validator,
-				amount: CLValueBuilder.u512(amount),
-			},
-			fee,
-		);
-	} catch (err) {
-		throw err;
-	}
+			validator,
+			amount: CLValueBuilder.u512(amount),
+		},
+		fee,
+	);
 };
 
 export const getSignedStakeDeploy = async ({
@@ -42,8 +36,6 @@ export const getSignedStakeDeploy = async ({
 	amount,
 	entryPoint = ENTRY_POINT_DELEGATE,
 }) => {
-	// It throw exceptions when invoke function CLPublicKey.fromHex
-	// eslint-disable-next-line no-useless-catch
 	try {
 		const fromAccPk = CLPublicKey.fromHex(fromAddress);
 		const validatorPk = CLPublicKey.fromHex(validator);
@@ -51,6 +43,6 @@ export const getSignedStakeDeploy = async ({
 		const signedDeploy = await signDeploy(deploy, fromAddress, validator);
 		return signedDeploy;
 	} catch (error) {
-		throw error;
+		throw new Error(`Failed to get signed stake deploy due to ${error}`);
 	}
 };

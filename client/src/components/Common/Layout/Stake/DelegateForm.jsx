@@ -72,10 +72,6 @@ const DelegateForm = ({
 	const onComfirm = async () => {
 		try {
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
-			if (signedDeploy.error) {
-				setSignerError(signedDeploy.error.message);
-				return;
-			}
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data } = deployResult;
 			setDeployHash(data.deployHash);
