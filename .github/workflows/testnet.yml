@@ -33,7 +33,9 @@ jobs:
               run : |
                   yarn  
             - name: Run UT
+              working-directory: ./client
               run : |
+                  yarn
                   yarn run test --if-present
             - name: Build react app
               working-directory: ./client
