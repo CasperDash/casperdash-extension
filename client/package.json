@@ -51,7 +51,7 @@
 		"build": "react-scripts build && react-snapshot",
 		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
 		"test": "react-scripts test --coverage --watchAll ",
-		"test-ci": "REACT_APP_CI=true react-scripts test --coverage",
+		"test-ci": "SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage",
 		"publish": "react-scripts build",
 		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build",
 		"build-style": "sass public/assets/css/style.scss public/assets/css/style.css"
