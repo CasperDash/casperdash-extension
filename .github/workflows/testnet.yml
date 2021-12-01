@@ -33,10 +33,17 @@ jobs:
               run : |
                   yarn  
             - name: Run UT
+              uses: codecov/codecov-action@v2
               working-directory: ./client
               run : |
                   yarn
-                  yarn run test
+                  yarn run test-ci
+
+            - name: Upload code coverage to codecov 
+              uses: codecov/codecov-action@v2
+              with:
+                working-directory: './client'
+
             - name: Build react app
               working-directory: ./client
               run: |
