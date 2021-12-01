@@ -1,6 +1,11 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
 
+/**
+ * Check value is public key.
+ * @param {String}  - Public key.
+ * @return {Boolean} - Is valid public key
+ */
 export const isValidPublicKey = (publicKey) => {
 	try {
 		const pbKey = CLPublicKey.fromHex(publicKey);
@@ -16,6 +21,11 @@ const COMMON_ERROR_MESSAGE = {
 	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
 };
 
+/**
+ * Validate transfer form.
+ * @param {Object}  - Transfer object.
+ * @return {Object} - Error object
+ */
 export const validateTransferForm = ({
 	displayBalance,
 	toAddress,
@@ -28,27 +38,27 @@ export const validateTransferForm = ({
 	let errors = {};
 	// to address
 	if (!toAddress) {
-		errors.toAddress = 'Required.';
+		return { toAddress: 'Required.' };
 	}
-	if (!errors.toAddress && !isValidPublicKey(toAddress)) {
-		errors.toAddress = 'Invalid address.';
+	if (!isValidPublicKey(toAddress)) {
+		return { toAddress: 'Invalid address.' };
 	}
 	// send amount
 	if (sendAmount < minAmount) {
-		errors.sendAmount = `Amount must be at least ${minAmount} ${tokenSymbol}.`;
+		return { sendAmount: `Amount must be at least ${minAmount} ${tokenSymbol}.` };
 	}
 	if (sendAmount <= 0) {
-		errors.sendAmount = `Amount must be more than 0 ${tokenSymbol}.`;
+		return { sendAmount: `Amount must be more than 0 ${tokenSymbol}.` };
 	}
-	if (!errors.sendAmount && sendAmount > displayBalance) {
-		errors.sendAmount = 'Not enough balance.';
+	if (sendAmount > displayBalance) {
+		return { sendAmount: 'Not enough balance.' };
 	}
-	if (!errors.sendAmount && tokenSymbol === 'CSPR' && sendAmount + transferFee > displayBalance) {
-		errors.sendAmount = 'Not enough balance.';
+	if (tokenSymbol === 'CSPR' && sendAmount + transferFee > displayBalance) {
+		return { sendAmount: 'Not enough balance.' };
 	}
 	//cspr balance
 	if (csprBalance < transferFee) {
-		errors.transferFee = 'Not enough CSPR balance.';
+		return { transferFee: 'Not enough CSPR balance.' };
 	}
 	return errors;
 };

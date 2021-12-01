@@ -1,38 +1,8 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { toFormattedCurrency } from '../../../../helpers/format';
-
-const ModalRow = ({ label, value, customClass }) => (
-	<div className={`cd_confirm_modal_row ${customClass}`}>
-		<span className="cd_confirm_modal_label">{label}</span>
-		<span className="cd_confirm_modal_value">{value}</span>
-	</div>
-);
-
-const SuccessRow = ({ label, value, customClass }) => (
-	<div className={`cd_confirm_modal_row ${customClass}`}>
-		<span className="cd_confirm_modal_label">{label}</span>
-		<span className="cd_confirm_modal_value_success">{value}</span>
-	</div>
-);
-
-const SingleCurrencyRow = ({ amount }) => (
-	<div className="cd_confirm_modal_row_single">
-		<span className="cd_confirm_modal_value">{amount}</span>
-	</div>
-);
-
-const CurrencyModalRow = ({ label, amount = 0, currency = 'CSPR', currentPrice, customClass }) => (
-	<>
-		<div className={`cd_confirm_modal_row ${customClass}`}>
-			<span className="cd_confirm_modal_label">{label}</span>
-			<span className="cd_confirm_modal_value">
-				{amount} <b>{currency}</b>
-			</span>
-		</div>
-		<SingleCurrencyRow amount={toFormattedCurrency(amount * currentPrice)} />
-	</>
-);
+import ModalRow from '../Modal/Row';
+import SuccessRow from '../Modal/SuccessRow';
+import CurrencyModalRow from '../Modal/CurrencyModalRow';
 
 export const ConfirmationModal = ({
 	title,

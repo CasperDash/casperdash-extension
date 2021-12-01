@@ -1,12 +1,12 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { moteToCspr } from '../../helpers/balance';
 import { getPendingStakes } from '../../selectors/stake';
 import { getValidators } from '../../selectors/validator';
-import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 import { getTransferDeploysStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
 import { getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
-import { useEffect } from 'react';
+import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 /**
  * Get staked validators and add the pending amount.
