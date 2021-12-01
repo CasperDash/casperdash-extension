@@ -44,6 +44,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
+		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
 		"build": "react-scripts build && react-snapshot",
 		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
 		"test": "react-scripts test",
@@ -74,6 +75,6 @@
 				"statements": 90
 			}
 		},
-		"resetMocks":false
+		"resetMocks": false
 	}
 }
