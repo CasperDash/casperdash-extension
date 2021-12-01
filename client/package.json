@@ -1,7 +1,10 @@
 {
-	"name": "frontend",
+	"name": "casperdash_client",
+	"description": "CasperDash Client",
 	"version": "1.0.2",
-	"private": "false",
+	"private": false,
+	"author": "CasperDash",
+	"license": "MIT",
 	"dependencies": {
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
@@ -47,7 +50,7 @@
 		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
 		"build": "react-scripts build && react-snapshot",
 		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
-		"test": "react-scripts test",
+		"test": "react-scripts test --coverage --watchAll ",
 		"publish": "react-scripts build",
 		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build",
 		"build-style": "sass public/assets/css/style.scss public/assets/css/style.css"
