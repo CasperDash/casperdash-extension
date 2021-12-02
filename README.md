@@ -1,5 +1,7 @@
 # Welcome to Casper Dash 👋
 
+[![codecov](https://codecov.io/gh/CasperDash/casperdash-client/branch/develop/graph/badge.svg?token=3KWLVN3DPV)](https://codecov.io/gh/CasperDash/casperdash-client)
+
 ![](https://i.imgur.com/S9p3Aob.png)
 
 > A web wallet for Casper blockchain

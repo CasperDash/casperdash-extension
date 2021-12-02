@@ -31,13 +31,25 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install eslint
               run : |
-                  yarn  
+                  yarn 
+
+            - name: Run UT
+              working-directory: ./client
+              continue-on-error: true
+              run : |
+                  yarn
+                  yarn run test-ci
+
+            - name: Upload code coverage to codecov 
+              uses: codecov/codecov-action@v2
+              with:
+                working-directory: './client'
+
             - name: Build react app
               working-directory: ./client
               run: |
                   cp .env.staging.local .env.production.local
                   yarn
                   yarn run publish-testnet --if-present
-                  aws s3 sync ./build/ s3://testnet.casperdash.io/ --delete
               env:
                   CI: false
