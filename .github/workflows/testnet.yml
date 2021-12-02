@@ -29,6 +29,9 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Install eslint
+              run : |
+                  yarn  
             - name: Build react app
               working-directory: ./client
               run: |
