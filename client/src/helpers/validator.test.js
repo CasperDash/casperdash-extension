@@ -1,4 +1,4 @@
-import { isValidPublicKey, validateTransferForm } from './validator';
+import { isValidPublicKey, validateTransferForm, validateStakeForm, validateUndelegateForm } from './validator';
 
 describe('isValidPublicKey', () => {
 	test('valid public key', () => {
@@ -27,6 +27,16 @@ describe('validateTransferForm', () => {
 				tokenSymbol: 'CSPR',
 			}),
 		).toEqual({ sendAmount: 'Amount must be at least 2.5 CSPR.' });
+	});
+	test('Send amount must be more than zero', () => {
+		expect(
+			validateTransferForm({
+				toAddress: '0111a5aee38d7506ae9199e62c30b8303298a38ca7e9835545772f21414ea019b0',
+				sendAmount: -1,
+				minAmount: -2,
+				tokenSymbol: 'CSPR',
+			}),
+		).toEqual({ sendAmount: 'Amount must be more than 0 CSPR.' });
 	});
 	test('Not enough balance', () => {
 		expect(
@@ -83,5 +93,96 @@ describe('validateTransferForm', () => {
 				csprBalance: 100,
 			}),
 		).toEqual({});
+	});
+});
+
+describe('validateStakeForm', () => {
+	test('Send amount must be more than zero', () => {
+		expect(
+			validateStakeForm({
+				amount: -1,
+				tokenSymbol: 'CSPR',
+				balance: 3,
+				fee: 5,
+				minAmount: 0.0001,
+			}),
+		).toEqual({ amount: 'Amount must be more than 0 CSPR.' });
+	});
+
+	test('Not enough balance with fee', () => {
+		expect(
+			validateStakeForm({
+				amount: 1,
+				tokenSymbol: 'CSPR',
+				balance: 3,
+				fee: 5,
+				minAmount: 0.0001,
+			}),
+		).toEqual({ amount: 'Not enough balance.' });
+	});
+
+	test('Not enough balance', () => {
+		expect(
+			validateStakeForm({
+				amount: 1,
+				tokenSymbol: 'CSPR',
+				balance: 6,
+				fee: 5,
+				minAmount: 7,
+			}),
+		).toEqual({ amount: 'Insufficient balance. System requires 7 CSPR minimum balance.' });
+	});
+});
+
+describe('validateUndelegateForm', () => {
+	test('Amount must be more than zero', () => {
+		expect(
+			validateUndelegateForm({
+				amount: -1,
+				tokenSymbol: 'CSPR',
+				balance: 3,
+				fee: 5,
+				minAmount: 0.0001,
+			}),
+		).toEqual({ amount: 'Amount must be more than 0 CSPR.' });
+	});
+
+	test('Amount must be less or equal than stacked amount', () => {
+		expect(
+			validateUndelegateForm({
+				amount: 3,
+				tokenSymbol: 'CSPR',
+				balance: 5,
+				fee: 0.00001,
+				minAmount: 0.0001,
+				stakedAmount: 2,
+			}),
+		).toEqual({ amount: 'Not enough staked amount.' });
+	});
+
+	test('Not enough balance', () => {
+		expect(
+			validateUndelegateForm({
+				amount: 1,
+				tokenSymbol: 'CSPR',
+				balance: 4,
+				fee: 4.5,
+				minAmount: 2.5,
+				stakedAmount: 2,
+			}),
+		).toEqual({ amount: 'Not enough balance.' });
+	});
+
+	test('Not enough minimum balance', () => {
+		expect(
+			validateUndelegateForm({
+				amount: 1,
+				tokenSymbol: 'CSPR',
+				balance: 4,
+				fee: 4.5,
+				minAmount: 5,
+				stakedAmount: 2,
+			}),
+		).toEqual({ amount: 'Insufficient balance. System requires 5 CSPR minimum balance.' });
 	});
 });
