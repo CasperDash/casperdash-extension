@@ -9,10 +9,14 @@ describe('ConfirmingTransactionsInfo', () => {
 	});
 
 	test('Render when there are more than two transactions', () => {
-		expect(ConfirmingTransactionsInfo([1, 2]).props.children[0]).toBe('Confirming transactions ...');
+		const { queryAllByText } = render(ConfirmingTransactionsInfo([1, 2]));
+		expect(queryAllByText('Confirming transactions ...')[0].textContent).toBe('Confirming transactions ... ');
 	});
 
 	test('Render when there is only transactions', () => {
-		expect(ConfirmingTransactionsInfo([1]).props.children[0]).toBe('Confirming transaction ...');
+		const { queryAllByText } = render(ConfirmingTransactionsInfo([1]));
+		expect(queryAllByText('Confirming transaction ...')[0].textContent).toBe(
+			'Confirming transaction ... View on explorer',
+		);
 	});
 });
