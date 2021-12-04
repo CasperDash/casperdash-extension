@@ -1,25 +1,13 @@
 import React from 'react';
 import Select from 'react-select';
-import selectEvent from 'react-select-event';
-
-const OptLabel = (e) => (
-	<div>
-		<div>
-			{e.icon} {e.label}
-		</div>
-		<div>
-			<small>Rate: {e.rate}%</small>
-		</div>
-	</div>
-);
-
+import CustomOptLabel from './OptLabel';
 /**
  * Wrap releact-select to work with Formik.
  *
  * @param {Object}
  * @returns
  */
-const SelectField = ({ options, field, form, customOptLabel = OptLabel }) => (
+const SelectField = ({ options, field, form, customOptLabel = CustomOptLabel }) => (
 	<Select
 		options={options}
 		inputId={field.name}
