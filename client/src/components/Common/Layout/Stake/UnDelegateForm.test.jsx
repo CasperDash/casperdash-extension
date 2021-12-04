@@ -22,8 +22,9 @@ jest.mock('../../../../services/stakeServices', () => {
 	};
 });
 
-import DelegateForm from './DelegateForm';
+import UnDelegateForm from './UnDelegateForm';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
+import UndelegateForm from './UnDelegateForm';
 
 afterEach(cleanup);
 let spyOnUseSelector;
@@ -39,32 +40,70 @@ beforeEach(() => {
 	spyOnUseDispatch.mockReturnValue(mockDispatch);
 });
 
-describe('DelegateForm displays normally', () => {
-	test('Should show delegate form with validators', () => {
-		const validators = [
-			{
-				public_key: '0x123',
+describe('UnDelegateForm displays normally', () => {
+	test('Should show validator info', () => {
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
 				bidInfo: {
 					bid: {
-						delegate_rate: 1,
+						delegation_rate: 2,
+						staked_amount: 3000000000,
 					},
 				},
 			},
-		];
+			tokenSymbol: 'CSPR',
+		};
+
 		spyOnUseSelector.mockReturnValue({
 			deployError: '',
 			isDeploying: false,
 		});
-		const { getByText } = render(<DelegateForm balance="1000" fee="50" validators={validators} />);
-		expect(getByText('Stake').textContent).toBe('Stake');
-		expect(getByText('1000').textContent).toBe('1000');
+
+		const { getAllByText } = render(<UnDelegateForm stakedValidator={stakedValidator} csprPrice={0.0018} />);
+		expect(getAllByText('0x11')[0].textContent).toBe('0x11');
+		expect(getAllByText('3')[0].textContent).toBe('3 ');
+	});
+
+	test('Should have undelegate button', () => {
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
+				bidInfo: {
+					bid: {
+						delegation_rate: 2,
+						staked_amount: 3000000000,
+					},
+				},
+			},
+			tokenSymbol: 'CSPR',
+		};
+
+		spyOnUseSelector.mockReturnValue({
+			deployError: '',
+			isDeploying: false,
+		});
+		const { getAllByText } = render(<UnDelegateForm stakedValidator={stakedValidator} />);
+		expect(getAllByText('Undelegate')[0].textContent).toBe('Undelegate');
 	});
 
 	test('Should set the quick staked amount by a quarter of balance', async () => {
 		spyOnUseSelector.mockReturnValue([]);
-
-		const { getByText, container, queryAllByText } = render(
-			<DelegateForm balance="1000" fromAddress="0x123" tokenSymbol="CSPR" />,
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
+				bidInfo: {
+					bid: {
+						delegation_rate: 2,
+						staked_amount: 3000000000,
+					},
+				},
+			},
+			stakedAmount: 1000,
+			tokenSymbol: 'CSPR',
+		};
+		const { getByText, container } = render(
+			<UnDelegateForm balance="1000" stakedValidator={stakedValidator} tokenSymbol="CSPR" />,
 		);
 
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
@@ -76,8 +115,22 @@ describe('DelegateForm displays normally', () => {
 
 	test('Should set the quick staked amount by a half of balance', async () => {
 		spyOnUseSelector.mockReturnValue([]);
-
-		const { getByText, container } = render(<DelegateForm balance="1000" fromAddress="0x123" tokenSymbol="CSPR" />);
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
+				bidInfo: {
+					bid: {
+						delegation_rate: 2,
+						staked_amount: 3000000000,
+					},
+				},
+			},
+			stakedAmount: 1000,
+			tokenSymbol: 'CSPR',
+		};
+		const { getByText, container } = render(
+			<UnDelegateForm balance="1000" stakedValidator={stakedValidator} tokenSymbol="CSPR" />,
+		);
 
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
@@ -88,9 +141,21 @@ describe('DelegateForm displays normally', () => {
 
 	test('Should set the quick staked amount by all in', async () => {
 		spyOnUseSelector.mockReturnValue([]);
-
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
+				bidInfo: {
+					bid: {
+						delegation_rate: 2,
+						staked_amount: 3000000000,
+					},
+				},
+			},
+			stakedAmount: 1000,
+			tokenSymbol: 'CSPR',
+		};
 		const { getByText, container, queryAllByText } = render(
-			<DelegateForm balance="1000" fromAddress="0x123" tokenSymbol="CSPR" />,
+			<UnDelegateForm balance="1000" stakedValidator={stakedValidator} fromAddress="0x123" tokenSymbol="CSPR" />,
 		);
 
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
@@ -104,13 +169,30 @@ describe('DelegateForm displays normally', () => {
 describe('Should show error if not valid form when click send', () => {
 	const setup = ({ balance = 1000, tokenSymbol = 'CSPR' }) => {
 		spyOnUseSelector.mockReturnValue([]);
-
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
+				bidInfo: {
+					bid: {
+						delegation_rate: 2,
+						staked_amount: 3000000000,
+					},
+				},
+			},
+			stakedAmount: 1000,
+			tokenSymbol: 'CSPR',
+		};
 		const { getByText, container, queryAllByText } = render(
-			<DelegateForm balance={balance} fromAddress="0x123" tokenSymbol={tokenSymbol} />,
+			<UnDelegateForm
+				balance={balance}
+				stakedValidator={stakedValidator}
+				fromAddress="0x123"
+				tokenSymbol={tokenSymbol}
+			/>,
 		);
-		const stakeBtn = queryAllByText('Stake')[0];
+		const unDelegateBtn = queryAllByText('Undelegate')[0];
 
-		return { getByText, container, queryAllByText, stakeBtn };
+		return { getByText, container, queryAllByText, stakeBtn: unDelegateBtn };
 	};
 
 	test('Insufficient balance', async () => {
@@ -147,9 +229,9 @@ describe('Should show error if not valid form when click send', () => {
 		expect(getByText('Amount must be more than 0 CSPR.').textContent).toBe('Amount must be more than 0 CSPR.');
 	});
 
-	test('Not enough balance', async () => {
+	test('Not enough stacked amount', async () => {
 		const { getByText, stakeBtn, container } = setup({
-			balance: 5,
+			balance: 500,
 		});
 		await act(async () => {
 			fireEvent.click(stakeBtn);
@@ -157,10 +239,10 @@ describe('Should show error if not valid form when click send', () => {
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
-				target: { value: '9' },
+				target: { value: '1200' },
 			});
 		});
-		expect(getByText('Not enough balance.').textContent).toBe('Not enough balance.');
+		expect(getByText('Not enough staked amount.').textContent).toBe('Not enough staked amount.');
 	});
 });
 
@@ -168,28 +250,30 @@ describe('Stake with errors', () => {
 	test('Should show error if can not sign the transaction', async () => {
 		spyOnUseSelector.mockReturnValue([]);
 		getSignedStakeDeploy.mockRejectedValue(new Error('Signed error'));
-		const validators = [
-			{
-				public_key: '0x123',
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
 				bidInfo: {
 					bid: {
-						delegate_rate: 1,
+						delegation_rate: 2,
+						staked_amount: 3000000000,
 					},
 				},
 			},
-		];
+			stakedAmount: 1000,
+			tokenSymbol: 'CSPR',
+		};
 		const { getByText, container, queryByText } = render(
-			<DelegateForm
+			<UnDelegateForm
 				fromAddress="0x000"
-				defaultValidator="0x123"
 				balance={999999}
 				fee={1}
-				validators={validators}
+				stakedValidator={stakedValidator}
 				tokenSymbol="CSPR"
 			/>,
 		);
 
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
+		const undelegateBtn = container.querySelector('.cd_undelegate_btn');
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
@@ -198,7 +282,7 @@ describe('Stake with errors', () => {
 		});
 
 		await act(async () => {
-			fireEvent.click(stakeBtn);
+			fireEvent.click(undelegateBtn);
 		});
 
 		await act(async () => {
@@ -222,19 +306,30 @@ describe('Stake with errors', () => {
 				},
 			},
 		];
-		const { debug, getByText, container, queryByText } = render(
-			<DelegateForm
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
+				bidInfo: {
+					bid: {
+						delegation_rate: 2,
+						staked_amount: 3000000000,
+					},
+				},
+			},
+			stakedAmount: 1000,
+			tokenSymbol: 'CSPR',
+		};
+		const { getByText, container, queryByText } = render(
+			<UnDelegateForm
 				fromAddress="0x000"
-				defaultValidator="0x123"
 				balance={999999}
 				fee={1}
-				validators={validators}
+				stakedValidator={stakedValidator}
 				tokenSymbol="CSPR"
-				csprPrice={0.001}
 			/>,
 		);
 
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
+		const unDelegateBtn = container.querySelector('.cd_undelegate_btn');
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
@@ -243,7 +338,7 @@ describe('Stake with errors', () => {
 		});
 
 		await act(async () => {
-			fireEvent.click(stakeBtn);
+			fireEvent.click(unDelegateBtn);
 		});
 
 		await act(async () => {
@@ -260,7 +355,7 @@ describe('Stake with errors', () => {
 	});
 });
 
-describe('Sucess to stake the valid amount', () => {
+describe('Sucess to undelegate the valid amount', () => {
 	test('Should show deploy hash', async () => {
 		spyOnUseSelector.mockReturnValue([]);
 		getSignedStakeDeploy.mockReturnValue({
@@ -275,29 +370,30 @@ describe('Sucess to stake the valid amount', () => {
 				deployHash: '0x113',
 			},
 		});
-		const validators = [
-			{
-				public_key: '0x123',
+		const stakedValidator = {
+			validator: '0x11',
+			info: {
 				bidInfo: {
 					bid: {
-						delegate_rate: 1,
+						delegation_rate: 2,
+						staked_amount: 3000000000,
 					},
 				},
 			},
-		];
-		const { debug, getByText, container, queryAllByText } = render(
-			<DelegateForm
+			stakedAmount: 1000,
+			tokenSymbol: 'CSPR',
+		};
+		const { getByText, container, queryAllByText } = render(
+			<UnDelegateForm
 				fromAddress="0x000"
-				defaultValidator="0x123"
 				balance={999999}
 				fee={1}
-				validators={validators}
+				stakedValidator={stakedValidator}
 				tokenSymbol="CSPR"
-				csprPrice={0.001}
 			/>,
 		);
 
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
+		const undelegateBtn = container.querySelector('.cd_undelegate_btn');
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
@@ -306,7 +402,7 @@ describe('Sucess to stake the valid amount', () => {
 		});
 
 		await act(async () => {
-			fireEvent.click(stakeBtn);
+			fireEvent.click(undelegateBtn);
 		});
 
 		await act(async () => {
