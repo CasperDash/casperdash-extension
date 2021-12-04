@@ -77,10 +77,6 @@ const UndelegateForm = ({
 	};
 
 	const setBalance = (percent, setFieldValue) => {
-		if (!stakedValidator) {
-			return;
-		}
-
 		const amount = stakedValidator.stakedAmount / percent;
 		setFieldValue('amount', amount);
 	};
@@ -161,7 +157,7 @@ const UndelegateForm = ({
 												Back
 											</Button>
 											<Button
-												className="cd_send_currency_btn"
+												className="cd_send_currency_btn cd_undelegate_btn"
 												type="submit"
 												disabled={!values.amount}
 												onClick={handleSubmit}
