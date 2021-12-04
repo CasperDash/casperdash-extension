@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 import CommonAction from '../../Button/CommonAction';
@@ -72,4 +71,4 @@ const StakingAccountListComponent = ({
 	);
 };
 
-export default connect(null, null)(StakingAccountListComponent);
+export default StakingAccountListComponent;
