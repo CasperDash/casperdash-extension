@@ -131,7 +131,7 @@ describe('Should show error if not valid form when click send', () => {
 		);
 	});
 
-	test('Stacked amount is less then zero', async () => {
+	test('Staked amount is less then zero', async () => {
 		const { getByText, stakeBtn, container } = setup({
 			balance: 5,
 		});

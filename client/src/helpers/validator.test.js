@@ -147,7 +147,7 @@ describe('validateUndelegateForm', () => {
 		).toEqual({ amount: 'Amount must be more than 0 CSPR.' });
 	});
 
-	test('Amount must be less or equal than stacked amount', () => {
+	test('Amount must be less or equal than staked amount', () => {
 		expect(
 			validateUndelegateForm({
 				amount: 3,

@@ -213,7 +213,7 @@ describe('Should show error if not valid form when click send', () => {
 		);
 	});
 
-	test('Stacked amount is less then zero', async () => {
+	test('Staked amount is less then zero', async () => {
 		const { getByText, stakeBtn, container } = setup({
 			balance: 5,
 		});
@@ -229,7 +229,7 @@ describe('Should show error if not valid form when click send', () => {
 		expect(getByText('Amount must be more than 0 CSPR.').textContent).toBe('Amount must be more than 0 CSPR.');
 	});
 
-	test('Not enough stacked amount', async () => {
+	test('Not enough staked amount', async () => {
 		const { getByText, stakeBtn, container } = setup({
 			balance: 500,
 		});
