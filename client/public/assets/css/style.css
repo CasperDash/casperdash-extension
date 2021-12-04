@@ -671,6 +671,9 @@ table td {
 .cd_dashboard_chart .apexcharts-toolbar {
   display: none;
 }
+.cd_dashboard_chart .apexcharts-xaxis-title text {
+  fill: #828cae;
+}
 
 .cd_all_page_comman_total_price {
   margin-top: 32px;

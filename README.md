@@ -2,7 +2,7 @@
 
 [![codecov](https://codecov.io/gh/CasperDash/casperdash-client/branch/develop/graph/badge.svg?token=3KWLVN3DPV)](https://codecov.io/gh/CasperDash/casperdash-client)
 
-![](https://i.imgur.com/S9p3Aob.png)
+![](https://i.imgur.com/N0DGupc.png)
 
 > A web wallet for Casper blockchain
 
@@ -49,23 +49,11 @@
 
 ## Architecture
 
-![Casperdash architecture view](/doc/assets/architecture.png)
-
-### Event Handler
-
-Event handler is a NodeJS program that offers these following features:
-
--   Listen to the DeployProcessed event from a Casper Node.
-
--   Parse events and send them to MongoDB
-
--   [WIP] Retry the Casper Node connection if it drops
-
 ### Web Server
 
-Web server is implemented in [Express.js](https://expressjs.com/). It allows us to create read-only data pipeline for clients.
+https://github.com/CasperDash/casperdash-api
 
-Having multiple Web Servers helps to scale horizontally by serving equally the incoming traffic among instances.
+Web server is implemented in [Express.js](https://expressjs.com/). It allows us to create read-only data pipeline for clients.
 
 ### Client
 
@@ -77,73 +65,40 @@ React web app provides user a simple and convenient dashboard to explore the blo
 
 ### Prerequisites
 
--   mongodb > 4.4
--   npm >= 7.24
+-   yarn >= 1.22.5
 -   nodejs >= 12
-
-# Common
-
-Shared components and utils between the folders
-
-Create your MongoDB configuration file db-config.json in YOUR_WORKING_DIRECTORY/casper-dashboad/common/config by copying the template file db-config.json.sample.
-
-### Install
-
-```sh
-cd YOUR_WORKING_DIRECTORY/casper-dashboad/common
-npm install
-```
 
 # Client
 
 ### Install
 
 ```sh
-cd YOUR_WORKING_DIRECTORY/casper-dashboad/client
-npm install
+cd YOUR_WORKING_DIRECTORY/casperdash-client/client
+yarn install
 ```
 
 ### Usage
 
-Update API endpoint at `src/constants/key.js`
+#### Configuration
+
+The configuration can be configurated at
+
+```
+YOUR_WORKING_DIRECTORY/casperdash-client/client/src/config/index.js
+```
+
+or by editing .env.\*.local
+
+```
+REACT_APP_API_ROOT=https://localhost:3001  //api endpoint
+REACT_APP_NETWORK_NAME=casper-test // casper network
+REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2  // contract hash for delegation
+REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","keyManager","stacking"] //Features can be enabled/disabled
+```
 
 ```shell
-npm start
-```
-
-# API
-
-### Install
-
-```sh
-cd YOUR_WORKING_DIRECTORY/casper-dashboad/server
-npm install
-```
-
-### Usage
-
-RPC url can be updated at `.env` or `constants/index.js`
-
-```sh
-npm start
-```
-
-# Event Handler
-
-### Install
-
-```sh
-cd YOUR_WORKING_DIRECTORY/casper-dashboad/common
-npm install
-
-cd YOUR_WORKING_DIRECTORY/casper-dashboad/event-handler
-npm install
-
-```
-
-### Usage
-
-```sh
-npm start
-
+yarn start // start web with dev config
+yarn build // publish
+yarn test  // run unit test
+yarn build-style // build css
 ```
