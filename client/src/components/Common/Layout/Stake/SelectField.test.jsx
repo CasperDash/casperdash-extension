@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import SelectField from './SelectField';
 import selectEvent from 'react-select-event';
 
