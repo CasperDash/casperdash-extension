@@ -12,7 +12,7 @@ const Layout = (props) => {
 	const ref = useRef(null);
 	// State
 	const [color, setColor] = useState('cd_light_theme_active');
-
+	const [title, setTitle] = useState('dashboard');
 	// Selector
 	const isLoading = useSelector(isLoadingRequest);
 
@@ -50,7 +50,9 @@ const Layout = (props) => {
 	// };
 
 	const url = window.location.pathname;
-	const title = url.split('/')[1];
+	useEffect(() => {
+		setTitle(url.split('/')[1]);
+	}, [url]);
 
 	return (
 		<div className={`cd_all_pages_content ${color === null ? 'cd_light_theme_active' : color}`}>
