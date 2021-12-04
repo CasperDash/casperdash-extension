@@ -14,7 +14,6 @@ describe('SelectField', () => {
 		];
 
 		const { queryAllByText } = render(<SelectField options={options} field={{ name: 'validator' }} />);
-		// debug();
 		expect(queryAllByText('icon 0x123')[0].textContent).toBe('icon 0x123');
 	});
 
@@ -41,7 +40,7 @@ describe('SelectField', () => {
 
 		const spy = jest.spyOn(form, 'setFieldValue');
 
-		const { container, getByLabelText, getByRole } = render(
+		const { getByLabelText } = render(
 			<form role="form">
 				<label htmlFor="validator">ValidatorVal</label>
 				<SelectField
