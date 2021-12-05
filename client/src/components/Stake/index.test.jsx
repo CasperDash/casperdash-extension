@@ -1,4 +1,4 @@
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
 
 import Stake from './index';
@@ -81,4 +81,52 @@ test('Have delegations', () => {
 	]);
 	const { queryAllByText, debug } = render(<Stake />);
 	expect(queryAllByText('0x123')[0].textContent).toBe('0x123 ');
+});
+
+describe('Trigger stake form', () => {
+	test('Can show stake form', async () => {
+		spyOnUseSelector
+			.mockReturnValue(0x123)
+			.mockReturnValueOnce({})
+			.mockReturnValueOnce([])
+			.mockReturnValueOnce([
+				{
+					validator: '0x123',
+				},
+			]);
+		useStakeFromValidators.mockReturnValue([
+			{
+				validator: '0x123',
+			},
+		]);
+		const { container } = render(<Stake />);
+
+		await act(async () => {
+			fireEvent.click(container.querySelector('.cd_send_currency_btn'));
+		});
+
+		expect(container.querySelector('.toggle_form')).not.toBeNull();
+	});
+
+	test('Can trigger undelegate', async () => {
+		spyOnUseSelector
+			.mockReturnValue('0x123')
+			.mockReturnValueOnce('0x123')
+			.mockReturnValueOnce([])
+			.mockReturnValueOnce([
+				{
+					validator: '0x123',
+				},
+			]);
+		useStakeFromValidators.mockReturnValue([
+			{
+				validator: '0x123',
+			},
+		]);
+		const { queryAllByText, debug, container } = render(<Stake />);
+		await act(async () => {
+			fireEvent.click(container.querySelector('.cd_tbl_action_undelegate'));
+		});
+		expect(queryAllByText('Confirming transactions ...')[0].textContent).toBe('Confirming transactions ... ');
+	});
 });
