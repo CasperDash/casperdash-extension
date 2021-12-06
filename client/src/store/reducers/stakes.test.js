@@ -1,5 +1,5 @@
-import stakesReducer from './stakes';
 import { getLocalStorageValue } from '../../services/localStorage';
+import stakesReducer from './stakes';
 jest.mock('../../services/localStorage', () => {
 	return {
 		__esModule: true,
