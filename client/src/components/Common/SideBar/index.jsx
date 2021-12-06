@@ -151,7 +151,7 @@ const SIDEBAR_ITEMS = [
 
 const SideBar = ({ modules }) => {
 	const url = window.location.pathname;
-	const title = url.split('/')[1];
+	const title = url.split('/')[1] || 'dashboard';
 
 	// hide show header
 	const [showSideBar, setShowSideBar] = useState(false);
@@ -186,7 +186,7 @@ const SideBar = ({ modules }) => {
 						</button>
 						<Link to={'/dashboard'} onClick={() => setSelectedTitle('dashboard')}>
 							<img
-								src="assets/image/casper-dash-beta-red-black.png"
+								src="assets/image/casperdash-beta-red-silver.png"
 								alt="logo"
 								className="img-fluid cd_main_logo"
 							/>
@@ -196,7 +196,7 @@ const SideBar = ({ modules }) => {
 								className="img-fluid cd_mini_sidebar_logo"
 							/>
 							<img
-								src="assets/image/casper-dash-beta-red-black.png"
+								src="assets/image/casperdash-beta-red-black.png"
 								alt="light-logo"
 								className="img-fluid cd_light_theme_logo d-none"
 							/>

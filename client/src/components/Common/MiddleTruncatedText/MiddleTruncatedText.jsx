@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { getEndString } from '../../../helpers/format';
 
 export const MiddleTruncatedText = ({ children, end, placement = 'top' }) => {
 	const endString = getEndString(children, end);
@@ -17,18 +18,3 @@ export const MiddleTruncatedText = ({ children, end, placement = 'top' }) => {
 MiddleTruncatedText.defaultProps = {
 	end: 5,
 };
-
-function getEndString(fullString, end) {
-	if (typeof end === 'string') {
-		return end;
-	} else if (typeof end === 'number') {
-		return fullString.slice(-Math.abs(end));
-	} else if (end instanceof window.RegExp) {
-		const match = fullString.match(end);
-		if (!match) {
-			return '';
-		}
-		const index = match.index;
-		return fullString.slice(index);
-	}
-}
