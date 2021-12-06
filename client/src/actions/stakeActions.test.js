@@ -16,7 +16,7 @@ jest.mock('../services/localStorage', () => {
 
 test('fetchValidators', () => {
 	expect(fetchValidators()).toEqual({
-		type: 'VALIDATORS.FETCH_ACTIVE_VALIDTORS',
+		type: 'VALIDATORS.FETCH_ACTIVE_VALIDATORS',
 		request: {
 			url: '/validators',
 		},
@@ -46,7 +46,7 @@ test('Update stakes with the empty local storage', () => {
 	expect(mockDispatch).toHaveBeenCalled();
 });
 
-test('Update stakes with the exsiting local storage', () => {
+test('Update stakes with the existing local storage', () => {
 	const mockDispatch = jest.fn();
 	getLocalStorageValue.mockReturnValue([
 		{},

@@ -16,7 +16,7 @@ jest.mock('@redux-requests/core', () => {
 test('userDetailsSelector should call getQuerySelector ', () => {
 	validatorSelector;
 	expect(getQuerySelector).toHaveBeenCalledWith({
-		type: 'VALIDATORS.FETCH_ACTIVE_VALIDTORS',
+		type: 'VALIDATORS.FETCH_ACTIVE_VALIDATORS',
 	});
 });
 
