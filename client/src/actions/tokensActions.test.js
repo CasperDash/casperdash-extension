@@ -20,7 +20,7 @@ test('fetchTokensInfoWithBalance', () => {
 			url: '/tokens/getTokensInfo',
 			params: {
 				publicKey: undefined,
-				tokenAddress: undefined,
+				tokenAddress: [undefined],
 			},
 		},
 	});
