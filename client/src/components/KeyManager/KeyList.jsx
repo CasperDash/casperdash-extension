@@ -5,7 +5,7 @@ import { formatKeyByPrefix } from '../../helpers/key';
 const KeyList = ({ associatedKeys }) => {
 	return (
 		<>
-			<div className="overflow-auto">
+			<div className="cd_table_wrapper">
 				<Table className="cd_key_list_table">
 					<thead>
 						<tr>

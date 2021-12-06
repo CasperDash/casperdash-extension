@@ -60,7 +60,7 @@ const SIDEBAR_ITEMS = [
 				viewBox="0 0 256.000000 256.000000"
 				preserveAspectRatio="xMidYMid meet"
 			>
-				<g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+				<g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#828CAE" stroke="none">
 					<path
 						d="M812 2126 c-307 -153 -456 -233 -471 -252 -21 -27 -21 -30 -21 -594
 0 -564 0 -567 21 -594 24 -30 904 -476 939 -476 35 0 915 446 939 476 21 27
@@ -149,7 +149,10 @@ const SIDEBAR_ITEMS = [
 	},
 ];
 
-const SideBar = ({ title, modules }) => {
+const SideBar = ({ modules }) => {
+	const url = window.location.pathname;
+	const title = url.split('/')[1];
+
 	// hide show header
 	const [showSideBar, setShowSideBar] = useState(false);
 	const [selectedTitle, setSelectedTitle] = useState(title);
@@ -181,7 +184,7 @@ const SideBar = ({ title, modules }) => {
 								/>
 							</svg>
 						</button>
-						<Link to={'/dashboard'}>
+						<Link to={'/dashboard'} onClick={() => setSelectedTitle('dashboard')}>
 							<img
 								src="assets/image/casper-dash-beta-red-black.png"
 								alt="logo"

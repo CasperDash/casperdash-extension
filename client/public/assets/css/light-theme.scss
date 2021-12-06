@@ -2,6 +2,7 @@
 
 .cd_light_theme_active {
 	background: $gradian-color14;
+
 	.cd_dark_theme_slide_img {
 		display: none;
 	}
@@ -102,6 +103,9 @@
 		}
 		.cd_all_page_notify_logout_btn {
 			.cd_all_page_logout_btn {
+				color: $color2;
+			}
+			.cd_heading_public_key {
 				color: $color12;
 			}
 			.dropdown-menu {
@@ -134,7 +138,7 @@
 					}
 				}
 			}
-			.dropdown-toggle {
+			.cd_theme_switch {
 				box-shadow: 0px 5px 34px rgb(186 19 88 / 42%);
 			}
 		}
@@ -194,6 +198,11 @@
 	.cd_send_receive_content {
 		.cd_send_receive_inner_content {
 			border-color: $color20;
+			.cd_send_receive_heading {
+				.cd_send_receive_token_symbol {
+					color: $color21;
+				}
+			}
 			.cd_send_balance_content {
 				.cd_send_balance_value {
 					color: $color12;
@@ -303,6 +312,17 @@
 	}
 	.cd_transaction_list_main_heading {
 		color: $color3;
+	}
+	.cd_table_wrapper {
+		&::-webkit-scrollbar-track {
+			background: $color20;
+		}
+		&::-webkit-scrollbar-thumb {
+			background: $color3;
+			&:hover {
+				background: $color3;
+			}
+		}
 	}
 	.cd_transaction_list_table {
 		.cd_transaction_list_table_heading {

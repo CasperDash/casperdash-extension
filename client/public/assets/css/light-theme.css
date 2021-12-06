@@ -58,6 +58,9 @@
   color: #252f47;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_all_page_logout_btn {
+  color: #ffffffe6;
+}
+.cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_heading_public_key {
   color: #3d476a;
 }
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu {
@@ -80,7 +83,7 @@
 .cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list:hover .cd_all_page_notification_list_more_btn svg {
   color: #828cae;
 }
-.cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle {
+.cd_light_theme_active .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_theme_switch {
   box-shadow: 0px 5px 34px rgba(186, 19, 88, 0.42);
 }
 .cd_light_theme_active .cd_all_page_comman_content {
@@ -120,6 +123,9 @@
 }
 .cd_light_theme_active .cd_send_receive_content .cd_send_receive_inner_content {
   border-color: #eff0f2;
+}
+.cd_light_theme_active .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading .cd_send_receive_token_symbol {
+  color: #3a4562;
 }
 .cd_light_theme_active .cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content .cd_send_balance_value {
   color: #3d476a;
@@ -168,6 +174,15 @@
 }
 .cd_light_theme_active .cd_transaction_list_main_heading {
   color: #828cae;
+}
+.cd_light_theme_active .cd_table_wrapper::-webkit-scrollbar-track {
+  background: #eff0f2;
+}
+.cd_light_theme_active .cd_table_wrapper::-webkit-scrollbar-thumb {
+  background: #828cae;
+}
+.cd_light_theme_active .cd_table_wrapper::-webkit-scrollbar-thumb:hover {
+  background: #828cae;
 }
 .cd_light_theme_active .cd_transaction_list_table .cd_transaction_list_table_heading {
   color: #828cae;

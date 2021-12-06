@@ -46,7 +46,7 @@ const NFTs = () => {
 							const tokenName = metadata.find((meta) => meta.key === 'name');
 							return tokenId ? (
 								<div
-									className="cd_nft_col col-lg-2 col-md-3"
+									className="cd_nft_col col-lg-3 col-md-3"
 									key={tokenId}
 									onClick={() => onOpenModal(metadata)}
 								>
