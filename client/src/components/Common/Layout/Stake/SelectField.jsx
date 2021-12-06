@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import CustomOptLabel from './OptLabel';
 /**
- * Wrap releact-select to work with Formik.
+ * Wrap react-select to work with Formik.
  *
  * @param {Object}
  * @returns

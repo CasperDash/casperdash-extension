@@ -11,7 +11,7 @@ test('When not loading', () => {
 	const { queryAllByText } = render(<EmptyDelegation isLoading={false} />);
 	expect(
 		queryAllByText(
-			'You do not have any delegations yet. Stake CSPR, earn rewards and help Capser become more secure!',
+			'You do not have any delegations yet. Stake CSPR, earn rewards and help Casper become more secure!',
 		)[0].textContent,
-	).toBe('You do not have any delegations yet. Stake CSPR, earn rewards and help Capser become more secure!');
+	).toBe('You do not have any delegations yet. Stake CSPR, earn rewards and help Casper become more secure!');
 });

@@ -7,7 +7,7 @@ const EmptyDelegation = ({ isLoading }) => (
 			<div className="cd_empty_delegation_message">
 				{isLoading
 					? 'Loading validators'
-					: 'You do not have any delegations yet. Stake CSPR, earn rewards and help Capser become more secure!'}
+					: 'You do not have any delegations yet. Stake CSPR, earn rewards and help Casper become more secure!'}
 			</div>
 		</div>
 	</div>

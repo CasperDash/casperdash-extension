@@ -64,9 +64,9 @@ test('Do not have any delegations', () => {
 	const { queryAllByText } = render(<Stake />);
 	expect(
 		queryAllByText(
-			'You do not have any delegations yet. Stake CSPR, earn rewards and help Capser become more secure!',
+			'You do not have any delegations yet. Stake CSPR, earn rewards and help Casper become more secure!',
 		)[0].textContent,
-	).toBe('You do not have any delegations yet. Stake CSPR, earn rewards and help Capser become more secure!');
+	).toBe('You do not have any delegations yet. Stake CSPR, earn rewards and help Casper become more secure!');
 });
 
 test('Have delegations', () => {
