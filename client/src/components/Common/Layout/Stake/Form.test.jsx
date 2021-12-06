@@ -18,15 +18,13 @@ jest.mock('./DelegateForm', () => {
 	};
 });
 
-describe('Form', () => {
-	test('When having default validator, showing undelegate form', () => {
-		const defaultValidator = {};
-		const { queryAllByText } = render(<Form defaultValidator={defaultValidator} />);
-		expect(queryAllByText('UnDelegate Form')[0].textContent).toBe('UnDelegate Form');
-	});
+test('When having default validator, showing undelegate form', () => {
+	const defaultValidator = {};
+	const { queryAllByText } = render(<Form defaultValidator={defaultValidator} />);
+	expect(queryAllByText('UnDelegate Form')[0].textContent).toBe('UnDelegate Form');
+});
 
-	test('When not having default validator, showing delegate form', () => {
-		const { queryAllByText } = render(<Form />);
-		expect(queryAllByText('Delegate Form')[0].textContent).toBe('Delegate Form');
-	});
+test('When not having default validator, showing delegate form', () => {
+	const { queryAllByText } = render(<Form />);
+	expect(queryAllByText('Delegate Form')[0].textContent).toBe('Delegate Form');
 });

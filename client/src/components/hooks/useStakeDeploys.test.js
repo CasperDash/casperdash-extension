@@ -144,12 +144,3 @@ test('Validators do not have bid info', () => {
 	const stakedValidators = useStakeFromValidators('0x00');
 	expect(stakedValidators.length).toBe(0);
 });
-// test('Show the stake button', () => {
-// 	const { queryAllByText } = render(<Button show={true} />);
-// 	expect(queryAllByText('Stake CSPR')[0].textContent).toBe('Stake CSPR');
-// });
-
-// test('Hide the stake button', () => {
-// 	const { container } = render(<Button />);
-// 	expect(container.querySelector('.hide')).not.toBeNull();
-// });

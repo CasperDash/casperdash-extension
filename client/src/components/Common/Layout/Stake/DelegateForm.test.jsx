@@ -253,7 +253,7 @@ describe('Stake with errors', () => {
 	});
 });
 
-describe('Sucess to stake the valid amount', () => {
+describe('Success to stake the valid amount', () => {
 	test('Should show deploy hash', async () => {
 		spyOnUseSelector.mockReturnValue([]);
 		getSignedStakeDeploy.mockReturnValue({

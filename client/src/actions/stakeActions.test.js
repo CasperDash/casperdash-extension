@@ -69,28 +69,3 @@ test('updateStakeDeploysLocalStorage', () => {
 		payload: [],
 	});
 });
-
-// test('getTokenInfo', () => {
-// 	expect(getTokenInfo('test')).toEqual({
-// 		type: 'TOKENS.FETCH_TOKEN_INFO',
-// 		request: {
-// 			url: `/token/test`,
-// 		},
-// 	});
-// });
-
-// test('addCustomTokenAddressToLocalStorage', () => {
-// 	const mockDispatch = jest.fn();
-// 	setLocalStorageValue.mockReturnValue({ tokens: {} });
-// 	addCustomTokenAddressToLocalStorage('address', 'pbkeytest')(mockDispatch);
-// 	expect(setLocalStorageValue).toHaveBeenCalled();
-// 	expect(mockDispatch).toHaveBeenCalled();
-// });
-
-// test('getTokenAddressFromLocalStorage', () => {
-// 	const mockDispatch = jest.fn();
-// 	getLocalStorageValue.mockReturnValue();
-// 	getTokenAddressFromLocalStorage('pbkeytest')(mockDispatch);
-// 	expect(getLocalStorageValue).toHaveBeenCalled();
-// 	expect(mockDispatch).toHaveBeenCalled();
-// });

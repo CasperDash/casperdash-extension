@@ -65,7 +65,3 @@ test('Should update stakes local storage', () => {
 test('default', () => {
 	expect(stakesReducer({ delegations: [] }, { type: '' })).toEqual({ delegations: [] });
 });
-
-// test('Should return current state', () => {
-// 	expect(tokensReducer({}, { type: 'TOKENS.TEST', payload: 'test' })).toEqual({});
-// });
