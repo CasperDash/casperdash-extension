@@ -21,8 +21,13 @@ jest.mock('../hooks/useStakeDeploys', () => {
 jest.mock('../Common/Layout/Stake/Form', () => {
 	return {
 		__esModule: true,
-		default: () => {
-			return <form />;
+		default: ({ handleToggle, handleUndelegateToggle }) => {
+			return (
+				<div>
+					<button className="ut_handle_toggler" onClick={handleToggle}></button>
+					<button className="ut_handle_undelegate_toggler" onClick={handleUndelegateToggle}></button>
+				</div>
+			);
 		},
 	};
 });
@@ -110,12 +115,12 @@ describe('Trigger stake form', () => {
 
 	test('Can trigger undelegate', async () => {
 		spyOnUseSelector
-			.mockReturnValue('0x123')
-			.mockReturnValueOnce('0x123')
+			.mockReturnValue('0x125')
+			.mockReturnValueOnce('0x124')
 			.mockReturnValueOnce([])
 			.mockReturnValueOnce([
 				{
-					validator: '0x123',
+					validator: '0x126',
 				},
 			]);
 		useStakeFromValidators.mockReturnValue([
@@ -123,10 +128,66 @@ describe('Trigger stake form', () => {
 				validator: '0x123',
 			},
 		]);
-		const { queryAllByText, debug, container } = render(<Stake />);
+		const { queryAllByText, container } = render(<Stake />);
 		await act(async () => {
 			fireEvent.click(container.querySelector('.cd_tbl_action_undelegate'));
 		});
 		expect(queryAllByText('Confirming transactions ...')[0].textContent).toBe('Confirming transactions ... ');
+	});
+
+	test('Can trigger undelegate when do not have validators', async () => {
+		spyOnUseSelector
+			.mockReturnValue('0x125')
+			.mockReturnValueOnce('0x124')
+			.mockReturnValueOnce([])
+			.mockReturnValueOnce([]);
+		useStakeFromValidators.mockReturnValue([
+			{
+				validator: '0x123',
+			},
+		]);
+		const { queryAllByText, container } = render(<Stake />);
+		await act(async () => {
+			fireEvent.click(container.querySelector('.cd_tbl_action_undelegate'));
+		});
+		expect(queryAllByText('Confirming transactions ...')[0].textContent).toBe('Confirming transactions ... ');
+	});
+
+	test('Can trigger toggle', async () => {
+		spyOnUseSelector
+			.mockReturnValue('0x125')
+			.mockReturnValueOnce('0x124')
+			.mockReturnValueOnce([])
+			.mockReturnValueOnce([]);
+		useStakeFromValidators.mockReturnValue([
+			{
+				validator: '0x123',
+			},
+		]);
+		const { container } = render(<Stake />);
+		await act(async () => {
+			fireEvent.click(container.querySelector('.ut_handle_toggler'));
+		});
+
+		expect(container.querySelector('.toggle_form')).not.toBeNull();
+	});
+
+	test('Can trigger undelegate toggle', async () => {
+		spyOnUseSelector
+			.mockReturnValue('0x125')
+			.mockReturnValueOnce(['0x124'])
+			.mockReturnValueOnce([])
+			.mockReturnValueOnce([]);
+		useStakeFromValidators.mockReturnValue([
+			{
+				validator: '0x123',
+			},
+		]);
+		const { container, debug } = render(<Stake />);
+		await act(async () => {
+			fireEvent.click(container.querySelector('.ut_handle_undelegate_toggler'));
+		});
+
+		expect(container.querySelector('.toggle_form')).not.toBeNull();
 	});
 });
