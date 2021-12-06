@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
-
+import { getSignedStakeDeploy } from '../../../../services/stakeServices';
+import UnDelegateForm from './UnDelegateForm';
 jest.mock('../../../../actions/deployActions', () => {
 	return {
 		__esModule: true,
@@ -21,11 +22,6 @@ jest.mock('../../../../services/stakeServices', () => {
 		getSignedStakeDeploy: jest.fn(),
 	};
 });
-
-import UnDelegateForm from './UnDelegateForm';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
-import UndelegateForm from './UnDelegateForm';
-
 afterEach(cleanup);
 let spyOnUseSelector;
 let spyOnUseDispatch;
@@ -154,7 +150,7 @@ describe('UnDelegateForm displays normally', () => {
 			stakedAmount: 1000,
 			tokenSymbol: 'CSPR',
 		};
-		const { getByText, container, queryAllByText } = render(
+		const { getByText, container } = render(
 			<UnDelegateForm balance="1000" stakedValidator={stakedValidator} fromAddress="0x123" tokenSymbol="CSPR" />,
 		);
 
@@ -296,16 +292,6 @@ describe('Stake with errors', () => {
 		spyOnUseSelector.mockReturnValue([]);
 		getSignedStakeDeploy.mockReturnValue({});
 		mockDispatch.mockRejectedValue(new Error('Failed to put deploy'));
-		const validators = [
-			{
-				public_key: '0x123',
-				bidInfo: {
-					bid: {
-						delegate_rate: 1,
-					},
-				},
-			},
-		];
 		const stakedValidator = {
 			validator: '0x11',
 			info: {

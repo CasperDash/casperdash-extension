@@ -1,4 +1,5 @@
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { render, cleanup } from '@testing-library/react';
 import * as redux from 'react-redux';
 import UnlockSingerWarning from './UnlockSingerWarning';
 

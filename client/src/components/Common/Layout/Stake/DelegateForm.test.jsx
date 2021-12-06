@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
-
+import { getSignedStakeDeploy } from '../../../../services/stakeServices';
+import DelegateForm from './DelegateForm';
 jest.mock('../../../../actions/deployActions', () => {
 	return {
 		__esModule: true,
@@ -21,10 +22,6 @@ jest.mock('../../../../services/stakeServices', () => {
 		getSignedStakeDeploy: jest.fn(),
 	};
 });
-
-import DelegateForm from './DelegateForm';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
-
 afterEach(cleanup);
 let spyOnUseSelector;
 let spyOnUseDispatch;
@@ -63,9 +60,7 @@ describe('DelegateForm displays normally', () => {
 	test('Should set the quick staked amount by a quarter of balance', async () => {
 		spyOnUseSelector.mockReturnValue([]);
 
-		const { getByText, container, queryAllByText } = render(
-			<DelegateForm balance="1000" fromAddress="0x123" tokenSymbol="CSPR" />,
-		);
+		const { getByText, container } = render(<DelegateForm balance="1000" fromAddress="0x123" tokenSymbol="CSPR" />);
 
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
@@ -89,9 +84,7 @@ describe('DelegateForm displays normally', () => {
 	test('Should set the quick staked amount by all in', async () => {
 		spyOnUseSelector.mockReturnValue([]);
 
-		const { getByText, container, queryAllByText } = render(
-			<DelegateForm balance="1000" fromAddress="0x123" tokenSymbol="CSPR" />,
-		);
+		const { getByText, container } = render(<DelegateForm balance="1000" fromAddress="0x123" tokenSymbol="CSPR" />);
 
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
@@ -222,7 +215,7 @@ describe('Stake with errors', () => {
 				},
 			},
 		];
-		const { debug, getByText, container, queryByText } = render(
+		const { getByText, container, queryByText } = render(
 			<DelegateForm
 				fromAddress="0x000"
 				defaultValidator="0x123"
@@ -285,7 +278,7 @@ describe('Sucess to stake the valid amount', () => {
 				},
 			},
 		];
-		const { debug, getByText, container, queryAllByText } = render(
+		const { getByText, container, queryAllByText } = render(
 			<DelegateForm
 				fromAddress="0x000"
 				defaultValidator="0x123"

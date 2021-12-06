@@ -1,10 +1,11 @@
+import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import ConfirmationModal from './Modal';
 afterEach(cleanup);
 
 describe('ConfirmationModal', () => {
 	test('When not deploying, show confirm button', () => {
-		const { debug, queryAllByText } = render(<ConfirmationModal show={true} />);
+		const { queryAllByText } = render(<ConfirmationModal show={true} />);
 		expect(queryAllByText('Confirm')[0].textContent).toBe('Confirm');
 	});
 

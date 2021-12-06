@@ -1,7 +1,7 @@
+import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import SelectField from './SelectField';
 import selectEvent from 'react-select-event';
-
+import SelectField from './SelectField';
 afterEach(cleanup);
 
 describe('SelectField', () => {
@@ -18,7 +18,7 @@ describe('SelectField', () => {
 	});
 
 	it('Can handle null value', () => {
-		const { queryAllByText, container } = render(<SelectField field={{ name: 'validator' }} />);
+		const { queryAllByText } = render(<SelectField field={{ name: 'validator' }} />);
 		expect(queryAllByText('Validator')[0].textContent).toBe('Validator');
 	});
 

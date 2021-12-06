@@ -1,7 +1,7 @@
-import { render, cleanup } from '@testing-library/react';
-import { useStakeFromValidators } from './useStakeDeploys';
+import { cleanup } from '@testing-library/react';
 import * as redux from 'react-redux';
 import React from 'react';
+import { useStakeFromValidators } from './useStakeDeploys';
 
 jest.mock('../../actions/stakeActions', () => {
 	return {
@@ -24,16 +24,10 @@ jest.mock('../../actions/deployActions', () => {
 		getTransferDeploysStatus: jest.fn(),
 	};
 });
-
-import { useAutoRefreshEffect } from './useAutoRefreshEffect';
-import { getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
-import { getTransferDeploysStatus } from '../../actions/deployActions';
-
 afterEach(cleanup);
 let spyOnUseSelector;
 let spyOnUseDispatch;
 let mockDispatch;
-let spyOnUseEffect;
 
 beforeEach(() => {
 	// Mock useSelector hook
@@ -44,7 +38,7 @@ beforeEach(() => {
 	mockDispatch = jest.fn();
 	spyOnUseDispatch.mockReturnValue(mockDispatch);
 
-	jest.spyOn(React, 'useEffect').mockImplementationOnce((cb) => {});
+	jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {});
 });
 
 test('Have a new pending delegation', () => {

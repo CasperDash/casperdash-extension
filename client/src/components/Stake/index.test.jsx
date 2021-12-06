@@ -1,7 +1,9 @@
+import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
-
+import { useStakeFromValidators } from '../hooks/useStakeDeploys';
 import Stake from './index';
+
 afterEach(cleanup);
 //Set up
 jest.mock('../../actions/stakeActions', () => {
@@ -24,15 +26,13 @@ jest.mock('../Common/Layout/Stake/Form', () => {
 		default: ({ handleToggle, handleUndelegateToggle }) => {
 			return (
 				<div>
-					<button className="ut_handle_toggler" onClick={handleToggle}></button>
-					<button className="ut_handle_undelegate_toggler" onClick={handleUndelegateToggle}></button>
+					<button className="ut_handle_toggler" onClick={handleToggle} />
+					<button className="ut_handle_undelegate_toggler" onClick={handleUndelegateToggle} />
 				</div>
 			);
 		},
 	};
 });
-
-import { useStakeFromValidators } from '../hooks/useStakeDeploys';
 
 let spyOnUseSelector;
 let spyOnUseDispatch;
@@ -84,7 +84,7 @@ test('Have delegations', () => {
 			validator: '0x123',
 		},
 	]);
-	const { queryAllByText, debug } = render(<Stake />);
+	const { queryAllByText } = render(<Stake />);
 	expect(queryAllByText('0x123')[0].textContent).toBe('0x123 ');
 });
 
@@ -183,7 +183,7 @@ describe('Trigger stake form', () => {
 				validator: '0x123',
 			},
 		]);
-		const { container, debug } = render(<Stake />);
+		const { container } = render(<Stake />);
 		await act(async () => {
 			fireEvent.click(container.querySelector('.ut_handle_undelegate_toggler'));
 		});
