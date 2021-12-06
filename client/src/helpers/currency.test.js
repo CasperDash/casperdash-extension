@@ -1,4 +1,4 @@
-import { toMotes, toCSPR } from './currency';
+import { toMotes } from './currency';
 
 describe('toMotes', () => {
 	test('can convert cspr to mote with valid string number', () => {
