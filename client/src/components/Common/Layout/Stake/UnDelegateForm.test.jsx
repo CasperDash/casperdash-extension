@@ -341,7 +341,7 @@ describe('Stake with errors', () => {
 	});
 });
 
-describe('Sucess to undelegate the valid amount', () => {
+describe('Success to undelegate the valid amount', () => {
 	test('Should show deploy hash', async () => {
 		spyOnUseSelector.mockReturnValue([]);
 		getSignedStakeDeploy.mockReturnValue({
