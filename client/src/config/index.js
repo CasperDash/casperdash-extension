@@ -29,7 +29,7 @@ const CONFIG_OPTIONS = {
 	},
 	AUCTION_HASH: {
 		env: 'REACT_APP_AUCTION_HASH',
-		default: undefined, //testnet auction contract hash.
+		default: '93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2', //testnet auction contract hash.
 	},
 	EXPLORER_ROOT_LINK: {
 		env: 'REACT_APP_EXPLORER_ROOT_LINK',

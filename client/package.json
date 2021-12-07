@@ -80,5 +80,8 @@
 			}
 		},
 		"resetMocks": false
+	},
+	"devDependencies": {
+		"react-select-event": "^5.3.0"
 	}
 }

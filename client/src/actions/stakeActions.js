@@ -36,7 +36,7 @@ export const updateStakeDeployStatus = (publicKey, path, listHash = []) => {
 	};
 };
 
-const updateStakeDeploysLocalStorage = (publicKey, patch, value, action) => {
+export const updateStakeDeploysLocalStorage = (publicKey, patch, value, action) => {
 	return (dispatch) => {
 		const { deploys = {} } = setLocalStorageValue(publicKey, patch, value, action);
 		dispatch({

@@ -1,30 +1,22 @@
 import React from 'react';
 import Select from 'react-select';
-
+import CustomOptLabel from './OptLabel';
 /**
- * Wrap releact-select to work with Formik.
+ * Wrap react-select to work with Formik.
  *
  * @param {Object}
  * @returns
  */
-const SelectField = ({ options, field, form }) => (
+const SelectField = ({ options, field, form, customOptLabel = CustomOptLabel }) => (
 	<Select
 		options={options}
+		inputId={field.name}
 		name={field.name}
 		value={options ? options.find((option) => option.value === field.value) : null}
 		onChange={(option) => form.setFieldValue(field.name, option.value)}
 		onBlur={field.onBlur}
 		placeholder="Validator"
-		getOptionLabel={(e) => (
-			<div>
-				<div>
-					{e.icon} {e.label}
-				</div>
-				<div>
-					<small>Rate: {e.rate}%</small>
-				</div>
-			</div>
-		)}
+		getOptionLabel={customOptLabel}
 	/>
 );
 
