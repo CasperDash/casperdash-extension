@@ -11,7 +11,7 @@ const StakingAccountListComponent = ({
 	isLoading = false,
 	isConfirmingTrans,
 }) => {
-	if (!stakingDeployList.length) {
+	if (!stakingDeployList.length || isLoading) {
 		return <EmptyDelegation isLoading={isLoading} />;
 	}
 
