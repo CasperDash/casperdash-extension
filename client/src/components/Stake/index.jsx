@@ -5,11 +5,10 @@ import StakingAccountList from '../Common/Layout/Stake/Table';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
 import { getCurrentPrice } from '../../selectors/price';
-import { getValidators } from '../../selectors/validator';
+import { getValidators, validatorSelector } from '../../selectors/validator';
 import { fetchValidators } from '../../actions/stakeActions';
 import { getPendingStakes } from '../../selectors/stake';
 import { useStakeFromValidators } from '../hooks/useStakeDeploys';
-import { isLoadingRequest } from '../../selectors/request';
 import ConfirmingTransactionsInfo from '../Common/Layout/Stake/ConfirmingTransactionsInfo';
 import UnlockSingerWarning from '../Common/Layout/Stake/UnlockSingerWarning';
 import StakeForm from '../Common/Layout/Stake/Form';
@@ -27,9 +26,7 @@ const Stake = () => {
 	const publicKey = useSelector(getPublicKey);
 	const currentPrice = useSelector(getCurrentPrice);
 	const validators = useSelector(getValidators);
-	// Selector
-	const isLoading = useSelector(isLoadingRequest);
-
+	const { loading: isLoading } = useSelector(validatorSelector);
 	const userDetails = useSelector(getMassagedUserDetails);
 	const pendingStakes = useSelector(getPendingStakes());
 	const stakingDeployList = useStakeFromValidators(publicKey);
