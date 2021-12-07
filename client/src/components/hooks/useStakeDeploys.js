@@ -75,7 +75,7 @@ export const useStakeFromValidators = (publicKey) => {
 		(async () => {
 			if (!publicKey) return;
 			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
-			if (data && data.some((item) => 'success' === item.status)) {
+			if (data && data.some((item) => 'pending' !== item.status)) {
 				dispatch(fetchValidators());
 				dispatch(updateStakeDeployStatus(publicKey, 'deploys.stakes', data));
 			}
