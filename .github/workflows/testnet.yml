@@ -52,5 +52,6 @@ jobs:
                   yarn
                   yarn run publish-testnet --if-present
                   aws s3 sync ./build/ s3://testnet.casperdash.io/ --delete
+                  aws cloudfront create-invalidation --distribution-id ${{ secrets.TESTNET_DISTRIBUTION_ID }} --paths "/*" --no-cli-page
               env:
                   CI: false
