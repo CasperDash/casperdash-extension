@@ -51,5 +51,6 @@ jobs:
                   cp .env.staging.local .env.production.local
                   yarn
                   yarn run publish-testnet --if-present
+                  aws s3 sync ./build/ s3://testnet.casperdash.io/ --delete
               env:
                   CI: false
