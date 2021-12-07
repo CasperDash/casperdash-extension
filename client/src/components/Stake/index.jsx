@@ -102,6 +102,7 @@ const Stake = () => {
 						stakingDeployList={stakingDeployList}
 						isLoading={isLoading}
 						unDelegateFunc={(validator) => undelegate(validator)}
+						pendingStakes={pendingStakes}
 					/>
 				</div>
 				<MessageModal
