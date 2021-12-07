@@ -5,7 +5,7 @@ import { getPendingStakes } from '../../selectors/stake';
 import { getValidators } from '../../selectors/validator';
 import { getTransferDeploysStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
-import { getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
+import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 /**
@@ -64,7 +64,6 @@ export const useStakeFromValidators = (publicKey) => {
 
 	const validators = useSelector(getValidators);
 	const pendingStakes = useSelector(getPendingStakes());
-
 	useEffect(() => {
 		dispatch(getStakeFromLocalStorage(publicKey));
 	}, [dispatch, publicKey]);
@@ -76,7 +75,10 @@ export const useStakeFromValidators = (publicKey) => {
 		(async () => {
 			if (!publicKey) return;
 			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
-			dispatch(updateStakeDeployStatus(publicKey, 'deploys.stakes', data));
+			if (data && data.some((item) => 'success' === item.status)) {
+				dispatch(fetchValidators());
+				dispatch(updateStakeDeployStatus(publicKey, 'deploys.stakes', data));
+			}
 		})();
 	}, [JSON.stringify(pendingStakes), dispatch]);
 
