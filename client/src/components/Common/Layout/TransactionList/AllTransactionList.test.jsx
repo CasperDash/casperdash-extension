@@ -34,5 +34,5 @@ test('Should table with data', () => {
 	expect(getByText('testtransferid').textContent).toBe('testtransferid');
 	expect(getByText('-100').textContent).toBe('-100');
 	expect(getByText('pending').textContent).toBe('pending');
-	expect(getByText('10/10/20, 07:00:00').textContent).toBe('10/10/20, 07:00:00');
+	expect(getByText(/10\/10\/20/i).textContent.includes('10/10/20')).toBe(true);
 });
