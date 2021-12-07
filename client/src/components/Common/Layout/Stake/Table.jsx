@@ -9,9 +9,9 @@ const StakingAccountListComponent = ({
 	stakingDeployList = [],
 	unDelegateFunc,
 	isLoading = false,
-	isConfirmingTrans,
+	pendingStakes = [],
 }) => {
-	if (!stakingDeployList.length) {
+	if (!stakingDeployList.length || isLoading) {
 		return <EmptyDelegation isLoading={isLoading} />;
 	}
 
@@ -49,7 +49,10 @@ const StakingAccountListComponent = ({
 								<TableActions
 									validator={staking}
 									unDelegateFunc={unDelegateFunc}
-									disableAction={isConfirmingTrans}
+									disableAction={
+										Array.isArray(pendingStakes) &&
+										pendingStakes.find((item) => staking.validator === item.validator)
+									}
 								/>
 							</td>
 						</tr>

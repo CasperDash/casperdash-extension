@@ -91,7 +91,7 @@ test('Have delegations', () => {
 describe('Trigger stake form', () => {
 	test('Can show stake form', async () => {
 		spyOnUseSelector
-			.mockReturnValue(0x123)
+			.mockReturnValue([])
 			.mockReturnValueOnce({})
 			.mockReturnValueOnce([])
 			.mockReturnValueOnce([
@@ -115,7 +115,14 @@ describe('Trigger stake form', () => {
 
 	test('Can trigger undelegate', async () => {
 		spyOnUseSelector
-			.mockReturnValue('0x125')
+			.mockReturnValue([
+				{
+					validator: '0x111',
+				},
+				{
+					validator: '0x112',
+				},
+			])
 			.mockReturnValueOnce('0x124')
 			.mockReturnValueOnce([])
 			.mockReturnValueOnce([
@@ -137,7 +144,14 @@ describe('Trigger stake form', () => {
 
 	test('Can trigger undelegate when do not have validators', async () => {
 		spyOnUseSelector
-			.mockReturnValue('0x125')
+			.mockReturnValue([
+				{
+					validator: '0x111',
+				},
+				{
+					validator: '0x112',
+				},
+			])
 			.mockReturnValueOnce('0x124')
 			.mockReturnValueOnce([])
 			.mockReturnValueOnce([]);
@@ -155,7 +169,11 @@ describe('Trigger stake form', () => {
 
 	test('Can trigger toggle', async () => {
 		spyOnUseSelector
-			.mockReturnValue('0x125')
+			.mockReturnValue([
+				{
+					validator: '0x125',
+				},
+			])
 			.mockReturnValueOnce('0x124')
 			.mockReturnValueOnce([])
 			.mockReturnValueOnce([]);
@@ -174,7 +192,11 @@ describe('Trigger stake form', () => {
 
 	test('Can trigger undelegate toggle', async () => {
 		spyOnUseSelector
-			.mockReturnValue('0x125')
+			.mockReturnValue([
+				{
+					validator: '0x125',
+				},
+			])
 			.mockReturnValueOnce(['0x124'])
 			.mockReturnValueOnce([])
 			.mockReturnValueOnce([]);
