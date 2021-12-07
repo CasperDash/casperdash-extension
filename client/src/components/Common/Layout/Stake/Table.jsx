@@ -49,7 +49,10 @@ const StakingAccountListComponent = ({
 								<TableActions
 									validator={staking}
 									unDelegateFunc={unDelegateFunc}
-									disableAction={pendingStakes.find((item) => staking.validator === item.validator)}
+									disableAction={
+										Array.isArray(pendingStakes) &&
+										pendingStakes.find((item) => staking.validator === item.validator)
+									}
 								/>
 							</td>
 						</tr>
