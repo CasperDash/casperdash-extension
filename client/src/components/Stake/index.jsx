@@ -101,7 +101,6 @@ const Stake = () => {
 					<StakingAccountList
 						stakingDeployList={stakingDeployList}
 						isLoading={isLoading}
-						isConfirmingTrans={isConfirmingTrans}
 						unDelegateFunc={(validator) => undelegate(validator)}
 					/>
 				</div>

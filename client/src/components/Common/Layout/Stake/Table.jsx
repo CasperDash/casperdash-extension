@@ -5,12 +5,7 @@ import CommonAction from '../../Button/CommonAction';
 import EmptyDelegation from './EmptyDelegation';
 import TableActions from './TableActions';
 
-const StakingAccountListComponent = ({
-	stakingDeployList = [],
-	unDelegateFunc,
-	isLoading = false,
-	isConfirmingTrans,
-}) => {
+const StakingAccountListComponent = ({ stakingDeployList = [], unDelegateFunc, isLoading = false }) => {
 	if (!stakingDeployList.length || isLoading) {
 		return <EmptyDelegation isLoading={isLoading} />;
 	}
@@ -46,11 +41,7 @@ const StakingAccountListComponent = ({
 								{displayNaN(toFormattedNumber(staking.stakedAmount))}
 							</td>
 							<td className="cd_stake_table_actions">
-								<TableActions
-									validator={staking}
-									unDelegateFunc={unDelegateFunc}
-									disableAction={isConfirmingTrans}
-								/>
+								<TableActions validator={staking} unDelegateFunc={unDelegateFunc} />
 							</td>
 						</tr>
 					))}
