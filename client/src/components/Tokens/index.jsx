@@ -82,51 +82,43 @@ const Tokens = () => {
 	return (
 		<section className="cd_wallets_page">
 			<HeadingModule name={'Tokens'} />
-			<>
-				<div className="cd_add_token_content cd_add_token_row row">
-					{!tokensInfo.length ? (
-						<div className="cd_currency_column_sub_row no_token_message">
-							You do not have any Tokens yet.
-						</div>
-					) : (
-						<div className="cd_currency_column_sub_row">
-							<TokenList
-								tokensInfo={tokensInfo}
-								selectedToken={selectedToken}
-								onTokenClick={onTokenClick}
-							/>
-						</div>
-					)}
-					<div className="cd_add_token_column cd_add_token_btn_col col" onClick={onAddNewTokenAddress}>
-						<div className="cd_add_token_btn_content">+ Add Token</div>
+			<div className="cd_add_token_content cd_add_token_row row">
+				{!tokensInfo.length ? (
+					<div className="cd_currency_column_sub_row no_token_message">You do not have any Tokens yet.</div>
+				) : (
+					<div className="cd_currency_column_sub_row">
+						<TokenList tokensInfo={tokensInfo} selectedToken={selectedToken} onTokenClick={onTokenClick} />
 					</div>
+				)}
+				<div className="cd_add_token_column cd_add_token_btn_col col" onClick={onAddNewTokenAddress}>
+					<div className="cd_add_token_btn_content">+ Add Token</div>
 				</div>
-				<TokenInfo selectedToken={selectedToken} />
-				<Tab.Content>
-					<SendReceiveSection
-						tokenSymbol={selectedToken.symbol}
-						fromAddress={publicKey}
-						displayBalance={selectedToken.balance && selectedToken.balance.displayValue}
-						minAmount={0}
-						tokenInfo={selectedToken}
-						transferFee={TOKEN_TRANSFER_FEE}
-						csprBalance={userDetails.balance && userDetails.balance.displayBalance}
-					/>
-				</Tab.Content>
+			</div>
+			<TokenInfo selectedToken={selectedToken} />
+			<Tab.Content>
+				<SendReceiveSection
+					tokenSymbol={selectedToken.symbol}
+					fromAddress={publicKey}
+					displayBalance={selectedToken.balance && selectedToken.balance.displayValue}
+					minAmount={0}
+					tokenInfo={selectedToken}
+					transferFee={TOKEN_TRANSFER_FEE}
+					csprBalance={userDetails.balance && userDetails.balance.displayBalance}
+				/>
+			</Tab.Content>
 
-				<AddTokenModal
-					show={showAddTokenModal}
-					handleClose={onCloseTokenModal}
-					handleAddToken={handleAddToken}
-					error={addTokenError}
-				/>
-				<MessageModal
-					type="Error"
-					message="Unlock your Signer!"
-					show={showError}
-					handleClose={() => setShowError(false)}
-				/>
-			</>
+			<AddTokenModal
+				show={showAddTokenModal}
+				handleClose={onCloseTokenModal}
+				handleAddToken={handleAddToken}
+				error={addTokenError}
+			/>
+			<MessageModal
+				type="Error"
+				message="Unlock your Signer!"
+				show={showError}
+				handleClose={() => setShowError(false)}
+			/>
 		</section>
 	);
 };

@@ -22,7 +22,7 @@ const StakingAccountListComponent = ({
 		.reduce((prev, next) => prev + next, 0);
 
 	return (
-		<div className="overflow-auto">
+		<div className="cd_table_wrapper">
 			<Table className="cd_transaction_list_table cd_stake_table">
 				<thead>
 					<tr>

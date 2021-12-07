@@ -20,7 +20,7 @@
   margin-top: 13px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image {
-  height: 250px;
+  height: 200px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image img {
   max-width: 100%;
@@ -101,7 +101,7 @@
     flex-direction: column;
   }
   .cd_nft_modal_body .cd_nft_modal_row .cd_nft_image {
-    height: 250px;
+    height: 150px;
   }
 }
 .cd_setting_list_items .cd_setting_items_form {
@@ -204,6 +204,22 @@ ul {
   padding: 0 !important;
   margin: 0 !important;
   list-style: none !important;
+}
+
+.cd_middle_truncated_text {
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: nowrap;
+}
+.cd_middle_truncated_text .cd_middle_truncated_text-begin {
+  flex: 0 1 content;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cd_middle_truncated_text .cd_middle_truncated_text-end {
+  flex: 1 0 content;
+  white-space: nowrap;
 }
 
 .cd_all_pages_content {
@@ -409,7 +425,7 @@ table td {
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn {
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: auto;
   min-width: 130px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key {
@@ -417,18 +433,18 @@ table td {
   width: 100px;
   color: #ffffff;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key p {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key span {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key p:after {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key span:after {
   content: attr(data-filetype);
   position: absolute;
   left: 100%;
   top: 0;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_theme_switch {
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -442,13 +458,13 @@ table td {
   border: 0;
   margin-right: 25px;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle svg {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_theme_switch svg {
   margin-right: 5px;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle::after {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_theme_switch::after {
   display: none;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .show > .btn-primary.dropdown-toggle:focus {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .show > .btn-primary.cd_theme_switch:focus {
   box-shadow: 0px 4px 31px #ba1358;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .btn-primary:not(:disabled):not(.disabled):active:focus {
@@ -458,8 +474,17 @@ table td {
   font-weight: 600;
   font-size: 13px;
   line-height: 16px;
+  color: #ffffffe6;
+  text-decoration: none;
+  margin-left: 20px;
+}
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_heading_public_key {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
   color: #828cae;
   text-decoration: none;
+  max-width: 100px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu {
   background: linear-gradient(210.96deg, #2a314d 0.01%, #212840 42.05%, #20233d 104.81%);
@@ -511,7 +536,7 @@ table td {
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list:hover div.cd_all_page_notification_user_img {
   opacity: 1;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .show > .btn-primary.dropdown-toggle:focus {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .show > .btn-primary.cd_theme_switch:focus {
   box-shadow: none !important;
   outline: 0 !important;
 }
@@ -671,6 +696,9 @@ table td {
 .cd_dashboard_chart .apexcharts-toolbar {
   display: none;
 }
+.cd_dashboard_chart .apexcharts-xaxis-title text {
+  fill: #828cae;
+}
 
 .cd_all_page_comman_total_price {
   margin-top: 32px;
@@ -734,8 +762,21 @@ table td {
   display: flex;
   min-width: 100%;
   max-width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding-bottom: 15px;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar-track {
+  background: #3a4562;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar-thumb {
+  background: #96a0c2;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar-thumb:hover {
+  background: #96a0c2;
 }
 .cd_add_token_row .no_token_message {
   padding-left: 10px;
@@ -1188,7 +1229,7 @@ table td {
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading .cd_send_receive_token_symbol {
   padding-left: 10px;
-  color: #3a4562;
+  color: #cad3f2;
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content {
   margin-bottom: 21px;
@@ -1399,6 +1440,23 @@ table td {
   display: none;
 }
 
+.cd_table_wrapper {
+  overflow: auto;
+}
+.cd_table_wrapper::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.cd_table_wrapper::-webkit-scrollbar-track {
+  background: #3a4562;
+}
+.cd_table_wrapper::-webkit-scrollbar-thumb {
+  background: #96a0c2;
+}
+.cd_table_wrapper::-webkit-scrollbar-thumb:hover {
+  background: #96a0c2;
+}
+
 .cd_transaction_list_table {
   margin-bottom: 0 !important;
   min-width: 1200px;
@@ -1440,7 +1498,7 @@ table td {
 .cd_transaction_list_table .cd_transaction_success::before {
   background: #50e2c2;
 }
-.cd_transaction_list_table .cd_transaction_failed::before {
+.cd_transaction_list_table .cd_transaction_fail::before {
   background: #e2507a;
 }
 .cd_transaction_list_table .cd_transaction_pending::before {
@@ -1838,6 +1896,7 @@ table td {
 .cd_btn_copy,
 .cd_btn_explorer {
   padding-left: 5px;
+  cursor: pointer;
 }
 
 @media (max-width: 1300px) {
@@ -1998,6 +2057,9 @@ table td {
     margin-left: -55px;
   }
   .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_all_page_logout_btn {
+    margin-left: auto;
+  }
+  .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_heading_public_key {
     margin-left: auto;
   }
   .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu {

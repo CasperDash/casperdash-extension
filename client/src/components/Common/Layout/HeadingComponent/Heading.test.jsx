@@ -89,7 +89,7 @@ test('Should show public key if connected and unlocked casper sign', () => {
 		.mockReturnValueOnce({ isConnected: true, isUnlocked: true });
 	const { getByText } = render(<Heading />);
 
-	expect(getByText('testaddress').textContent).toBe('testaddress');
+	expect(getByText('testad').textContent).toBe('testad');
 });
 
 test('Should not show view mode if have public key', () => {
@@ -98,4 +98,12 @@ test('Should not show view mode if have public key', () => {
 	const { queryByText } = render(<Heading />);
 
 	expect(queryByText('View Mode')).toBe(null);
+});
+
+test('Should change theme', () => {
+	const { container, baseElement } = render(<Heading />);
+	const switchThemeBtn = container.querySelector('.cd_theme_switch');
+
+	fireEvent.click(switchThemeBtn);
+	expect(baseElement.querySelector('cd_page_dark_mode')).toBe(null);
 });

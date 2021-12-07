@@ -3,11 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
+import { getTheme } from '../../../../selectors/settings';
 import { isConnectedCasper, getSignerStatus } from '../../../../selectors/signer';
 import { updateConnectStatus, handleUnlockSigner, handleLockSigner } from '../../../../actions/signerActions';
 import { updatePublicKeyFromSigner, getUserDetails, setPublicKey } from '../../../../actions/userActions';
+import { switchTheme } from '../../../../actions/settingActions';
 import { connectCasperSigner } from '../../../../services/casperServices';
 import { isValidPublicKey } from '../../../../helpers/validator';
+import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
+import { MiddleTruncatedText } from '../../MiddleTruncatedText/MiddleTruncatedText';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 
 const SIGNER_EVENTS = {
@@ -22,6 +26,7 @@ const SIGNER_EVENTS = {
 const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
 	const { isUnlocked, isConnected, isAvailable } = useSelector(getSignerStatus);
+	const theme = useSelector(getTheme);
 
 	const [showError, setShowError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -102,34 +107,41 @@ const HeadingModule = (props) => {
 		}
 	};
 
+	const onSwitchTheme = () => {
+		const newTheme = theme === DARK_THEME ? LIGHT_THEME : DARK_THEME;
+		dispatch(switchTheme(newTheme));
+	};
+
 	return (
 		<>
 			<div className="cd_all_page_heading_section">
 				<div className="cd_all_page_heading">
 					<h2>{props.name}</h2>
 				</div>
-				<div className="cd_public_key_view">
+
+				<div className="cd_all_page_notify_logout_btn">
+					<Button className="cd_theme_switch" onClick={onSwitchTheme}>
+						<i className={`bi ${theme === DARK_THEME ? 'bi-brightness-high-fill' : 'bi-moon-fill'}`} />
+					</Button>
 					{!publicKey && !isAvailable && (
-						<Button className="cd_btn_primary_active" onClick={onClickViewMode}>
+						<Button className="cd_all_page_logout_btn" onClick={onClickViewMode}>
 							View Mode
 						</Button>
 					)}
-				</div>
-				<div className="cd_all_page_notify_logout_btn">
 					{!isConnected ? (
 						<Button
-							className="cd_btn_primary_active"
+							className="cd_all_page_logout_btn"
 							onClick={handleConnectCasper}
 						>{`Connect Casper`}</Button>
 					) : !isUnlocked ? (
 						<Button
-							className="cd_btn_primary_active"
+							className="cd_all_page_logout_btn"
 							onClick={handleConnectCasper}
 						>{`Unlock Casper`}</Button>
 					) : (
-						<span className="cd_public_key">
-							<p title={publicKey}>{publicKey}</p>
-						</span>
+						<div className="cd_heading_public_key">
+							<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
+						</div>
 					)}
 				</div>
 				<Modal
