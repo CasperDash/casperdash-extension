@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import StakingAccountList from '../Common/Layout/Stake/Table';
@@ -12,6 +12,7 @@ import { useStakeFromValidators } from '../hooks/useStakeDeploys';
 import ConfirmingTransactionsInfo from '../Common/Layout/Stake/ConfirmingTransactionsInfo';
 import UnlockSingerWarning from '../Common/Layout/Stake/UnlockSingerWarning';
 import StakeForm from '../Common/Layout/Stake/Form';
+import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import StakeButton from './Button';
 
 const Stake = () => {
@@ -31,9 +32,12 @@ const Stake = () => {
 	const pendingStakes = useSelector(getPendingStakes());
 	const stakingDeployList = useStakeFromValidators(publicKey);
 
-	useEffect(() => {
-		dispatch(fetchValidators());
-	}, [dispatch]);
+	useAutoRefreshEffect(() => {
+		// Prevent the duplicated fetching
+		if (isLoading) {
+			dispatch(fetchValidators());
+		}
+	}, [dispatch, isLoading]);
 
 	// Function
 	const handleToggle = () => {
