@@ -91,6 +91,13 @@ describe('updateTransferDeployStatus', () => {
 		expect(getLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 	});
+	test('Should ignore the deploy do not have deployHash', () => {
+		const mockDispatch = jest.fn();
+		getLocalStorageValue.mockReturnValue([{ deployHash: 'test', status: 'pending' }, { status: 'pending' }]);
+		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch);
+		expect(getLocalStorageValue).toHaveBeenCalled();
+		expect(mockDispatch).toHaveBeenCalled();
+	});
 });
 
 describe('pushTransferToLocalStorage', () => {
