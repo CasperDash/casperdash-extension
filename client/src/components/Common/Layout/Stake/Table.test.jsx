@@ -25,3 +25,8 @@ test('Should display empty list', async () => {
 		)[0].textContent,
 	).toBe('You do not have any delegations yet. Stake CSPR, earn rewards and help Casper become more secure!');
 });
+
+test('Should display empty list if loading validators', async () => {
+	const { queryAllByText } = render(<Table isLoading={true} />);
+	expect(queryAllByText('Loading validators')[0].textContent).toBe('Loading validators');
+});
