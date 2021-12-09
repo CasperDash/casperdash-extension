@@ -239,6 +239,9 @@ ul {
   outline: 0;
   color: #828cae;
 }
+.modal .modal-content .close {
+  color: #828cae;
+}
 
 .cd_all_pages_content {
   position: relative;
