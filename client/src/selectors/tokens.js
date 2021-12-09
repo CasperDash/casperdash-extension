@@ -2,7 +2,6 @@
 import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { TOKENS } from '../store/actionTypes';
-import { DEFAULT_TOKENS_ADDRESS_LIST } from '../constants/tokens';
 
 export const tokensSelector = getQuerySelector({ type: TOKENS.FETCH_TOKENS_INFO_WITH_BALANCE });
 
@@ -40,7 +39,6 @@ export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) =>
 				},
 			};
 		} catch (error) {
-			console.error(error);
 			return {};
 		}
 	});
@@ -48,5 +46,5 @@ export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) =>
 
 export const getTokensAddressList = ({ tokens }) => {
 	const tokensAddress = (tokens && tokens.address) || [];
-	return [...new Set([...DEFAULT_TOKENS_ADDRESS_LIST, ...tokensAddress])];
+	return [...new Set([...tokensAddress])];
 };

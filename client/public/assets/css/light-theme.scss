@@ -2,54 +2,18 @@
 
 .cd_light_theme_active {
 	background: $gradian-color14;
+
+	.modal {
+		.modal-content {
+			background-color: $color5;
+		}
+		.close {
+			color: $color17;
+		}
+	}
+
 	.cd_dark_theme_slide_img {
 		display: none;
-	}
-	.cd_welcome_slide_section {
-		.cd_welcome_slide_content {
-			.round_shap_img_one {
-				display: none;
-			}
-			.round_shap_img_two {
-				display: none;
-			}
-			.cd_welcome_slide_indicator {
-				.cd_welcome_slide_indicator_items {
-					background: $color35;
-					opacity: 0.3;
-					&:first-child[title='1'] {
-						background: $color35;
-						opacity: 1;
-					}
-					&:nth-child(2)[title='2'] {
-						background: $color35;
-						opacity: 1;
-					}
-					&:nth-child(3)[title='3'] {
-						background: $color35;
-						opacity: 1;
-					}
-					&:nth-child(2)[title='1'] {
-						background: $color35;
-						opacity: 0.6;
-					}
-					&:nth-child(3)[title='2'] {
-						background: $color35;
-						opacity: 0.6;
-					}
-					&:nth-child(2)[title='3'] {
-						background: $color35;
-						opacity: 0.6;
-					}
-				}
-			}
-			.cd_welcome_slide_heading {
-				color: $color4;
-			}
-			.cd_welcome_slide_step_btns {
-				color: $color13;
-			}
-		}
 	}
 	.cd_login_section {
 		.cd_login_content {
@@ -148,6 +112,9 @@
 		}
 		.cd_all_page_notify_logout_btn {
 			.cd_all_page_logout_btn {
+				color: $color2;
+			}
+			.cd_heading_public_key {
 				color: $color12;
 			}
 			.dropdown-menu {
@@ -180,24 +147,10 @@
 					}
 				}
 			}
-			.dropdown-toggle {
+			.cd_theme_switch {
 				box-shadow: 0px 5px 34px rgb(186 19 88 / 42%);
 			}
 		}
-	}
-	.react-datepicker__navigation-icon {
-		&::before {
-			border-color: $color4;
-		}
-	}
-	.react-datepicker__year-read-view--down-arrow {
-		border-color: $color4;
-	}
-	.react-datepicker__month-read-view--down-arrow {
-		border-color: $color4;
-	}
-	.react-datepicker__month-year-read-view--down-arrow {
-		border-color: $color4;
 	}
 	.cd_all_page_comman_content {
 		border-color: $color20;
@@ -243,20 +196,7 @@
 			}
 		}
 	}
-	.cd_portfolio_page {
-		.cd_add_token_row {
-			.cd_add_token_column {
-				.cd_add_token_inner_content {
-					.cd_add_token_price {
-						p {
-							color: $color12;
-							opacity: 1;
-						}
-					}
-				}
-			}
-		}
-	}
+
 	.cd_currency_icon {
 		svg {
 			path[fill='#2E3855'] {
@@ -267,6 +207,11 @@
 	.cd_send_receive_content {
 		.cd_send_receive_inner_content {
 			border-color: $color20;
+			.cd_send_receive_heading {
+				.cd_send_receive_token_symbol {
+					color: $color21;
+				}
+			}
 			.cd_send_balance_content {
 				.cd_send_balance_value {
 					color: $color12;
@@ -377,6 +322,17 @@
 	.cd_transaction_list_main_heading {
 		color: $color3;
 	}
+	.cd_table_wrapper {
+		&::-webkit-scrollbar-track {
+			background: $color20;
+		}
+		&::-webkit-scrollbar-thumb {
+			background: $color3;
+			&:hover {
+				background: $color3;
+			}
+		}
+	}
 	.cd_transaction_list_table {
 		.cd_transaction_list_table_heading {
 			color: $color3;
@@ -479,16 +435,7 @@
 			}
 		}
 	}
-	.cd_account_support_input_list {
-		.cd_account_support_input_items {
-			.form-control {
-				color: $color12;
-				&::placeholder {
-					color: $color12;
-				}
-			}
-		}
-	}
+
 	.cd_dark_theme_qrcode {
 		display: none;
 	}
@@ -507,125 +454,6 @@
 		h3 {
 			color: $color3;
 		}
-	}
-	.cd_currency_page {
-		.cd_add_token_row {
-			.cd_add_token_column.active {
-				.cd_add_token_inner_content {
-					background: $color36;
-				}
-			}
-		}
-	}
-}
-.cd_light_theme_active.cd_all_pages_content {
-	.react-datepicker__input-container {
-		input {
-			color: $color12;
-			border-color: $color20;
-		}
-		&::before {
-			background-image: url(../image/calender-dark-icon.svg);
-		}
-	}
-	.react-datepicker {
-		background: $gradian-color16;
-		box-shadow: -10px 48.6px 140px rgb(23 18 43 / 20%);
-		backdrop-filter: blur(19px);
-	}
-	.react-datepicker-popper[data-placement^='bottom'] {
-		.react-datepicker__triangle {
-			&::before {
-				border-bottom-color: $color13;
-			}
-			&::after {
-				border-bottom-color: $color13;
-			}
-		}
-	}
-	.react-datepicker__day-name {
-		color: $color4;
-	}
-	.react-datepicker__day {
-		color: $color4;
-		&:hover {
-			color: $color4;
-		}
-	}
-	.react-datepicker__time-name {
-		color: $color4;
-	}
-	.react-datepicker__month-text {
-		&:hover {
-			color: $color4;
-		}
-	}
-	.react-datepicker__quarter-text {
-		&:hover {
-			color: $color4;
-		}
-	}
-	.react-datepicker__year-text {
-		&:hover {
-			color: $color4;
-		}
-	}
-	.react-datepicker__current-month {
-		color: $color4;
-	}
-	.react-datepicker-time__header {
-		color: $color4;
-	}
-	.react-datepicker-year-header {
-		color: $color4;
-	}
-	.react-datepicker__day--keyboard-selected {
-		color: $color13;
-	}
-	.react-datepicker__month-text--keyboard-selected {
-		color: $color13;
-	}
-	.react-datepicker__quarter-text--keyboard-selected {
-		color: $color13;
-	}
-	.react-datepicker__year-text--keyboard-selected {
-		color: $color13;
-	}
-	.react-datepicker__day--selected {
-		color: $color13;
-	}
-	.react-datepicker__day--in-selecting-range {
-		color: $color13;
-	}
-	.react-datepicker__day--in-range {
-		color: $color13;
-	}
-	.react-datepicker__month-text--selected {
-		color: $color13;
-	}
-	.react-datepicker__month-text--in-selecting-range {
-		color: $color13;
-	}
-	.react-datepicker__month-text--in-range {
-		color: $color13;
-	}
-	.react-datepicker__quarter-text--selected {
-		color: $color13;
-	}
-	.react-datepicker__quarter-text--in-selecting-range {
-		color: $color13;
-	}
-	.react-datepicker__quarter-text--in-range {
-		color: $color13;
-	}
-	.react-datepicker__year-text--selected {
-		color: $color13;
-	}
-	.react-datepicker__year-text--in-selecting-range {
-		color: $color13;
-	}
-	.react-datepicker__year-text--in-range {
-		color: $color13;
 	}
 }
 

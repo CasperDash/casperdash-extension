@@ -27,6 +27,14 @@ const CONFIG_OPTIONS = {
 		env: 'REACT_APP_AVAILABLE_FEATURES',
 		default: undefined,
 	},
+	AUCTION_HASH: {
+		env: 'REACT_APP_AUCTION_HASH',
+		default: '93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2', //testnet auction contract hash.
+	},
+	EXPLORER_ROOT_LINK: {
+		env: 'REACT_APP_EXPLORER_ROOT_LINK',
+		default: 'https://testnet.cspr.live',
+	},
 };
 
 const getConfigOption = (option) => {
@@ -36,7 +44,7 @@ const getConfigOption = (option) => {
 		return null;
 	}
 
-	if (process.env.hasOwnProperty(item.env)) {
+	if (Object.prototype.hasOwnProperty.call(process.env, item.env)) {
 		return process.env[item.env];
 	}
 

@@ -9,7 +9,9 @@ import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
 import tokensReducer from './reducers/tokens';
 import deployReducer from './reducers/deploys';
+import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
+import settingsReducer from './reducers/settings';
 import { REQUEST } from './actionTypes';
 
 export const initialState = {
@@ -31,6 +33,9 @@ export const initialState = {
 	},
 	request: {
 		isLoading: [],
+	},
+	settings: {
+		theme: '',
 	},
 };
 
@@ -72,7 +77,9 @@ const main = combineReducers({
 	tokens: tokensReducer,
 	requests: requestsReducer,
 	deploys: deployReducer,
+	stakes: stakeReducer,
 	request: requestReducer,
+	settings: settingsReducer,
 });
 
 const store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));

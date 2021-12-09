@@ -11,7 +11,7 @@ const DEPLOY_PAYMENT_AMOUNT = 1 * MOTE_RATE;
  * @param {String} entryPoint contract's function name
  * @returns {Deploy} deploy
  */
-const buildKeyManagerDeploy = (baseAccount, entryPoint, args, paymentAmount = PAYMENT_AMOUNT) => {
+export const buildKeyManagerDeploy = (baseAccount, entryPoint, args, paymentAmount = PAYMENT_AMOUNT) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
 	const runtimeArgs = RuntimeArgs.fromMap(args);
 	const sessionModule = DeployUtil.ExecutableDeployItem.newStoredContractByName(
@@ -26,10 +26,12 @@ const buildKeyManagerDeploy = (baseAccount, entryPoint, args, paymentAmount = PA
 /**
  * Get deploy for key weight with a specified weight
  * @param {CLPublicKey} fromAccount main account public key
+ * @param {CLPublicKey} account set account
  * @param {Number} weight
+ * @param {number} payment
  * @returns {Deploy} deploy
  */
-const getKeyWeightDeploy = (fromAccount, account, weight, payment) => {
+export const getKeyWeightDeploy = (fromAccount, account, weight, payment) => {
 	return buildKeyManagerDeploy(
 		fromAccount,
 		'set_key_weight',
@@ -47,7 +49,7 @@ const getKeyWeightDeploy = (fromAccount, account, weight, payment) => {
  * @param {Number} weight
  * @returns {Deploy} deploy
  */
-const getDeploymentThresholdDeploy = (fromAccount, weight, payment) => {
+export const getDeploymentThresholdDeploy = (fromAccount, weight, payment) => {
 	return buildKeyManagerDeploy(
 		fromAccount,
 		'set_deployment_threshold',
@@ -64,7 +66,7 @@ const getDeploymentThresholdDeploy = (fromAccount, weight, payment) => {
  * @param {Number} weight
  * @returns {Deploy} deploy
  */
-const getKeyManagementThresholdDeploy = (fromAccount, weight, payment) => {
+export const getKeyManagementThresholdDeploy = (fromAccount, weight, payment) => {
 	return buildKeyManagerDeploy(
 		fromAccount,
 		'set_key_management_threshold',
@@ -136,8 +138,7 @@ export const getSignedKeyManagementThresholdDeploy = async (weight, mainAccount)
  * @returns {Object} signed deploy Json
  */
 const getKeysManagerDeploy = async () => {
-	const data = await request('/getKeysManagerDeploy');
-	return data;
+	return await request('/getKeysManagerDeploy');
 };
 
 /**
@@ -150,7 +151,7 @@ export const getKeyManagerContractDeploy = async (mainAccount) => {
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
 		const deploySession = await getKeysManagerDeploy();
 		const deployFromJson = DeployUtil.deployFromJson(deploySession);
-		const deploy = await buildContractInstallDeploy(mainAccountPK, deployFromJson.val.session);
+		const deploy = buildContractInstallDeploy(mainAccountPK, deployFromJson.val.session);
 		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount);
 		delete signedDeploy.deploy.session;
 		return signedDeploy;

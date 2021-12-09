@@ -5,9 +5,7 @@ name: Node.js CI
 
 on:
     push:
-        branches: [feature/account-management]
-    pull_request:
-        branches: [feature/account-management]
+        branches: [develop]
 
 jobs:
     build:
@@ -31,11 +29,28 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Install eslint
+              run : |
+                  yarn 
+
+            - name: Run UT
+              working-directory: ./client
+              run : |
+                  yarn
+                  yarn run test-ci
+
+            - name: Upload code coverage to codecov 
+              uses: codecov/codecov-action@v2
+              with:
+                working-directory: './client'
+
             - name: Build react app
               working-directory: ./client
               run: |
-                  npm ci
-                  npm run publish-testnet --if-present
+                  cp .env.staging.local .env.production.local
+                  yarn
+                  yarn run publish-testnet --if-present
                   aws s3 sync ./build/ s3://testnet.casperdash.io/ --delete
+                  aws cloudfront create-invalidation --distribution-id ${{ secrets.TESTNET_DISTRIBUTION_ID }} --paths "/*" --no-cli-page
               env:
                   CI: false

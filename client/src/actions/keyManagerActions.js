@@ -1,11 +1,19 @@
 import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
 import { KEY_MANAGER } from '../store/actionTypes';
 
+/**
+ *
+ * @param {string} publicKey
+ */
 export const fetchKeyManagerDetails = (publicKey) => ({
 	type: KEY_MANAGER.FETCH_KEY_MANAGER_DETAILS,
 	request: { url: `/keyManager/${publicKey}` },
 });
 
+/**
+ *
+ * @param {object} signedDeploy
+ */
 export const putWeightDeploy = (signedDeploy) => ({
 	type: KEY_MANAGER.PUT_WEIGHT_DEPLOY,
 	request: {
@@ -15,6 +23,10 @@ export const putWeightDeploy = (signedDeploy) => ({
 	},
 });
 
+/**
+ *
+ * @param {object} signedDeploy
+ */
 export const deployKeyManagerContract = (signedDeploy) => ({
 	type: KEY_MANAGER.DEPLOY_KEY_MANAGER_CONTRACT,
 	request: {
@@ -24,6 +36,13 @@ export const deployKeyManagerContract = (signedDeploy) => ({
 	},
 });
 
+/**
+ *
+ * @param {string} publicKey
+ * @param {string} patch
+ * @param {object} value
+ * @param {string} action
+ */
 export const updateKeysManagerLocalStorage = (publicKey, patch, value, action) => {
 	return (dispatch) => {
 		const { keysManager } = setLocalStorageValue(publicKey, patch, value, action);
@@ -34,12 +53,18 @@ export const updateKeysManagerLocalStorage = (publicKey, patch, value, action) =
 	};
 };
 
+/**
+ *
+ * @param {string} publicKey
+ * @param {string} path
+ * @param {Array} listHash
+ */
 export const updateKeysManagerDeployStatus = (publicKey, path, listHash = []) => {
 	return (dispatch) => {
 		const deployStorageValue = getLocalStorageValue(publicKey, path);
 		const updatedValue = Object.keys(deployStorageValue).reduce((out, key) => {
 			out[key] = deployStorageValue[key].map((value) => {
-				const deployStatus = listHash.find((h) => h.hash === value.hash);
+				const deployStatus = listHash.find((h) => h.hash.toLowerCase() === value.hash.toLowerCase());
 				return { ...value, status: deployStatus ? deployStatus.status : value.status };
 			});
 			return out;
@@ -48,6 +73,10 @@ export const updateKeysManagerDeployStatus = (publicKey, path, listHash = []) =>
 	};
 };
 
+/**
+ *
+ * @param {string} publicKey
+ */
 export const getKeysManagerLocalStorage = (publicKey) => {
 	return (dispatch) => {
 		const item = getLocalStorageValue(publicKey, 'keysManager');
@@ -58,6 +87,10 @@ export const getKeysManagerLocalStorage = (publicKey) => {
 	};
 };
 
+/**
+ *
+ * @param {string} deployHash
+ */
 export const getKeysManagerPendingDeploys = (deployHash) => ({
 	type: KEY_MANAGER.GET_DEPLOYS_STATUS,
 	request: {

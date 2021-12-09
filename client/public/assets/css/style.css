@@ -20,7 +20,7 @@
   margin-top: 13px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image {
-  height: 250px;
+  height: 200px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image img {
   max-width: 100%;
@@ -101,15 +101,92 @@
     flex-direction: column;
   }
   .cd_nft_modal_body .cd_nft_modal_row .cd_nft_image {
-    height: 250px;
+    height: 150px;
   }
 }
-/* .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
-.cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
-.cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path:first-child,
-.cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path:first-child{
-    fill: #fff;
-} */
+.cd_setting_list_items .cd_setting_items_form {
+  width: 100%;
+}
+
+.cd-staking-form .cd-form-text-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cd_undelegate_section {
+  margin-top: 27px;
+}
+
+.cd_undelegate_form .cd_undelegate_form_sub_info_title {
+  font-size: 12px;
+  line-height: 22px;
+  color: #828cae;
+  margin-bottom: 21px;
+  word-break: break-word;
+}
+.cd_undelegate_form .cd_undelegate_form_sub_info_value {
+  font-size: 12px;
+  line-height: 22px;
+  color: #828cae;
+  margin-bottom: 21px;
+  word-break: break-word;
+  padding-left: 20px;
+}
+.cd_undelegate_form .cd_undelegate_form_sub_info_value_amount {
+  font-size: 12px;
+  line-height: 22px;
+  color: #828cae;
+  margin-bottom: 21px;
+  word-break: break-word;
+  padding-left: 20px;
+  font-weight: 600;
+}
+
+.cd_confirm_modal_row.total .cd_confirm_modal_label {
+  font-size: large;
+  font-weight: bold;
+}
+
+.cd_stake_table {
+  min-width: auto !important;
+}
+.cd_stake_table .cd_transaction_list_validator,
+.cd_stake_table .cd_stake_table_actions i {
+  cursor: pointer;
+  padding-left: 5px;
+}
+.cd_stake_table .cd_tbl_action_undelegate {
+  cursor: pointer;
+  color: #53b9ea;
+}
+.cd_stake_table .cd_tbl_action_undelegate.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.cd_empty_delegation_row .cd_empty_delegation_section {
+  margin: auto;
+  text-align: center;
+}
+.cd_empty_delegation_row .cd_empty_delegation_message {
+  color: #ba1358;
+}
+
+.cd_staking_component.toggle_form .cd_btn_stake_cspr {
+  display: none;
+}
+.cd_staking_component.toggle_form .cd_staking_form {
+  display: block;
+}
+
+.cd_staking_component .cd_staking_form {
+  display: none;
+}
+
+.cd_btn_stake_cspr.hide {
+  display: none;
+}
+
 body {
   font-family: "Montserrat", sans-serif !important;
 }
@@ -127,6 +204,43 @@ ul {
   padding: 0 !important;
   margin: 0 !important;
   list-style: none !important;
+}
+
+.cd_middle_truncated_text {
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: nowrap;
+}
+.cd_middle_truncated_text .cd_middle_truncated_text-begin {
+  flex: 0 1 content;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cd_middle_truncated_text .cd_middle_truncated_text-end {
+  flex: 1 0 content;
+  white-space: nowrap;
+}
+
+.modal .modal-content {
+  background-color: #252f47;
+}
+.modal .modal-content .modal-title {
+  color: #828cae;
+}
+.modal .modal-content .modal-body {
+  color: #828cae;
+}
+.modal .modal-content input {
+  background-color: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  outline: 0;
+  color: #828cae;
+}
+.modal .modal-content .close {
+  color: #828cae;
 }
 
 .cd_all_pages_content {
@@ -158,174 +272,6 @@ ul {
 }
 .cd_all_pages_content .custom-switch .custom-control-label::before {
   left: -24px;
-}
-.cd_all_pages_content .react-datepicker-popper[data-placement^=bottom] {
-  position: absolute;
-  right: 0;
-}
-.cd_all_pages_content .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {
-  border-bottom-color: #28304b;
-}
-.cd_all_pages_content .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {
-  border-bottom-color: #28304b;
-}
-.cd_all_pages_content .react-datepicker__input-container {
-  position: relative;
-}
-.cd_all_pages_content .react-datepicker__input-container input {
-  background: transparent;
-  border: 1px solid #3a4562;
-  border-radius: 4px;
-  outline: 0;
-  padding: 8px 35px 8px 16px;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.25px;
-  color: #c0c3cc;
-  position: relative;
-  z-index: 9;
-  font-weight: 600;
-}
-.cd_all_pages_content .react-datepicker__input-container::before {
-  content: "";
-  position: absolute;
-  background-image: url("../image/calendar.svg");
-  width: 16px;
-  height: 16px;
-  right: 10px;
-  top: 11px;
-  z-index: 0;
-}
-.cd_all_pages_content .react-datepicker__close-icon {
-  display: none;
-}
-.cd_all_pages_content .react-datepicker {
-  background: linear-gradient(210.96deg, #2a314d 0.01%, #212840 42.05%, #20233d 104.81%);
-  box-shadow: 0px 48px 69px rgba(23, 18, 43, 0.85);
-  border: 0;
-  font-family: "Montserrat", sans-serif !important;
-}
-.cd_all_pages_content .react-datepicker__header {
-  background: transparent;
-  border: 0;
-}
-.cd_all_pages_content .react-datepicker__current-month {
-  color: #c0c3cc;
-  font-weight: 400;
-}
-.cd_all_pages_content .react-datepicker-time__header {
-  color: #c0c3cc;
-  font-weight: 400;
-}
-.cd_all_pages_content .react-datepicker-year-header {
-  color: #c0c3cc;
-  font-weight: 400;
-}
-.cd_all_pages_content .react-datepicker__day-name {
-  color: #c0c3cc;
-}
-.cd_all_pages_content .react-datepicker__day {
-  color: #c0c3cc;
-}
-.cd_all_pages_content .react-datepicker__day:hover {
-  color: #000;
-  background: #fff;
-}
-.cd_all_pages_content .react-datepicker__time-name {
-  color: #c0c3cc;
-}
-.cd_all_pages_content .react-datepicker__day--keyboard-selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__day--keyboard-selected:hover {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__month-text--keyboard-selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__month-text--keyboard-selected:hover {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__quarter-text--keyboard-selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__quarter-text--keyboard-selected:hover {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__year-text--keyboard-selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__year-text--keyboard-selected:hover {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__day--selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__day--in-selecting-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__day--in-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__month-text--selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__month-text--in-selecting-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__month-text--in-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__quarter-text--selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__quarter-text--in-selecting-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__quarter-text--in-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__year-text--selected {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__year-text--in-selecting-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__year-text--in-range {
-  background: linear-gradient(224.09deg, rgba(61, 71, 106, 0.45) 0%, rgba(61, 71, 106, 0.49) 98.47%);
-}
-.cd_all_pages_content .react-datepicker__month-text:hover {
-  color: #000;
-  background: #fff;
-}
-.cd_all_pages_content .react-datepicker__quarter-text:hover {
-  color: #000;
-  background: #fff;
-}
-.cd_all_pages_content .react-datepicker__year-text:hover {
-  color: #000;
-  background: #fff;
-}
-.cd_all_pages_content .react-datepicker__navigation-icon::before {
-  top: 11px;
-}
-.cd_all_pages_content .react-datepicker__year-read-view--down-arrow {
-  top: 11px;
-}
-.cd_all_pages_content .react-datepicker__month-read-view--down-arrow {
-  top: 11px;
-}
-.cd_all_pages_content .react-datepicker__month-year-read-view--down-arrow {
-  top: 11px;
-}
-.cd_all_pages_content .react-datepicker__navigation-icon--previous::before {
-  right: -5px;
-}
-.cd_all_pages_content .react-datepicker__navigation-icon--next::before {
-  left: -4px;
-}
-.cd_all_pages_content .react-datepicker__navigation {
-  outline: 0;
 }
 
 .cd_all_page_comman_content {
@@ -360,110 +306,6 @@ table th {
 }
 table td {
   border: 0 !important;
-}
-
-.cd_welcome_slide_section {
-  padding: 102px 0;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content.container {
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_img img {
-  filter: drop-shadow(0px 50px 50px rgba(0, 0, 0, 0.1));
-  order: 1;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 41px 0 31px !important;
-  order: 2;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items {
-  width: 6px;
-  height: 6px;
-  background: #c4c4c44d;
-  border-radius: 10px;
-  margin-right: 5px;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:first-child[title="1"] {
-  background: #c4c4c4;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="2"] {
-  background: #c4c4c4;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(3)[title="3"] {
-  background: #c4c4c4;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="1"] {
-  background: #c4c4c499;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(3)[title="2"] {
-  background: #c4c4c499;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_indicator .cd_welcome_slide_indicator_items:nth-child(2)[title="3"] {
-  background: #c4c4c499;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_heading {
-  font-weight: 600;
-  font-size: 30px;
-  line-height: 37px;
-  color: #ffffffe6;
-  text-align: center;
-  margin-bottom: 10px;
-  order: 3;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_peregraph {
-  font-size: 13px;
-  line-height: 16px;
-  color: #828cae;
-  margin-bottom: 47px;
-  text-align: center;
-  order: 4;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_step_btns {
-  margin: 0 auto;
-  background: #828cae;
-  border-radius: 10px;
-  display: block;
-  max-width: 180px;
-  width: 100%;
-  border: 0;
-  padding: 18px 10px;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  color: #252f47;
-  text-align: center;
-  text-decoration: none;
-  outline: 0;
-  order: 5;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .round_shap_img_one {
-  position: absolute;
-  top: 330px;
-  right: -75px;
-  z-index: 0;
-  width: 150px;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .round_shap_img_two {
-  position: absolute;
-  top: -78px;
-  left: -154px;
-  width: 309px;
-  z-index: 0;
-}
-.cd_welcome_slide_section .cd_welcome_slide_content .cd_welcome_slide_already_wallet {
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  color: #828cae;
-  margin-top: 21px;
-  text-align: center;
-  order: 6;
 }
 
 .round_shap_light_img_two,
@@ -604,7 +446,7 @@ table td {
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn {
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: auto;
   min-width: 130px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key {
@@ -612,18 +454,18 @@ table td {
   width: 100px;
   color: #ffffff;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key p {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key span {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key p:after {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_public_key span:after {
   content: attr(data-filetype);
   position: absolute;
   left: 100%;
   top: 0;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_theme_switch {
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -637,13 +479,13 @@ table td {
   border: 0;
   margin-right: 25px;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle svg {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_theme_switch svg {
   margin-right: 5px;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-toggle::after {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_theme_switch::after {
   display: none;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .show > .btn-primary.dropdown-toggle:focus {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .show > .btn-primary.cd_theme_switch:focus {
   box-shadow: 0px 4px 31px #ba1358;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .btn-primary:not(:disabled):not(.disabled):active:focus {
@@ -653,8 +495,17 @@ table td {
   font-weight: 600;
   font-size: 13px;
   line-height: 16px;
+  color: #ffffffe6;
+  text-decoration: none;
+  margin-left: 20px;
+}
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_heading_public_key {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
   color: #828cae;
   text-decoration: none;
+  max-width: 100px;
 }
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu {
   background: linear-gradient(210.96deg, #2a314d 0.01%, #212840 42.05%, #20233d 104.81%);
@@ -706,7 +557,7 @@ table td {
 .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list:hover div.cd_all_page_notification_user_img {
   opacity: 1;
 }
-.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .show > .btn-primary.dropdown-toggle:focus {
+.cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu .cd_all_page_notification_body .cd_all_page_notification_list .show > .btn-primary.cd_theme_switch:focus {
   box-shadow: none !important;
   outline: 0 !important;
 }
@@ -829,34 +680,20 @@ table td {
   margin: 0;
 }
 
+.btn-primary {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
+}
 .btn-primary:focus {
   box-shadow: none !important;
   outline: 0 !important;
 }
 
-.cd_btn_primary_active {
-  background-color: #53b9ea !important;
-  border-color: #53b9ea !important;
-}
-
-.cd_currency_icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: auto;
-}
-.cd_currency_icon svg {
-  width: auto !important;
-  height: 25px;
-  filter: none !important;
-}
-.cd_currency_icon img {
-  width: 25px !important;
-  height: 25px;
-  filter: none !important;
+.btn-secondary {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
 }
 
 .cd_chart_box_heading_date {
@@ -885,6 +722,9 @@ table td {
 }
 .cd_dashboard_chart .apexcharts-toolbar {
   display: none;
+}
+.cd_dashboard_chart .apexcharts-xaxis-title text {
+  fill: #828cae;
 }
 
 .cd_all_page_comman_total_price {
@@ -949,8 +789,21 @@ table td {
   display: flex;
   min-width: 100%;
   max-width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding-bottom: 15px;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar-track {
+  background: #3a4562;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar-thumb {
+  background: #96a0c2;
+}
+.cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar-thumb:hover {
+  background: #96a0c2;
 }
 .cd_add_token_row .no_token_message {
   padding-left: 10px;
@@ -1065,21 +918,6 @@ table td {
 .cd_wallets_page .cd_add_token_row .cd_add_token_column .cd_add_token_btn_content {
   height: calc(100% - 15px);
 }
-.cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover {
-  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #f9a22a;
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active {
-  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active::before {
-  background: linear-gradient(113.91deg, #ffcb54 0%, rgba(247, 147, 26, 0.0001) 82.9%);
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #f9a22a;
-}
 .cd_wallets_page .cd_add_token_inner_content::before {
   content: "";
   position: absolute;
@@ -1129,27 +967,6 @@ table td {
 .cd_wallets_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
   fill: #345d9d;
 }
-.cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover {
-  background: linear-gradient(113.91deg, #70b2ff 0%, rgba(83, 185, 234, 0.0001) 82.9%);
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #e3507a;
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
-  fill: #b5395c;
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active {
-  background: linear-gradient(135deg, #e3507a 0%, #e3507a 19.24%, #bc3dcb 68.64%, #bc3dcb 81.77%, #a330ff 100%);
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active::before {
-  background: linear-gradient(113.91deg, #e3507a 0%, rgba(52, 93, 157, 0.0001) 82.9%);
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #e3507a;
-}
-.cd_wallets_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
-  fill: #b5395c;
-}
 .cd_wallets_page .cd_add_token_inner_content.active .cd_add_token_icon_chart .cd_currency_icon {
   background: #fff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.0744452);
@@ -1177,83 +994,6 @@ table td {
   margin-top: 27px;
 }
 
-.cd_add_token_page .cd_all_page_comman_content {
-  padding: 4px 21px 21px;
-  border-radius: 10px;
-}
-.cd_add_token_page .cd_add_token_row {
-  margin: 0 -10px;
-}
-.cd_add_token_page .cd_add_token_row .cd_add_token_column {
-  margin-top: 20px;
-  padding: 0 10px;
-}
-.cd_add_token_page .cd_add_token_row .cd_add_token_inner_content {
-  display: flex;
-  align-items: center;
-}
-
-.cd_add_token_search {
-  position: relative;
-  padding-left: 34px;
-  border-bottom: 1px solid #828cae26;
-}
-.cd_add_token_search .cd_add_token_search_icon {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.cd_add_token_search .form-control {
-  padding: 18px 12px;
-  font-size: 17px;
-  line-height: 21px;
-  color: #828cae;
-  background: transparent;
-  border: 0;
-  outline: 0;
-  height: auto;
-}
-.cd_add_token_search .form-control::placeholder {
-  opacity: 0.3;
-}
-.cd_add_token_search .form-control:focus {
-  outline: 0;
-  background: transparent;
-  box-shadow: none;
-  color: #828cae;
-}
-
-.cd_custom_currency_checkbox.custom-switch .custom-control-label::before {
-  width: 23px;
-  height: 14px;
-  border: 0;
-}
-.cd_custom_currency_checkbox.custom-switch .custom-control-label::after {
-  width: 12px;
-  height: 12px;
-  border: 0;
-  left: -23px;
-  top: 5px;
-  background: #53b9ea;
-}
-.cd_custom_currency_checkbox.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-  left: -14px;
-  transform: translateX(0);
-}
-.cd_custom_currency_checkbox.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
-  background: #53b9ea;
-}
-
 .cd_add_token_text {
   margin-right: auto;
   padding-left: 15px;
@@ -1270,16 +1010,6 @@ table td {
   line-height: 12px;
   color: #828cae;
   margin-bottom: 0;
-}
-
-.cd_protfolio_mini_chart {
-  margin-top: 9px;
-}
-.cd_protfolio_mini_chart svg {
-  filter: drop-shadow(0px 10px 4px rgba(12, 10, 32, 0.54362));
-}
-.cd_protfolio_mini_chart svg g:last-child {
-  display: none;
 }
 
 .cd_add_token_content + .cd_all_page_comman_content {
@@ -1299,31 +1029,6 @@ table td {
   font-family: "Montserrat", sans-serif !important;
 }
 
-.cd_protfolio_main_chart .cd_chart_box_heading_date {
-  margin-bottom: 0;
-  position: relative;
-  z-index: 9999;
-}
-.cd_protfolio_main_chart .cd_chart_date_picker {
-  margin-bottom: -30px;
-  margin-left: auto;
-}
-
-.cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover {
-  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #f9a22a;
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active {
-  background: linear-gradient(135deg, #ffcb54 0%, #ffcb54 19.24%, #f7931a 68.64%, #f7931a 81.77%, #f7931a 100%);
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active::before {
-  background: linear-gradient(113.91deg, #ffcb54 0%, rgba(247, 147, 26, 0.0001) 82.9%);
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_bitcoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
-  fill: #f9a22a;
-}
 .cd_history_page .cd_add_token_inner_content::before {
   content: "";
   position: absolute;
@@ -1372,27 +1077,6 @@ table td {
 }
 .cd_history_page .cd_add_token_inner_content.cd_add_litecoin_currency.active .cd_add_token_icon_chart .cd_currency_icon svg path {
   fill: #345d9d;
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover {
-  background: linear-gradient(135deg, #e3507a 0%, #e3507a 19.24%, #bc3dcb 68.64%, #bc3dcb 81.77%, #a330ff 100%);
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #e3507a;
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency:hover .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
-  fill: #b5395c;
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active {
-  background: linear-gradient(135deg, #e3507a 0%, #e3507a 19.24%, #bc3dcb 68.64%, #bc3dcb 81.77%, #a330ff 100%);
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active::before {
-  background: linear-gradient(113.91deg, #e3507a 0%, rgba(52, 93, 157, 0.0001) 82.9%);
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .left-shap {
-  fill: #e3507a;
-}
-.cd_history_page .cd_add_token_inner_content.cd_add_ethereum_currency.active .cd_add_token_icon_chart .cd_currency_icon svg .right-shap {
-  fill: #b5395c;
 }
 .cd_history_page .cd_add_token_inner_content.active .cd_add_token_icon_chart .cd_currency_icon {
   background: #fff;
@@ -1572,7 +1256,7 @@ table td {
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_receive_heading .cd_send_receive_token_symbol {
   padding-left: 10px;
-  color: #3a4562;
+  color: #cad3f2;
 }
 .cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content {
   margin-bottom: 21px;
@@ -1593,6 +1277,12 @@ table td {
   margin-bottom: 8px;
   word-break: break-all;
 }
+.cd_send_receive_content .cd_send_receive_inner_content .cd_send_balance_content .cd_send_balance_label {
+  padding-left: 20px;
+  color: #c0c3cc;
+  margin-bottom: 8px;
+  word-break: break-all;
+}
 .cd_send_receive_content .cd_send_receive_content_row {
   display: flex;
   flex-wrap: wrap;
@@ -1600,6 +1290,11 @@ table td {
 }
 .cd_send_receive_content .cd_send_receive_content_column {
   max-width: 50%;
+  width: 100%;
+  padding: 0 12px;
+}
+.cd_send_receive_content .cd_send_receive_content_full_column {
+  max-width: 100%;
   width: 100%;
   padding: 0 12px;
 }
@@ -1772,6 +1467,23 @@ table td {
   display: none;
 }
 
+.cd_table_wrapper {
+  overflow: auto;
+}
+.cd_table_wrapper::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.cd_table_wrapper::-webkit-scrollbar-track {
+  background: #3a4562;
+}
+.cd_table_wrapper::-webkit-scrollbar-thumb {
+  background: #96a0c2;
+}
+.cd_table_wrapper::-webkit-scrollbar-thumb:hover {
+  background: #96a0c2;
+}
+
 .cd_transaction_list_table {
   margin-bottom: 0 !important;
   min-width: 1200px;
@@ -1813,7 +1525,7 @@ table td {
 .cd_transaction_list_table .cd_transaction_success::before {
   background: #50e2c2;
 }
-.cd_transaction_list_table .cd_transaction_failed::before {
+.cd_transaction_list_table .cd_transaction_fail::before {
   background: #e2507a;
 }
 .cd_transaction_list_table .cd_transaction_pending::before {
@@ -1990,14 +1702,6 @@ table td {
   align-items: center;
 }
 
-.cd_portfolio_page .cd_add_token_inner_content .cd_add_token_mini_chart svg {
-  margin-top: 10px;
-  filter: drop-shadow(0px 10px 5px rgba(12, 10, 32, 0.15));
-}
-.cd_portfolio_page .cd_add_token_inner_content .cd_add_token_mini_chart svg g:last-child {
-  display: none;
-}
-
 .cd_restore_wallet_input_content {
   padding: 22px 22px 54px;
   border: 1px solid #828cae26;
@@ -2019,89 +1723,6 @@ table td {
 }
 .cd_restore_wallet_input_content .cd_securebackup_col_3:nth-last-child(1) {
   margin-bottom: 0;
-}
-
-.cd_currency_page .cd_add_token_row .cd_add_token_column {
-  max-width: 25%;
-  padding: 0 10px;
-  margin-bottom: 20px;
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column:nth-last-child(4) {
-  margin-bottom: 0;
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column:nth-last-child(3) {
-  margin-bottom: 0;
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column:nth-last-child(2) {
-  margin-bottom: 0;
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column:nth-last-child(1) {
-  margin-bottom: 0;
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content {
-  padding: 21px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  height: 100%;
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column .cd_add_token_inner_content .cd_add_token_img img {
-  filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column.active .cd_add_token_inner_content {
-  background: #3a4562;
-}
-.cd_currency_page .cd_add_token_row .cd_add_token_column.active .cd_add_token_inner_content::before {
-  content: "";
-  position: absolute;
-  background: linear-gradient(180deg, #40ffd5 0%, #4ce4c3 100%);
-  opacity: 0.8;
-  box-shadow: 0px 0px 5px #0ee6b6;
-  width: 6px;
-  height: 6px;
-  right: 11px;
-  top: 11px;
-  border-radius: 10px;
-}
-.cd_currency_page .cd_all_page_comman_content {
-  border-radius: 10px;
-  padding: 4px 21px 21px;
-}
-.cd_currency_page .cd_add_token_row.row {
-  margin: 0 -10px;
-  margin-top: 21px;
-}
-
-.cd_account_support_input_list {
-  margin-top: 21px;
-}
-.cd_account_support_input_list .cd_account_support_input_items {
-  padding: 15px 19px 21px;
-  border: 1px solid #828cae26;
-  border-radius: 10px;
-}
-.cd_account_support_input_list .cd_account_support_input_items .form-label {
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 15px;
-  color: #828cae;
-  margin-bottom: 13px;
-}
-.cd_account_support_input_list .cd_account_support_input_items .form-control {
-  font-size: 17px;
-  line-height: 21px;
-  color: #ffffff;
-  opacity: 0.7;
-  background: transparent;
-  border: 0;
-  outline: 0;
-  box-shadow: none;
-  padding: 0;
-  height: auto;
-}
-.cd_account_support_input_list .cd_account_support_input_items .form-control::placeholder {
-  color: #ffffff;
-  opacity: 0.7;
 }
 
 .cd_history_page .cd_add_token_row.nav {
@@ -2179,7 +1800,7 @@ table td {
   color: #828cae;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_value {
-  color: #3d476a;
+  color: #828cae;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row .cd_confirm_modal_value input {
   text-align: right;
@@ -2193,7 +1814,7 @@ table td {
   padding: 10px;
 }
 .cd_confirm_modal_content .cd_confirm_modal_body .cd_confirm_modal_row_single .cd_confirm_modal_value {
-  color: #3d476a;
+  color: #828cae;
 }
 .cd_confirm_modal_content .cd_confirm_modal_footer {
   border-top: none !important;
@@ -2223,7 +1844,7 @@ table td {
   color: #828cae;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row .cd_edit_modal_value {
-  color: #3d476a;
+  color: #828cae;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row .cd_edit_modal_value_long {
   width: 300px;
@@ -2237,7 +1858,7 @@ table td {
   padding: 10px;
 }
 .cd_edit_modal_content .cd_edit_modal_body .cd_edit_modal_row_single .cd_edit_modal_value {
-  color: #3d476a;
+  color: #828cae;
 }
 .cd_edit_modal_content .cd_edit_modal_footer {
   justify-content: space-between !important;
@@ -2302,6 +1923,7 @@ table td {
 .cd_btn_copy,
 .cd_btn_explorer {
   padding-left: 5px;
+  cursor: pointer;
 }
 
 @media (max-width: 1300px) {
@@ -2317,10 +1939,6 @@ table td {
   }
   .cd_add_token_row .cd_add_token_column:nth-last-child(1) {
     margin-bottom: 0px;
-  }
-
-  .cd_add_token_page .cd_add_token_row .cd_add_token_column {
-    margin-bottom: 0;
   }
 
   .cd_send_qr_address {
@@ -2439,10 +2057,6 @@ table td {
     padding: 25px 20px;
   }
 
-  .cd_protfolio_main_chart .cd_chart_date_picker {
-    margin-bottom: 0;
-  }
-
   .cd_wallet_chart_bottom_content {
     display: block;
   }
@@ -2453,10 +2067,6 @@ table td {
   }
 
   .cd_wallets_page .cd_add_token_row .cd_add_token_column {
-    margin-bottom: 0;
-  }
-
-  .cd_add_token_page .cd_add_token_row .cd_add_token_column:nth-last-child(2) {
     margin-bottom: 0;
   }
 }
@@ -2474,6 +2084,9 @@ table td {
     margin-left: -55px;
   }
   .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_all_page_logout_btn {
+    margin-left: auto;
+  }
+  .cd_all_page_heading_section .cd_all_page_notify_logout_btn .cd_heading_public_key {
     margin-left: auto;
   }
   .cd_all_page_heading_section .cd_all_page_notify_logout_btn .dropdown-menu {
@@ -2513,12 +2126,6 @@ table td {
     margin-top: 20px;
   }
 
-  .cd_all_pages_content .react-datepicker-wrapper {
-    width: 100%;
-  }
-  .cd_all_pages_content .react-datepicker__input-container input {
-    width: 100%;
-  }
   .cd_all_pages_content .cd_page_sidebar[title=""] ~ .cd_all_pages_inner_content {
     padding: 35px 15px;
   }

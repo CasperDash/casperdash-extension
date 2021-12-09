@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import KeyList from './KeyList';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import { getPublicKey, getMassagedUserDetails } from '../../selectors/user';
 import { isKeyManagerContractAvailable, getPendingDeploys, getPendingDeployHashes } from '../../selectors/keyManager';
@@ -23,9 +22,9 @@ import {
 	getKeysManagerPendingDeploys,
 	updateKeysManagerDeployStatus,
 } from '../../actions/keyManagerActions';
+import KeyList from './KeyList';
 import { DeployConfirmModal } from './ConfirmDeployModal';
 import { AttributeRow } from './AttributeRow';
-
 import { EditModal } from './EditModal';
 
 const KeyManager = () => {
@@ -126,7 +125,6 @@ const KeyManager = () => {
 		const deploy = await getKeyManagerContractDeploy(publicKey);
 		if (deploy.error) {
 			setDeployError(deploy.error.message);
-			console.log(deploy.error.message);
 			return;
 		}
 		const { data: hash, error } = await dispatch(deployKeyManagerContract(deploy));
@@ -194,7 +192,7 @@ const KeyManager = () => {
 						<div className="cd_setting_items_heading_peregraph">
 							{!isContractAvailable && publicKey && (
 								<div className="cd_error_text">
-									Your account haven't deployed keys manager contract yet.{' '}
+									Your account have not deployed keys manager contract yet.{' '}
 									{pendingDeploys.installContract && pendingDeploys.installContract.length ? (
 										'Installing Contract...'
 									) : (
@@ -267,18 +265,19 @@ const KeyManager = () => {
 												<OverlayTrigger
 													placement="top"
 													overlay={<Tooltip>{deploy.hash}</Tooltip>}
+													key={deploy.hash}
 												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														width="16"
 														height="16"
 														fill="currentColor"
-														class="bi bi-arrow-clockwise"
+														className="bi bi-arrow-clockwise"
 														viewBox="0 0 16 16"
 														onClick={() => onShowDeployHash(deploy.hash)}
 													>
 														<path
-															fill-rule="evenodd"
+															fillRule="evenodd"
 															d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
 														/>
 														<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
@@ -292,7 +291,7 @@ const KeyManager = () => {
 													width="16"
 													height="16"
 													fill="currentColor"
-													class="bi bi-plus-circle"
+													className="bi bi-plus-circle"
 													viewBox="0 0 16 16"
 													onClick={() => onEdit('associatedKey', '')}
 												>

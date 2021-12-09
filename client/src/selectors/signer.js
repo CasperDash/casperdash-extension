@@ -4,7 +4,7 @@ export const isConnectedCasper = async () => {
 	try {
 		return await Signer.isConnected();
 	} catch (error) {
-		console.warn(error);
+		return undefined;
 	}
 };
 

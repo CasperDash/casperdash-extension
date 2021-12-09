@@ -29,7 +29,12 @@ export const AddTokenModal = ({ show, handleClose, handleAddToken, error }) => {
 				<div className="cd_add_token_modal_row">
 					<div className="cd_add_token_modal_label">Token Address</div>
 					<div className="cd_add_token_modal_value">
-						<input type="text" value={addTokenAddress} onChange={(e) => handleInputChange(e)}></input>
+						<input
+							type="text"
+							value={addTokenAddress}
+							onChange={(e) => handleInputChange(e)}
+							placeholder="Token Address"
+						/>
 					</div>
 				</div>
 			</Modal.Body>

@@ -1,17 +1,19 @@
 {
-	"name": "frontend",
-	"version": "1.0.2",
-	"private": true,
+	"name": "casperdash_client",
+	"description": "CasperDash Client",
+	"version": "1.3.0",
+	"private": false,
+	"author": "CasperDash",
+	"license": "MIT",
 	"dependencies": {
-		"@auth0/auth0-react": "^1.0.0",
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
-		"antd": "^4.4.1",
-		"apexcharts": "^3.26.3",
+		"apexcharts": "^3.30.0",
 		"axios": "^0.19.2",
+		"big.js": "^6.1.1",
 		"bootstrap": "^4.5.0",
 		"bootstrap-icons": "^1.5.0",
 		"browserslist": "^4.13.0",
@@ -20,38 +22,23 @@
 		"dayjs": "^1.8.29",
 		"dotenv": "^10.0.0",
 		"formik": "^2.2.9",
-		"immutable": "^4.0.0-rc.12",
-		"loadash": "^1.0.0",
 		"lodash-es": "^4.17.21",
-		"node-sass": "^4.14.1",
-		"prop-types": "^15.7.2",
 		"qrcode.react": "^1.0.1",
 		"qs": "^6.9.4",
 		"react": "^16.13.1",
 		"react-apexcharts": "^1.3.9",
-		"react-autobind": "^1.0.6",
 		"react-bootstrap": "^1.6.4",
-		"react-datepicker": "^4.1.0",
 		"react-dom": "^16.13.1",
-		"react-helmet": "^6.1.0",
-		"react-highlight-words": "^0.16.0",
 		"react-redux": "^7.2.0",
 		"react-router-dom": "^5.2.0",
-		"react-script-tag": "^1.1.2",
-		"react-scripts": "3.4.1",
+		"react-scripts": "^4.0.3",
+		"react-select": "^5.2.1",
 		"react-snapshot": "^1.3.0",
-		"react-sparklines": "^1.7.0",
-		"react-step-builder": "^2.0.10",
 		"react-top-loading-bar": "^2.0.1",
 		"redux": "^4.0.5",
-		"redux-devtools-extension": "^2.13.8",
-		"redux-form": "^8.3.6",
 		"redux-thunk": "^2.3.0",
 		"reselect": "^4.0.0",
-		"sass": "^1.26.10",
-		"typescript": "^3.9.6",
-		"url-join": "^4.0.1",
-		"yup": "^0.32.9"
+		"sass": "^1.26.10"
 	},
 	"reactSnapshot": {
 		"exclude": [
@@ -60,14 +47,14 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
+		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
 		"build": "react-scripts build && react-snapshot",
 		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
-		"test": "react-scripts test",
+		"test": "react-scripts test --coverage --watchAll ",
+		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage",
 		"publish": "react-scripts build",
-		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
+		"publish-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build",
+		"build-style": "sass public/assets/css/style.scss public/assets/css/style.css && sass public/assets/css/light-theme.scss public/assets/css/light-theme.css"
 	},
 	"browserslist": {
 		"production": [
@@ -80,5 +67,21 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/node_modules/"
+		],
+		"coverageThreshold": {
+			"global": {
+				"lines": 90,
+				"statements": 90
+			}
+		},
+		"resetMocks": false
+	},
+	"devDependencies": {
+		"react-select-event": "^5.3.0"
 	}
 }

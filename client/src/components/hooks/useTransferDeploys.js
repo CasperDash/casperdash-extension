@@ -1,25 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 import {
 	getTransferDeploysStatus,
 	updateTransferDeployStatus,
 	getTransfersFromLocalStorage,
 } from '../../actions/deployActions';
-import { getTransfersDeploy, getPendingTransferDeployHash, getMassagedTransfers } from '../../selectors/deploy';
-
-/**
- *
- * Merge local and remote deploys without duplication by deployHash.
- *
- * @param {Array} localList
- * @param {Array} remoteList
- * @returns
- */
-const mergeDeploys = (localList, remoteList) => {
-	const remoteIds = remoteList.map((r) => r.deployHash);
-	return [...remoteList, ...localList.filter((l) => remoteIds.indexOf(l.deployHash) < 0)];
-};
+import { getTransfersDeploy, getPendingTransferDeployHash } from '../../selectors/deploy';
+import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 const sortByTimeStampDesc = (a, b) => b.timestamp.localeCompare(a.timestamp);
 
@@ -28,7 +15,6 @@ export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 
 	const transfersDeployList = useSelector(getTransfersDeploy(symbol));
 	const pendingTransferDeployHash = useSelector(getPendingTransferDeployHash(symbol));
-	const historyTransfersDeploy = useSelector(getMassagedTransfers);
 
 	useEffect(() => {
 		dispatch(getTransfersFromLocalStorage(publicKey));
@@ -43,7 +29,7 @@ export const useDeploysWithStatus = ({ symbol, publicKey }) => {
 		}
 	}, [JSON.stringify(pendingTransferDeployHash), dispatch]);
 
-	return mergeDeploys(transfersDeployList, historyTransfersDeploy)
+	return transfersDeployList
 		.filter((transfer) => (symbol ? transfer.symbol === symbol : true))
 		.sort(sortByTimeStampDesc);
 };

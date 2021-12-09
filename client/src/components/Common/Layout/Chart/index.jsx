@@ -5,7 +5,7 @@ export const ChartLine = ({ data }) => {
 	const options = {
 		chart: {
 			zoom: {
-				enabled: true,
+				enabled: false,
 			},
 			stacked: false,
 		},
@@ -15,6 +15,11 @@ export const ChartLine = ({ data }) => {
 			type: 'datetime',
 			tooltip: {
 				enabled: false,
+			},
+			title: {
+				text: 'Source - Coingecko',
+				offsetX: 0,
+				offsetY: 0,
 			},
 		},
 		tooltip: {

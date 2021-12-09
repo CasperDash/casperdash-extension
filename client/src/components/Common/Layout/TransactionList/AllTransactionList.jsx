@@ -6,7 +6,7 @@ import CommonAction from '../../Button/CommonAction';
 const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 	return (
 		<>
-			<div className="overflow-auto">
+			<div className="cd_table_wrapper">
 				<Table className="cd_transaction_list_table">
 					<thead>
 						<tr>

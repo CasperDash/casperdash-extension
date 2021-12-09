@@ -7,6 +7,7 @@ import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../const
  * @param {CLPublicKey} toAccount public key of target account
  * @param {Number} amount transfer amount
  * @param {Number} transferId transfer id. This parameter is optional
+ * @param {Number} fee transfer fee
  * @returns {Deploy} transfer deploy
  */
 export const getTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
@@ -22,7 +23,7 @@ export const getTransferDeploy = (fromAccount, toAccount, amount, transferId, fe
  * @param {Object} session hash contract content
  * @returns {Deploy} deploy of the contract
  */
-export const buildContractInstallDeploy = async (baseAccount, session) => {
+export const buildContractInstallDeploy = (baseAccount, session) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
 	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
 	return DeployUtil.makeDeploy(deployParams, session, payment);
@@ -36,9 +37,13 @@ export const buildContractInstallDeploy = async (baseAccount, session) => {
  * @returns {Deploy} Signed deploy
  */
 export const signDeploy = async (deploy, mainAccountHex, setAccountHex) => {
-	const deployObj = DeployUtil.deployToJson(deploy);
-	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
-	return signedDeploy;
+	try {
+		const deployObj = DeployUtil.deployToJson(deploy);
+		const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
+		return signedDeploy;
+	} catch (error) {
+		return { error: { message: error.message } };
+	}
 };
 
 /**
@@ -64,6 +69,10 @@ export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractH
 	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
 };
 
+/**
+ * Request to connect with signer
+ * @returns {string} error message
+ */
 export const connectCasperSigner = () => {
 	try {
 		Signer.sendConnectionRequest();
