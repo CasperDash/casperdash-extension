@@ -39,7 +39,7 @@ export const SendReceiveSection = ({
 
 	// Functions
 	const setBalance = (percent, setFieldValue) => {
-		const amount = displayBalance / percent;
+		const amount = displayBalance / percent - transferFee;
 		setFieldValue('sendAmount', amount);
 	};
 
@@ -111,7 +111,7 @@ export const SendReceiveSection = ({
 									<div className="cd_send_balance_content">
 										<span className="cd_send_balance_heading">Total Balance</span>
 										<span className="cd_send_balance_value">
-											{toFormattedNumber(displayBalance - values.sendAmount)}
+											{toFormattedNumber(displayBalance - values.sendAmount - transferFee)}
 										</span>
 									</div>
 									<div className="cd_send_qr_address">

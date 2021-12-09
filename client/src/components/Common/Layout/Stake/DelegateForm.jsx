@@ -65,7 +65,7 @@ const DelegateForm = ({
 	};
 
 	const setBalance = (percent, setFieldValue) => {
-		const amount = balance / percent;
+		const amount = balance / percent - fee;
 		setFieldValue('amount', amount);
 	};
 
