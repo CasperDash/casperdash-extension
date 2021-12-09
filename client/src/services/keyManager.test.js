@@ -1,6 +1,7 @@
 import * as casper from 'casper-js-sdk';
 import * as keyManager from './keyManager';
 import * as casperServices from './casperServices';
+import * as request from './request';
 
 const spyOnDeployParams = jest.spyOn(casper.DeployUtil, 'DeployParams');
 const spyFromMap = jest.spyOn(casper.RuntimeArgs, 'fromMap');
@@ -94,8 +95,11 @@ test('getSignedKeyManagementThresholdDeploy return error', async () => {
 });
 
 test('getKeyManagerContractDeploy', async () => {
+	const spyOnRequest = jest.spyOn(request, 'request');
+	spyOnRequest.mockReturnValue({});
 	await keyManager.getKeyManagerContractDeploy('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad');
 	expect(spySignDeploy).toHaveBeenCalled();
+	expect(spyOnRequest).toHaveBeenCalled();
 	expect(spyDeployFromJson).toHaveBeenCalled();
 });
 
