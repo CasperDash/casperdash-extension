@@ -3,6 +3,12 @@
 .cd_light_theme_active {
 	background: $gradian-color14;
 
+	.modal {
+		.modal-content {
+			background-color: $color5;
+		}
+	}
+
 	.cd_dark_theme_slide_img {
 		display: none;
 	}

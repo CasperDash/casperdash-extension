@@ -2,6 +2,9 @@
 .cd_light_theme_active {
   background: linear-gradient(180deg, #ffffff -100%, #ffffff 100%);
 }
+.cd_light_theme_active .modal .modal-content {
+  background-color: #ffffff;
+}
 .cd_light_theme_active .cd_dark_theme_slide_img {
   display: none;
 }

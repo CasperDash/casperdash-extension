@@ -38,6 +38,26 @@ ul {
 	}
 }
 
+.modal {
+	.modal-content {
+		background-color: $color4;
+		.modal-title {
+			color: $color3;
+		}
+		.modal-body {
+			color: $color3;
+		}
+		input {
+			background-color: transparent;
+			border-top: 0;
+			border-left: 0;
+			border-right: 0;
+			outline: 0;
+			color: $color3;
+		}
+	}
+}
+
 .cd_all_pages_content {
 	position: relative;
 	.cd_all_pages_inner_content {
@@ -1735,7 +1755,7 @@ table {
 				color: $color3;
 			}
 			.cd_confirm_modal_value {
-				color: $color12;
+				color: $color3;
 				input {
 					text-align: right;
 				}
@@ -1749,7 +1769,7 @@ table {
 			justify-content: end;
 			padding: 10px;
 			.cd_confirm_modal_value {
-				color: $color12;
+				color: $color3;
 			}
 		}
 	}
@@ -1787,7 +1807,7 @@ table {
 				color: $color3;
 			}
 			.cd_edit_modal_value {
-				color: $color12;
+				color: $color3;
 			}
 			.cd_edit_modal_value_long {
 				width: 300px;
@@ -1801,7 +1821,7 @@ table {
 			justify-content: end;
 			padding: 10px;
 			.cd_edit_modal_value {
-				color: $color12;
+				color: $color3;
 			}
 		}
 	}

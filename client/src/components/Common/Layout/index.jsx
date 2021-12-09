@@ -5,7 +5,7 @@ import { fetchPriceHistory } from '../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../actions/deployActions';
 import { switchTheme } from '../../../actions/settingActions';
 import { REFRESH_TIME } from '../../../constants/key';
-import { DARK_THEME } from '../../../constants/settings';
+import { DARK_THEME, LIGHT_THEME } from '../../../constants/settings';
 import SideBar from '../SideBar';
 import { isLoadingRequest } from '../../../selectors/request';
 import { getTheme } from '../../../selectors/settings';
@@ -18,6 +18,14 @@ const Layout = (props) => {
 	const isLoading = useSelector(isLoadingRequest);
 	const theme = useSelector(getTheme);
 	// Effect
+	useEffect(() => {
+		if (theme) {
+			const currentTheme = theme === LIGHT_THEME ? DARK_THEME : LIGHT_THEME;
+			document.body.classList.remove(currentTheme);
+			document.body.classList.add(theme);
+		}
+	}, [theme]);
+
 	useEffect(() => {
 		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
 		return () => clearInterval(refreshStateRootHash);
@@ -43,7 +51,7 @@ const Layout = (props) => {
 	}, [isLoading]);
 
 	return (
-		<div className={`cd_all_pages_content ${theme}`}>
+		<div className={`cd_all_pages_content`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} className="loading_indicator" />
 			<SideBar modules={props.modules} />
 			<div className="cd_all_pages_inner_content">{props.children}</div>
