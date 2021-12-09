@@ -677,14 +677,20 @@ table td {
   margin: 0;
 }
 
+.btn-primary {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
+}
 .btn-primary:focus {
   box-shadow: none !important;
   outline: 0 !important;
 }
 
-.cd_btn_primary_active {
-  background-color: #53b9ea !important;
-  border-color: #53b9ea !important;
+.btn-secondary {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
 }
 
 .cd_chart_box_heading_date {

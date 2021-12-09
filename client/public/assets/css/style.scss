@@ -544,10 +544,14 @@ table {
 		box-shadow: none !important;
 		outline: 0 !important;
 	}
+	font-weight: 600 !important;
+	font-size: 13px !important;
+	line-height: 16px !important;
 }
-.cd_btn_primary_active {
-	background-color: $color7 !important;
-	border-color: $color7 !important;
+.btn-secondary {
+	font-weight: 600 !important;
+	font-size: 13px !important;
+	line-height: 16px !important;
 }
 
 .cd_chart_box_heading_date {
