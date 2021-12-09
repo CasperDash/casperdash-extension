@@ -93,7 +93,12 @@ export const updateTransferDeployStatus = (publicKey, path, listHash = []) => {
 	return (dispatch) => {
 		const deployStorageValue = getLocalStorageValue(publicKey, path) || [];
 		const updatedValue = deployStorageValue.map((deploy) => {
-			const hashStatus = listHash.find((hash) => hash.hash.toLowerCase() === deploy.deployHash.toLowerCase());
+			if (!deploy.deployHash) {
+				return deploy;
+			}
+			const hashStatus = listHash.find(
+				(item) => item.hash && item.hash.toLowerCase() === deploy.deployHash.toLowerCase(),
+			);
 			return { ...deploy, status: hashStatus ? hashStatus.status : deploy.status };
 		});
 		dispatch(updateTransferDeploysLocalStorage(publicKey, path, updatedValue, 'set'));

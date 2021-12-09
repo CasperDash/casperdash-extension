@@ -36,7 +36,6 @@ jobs:
     
     - name: Run UT
       working-directory: /client
-      continue-on-error: true
       run : |
           yarn
           yarn run test-ci
