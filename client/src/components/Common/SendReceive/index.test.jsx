@@ -63,24 +63,24 @@ test('Should set send amount if clicked on preset amount button', async () => {
 	expect(getByText('Total Balance').textContent).toBe('Total Balance');
 	const amountInput = container.querySelector('input[name="sendAmount"]');
 	// Display balance = balance - send amount ( default 2.5)
-	expect(getByText('997.5').textContent).toBe('997.5');
+	expect(getByText('997.4').textContent).toBe('997.4');
 	expect(amountInput.value).toBe('2.5');
 	expect(getByText('$5.00').textContent).toBe('$5.00');
 	await act(async () => {
 		fireEvent.click(getByText('1/4'));
 	});
-	expect(amountInput.value).toBe('250');
-	expect(getByText('$500.00').textContent).toBe('$500.00');
+	expect(amountInput.value).toBe('249.9');
+	expect(getByText('$499.80').textContent).toBe('$499.80');
 	await act(async () => {
 		fireEvent.click(getByText('Half'));
 	});
-	expect(amountInput.value).toBe('500');
-	expect(getByText('$1,000.00').textContent).toBe('$1,000.00');
+	expect(amountInput.value).toBe('499.9');
+	expect(getByText('$999.80').textContent).toBe('$999.80');
 	await act(async () => {
 		fireEvent.click(getByText('All'));
 	});
-	expect(amountInput.value).toBe('1000');
-	expect(getByText('$2,000.00').textContent).toBe('$2,000.00');
+	expect(amountInput.value).toBe('999.9');
+	expect(getByText('$1,999.80').textContent).toBe('$1,999.80');
 });
 
 describe('Should show error if not valid form when click send', () => {
