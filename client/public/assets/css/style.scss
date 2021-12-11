@@ -1593,6 +1593,11 @@ table {
 		}
 	}
 }
+.cd_error_text {
+	color: $color32;
+	font-size: 0.8em;
+}
+
 .cd_setting_list {
 	.cd_setting_list_items {
 		border: 1px solid $color26;
@@ -1631,10 +1636,6 @@ table {
 				span {
 					font-weight: normal;
 				}
-			}
-			.cd_error_text {
-				color: $color32;
-				font-size: 0.8em;
 			}
 		}
 		.cd_setting_items_right_text {
@@ -1837,6 +1838,9 @@ table {
 		flex-basis: auto;
 		.cd_edit_modal_error {
 			color: $color32;
+		}
+		.cd_edit_modal_success {
+			color: $color34;
 		}
 	}
 }

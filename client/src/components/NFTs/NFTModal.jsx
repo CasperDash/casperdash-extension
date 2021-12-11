@@ -1,7 +1,8 @@
+/* eslint-disable complexity */
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export const NFTModal = ({ show, handleClose, metadata = [] }) => {
+export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError, deployHash }) => {
 	const image = metadata && metadata.find((data) => data.key === 'image');
 	const name = metadata && metadata.find((data) => data.key === 'name');
 	return (
@@ -30,9 +31,16 @@ export const NFTModal = ({ show, handleClose, metadata = [] }) => {
 			</Modal.Body>
 
 			<Modal.Footer className="cd_edit_modal_footer">
-				<Button variant="secondary" onClick={handleClose}>
-					Close
-				</Button>
+				<div className="cd_edit_modal_info">
+					{deployError && !deployHash && <span className="cd_edit_modal_error">{deployError}</span>}
+					{deployHash && <span className="cd_edit_modal_success">{deployHash}</span>}
+				</div>
+				<div>
+					<Button variant="secondary" onClick={handleClose}>
+						Close
+					</Button>
+					{typeof onMint === 'function' && !deployHash && <Button onClick={onMint}>Mint</Button>}
+				</div>
 			</Modal.Footer>
 		</Modal>
 	);

@@ -95,6 +95,43 @@
   color: #ffffff;
 }
 
+.cd_nft_mint .cd_nft_mint_form h3 {
+  font-size: 17px;
+  line-height: 21px;
+  color: #ffffff;
+  opacity: 0.7;
+  margin-bottom: 13px;
+  margin-top: 13px;
+}
+.cd_nft_mint .cd_nft_mint_form h4 {
+  font-size: 15px;
+  line-height: 21px;
+  color: #828cae;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+.cd_nft_mint .cd_nft_mint_form input {
+  margin-bottom: 5px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata .bi-plus-circle-fill:hover {
+  color: #0ee6b6;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input input {
+  margin-right: 10px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input .bi-dash-circle-fill {
+  color: #828cae;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input .bi-dash-circle-fill:hover {
+  color: #b5395c;
+}
+
 @media (max-width: 600px) {
   .cd_nft_modal_body .cd_nft_modal_row {
     display: flex;
@@ -1642,6 +1679,11 @@ table td {
   color: #252f47;
 }
 
+.cd_error_text {
+  color: #b5395c;
+  font-size: 0.8em;
+}
+
 .cd_setting_list .cd_setting_list_items {
   border: 1px solid #828cae26;
   border-radius: 10px;
@@ -1681,10 +1723,6 @@ table td {
 }
 .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph p span {
   font-weight: normal;
-}
-.cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph .cd_error_text {
-  color: #b5395c;
-  font-size: 0.8em;
 }
 .cd_setting_list .cd_setting_list_items .cd_setting_items_right_text {
   display: flex;
@@ -1866,6 +1904,9 @@ table td {
 }
 .cd_edit_modal_content .cd_edit_modal_footer .cd_edit_modal_error {
   color: #b5395c;
+}
+.cd_edit_modal_content .cd_edit_modal_footer .cd_edit_modal_success {
+  color: #0ee6b6;
 }
 
 .cd_add_token_modal_content .cd_add_token_modal_header {

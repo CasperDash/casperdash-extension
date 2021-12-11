@@ -6,6 +6,7 @@ import { getPublicKey } from '../../selectors/user';
 import { getNFTInfo } from '../../selectors/NFTs';
 import { fetchNFTInfo } from '../../actions/NFTActions';
 import { NFTModal } from './NFTModal';
+import { NFTTab } from './NFTTab';
 
 const NFTs = () => {
 	const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const NFTs = () => {
 		<>
 			<section className="cd_wallets_page">
 				<HeadingModule name={'NFTs'} />
+				{publicKey && <NFTTab activeTab="/NFTs" />}
 
 				<div className="cd_nft_row row">
 					{NFTInfo && NFTInfo.length ? (

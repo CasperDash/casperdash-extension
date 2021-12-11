@@ -53,6 +53,7 @@ export const REQUEST = {
 
 export const NFTS = {
 	FETCH_NFTS_INFO: 'NFTS.FETCH_NFTS_INFO',
+	FETCH_NFTS_CONTRACT_INFO: 'NFTS.FETCH_NFTS_CONTRACT_INFO',
 };
 
 export const VALIDATORS = {

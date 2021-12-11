@@ -38,7 +38,8 @@
 		"redux": "^4.0.5",
 		"redux-thunk": "^2.3.0",
 		"reselect": "^4.0.0",
-		"sass": "^1.26.10"
+		"sass": "^1.26.10",
+		"ts-results": "^3.3.0"
 	},
 	"reactSnapshot": {
 		"exclude": [
@@ -46,7 +47,7 @@
 		]
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
 		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
 		"build": "react-scripts build && react-snapshot",
 		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",

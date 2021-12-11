@@ -96,6 +96,51 @@
 	}
 }
 
+.cd_nft_mint {
+	.cd_nft_mint_form {
+		h3 {
+			font-size: 17px;
+			line-height: 21px;
+			color: $color5;
+			opacity: 0.7;
+			margin-bottom: 13px;
+			margin-top: 13px;
+		}
+		h4 {
+			font-size: 15px;
+			line-height: 21px;
+			color: $color3;
+			opacity: 0.7;
+			margin-top: 15px;
+		}
+		input {
+			margin-bottom: 5px;
+		}
+		.cd_nft_mint_metadata {
+			.bi-plus-circle-fill {
+				&:hover {
+					color: $color34;
+				}
+			}
+		}
+		.cd_nft_mint_attributes_input {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			input {
+				margin-right: 10px;
+			}
+			.bi-dash-circle-fill {
+				color: $color3;
+				&:hover {
+					color: $color32;
+				}
+			}
+		}
+	}
+}
+
 @media (max-width: 600px) {
 	.cd_nft_modal_body {
 		.cd_nft_modal_row {

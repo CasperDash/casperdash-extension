@@ -13,3 +13,14 @@ export const fetchNFTInfo = (publicKey) => ({
 		},
 	},
 });
+
+/**
+ * @param {string} publicKey
+ * @returns {object}
+ */
+export const fetchNTFContractInfo = (publicKey) => ({
+	type: NFTS.FETCH_NFTS_CONTRACT_INFO,
+	request: {
+		url: `/nfts/${publicKey}/NFTContracts`,
+	},
+});
