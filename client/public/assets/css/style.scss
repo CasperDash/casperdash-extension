@@ -61,6 +61,25 @@ ul {
 	}
 }
 
+.cd_tabs {
+	border: 0;
+	display: flex;
+	padding-bottom: 20px;
+	.cd_tab {
+		padding-right: 20px;
+		a {
+			text-decoration: none;
+			color: $color2;
+			&.active {
+				border-bottom: 2px solid $color7;
+			}
+			&:hover {
+				border-bottom: 2px solid $color7;
+			}
+		}
+	}
+}
+
 .cd_all_pages_content {
 	position: relative;
 	.cd_all_pages_inner_content {
@@ -1596,6 +1615,10 @@ table {
 .cd_error_text {
 	color: $color32;
 	font-size: 0.8em;
+}
+
+.cd_success_text {
+	color: $color34;
 }
 
 .cd_setting_list {

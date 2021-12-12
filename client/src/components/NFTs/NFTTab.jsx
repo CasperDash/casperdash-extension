@@ -1,15 +1,19 @@
 import React from 'react';
-import { Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export const NFTTab = ({ activeTab = '/NFTs' }) => {
 	return (
-		<Nav variant="tabs" defaultActiveKey={activeTab}>
-			<Nav.Item>
-				<Nav.Link href="/NFTs">Your NFTs</Nav.Link>
-			</Nav.Item>
-			<Nav.Item>
-				<Nav.Link href="/createNFT">Mint NFT</Nav.Link>
-			</Nav.Item>
-		</Nav>
+		<div className="cd_tabs">
+			<div className="cd_tab">
+				<Link to="/NFTs" className={`${activeTab === '/NFTs' ? 'active' : ''}`}>
+					Your NFTs
+				</Link>
+			</div>
+			<div className="cd_tab">
+				<Link to="/createNFT" className={`${activeTab === '/createNFT' ? 'active' : ''}`}>
+					Mint NFT
+				</Link>
+			</div>
+		</div>
 	);
 };

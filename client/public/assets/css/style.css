@@ -132,6 +132,29 @@
   color: #b5395c;
 }
 
+.cd_nft_contract_deploy_modal h3 {
+  font-size: 17px;
+  line-height: 21px;
+  color: #828cae;
+  opacity: 0.7;
+  margin-bottom: 13px;
+  margin-top: 13px;
+}
+.cd_nft_contract_deploy_modal h4 {
+  font-size: 15px;
+  line-height: 21px;
+  color: #ffffff;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+.cd_nft_contract_deploy_modal .cd_nft_contract_row {
+  padding-bottom: 10px;
+}
+.cd_nft_contract_deploy_modal .cd_nft_contract_confirm_notice {
+  font-size: 0.7em;
+  color: #b5395c;
+}
+
 @media (max-width: 600px) {
   .cd_nft_modal_body .cd_nft_modal_row {
     display: flex;
@@ -278,6 +301,25 @@ ul {
 }
 .modal .modal-content .close {
   color: #828cae;
+}
+
+.cd_tabs {
+  border: 0;
+  display: flex;
+  padding-bottom: 20px;
+}
+.cd_tabs .cd_tab {
+  padding-right: 20px;
+}
+.cd_tabs .cd_tab a {
+  text-decoration: none;
+  color: #ffffffe6;
+}
+.cd_tabs .cd_tab a.active {
+  border-bottom: 2px solid #53b9ea;
+}
+.cd_tabs .cd_tab a:hover {
+  border-bottom: 2px solid #53b9ea;
 }
 
 .cd_all_pages_content {
@@ -1682,6 +1724,10 @@ table td {
 .cd_error_text {
   color: #b5395c;
   font-size: 0.8em;
+}
+
+.cd_success_text {
+  color: #0ee6b6;
 }
 
 .cd_setting_list .cd_setting_list_items {

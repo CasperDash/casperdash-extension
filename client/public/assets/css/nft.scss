@@ -141,6 +141,31 @@
 	}
 }
 
+.cd_nft_contract_deploy_modal {
+	h3 {
+		font-size: 17px;
+		line-height: 21px;
+		color: $color3;
+		opacity: 0.7;
+		margin-bottom: 13px;
+		margin-top: 13px;
+	}
+	h4 {
+		font-size: 15px;
+		line-height: 21px;
+		color: $color5;
+		opacity: 0.7;
+		margin-top: 15px;
+	}
+	.cd_nft_contract_row {
+		padding-bottom: 10px;
+	}
+	.cd_nft_contract_confirm_notice {
+		font-size: 0.7em;
+		color: $color32;
+	}
+}
+
 @media (max-width: 600px) {
 	.cd_nft_modal_body {
 		.cd_nft_modal_row {

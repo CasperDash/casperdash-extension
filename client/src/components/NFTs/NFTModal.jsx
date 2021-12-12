@@ -36,10 +36,13 @@ export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError
 					{deployHash && <span className="cd_edit_modal_success">{deployHash}</span>}
 				</div>
 				<div>
-					<Button variant="secondary" onClick={handleClose}>
-						Close
-					</Button>
-					{typeof onMint === 'function' && !deployHash && <Button onClick={onMint}>Mint</Button>}
+					{typeof onMint === 'function' && !deployHash ? (
+						<Button onClick={onMint}>Mint</Button>
+					) : (
+						<Button variant="secondary" onClick={handleClose}>
+							Close
+						</Button>
+					)}
 				</div>
 			</Modal.Footer>
 		</Modal>
