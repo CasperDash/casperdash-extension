@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
 import { putDeploy } from '../../../actions/deployActions';
-import { storeFile } from '../../../actions/fileActions';
+import { storeFile, deleteFile } from '../../../actions/fileActions';
 import { getSingedMintDeploy } from '../../../services/nftServices';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
+import { NFT_GATEWAY } from '../../../constants/key';
 import { NFTModal } from '../NFTModal';
 import SelectField from './SelectField';
 import { NFTAttributeRow } from './NFTAttributeRow';
@@ -60,26 +61,34 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	const [previewMetadata, setPreviewMetaData] = useState([]);
 	const [signerError, setSignerError] = useState('');
 	const [deployHash, setDeployHash] = useState();
+	const [isMinting, setIsMinting] = useState(false);
 
 	// function
 	const onMintNFT = async () => {
+		setIsMinting(true);
+		// store file by nft.storage
 		const { data: cid } = await dispatch(storeFile(nftInfo.metadata.find((attr) => attr.name === 'image').value));
+		// Update massage and image attribute
 		const nftMetadata = nftInfo.metadata.map((attr) => {
-			return [attr.name, attr.name !== 'image' ? attr.value : cid.cid];
+			return [attr.name, attr.name !== 'image' ? attr.value : `https://${cid.cid}.${NFT_GATEWAY}`];
 		});
-
+		// Build and request to sign deploy with signer
 		const signedDeploy = await getSingedMintDeploy({ ...nftInfo, metadata: nftMetadata, publicKey });
-		if (!signedDeploy.error) {
+
+		if (signedDeploy && !signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
 		} else {
-			setSignerError(signedDeploy.error);
+			setSignerError(signedDeploy ? signedDeploy.error.message : 'Error!');
+			if (cid) {
+				dispatch(deleteFile(cid.cid));
+			}
 		}
+		setIsMinting(false);
 	};
 
 	const handleSubmit = async (values) => {
 		const nftInfo = massageFormValues(values);
-
 		setPreviewMetaData(nftInfo.metadata);
 		setNFTInfo(nftInfo);
 		setShowNFTModal(true);
@@ -102,6 +111,13 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 		setAttributes(updatedAttributes);
 	};
 
+	const clearState = () => {
+		setSignerError('');
+		setDeployHash('');
+		setPreviewMetaData([]);
+		setNFTInfo({});
+	};
+
 	return (
 		<>
 			<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '' }} validate={validate}>
@@ -115,7 +131,9 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 							<Form.Control.Feedback type="invalid">{errors.nftContract}</Form.Control.Feedback>
 						</div>
 						<div className="cd_nft_mint_recipient">
-							<h3>Recipient</h3>
+							<h3>
+								Recipient <span className="cd_field_note">( Leave it empty to mint for yourself )</span>
+							</h3>
 							<FormControl
 								placeholder="Insert address"
 								name="toAddress"
@@ -128,7 +146,9 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 						<div className="cd_nft_mint_metadata">
 							<h3>Metadata</h3>
 							<div className="cd_nft_mint_name">
-								<h4>Name</h4>
+								<h4>
+									Name <span className="cd_field_note">*</span>
+								</h4>
 								<FormControl
 									placeholder="NFT name"
 									name="name"
@@ -140,7 +160,9 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 							</div>
 
 							<div className="cd_nft_mint_image">
-								<h4>Image File</h4>
+								<h4>
+									Image File <span className="cd_field_note">*</span>
+								</h4>
 								<ImagePreview file={values.image} />
 								<FormControl
 									placeholder="Image file"
@@ -183,10 +205,14 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 			<NFTModal
 				show={showNFTModal}
 				metadata={previewMetadata}
-				handleClose={() => setShowNFTModal(false)}
+				handleClose={() => {
+					setShowNFTModal(false);
+					clearState();
+				}}
 				onMint={onMintNFT}
 				deployError={signerError}
 				deployHash={deployHash}
+				isMinting={isMinting}
 			/>
 		</>
 	);

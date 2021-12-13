@@ -3,13 +3,20 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { ImagePreview } from '../Common/Image/ImagePreview';
 
-export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError, deployHash }) => {
+export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError, deployHash, isMinting }) => {
 	const { value: imageValue = 'assets/image/nft-empty.png' } =
 		(metadata && metadata.find((data) => data.key === 'image')) || {};
 
 	const name = (metadata && metadata.find((data) => data.key === 'name')) || {};
+	const onClose = () => {
+		if (isMinting) {
+			return;
+		} else {
+			handleClose();
+		}
+	};
 	return (
-		<Modal show={show} onHide={handleClose} centered className="cd_edit_modal_content" size="lg">
+		<Modal show={show} onHide={onClose} centered className="cd_edit_modal_content" size="lg">
 			<Modal.Header closeButton className="cd_edit_modal_header">
 				<Modal.Title>{name ? name.value : 'NFT'}</Modal.Title>
 			</Modal.Header>
@@ -44,9 +51,11 @@ export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError
 				</div>
 				<div>
 					{typeof onMint === 'function' && !deployHash ? (
-						<Button onClick={onMint}>Mint</Button>
+						<Button onClick={onMint} disabled={isMinting}>
+							{isMinting ? 'Minting...' : 'Mint'}
+						</Button>
 					) : (
-						<Button variant="secondary" onClick={handleClose}>
+						<Button variant="secondary" onClick={onClose}>
 							Close
 						</Button>
 					)}

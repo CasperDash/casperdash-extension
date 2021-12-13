@@ -113,8 +113,26 @@
 			opacity: 0.7;
 			margin-top: 15px;
 		}
+		.cd_field_note {
+			color: $color37;
+			font-size: 12px;
+		}
 		input {
 			margin-bottom: 5px;
+			background-color: transparent;
+			color: $color3;
+			border-top: 0px;
+			border-left: 0px;
+			border-right: 0px;
+		}
+		.cd_nft_mint_contract_dropdown {
+			div {
+				background-color: transparent;
+				color: $color3;
+			}
+			#react-select-3-listbox {
+				background-color: $color4;
+			}
 		}
 		.cd_nft_mint_metadata {
 			.bi-plus-circle-fill {

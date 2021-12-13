@@ -16,3 +16,4 @@ export const ENTRY_POINT_DELEGATE = 'delegate';
 export const ENTRY_POINT_UNDELEGATE = 'undelegate';
 export const EXPLORER_URL = NETWORK_NAME === 'casper' ? 'https://cspr.live' : 'https://testnet.cspr.live';
 export const CASPER_SYMBOL = 'CSPR';
+export const NFT_GATEWAY = 'ipfs.dweb.link';

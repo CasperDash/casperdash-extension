@@ -110,8 +110,24 @@
   opacity: 0.7;
   margin-top: 15px;
 }
+.cd_nft_mint .cd_nft_mint_form .cd_field_note {
+  color: #dc3545;
+  font-size: 12px;
+}
 .cd_nft_mint .cd_nft_mint_form input {
   margin-bottom: 5px;
+  background-color: transparent;
+  color: #828cae;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_contract_dropdown div {
+  background-color: transparent;
+  color: #828cae;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_contract_dropdown #react-select-3-listbox {
+  background-color: #252f47;
 }
 .cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata {
   padding-bottom: 20px;

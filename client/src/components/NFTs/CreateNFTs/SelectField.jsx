@@ -9,6 +9,7 @@ import { ContractField } from './ContractField';
  */
 const SelectField = ({ options, field, form }) => (
 	<Select
+		className="cd_nft_mint_contract_dropdown"
 		options={options}
 		inputId={field.name}
 		name={field.name}
