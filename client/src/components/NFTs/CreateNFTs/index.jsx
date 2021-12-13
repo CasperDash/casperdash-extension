@@ -8,6 +8,7 @@ import { fetchNTFContractInfo } from '../../../actions/NFTActions';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import { NFTMintForm } from './NFTMintForm';
 import { DeployConfirmModal } from './DeployConfirmModal';
+import { Button } from 'react-bootstrap';
 
 const CreateNFT = () => {
 	const dispatch = useDispatch();
@@ -44,7 +45,10 @@ const CreateNFT = () => {
 					</a>
 				</div>
 			) : (
-				<NFTMintForm publicKey={publicKey} nftContracts={nftContracts} />
+				<>
+					<Button onClick={handleDeployTextClick}>Add new collection</Button>
+					<NFTMintForm publicKey={publicKey} nftContracts={nftContracts} />
+				</>
 			)}
 			<DeployConfirmModal
 				show={showConfirmModal}

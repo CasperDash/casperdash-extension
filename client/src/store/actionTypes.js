@@ -63,3 +63,7 @@ export const VALIDATORS = {
 export const SETTINGS = {
 	SWITCH_THEME: 'SETTINGS.SWITCH_THEME',
 };
+
+export const FILE = {
+	STORE_FILE: 'FILE.STORE_FILE',
+};

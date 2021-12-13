@@ -113,8 +113,22 @@
 .cd_nft_mint .cd_nft_mint_form input {
   margin-bottom: 5px;
 }
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata {
+  padding-bottom: 20px;
+}
 .cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata .bi-plus-circle-fill:hover {
   color: #0ee6b6;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata .cd_nft_image {
+  height: 400px;
+  max-width: 400px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata .cd_nft_image img {
+  max-width: 100%;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 .cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input {
   display: flex;
@@ -130,6 +144,9 @@
 }
 .cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input .bi-dash-circle-fill:hover {
   color: #b5395c;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_btn_mint {
+  width: 200px;
 }
 
 .cd_nft_contract_deploy_modal h3 {

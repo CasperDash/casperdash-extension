@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../selectors/user';
+import { getOwnNFTContractHash } from '../../selectors/NFTs';
 import { getNFTInfo } from '../../selectors/NFTs';
 import { fetchNFTInfo } from '../../actions/NFTActions';
 import { NFTModal } from './NFTModal';
@@ -14,14 +15,15 @@ const NFTs = () => {
 	// Selector
 	const publicKey = useSelector(getPublicKey);
 	const NFTInfo = useSelector(getNFTInfo);
+	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 	// State
 	const [showModal, setShowModal] = useState(false);
 	const [selectedMetadata, setSelectedMetadata] = useState(false);
 
 	// Effect
 	useAutoRefreshEffect(() => {
-		dispatch(fetchNFTInfo(publicKey));
-	}, [dispatch, publicKey]);
+		dispatch(fetchNFTInfo(publicKey, ownNFTContracts));
+	}, [dispatch, publicKey, JSON.stringify(ownNFTContracts)]);
 
 	// Functions
 	const onCloseModal = () => {

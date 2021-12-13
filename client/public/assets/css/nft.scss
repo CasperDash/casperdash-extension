@@ -122,6 +122,18 @@
 					color: $color34;
 				}
 			}
+			padding-bottom: 20px;
+			.cd_nft_image {
+				height: 400px;
+				max-width: 400px;
+				img {
+					max-width: 100%;
+					max-height: 100%;
+					margin-left: auto;
+					margin-right: auto;
+					display: block;
+				}
+			}
 		}
 		.cd_nft_mint_attributes_input {
 			display: flex;
@@ -137,6 +149,9 @@
 					color: $color32;
 				}
 			}
+		}
+		.cd_nft_btn_mint {
+			width: 200px;
 		}
 	}
 }

@@ -1,10 +1,13 @@
 /* eslint-disable complexity */
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { ImagePreview } from '../Common/Image/ImagePreview';
 
 export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError, deployHash }) => {
-	const image = metadata && metadata.find((data) => data.key === 'image');
-	const name = metadata && metadata.find((data) => data.key === 'name');
+	const { value: imageValue = 'assets/image/nft-empty.png' } =
+		(metadata && metadata.find((data) => data.key === 'image')) || {};
+
+	const name = (metadata && metadata.find((data) => data.key === 'name')) || {};
 	return (
 		<Modal show={show} onHide={handleClose} centered className="cd_edit_modal_content" size="lg">
 			<Modal.Header closeButton className="cd_edit_modal_header">
@@ -14,7 +17,11 @@ export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError
 			<Modal.Body className="cd_nft_modal_body">
 				<div className="cd_nft_modal_row">
 					<div className="cd_nft_image">
-						<img src={image ? image.value : 'assets/image/nft-empty.png'} alt="nft-detail" />
+						{typeof imageValue === 'string' ? (
+							<img src={imageValue} alt="nft-detail" />
+						) : (
+							<ImagePreview file={imageValue} />
+						)}
 					</div>
 					<div className="cd_nft_modal_metadata">
 						{metadata &&

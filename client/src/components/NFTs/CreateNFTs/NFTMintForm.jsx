@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
 import { putDeploy } from '../../../actions/deployActions';
+import { storeFile } from '../../../actions/fileActions';
 import { getSingedMintDeploy } from '../../../services/nftServices';
+import { ImagePreview } from '../../Common/Image/ImagePreview';
 import { NFTModal } from '../NFTModal';
 import SelectField from './SelectField';
 import { NFTAttributeRow } from './NFTAttributeRow';
@@ -34,13 +36,17 @@ const massageFormValues = (values) => {
 			if (!attribute || !value) {
 				return;
 			}
-			return [attribute, value];
+			return { key: attribute, value: value, name: attribute };
 		})
 		.filter(Boolean);
 	return {
 		nftContract: values.nftContract,
 		recipient: values.toAddress,
-		metadata: [['name', values.name], ['image', values.image], ...metadataAttributes],
+		metadata: [
+			{ key: 'name', value: values.name, name: 'name' },
+			{ key: 'image', value: values.image, name: 'image' },
+			...metadataAttributes,
+		],
 	};
 };
 
@@ -55,25 +61,26 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	const [signerError, setSignerError] = useState('');
 	const [deployHash, setDeployHash] = useState();
 
+	// function
 	const onMintNFT = async () => {
-		const signedDeploy = await getSingedMintDeploy({ ...nftInfo, publicKey });
+		const { data: cid } = await dispatch(storeFile(nftInfo.metadata.find((attr) => attr.name === 'image').value));
+		const nftMetadata = nftInfo.metadata.map((attr) => {
+			return [attr.name, attr.name !== 'image' ? attr.value : cid.cid];
+		});
+
+		const signedDeploy = await getSingedMintDeploy({ ...nftInfo, metadata: nftMetadata, publicKey });
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
 		} else {
-			setSignerError(signedDeploy.error.message);
+			setSignerError(signedDeploy.error);
 		}
 	};
 
-	// function
 	const handleSubmit = async (values) => {
 		const nftInfo = massageFormValues(values);
-		const preview = nftInfo.metadata.map((attribute) => ({
-			key: attribute[0],
-			value: attribute[1],
-			name: attribute[0],
-		}));
-		setPreviewMetaData(preview);
+
+		setPreviewMetaData(nftInfo.metadata);
 		setNFTInfo(nftInfo);
 		setShowNFTModal(true);
 	};
@@ -97,8 +104,8 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 
 	return (
 		<>
-			<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '', image: '' }} validate={validate}>
-				{({ values, errors, handleSubmit, handleChange }) => (
+			<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '' }} validate={validate}>
+				{({ values, errors, handleSubmit, handleChange, setFieldValue }) => (
 					<Form noValidate onSubmit={handleSubmit} className="cd_nft_mint_form">
 						<div className="cd_nft_mint_contract">
 							<h3>NFT Contract</h3>
@@ -131,14 +138,18 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 								/>
 								<Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
 							</div>
+
 							<div className="cd_nft_mint_image">
-								<h4>Image</h4>
+								<h4>Image File</h4>
+								<ImagePreview file={values.image} />
 								<FormControl
-									placeholder="Image uri"
+									placeholder="Image file"
 									name="image"
-									value={values.image}
-									onChange={handleChange}
+									onChange={(e) => {
+										setFieldValue('image', e.currentTarget.files[0]);
+									}}
 									isInvalid={errors.image}
+									type="file"
 								/>
 								<Form.Control.Feedback type="invalid">{errors.image}</Form.Control.Feedback>
 							</div>
@@ -161,15 +172,11 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 								})}
 							</div>
 						</div>
-
-						<Button
-							variant="primary"
-							type="submit"
-							onClick={handleSubmit}
-							className="cd_send_currency_btn_text"
-						>
-							Mint
-						</Button>
+						<div className="cd_send_currency_btn_text">
+							<Button type="submit" onClick={handleSubmit} className="cd_send_currency_btn">
+								Mint
+							</Button>
+						</div>
 					</Form>
 				)}
 			</Formik>
