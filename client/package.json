@@ -17,7 +17,7 @@
 		"bootstrap": "^4.5.0",
 		"bootstrap-icons": "^1.5.0",
 		"browserslist": "^4.13.0",
-		"casper-js-sdk": "^2.7.1",
+		"casper-js-sdk": "^2.7.3",
 		"cookie": "^0.4.1",
 		"dayjs": "^1.8.29",
 		"dotenv": "^10.0.0",
