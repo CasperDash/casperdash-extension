@@ -687,7 +687,8 @@ table {
 	}
 	.no_token_message {
 		padding-left: 10px;
-		color: $color27;
+		color: $color37;
+		font-weight: 600;
 	}
 	.cd_currency_column_sub_row {
 		display: flex;
@@ -1615,6 +1616,7 @@ table {
 .cd_error_text {
 	color: $color37;
 	font-size: 0.8em;
+	font-weight: 600;
 }
 
 .cd_success_text {
@@ -1810,6 +1812,7 @@ table {
 		flex-basis: auto;
 		.cd_confirm_modal_error {
 			color: $color37;
+			font-weight: 600;
 		}
 	}
 }
@@ -1819,6 +1822,7 @@ table {
 		.cd_key_manager_contract_confirm_notice {
 			font-size: 0.8em;
 			color: $color37;
+			font-weight: 600;
 		}
 	}
 }
@@ -1861,6 +1865,7 @@ table {
 		flex-basis: auto;
 		.cd_edit_modal_error {
 			color: $color37;
+			font-weight: 600;
 		}
 		.cd_edit_modal_success {
 			color: $color34;
@@ -1898,6 +1903,7 @@ table {
 		flex-basis: auto;
 		.cd_add_token_modal_error {
 			color: $color37;
+			font-weight: 600;
 		}
 	}
 }

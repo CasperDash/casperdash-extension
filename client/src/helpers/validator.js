@@ -15,6 +15,28 @@ export const isValidPublicKey = (publicKey) => {
 	}
 };
 
+/**
+ * validate NFT Mint Form
+ * @param {object} values
+ */
+export const validateNFTMintForm = (values) => {
+	let errors = {};
+	if (!values.nftContract) {
+		errors.nftContract = 'required';
+	}
+	if (!values.name) {
+		errors.name = 'required';
+	}
+	if (!values.image) {
+		errors.image = 'required';
+	}
+	if (values.toAddress && !isValidPublicKey(values.toAddress)) {
+		return { toAddress: 'Invalid address.' };
+	}
+
+	return errors;
+};
+
 const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
 	NOT_ENOUGH_BALANCE: 'Not enough balance.',

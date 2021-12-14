@@ -7,49 +7,12 @@ import { storeFile, deleteFile } from '../../../actions/fileActions';
 import { getSingedMintDeploy } from '../../../services/nftServices';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
 import { NFT_GATEWAY } from '../../../constants/key';
+import { validateNFTMintForm } from '../../../helpers/validator';
+import { massageNFTMintFormValues } from '../../../helpers/nft';
+import { MAX_METADATA_ATTRIBUTES } from '../../../constants/nft';
 import { NFTModal } from '../NFTModal';
 import SelectField from './SelectField';
 import { NFTAttributeRow } from './NFTAttributeRow';
-
-const MAX_METADATA_ATTRIBUTES = 5;
-
-const validate = (values) => {
-	let errors = {};
-	if (!values.nftContract) {
-		errors.nftContract = 'required';
-	}
-	if (!values.name) {
-		errors.name = 'required';
-	}
-	if (!values.image) {
-		errors.image = 'required';
-	}
-
-	return errors;
-};
-
-const massageFormValues = (values) => {
-	const metadataAttributes = new Array(MAX_METADATA_ATTRIBUTES)
-		.fill()
-		.map((el, index) => {
-			const attribute = values[`attribute${index}`];
-			const value = values[`value${index}`];
-			if (!attribute || !value) {
-				return;
-			}
-			return { key: attribute, value: value, name: attribute };
-		})
-		.filter(Boolean);
-	return {
-		nftContract: values.nftContract,
-		recipient: values.toAddress,
-		metadata: [
-			{ key: 'name', value: values.name, name: 'name' },
-			{ key: 'image', value: values.image, name: 'image' },
-			...metadataAttributes,
-		],
-	};
-};
 
 export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	const dispatch = useDispatch();
@@ -88,14 +51,14 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	};
 
 	const handleSubmit = async (values) => {
-		const nftInfo = massageFormValues(values);
+		const nftInfo = massageNFTMintFormValues(values);
 		setPreviewMetaData(nftInfo.metadata);
 		setNFTInfo(nftInfo);
 		setShowNFTModal(true);
 	};
 
 	const onAddNewAttribute = () => {
-		if (attributes.length >= 4) {
+		if (attributes.length >= MAX_METADATA_ATTRIBUTES) {
 			return;
 		}
 		const newAttribute = { [`attribute${attributes.length}`]: '', [`value${attributes.length}`]: '' };
@@ -120,7 +83,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 
 	return (
 		<>
-			<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '' }} validate={validate}>
+			<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '' }} validate={validateNFTMintForm}>
 				{({ values, errors, handleSubmit, handleChange, setFieldValue }) => (
 					<Form noValidate onSubmit={handleSubmit} className="cd_nft_mint_form">
 						<div className="cd_nft_mint_contract">

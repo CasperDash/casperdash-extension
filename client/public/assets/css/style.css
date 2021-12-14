@@ -47,7 +47,8 @@
 }
 .cd_nft_row.row .cd_nft_empty .cd_no_nft_message {
   text-align: center;
-  color: #ba1358;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_nft_modal_body .cd_nft_modal_row {
@@ -113,6 +114,7 @@
 .cd_nft_mint .cd_nft_mint_form .cd_field_note {
   color: #dc3545;
   font-size: 12px;
+  font-weight: 600;
 }
 .cd_nft_mint .cd_nft_mint_form input {
   margin-bottom: 5px;
@@ -186,6 +188,7 @@
 .cd_nft_contract_deploy_modal .cd_nft_contract_confirm_notice {
   font-size: 0.8em;
   color: #dc3545;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {
@@ -262,7 +265,8 @@
   text-align: center;
 }
 .cd_empty_delegation_row .cd_empty_delegation_message {
-  color: #ba1358;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_staking_component.toggle_form .cd_btn_stake_cspr {
@@ -919,7 +923,8 @@ table td {
 }
 .cd_add_token_row .no_token_message {
   padding-left: 10px;
-  color: #ba1358;
+  color: #dc3545;
+  font-weight: 600;
 }
 .cd_add_token_row .cd_currency_column_sub_row {
   display: flex;
@@ -1757,6 +1762,7 @@ table td {
 .cd_error_text {
   color: #dc3545;
   font-size: 0.8em;
+  font-weight: 600;
 }
 
 .cd_success_text {
@@ -1940,11 +1946,13 @@ table td {
 }
 .cd_confirm_modal_content .cd_confirm_modal_footer .cd_confirm_modal_error {
   color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_key_manger_contract_confirm_modal .cd_key_manger_contract_confirm_content .cd_key_manager_contract_confirm_notice {
   font-size: 0.8em;
   color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_edit_modal_content .cd_edit_modal_header {
@@ -1983,6 +1991,7 @@ table td {
 }
 .cd_edit_modal_content .cd_edit_modal_footer .cd_edit_modal_error {
   color: #dc3545;
+  font-weight: 600;
 }
 .cd_edit_modal_content .cd_edit_modal_footer .cd_edit_modal_success {
   color: #0ee6b6;
@@ -2016,6 +2025,7 @@ table td {
 }
 .cd_add_token_modal_content .cd_add_token_modal_footer .cd_add_token_modal_error {
   color: #dc3545;
+  font-weight: 600;
 }
 
 @media (max-width: 1350px) {
