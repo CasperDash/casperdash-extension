@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import * as redux from 'react-redux';
@@ -14,6 +15,12 @@ beforeEach(() => {
 	// Mock dispatch function returned from useDispatch
 	mockDispatch = jest.fn();
 	spyOnUseDispatch.mockReturnValue(mockDispatch);
+});
+
+jest.mock('react-router-dom', () => {
+	return {
+		Link: () => <div />,
+	};
 });
 
 jest.mock('../Common/Layout/HeadingComponent/Heading', () => {

@@ -38,6 +38,13 @@ jest.mock('./Stake', () => {
 		default: '',
 	};
 });
+
+jest.mock('./NFTs/CreateNFTs', () => {
+	return {
+		__esModules: true,
+		default: '',
+	};
+});
 jest.mock('../shared/constants', () => {
 	return {
 		routes: { dashboard: '/dashboard', nfts: '/NFTs' },

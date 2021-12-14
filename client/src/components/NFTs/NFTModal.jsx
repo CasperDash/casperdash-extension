@@ -7,7 +7,7 @@ export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError
 	const { value: imageValue = 'assets/image/nft-empty.png' } =
 		(metadata && metadata.find((data) => data.key === 'image')) || {};
 
-	const name = (metadata && metadata.find((data) => data.key === 'name')) || {};
+	const name = metadata && metadata.find((data) => data.key === 'name');
 	const onClose = () => {
 		if (isMinting) {
 			return;
