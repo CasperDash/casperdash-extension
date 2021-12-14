@@ -15,6 +15,7 @@ import { MessageModal } from '../Common/Layout/Modal/MessageModal';
 import { AddTokenModal } from '../Common/Layout/Modal/AddTokenModal';
 import { NFTModal } from './NFTModal';
 import { NFTTab } from './NFTTab';
+import { NFTCard } from './NFTCard';
 
 const NFTs = () => {
 	const dispatch = useDispatch();
@@ -89,26 +90,8 @@ const NFTs = () => {
 				</div>
 				<div className="cd_nft_row row">
 					{NFTInfo && NFTInfo.length ? (
-						NFTInfo.map(({ tokenId, metadata = [] }) => {
-							const image = metadata.find((meta) => meta.key === 'image');
-							const tokenName = metadata.find((meta) => meta.key === 'name');
-							return tokenId ? (
-								<div
-									className="cd_nft_col col-lg-3 col-md-3"
-									key={tokenId}
-									onClick={() => onOpenModal(metadata)}
-								>
-									<div className="cd_nft_content position-relative">
-										<div className="cd_nft_image">
-											<img
-												src={image ? image.value : 'assets/image/nft-empty.png'}
-												alt="nft-image"
-											/>
-										</div>
-										<div className="cd_nft_content_text">{tokenName ? tokenName.value : 'NFT'}</div>
-									</div>
-								</div>
-							) : null;
+						NFTInfo.map((nft, index) => {
+							return <NFTCard key={index} {...nft} onOpenModal={onOpenModal} />;
 						})
 					) : (
 						<div className="cd_nft_empty">

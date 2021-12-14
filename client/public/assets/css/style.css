@@ -9,15 +9,13 @@
 .cd_nft_row.row .cd_nft_col .cd_nft_content {
   box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid #828cae26;
-  border-radius: 10px;
-  padding: 15px 20px;
+  border-radius: 5px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_content_text {
-  font-weight: bold;
   font-size: 15px;
   line-height: 15px;
   color: #828cae;
-  margin-top: 13px;
+  padding: 15px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image {
   height: 200px;

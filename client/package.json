@@ -48,7 +48,7 @@
 	},
 	"scripts": {
 		"start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
+		"start-testnet": "DISABLE_ESLINT_PLUGIN=true REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
 		"build": "react-scripts build && react-snapshot",
 		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
 		"test": "react-scripts test --coverage --watchAll ",

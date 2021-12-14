@@ -6,14 +6,13 @@
 		.cd_nft_content {
 			box-shadow: 0px 15px 30px rgb(0 0 0 / 20%);
 			border: 1px solid $color26;
-			border-radius: 10px;
-			padding: 15px 20px;
+			border-radius: 5px;
+
 			.cd_nft_content_text {
-				font-weight: bold;
 				font-size: 15px;
 				line-height: 15px;
 				color: $color3;
-				margin-top: 13px;
+				padding: 15px;
 			}
 			.cd_nft_image {
 				height: 200px;
