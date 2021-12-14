@@ -128,7 +128,7 @@
   background-color: transparent;
   color: #828cae;
 }
-.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_contract_dropdown #react-select-3-listbox {
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_contract_dropdown div[id$=-listbox] {
   background-color: #252f47;
 }
 .cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata {

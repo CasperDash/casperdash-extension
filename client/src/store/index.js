@@ -8,6 +8,7 @@ import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
 import keysManagerReducer from './reducers/keysManager';
 import tokensReducer from './reducers/tokens';
+import nftsReducer from './reducers/nfts';
 import deployReducer from './reducers/deploys';
 import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
@@ -36,6 +37,9 @@ export const initialState = {
 	},
 	settings: {
 		theme: '',
+	},
+	nfts: {
+		address: [],
 	},
 };
 
@@ -80,6 +84,7 @@ const main = combineReducers({
 	stakes: stakeReducer,
 	request: requestReducer,
 	settings: settingsReducer,
+	nfts: nftsReducer,
 });
 
 const store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));

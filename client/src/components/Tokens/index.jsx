@@ -13,10 +13,10 @@ import {
 } from '../../actions/tokensActions';
 import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
+import { AddTokenModal } from '../Common/Layout/Modal/AddTokenModal';
 import { TOKEN_TRANSFER_FEE } from '../../constants/key';
 import { TokenList } from '../Common/TokenList';
 import { TokenInfo } from './TokenInfo';
-import { AddTokenModal } from './AddTokenModal';
 
 const Tokens = () => {
 	const dispatch = useDispatch();

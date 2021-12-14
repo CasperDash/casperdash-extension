@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { NFTTab } from '../NFTTab';
 import { getNFTContracts } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
-import { fetchNTFContractInfo } from '../../../actions/NFTActions';
+import { fetchAllNTFContractInfoByPublicKey } from '../../../actions/NFTActions';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import { NFTMintForm } from './NFTMintForm';
 import { DeployConfirmModal } from './DeployConfirmModal';
@@ -22,7 +22,7 @@ const CreateNFT = () => {
 	//Effect
 	useEffect(() => {
 		if (publicKey) {
-			dispatch(fetchNTFContractInfo(publicKey));
+			dispatch(fetchAllNTFContractInfoByPublicKey(publicKey));
 		}
 	}, [dispatch, publicKey]);
 

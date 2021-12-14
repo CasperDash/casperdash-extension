@@ -132,7 +132,7 @@
 				background-color: transparent;
 				color: $color3;
 			}
-			#react-select-3-listbox {
+			div[id$='-listbox'] {
 				background-color: $color4;
 			}
 		}

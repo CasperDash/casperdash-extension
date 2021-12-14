@@ -19,11 +19,21 @@ export const getNFTContracts = createSelector(NFTContractInfoSelector, ({ data =
 	return data.map((datum) => ({ label: datum.name, value: datum.address, symbol: datum.symbol }));
 });
 
-export const getOwnNFTContractHash = createSelector(userDetailsSelector, ({ data = {} }) => {
-	if (!data || !data.namedKeys || !data.namedKeys.length) {
-		return [];
-	}
-	return data.namedKeys
-		.filter((namedKey) => namedKey.name.match(/.*nft.*_contract$/g))
-		.map((namedKey) => formatKeyByPrefix(namedKey.key));
-});
+export const getNFTAddressList = ({ nfts }) => {
+	const tokensAddress = (nfts && nfts.address) || [];
+	return [...new Set([...tokensAddress])];
+};
+
+export const getOwnNFTContractHash = createSelector(
+	userDetailsSelector,
+	getNFTAddressList,
+	({ data = {} }, customAddresses) => {
+		if (!data || !data.namedKeys || !data.namedKeys.length) {
+			return [];
+		}
+		const nftContractAddress = data.namedKeys
+			.filter((namedKey) => namedKey.name.match(/.*nft.*_contract$/g))
+			.map((namedKey) => formatKeyByPrefix(namedKey.key));
+		return [...new Set([...nftContractAddress, ...customAddresses])];
+	},
+);
