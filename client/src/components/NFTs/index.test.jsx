@@ -17,6 +17,17 @@ beforeEach(() => {
 	spyOnUseDispatch.mockReturnValue(mockDispatch);
 });
 
+jest.mock('../../actions/NFTActions', () => {
+	//Mock the default export and named export 'foo'
+	return {
+		__esModule: true,
+		getNFTAddressesFromLocalStorage: () => {},
+		addCustomNFTAddressToLocalStorage: () => {},
+		fetchNFTContractInfo: () => {},
+		fetchNFTInfo: () => ({ error: { message: 'error message' } }),
+	};
+});
+
 jest.mock('react-router-dom', () => {
 	return {
 		Link: () => <div />,

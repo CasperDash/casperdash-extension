@@ -67,7 +67,7 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	},
 	onError: (error, action, store) => {
 		store.dispatch(removeLoadingStatus(action.type));
-		return error;
+		throw error;
 	},
 	onAbort: (action, store) => {
 		store.dispatch(removeLoadingStatus(action.type));

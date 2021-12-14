@@ -72,9 +72,9 @@ const Tokens = () => {
 	const handleAddToken = async (tokenAddress) => {
 		const { data, error } = await dispatch(getTokenInfo(tokenAddress));
 		if (error) {
-			setAddTokenError(error);
+			setAddTokenError('Can not find token info');
 		} else {
-			data.name && dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
+			data && data.name && dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
 			setShowAddTokenModal(false);
 		}
 	};

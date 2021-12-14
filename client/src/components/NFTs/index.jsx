@@ -66,11 +66,12 @@ const NFTs = () => {
 	};
 
 	const handleAddToken = async (tokenAddress) => {
-		const { data, error } = await dispatch(fetchNFTContractInfo(tokenAddress));
+		const response = await dispatch(fetchNFTContractInfo(tokenAddress));
+		const { error, data } = response;
 		if (error) {
-			setAddTokenError(error);
+			setAddTokenError('Can not find NFT info');
 		} else {
-			data.name && dispatch(addCustomNFTAddressToLocalStorage(tokenAddress, publicKey));
+			data && data.name && dispatch(addCustomNFTAddressToLocalStorage(tokenAddress, publicKey));
 			setShowAddTokenModal(false);
 		}
 	};
