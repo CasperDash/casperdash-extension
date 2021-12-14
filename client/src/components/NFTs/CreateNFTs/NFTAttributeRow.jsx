@@ -11,7 +11,7 @@ export const NFTAttributeRow = ({ values, errors, index, onRemoveAttribute, hand
 				required
 				placeholder="Name"
 				name={attributeName}
-				value={values[attributeName]}
+				value={values[attributeName] || ''}
 				onChange={handleChange}
 				isInvalid={errors[attributeName]}
 			/>
@@ -21,7 +21,7 @@ export const NFTAttributeRow = ({ values, errors, index, onRemoveAttribute, hand
 				required
 				placeholder="Value"
 				name={attributeValue}
-				value={values[attributeValue]}
+				value={values[attributeValue] || ''}
 				onChange={handleChange}
 				isInvalid={errors[attributeValue]}
 			/>

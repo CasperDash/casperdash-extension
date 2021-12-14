@@ -1613,7 +1613,7 @@ table {
 	}
 }
 .cd_error_text {
-	color: $color32;
+	color: $color37;
 	font-size: 0.8em;
 }
 
@@ -1809,7 +1809,7 @@ table {
 		justify-content: space-between !important;
 		flex-basis: auto;
 		.cd_confirm_modal_error {
-			color: $color32;
+			color: $color37;
 		}
 	}
 }
@@ -1817,8 +1817,8 @@ table {
 .cd_key_manger_contract_confirm_modal {
 	.cd_key_manger_contract_confirm_content {
 		.cd_key_manager_contract_confirm_notice {
-			font-size: 0.7em;
-			color: $color32;
+			font-size: 0.8em;
+			color: $color37;
 		}
 	}
 }
@@ -1860,7 +1860,7 @@ table {
 		justify-content: space-between !important;
 		flex-basis: auto;
 		.cd_edit_modal_error {
-			color: $color32;
+			color: $color37;
 		}
 		.cd_edit_modal_success {
 			color: $color34;
@@ -1897,7 +1897,7 @@ table {
 		justify-content: space-between !important;
 		flex-basis: auto;
 		.cd_add_token_modal_error {
-			color: $color32;
+			color: $color37;
 		}
 	}
 }

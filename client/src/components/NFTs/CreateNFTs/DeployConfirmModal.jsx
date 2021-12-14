@@ -109,22 +109,21 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 							<h3>NFT Symbol</h3>
 							<h4>{inputValues.collectionSymbol}</h4>
 						</div>
+						<p className="cd_nft_contract_confirm_notice">
+							* By confirm this, a NFT contract will be deployed on your account.
+						</p>
+						<p className="cd_nft_contract_confirm_notice">
+							** The contract was built based on{' '}
+							<a
+								href="https://github.com/casper-ecosystem/casper-nft-cep47"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								https://github.com/casper-ecosystem/casper-nft-cep47.
+							</a>
+						</p>
 					</div>
 				)}
-
-				<p className="cd_nft_contract_confirm_notice">
-					*By confirm this, a NFT contract will be deployed on your account.
-				</p>
-				<p className="cd_nft_contract_confirm_notice">
-					The contract was built based on{' '}
-					<a
-						href="https://github.com/casper-ecosystem/casper-nft-cep47"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						https://github.com/casper-ecosystem/casper-nft-cep47.
-					</a>
-				</p>
 			</Modal.Body>
 
 			<Modal.Footer>

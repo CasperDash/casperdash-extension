@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-indent-props */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from 'react-bootstrap';
 import { NFTTab } from '../NFTTab';
 import { getNFTContracts } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
@@ -8,7 +9,6 @@ import { fetchNTFContractInfo } from '../../../actions/NFTActions';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import { NFTMintForm } from './NFTMintForm';
 import { DeployConfirmModal } from './DeployConfirmModal';
-import { Button } from 'react-bootstrap';
 
 const CreateNFT = () => {
 	const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const CreateNFT = () => {
 
 			{!isContractAvailable && publicKey ? (
 				<div className="cd_error_text">
-					Your account have not deployed NFT contract yet.{' '}
+					Your account did not have any collections yet.{' '}
 					<a href="#" onClick={handleDeployTextClick}>
 						Click to deploy.
 					</a>
