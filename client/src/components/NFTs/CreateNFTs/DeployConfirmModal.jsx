@@ -53,7 +53,7 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	};
 
 	return (
-		<Modal show={show} onHide={handleClose} centered className="cd_nft_contract_deploy_modal">
+		<Modal show={show} onHide={handleClose} size="lg" centered className="cd_nft_contract_deploy_modal">
 			<Modal.Header closeButton>
 				<Modal.Title>Deploy NFT Contract</Modal.Title>
 			</Modal.Header>
@@ -108,6 +108,10 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 						<div className="cd_nft_contract_row">
 							<h3>NFT Symbol</h3>
 							<h4>{inputValues.collectionSymbol}</h4>
+						</div>
+						<div className="cd_nft_contract_row">
+							<h3>Network Fee</h3>
+							<h4>100 CSPR</h4>
 						</div>
 						<p className="cd_nft_contract_confirm_notice">
 							* By confirm this, a NFT contract will be deployed on your account.

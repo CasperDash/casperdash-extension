@@ -14,6 +14,8 @@ import { NFTModal } from '../NFTModal';
 import SelectField from './SelectField';
 import { NFTAttributeRow } from './NFTAttributeRow';
 
+const mintFee = { key: 'fee', name: 'Fee', value: '1 CSPR' };
+
 export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	const dispatch = useDispatch();
 
@@ -167,7 +169,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 			</Formik>
 			<NFTModal
 				show={showNFTModal}
-				metadata={previewMetadata}
+				metadata={[...previewMetadata, mintFee]}
 				handleClose={() => {
 					setShowNFTModal(false);
 					clearState();
