@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-snapshot';
-import App from './App';
+import WebExtension from './extension/App';
+// import App from './App';
 
-render(<App />, document.getElementById('root'));
+render(<WebExtension />, document.getElementById('root'));

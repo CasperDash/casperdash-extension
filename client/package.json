@@ -47,11 +47,11 @@
 		]
 	},
 	"scripts": {
-		"dev": "webpack-dev-server --mode development --history-api-fallback",
-		"start": "webpack-dev-server  --history-api-fallback",
-		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io webpack-dev-server --history-api-fallback",
-		"build": "webpack --mode production  && react-snapshot",
-		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io webpack --mode production  && react-snapshot",
+		"buildExtension": "./script/build.sh",
+		"start": "react-scripts start",
+		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
+		"build": "react-scripts build && react-snapshot",
+		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
 		"test": "react-scripts test --coverage --watchAll ",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage"
 	},
