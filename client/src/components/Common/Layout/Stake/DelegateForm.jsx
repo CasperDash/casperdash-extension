@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
@@ -112,7 +113,7 @@ const DelegateForm = ({
 							{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit} className="cd-staking-form">
 									<h3 className="cd_send_receive_heading">
-										<img src="assets/image/receive-heading-icon.svg" alt="delegate" />
+										<img src={receiveHeadingIcon} alt="delegate" />
 										Delegate
 									</h3>
 									<div className="cd_send_balance_content">

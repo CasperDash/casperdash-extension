@@ -8,6 +8,8 @@ import Layout from './components/Common/Layout';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import './assets/css/style.scss';
+import './assets/css/light-theme.scss';
 
 const App = () => {
 	const routes = Object.keys(modules).map((item) => (
