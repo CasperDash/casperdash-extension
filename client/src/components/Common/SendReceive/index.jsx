@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
+import receiveHeading from 'assets/image/receiver-heading-icon.svg';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
@@ -104,7 +105,7 @@ export const SendReceiveSection = ({
 							{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="cd_send_receive_heading">
-										<img src="assets/image/receive-heading-icon.svg" alt="receive-icon" />
+										<img src={receiveHeading} alt="receive-icon" />
 										Send <span className="cd_send_receive_token_symbol">{tokenSymbol}</span>
 									</h3>
 
@@ -185,7 +186,7 @@ export const SendReceiveSection = ({
 				<div className="cd_send_receive_content_column">
 					<div className="cd_send_receive_inner_content">
 						<h3 className="cd_send_receive_heading cd_receive_heading">
-							<img src="assets/image/receive-heading-icon.svg" alt="send-icon" />
+							<img src={receiveHeading} alt="send-icon" />
 							Receive
 						</h3>
 						<div className="cd_receive_address_content">

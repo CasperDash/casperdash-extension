@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
+import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
@@ -110,7 +111,7 @@ const UndelegateForm = ({
 								{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 									<Form noValidate onSubmit={handleSubmit} className="cd_undelegate_form">
 										<h3 className="cd_send_receive_heading">
-											<img src="assets/image/receive-heading-icon.svg" alt="undelegate" />
+											<img src={receiveHeading} alt="undelegate" />
 											Undelegate
 										</h3>
 										<div className="cd_send_balance_content">

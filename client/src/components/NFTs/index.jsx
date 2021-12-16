@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import nftEmpty from 'assets/image/nft-empty.png';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../selectors/user';
@@ -95,7 +96,7 @@ const NFTs = () => {
 						})
 					) : (
 						<div className="cd_nft_empty">
-							<img src="assets/image/nft-empty.png" alt="no-nft-image" />
+							<img src={nftEmpty} alt="no-nft-image" />
 							<div className="cd_no_nft_message">You do not have any NFT collectables yet.</div>
 						</div>
 					)}
