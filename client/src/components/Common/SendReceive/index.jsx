@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
-import receiveHeading from 'assets/image/receiver-heading-icon.svg';
+import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
