@@ -1,11 +1,11 @@
 /* eslint-disable complexity */
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import nftEmpty from 'assets/image/nft-empty.png';
 import { ImagePreview } from '../Common/Image/ImagePreview';
 
 export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError, deployHash, isMinting }) => {
-	const { value: imageValue = 'assets/image/nft-empty.png' } =
-		(metadata && metadata.find((data) => data.key === 'image')) || {};
+	const { value: imageValue = nftEmpty } = (metadata && metadata.find((data) => data.key === 'image')) || {};
 
 	const name = metadata && metadata.find((data) => data.key === 'name');
 	const onClose = () => {
@@ -30,7 +30,6 @@ export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError
 					) : (
 						<ImagePreview file={imageValue} />
 					)}
-
 					<div className="cd_nft_modal_metadata">
 						{metadata &&
 							metadata
