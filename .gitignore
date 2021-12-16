@@ -5,3 +5,4 @@ node_modules
 db-config.json
 build
 coverage
+dist
