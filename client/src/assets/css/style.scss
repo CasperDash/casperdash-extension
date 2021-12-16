@@ -61,6 +61,25 @@ ul {
 	}
 }
 
+.cd_tabs {
+	border: 0;
+	display: flex;
+	padding-bottom: 20px;
+	.cd_tab {
+		padding-right: 20px;
+		a {
+			text-decoration: none;
+			color: $color2;
+			&.active {
+				border-bottom: 2px solid $color7;
+			}
+			&:hover {
+				border-bottom: 2px solid $color7;
+			}
+		}
+	}
+}
+
 .cd_all_pages_content {
 	position: relative;
 	.cd_all_pages_inner_content {
@@ -650,7 +669,7 @@ table {
 		display: flex;
 		min-width: 100%;
 		max-width: 100%;
-		overflow-x: auto;
+		flex-wrap: wrap;
 		padding-bottom: 15px;
 		&::-webkit-scrollbar {
 			width: 5px;
@@ -668,13 +687,14 @@ table {
 	}
 	.no_token_message {
 		padding-left: 10px;
-		color: $color27;
+		color: $color37;
+		font-weight: 600;
 	}
 	.cd_currency_column_sub_row {
 		display: flex;
 		min-width: 80%;
 		max-width: 80%;
-		overflow-x: auto;
+		flex-wrap: wrap;
 		padding-bottom: 15px;
 		.cd_add_token_column {
 			cursor: pointer;
@@ -1116,6 +1136,9 @@ table {
 				min-width: 180px;
 				width: 100%;
 			}
+			&:hover {
+				background-color: $color6 !important;
+			}
 			svg {
 				margin-right: 11px;
 			}
@@ -1156,6 +1179,9 @@ table {
 			max-width: 180px;
 			min-width: 180px;
 			width: 100%;
+		}
+		&:hover {
+			background-color: $color6 !important;
 		}
 	}
 	display: flex;
@@ -1433,7 +1459,7 @@ table {
 }
 .cd_transaction_list_table {
 	margin-bottom: 0 !important;
-	min-width: 1200px;
+	//min-width: 1200px;
 	.cd_transaction_list_table_heading {
 		font-weight: 600;
 		font-size: 12px;
@@ -1448,6 +1474,9 @@ table {
 			line-height: 15px;
 			text-align: center;
 			color: $color3;
+			.cd_middle_truncated_text {
+				width: 100px;
+			}
 		}
 	}
 	.cd_transaction_pluse {
@@ -1593,6 +1622,16 @@ table {
 		}
 	}
 }
+.cd_error_text {
+	color: $color37;
+	font-size: 0.8em;
+	font-weight: 600;
+}
+
+.cd_success_text {
+	color: $color34;
+}
+
 .cd_setting_list {
 	.cd_setting_list_items {
 		border: 1px solid $color26;
@@ -1631,10 +1670,6 @@ table {
 				span {
 					font-weight: normal;
 				}
-			}
-			.cd_error_text {
-				color: $color32;
-				font-size: 0.8em;
 			}
 		}
 		.cd_setting_items_right_text {
@@ -1785,7 +1820,8 @@ table {
 		justify-content: space-between !important;
 		flex-basis: auto;
 		.cd_confirm_modal_error {
-			color: $color32;
+			color: $color37;
+			font-weight: 600;
 		}
 	}
 }
@@ -1793,8 +1829,9 @@ table {
 .cd_key_manger_contract_confirm_modal {
 	.cd_key_manger_contract_confirm_content {
 		.cd_key_manager_contract_confirm_notice {
-			font-size: 0.7em;
-			color: $color32;
+			font-size: 0.8em;
+			color: $color37;
+			font-weight: 600;
 		}
 	}
 }
@@ -1836,7 +1873,11 @@ table {
 		justify-content: space-between !important;
 		flex-basis: auto;
 		.cd_edit_modal_error {
-			color: $color32;
+			color: $color37;
+			font-weight: 600;
+		}
+		.cd_edit_modal_success {
+			color: $color34;
 		}
 	}
 }
@@ -1870,7 +1911,8 @@ table {
 		justify-content: space-between !important;
 		flex-basis: auto;
 		.cd_add_token_modal_error {
-			color: $color32;
+			color: $color37;
+			font-weight: 600;
 		}
 	}
 }
