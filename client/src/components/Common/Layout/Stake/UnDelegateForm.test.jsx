@@ -332,12 +332,6 @@ describe('Stake with errors', () => {
 		});
 
 		expect(queryByText('Failed to put deploy').textContent).toBe('Failed to put deploy');
-
-		await act(async () => {
-			fireEvent.click(getByText('Close'));
-		});
-
-		expect(container.querySelector('.cd_confirm_modal_content')).toBeNull();
 	});
 });
 

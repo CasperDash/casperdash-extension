@@ -76,15 +76,12 @@ test('Have Tokens', () => {
 	expect(getByText(/1,000/i).textContent).toBe('1,000');
 });
 
-test('Add new token, add token modal should be shown', () => {
+test('Add new token, add token modal should be shown', async () => {
 	spyOnUseSelector.mockReturnValue([]);
 
-	const { getByText, queryAllByText, container } = render(<Token />);
+	const { getByText } = render(<Token />);
 	fireEvent.click(getByText('+ Add Token'));
 	expect(getByText(/Token Address/i).textContent).toBe('Token Address');
-	fireEvent.click(queryAllByText('Close')[0]);
-
-	expect(container.querySelector('.cd_add_token_modal_content')).toBe(null);
 });
 
 test('Show error if can not add token', async () => {
@@ -128,7 +125,7 @@ test('Show error if click on add token without public key', async () => {
 	expect(queryByText('Unlock your Signer!').textContent).toBe('Unlock your Signer!');
 	await act(async () => {
 		/* fire events that update state */
-		fireEvent.click(queryAllByText('Close')[0]);
+		await fireEvent.click(queryAllByText('Close')[0]);
 	});
 	expect(queryByText('Unlock your Signer!')).toBe(null);
 });

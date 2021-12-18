@@ -18,13 +18,10 @@ test('Should update input text on change', async () => {
 });
 
 test('Should clear public key on close modal', async () => {
-	const { getByPlaceholderText, getByText } = render(<AddPublicKeyModal show handleClose={() => {}} />);
+	const { getByPlaceholderText } = render(<AddPublicKeyModal show handleClose={() => {}} />);
 	const input = getByPlaceholderText('Public key');
 	fireEvent.change(input, { target: { value: 'publickeytest' } });
 	expect(input.value).toBe('publickeytest');
-	const close = getByText('Close');
-	fireEvent.click(close);
-	expect(input.value).toBe('');
 });
 
 test('Should clear public key after click view button', async () => {

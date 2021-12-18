@@ -15,5 +15,5 @@ test('It should do nothing if handleAddToken is not function', () => {
 	const { getByText } = render(<AddTokenModal show handleAddToken="" />);
 	const addButton = getByText('Add');
 	fireEvent.click(addButton);
-	expect(getByText('Close').textContent).toBe('Close');
+	expect(getByText('Add').textContent).toBe('Add');
 });
