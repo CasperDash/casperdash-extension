@@ -72,7 +72,10 @@
 			"src/**/*.{js,jsx,ts,tsx}",
 			"!<rootDir>/node_modules/"
 		],
-		"resetMocks": false
+		"resetMocks": false,
+		"moduleNameMapper": {
+			"^assets(.*)$": "<rootDir>/src/assets$1"
+		}
 	},
 	"devDependencies": {
 		"babel-core": "^6.26.3",

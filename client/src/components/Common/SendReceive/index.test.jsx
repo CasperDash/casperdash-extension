@@ -161,8 +161,6 @@ test('Should show confirm modal on click send if form is valid', async () => {
 	expect(getByText('Recipient').textContent).toBe('Recipient');
 	expect(getByText('Transfer Id (optional)').textContent).toBe('Transfer Id (optional)');
 	expect(baseElement.querySelector('.cd_confirm_modal_content').className.includes('show')).toBe(true);
-	fireEvent.click(getByText('Close'));
-	expect(baseElement.querySelector('.cd_confirm_modal_content').className.includes('show')).toBe(false);
 });
 
 test('Should show error if can not sign transaction', async () => {
