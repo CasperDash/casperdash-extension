@@ -74,3 +74,17 @@ export const updateNFTLocalStorage = (publicKey, patch, value, action) => {
 		});
 	};
 };
+
+/**
+ *
+ * @param {string} publicKey
+ */
+export const getNFTDeploysFromLocalStorage = (publicKey) => {
+	return (dispatch) => {
+		const item = getLocalStorageValue(publicKey, 'nfts');
+		dispatch({
+			type: NFTS.GET_DEPLOY_FROM_LOCAL_STORAGE,
+			payload: item ? item : { deploys: {} },
+		});
+	};
+};

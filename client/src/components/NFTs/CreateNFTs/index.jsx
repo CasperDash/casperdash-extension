@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { NFTTab } from '../NFTTab';
 import { getNFTContracts, getNFTDeployHistory } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
-import { fetchAllNTFContractInfoByPublicKey } from '../../../actions/NFTActions';
+import { fetchAllNTFContractInfoByPublicKey, getNFTDeploysFromLocalStorage } from '../../../actions/NFTActions';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import { NFTMintForm } from './NFTMintForm';
 import { DeployConfirmModal } from './DeployConfirmModal';
@@ -25,6 +25,7 @@ const CreateNFT = () => {
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(fetchAllNTFContractInfoByPublicKey(publicKey));
+			dispatch(getNFTDeploysFromLocalStorage(publicKey));
 		}
 	}, [dispatch, publicKey]);
 
@@ -48,7 +49,9 @@ const CreateNFT = () => {
 				</div>
 			) : (
 				<>
-					<Button onClick={handleDeployTextClick}>Add new collection</Button>
+					<Button onClick={handleDeployTextClick} className="cd_nft_btn_add_collection">
+						Add new collection
+					</Button>
 					<NFTMintForm publicKey={publicKey} nftContracts={nftContracts} />
 				</>
 			)}

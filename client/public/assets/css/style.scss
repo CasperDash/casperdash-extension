@@ -669,7 +669,7 @@ table {
 		display: flex;
 		min-width: 100%;
 		max-width: 100%;
-		overflow-x: auto;
+		flex-wrap: wrap;
 		padding-bottom: 15px;
 		&::-webkit-scrollbar {
 			width: 5px;
@@ -694,7 +694,7 @@ table {
 		display: flex;
 		min-width: 80%;
 		max-width: 80%;
-		overflow-x: auto;
+		flex-wrap: wrap;
 		padding-bottom: 15px;
 		.cd_add_token_column {
 			cursor: pointer;
@@ -1453,7 +1453,7 @@ table {
 }
 .cd_transaction_list_table {
 	margin-bottom: 0 !important;
-	// min-width: 1200px;
+	//min-width: 1200px;
 	.cd_transaction_list_table_heading {
 		font-weight: 600;
 		font-size: 12px;
@@ -1468,6 +1468,9 @@ table {
 			line-height: 15px;
 			text-align: center;
 			color: $color3;
+			.cd_middle_truncated_text {
+				width: 100px;
+			}
 		}
 	}
 	.cd_transaction_pluse {

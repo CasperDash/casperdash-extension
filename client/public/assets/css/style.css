@@ -94,6 +94,12 @@
   color: #ffffff;
 }
 
+.cd_nft_mint .cd_nft_mint_form {
+  margin-top: 20px;
+  padding: 32px;
+  border: 1px solid #3a4562;
+  border-radius: 4px;
+}
 .cd_nft_mint .cd_nft_mint_form h3 {
   font-size: 17px;
   line-height: 21px;
@@ -903,7 +909,7 @@ table td {
   display: flex;
   min-width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+  flex-wrap: wrap;
   padding-bottom: 15px;
 }
 .cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar {
@@ -928,7 +934,7 @@ table td {
   display: flex;
   min-width: 80%;
   max-width: 80%;
-  overflow-x: auto;
+  flex-wrap: wrap;
   padding-bottom: 15px;
 }
 .cd_add_token_row .cd_currency_column_sub_row .cd_add_token_column {
@@ -1615,6 +1621,9 @@ table td {
   line-height: 15px;
   text-align: center;
   color: #828cae;
+}
+.cd_transaction_list_table tr td .cd_middle_truncated_text {
+  width: 100px;
 }
 .cd_transaction_list_table .cd_transaction_pluse {
   color: #50e3c2;

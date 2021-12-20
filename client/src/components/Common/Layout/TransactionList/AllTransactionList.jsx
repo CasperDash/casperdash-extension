@@ -1,13 +1,14 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { toFormattedDate } from '../../../../helpers/format';
+import { MiddleTruncatedText } from '../../MiddleTruncatedText';
 import CommonAction from '../../Button/CommonAction';
 
 const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 	return (
 		<>
 			<div className="cd_table_wrapper">
-				<Table className="cd_transaction_list_table">
+				<Table className="cd_transaction_list_table" responsive="sm">
 					<thead>
 						<tr>
 							<th className="cd_transaction_list_table_heading">name</th>
@@ -25,7 +26,8 @@ const AllTransactionListComponent = ({ transfersDeployList = [] }) => {
 								<td className="cd_transaction_list_name">{transfer.symbol}</td>
 								<td className="cd_transaction_list_type">Transfer</td>
 								<td className="cd_transaction_list_id">
-									{transfer.deployHash} <CommonAction type="deploy" value={transfer.deployHash} />
+									<MiddleTruncatedText>{transfer.deployHash}</MiddleTruncatedText>
+									<CommonAction type="deploy" value={transfer.deployHash} />
 								</td>
 								<td className="cd_transaction_list_id">{transfer.transferId}</td>
 								<td className={`cd_transaction_minas cd_transaction_list_value`}>-{transfer.amount}</td>

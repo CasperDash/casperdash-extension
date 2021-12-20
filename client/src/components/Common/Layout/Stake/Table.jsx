@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import { toFormattedNumber, displayNaN } from '../../../../helpers/format';
 import CommonAction from '../../Button/CommonAction';
+import { MiddleTruncatedText } from '../../MiddleTruncatedText';
 import EmptyDelegation from './EmptyDelegation';
 import TableActions from './TableActions';
 
@@ -37,7 +38,8 @@ const StakingAccountListComponent = ({
 						<tr key={staking.validator}>
 							<td className="cd_transaction_list_no">{i + 1}</td>
 							<td className="cd_transaction_list_validator">
-								{staking.validator} <CommonAction type="account" value={staking.validator} />
+								<MiddleTruncatedText>{staking.validator}</MiddleTruncatedText>
+								<CommonAction type="account" value={staking.validator} />
 							</td>
 							<td className="cd_transaction_list_amount">
 								{displayNaN(toFormattedNumber(staking.pendingAmount))}
