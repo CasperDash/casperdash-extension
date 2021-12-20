@@ -9,14 +9,14 @@ export const massageNFTMintFormValues = (values) => {
 			if (!attribute || !value) {
 				return;
 			}
-			return { key: attribute, value: value, name: attribute };
+			return { key: attribute.trim(), value: value.trim(), name: attribute.trim() };
 		})
 		.filter(Boolean);
 	return {
 		nftContract: values.nftContract,
 		recipient: values.toAddress,
 		metadata: [
-			{ key: 'name', value: values.name, name: 'name' },
+			{ key: 'name', value: values.name.trim(), name: 'name' },
 			{ key: 'image', value: values.image, name: 'image' },
 			...metadataAttributes,
 		],

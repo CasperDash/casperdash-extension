@@ -23,17 +23,21 @@ export const isValidPublicKey = (publicKey) => {
 export const validateNFTMintForm = (values) => {
 	let errors = {};
 	if (!values.nftContract) {
-		errors.nftContract = 'required';
+		errors.nftContract = 'Required';
 	}
 	if (!values.name) {
-		errors.name = 'required';
+		errors.name = 'Required';
 	}
 	if (!values.image) {
-		errors.image = 'required';
+		errors.image = 'Required';
+	}
+	if (values.image && values.image.type && !values.image.type.includes('image')) {
+		errors.image = 'Should be image.';
 	}
 	if (values.toAddress && !isValidPublicKey(values.toAddress)) {
 		errors.toAddress = 'Invalid address.';
 	}
+
 	new Array(MAX_METADATA_ATTRIBUTES).fill().forEach((value, index) => {
 		const attrName = `attribute${index}`;
 		const attrValue = `value${index}`;

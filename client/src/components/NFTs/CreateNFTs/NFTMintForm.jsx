@@ -102,7 +102,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 		setAttributes(updatedAttributes);
 	};
 
-	const clearState = () => {
+	const clearConfirmState = () => {
 		setSignerError('');
 		setDeployHash('');
 		setPreviewMetaData([]);
@@ -112,7 +112,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	return (
 		<>
 			<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '' }} validate={validateNFTMintForm}>
-				{({ values, errors, handleSubmit, handleChange, setFieldValue }) => (
+				{({ values, errors, handleSubmit, handleChange, setFieldValue, resetForm }) => (
 					<Form noValidate onSubmit={handleSubmit} className="cd_nft_mint_form">
 						<div className="cd_nft_mint_contract">
 							<h3>NFT Contract</h3>
@@ -189,6 +189,9 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 							<Button type="submit" onClick={handleSubmit} className="cd_send_currency_btn">
 								Mint
 							</Button>
+							<Button onClick={resetForm} className="cd_send_currency_btn">
+								Clear
+							</Button>
 						</div>
 					</Form>
 				)}
@@ -198,7 +201,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 				metadata={[...previewMetadata, mintFee]}
 				handleClose={() => {
 					setShowNFTModal(false);
-					clearState();
+					clearConfirmState();
 				}}
 				onMint={onMintNFT}
 				deployError={signerError}
