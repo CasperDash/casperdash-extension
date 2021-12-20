@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
@@ -61,6 +62,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 							status: 'pending',
 							timestamp: new Date().toString(),
 							collectionName: selectedContract.symbol || '',
+							recipient: nftInfo.recipient || '',
 						},
 						'push',
 					),

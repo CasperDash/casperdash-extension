@@ -29,8 +29,12 @@ export const NFTHistory = ({ nftDeployHistory = [] }) => {
 									<CommonAction type="deploy" value={deploy.hash} />
 								</td>
 								<td className="cd_transaction_list_id">
-									<MiddleTruncatedText>{deploy.hash}</MiddleTruncatedText>
-									<CommonAction type="deploy" value={deploy.hash} />
+									{deploy.recipient && (
+										<>
+											<MiddleTruncatedText>{deploy.recipient}</MiddleTruncatedText>
+											<CommonAction type="account" value={deploy.recipient} />
+										</>
+									)}
 								</td>
 								<td
 									className={`cd_transaction_${
