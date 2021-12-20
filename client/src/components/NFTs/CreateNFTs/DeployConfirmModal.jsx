@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { putDeploy } from '../../../actions/deployActions';
+import { updateNFTLocalStorage } from '../../../actions/NFTActions';
 import { nftContractDeploy } from '../../../services/nftServices';
 
 export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
@@ -48,6 +49,14 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 		} else {
 			const { data: hash } = await dispatch(putDeploy(deploy));
 			setDeployHash(hash.deployHash);
+			dispatch(
+				updateNFTLocalStorage(
+					publicKey,
+					`nfts.deploys.installContract`,
+					{ hash: hash.deployHash, status: 'pending' },
+					'push',
+				),
+			);
 			setIsLoading(false);
 		}
 	};

@@ -4,6 +4,11 @@ import { NFTS } from '../store/actionTypes';
 import { formatKeyByPrefix } from '../helpers/key';
 import { userDetailsSelector } from './user';
 
+const NFT_TYPE_MAPPING = {
+	installContract: 'Install Contract',
+	mint: 'Mint',
+};
+
 export const NFTSelector = getQuerySelector({ type: NFTS.FETCH_NFTS_INFO });
 
 export const getNFTInfo = createSelector(NFTSelector, ({ data }) => {
@@ -37,3 +42,30 @@ export const getOwnNFTContractHash = createSelector(
 		return [...new Set([...nftContractAddress, ...customAddresses])];
 	},
 );
+
+export const getPendingDeploys = ({ nfts }) => {
+	if (!nfts || !nfts.deploys) {
+		return {};
+	}
+	const pendingDeploys = Object.keys(nfts.deploys).reduce((out, key) => {
+		out[key] = Array.isArray(nfts.deploys[key])
+			? nfts.deploys[key].filter((deploy) => deploy.status === 'pending')
+			: [];
+		return out;
+	}, {});
+	return pendingDeploys;
+};
+
+export const getNFTDeployHistory = ({ nfts }) => {
+	if (!nfts || !nfts.deploys) {
+		return [];
+	}
+	const nftDeploys = Object.keys(nfts.deploys).map((key) => {
+		return nfts.deploys[key] && nfts.deploys[key].length
+			? nfts.deploys[key].map((deploy) => {
+					return { ...deploy, type: NFT_TYPE_MAPPING[key] };
+			  })
+			: [];
+	});
+	return nftDeploys.flat();
+};

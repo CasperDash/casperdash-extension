@@ -38,7 +38,7 @@ export const addCustomNFTAddressToLocalStorage = (tokenAddress, publicKey) => {
 	return (dispatch) => {
 		const { nfts } = setLocalStorageValue(publicKey, 'nfts.address', tokenAddress, 'push');
 		dispatch({
-			type: NFTS.SET_LOCAL_STORAGE,
+			type: NFTS.SET_ADDRESS_LOCAL_STORAGE,
 			payload: nfts.address || [],
 		});
 	};
@@ -54,6 +54,23 @@ export const getNFTAddressesFromLocalStorage = (publicKey) => {
 		dispatch({
 			type: NFTS.GET_FROM_LOCAL_STORAGE,
 			payload: localStorageValue || [],
+		});
+	};
+};
+
+/**
+ *
+ * @param {string} publicKey
+ * @param {string} patch
+ * @param {object} value
+ * @param {string} action
+ */
+export const updateNFTLocalStorage = (publicKey, patch, value, action) => {
+	return (dispatch) => {
+		const { nfts } = setLocalStorageValue(publicKey, patch, value, action);
+		dispatch({
+			type: NFTS.UPDATE_LOCAL_STORAGE,
+			payload: nfts,
 		});
 	};
 };
