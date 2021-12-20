@@ -4,6 +4,7 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
 import { putDeploy } from '../../../actions/deployActions';
 import { storeFile, deleteFile } from '../../../actions/fileActions';
+import { updateNFTLocalStorage } from '../../../actions/NFTActions';
 import { getSingedMintDeploy } from '../../../services/nftServices';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
 import { NFT_GATEWAY } from '../../../constants/key';
@@ -31,24 +32,49 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	// function
 	const onMintNFT = async () => {
 		setIsMinting(true);
-		// store file by nft.storage
-		const { data: cid } = await dispatch(storeFile(nftInfo.metadata.find((attr) => attr.name === 'image').value));
-		// Update massage and image attribute
-		const nftMetadata = nftInfo.metadata.map((attr) => {
-			return [attr.name, attr.name !== 'image' ? attr.value : `https://${cid.cid}.${NFT_GATEWAY}`];
-		});
-		// Build and request to sign deploy with signer
-		const signedDeploy = await getSingedMintDeploy({ ...nftInfo, metadata: nftMetadata, publicKey });
-
-		if (signedDeploy && !signedDeploy.error) {
-			const { data: hash } = await dispatch(putDeploy(signedDeploy));
-			setDeployHash(hash.deployHash);
-		} else {
-			setSignerError(signedDeploy ? signedDeploy.error.message : 'Error!');
-			if (cid) {
-				dispatch(deleteFile(cid.cid));
+		try {
+			// store file by nft.storage
+			const { data: cid } = await dispatch(
+				storeFile(nftInfo.metadata.find((attr) => attr.name === 'image').value),
+			);
+			if (!cid || !cid.cid) {
+				throw new Error('Can not store image');
 			}
+
+			// Update massage and image attribute
+			const nftMetadata = nftInfo.metadata.map((attr) => {
+				return [attr.name, attr.name !== 'image' ? attr.value : `https://${cid.cid}.${NFT_GATEWAY}`];
+			});
+			// Build and request to sign deploy with signer
+			const signedDeploy = await getSingedMintDeploy({ ...nftInfo, metadata: nftMetadata, publicKey });
+
+			if (signedDeploy && !signedDeploy.error) {
+				const { data: hash } = await dispatch(putDeploy(signedDeploy));
+				setDeployHash(hash.deployHash);
+				const selectedContract = nftContracts.find((ct) => ct.value === nftInfo.nftContract) || {};
+				dispatch(
+					updateNFTLocalStorage(
+						publicKey,
+						`nfts.deploys.mint`,
+						{
+							hash: hash.deployHash,
+							status: 'pending',
+							timestamp: new Date().toString(),
+							collectionName: selectedContract.symbol || '',
+						},
+						'push',
+					),
+				);
+			} else {
+				setSignerError(signedDeploy ? signedDeploy.error.message : 'Error!');
+				if (cid) {
+					dispatch(deleteFile(cid.cid));
+				}
+			}
+		} catch (error) {
+			setSignerError(error.message);
 		}
+
 		setIsMinting(false);
 	};
 

@@ -57,7 +57,7 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 						hash: hash.deployHash,
 						status: 'pending',
 						timestamp: new Date().toString(),
-						collectionName: inputValues.collectionName,
+						collectionName: inputValues.collectionSymbol,
 					},
 					'push',
 				),
