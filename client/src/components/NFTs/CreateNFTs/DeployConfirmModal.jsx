@@ -53,7 +53,12 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 				updateNFTLocalStorage(
 					publicKey,
 					`nfts.deploys.installContract`,
-					{ hash: hash.deployHash, status: 'pending' },
+					{
+						hash: hash.deployHash,
+						status: 'pending',
+						timestamp: new Date().toString(),
+						collectionName: inputValues.collectionName,
+					},
 					'push',
 				),
 			);
@@ -61,8 +66,20 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 		}
 	};
 
+	const clearState = () => {
+		setInputValues({ collectionName: '', collectionSymbol: '' });
+		setStep('input');
+		setDeployError('');
+		setDeployHash('');
+	};
+
+	const onClose = () => {
+		clearState();
+		handleClose();
+	};
+
 	return (
-		<Modal show={show} onHide={handleClose} size="lg" centered className="cd_nft_contract_deploy_modal">
+		<Modal show={show} onHide={onClose} size="lg" centered className="cd_nft_contract_deploy_modal">
 			<Modal.Header closeButton>
 				<Modal.Title>Deploy NFT Contract</Modal.Title>
 			</Modal.Header>
@@ -167,7 +184,7 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 							<span>{deployHash}</span>
 						</div>
 
-						<Button variant="secondary" onClick={handleClose}>
+						<Button variant="secondary" onClick={onClose}>
 							close
 						</Button>
 					</>
