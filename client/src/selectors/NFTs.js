@@ -5,7 +5,7 @@ import { formatKeyByPrefix } from '../helpers/key';
 import { userDetailsSelector } from './user';
 
 const NFT_TYPE_MAPPING = {
-	installContract: 'Install Contract',
+	installContract: 'Deploy Contract',
 	mint: 'Mint',
 };
 
