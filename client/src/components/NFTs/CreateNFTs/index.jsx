@@ -3,9 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { NFTTab } from '../NFTTab';
-import { getNFTContracts, getNFTDeployHistory } from '../../../selectors/NFTs';
+import { getNFTContracts, getNFTDeployHistory, getPendingDeployHashes } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
-import { fetchAllNTFContractInfoByPublicKey, getNFTDeploysFromLocalStorage } from '../../../actions/NFTActions';
+import {
+	fetchAllNTFContractInfoByPublicKey,
+	getNFTDeploysFromLocalStorage,
+	getNFTPendingDeploysStatus,
+	updateNFTDeploysStatus,
+} from '../../../actions/NFTActions';
+import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import { NFTMintForm } from './NFTMintForm';
 import { DeployConfirmModal } from './DeployConfirmModal';
@@ -17,6 +23,7 @@ const CreateNFT = () => {
 	const publicKey = useSelector(getPublicKey);
 	const nftContracts = useSelector(getNFTContracts);
 	const nftDeployHistory = useSelector(getNFTDeployHistory);
+	const pendingDeployHashes = useSelector(getPendingDeployHashes);
 
 	//State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -28,6 +35,15 @@ const CreateNFT = () => {
 			dispatch(getNFTDeploysFromLocalStorage(publicKey));
 		}
 	}, [dispatch, publicKey]);
+
+	useAutoRefreshEffect(() => {
+		if (pendingDeployHashes.length) {
+			(async () => {
+				const { data } = await dispatch(getNFTPendingDeploysStatus(pendingDeployHashes));
+				dispatch(updateNFTDeploysStatus(publicKey, 'nfts.deploys', data));
+			})();
+		}
+	}, [JSON.stringify(pendingDeployHashes), dispatch]);
 
 	const isContractAvailable = nftContracts.length;
 

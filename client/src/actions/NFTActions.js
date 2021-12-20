@@ -88,3 +88,29 @@ export const getNFTDeploysFromLocalStorage = (publicKey) => {
 		});
 	};
 };
+
+export const getNFTPendingDeploysStatus = (deployHash) => ({
+	type: NFTS.GET_DEPLOYS_STATUS,
+	request: {
+		url: '/deploysStatus',
+		params: {
+			deployHash,
+		},
+	},
+});
+
+export const updateNFTDeploysStatus = (publicKey, path, listHash = []) => {
+	return (dispatch) => {
+		const deployStorageValue = getLocalStorageValue(publicKey, path);
+		const updatedValue = Object.keys(deployStorageValue).reduce((out, key) => {
+			out[key] = deployStorageValue[key].map((value) => {
+				const deployStatus = listHash.find(
+					(h) => h.hash && value.hash && h.hash.toLowerCase() === value.hash.toLowerCase(),
+				);
+				return { ...value, status: deployStatus ? deployStatus.status : value.status };
+			});
+			return out;
+		}, {});
+		dispatch(updateNFTLocalStorage(publicKey, path, updatedValue, 'set'));
+	};
+};
