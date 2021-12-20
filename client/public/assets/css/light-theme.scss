@@ -325,6 +325,9 @@
 				&:active {
 					color: $color13 !important;
 				}
+				&:hover {
+					background-color: $color12 !important;
+				}
 			}
 		}
 		button {
@@ -340,6 +343,9 @@
 			color: $color13 !important;
 			&:active {
 				color: $color13 !important;
+			}
+			&:hover {
+				background-color: $color12 !important;
 			}
 		}
 		.cd_send_currency_text {

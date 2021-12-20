@@ -188,6 +188,9 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 							</div>
 						</div>
 						<div className="cd_send_currency_btn_text">
+							<Button onClick={resetForm} className="cd_send_currency_btn">
+								Clear
+							</Button>
 							<Button
 								type="submit"
 								onClick={handleSubmit}
@@ -195,9 +198,6 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 								disabled={Object.keys(errors).length}
 							>
 								Mint
-							</Button>
-							<Button onClick={resetForm} className="cd_send_currency_btn">
-								Clear
 							</Button>
 						</div>
 					</Form>

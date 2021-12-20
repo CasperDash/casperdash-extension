@@ -1136,6 +1136,9 @@ table {
 				min-width: 180px;
 				width: 100%;
 			}
+			&:hover {
+				background-color: $color6 !important;
+			}
 			svg {
 				margin-right: 11px;
 			}
@@ -1176,6 +1179,9 @@ table {
 			max-width: 180px;
 			min-width: 180px;
 			width: 100%;
+		}
+		&:hover {
+			background-color: $color6 !important;
 		}
 	}
 	display: flex;

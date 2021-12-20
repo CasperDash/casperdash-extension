@@ -23,13 +23,14 @@ export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError
 
 			<Modal.Body className="cd_nft_modal_body">
 				<div className="cd_nft_modal_row">
-					<div className="cd_nft_image">
-						{typeof imageValue === 'string' ? (
+					{typeof imageValue === 'string' ? (
+						<div className="cd_nft_image">
 							<img src={imageValue} alt="nft-detail" />
-						) : (
-							<ImagePreview file={imageValue} />
-						)}
-					</div>
+						</div>
+					) : (
+						<ImagePreview file={imageValue} />
+					)}
+
 					<div className="cd_nft_modal_metadata">
 						{metadata &&
 							metadata

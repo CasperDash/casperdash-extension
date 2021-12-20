@@ -52,12 +52,12 @@
 .cd_nft_modal_body .cd_nft_modal_row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-basis: auto;
   padding: 10px;
 }
 .cd_nft_modal_body .cd_nft_modal_row .cd_nft_image {
-  height: 400px;
+  height: 350px;
+  width: 75%;
 }
 .cd_nft_modal_body .cd_nft_modal_row .cd_nft_image img {
   max-width: 100%;
@@ -71,6 +71,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 25%;
 }
 .cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row {
   content: "";
@@ -1296,6 +1297,9 @@ table td {
   min-width: 180px;
   width: 100%;
 }
+.cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button:hover {
+  background-color: #ffffffb3 !important;
+}
 .cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button svg {
   margin-right: 11px;
 }
@@ -1338,6 +1342,9 @@ table td {
   max-width: 180px;
   min-width: 180px;
   width: 100%;
+}
+.cd_send_currency_btn_text .cd_send_currency_btn:hover {
+  background-color: #ffffffb3 !important;
 }
 .cd_send_currency_btn_text .cd_send_currency_text p {
   font-size: 14px;

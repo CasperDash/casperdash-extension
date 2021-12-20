@@ -184,6 +184,9 @@
 .cd_light_theme_active .cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button:active {
   color: #fff !important;
 }
+.cd_light_theme_active .cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button:hover {
+  background-color: #3d476a !important;
+}
 .cd_light_theme_active .cd_wallet_chart_bottom_content button svg path {
   fill: #fff;
 }
@@ -192,6 +195,9 @@
 }
 .cd_light_theme_active .cd_send_currency_btn_text .cd_send_currency_btn:active {
   color: #fff !important;
+}
+.cd_light_theme_active .cd_send_currency_btn_text .cd_send_currency_btn:hover {
+  background-color: #3d476a !important;
 }
 .cd_light_theme_active .cd_send_currency_btn_text .cd_send_currency_text p span {
   color: #3d476a;

@@ -53,11 +53,11 @@
 	.cd_nft_modal_row {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
 		flex-basis: auto;
 		padding: 10px;
 		.cd_nft_image {
-			height: 400px;
+			height: 350px;
+			width: 75%;
 			img {
 				max-width: 100%;
 				max-height: 100%;
@@ -71,6 +71,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
+			width: 25%;
 			.cd_nft_metadata_row {
 				content: '';
 				display: table;
