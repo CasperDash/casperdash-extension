@@ -13,7 +13,7 @@ test('Should display delegations', async () => {
 		},
 	];
 	const { queryAllByText } = render(<Table stakingDeployList={stakingDeployList} />);
-	expect(queryAllByText('0x123')[0].textContent).toBe('0x123 ');
+	expect(queryAllByText('0x123')[0].textContent).toBe('0x123');
 });
 
 test('Should display empty list', async () => {

@@ -7,7 +7,7 @@ export const getPublicKey = ({ user }) => {
 	return user.publicKey;
 };
 
-const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
+export const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
 
 export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {
 	const data = userDetails.data || {};

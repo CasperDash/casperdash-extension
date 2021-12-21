@@ -5,6 +5,7 @@ import KeyManager from './KeyManager';
 import Tokens from './Tokens';
 import Stake from './Stake';
 import NFTs from './NFTs';
+import CreateNFT from './NFTs/CreateNFTs';
 
 const MODULE_MAPPING = {
 	[routes.home]: Wallets,
@@ -14,6 +15,7 @@ const MODULE_MAPPING = {
 	[routes.nfts]: NFTs,
 	[routes.keyManager]: KeyManager,
 	[routes.staking]: Stake,
+	[routes.createnft]: CreateNFT,
 };
 
 export default Object.keys(MODULE_MAPPING).reduce((out, module) => {

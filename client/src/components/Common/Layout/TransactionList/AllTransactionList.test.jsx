@@ -30,7 +30,8 @@ test('Should table with data', () => {
 		/>,
 	);
 	expect(getByText('CDAS').textContent).toBe('CDAS');
-	expect(getByText('testdeployhash').textContent).toBe('testdeployhash ');
+	expect(getByText('testdeplo').textContent).toBe('testdeplo');
+	expect(getByText('yhash').textContent).toBe('yhash');
 	expect(getByText('testtransferid').textContent).toBe('testtransferid');
 	expect(getByText('-100').textContent).toBe('-100');
 	expect(getByText('pending').textContent).toBe('pending');

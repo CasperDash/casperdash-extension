@@ -13,10 +13,10 @@ import {
 } from '../../actions/tokensActions';
 import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
 import { MessageModal } from '../Common/Layout/Modal/MessageModal';
+import { AddTokenModal } from '../Common/Layout/Modal/AddTokenModal';
 import { TOKEN_TRANSFER_FEE } from '../../constants/key';
 import { TokenList } from '../Common/TokenList';
 import { TokenInfo } from './TokenInfo';
-import { AddTokenModal } from './AddTokenModal';
 
 const Tokens = () => {
 	const dispatch = useDispatch();
@@ -72,9 +72,9 @@ const Tokens = () => {
 	const handleAddToken = async (tokenAddress) => {
 		const { data, error } = await dispatch(getTokenInfo(tokenAddress));
 		if (error) {
-			setAddTokenError(error);
+			setAddTokenError('Can not find token info');
 		} else {
-			data.name && dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
+			data && data.name && dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
 			setShowAddTokenModal(false);
 		}
 	};

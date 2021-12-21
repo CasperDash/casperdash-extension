@@ -96,7 +96,7 @@ test('Show error if can not add token', async () => {
 		/* fire events that update state */
 		fireEvent.click(getByText('Add'));
 	});
-	expect(getByText(/error message/i).textContent).toBe('error message');
+	expect(getByText(/Can not find token info/i).textContent).toBe('Can not find token info');
 });
 
 test('Close add token modal if successfully add token', async () => {

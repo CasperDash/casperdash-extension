@@ -85,7 +85,7 @@ test('Have delegations', () => {
 		},
 	]);
 	const { queryAllByText } = render(<Stake />);
-	expect(queryAllByText('0x123')[0].textContent).toBe('0x123 ');
+	expect(queryAllByText('0x123')[0].textContent).toBe('0x123');
 });
 
 describe('Trigger stake form', () => {

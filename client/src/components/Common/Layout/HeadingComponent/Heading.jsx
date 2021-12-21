@@ -11,7 +11,7 @@ import { switchTheme } from '../../../../actions/settingActions';
 import { connectCasperSigner } from '../../../../services/casperServices';
 import { isValidPublicKey } from '../../../../helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
-import { MiddleTruncatedText } from '../../MiddleTruncatedText/MiddleTruncatedText';
+import { MiddleTruncatedText } from '../../MiddleTruncatedText';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 
 const SIGNER_EVENTS = {

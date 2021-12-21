@@ -9,15 +9,13 @@
 .cd_nft_row.row .cd_nft_col .cd_nft_content {
   box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid #828cae26;
-  border-radius: 10px;
-  padding: 15px 20px;
+  border-radius: 5px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_content_text {
-  font-weight: bold;
   font-size: 15px;
   line-height: 15px;
   color: #828cae;
-  margin-top: 13px;
+  padding: 15px;
 }
 .cd_nft_row.row .cd_nft_col .cd_nft_content .cd_nft_image {
   height: 200px;
@@ -47,18 +45,19 @@
 }
 .cd_nft_row.row .cd_nft_empty .cd_no_nft_message {
   text-align: center;
-  color: #ba1358;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_nft_modal_body .cd_nft_modal_row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-basis: auto;
   padding: 10px;
 }
 .cd_nft_modal_body .cd_nft_modal_row .cd_nft_image {
-  height: 400px;
+  height: 350px;
+  width: 75%;
 }
 .cd_nft_modal_body .cd_nft_modal_row .cd_nft_image img {
   max-width: 100%;
@@ -72,6 +71,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 25%;
 }
 .cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row {
   content: "";
@@ -93,6 +93,107 @@
 }
 .cd_nft_modal_body .cd_nft_modal_row .cd_nft_modal_metadata .cd_nft_metadata_row .cd_nft_metadata_value {
   color: #ffffff;
+}
+
+.cd_nft_mint .cd_nft_mint_form {
+  margin-top: 20px;
+  padding: 32px;
+  border: 1px solid #3a4562;
+  border-radius: 4px;
+}
+.cd_nft_mint .cd_nft_mint_form h3 {
+  font-size: 17px;
+  line-height: 21px;
+  color: #ffffff;
+  opacity: 0.7;
+  margin-bottom: 13px;
+  margin-top: 13px;
+}
+.cd_nft_mint .cd_nft_mint_form h4 {
+  font-size: 15px;
+  line-height: 21px;
+  color: #828cae;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_field_note {
+  color: #dc3545;
+  font-size: 12px;
+  font-weight: 600;
+}
+.cd_nft_mint .cd_nft_mint_form input {
+  margin-bottom: 5px;
+  background-color: transparent;
+  color: #828cae;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_contract_dropdown div {
+  background-color: transparent;
+  color: #828cae;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_contract_dropdown div[id$=-listbox] {
+  background-color: #252f47;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata {
+  padding-bottom: 20px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata .bi-plus-circle-fill:hover {
+  color: #0ee6b6;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata .cd_nft_image {
+  height: 400px;
+  max-width: 400px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_metadata .cd_nft_image img {
+  max-width: 100%;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input input {
+  margin-right: 10px;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input .bi-dash-circle-fill {
+  color: #828cae;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_mint_attributes_input .bi-dash-circle-fill:hover {
+  color: #dc3545;
+}
+.cd_nft_mint .cd_nft_mint_form .cd_nft_btn_mint {
+  width: 200px;
+}
+
+.cd_nft_contract_deploy_modal h3 {
+  font-size: 17px;
+  line-height: 21px;
+  color: #828cae;
+  opacity: 0.7;
+  margin-bottom: 13px;
+  margin-top: 13px;
+}
+.cd_nft_contract_deploy_modal h4 {
+  font-size: 15px;
+  line-height: 21px;
+  color: #ffffff;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+.cd_nft_contract_deploy_modal .cd_nft_contract_row {
+  padding-bottom: 10px;
+}
+.cd_nft_contract_deploy_modal .cd_nft_contract_confirm_notice {
+  font-size: 0.8em;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {
@@ -169,7 +270,8 @@
   text-align: center;
 }
 .cd_empty_delegation_row .cd_empty_delegation_message {
-  color: #ba1358;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_staking_component.toggle_form .cd_btn_stake_cspr {
@@ -241,6 +343,25 @@ ul {
 }
 .modal .modal-content .close {
   color: #828cae;
+}
+
+.cd_tabs {
+  border: 0;
+  display: flex;
+  padding-bottom: 20px;
+}
+.cd_tabs .cd_tab {
+  padding-right: 20px;
+}
+.cd_tabs .cd_tab a {
+  text-decoration: none;
+  color: #ffffffe6;
+}
+.cd_tabs .cd_tab a.active {
+  border-bottom: 2px solid #53b9ea;
+}
+.cd_tabs .cd_tab a:hover {
+  border-bottom: 2px solid #53b9ea;
 }
 
 .cd_all_pages_content {
@@ -789,7 +910,7 @@ table td {
   display: flex;
   min-width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+  flex-wrap: wrap;
   padding-bottom: 15px;
 }
 .cd_add_token_row .cd_currency_column_sub_row_full::-webkit-scrollbar {
@@ -807,13 +928,14 @@ table td {
 }
 .cd_add_token_row .no_token_message {
   padding-left: 10px;
-  color: #ba1358;
+  color: #dc3545;
+  font-weight: 600;
 }
 .cd_add_token_row .cd_currency_column_sub_row {
   display: flex;
   min-width: 80%;
   max-width: 80%;
-  overflow-x: auto;
+  flex-wrap: wrap;
   padding-bottom: 15px;
 }
 .cd_add_token_row .cd_currency_column_sub_row .cd_add_token_column {
@@ -1175,6 +1297,9 @@ table td {
   min-width: 180px;
   width: 100%;
 }
+.cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button:hover {
+  background-color: #ffffffb3 !important;
+}
 .cd_wallet_chart_bottom_content .cd_wallet_chart_send_receive_btn button svg {
   margin-right: 11px;
 }
@@ -1217,6 +1342,9 @@ table td {
   max-width: 180px;
   min-width: 180px;
   width: 100%;
+}
+.cd_send_currency_btn_text .cd_send_currency_btn:hover {
+  background-color: #ffffffb3 !important;
 }
 .cd_send_currency_btn_text .cd_send_currency_text p {
   font-size: 14px;
@@ -1486,7 +1614,6 @@ table td {
 
 .cd_transaction_list_table {
   margin-bottom: 0 !important;
-  min-width: 1200px;
 }
 .cd_transaction_list_table .cd_transaction_list_table_heading {
   font-weight: 600;
@@ -1501,6 +1628,9 @@ table td {
   line-height: 15px;
   text-align: center;
   color: #828cae;
+}
+.cd_transaction_list_table tr td .cd_middle_truncated_text {
+  width: 100px;
 }
 .cd_transaction_list_table .cd_transaction_pluse {
   color: #50e3c2;
@@ -1642,6 +1772,16 @@ table td {
   color: #252f47;
 }
 
+.cd_error_text {
+  color: #dc3545;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.cd_success_text {
+  color: #0ee6b6;
+}
+
 .cd_setting_list .cd_setting_list_items {
   border: 1px solid #828cae26;
   border-radius: 10px;
@@ -1681,10 +1821,6 @@ table td {
 }
 .cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph p span {
   font-weight: normal;
-}
-.cd_setting_list .cd_setting_list_items .cd_setting_items_heading_peregraph .cd_error_text {
-  color: #b5395c;
-  font-size: 0.8em;
 }
 .cd_setting_list .cd_setting_list_items .cd_setting_items_right_text {
   display: flex;
@@ -1822,12 +1958,14 @@ table td {
   flex-basis: auto;
 }
 .cd_confirm_modal_content .cd_confirm_modal_footer .cd_confirm_modal_error {
-  color: #b5395c;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_key_manger_contract_confirm_modal .cd_key_manger_contract_confirm_content .cd_key_manager_contract_confirm_notice {
-  font-size: 0.7em;
-  color: #b5395c;
+  font-size: 0.8em;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .cd_edit_modal_content .cd_edit_modal_header {
@@ -1865,7 +2003,11 @@ table td {
   flex-basis: auto;
 }
 .cd_edit_modal_content .cd_edit_modal_footer .cd_edit_modal_error {
-  color: #b5395c;
+  color: #dc3545;
+  font-weight: 600;
+}
+.cd_edit_modal_content .cd_edit_modal_footer .cd_edit_modal_success {
+  color: #0ee6b6;
 }
 
 .cd_add_token_modal_content .cd_add_token_modal_header {
@@ -1895,7 +2037,8 @@ table td {
   flex-basis: auto;
 }
 .cd_add_token_modal_content .cd_add_token_modal_footer .cd_add_token_modal_error {
-  color: #b5395c;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 @media (max-width: 1350px) {
