@@ -9,7 +9,7 @@ const CONFIG_OPTIONS = {
 	},
 	API_ROOT: {
 		env: 'REACT_APP_API_ROOT',
-		default: 'https://testnet.casperdash.io',
+		default: 'http://localhost:3001/',
 	},
 	FAILED_LOGIN_ATTEMPTS_TO_BLOCK: {
 		env: 'FAILED_LOGIN_ATTEMPTS_TO_BLOCK',

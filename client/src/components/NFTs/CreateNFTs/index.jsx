@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { NFTTab } from '../NFTTab';
 import { getNFTContracts, getNFTDeployHistory, getPendingDeployHashes } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
@@ -26,7 +26,7 @@ const CreateNFT = () => {
 	const nftDeployHistory = useSelector(getNFTDeployHistory);
 	const pendingDeployHashes = useSelector(getPendingDeployHashes);
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	//State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -34,9 +34,9 @@ const CreateNFT = () => {
 	//Effect
 	useEffect(() => {
 		if (!publicKey) {
-			history.push('/NFTs');
+			navigate('/NFTs');
 		}
-	}, [history, publicKey]);
+	}, [navigate, publicKey]);
 
 	useEffect(() => {
 		if (publicKey) {
