@@ -1,6 +1,9 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
+import CasperApp from '@zondax/ledger-casper';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { getTheme } from '../../../../selectors/settings';
@@ -90,6 +93,29 @@ const HeadingModule = (props) => {
 		}
 	};
 
+	const handleConnectLedger = async () => {
+		try {
+			const transport = await TransportWebUSB.create();
+			const app = new CasperApp(transport);
+			const { publicKey } = await app.getAddressAndPubKey("m/44'/506'/0'/0/0");
+			if (!publicKey) {
+				return;
+			}
+
+			const key = `02${publicKey.toString('hex')}`;
+			dispatch(setPublicKey(key));
+		} catch (error) {
+			console.error('Ledger connection error', error);
+			if ('TransportInterfaceNotAvailable' === error.name) {
+				alert('You must open the Casper app on your Ledger device to connect.');
+			} else if ('TransportOpenUserCancelled' === error.name) {
+				alert(error.message);
+			} else {
+				alert(error);
+			}
+		}
+	};
+
 	const onClickViewMode = () => {
 		setShowPublicKeyInput(true);
 	};
@@ -123,6 +149,7 @@ const HeadingModule = (props) => {
 					<Button className="cd_theme_switch" onClick={onSwitchTheme}>
 						<i className={`bi ${theme === DARK_THEME ? 'bi-brightness-high-fill' : 'bi-moon-fill'}`} />
 					</Button>
+					<Button className="cd_all_page_logout_btn" onClick={handleConnectLedger}>{`Connect Ledger`}</Button>
 					{!publicKey && !isAvailable && (
 						<Button className="cd_all_page_logout_btn" onClick={onClickViewMode}>
 							View Mode
