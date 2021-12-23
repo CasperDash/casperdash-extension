@@ -100,12 +100,13 @@ const HeadingModule = (props) => {
 		try {
 			const transport = await TransportWebUSB.create();
 			const app = new CasperApp(transport);
-			const { publicKey } = await app.getAddressAndPubKey("m/44'/506'/0'/0/0");
-			if (!publicKey) {
+			const response = await app.getAddressAndPubKey("m/44'/506'/0'/0/0");
+			if (!response.publicKey) {
+				alert('You must unlock the Casper App on your Ledger device to connect.');
 				return;
 			}
 
-			const key = `02${publicKey.toString('hex')}`;
+			const key = `02${response.publicKey.toString('hex')}`;
 			dispatch(setPublicKey(key));
 			dispatch(
 				setLedgerOptions({
