@@ -1,5 +1,6 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey } from 'casper-js-sdk';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
+import { signByLedger } from '../services/ledgerServices';
 
 /**
  * Get Transfer deploy
@@ -36,11 +37,20 @@ export const buildContractInstallDeploy = (baseAccount, session) => {
  * @param {String} setAccountHex contract's arguments
  * @returns {Deploy} Signed deploy
  */
-export const signDeploy = async (deploy, mainAccountHex, setAccountHex) => {
+export const signDeploy = async (deploy, mainAccountHex, setAccountHex, casperApp) => {
 	try {
-		const deployObj = DeployUtil.deployToJson(deploy);
-		const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
-		return signedDeploy;
+		if (!casperApp) {
+			const deployObj = DeployUtil.deployToJson(deploy);
+			const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
+			return signedDeploy;
+		} else {
+			const signedDeploy = await signByLedger(deploy, {
+				publicKey: mainAccountHex,
+				keyPath: 0,
+				app: casperApp,
+			});
+			return DeployUtil.deployToJson(signedDeploy);
+		}
 	} catch (error) {
 		return { error: { message: error.message } };
 	}
