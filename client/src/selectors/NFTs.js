@@ -34,7 +34,7 @@ export const getOwnNFTContractHash = createSelector(
 	getNFTAddressList,
 	({ data = {} }, customAddresses) => {
 		if (!data || !data.namedKeys || !data.namedKeys.length) {
-			return [];
+			return customAddresses || [];
 		}
 		const nftContractAddress = data.namedKeys
 			.filter((namedKey) => namedKey.name.match(/.*nft.*_contract$/g))
