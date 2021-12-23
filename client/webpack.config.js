@@ -3,11 +3,13 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { ESBuildMinifyPlugin } = require('esbuild-loader');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const APP_DIR = path.resolve(__dirname, 'src/');
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production';
+	const type = env.type || 'web';
 
 	const sourceMap = isProduction ? {} : { devtool: 'inline-source-map' };
 	return {
@@ -15,7 +17,7 @@ module.exports = (env, argv) => {
 		entry: path.resolve(__dirname, 'src/index.js'),
 		output: {
 			filename: 'static/js/[name].[contenthash:8].js',
-			path: path.resolve(__dirname, 'build'),
+			path: path.resolve(__dirname, type == 'web' ? 'build' : 'build_extension'),
 			assetModuleFilename: 'assets/images/[hash][ext][query]',
 			chunkFilename: 'static/js/[name].[contenthash:8].js',
 		},
@@ -41,7 +43,11 @@ module.exports = (env, argv) => {
 		},
 		plugins: [
 			new HtmlWebpackPlugin({
-				template: path.resolve(__dirname, '/template/index.html'),
+				template: path.resolve(
+					__dirname,
+					env.type === 'web' ? '/template/index.html' : '/template/extension/popup.html',
+				),
+				filename: env.type === 'web' ? 'index.html' : 'popup.html',
 			}),
 			new webpack.ProvidePlugin({
 				Buffer: ['buffer', 'Buffer'],
@@ -52,6 +58,26 @@ module.exports = (env, argv) => {
 			new MiniCssExtractPlugin({
 				filename: 'assets/css/[name].css',
 			}),
+
+			new CopyWebpackPlugin({
+				patterns: [
+					{
+						from: 'template/extension/manifest.json',
+						to: path.join(__dirname, 'build_extension'),
+						force: true,
+					},
+				],
+			}),
+			new CopyWebpackPlugin({
+				patterns: [
+					{
+						from: 'template/extension/512.png',
+						to: path.join(__dirname, 'build_extension'),
+						force: true,
+					},
+				],
+			}),
+
 			// new BundleAnalyzerPlugin(),
 		],
 		resolve: {
