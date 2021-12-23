@@ -47,11 +47,13 @@
 		]
 	},
 	"scripts": {
-		"buildExtension": "./script/build.sh",
-		"start": "react-scripts start",
-		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts start",
-		"build": "react-scripts build && react-snapshot",
-		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io react-scripts build && react-snapshot",
+		"dev": "webpack-dev-server --mode development --history-api-fallback",
+		"dev-extension": "webpack --mode development --env=type=extension --watch",
+		"start": "webpack-dev-server  --history-api-fallback",
+		"start-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io webpack-dev-server --history-api-fallback",
+		"build": "webpack --mode production  && react-snapshot",
+		"build-testnet": "REACT_APP_API_ROOT=https://testnet-api.casperdash.io webpack --mode production  && react-snapshot",
+		"build-extension": "webpack --mode production --env=type=extension",
 		"test": "react-scripts test --coverage --watchAll ",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage"
 	},
@@ -82,6 +84,7 @@
 		"babel-loader": "^8.2.3",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-react": "^6.24.1",
+		"copy-webpack-plugin": "^10.2.0",
 		"css-loader": "^6.5.1",
 		"css-minimizer-webpack-plugin": "^3.2.0",
 		"esbuild-loader": "^2.17.0",
