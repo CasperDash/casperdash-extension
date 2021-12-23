@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
