@@ -9,6 +9,7 @@ import { deploySelector } from '../../../../selectors/deploy';
 import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_TRANSFER } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
+import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
 import ConfirmationModal from './Modal';
 import ValidatorInfo from './ValidatorInfo';
 
@@ -31,6 +32,7 @@ const UndelegateForm = ({
 
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	const { casperApp } = useSelector(getLedgerOptions);
 
 	// Func
 	const handleSubmit = async (values) => {
@@ -50,7 +52,11 @@ const UndelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
+			const signedDeploy = await getSignedStakeDeploy(stakeDetails, casperApp);
+			if (signedDeploy.error) {
+				setSignerError(signedDeploy.error.message);
+				return;
+			}
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data } = deployResult;
 			setDeployHash(data.deployHash);
