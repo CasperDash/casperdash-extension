@@ -1,4 +1,4 @@
-import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey } from 'casper-js-sdk';
+import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
 import { signByLedger } from '../services/ledgerServices';
 
@@ -57,6 +57,14 @@ export const signDeploy = async (deploy, mainAccountHex, setAccountHex, casperAp
 };
 
 /**
+ * Get Recipient address
+ * @param {CLPublicKey} recipient
+ */
+export const createRecipientAddress = (recipient) => {
+	return new CLKey(new CLAccountHash(recipient.toAccountHash()));
+};
+
+/**
  * Get Transfer Token deploy
  * @param {CLPublicKey} fromAccount from account public key
  * @param {CLPublicKey} toAccount to account public key
@@ -72,7 +80,7 @@ export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractH
 		'transfer',
 		RuntimeArgs.fromMap({
 			amount: CLValueBuilder.u256(amount),
-			recipient: new CLKey(new CLAccountHash(toAccount.toAccountHash())),
+			recipient: createRecipientAddress(toAccount),
 		}),
 	);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
@@ -90,3 +98,13 @@ export const connectCasperSigner = () => {
 		return error.message;
 	}
 };
+
+export const toCLMap = (map) => {
+	const clMap = CLValueBuilder.map([CLTypeBuilder.string(), CLTypeBuilder.string()]);
+	for (const [key, value] of Array.from(map.entries())) {
+		clMap.set(CLValueBuilder.string(key), CLValueBuilder.string(value));
+	}
+	return clMap;
+};
+
+export const contractHashToByteArray = (contractHash) => Uint8Array.from(Buffer.from(contractHash, 'hex'));

@@ -1,0 +1,1 @@
+export const MAX_METADATA_ATTRIBUTES = 5;

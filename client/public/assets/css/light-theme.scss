@@ -11,6 +11,37 @@
 			color: $color17;
 		}
 	}
+	.cd_tabs {
+		.cd_tab {
+			a {
+				color: $color12;
+			}
+		}
+	}
+	// NFT
+	.cd_nft_mint {
+		.cd_nft_mint_form {
+			h3 {
+				color: $color12;
+			}
+			.cd_nft_mint_contract_dropdown {
+				div {
+					color: $color3;
+				}
+				#react-select-3-listbox {
+					background-color: $color2;
+				}
+			}
+		}
+	}
+	.cd_nft_contract_deploy_modal {
+		.h3 {
+			color: $color4;
+		}
+		h4 {
+			color: $color3;
+		}
+	}
 
 	.cd_dark_theme_slide_img {
 		display: none;
@@ -294,6 +325,9 @@
 				&:active {
 					color: $color13 !important;
 				}
+				&:hover {
+					background-color: $color12 !important;
+				}
 			}
 		}
 		button {
@@ -309,6 +343,9 @@
 			color: $color13 !important;
 			&:active {
 				color: $color13 !important;
+			}
+			&:hover {
+				background-color: $color12 !important;
 			}
 		}
 		.cd_send_currency_text {

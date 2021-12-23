@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
+import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
 
 /**
  * Check value is public key.
@@ -13,6 +14,42 @@ export const isValidPublicKey = (publicKey) => {
 	} catch (error) {
 		return false;
 	}
+};
+
+/**
+ * validate NFT Mint Form
+ * @param {object} values
+ */
+export const validateNFTMintForm = (values) => {
+	let errors = {};
+	if (!values.nftContract) {
+		errors.nftContract = 'Required';
+	}
+	if (!values.name) {
+		errors.name = 'Required';
+	}
+	if (!values.image) {
+		errors.image = 'Required';
+	}
+	if (values.image && values.image.type && !values.image.type.includes('image')) {
+		errors.image = 'Should be image.';
+	}
+	if (values.toAddress && !isValidPublicKey(values.toAddress)) {
+		errors.toAddress = 'Invalid address.';
+	}
+
+	new Array(MAX_METADATA_ATTRIBUTES).fill().forEach((value, index) => {
+		const attrName = `attribute${index}`;
+		const attrValue = `value${index}`;
+		if (values[attrName] && values[attrName].length > 20) {
+			errors[attrName] = 'Max is 20 chars.';
+		}
+		if (values[attrValue] && values[attrValue].length > 20) {
+			errors[attrValue] = 'Max is 20 chars.';
+		}
+	});
+
+	return errors;
 };
 
 const COMMON_ERROR_MESSAGE = {

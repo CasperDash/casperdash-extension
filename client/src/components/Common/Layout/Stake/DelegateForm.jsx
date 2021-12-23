@@ -168,19 +168,19 @@ const DelegateForm = ({
 									<div className="cd_send_currency_btn_text">
 										<Button
 											className="cd_send_currency_btn"
+											variant="secondary"
+											onClick={handleToggle}
+										>
+											Back
+										</Button>
+										<Button
+											className="cd_send_currency_btn"
 											variant="primary"
 											type="submit"
 											disabled={!values.amount || !values.validator}
 											onClick={handleSubmit}
 										>
 											Stake
-										</Button>
-										<Button
-											className="cd_send_currency_btn"
-											variant="secondary"
-											onClick={handleToggle}
-										>
-											Back
 										</Button>
 										<div className="cd_send_currency_text">
 											<p>

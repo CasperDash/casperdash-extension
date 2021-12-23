@@ -2327,6 +2327,13 @@
     anymatch "^3.0.0"
     source-map "^0.6.0"
 
+"@types/ws@^8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.2.2.tgz#7c5be4decb19500ae6b3d563043cd407bf366c21"
+  integrity sha512-NOn5eIcgWLOo6qW8AcuLZ7G8PycXu0xTxxkS6Q18VWFxgPUSOwV0pBj2a/4viNZVu25i7RIB7GttdkAIUUXOOg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/yargs-parser@*":
   version "20.2.1"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-20.2.1.tgz#3b9ce2489919d9e4fea439b76916abc34b2df129"
@@ -3893,16 +3900,17 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-casper-js-sdk@^2.7.1:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/casper-js-sdk/-/casper-js-sdk-2.7.2.tgz#6fb36d6eb193eb3df706a81aeabba782376dc01e"
-  integrity sha512-IB7DkueG3QTM62K6vWfGyV68mTRRTi5h1nV5w/iIOLrKSIrUn02sVrCrdz04lswT1q6Ri1vztBNpkyxjjTmemA==
+casper-js-sdk@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/casper-js-sdk/-/casper-js-sdk-2.7.3.tgz#7af0959ac3080bec9e7b82442439ee6932ee6f7f"
+  integrity sha512-LChaBRgeSb0B3yQ9akppQLxbb+JdrpF35+YkE0Cndqho5v28MclVejxayD/Put0xSfwDMBRxKLh/ILNKUFsaTg==
   dependencies:
     "@ethersproject/bignumber" "^5.0.8"
     "@ethersproject/bytes" "^5.0.5"
     "@ethersproject/constants" "^5.0.5"
     "@open-rpc/client-js" "^1.6.2"
     "@types/eccrypto" "^1.1.2"
+    "@types/ws" "^8.2.2"
     blakejs "^1.1.0"
     eccrypto "^1.1.6"
     eslint-plugin-prettier "^3.4.0"
@@ -12403,7 +12411,7 @@ ts-pnp@1.2.0, ts-pnp@^1.1.6:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
-ts-results@^3.2.1:
+ts-results@^3.2.1, ts-results@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/ts-results/-/ts-results-3.3.0.tgz#68623a6c18e65556287222dab76498a28154922f"
   integrity sha512-FWqxGX2NHp5oCyaMd96o2y2uMQmSu8Dey6kvyuFdRJ2AzfmWo3kWa4UsPlCGlfQ/qu03m09ZZtppMoY8EMHuiA==

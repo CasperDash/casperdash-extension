@@ -182,7 +182,7 @@ describe('Stake with errors', () => {
 			/>,
 		);
 
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
+		const stakeBtn = getByText('Stake');
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
@@ -227,7 +227,7 @@ describe('Stake with errors', () => {
 			/>,
 		);
 
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
+		const stakeBtn = getByText('Stake');
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
@@ -290,7 +290,7 @@ describe('Success to stake the valid amount', () => {
 			/>,
 		);
 
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
+		const stakeBtn = getByText('Stake');
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
