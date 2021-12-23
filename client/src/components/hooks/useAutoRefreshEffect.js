@@ -7,7 +7,7 @@ export const useAutoRefreshEffect = (callback, dependencies) => {
 
 	useEffect(() => {
 		//only refresh if tab is active
-		if (document.visibilityState === 'visible') {
+		if (document && document.visibilityState === 'visible') {
 			callback();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
