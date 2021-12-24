@@ -38,6 +38,7 @@ module.exports = (dir) => ({
 		new MiniCssExtractPlugin({
 			filename: 'assets/css/[name].css',
 		}),
+		new webpack.ProgressPlugin(),
 	],
 	resolve: {
 		extensions: ['.js', '.jsx'],
