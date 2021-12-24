@@ -3,11 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingBar from 'react-top-loading-bar';
 import { fetchPriceHistory } from '../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../actions/deployActions';
-import { switchTheme } from '../../../actions/settingActions';
 import { REFRESH_TIME } from '../../../constants/key';
-import { DARK_THEME, LIGHT_THEME } from '../../../constants/settings';
 import { isLoadingRequest } from '../../../selectors/request';
-import { getTheme } from '../../../selectors/settings';
 import BottomBar from './BottomBar';
 
 const Layout = (props) => {
@@ -16,15 +13,6 @@ const Layout = (props) => {
 
 	// Selector
 	const isLoading = useSelector(isLoadingRequest);
-	const theme = useSelector(getTheme);
-	// Effect
-	useEffect(() => {
-		if (theme) {
-			const currentTheme = theme === LIGHT_THEME ? DARK_THEME : LIGHT_THEME;
-			document.body.classList.remove(currentTheme);
-			document.body.classList.add(theme);
-		}
-	}, [theme]);
 
 	useEffect(() => {
 		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
@@ -33,13 +21,6 @@ const Layout = (props) => {
 
 	useEffect(() => {
 		dispatch(fetchPriceHistory());
-	}, [dispatch]);
-
-	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			const localTheme = localStorage.getItem('themColor') || DARK_THEME;
-			dispatch(switchTheme(localTheme));
-		}
 	}, [dispatch]);
 
 	useEffect(() => {
