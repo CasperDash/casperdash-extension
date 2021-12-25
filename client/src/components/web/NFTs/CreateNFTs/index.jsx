@@ -4,16 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { NFTTab } from '../NFTTab';
-import { getNFTContracts, getNFTDeployHistory, getPendingDeployHashes } from '../../../selectors/NFTs';
-import { getPublicKey } from '../../../selectors/user';
+import { getNFTContracts, getNFTDeployHistory, getPendingDeployHashes } from '../../../../selectors/NFTs';
+import { getPublicKey } from '../../../../selectors/user';
 import {
 	fetchAllNTFContractInfoByPublicKey,
 	getNFTDeploysFromLocalStorage,
 	getNFTPendingDeploysStatus,
 	updateNFTDeploysStatus,
-} from '../../../actions/NFTActions';
-import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
-import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
+} from '../../../../actions/NFTActions';
+import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
+import HeadingModule from '../../../Common/Layout/HeadingComponent/Heading';
 import { NFTMintForm } from './NFTMintForm';
 import { DeployConfirmModal } from './DeployConfirmModal';
 import { NFTHistory } from './NFTHistory';

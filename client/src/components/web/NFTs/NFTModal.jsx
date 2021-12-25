@@ -2,7 +2,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import nftEmpty from 'assets/image/nft-empty.png';
-import { ImagePreview } from '../Common/Image/ImagePreview';
+import { ImagePreview } from '../../Common/Image/ImagePreview';
 
 export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError, deployHash, isMinting }) => {
 	const { value: imageValue = nftEmpty } = (metadata && metadata.find((data) => data.key === 'image')) || {};

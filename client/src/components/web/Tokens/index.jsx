@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from 'react-bootstrap';
-import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { SendReceiveSection } from '../Common/SendReceive';
-import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
+import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
+import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
+import { SendReceiveSection } from '../../Common/SendReceive';
+import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import {
 	fetchTokensInfoWithBalance,
 	getTokenInfo,
 	addCustomTokenAddressToLocalStorage,
 	getTokenAddressFromLocalStorage,
-} from '../../actions/tokensActions';
-import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
-import { MessageModal } from '../Common/Layout/Modal/MessageModal';
-import { AddTokenModal } from '../Common/Layout/Modal/AddTokenModal';
-import { TOKEN_TRANSFER_FEE } from '../../constants/key';
-import { TokenList } from '../Common/TokenList';
+} from '../../../actions/tokensActions';
+import { getMassagedTokenData, getTokensAddressList } from '../../../selectors/tokens';
+import { MessageModal } from '../../Common/Layout/Modal/MessageModal';
+import { AddTokenModal } from '../../Common/Layout/Modal/AddTokenModal';
+import { TOKEN_TRANSFER_FEE } from '../../../constants/key';
+import { TokenList } from '../../Common/TokenList';
 import { TokenInfo } from './TokenInfo';
 
 const Tokens = () => {

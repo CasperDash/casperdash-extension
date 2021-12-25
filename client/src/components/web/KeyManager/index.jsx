@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
-import { getPublicKey, getMassagedUserDetails } from '../../selectors/user';
-import { isKeyManagerContractAvailable, getPendingDeploys, getPendingDeployHashes } from '../../selectors/keyManager';
-import { formatKeyByPrefix } from '../../helpers/key';
-import { getWeightByAccountHash } from '../../helpers/keyManager';
+import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
+import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
+import { getPublicKey, getMassagedUserDetails } from '../../../selectors/user';
+import {
+	isKeyManagerContractAvailable,
+	getPendingDeploys,
+	getPendingDeployHashes,
+} from '../../../selectors/keyManager';
+import { formatKeyByPrefix } from '../../../helpers/key';
+import { getWeightByAccountHash } from '../../../helpers/keyManager';
 import {
 	getSignedAccountWeightDeploy,
 	getKeyManagerContractDeploy,
 	getSignedAccountDeploymentDeploy,
 	getSignedKeyManagementThresholdDeploy,
-} from '../../services/keyManager';
+} from '../../../services/keyManager';
 import {
 	fetchKeyManagerDetails,
 	putWeightDeploy,
@@ -21,7 +25,7 @@ import {
 	getKeysManagerLocalStorage,
 	getKeysManagerPendingDeploys,
 	updateKeysManagerDeployStatus,
-} from '../../actions/keyManagerActions';
+} from '../../../actions/keyManagerActions';
 import KeyList from './KeyList';
 import { DeployConfirmModal } from './ConfirmDeployModal';
 import { AttributeRow } from './AttributeRow';

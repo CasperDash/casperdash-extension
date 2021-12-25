@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { KEYS_MANAGER_ATTRS } from '../../constants/keysManager';
+import { KEYS_MANAGER_ATTRS } from '../../../constants/keysManager';
 
 export const EditModal = ({
 	field,

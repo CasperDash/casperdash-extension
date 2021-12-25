@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from 'react-bootstrap';
-import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import AllList from '../Common/Layout/TransactionList/AllTransactionList';
-import { TokenList } from '../Common/TokenList';
-import { getAllTokenInfo } from '../../selectors/user';
-import { getPublicKey } from '../../selectors/user';
-import { getTokensAddressList } from '../../selectors/tokens';
-import { fetchTokensInfoWithBalance } from '../../actions/tokensActions';
-import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
+import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
+import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
+import AllList from '../../Common/Layout/TransactionList/AllTransactionList';
+import { TokenList } from '../../Common/TokenList';
+import { getAllTokenInfo } from '../../../selectors/user';
+import { getPublicKey } from '../../../selectors/user';
+import { getTokensAddressList } from '../../../selectors/tokens';
+import { fetchTokensInfoWithBalance } from '../../../actions/tokensActions';
+import { useDeploysWithStatus } from '../../hooks/useTransferDeploys';
 
 const PortfolioModule = () => {
 	const dispatch = useDispatch();

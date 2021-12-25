@@ -3,17 +3,17 @@ import { useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import csprIcon from 'assets/image/cspr.png';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import AllTransactionList from '../Common/Layout/TransactionList/AllTransactionList';
-import { SendReceiveSection } from '../Common/SendReceive';
-import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
-import { getPriceHistory, getCurrentPrice } from '../../selectors/price';
-import { formatKeyByPrefix } from '../../helpers/key';
-import { MessageModal } from '../Common/Layout/Modal/MessageModal';
-import { ChartLine } from '../Common/Layout/Chart';
-import { toFormattedNumber, toFormattedCurrency } from '../../helpers/format';
-import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
-import CommonAction from '../Common/Button/CommonAction';
+import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
+import AllTransactionList from '../../Common/Layout/TransactionList/AllTransactionList';
+import { SendReceiveSection } from '../../Common/SendReceive';
+import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
+import { getPriceHistory, getCurrentPrice } from '../../../selectors/price';
+import { formatKeyByPrefix } from '../../../helpers/key';
+import { MessageModal } from '../../Common/Layout/Modal/MessageModal';
+import { ChartLine } from '../../Common/Layout/Chart';
+import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
+import { useDeploysWithStatus } from '../../hooks/useTransferDeploys';
+import CommonAction from '../../Common/Button/CommonAction';
 
 const WalletDetails = () => {
 	// State

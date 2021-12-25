@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import StakingAccountList from '../Common/Layout/Stake/Table';
-import { MessageModal } from '../Common/Layout/Modal/MessageModal';
-import { getMassagedUserDetails, getPublicKey } from '../../selectors/user';
-import { getCurrentPrice } from '../../selectors/price';
-import { getValidators, validatorSelector } from '../../selectors/validator';
-import { fetchValidators } from '../../actions/stakeActions';
-import { getPendingStakes } from '../../selectors/stake';
-import { useStakeFromValidators } from '../hooks/useStakeDeploys';
-import ConfirmingTransactionsInfo from '../Common/Layout/Stake/ConfirmingTransactionsInfo';
-import UnlockSingerWarning from '../Common/Layout/Stake/UnlockSingerWarning';
-import StakeForm from '../Common/Layout/Stake/Form';
+import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
+import StakingAccountList from '../../Common/Layout/Stake/Table';
+import { MessageModal } from '../../Common/Layout/Modal/MessageModal';
+import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
+import { getCurrentPrice } from '../../../selectors/price';
+import { getValidators, validatorSelector } from '../../../selectors/validator';
+import { fetchValidators } from '../../../actions/stakeActions';
+import { getPendingStakes } from '../../../selectors/stake';
+import { useStakeFromValidators } from '../../hooks/useStakeDeploys';
+import ConfirmingTransactionsInfo from '../../Common/Layout/Stake/ConfirmingTransactionsInfo';
+import UnlockSingerWarning from '../../Common/Layout/Stake/UnlockSingerWarning';
+import StakeForm from '../../Common/Layout/Stake/Form';
 import StakeButton from './Button';
 
 const Stake = () => {

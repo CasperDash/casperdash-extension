@@ -1,4 +1,4 @@
-import { routes } from '../shared/constants';
+import { routes } from '../../shared/constants';
 import Wallets from './Wallets';
 import History from './History';
 import KeyManager from './KeyManager';

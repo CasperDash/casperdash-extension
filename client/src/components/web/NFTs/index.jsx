@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import nftEmpty from 'assets/image/nft-empty.png';
-import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
-import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
-import { getPublicKey } from '../../selectors/user';
-import { getOwnNFTContractHash } from '../../selectors/NFTs';
-import { getNFTInfo } from '../../selectors/NFTs';
+import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
+import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
+import { getPublicKey } from '../../../selectors/user';
+import { getOwnNFTContractHash } from '../../../selectors/NFTs';
+import { getNFTInfo } from '../../../selectors/NFTs';
 import {
 	fetchNFTInfo,
 	fetchNFTContractInfo,
 	addCustomNFTAddressToLocalStorage,
 	getNFTAddressesFromLocalStorage,
-} from '../../actions/NFTActions';
-import { MessageModal } from '../Common/Layout/Modal/MessageModal';
-import { AddTokenModal } from '../Common/Layout/Modal/AddTokenModal';
+} from '../../../actions/NFTActions';
+import { MessageModal } from '../../Common/Layout/Modal/MessageModal';
+import { AddTokenModal } from '../../Common/Layout/Modal/AddTokenModal';
 import { NFTModal } from './NFTModal';
 import { NFTTab } from './NFTTab';
 import { NFTCard } from './NFTCard';

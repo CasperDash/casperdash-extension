@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-import modules from './components';
+import modules from './components/web';
 import Page404 from './components/Common/Page404';
 import Layout from './components/Common/Layout';
 
