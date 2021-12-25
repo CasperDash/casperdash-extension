@@ -1,11 +1,11 @@
 /**
  * Return formatted number.
  * @param {Number} num - Number.
- * @param {String} locales - Locales.
  * @param {Object} options - Format options.
+ * @param {String} locales - Locales.
  * @return {String} Formatted number.
  */
-export const toFormattedNumber = (num, locales, options) => {
+export const toFormattedNumber = (num, options, locales) => {
 	const number = new Intl.NumberFormat(locales, { maximumFractionDigits: 5, ...options });
 	return number ? number.format(num) : '0';
 };
@@ -13,11 +13,11 @@ export const toFormattedNumber = (num, locales, options) => {
 /**
  * Return formatted number by currency.
  * @param {Number} num - Number.
- * @param {String} locales - Locales.
  * @param {Object} options - Format options.
+ * @param {String} locales - Locales.
  * @return {String} Formatted number by currency.
  */
-export const toFormattedCurrency = (num, locales, options) => {
+export const toFormattedCurrency = (num, options, locales) => {
 	const defaultOpt = {
 		style: 'currency',
 		currency: 'USD',
@@ -28,8 +28,8 @@ export const toFormattedCurrency = (num, locales, options) => {
 /**
  * Return formatted date.
  * @param {String} dateString - Date.
- * @param {String} locales - Locales.
  * @param {Object} options - Format options.
+ * @param {String} locales - Locales.
  * @return {String} Formatted date.
  */
 export const toFormattedDate = (

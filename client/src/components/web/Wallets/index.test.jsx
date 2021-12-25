@@ -4,7 +4,7 @@ import * as redux from 'react-redux';
 import { render, cleanup, fireEvent, act } from '@testing-library/react';
 import Wallet from './index';
 
-jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
+jest.mock('../../Common/Layout/HeadingComponent/Heading', () => {
 	return {
 		__esModule: true,
 		default: () => {
@@ -13,7 +13,7 @@ jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
 	};
 });
 
-jest.mock('../Common/SendReceive', () => {
+jest.mock('../../Common/SendReceive', () => {
 	return {
 		__esModule: true,
 		SendReceiveSection: () => {
@@ -21,7 +21,7 @@ jest.mock('../Common/SendReceive', () => {
 		},
 	};
 });
-jest.mock('../Common/Layout/TransactionList/AllTransactionList', () => {
+jest.mock('../../Common/Layout/TransactionList/AllTransactionList', () => {
 	return {
 		__esModule: true,
 		default: () => {
@@ -29,7 +29,7 @@ jest.mock('../Common/Layout/TransactionList/AllTransactionList', () => {
 		},
 	};
 });
-jest.mock('../hooks/useTransferDeploys', () => {
+jest.mock('../../hooks/useTransferDeploys', () => {
 	return {
 		__esModule: true,
 		useDeploysWithStatus: () => {},
@@ -43,7 +43,7 @@ jest.mock('react-router-dom', () => {
 	};
 });
 
-jest.mock('../Common/Layout/Chart', () => {
+jest.mock('../../Common/Layout/Chart', () => {
 	return {
 		__esModule: true,
 		ChartLine: () => <div />,

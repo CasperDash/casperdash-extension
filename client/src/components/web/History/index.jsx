@@ -17,10 +17,10 @@ const PortfolioModule = () => {
 	const [selectedToken, setSelectedToken] = useState({});
 
 	// Selector
+	const allTokenInfo = useSelector(getAllTokenInfo);
 	const publicKey = useSelector(getPublicKey);
 	const transferList = useDeploysWithStatus({ symbol: selectedToken.symbol, publicKey });
 	const tokensAddressList = useSelector(getTokensAddressList);
-	const allTokenInfo = useSelector(getAllTokenInfo);
 
 	// Effects
 	useAutoRefreshEffect(() => {
