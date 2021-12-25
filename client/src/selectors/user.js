@@ -54,7 +54,7 @@ export const getAllTokenInfo = createSelector(
 				  }))
 				: [];
 
-		return [...tokensInfo, CSPRInfo];
+		return [CSPRInfo, ...tokensInfo];
 	},
 );
 

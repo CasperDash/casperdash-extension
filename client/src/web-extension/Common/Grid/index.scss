@@ -7,11 +7,13 @@
 		.cd_we_item_right {
 			margin-left: auto;
 		}
-		.cd_we_item_main {
-			font-weight: bold;
-		}
-		.cd_we_item_sub {
-			color: #828cae;
+		.cd_we_item_value {
+			&.secondary {
+				color: #828cae;
+			}
+			&.primary {
+				font-weight: bold;
+			}
 		}
 	}
 }
