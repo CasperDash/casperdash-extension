@@ -6,8 +6,6 @@ import { AccountInfo } from '../Common/Account';
 import './index.scss';
 
 const WalletDetails = () => {
-	// Selector
-
 	return (
 		<section className="cd_we_dashboard_page">
 			<Header />
