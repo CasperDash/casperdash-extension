@@ -10,5 +10,5 @@ module.exports = (isWeb) =>
 				},
 		  }
 		: {
-				devtool: 'cheap-module-source-map',
+				devtool: 'inline-source-map',
 		  };
