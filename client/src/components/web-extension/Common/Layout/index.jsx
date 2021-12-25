@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingBar from 'react-top-loading-bar';
-import { fetchPriceHistory } from '../../../actions/priceActions';
-import { getLatestBlockHash } from '../../../actions/deployActions';
-import { REFRESH_TIME } from '../../../constants/key';
-import { isLoadingRequest } from '../../../selectors/request';
+import { fetchPriceHistory } from '../../../../actions/priceActions';
+import { getLatestBlockHash } from '../../../../actions/deployActions';
+import { REFRESH_TIME } from '../../../../constants/key';
+import { isLoadingRequest } from '../../../../selectors/request';
 import BottomBar from './BottomBar';
 
 const Layout = (props) => {

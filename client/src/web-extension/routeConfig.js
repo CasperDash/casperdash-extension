@@ -1,10 +1,10 @@
 import APP_CONFIGS from '../config';
-import History from '../components/History';
-import KeyManager from '../components/KeyManager';
-import Tokens from '../components/Tokens';
-import Stake from '../components/Stake';
-import NFTs from '../components/NFTs';
-import Wallets from './Dashboard';
+import History from '../components/web/History';
+import KeyManager from '../components/web/KeyManager';
+import Tokens from '../components/web/Tokens';
+import Stake from '../components/web/Stake';
+import NFTs from '../components/web/NFTs';
+import Wallets from '../components/web-extension/Dashboard';
 
 let features;
 try {

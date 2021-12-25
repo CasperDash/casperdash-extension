@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../store';
-import Layout from './Common/Layout';
+import Layout from '../components/web-extension/Common/Layout';
 import modules from './routeConfig';
 
 import 'bootstrap/dist/css/bootstrap.min.css';

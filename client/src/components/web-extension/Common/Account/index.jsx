@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getPublicKey, getAccountTotalBalanceInFiat } from '../../../selectors/user';
-import { MiddleTruncatedText } from '../../../components/Common/MiddleTruncatedText';
-import { toFormattedCurrency } from '../../../helpers/format';
+import { getPublicKey, getAccountTotalBalanceInFiat } from '../../../../selectors/user';
+import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
+import { toFormattedCurrency } from '../../../../helpers/format';
 import './index.scss';
 
 export const AccountInfo = () => {
