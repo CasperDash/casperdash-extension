@@ -2,11 +2,11 @@
 import React from 'react';
 import * as redux from 'react-redux';
 import { render, fireEvent, cleanup, act } from '@testing-library/react';
+import { getSignedAccountWeightDeploy } from '../../../services/keyManager';
 import KeyManager from './index';
-import { getSignedAccountWeightDeploy } from '../../services/keyManager';
 
 //Set up
-jest.mock('../../actions/keyManagerActions', () => {
+jest.mock('../../../actions/keyManagerActions', () => {
 	//Mock the default export and named export 'foo'
 	return {
 		__esModule: true,
@@ -20,7 +20,7 @@ jest.mock('../../actions/keyManagerActions', () => {
 	};
 });
 
-jest.mock('../../services/keyManager', () => {
+jest.mock('../../../services/keyManager', () => {
 	//Mock the default export and named export 'foo'
 	return {
 		__esModule: true,
@@ -28,7 +28,7 @@ jest.mock('../../services/keyManager', () => {
 	};
 });
 
-jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
+jest.mock('../../Common/Layout/HeadingComponent/Heading', () => {
 	return {
 		__esModule: true,
 		default: () => {
@@ -37,7 +37,7 @@ jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
 	};
 });
 
-jest.mock('../Common/SendReceive', () => {
+jest.mock('../../Common/SendReceive', () => {
 	return {
 		__esModule: true,
 		SendReceiveSection: () => {

@@ -1,26 +1,26 @@
 import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
-import { useStakeFromValidators } from '../hooks/useStakeDeploys';
+import { useStakeFromValidators } from '../../hooks/useStakeDeploys';
 import Stake from './index';
 
 afterEach(cleanup);
 //Set up
-jest.mock('../../actions/stakeActions', () => {
+jest.mock('../../../actions/stakeActions', () => {
 	return {
 		__esModule: true,
 		fetchValidators: () => {},
 	};
 });
 
-jest.mock('../hooks/useStakeDeploys', () => {
+jest.mock('../../hooks/useStakeDeploys', () => {
 	return {
 		__esModule: true,
 		useStakeFromValidators: jest.fn(),
 	};
 });
 
-jest.mock('../Common/Layout/Stake/Form', () => {
+jest.mock('../../Common/Layout/Stake/Form', () => {
 	return {
 		__esModule: true,
 		default: ({ handleToggle, handleUndelegateToggle }) => {

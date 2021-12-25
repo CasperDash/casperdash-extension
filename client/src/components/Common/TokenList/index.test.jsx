@@ -8,7 +8,15 @@ afterEach(cleanup);
 test('Should display token info', () => {
 	const { getByText } = render(
 		<TokenList
-			tokensInfo={[{ symbol: 'CDAS', address: 'cdasaddress', balance: { displayValue: '1000' }, price: 1 }]}
+			tokensInfo={[
+				{
+					symbol: 'CDAS',
+					address: 'cdasaddress',
+					balance: { displayValue: '1000' },
+					price: 1,
+					totalPrice: 1000,
+				},
+			]}
 		/>,
 	);
 	expect(getByText('CDAS').textContent).toBe('CDAS');

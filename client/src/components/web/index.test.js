@@ -45,7 +45,7 @@ jest.mock('./NFTs/CreateNFTs', () => {
 		default: '',
 	};
 });
-jest.mock('../shared/constants', () => {
+jest.mock('../../shared/constants', () => {
 	return {
 		routes: { dashboard: '/dashboard', nfts: '/NFTs' },
 	};

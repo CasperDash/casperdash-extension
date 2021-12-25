@@ -17,7 +17,7 @@ beforeEach(() => {
 	spyOnUseDispatch.mockReturnValue(mockDispatch);
 });
 
-jest.mock('../../actions/NFTActions', () => {
+jest.mock('../../../actions/NFTActions', () => {
 	//Mock the default export and named export 'foo'
 	return {
 		__esModule: true,
@@ -34,7 +34,7 @@ jest.mock('react-router-dom', () => {
 	};
 });
 
-jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
+jest.mock('../../Common/Layout/HeadingComponent/Heading', () => {
 	return {
 		__esModule: true,
 		default: () => {

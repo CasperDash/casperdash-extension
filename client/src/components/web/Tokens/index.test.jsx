@@ -5,7 +5,7 @@ import { render, fireEvent, cleanup, act } from '@testing-library/react';
 import Token from './index';
 
 //Set up
-jest.mock('../../actions/tokensActions', () => {
+jest.mock('../../../actions/tokensActions', () => {
 	//Mock the default export and named export 'foo'
 	return {
 		__esModule: true,
@@ -16,7 +16,7 @@ jest.mock('../../actions/tokensActions', () => {
 	};
 });
 
-jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
+jest.mock('../../Common/Layout/HeadingComponent/Heading', () => {
 	return {
 		__esModule: true,
 		default: () => {
@@ -25,7 +25,7 @@ jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
 	};
 });
 
-jest.mock('../Common/SendReceive', () => {
+jest.mock('../../Common/SendReceive', () => {
 	return {
 		__esModule: true,
 		SendReceiveSection: () => {

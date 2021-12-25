@@ -2,9 +2,9 @@
 import React from 'react';
 import * as redux from 'react-redux';
 import { render, cleanup, fireEvent, act } from '@testing-library/react';
-import Wallet from './index';
+import History from './index';
 
-jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
+jest.mock('../../Common/Layout/HeadingComponent/Heading', () => {
 	return {
 		__esModule: true,
 		default: () => {
@@ -13,7 +13,7 @@ jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
 	};
 });
 
-jest.mock('../Common/Layout/TransactionList/AllTransactionList', () => {
+jest.mock('../../Common/Layout/TransactionList/AllTransactionList', () => {
 	return {
 		__esModule: true,
 		default: () => {
@@ -22,13 +22,13 @@ jest.mock('../Common/Layout/TransactionList/AllTransactionList', () => {
 	};
 });
 
-jest.mock('../hooks/useTransferDeploys', () => {
+jest.mock('../../hooks/useTransferDeploys', () => {
 	return {
 		__esModule: true,
 		useDeploysWithStatus: () => {},
 	};
 });
-jest.mock('../../selectors/tokens', () => {
+jest.mock('../../../selectors/tokens', () => {
 	//Mock the default export and named export 'foo'
 	return {
 		__esModule: true,
@@ -37,7 +37,7 @@ jest.mock('../../selectors/tokens', () => {
 	};
 });
 
-jest.mock('../../actions/tokensActions', () => {
+jest.mock('../../../actions/tokensActions', () => {
 	//Mock the default export and named export 'foo'
 	return {
 		__esModule: true,
@@ -61,52 +61,39 @@ beforeEach(() => {
 
 test('Should display All Transactions button', () => {
 	spyOnUseSelector.mockReturnValue([]);
-	const { getByText } = render(<Wallet />);
+	const { getByText } = render(<History />);
 
 	expect(getByText(/All Transactions/i).textContent).toBe('All Transactions');
 });
 
 test('Should display cspr balance', () => {
-	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce({ balance: { displayBalance: 999 } });
-	const { getByText } = render(<Wallet />);
+	spyOnUseSelector
+		.mockReturnValue([])
+		.mockReturnValueOnce([{ address: 'CSPR', symbol: 'CSPR', balance: { displayValue: 999 } }]);
+	const { getByText } = render(<History />);
 
 	expect(getByText(/999/i).textContent).toBe('999');
-});
-
-test('Should display CSPR in token list', () => {
-	spyOnUseSelector.mockReturnValue([]);
-	const { getByText } = render(<Wallet />);
-
 	expect(getByText(/CSPR/i).textContent).toBe('CSPR');
 });
 
 test('Should display all token in token list', () => {
-	spyOnUseSelector
-		.mockReturnValue([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([
-			{ symbol: 'CDAS', address: 'casperdashaddress' },
-			{ symbol: 'CBTC', address: 'btcaddress' },
-		]);
-	const { getByText } = render(<Wallet />);
+	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce([
+		{ symbol: 'CDAS', address: 'casperdashaddress' },
+		{ symbol: 'CBTC', address: 'btcaddress' },
+	]);
+	const { getByText } = render(<History />);
 
 	expect(getByText(/CDAS/i).textContent).toBe('CDAS');
 	expect(getByText(/CBTC/i).textContent).toBe('CBTC');
 });
 
 test('Should show history of token when token was selected', async () => {
-	spyOnUseSelector
-		.mockReturnValue([
-			{ symbol: 'CDAS', address: 'casperdashaddress' },
-			{ symbol: 'CBTC', address: 'btcaddress' },
-		])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([]);
+	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce([
+		{ symbol: 'CDAS', address: 'casperdashaddress' },
+		{ symbol: 'CBTC', address: 'btcaddress' },
+	]);
 
-	const { getByText, container } = render(<Wallet />);
+	const { getByText, container } = render(<History />);
 	expect(getByText(/CDAS/i).textContent).toBe('CDAS');
 
 	await act(async () => {
@@ -116,16 +103,12 @@ test('Should show history of token when token was selected', async () => {
 });
 
 test('Should set selected token info equal empty if click on All Transactions', async () => {
-	spyOnUseSelector
-		.mockReturnValue([
-			{ symbol: 'CDAS', address: 'casperdashaddress' },
-			{ symbol: 'CBTC', address: 'btcaddress' },
-		])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([]);
+	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce([
+		{ symbol: 'CDAS', address: 'casperdashaddress' },
+		{ symbol: 'CBTC', address: 'btcaddress' },
+	]);
 
-	const { getByText, container } = render(<Wallet />);
+	const { getByText, container } = render(<History />);
 
 	await act(async () => {
 		fireEvent.click(getByText(/CDAS/i));
