@@ -5,6 +5,7 @@ import Tokens from '../../components/web/Tokens';
 import Stake from '../../components/web/Stake';
 import NFTs from '../../components/web/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
+import { Receive } from '../../components/web-extension/Dashboard/Receive';
 
 let features;
 try {
@@ -24,6 +25,7 @@ const defaultRoutes = {
 	keyManager: '/keyManager',
 	staking: '/staking',
 	nfts: '/NFTs',
+	receive: '/receive',
 };
 
 const routes = features
@@ -40,6 +42,7 @@ const MODULE_MAPPING = {
 	[routes.nfts]: NFTs,
 	[routes.keyManager]: KeyManager,
 	[routes.staking]: Stake,
+	[routes.receive]: Receive,
 };
 
 export default Object.keys(MODULE_MAPPING).reduce((out, module) => {

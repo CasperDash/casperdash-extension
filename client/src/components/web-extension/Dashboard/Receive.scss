@@ -1,0 +1,29 @@
+.cd_we_receive_page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 40px 0;
+
+	div[class^='cd_we_receive'] {
+		padding: 10px;
+	}
+	.cd_we_receive_address {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 90%;
+		div {
+			overflow-wrap: anywhere;
+			text-align: center;
+		}
+		.label {
+			color: #828cae;
+		}
+	}
+	.cd_we_receive_actions {
+		display: flex;
+		button {
+			margin: 10px;
+		}
+	}
+}
