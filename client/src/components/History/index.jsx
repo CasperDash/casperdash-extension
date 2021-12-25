@@ -5,17 +5,12 @@ import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import AllList from '../Common/Layout/TransactionList/AllTransactionList';
 import { TokenList } from '../Common/TokenList';
-import { getMassagedUserDetails } from '../../selectors/user';
+import { getMassagedUserDetails, getAllTokenInfo } from '../../selectors/user';
 import { getCurrentPrice } from '../../selectors/price';
 import { getPublicKey } from '../../selectors/user';
 import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
 import { fetchTokensInfoWithBalance } from '../../actions/tokensActions';
 import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
-
-const CSPR_INFO = {
-	symbol: 'CSPR',
-	address: 'CSPR',
-};
 
 const PortfolioModule = () => {
 	const dispatch = useDispatch();
@@ -23,18 +18,10 @@ const PortfolioModule = () => {
 	const [selectedToken, setSelectedToken] = useState({});
 
 	// Selector
-	const userDetails = useSelector(getMassagedUserDetails);
-	const currentPrice = useSelector(getCurrentPrice);
 	const publicKey = useSelector(getPublicKey);
 	const transferList = useDeploysWithStatus({ symbol: selectedToken.symbol, publicKey });
-	const tokensInfo = useSelector(getMassagedTokenData);
 	const tokensAddressList = useSelector(getTokensAddressList);
-
-	const displayBalance = userDetails && userDetails.balance ? userDetails.balance.displayBalance : 0;
-	const tokensInfoWithCSPR = [
-		{ ...CSPR_INFO, balance: { displayValue: displayBalance }, price: currentPrice },
-		...tokensInfo,
-	];
+	const allTokenInfo = useSelector(getAllTokenInfo);
 
 	// Effects
 	useAutoRefreshEffect(() => {
@@ -43,7 +30,7 @@ const PortfolioModule = () => {
 
 	// Functions
 	const onTokenClick = (address) => {
-		const token = tokensInfoWithCSPR.find((tk) => tk.address === address);
+		const token = allTokenInfo.find((tk) => tk.address === address);
 		setSelectedToken(token || {});
 	};
 
@@ -60,7 +47,7 @@ const PortfolioModule = () => {
 								</div>
 							</div>
 							<TokenList
-								tokensInfo={tokensInfoWithCSPR}
+								tokensInfo={allTokenInfo}
 								selectedToken={selectedToken}
 								onTokenClick={onTokenClick}
 							/>

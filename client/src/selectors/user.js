@@ -5,6 +5,11 @@ import { USERS } from '../store/actionTypes';
 import { getCurrentPrice } from './price';
 import { getMassagedTokenData } from './tokens';
 
+const CSPR_INFO = {
+	symbol: 'CSPR',
+	address: 'CSPR',
+};
+
 export const getPublicKey = ({ user }) => {
 	return user.publicKey || '02021172744b5e6bdc83a591b75765712e068e5d40a3be8ae360274fb26503b4ad38';
 };
@@ -24,21 +29,39 @@ export const getMassagedUserDetails = createSelector(userDetailsSelector, (userD
 	};
 });
 
-export const getAccountTotalBalanceInFiat = createSelector(
+export const getAllTokenInfo = createSelector(
 	getMassagedUserDetails,
 	getCurrentPrice,
 	getMassagedTokenData,
 	(accountDetails, CSPRPrice, tokensData) => {
 		const CSPRBalance = (accountDetails && accountDetails.balance && accountDetails.balance.displayBalance) || 0;
-		const CSPRValue = CSPRPrice * CSPRBalance;
+		const CSPRInfo = {
+			...CSPR_INFO,
+			balance: { displayValue: CSPRBalance },
+			price: CSPRPrice,
+			totalPrice: CSPRPrice * CSPRBalance,
+		};
+
 		//TODO: should get price for each token, currently no token issue on Casper blockchain and no source as well
+		// Temporary set the token price to 0
 		const tokenPrice = 0;
-		const tokensValue =
+		const tokensInfo =
 			tokensData && tokensData.length
-				? tokensData.reduce((out, datum) => {
-						return out + ((datum && datum.balance && datum.balance.displayValue) || 0) * tokenPrice;
-				  }, 0)
-				: 0;
-		return CSPRValue + tokensValue;
+				? tokensData.map((datum) => ({
+						...datum,
+						price: tokenPrice,
+						totalPrice: tokenPrice * datum.balance.displayValue,
+				  }))
+				: [];
+
+		return [...tokensInfo, CSPRInfo];
 	},
 );
+
+export const getAccountTotalBalanceInFiat = createSelector(getAllTokenInfo, (allTokenInfo) => {
+	return allTokenInfo && allTokenInfo.length
+		? allTokenInfo.reduce((out, datum) => {
+				return out + datum.totalPrice;
+		  }, 0)
+		: 0;
+});
