@@ -1,13 +1,13 @@
 import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../store';
-import Layout from '../components/web-extension/Common/Layout';
+import store from '../../store';
+import Layout from '../../components/web-extension/Common/Layout';
 import modules from './routeConfig';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
-import '../assets/css/extension/style.scss';
+import '../../assets/css/extension/style.scss';
 
 const App = () => {
 	const routes = Object.keys(modules).map((item) => {

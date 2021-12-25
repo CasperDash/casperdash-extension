@@ -11,7 +11,7 @@ const CSPR_INFO = {
 };
 
 export const getPublicKey = ({ user }) => {
-	return user.publicKey || '02021172744b5e6bdc83a591b75765712e068e5d40a3be8ae360274fb26503b4ad38';
+	return user.publicKey;
 };
 
 export const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });

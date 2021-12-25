@@ -6,7 +6,7 @@ const common = require('./commonConfig');
 
 module.exports = (dir) =>
 	merge(common(dir), {
-		entry: path.resolve(dir, 'src/web-extension/index.js'),
+		entry: path.resolve(dir, 'src/app/web-extension/index.js'),
 		output: {
 			path: path.resolve(dir, 'build_extension'),
 		},
