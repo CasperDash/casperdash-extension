@@ -5,10 +5,9 @@ import { useAutoRefreshEffect } from '../hooks/useAutoRefreshEffect';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import AllList from '../Common/Layout/TransactionList/AllTransactionList';
 import { TokenList } from '../Common/TokenList';
-import { getMassagedUserDetails, getAllTokenInfo } from '../../selectors/user';
-import { getCurrentPrice } from '../../selectors/price';
+import { getAllTokenInfo } from '../../selectors/user';
 import { getPublicKey } from '../../selectors/user';
-import { getMassagedTokenData, getTokensAddressList } from '../../selectors/tokens';
+import { getTokensAddressList } from '../../selectors/tokens';
 import { fetchTokensInfoWithBalance } from '../../actions/tokensActions';
 import { useDeploysWithStatus } from '../hooks/useTransferDeploys';
 
