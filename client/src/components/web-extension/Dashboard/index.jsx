@@ -4,7 +4,6 @@ import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { getAllTokenInfo, getPublicKey } from '../../../selectors/user';
 import { getTokensAddressList } from '../../../selectors/tokens';
 import { fetchTokensInfoWithBalance } from '../../../actions/tokensActions';
-import { Header } from '../Common/Header';
 import { SendReceive } from '../Common/SendReceive';
 import Grid from '../Common/Grid';
 import { AccountInfo } from '../Common/Account';
@@ -35,7 +34,6 @@ const WalletDetails = () => {
 
 	return (
 		<section className="cd_we_dashboard_page">
-			<Header />
 			<div className="cd_we_content">
 				<div className="cd_we_main_content">
 					<AccountInfo />
