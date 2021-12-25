@@ -6,7 +6,7 @@ import { getTokensAddressList } from '../../selectors/tokens';
 import { fetchTokensInfoWithBalance } from '../../actions/tokensActions';
 import { Header } from '../Common/Header';
 import { SendReceive } from '../Common/SendReceive';
-import { Grid } from '../Common/Grid';
+import Grid from '../Common/Grid';
 import { AccountInfo } from '../Common/Account';
 import './index.scss';
 
