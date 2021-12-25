@@ -2,12 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../store';
-import modules from '../components';
-import Page404 from '../components/Common/Page404';
-import Layout from '../components/Common/ExtensionLayout';
+import Layout from './Common/Layout';
+import modules from './routeConfig';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './App.scss';
 import '../assets/css/extension/style.scss';
 
 const App = () => {
@@ -20,10 +19,7 @@ const App = () => {
 		<Provider store={store}>
 			<MemoryRouter>
 				<Layout modules={Object.keys(modules)}>
-					<Routes>
-						{routes}
-						<Route component={Page404} />
-					</Routes>
+					<Routes>{routes}</Routes>
 				</Layout>
 			</MemoryRouter>
 		</Provider>

@@ -35,7 +35,7 @@ const Layout = (props) => {
 		<div className={`cd_all_pages_content`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} className="loading_indicator" />
 			<BottomBar modules={props.modules} />
-			<div className="cd_all_pages_inner_content">{props.children}</div>
+			<div className="cd_web_extension_content">{props.children}</div>
 		</div>
 	);
 };
