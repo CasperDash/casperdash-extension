@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAutoRefreshEffect } from '../../components/hooks/useAutoRefreshEffect';
-import { getAllTokenInfo, getPublicKey } from '../../selectors/user';
-import { getTokensAddressList } from '../../selectors/tokens';
-import { fetchTokensInfoWithBalance } from '../../actions/tokensActions';
+import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
+import { getAllTokenInfo, getPublicKey } from '../../../selectors/user';
+import { getTokensAddressList } from '../../../selectors/tokens';
+import { fetchTokensInfoWithBalance } from '../../../actions/tokensActions';
 import { Header } from '../Common/Header';
 import { SendReceive } from '../Common/SendReceive';
 import Grid from '../Common/Grid';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import casperDashLogo from 'assets/image/Logo-only.png';
-import { getUserDetails } from '../../../actions/userActions';
-import { getPublicKey } from '../../../selectors/user';
-import { useAutoRefreshEffect } from '../../../components/hooks/useAutoRefreshEffect';
+import { getUserDetails } from '../../../../actions/userActions';
+import { getPublicKey } from '../../../../selectors/user';
+import { useAutoRefreshEffect } from '../../../../components/hooks/useAutoRefreshEffect';
 import './index.scss';
 
 export const Header = () => {

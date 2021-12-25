@@ -1,7 +1,7 @@
 import _get from 'lodash-es/get';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getValueByFormat } from '../../../helpers/format';
+import { getValueByFormat } from '../../../../helpers/format';
 import './index.scss';
 
 const Grid = ({ data = [], metadata = {} }) => {
