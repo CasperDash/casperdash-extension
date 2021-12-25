@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { getPendingDeploys } from '../../selectors/keyManager';
+import { getPendingDeploys } from '../../../selectors/keyManager';
 
 export const AttributeRow = ({ label, value, valueKey, canEdit, onEdit, onShowDeployHash }) => {
 	const pendingDeploys = useSelector(getPendingDeploys);

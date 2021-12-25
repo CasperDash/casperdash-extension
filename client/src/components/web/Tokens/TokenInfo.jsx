@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { toFormattedNumber } from '../../helpers/format';
+import { toFormattedNumber } from '../../../helpers/format';
 
 export const TokenInfo = ({ selectedToken }) => {
 	return (

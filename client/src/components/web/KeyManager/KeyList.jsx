@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { formatKeyByPrefix } from '../../helpers/key';
+import { formatKeyByPrefix } from '../../../helpers/key';
 
 const KeyList = ({ associatedKeys }) => {
 	return (

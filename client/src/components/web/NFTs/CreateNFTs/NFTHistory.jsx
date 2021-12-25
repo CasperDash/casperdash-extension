@@ -1,8 +1,8 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { toFormattedDate } from '../../../helpers/format';
-import CommonAction from '../../Common/Button/CommonAction';
-import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
+import { toFormattedDate } from '../../../../helpers/format';
+import CommonAction from '../../../Common/Button/CommonAction';
+import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
 
 export const NFTHistory = ({ nftDeployHistory = [] }) => {
 	return (
