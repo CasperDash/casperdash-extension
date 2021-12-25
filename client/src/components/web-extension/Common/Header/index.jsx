@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import casperDashLogo from 'assets/image/Logo-only.png';
+import casperDashLogo from 'assets/image/casper-dash-red-silver.png';
 import { getUserDetails } from '../../../../actions/userActions';
 import { getPublicKey } from '../../../../selectors/user';
 import { useAutoRefreshEffect } from '../../../../components/hooks/useAutoRefreshEffect';
