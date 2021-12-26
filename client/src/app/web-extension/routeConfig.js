@@ -5,7 +5,7 @@ import Tokens from '../../components/web/Tokens';
 import Stake from '../../components/web/Stake';
 import NFTs from '../../components/web/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
-import { Receive } from '../../components/web-extension/Dashboard/Receive';
+import { Receive } from '../../components/web-extension/Receive/Receive';
 
 let features;
 try {

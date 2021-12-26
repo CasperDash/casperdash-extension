@@ -4,7 +4,7 @@ import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { getAllTokenInfo, getPublicKey } from '../../../selectors/user';
 import { getTokensAddressList } from '../../../selectors/tokens';
 import { fetchTokensInfoWithBalance } from '../../../actions/tokensActions';
-import { SendReceive } from '../Common/SendReceive';
+import { SendReceive } from '../Common/SendReceiveButtons';
 import Grid from '../Common/Grid';
 import { AccountInfo } from '../Common/Account';
 import './index.scss';
