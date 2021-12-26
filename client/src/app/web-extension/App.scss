@@ -7,3 +7,18 @@
 	color: white;
 	padding-bottom: 65px;
 }
+
+.cd_we_dropdown {
+	div {
+		background-color: transparent;
+		color: #828cae;
+	}
+	div[id$='-listbox'] {
+		background-color: #252f47;
+	}
+}
+
+input {
+	background-color: transparent !important;
+	color: #828cae !important;
+}

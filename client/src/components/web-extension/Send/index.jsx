@@ -1,11 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
+import { getAllTokenInfo } from '../../../selectors/user';
+import TokenSelectField from './TokenSelectField';
 import './Send.scss';
 
 const Send = () => {
 	//Selector
-
+	const allTokenInfo = useSelector(getAllTokenInfo);
 	//Function
 	const handleSubmit = (values) => {
 		console.info(values);
@@ -30,6 +33,10 @@ const Send = () => {
 					<Form noValidate onSubmit={handleSubmit}>
 						<div className="cd_we_send_token">
 							<div>Assets</div>
+							<Form.Group controlId="cd_token_dropdown">
+								<Field name="token" component={TokenSelectField} options={allTokenInfo} />
+							</Form.Group>
+							<Form.Control.Feedback type="invalid">{errors.nftContract}</Form.Control.Feedback>
 						</div>
 						<div className="cd_we_send_amount">
 							<div>Transfer Amount</div>
@@ -54,13 +61,13 @@ const Send = () => {
 								className="cd_we_send_input"
 								onChange={handleChange}
 								isInvalid={errors.toAddress}
-								placeholder="Please enter receiving address or QR code"
+								placeholder="Enter receiving address"
 							/>
 
 							<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
 						</div>
 						<div className="cd_we_send_transfer_id">
-							<div>Transfer ID</div>
+							<div>Transfer ID (optional)</div>
 							<FormControl
 								value={values.transferId}
 								name="transferId"
@@ -68,14 +75,14 @@ const Send = () => {
 								className="cd_we_send_input"
 								onChange={handleChange}
 								isInvalid={errors.transferId}
-								placeholder="Enter note here"
+								placeholder="Enter note"
 							/>
 
 							<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
 						</div>
 
 						<div className="cd_we_send_actions">
-							<Button className="cd_send_currency_btn" type="submit">
+							<Button className="cd_we_send_confirm_btn" type="submit">
 								Confirm
 							</Button>
 						</div>
