@@ -17,34 +17,20 @@ try {
 	features = undefined;
 }
 
-const defaultRoutes = {
-	home: '/',
-	dashboard: '/dashboard',
-	tokens: '/tokens',
-	history: '/history',
-	keyManager: '/keyManager',
-	staking: '/staking',
-	nfts: '/NFTs',
-	receive: '/receive',
+const routes = {
+	// Routes in menu bar
+	mainRoutes: [
+		{ name: 'home', route: '/', component: Wallets },
+		{ name: 'dashboard', route: '/dashboard', component: Wallets },
+		{ name: 'tokens', route: '/tokens', component: Tokens },
+		{ name: 'history', route: '/history', component: History },
+		{ name: 'keyManager', route: '/keyManager', component: KeyManager },
+		{ name: 'staking', route: '/staking', component: Stake },
+		{ name: 'nfts', route: '/NFTs', component: NFTs },
+	],
+	// Routes which navigate from main routes
+	innerRoutes: [{ name: 'receive', route: '/receive', component: Receive }],
 };
-
-const routes = features
-	? Object.keys(defaultRoutes).reduce((out, route) => {
-			return features.includes(route) ? { ...out, [route]: defaultRoutes[route] } : out;
-	  }, {})
-	: defaultRoutes;
-
-const MODULE_MAPPING = {
-	[routes.home]: Wallets,
-	[routes.dashboard]: Wallets,
-	[routes.tokens]: Tokens,
-	[routes.history]: History,
-	[routes.nfts]: NFTs,
-	[routes.keyManager]: KeyManager,
-	[routes.staking]: Stake,
-	[routes.receive]: Receive,
-};
-
-export default Object.keys(MODULE_MAPPING).reduce((out, module) => {
-	return module !== 'undefined' ? { ...out, [module]: MODULE_MAPPING[module] } : out;
+export default Object.keys(routes).reduce((out, key) => {
+	return { ...out, [key]: features ? routes[key].filter((route) => features.includes(route.name)) : routes[key] };
 }, {});

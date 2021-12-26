@@ -6,7 +6,7 @@ export const SendReceive = () => {
 	const navigate = useNavigate();
 
 	const onReceiveClick = () => {
-		navigate('/receive');
+		navigate('/receive', { state: { name: 'Receive' } });
 	};
 	return (
 		<div className="cd_we_send_receive_buttons">

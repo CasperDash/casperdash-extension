@@ -1,16 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 import { fetchPriceHistory } from '../../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../../actions/deployActions';
 import { REFRESH_TIME } from '../../../../constants/key';
 import { isLoadingRequest } from '../../../../selectors/request';
-import { Header } from '../Header';
+import { Header, InnerHeader } from '../Header';
 import BottomBar from './BottomBar';
 
 const Layout = (props) => {
 	const dispatch = useDispatch();
 	const ref = useRef(null);
+	const location = useLocation();
 
 	// Selector
 	const isLoading = useSelector(isLoadingRequest);
@@ -35,9 +37,15 @@ const Layout = (props) => {
 	return (
 		<div className={`cd_all_pages_content`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} className="loading_indicator" />
-			<Header />
+			{props.modules && props.modules.includes(location.pathname) ? (
+				<>
+					<Header />
+					<BottomBar modules={props.modules} />
+				</>
+			) : (
+				<InnerHeader />
+			)}
 			<div className="cd_web_extension_content">{props.children}</div>
-			<BottomBar modules={props.modules} />
 		</div>
 	);
 };
