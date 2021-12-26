@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { getAllTokenInfo, getPublicKey } from '../../../selectors/user';
 import { getTokensAddressList } from '../../../selectors/tokens';
@@ -22,6 +23,7 @@ const tokensGridMetadata = {
 
 const WalletDetails = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	// Selector
 	const allTokenInfo = useSelector(getAllTokenInfo);
 	const publicKey = useSelector(getPublicKey);
@@ -32,6 +34,11 @@ const WalletDetails = () => {
 		dispatch(fetchTokensInfoWithBalance(tokensAddressList, publicKey));
 	}, [publicKey, JSON.stringify(tokensAddressList)]);
 
+	// Functions
+	const onSelectToken = (token) => {
+		navigate('./token', { state: { token, name: token.symbol } });
+	};
+
 	return (
 		<section className="cd_we_dashboard_page">
 			<div className="cd_we_content">
@@ -39,7 +46,7 @@ const WalletDetails = () => {
 					<AccountInfo />
 					<SendReceive />
 				</div>
-				<Grid data={allTokenInfo} metadata={tokensGridMetadata} />
+				<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
 				<div className="cd_we_action"> + Add Custom Token</div>
 			</div>
 		</section>

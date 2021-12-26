@@ -1,0 +1,23 @@
+.cd_we_token_details_page {
+	padding: 20px 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-bottom: 1px solid;
+	div[class^='cd_we_token'] {
+		padding: 5px;
+	}
+	.cd_we_token_info {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.cd_we_token_info_balance {
+			display: flex;
+			font-weight: bold;
+			font-size: 22px;
+			div {
+				padding-left: 5px;
+			}
+		}
+	}
+}

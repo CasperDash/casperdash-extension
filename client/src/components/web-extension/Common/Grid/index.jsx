@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { getValueByFormat } from '../../../../helpers/format';
 import './index.scss';
 
-const Grid = ({ data = [], metadata = {} }) => {
+const Grid = ({ data = [], metadata = {}, onRowClick }) => {
 	return (
 		<div className="cd_we_grid">
 			{data.map((value, i) => {
 				return (
-					<div className="cd_we_item" key={i}>
+					<div className="cd_we_item" key={i} onClick={() => onRowClick(value)}>
 						{Object.keys(metadata).map((key) => {
 							return (
 								<div className={`cd_we_item_${key}`} key={key}>
@@ -58,6 +58,10 @@ Grid.propTypes = {
 			}),
 		),
 	}),
+	/**
+	 * On row click
+	 */
+	onRowClick: PropTypes.func,
 };
 
 export default Grid;

@@ -65,3 +65,8 @@ export const getAccountTotalBalanceInFiat = createSelector(getAllTokenInfo, (all
 		  }, 0)
 		: 0;
 });
+
+export const getTokenInfoByAddress = (token) =>
+	createSelector(getAllTokenInfo, (allTokenInfo) => {
+		return allTokenInfo && allTokenInfo.length ? allTokenInfo.find((info) => info.address === token.address) : {};
+	});
