@@ -8,9 +8,13 @@ export const SendReceive = () => {
 	const onReceiveClick = () => {
 		navigate('/receive', { state: { name: 'Receive' } });
 	};
+
+	const onSendClick = () => {
+		navigate('/send', { state: { name: 'Send' } });
+	};
 	return (
 		<div className="cd_we_send_receive_buttons">
-			<div className="cd_we_send_receive_item">
+			<div className="cd_we_send_receive_item" onClick={onSendClick}>
 				<div className="cd_we_send_receiver_icon">
 					<i className="bi bi-arrow-up" />
 				</div>

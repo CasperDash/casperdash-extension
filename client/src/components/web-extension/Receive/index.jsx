@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { getPublicKey } from '../../../selectors/user';
 import './Receive.scss';
 
-export const Receive = () => {
+const Receive = () => {
 	//Selector
 	const publicKey = useSelector(getPublicKey);
 
@@ -31,3 +31,5 @@ export const Receive = () => {
 		</section>
 	);
 };
+
+export default Receive;

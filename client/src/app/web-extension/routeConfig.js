@@ -5,7 +5,8 @@ import Tokens from '../../components/web/Tokens';
 import Stake from '../../components/web/Stake';
 import NFTs from '../../components/web/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
-import { Receive } from '../../components/web-extension/Receive/Receive';
+import Receive from '../../components/web-extension/Receive';
+import Send from '../../components/web-extension/Send';
 
 let features;
 try {
@@ -29,7 +30,10 @@ const routes = {
 		{ name: 'nfts', route: '/NFTs', component: NFTs },
 	],
 	// Routes which navigate from main routes
-	innerRoutes: [{ name: 'receive', route: '/receive', component: Receive }],
+	innerRoutes: [
+		{ name: 'receive', route: '/receive', component: Receive },
+		{ name: 'send', route: '/send', component: Send },
+	],
 };
 export default Object.keys(routes).reduce((out, key) => {
 	return { ...out, [key]: features ? routes[key].filter((route) => features.includes(route.name)) : routes[key] };
