@@ -3,9 +3,16 @@
 		margin: 20px 15px;
 		border-bottom: 1px solid #828cae;
 		display: flex;
-		cursor: pointer;
+
+		&.clickable {
+			cursor: pointer;
+		}
+		.cd_we_item_left {
+			max-width: 150px;
+		}
 		.cd_we_item_right {
 			margin-left: auto;
+			max-width: 150px;
 		}
 		.cd_we_item_value {
 			&.secondary {

@@ -8,15 +8,24 @@ const Grid = ({ data = [], metadata = {}, onRowClick }) => {
 	return (
 		<div className="cd_we_grid">
 			{data.map((value, i) => {
+				const canClick = typeof onRowClick === 'function';
 				return (
-					<div className="cd_we_item" key={i} onClick={() => onRowClick(value)}>
+					<div
+						className={`cd_we_item ${canClick ? 'clickable' : ''}`}
+						key={i}
+						onClick={() => canClick && onRowClick(value)}
+					>
 						{Object.keys(metadata).map((key) => {
 							return (
 								<div className={`cd_we_item_${key}`} key={key}>
 									{metadata[key].map((item, i) => {
+										const Component = item.component;
+										const formattedValue = getValueByFormat(_get(value, item.key), {
+											format: item.format,
+										});
 										return (
 											<div className={`cd_we_item_value ${item.type}`} key={i}>
-												{getValueByFormat(_get(value, item.key), { format: item.format })}
+												{Component ? <Component>{formattedValue}</Component> : formattedValue}
 											</div>
 										);
 									})}
