@@ -4,7 +4,7 @@ import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format'
 export const TokenList = ({ tokensInfo = [], onTokenClick, selectedToken = {} }) => {
 	return (
 		<>
-			{tokensInfo.map(({ symbol, address, balance, price }) => {
+			{tokensInfo.map(({ symbol, address, balance, totalPrice, price }) => {
 				const isSelected = selectedToken.address === address;
 				return (
 					<div className="cd_add_token_column col" key={address} onClick={() => onTokenClick(address)}>
@@ -19,9 +19,7 @@ export const TokenList = ({ tokensInfo = [], onTokenClick, selectedToken = {} })
 									<p>{balance && toFormattedNumber(balance.displayValue || 0)}</p>
 								</div>
 								<div className="cd_add_token_right_price">
-									<p>
-										{price && balance ? toFormattedCurrency(balance.displayValue * price) : '$--'}
-									</p>
+									<p>{price && balance ? toFormattedCurrency(totalPrice) : '$--'}</p>
 								</div>
 							</div>
 						</div>

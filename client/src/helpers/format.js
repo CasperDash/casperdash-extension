@@ -1,23 +1,23 @@
 /**
  * Return formatted number.
  * @param {Number} num - Number.
- * @param {String} locales - Locales.
  * @param {Object} options - Format options.
+ * @param {String} locales - Locales.
  * @return {String} Formatted number.
  */
-export const toFormattedNumber = (num, locales, options) => {
-	const number = new Intl.NumberFormat(locales, { maximumFractionDigits: 9, ...options });
+export const toFormattedNumber = (num, options, locales) => {
+	const number = new Intl.NumberFormat(locales, { maximumFractionDigits: 5, ...options });
 	return number ? number.format(num) : '0';
 };
 
 /**
  * Return formatted number by currency.
  * @param {Number} num - Number.
- * @param {String} locales - Locales.
  * @param {Object} options - Format options.
+ * @param {String} locales - Locales.
  * @return {String} Formatted number by currency.
  */
-export const toFormattedCurrency = (num, locales, options) => {
+export const toFormattedCurrency = (num, options, locales) => {
 	const defaultOpt = {
 		style: 'currency',
 		currency: 'USD',
@@ -28,14 +28,14 @@ export const toFormattedCurrency = (num, locales, options) => {
 /**
  * Return formatted date.
  * @param {String} dateString - Date.
- * @param {String} locales - Locales.
  * @param {Object} options - Format options.
+ * @param {String} locales - Locales.
  * @return {String} Formatted date.
  */
 export const toFormattedDate = (
 	dateString,
-	locales,
 	options = { dateStyle: 'short', timeStyle: 'medium', hour12: false },
+	locales,
 ) => {
 	let date = new Date(dateString);
 
@@ -66,5 +66,19 @@ export const getEndString = (fullString, end) => {
 		}
 		const index = match.index;
 		return fullString.slice(index);
+	}
+};
+
+export const getValueByFormat = (value, options) => {
+	const { format, ...formatOptions } = options;
+	switch (format) {
+		case 'currency':
+			return toFormattedCurrency(value, formatOptions);
+		case 'number':
+			return toFormattedNumber(value, formatOptions);
+		case 'date':
+			return toFormattedDate(value, formatOptions);
+		default:
+			return value;
 	}
 };

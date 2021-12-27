@@ -1,0 +1,19 @@
+.cd_we_grid {
+	.cd_we_item {
+		margin: 20px 15px;
+		border-bottom: 1px solid #828cae;
+		display: flex;
+		cursor: pointer;
+		.cd_we_item_right {
+			margin-left: auto;
+		}
+		.cd_we_item_value {
+			&.secondary {
+				color: #828cae;
+			}
+			&.primary {
+				font-weight: bold;
+			}
+		}
+	}
+}

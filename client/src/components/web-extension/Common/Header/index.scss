@@ -1,0 +1,23 @@
+.cd_we_header {
+	display: flex;
+	border-bottom: 1px solid;
+	padding: 15px 0 15px 0;
+
+	width: 100%;
+	background: #252f47;
+	.cd_we_logo {
+		margin-right: 15px;
+		margin-left: 15px;
+		img {
+			height: 26px;
+		}
+	}
+	.cd_we_settings {
+		margin-left: auto;
+		margin-right: 20px;
+		cursor: pointer;
+		i {
+			font-weight: bold;
+		}
+	}
+}
