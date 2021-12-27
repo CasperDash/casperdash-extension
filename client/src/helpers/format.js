@@ -5,9 +5,9 @@
  * @param {String} locales - Locales.
  * @return {String} Formatted number.
  */
-export const toFormattedNumber = (num, options, locales) => {
+export const toFormattedNumber = (num = 0, options, locales) => {
 	const number = new Intl.NumberFormat(locales, { maximumFractionDigits: 5, ...options });
-	return number ? number.format(num) : '0';
+	return number.format(num) || '0';
 };
 
 /**
@@ -17,7 +17,7 @@ export const toFormattedNumber = (num, options, locales) => {
  * @param {String} locales - Locales.
  * @return {String} Formatted number by currency.
  */
-export const toFormattedCurrency = (num, options, locales) => {
+export const toFormattedCurrency = (num = 0, options, locales) => {
 	const defaultOpt = {
 		style: 'currency',
 		currency: 'USD',

@@ -6,6 +6,7 @@ import Receive from '../../components/web-extension/Receive';
 import Send from '../../components/web-extension/Send';
 import Token from '../../components/web-extension/Token';
 import DeployDetails from '../../components/web-extension/DeployDetails';
+import { AddToken } from '../../components/web-extension/Token/AddToken';
 
 let features;
 try {
@@ -31,6 +32,7 @@ const routes = {
 		{ name: 'send', route: '/send', component: Send },
 		{ name: 'token', route: '/token', component: Token },
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
+		{ name: 'addToken', route: '/addToken', component: AddToken },
 	],
 };
 export default Object.keys(routes).reduce((out, key) => {

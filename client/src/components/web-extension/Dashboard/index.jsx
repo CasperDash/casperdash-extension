@@ -36,7 +36,11 @@ const WalletDetails = () => {
 
 	// Functions
 	const onSelectToken = (token) => {
-		navigate('./token', { state: { token, name: token.symbol } });
+		navigate('/token', { state: { token, name: token.symbol } });
+	};
+
+	const onAddToken = () => {
+		navigate('/addToken', { state: { name: 'Add Token' } });
 	};
 
 	return (
@@ -47,7 +51,9 @@ const WalletDetails = () => {
 					<SendReceive />
 				</div>
 				<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
-				<div className="cd_we_action"> + Add Custom Token</div>
+				<div className="cd_we_action" onClick={onAddToken}>
+					+ Add Custom Token
+				</div>
 			</div>
 		</section>
 	);

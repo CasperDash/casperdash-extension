@@ -25,7 +25,7 @@ export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) =>
 										? parseFloat(datum.balance.hex / 10 ** decimals).toFixed(2)
 										: 0,
 						  }
-						: { displayValue: datum.balance },
+						: { displayValue: datum.balance || 0 },
 				total_supply: {
 					...datum.total_supply,
 					displayValue:
