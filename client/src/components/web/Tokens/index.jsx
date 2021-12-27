@@ -70,11 +70,11 @@ const Tokens = () => {
 	};
 
 	const handleAddToken = async (tokenAddress) => {
-		const { data, error } = await dispatch(getTokenInfo(tokenAddress));
-		if (error) {
+		const { data } = await dispatch(getTokenInfo(tokenAddress));
+		if (!data || !data.name) {
 			setAddTokenError('Can not find token info');
 		} else {
-			data && data.name && dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
+			dispatch(addCustomTokenAddressToLocalStorage(tokenAddress, publicKey));
 			setShowAddTokenModal(false);
 		}
 	};
