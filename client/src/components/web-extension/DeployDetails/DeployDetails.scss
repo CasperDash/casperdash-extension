@@ -1,0 +1,13 @@
+.cd_we_deploy_details {
+	padding: 20px 15px;
+	.cd_we_deploy_details_item {
+		padding-top: 5px;
+		.cd_we_item_label {
+			font-weight: bold;
+			color: #828cae;
+		}
+		.cd_we_item_value {
+			word-break: break-all;
+		}
+	}
+}

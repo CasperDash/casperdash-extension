@@ -21,7 +21,7 @@ const CONFIG_OPTIONS = {
 	},
 	NETWORK_NAME: {
 		env: 'REACT_APP_NETWORK_NAME',
-		default: 'casper-test',
+		default: 'casper',
 	},
 	AVAILABLE_FEATURES: {
 		env: 'REACT_APP_AVAILABLE_FEATURES',

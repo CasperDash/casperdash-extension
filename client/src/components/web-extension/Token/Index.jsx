@@ -97,8 +97,8 @@ const TokenDetails = () => {
 	const transferList = useDeploysWithStatus({ symbol: token.symbol, publicKey, status: selectedStatus });
 
 	// Function
-	const onTransactionClick = (transaction) => {
-		navigate('/tokenDetails', { state: { transaction } });
+	const onTransactionClick = (deploy) => {
+		navigate('/deployDetails', { state: { deploy, name: 'Transaction details' } });
 	};
 
 	return (
