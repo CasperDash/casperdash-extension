@@ -1,6 +1,7 @@
-@import './theme-config.scss';
-@import './nft.scss';
-@import './stake/style.scss';
+@import '../theme-config.scss';
+@import '../nft.scss';
+@import '../stake/style.scss';
+@import './bottom-bar.scss';
 
 body {
 	font-family: $fontfamily !important;
@@ -1457,6 +1458,11 @@ table {
 		}
 	}
 }
+
+.table > :not(:first-child) {
+	border: 0 !important;
+}
+
 .cd_transaction_list_table {
 	margin-bottom: 0 !important;
 	//min-width: 1200px;

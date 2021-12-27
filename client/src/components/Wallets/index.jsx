@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import csprIcon from 'assets/image/cspr.png';
 import HeadingModule from '../Common/Layout/HeadingComponent/Heading';
 import AllTransactionList from '../Common/Layout/TransactionList/AllTransactionList';
 import { SendReceiveSection } from '../Common/SendReceive';
@@ -82,7 +83,7 @@ const WalletDetails = () => {
 					<div className="cd_chart_box_heading_date">
 						<h2 className="cd_chart_box_heading">
 							<div className="cd_add_token_icon_chart">
-								<img src="assets/image/cspr.png" alt="currency-icon" />
+								<img src={csprIcon} alt="currency-icon" />
 							</div>
 							<div>CSPR</div>
 							<div className="cd_current_price">${currentPrice}</div>

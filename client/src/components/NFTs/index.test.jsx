@@ -107,14 +107,14 @@ test('Missing image', () => {
 		},
 	]);
 	const { getByAltText } = render(<NFTs />);
-	expect(getByAltText('nft-image').src.includes('assets/image/nft-empty.png')).toBe(true);
+	expect(getByAltText('nft-image').src.includes('nft-empty.png')).toBe(true);
 });
 
 test('Missing token name', () => {
 	spyOnUseSelector.mockReturnValue([
 		{
 			tokenId: 1,
-			metadata: [{ key: 'image', value: 'assets/image/nft-empty.png' }],
+			metadata: [{ key: 'image', value: 'nft-empty.png' }],
 		},
 	]);
 	const { queryByText } = render(<NFTs />);
