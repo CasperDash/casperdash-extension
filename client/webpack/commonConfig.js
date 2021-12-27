@@ -39,6 +39,9 @@ module.exports = (dir) => ({
 			filename: 'assets/css/[name].css',
 		}),
 		new webpack.ProgressPlugin(),
+		new webpack.DefinePlugin({
+			'process.env': JSON.stringify(process.env),
+		}),
 	],
 	resolve: {
 		extensions: ['.js', '.jsx'],

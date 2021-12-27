@@ -47,7 +47,6 @@ jobs:
             - name: Build react app
               working-directory: ./client
               run: |
-                  cp .env.staging.local .env.production.local
                   yarn
                   yarn run build-testnet
                   aws s3 sync ./build/ s3://testnet.casperdash.io/ --delete
