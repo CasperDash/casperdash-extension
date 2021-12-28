@@ -7,8 +7,8 @@ afterEach(cleanup);
 
 test('Should show copy and go to explorer button', () => {
 	const { container } = render(<CommonAction />);
-	expect(container.querySelector('.cd_btn_copy').className.includes('bi-clipboard')).toBe(true);
-	expect(container.querySelector('.cd_btn_explorer').className.includes('bi-box-arrow-up-right')).toBe(true);
+	expect(Boolean(container.querySelector('.cd_btn_copy'))).toBe(true);
+	expect(Boolean(container.querySelector('.cd_btn_explorer'))).toBe(true);
 });
 
 test('Should copy value when clicked on copy', async () => {
