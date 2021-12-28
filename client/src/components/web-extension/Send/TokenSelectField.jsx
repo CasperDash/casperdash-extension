@@ -13,8 +13,10 @@ const TokenSelectField = ({ options, field, form }) => (
 		options={options}
 		inputId={field.name}
 		name={field.name}
-		value={options ? options.find((option) => option.address === field.address) : null}
-		onChange={(option) => form.setFieldValue(field.name, option.address)}
+		value={options ? options.find((option) => option.address === field.value) : null}
+		onChange={(option) => {
+			form.setFieldValue(field.name, option.address);
+		}}
 		onBlur={field.onBlur}
 		placeholder="Token"
 		getOptionLabel={TokenField}

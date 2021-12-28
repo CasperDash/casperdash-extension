@@ -40,7 +40,9 @@ const WalletDetails = () => {
 	};
 
 	const onAddToken = () => {
-		navigate('/addToken', { state: { name: 'Add Token' } });
+		navigate('/addToken', {
+			state: { name: 'Add Token' },
+		});
 	};
 
 	return (
@@ -48,7 +50,7 @@ const WalletDetails = () => {
 			<div className="cd_we_content">
 				<div className="cd_we_main_content">
 					<AccountInfo />
-					<SendReceive />
+					<SendReceive token={allTokenInfo.find((token) => token.address === 'CSPR')} />
 				</div>
 				<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
 				<div className="cd_we_action" onClick={onAddToken}>

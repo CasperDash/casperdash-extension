@@ -58,6 +58,22 @@ const COMMON_ERROR_MESSAGE = {
 	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
 };
 
+const getSendAmountError = ({ sendAmount, minAmount, tokenSymbol, displayBalance, transferFee }) => {
+	if (sendAmount < minAmount) {
+		return `Amount must be at least ${minAmount} ${tokenSymbol}.`;
+	}
+	if (sendAmount <= 0) {
+		return `Amount must be more than 0 ${tokenSymbol}.`;
+	}
+	if (sendAmount > displayBalance) {
+		return 'Not enough balance.';
+	}
+	if (tokenSymbol === 'CSPR' && sendAmount + transferFee > displayBalance) {
+		return 'Not enough balance.';
+	}
+	return '';
+};
+
 /**
  * Validate transfer form.
  * @param {Object}  - Transfer object.
@@ -75,27 +91,19 @@ export const validateTransferForm = ({
 	let errors = {};
 	// to address
 	if (!toAddress) {
-		return { toAddress: 'Required.' };
+		errors.toAddress = 'Required.';
 	}
-	if (!isValidPublicKey(toAddress)) {
-		return { toAddress: 'Invalid address.' };
+	if (toAddress && !isValidPublicKey(toAddress)) {
+		errors.toAddress = 'Invalid address.';
 	}
 	// send amount
-	if (sendAmount < minAmount) {
-		return { sendAmount: `Amount must be at least ${minAmount} ${tokenSymbol}.` };
-	}
-	if (sendAmount <= 0) {
-		return { sendAmount: `Amount must be more than 0 ${tokenSymbol}.` };
-	}
-	if (sendAmount > displayBalance) {
-		return { sendAmount: 'Not enough balance.' };
-	}
-	if (tokenSymbol === 'CSPR' && sendAmount + transferFee > displayBalance) {
-		return { sendAmount: 'Not enough balance.' };
+	const sendAmountError = getSendAmountError({ sendAmount, minAmount, tokenSymbol, displayBalance, transferFee });
+	if (sendAmountError) {
+		errors.sendAmount = sendAmountError;
 	}
 	//cspr balance
 	if (csprBalance < transferFee) {
-		return { transferFee: 'Not enough CSPR balance.' };
+		errors.transferFee = 'Not enough CSPR balance.';
 	}
 	return errors;
 };

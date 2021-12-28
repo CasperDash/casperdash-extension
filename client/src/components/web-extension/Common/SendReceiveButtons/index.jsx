@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './index.scss';
 
-export const SendReceive = () => {
+export const SendReceive = ({ token }) => {
 	const navigate = useNavigate();
 
 	const onReceiveClick = () => {
@@ -10,7 +10,7 @@ export const SendReceive = () => {
 	};
 
 	const onSendClick = () => {
-		navigate('/send', { state: { name: 'Send' } });
+		navigate('/send', { state: { name: 'Send', token } });
 	};
 	return (
 		<div className="cd_we_send_receive_buttons">

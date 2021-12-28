@@ -4,9 +4,9 @@ import NFTs from '../../components/web/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
 import Receive from '../../components/web-extension/Receive';
 import Send from '../../components/web-extension/Send';
-import Token from '../../components/web-extension/Token';
+import Token from '../../components/web-extension/TokenInfo';
 import DeployDetails from '../../components/web-extension/DeployDetails';
-import { AddToken } from '../../components/web-extension/Token/AddToken';
+import { AddToken } from '../../components/web-extension/TokenInfo/AddToken';
 
 let features;
 try {

@@ -88,6 +88,7 @@ const TokenDetails = () => {
 		state: { token = {} },
 	} = useLocation();
 	const navigate = useNavigate();
+
 	// State
 	const [selectedStatus, setSelectedStatus] = useState(STATUS_MAPPING[0].value);
 
@@ -112,7 +113,7 @@ const TokenDetails = () => {
 					</div>
 					<div className="cd_we_token_info_value">{toFormattedCurrency(totalPrice)}</div>
 				</div>
-				<SendReceive />
+				<SendReceive token={token} />
 			</div>
 			<div className="cd_we_token_status_filter">
 				{STATUS_MAPPING.map((status, i) => (

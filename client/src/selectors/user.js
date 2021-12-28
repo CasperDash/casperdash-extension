@@ -2,12 +2,14 @@ import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { USERS } from '../store/actionTypes';
+import { CSPR_TRANSFER_FEE, TOKEN_TRANSFER_FEE } from '../constants/key';
 import { getCurrentPrice } from './price';
 import { getMassagedTokenData } from './tokens';
 
 const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
+	transferFee: CSPR_TRANSFER_FEE,
 };
 
 export const getPublicKey = ({ user }) => {
@@ -51,6 +53,7 @@ export const getAllTokenInfo = createSelector(
 						...datum,
 						price: tokenPrice,
 						totalPrice: tokenPrice * datum.balance.displayValue,
+						transferFee: TOKEN_TRANSFER_FEE,
 				  }))
 				: [];
 
@@ -68,5 +71,7 @@ export const getAccountTotalBalanceInFiat = createSelector(getAllTokenInfo, (all
 
 export const getTokenInfoByAddress = (token) =>
 	createSelector(getAllTokenInfo, (allTokenInfo) => {
-		return allTokenInfo && allTokenInfo.length ? allTokenInfo.find((info) => info.address === token.address) : {};
+		return allTokenInfo && allTokenInfo.length
+			? allTokenInfo.find((info) => info.tokenAddress === token.tokenAddress)
+			: {};
 	});
