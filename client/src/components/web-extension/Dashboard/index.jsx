@@ -1,10 +1,6 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
-import { getAllTokenInfo, getPublicKey } from '../../../selectors/user';
-import { getTokensAddressList } from '../../../selectors/tokens';
-import { fetchTokensInfoWithBalance } from '../../../actions/tokensActions';
+import { useTokenInfo } from '../../hooks/useTokensInfo';
 import { SendReceive } from '../Common/SendReceiveButtons';
 import Grid from '../Common/Grid';
 import { AccountInfo } from '../Common/Account';
@@ -22,17 +18,9 @@ const tokensGridMetadata = {
 };
 
 const WalletDetails = () => {
-	const dispatch = useDispatch();
+	// Hook
 	const navigate = useNavigate();
-	// Selector
-	const allTokenInfo = useSelector(getAllTokenInfo);
-	const publicKey = useSelector(getPublicKey);
-	const tokensAddressList = useSelector(getTokensAddressList);
-
-	// Effect
-	useAutoRefreshEffect(() => {
-		dispatch(fetchTokensInfoWithBalance(tokensAddressList, publicKey));
-	}, [publicKey, JSON.stringify(tokensAddressList)]);
+	const { allTokenInfo } = useTokenInfo();
 
 	// Functions
 	const onSelectToken = (token) => {

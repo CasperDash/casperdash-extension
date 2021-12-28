@@ -5,6 +5,10 @@ import { TOKENS } from '../store/actionTypes';
 
 export const tokensSelector = getQuerySelector({ type: TOKENS.FETCH_TOKENS_INFO_WITH_BALANCE });
 
+export const isFetchingTokensInfo = createSelector(tokensSelector, (token) => {
+	return token.loading;
+});
+
 export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) => {
 	if (!Array.isArray(data)) {
 		return [];

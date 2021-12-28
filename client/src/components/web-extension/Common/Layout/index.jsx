@@ -2,6 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
+// import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
+// import { fetchTokensInfoWithBalance } from '../../../../actions/tokensActions';
+// import { getTokensAddressList } from '../../../../selectors/tokens';
+// import { getPublicKey } from '../../../../selectors/user';
 import { fetchPriceHistory } from '../../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../../actions/deployActions';
 import { REFRESH_TIME } from '../../../../constants/key';
@@ -16,7 +20,10 @@ const Layout = (props) => {
 
 	// Selector
 	const isLoading = useSelector(isLoadingRequest);
+	// const tokensAddressList = useSelector(getTokensAddressList);
+	// const publicKey = useSelector(getPublicKey);
 
+	// Effect
 	useEffect(() => {
 		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
 		return () => clearInterval(refreshStateRootHash);
@@ -33,6 +40,11 @@ const Layout = (props) => {
 			ref.current.complete();
 		}
 	}, [isLoading]);
+
+	// Effect
+	// useAutoRefreshEffect(() => {
+	// 	dispatch(fetchTokensInfoWithBalance(tokensAddressList, publicKey));
+	// }, [publicKey, JSON.stringify(tokensAddressList)]);
 
 	return (
 		<div className={`cd_all_pages_content`}>
