@@ -59,7 +59,7 @@ const COMMON_ERROR_MESSAGE = {
 };
 
 const getSendAmountError = ({ sendAmount, minAmount, tokenSymbol, displayBalance, transferFee }) => {
-	if (sendAmount < minAmount) {
+	if (minAmount && sendAmount < minAmount) {
 		return `Amount must be at least ${minAmount} ${tokenSymbol}.`;
 	}
 	if (sendAmount <= 0) {

@@ -7,7 +7,7 @@ import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { deploySelector } from '../../../../selectors/deploy';
-import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import ConfirmationModal from './Modal';
@@ -102,7 +102,7 @@ const UndelegateForm = ({
 										tokenSymbol,
 										stakedAmount: stakedValidator.stakedAmount,
 										fee,
-										minAmount: MIN_TRANSFER,
+										minAmount: MIN_CSPR_TRANSFER,
 									})
 								}
 								initialValues={{ amount: 0, toAddress: '' }}

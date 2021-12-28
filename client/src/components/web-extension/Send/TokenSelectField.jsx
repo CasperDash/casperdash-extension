@@ -7,7 +7,7 @@ import { TokenField } from './TokenField';
  * @param {Object}
  * @returns
  */
-const TokenSelectField = ({ options, field, form }) => (
+const TokenSelectField = ({ options, field, form, handleTokenChange }) => (
 	<Select
 		className="cd_we_dropdown"
 		options={options}
@@ -16,6 +16,7 @@ const TokenSelectField = ({ options, field, form }) => (
 		value={options ? options.find((option) => option.address === field.value) : null}
 		onChange={(option) => {
 			form.setFieldValue(field.name, option.address);
+			handleTokenChange(option.address);
 		}}
 		onBlur={field.onBlur}
 		placeholder="Token"

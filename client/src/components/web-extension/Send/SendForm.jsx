@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
-import { getAllTokenInfo } from '../../../selectors/user';
+import { getAllTokenInfo, getTokenInfoByAddress } from '../../../selectors/user';
 import { validateTransferForm } from '../../../helpers/validator';
 import TokenSelectField from './TokenSelectField';
 
@@ -11,26 +11,29 @@ const SendForm = ({ token }) => {
 	//Hook
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
+
+	//State
+	const [selectedTokenAddress, setSelectedTokenAddress] = useState(token ? token.address : 'CSPR');
+
 	//Selector
 	const allTokenInfo = useSelector(getAllTokenInfo);
+	const selectedToken = useSelector(getTokenInfoByAddress({ address: selectedTokenAddress }));
 
 	//Function
-	const getTokenInfo = (address) => {
-		return allTokenInfo ? allTokenInfo.find((token) => token.address === address) : {};
+	const handleTokenChange = (address) => {
+		setSelectedTokenAddress(address);
 	};
 
 	const handleSubmit = (values) => {
-		const tokenInfo = getTokenInfo(values.address);
-		navigate(`${pathname}#confirm`, { state: { token: { ...tokenInfo, ...values }, name: 'Confirm' } });
+		navigate(`${pathname}#confirm`, { state: { token: { ...selectedToken, ...values }, name: 'Confirm' } });
 	};
 
 	const onValidate = (values) => {
-		const tokenInfo = getTokenInfo(values.address);
 		return validateTransferForm({
 			...values,
-			...tokenInfo,
-			displayBalance: tokenInfo && tokenInfo.balance && tokenInfo.balance.displayValue,
-			tokenSymbol: tokenInfo.symbol,
+			...selectedToken,
+			displayBalance: selectedToken && selectedToken.balance && selectedToken.balance.displayValue,
+			tokenSymbol: selectedToken.symbol,
 		});
 	};
 
@@ -53,7 +56,12 @@ const SendForm = ({ token }) => {
 					<div className="cd_we_send_token">
 						<div>Assets</div>
 						<Form.Group controlId="cd_token_dropdown">
-							<Field name="address" component={TokenSelectField} options={allTokenInfo} />
+							<Field
+								name="address"
+								component={TokenSelectField}
+								options={allTokenInfo}
+								handleTokenChange={handleTokenChange}
+							/>
 						</Form.Group>
 						<Form.Control.Feedback type="invalid">{errors.nftContract}</Form.Control.Feedback>
 					</div>

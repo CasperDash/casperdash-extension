@@ -94,7 +94,7 @@ const TokenDetails = () => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
-	const { symbol, balance, totalPrice } = useSelector(getTokenInfoByAddress(token));
+	const tokenInfo = useSelector(getTokenInfoByAddress(token));
 	const transferList = useDeploysWithStatus({ symbol: token.symbol, publicKey, status: selectedStatus });
 
 	// Function
@@ -108,12 +108,12 @@ const TokenDetails = () => {
 				<div className="cd_we_token_info">
 					<div className="cd_we_token_info_balance">
 						<img />
-						<div>{balance && toFormattedNumber(balance.displayValue)}</div>
-						<div>{symbol}</div>
+						<div>{tokenInfo.balance && toFormattedNumber(tokenInfo.balance.displayValue)}</div>
+						<div>{tokenInfo.symbol}</div>
 					</div>
-					<div className="cd_we_token_info_value">{toFormattedCurrency(totalPrice)}</div>
+					<div className="cd_we_token_info_value">{toFormattedCurrency(tokenInfo.totalPrice)}</div>
 				</div>
-				<SendReceive token={token} />
+				<SendReceive token={tokenInfo} />
 			</div>
 			<div className="cd_we_token_status_filter">
 				{STATUS_MAPPING.map((status, i) => (

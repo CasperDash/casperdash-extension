@@ -8,7 +8,7 @@ import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { deploySelector } from '../../../../selectors/deploy';
 import { validateStakeForm } from '../../../../helpers/validator';
-import { CSPR_AUCTION_DELEGATE_FEE, MIN_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import ConfirmationModal from './Modal';
@@ -105,7 +105,7 @@ const DelegateForm = ({
 									balance,
 									tokenSymbol,
 									fee,
-									minAmount: MIN_TRANSFER,
+									minAmount: MIN_CSPR_TRANSFER,
 								})
 							}
 							onSubmit={handleSubmit}
