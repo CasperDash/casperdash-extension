@@ -12,6 +12,7 @@ export const SendReceive = ({ token }) => {
 	const onSendClick = () => {
 		navigate('/send', { state: { name: 'Send', token } });
 	};
+
 	return (
 		<div className="cd_we_send_receive_buttons">
 			<div className="cd_we_send_receive_item" onClick={onSendClick}>

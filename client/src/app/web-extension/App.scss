@@ -38,3 +38,21 @@ input {
 	font-size: 0.8em;
 	font-weight: 600;
 }
+
+.cd_we_confirm {
+	.cd_we_confirm_row {
+		padding-bottom: 15px;
+		:first-child {
+			color: #828cae;
+		}
+	}
+	.cd_we_confirm_buttons {
+		display: flex;
+		justify-content: space-around;
+		margin-top: 20px;
+		button {
+			width: 50%;
+			margin: 5px;
+		}
+	}
+}
