@@ -6,11 +6,13 @@
 	"author": "CasperDash",
 	"license": "MIT",
 	"dependencies": {
+		"@ledgerhq/hw-transport-webusb": "^6.20.0",
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
+		"@zondax/ledger-casper": "^0.0.1",
 		"apexcharts": "^3.30.0",
 		"axios": "^0.24.0",
 		"big.js": "^6.1.1",

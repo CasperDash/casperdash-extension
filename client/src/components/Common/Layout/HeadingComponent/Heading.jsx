@@ -12,6 +12,9 @@ import { connectCasperSigner } from '../../../../services/casperServices';
 import { isValidPublicKey } from '../../../../helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
 import { MiddleTruncatedText } from '../../MiddleTruncatedText';
+import { setLedgerOptions } from '../../../../actions/ledgerActions';
+import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
+import { getLedgerPublicKey, handleLedgerError, initLedgerApp } from '../../../../services/ledgerServices';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 
 const SIGNER_EVENTS = {
@@ -26,6 +29,8 @@ const SIGNER_EVENTS = {
 const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
 	const { isUnlocked, isConnected, isAvailable } = useSelector(getSignerStatus);
+	const { casperApp } = useSelector(getLedgerOptions);
+
 	const theme = useSelector(getTheme);
 
 	const [showError, setShowError] = useState(false);
@@ -90,6 +95,27 @@ const HeadingModule = (props) => {
 		}
 	};
 
+	const handleConnectLedger = async () => {
+		try {
+			const app = await initLedgerApp();
+			const response = await getLedgerPublicKey(app);
+			if (!response.publicKey) {
+				alert('You must unlock the Casper App on your Ledger device to connect.');
+				return;
+			}
+
+			const key = `02${response.publicKey.toString('hex')}`;
+			dispatch(setPublicKey(key));
+			dispatch(
+				setLedgerOptions({
+					app,
+				}),
+			);
+		} catch (error) {
+			handleLedgerError(error);
+		}
+	};
+
 	const onClickViewMode = () => {
 		setShowPublicKeyInput(true);
 	};
@@ -123,12 +149,23 @@ const HeadingModule = (props) => {
 					<Button className="cd_theme_switch" onClick={onSwitchTheme}>
 						<i className={`bi ${theme === DARK_THEME ? 'bi-brightness-high-fill' : 'bi-moon-fill'}`} />
 					</Button>
+					{!publicKey && !casperApp && (
+						<Button
+							className="cd_all_page_logout_btn"
+							onClick={handleConnectLedger}
+						>{`Connect Ledger`}</Button>
+					)}
+
 					{!publicKey && !isAvailable && (
 						<Button className="cd_all_page_logout_btn" onClick={onClickViewMode}>
 							View Mode
 						</Button>
 					)}
-					{!isConnected ? (
+					{casperApp ? (
+						<div className="cd_heading_public_key">
+							<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
+						</div>
+					) : !isConnected ? (
 						<Button
 							className="cd_all_page_logout_btn"
 							onClick={handleConnectCasper}

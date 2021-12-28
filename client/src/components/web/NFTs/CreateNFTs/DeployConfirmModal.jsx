@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { putDeploy } from '../../../../actions/deployActions';
-import { updateNFTLocalStorage } from '../../../../actions/NFTActions';
-import { nftContractDeploy } from '../../../../services/nftServices';
+import { putDeploy } from '../../../actions/deployActions';
+import { updateNFTLocalStorage } from '../../../actions/NFTActions';
+import { nftContractDeploy } from '../../../services/nftServices';
+import { getLedgerOptions } from '../../../selectors/ledgerOptions';
 
 export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	const dispatch = useDispatch();
@@ -14,6 +15,8 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	const [deployError, setDeployError] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [deployHash, setDeployHash] = useState();
+
+	const { casperApp } = useSelector(getLedgerOptions);
 
 	const formRef = useRef();
 
@@ -41,7 +44,12 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 
 	const handleConfirmDeployContract = async () => {
 		setIsLoading(true);
-		const deploy = await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol);
+		const deploy = await nftContractDeploy(
+			publicKey,
+			inputValues.collectionName,
+			inputValues.collectionSymbol,
+			casperApp,
+		);
 		if (deploy.error) {
 			setIsLoading(false);
 			setDeployError(deploy.error.message);
