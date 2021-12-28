@@ -22,7 +22,7 @@ describe('getMassagedTokenData', () => {
 		expect(getMassagedTokenData()).toEqual([
 			{
 				balance: {
-					displayValue: undefined,
+					displayValue: 0,
 				},
 				decimals: {
 					displayValue: 0,
