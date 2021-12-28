@@ -11,6 +11,7 @@ import { validateStakeForm } from '../../../../helpers/validator';
 import { CSPR_AUCTION_DELEGATE_FEE, MIN_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
+import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
 
@@ -34,6 +35,7 @@ const DelegateForm = ({
 
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	const { casperApp } = useSelector(getLedgerOptions);
 
 	const options = validators
 		? validators.map(({ public_key: publicKey, bidInfo }) => ({
@@ -70,9 +72,13 @@ const DelegateForm = ({
 		setFieldValue('amount', amount);
 	};
 
-	const onComfirm = async () => {
+	const onConfirm = async () => {
 		try {
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
+			const signedDeploy = await getSignedStakeDeploy(stakeDetails, casperApp);
+			if (signedDeploy.error) {
+				setSignerError(signedDeploy.error.message);
+				return;
+			}
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data } = deployResult;
 			setDeployHash(data.deployHash);
@@ -198,7 +204,7 @@ const DelegateForm = ({
 							fee={stakeDetails.fee}
 							currentPrice={csprPrice}
 							onClose={onCloseModal}
-							onConfirm={onComfirm}
+							onConfirm={onConfirm}
 							deployHash={deployHash}
 							isDeploying={isDeploying}
 							error={error}

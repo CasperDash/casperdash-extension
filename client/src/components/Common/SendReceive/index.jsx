@@ -11,6 +11,7 @@ import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { getLedgerOptions } from '../../../selectors/ledgerOptions';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -35,6 +36,7 @@ export const SendReceiveSection = ({
 
 	//Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	const { casperApp } = useSelector(getLedgerOptions);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -46,8 +48,8 @@ export const SendReceiveSection = ({
 
 	const onConfirmTransaction = async (transferId) => {
 		const signedDeploy = !isTokenTransfer
-			? await getSignedTransferDeploy({ ...transactionDetails, transferId })
-			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
+			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, casperApp)
+			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, casperApp);
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
