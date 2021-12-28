@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { putDeploy } from '../../../actions/deployActions';
-import { updateNFTLocalStorage } from '../../../actions/NFTActions';
-import { nftContractDeploy } from '../../../services/nftServices';
-import { getLedgerOptions } from '../../../selectors/ledgerOptions';
+import { putDeploy } from '../../../../actions/deployActions';
+import { updateNFTLocalStorage } from '../../../../actions/NFTActions';
+import { nftContractDeploy } from '../../../../services/nftServices';
+import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
 
 export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	const dispatch = useDispatch();

@@ -2,8 +2,12 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	.cd_we_account_address {
-		width: 100px;
+	.cd_we_address_section {
+		display: flex;
+		align-items: center;
+		.cd_we_account_address {
+			width: 100px;
+		}
 	}
 	div[class^='cd_we_account'] {
 		padding: 5px;
