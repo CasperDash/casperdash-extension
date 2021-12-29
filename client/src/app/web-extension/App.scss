@@ -10,8 +10,12 @@
 	--secondary-text-color-light: #f6f7fa;
 	--primary-color: #ec1c24;
 	--primary-light-color: #fbd2d3;
+
 	--bs-body-bg: var(--primary-background);
 	--bs-body-font-size: 0.8em;
+	--bs-success: #83bd67;
+	--bs-danger: #fa2852;
+	--bs-warning: #ffcd1a;
 }
 
 .btn-primary {
@@ -25,18 +29,7 @@
 
 .cd_all_pages_content {
 	color: var(--primary-text-color);
-	padding-bottom: 65px;
 }
-
-// .cd_we_dropdown {
-// 	div {
-// 		background-color: transparent;
-// 		color: var(--secondary-text-color);
-// 	}
-// 	div[id$='-listbox'] {
-// 		background-color: var(--component-background);
-// 	}
-// }
 
 input {
 	background-color: var(--component-background);
@@ -44,13 +37,13 @@ input {
 }
 
 .success {
-	color: #50e2c2;
+	color: var(--bs-success) !important;
 }
 .fail {
-	color: #e2507a;
+	color: #e2507a !important;
 }
 .pending {
-	color: #f9a22a;
+	color: #f9a22a !important;
 }
 
 .cd_error_text {

@@ -23,8 +23,8 @@ const TRANSFER_METADATA = {
 		{ key: 'timestamp', type: 'secondary', format: 'date' },
 	],
 	right: [
-		{ key: 'amount', type: 'primary' },
-		{ key: 'status', type: 'secondary' },
+		{ key: 'amount', type: 'primary', format: 'number' },
+		{ key: 'status', type: 'secondary', valueAsClass: true },
 	],
 };
 
@@ -58,23 +58,24 @@ const TokenDetails = () => {
 						<div>{tokenInfo.balance && toFormattedNumber(tokenInfo.balance.displayValue)}</div>
 						<div>{tokenInfo.symbol}</div>
 					</div>
-					<div className="cd_we_token_info_value">{toFormattedCurrency(tokenInfo.totalPrice)}</div>
+					<div className="cd_we_token_info_value">~ {toFormattedCurrency(tokenInfo.totalPrice)}</div>
 				</div>
 				<SendReceive token={tokenInfo} />
 			</div>
-			<div className="cd_we_token_status_filter">
-				{STATUS_MAPPING.map((status, i) => (
-					<div
-						key={i}
-						onClick={() => setSelectedStatus(status.value)}
-						className={`cd_token_status ${status.value === selectedStatus ? 'active' : ''}`}
-					>
-						{status.label}
-					</div>
-				))}
+			<div className="cd_we_token_history">
+				<div className="cd_we_token_status_filter">
+					{STATUS_MAPPING.map((status, i) => (
+						<div
+							key={i}
+							onClick={() => setSelectedStatus(status.value)}
+							className={`cd_token_status ${status.value === selectedStatus ? 'active' : ''}`}
+						>
+							{status.label}
+						</div>
+					))}
+				</div>
+				<Grid data={transferList} metadata={TRANSFER_METADATA} onRowClick={onTransactionClick} />
 			</div>
-
-			<Grid data={transferList} metadata={TRANSFER_METADATA} onRowClick={onTransactionClick} />
 		</section>
 	);
 };
