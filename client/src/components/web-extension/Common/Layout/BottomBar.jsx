@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import './css/SideBar.css';
+import './BottomBar.scss';
 
 const SIDEBAR_ITEMS = [
 	{

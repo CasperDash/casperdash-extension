@@ -1,10 +1,17 @@
-#root {
+@import '../../assets/css/extension/normalize.scss';
+
+:root {
 	width: 357px;
 	height: 600px;
+	--primary-background: #f8f8f8;
+	--component-background: #ffffff;
+	--primary-text-color: #232635;
+	--secondary-text-color: #777e91;
+	background-color: var(--primary-background) !important;
 }
 
 .cd_all_pages_content {
-	color: white;
+	color: var(--primary-text-color);
 	padding-bottom: 65px;
 }
 

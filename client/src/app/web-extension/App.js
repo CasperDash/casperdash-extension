@@ -5,9 +5,9 @@ import store from '../../store';
 import Layout from '../../components/web-extension/Common/Layout';
 import routeConfig from './routeConfig';
 
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
-import '../../assets/css/extension/style.scss';
+// import '../../assets/css/extension/style.scss';
 
 const getRoutes = (routes) => {
 	return (
