@@ -3,11 +3,11 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Layout from '../../components/web-extension/Common/Layout';
+import WithAccount from '../../components/Common/Auth/WithAccount';
 import routeConfig from './routeConfig';
 
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
-// import '../../assets/css/extension/style.scss';
 
 const getRoutes = (routes) => {
 	return (
@@ -20,17 +20,25 @@ const getRoutes = (routes) => {
 };
 
 const App = () => {
-	const { mainRoutes, innerRoutes } = routeConfig;
+	const { mainRoutes, innerRoutes, outerRoutes } = routeConfig;
 
 	return (
 		<Provider store={store}>
 			<MemoryRouter>
-				<Layout modules={mainRoutes.map((route) => route.route)}>
-					<Routes>
+				<Routes>
+					<Route
+						element={
+							<WithAccount>
+								<Layout modules={mainRoutes.map((route) => route.route)} />
+							</WithAccount>
+						}
+					>
 						{getRoutes(mainRoutes)}
 						{getRoutes(innerRoutes)}
-					</Routes>
-				</Layout>
+					</Route>
+
+					{getRoutes(outerRoutes)}
+				</Routes>
 			</MemoryRouter>
 		</Provider>
 	);

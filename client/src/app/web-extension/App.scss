@@ -8,7 +8,7 @@
 	--primary-text-color: #232635;
 	--secondary-text-color: #777e91;
 	--secondary-text-color-light: #f6f7fa;
-	--primary-color: #ec1c24;
+	--primary-color: #fa2852;
 	--primary-light-color: #fbd2d3;
 
 	--bs-body-bg: var(--primary-background);
@@ -18,11 +18,23 @@
 	--bs-warning: #ffcd1a;
 }
 
+.btn {
+	border-radius: 40px;
+}
+
 .btn-primary {
 	background-color: var(--primary-color);
 	border-color: var(--primary-color);
 	&:hover {
 		background-color: var(--primary-color);
+		border-color: var(--primary-color);
+	}
+}
+
+.btn-normal {
+	background-color: transparent;
+	border-color: var(--secondary-text-color);
+	&:hover {
 		border-color: var(--primary-color);
 	}
 }

@@ -7,6 +7,7 @@ import Send from '../../components/web-extension/Send';
 import Token from '../../components/web-extension/TokenInfo';
 import DeployDetails from '../../components/web-extension/DeployDetails';
 import { AddToken } from '../../components/web-extension/TokenInfo/AddToken';
+import ConnectAccount from '../../components/web-extension/ConnectAccount';
 
 let features;
 try {
@@ -34,6 +35,8 @@ const routes = {
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
 	],
+	// Routes which do not relate to main routes
+	outerRoutes: [{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount }],
 };
 export default Object.keys(routes).reduce((out, key) => {
 	return { ...out, [key]: features ? routes[key].filter((route) => features.includes(route.name)) : routes[key] };
