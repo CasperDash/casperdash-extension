@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import './Copy.scss';
 
 const Copy = ({ value }) => {
 	const [copyText, setCopyText] = useState('Copy');

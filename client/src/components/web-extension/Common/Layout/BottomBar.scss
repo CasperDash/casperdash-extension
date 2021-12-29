@@ -3,7 +3,9 @@
 	border: none;
 	bottom: 0;
 	height: 64px;
-	background: #252f47;
+	background: var(--component-background);
+	box-shadow: 0px 0px 80px rgba(55, 62, 125, 0.05);
+	border-radius: 40px 40px 0px 0px;
 	margin-bottom: 0;
 	position: fixed;
 	display: flex;
@@ -23,11 +25,11 @@
 		.active {
 			svg {
 				rect {
-					fill: #53b9ea;
+					fill: var(--primary-color);
 				}
 				path {
-					fill: #53b9ea;
-					stroke: #53b9ea;
+					fill: var(--primary-color);
+					stroke: var(--primary-color);
 				}
 			}
 		}
