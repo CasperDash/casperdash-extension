@@ -31,7 +31,6 @@ const Copy = ({ value }) => {
 					fill="#989a9b"
 				/>
 			</svg>
-			{/* <i className="bi bi-clipboard cd_btn_copy" onClick={onClickCopy} /> */}
 		</OverlayTrigger>
 	);
 };
