@@ -24,13 +24,7 @@ const Receive = () => {
 	return (
 		<section className="cd_we_receive_page">
 			<div className="cd_we_receive_qr">
-				<QRCode
-					value={publicKey}
-					bgColor={'transparent'}
-					fgColor={'#CAD3F2'}
-					size={166}
-					className="cd_dark_theme_qrcode"
-				/>
+				<QRCode value={publicKey} bgColor={'transparent'} fgColor={'#232635'} size={166} />
 			</div>
 			<div className="cd_we_receive_address">
 				<div className="label">Receiving Address</div>

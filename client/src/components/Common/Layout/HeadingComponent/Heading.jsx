@@ -161,7 +161,7 @@ const HeadingModule = (props) => {
 							View Mode
 						</Button>
 					)}
-					{casperApp ? (
+					{casperApp || publicKey ? (
 						<div className="cd_heading_public_key">
 							<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
 						</div>

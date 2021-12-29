@@ -4,6 +4,7 @@ import { getTokensAddressList, isFetchingTokensInfo } from '../../selectors/toke
 import { getPublicKey, getAllTokenInfo, getTokenInfoByAddress } from '../../selectors/user';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
+// Note: only use this if need to refetch the token data
 export const useTokenInfo = (token) => {
 	const dispatch = useDispatch();
 

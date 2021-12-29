@@ -40,9 +40,11 @@ const WalletDetails = () => {
 					<AccountInfo />
 					<SendReceive token={allTokenInfo.find((token) => token.address === 'CSPR')} />
 				</div>
-				<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
-				<div className="cd_we_action" onClick={onAddToken}>
-					+ Add Custom Token
+				<div className="cd_we_main_details">
+					<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
+					<div className="cd_we_action" onClick={onAddToken}>
+						+ Add Custom Token
+					</div>
 				</div>
 			</div>
 		</section>

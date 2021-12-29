@@ -1,19 +1,30 @@
 .cd_we_send_receive_buttons {
 	display: flex;
-
+	padding-bottom: 20px;
 	.cd_we_send_receive_item {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		cursor: pointer;
-		margin: 10px;
+		margin: 0 15px;
 		.cd_we_send_receiver_icon {
-			width: 34px;
-			height: 34px;
-			line-height: 34px;
-			background-color: black;
+			width: 42px;
+			height: 42px;
+			line-height: 42px;
+			background-color: var(--primary-light-color);
 			border-radius: 50%;
-			text-align: center;
+			align-items: center;
+			justify-content: center;
+			display: flex;
+			svg {
+				path {
+					fill: var(--primary-color);
+				}
+			}
+			margin-bottom: 10px;
+		}
+		.cd_we_send_receiver_text {
+			color: var(--secondary-text-color);
 		}
 	}
 }

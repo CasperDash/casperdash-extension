@@ -2,9 +2,14 @@
 	display: flex;
 	padding: 15px;
 	width: 100%;
-	background: #252f47;
+	align-items: center;
 	.cd_we_back_btn {
 		padding-right: 10px;
 		cursor: pointer;
+	}
+	.cd_we_title {
+		margin: auto;
+		font-size: 22px;
+		font-weight: bold;
 	}
 }

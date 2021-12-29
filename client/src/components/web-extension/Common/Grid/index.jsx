@@ -24,7 +24,12 @@ const Grid = ({ data = [], metadata = {}, onRowClick }) => {
 											format: item.format,
 										});
 										return (
-											<div className={`cd_we_item_value ${item.type}`} key={i}>
+											<div
+												className={`cd_we_item_value ${item.type} ${
+													item.valueAsClass ? formattedValue : ''
+												}`}
+												key={i}
+											>
 												{Component ? <Component>{formattedValue}</Component> : formattedValue}
 											</div>
 										);

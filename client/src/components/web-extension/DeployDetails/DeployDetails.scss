@@ -1,13 +1,23 @@
 .cd_we_deploy_details {
 	padding: 20px 15px;
+	border-radius: 40px 40px 0 0;
+	background: var(--component-background);
 	.cd_we_deploy_details_item {
-		padding-top: 5px;
+		padding-bottom: 15px;
 		.cd_we_item_label {
+			padding-bottom: 5px;
 			font-weight: bold;
-			color: #828cae;
+			color: var(--secondary-text-color);
 		}
 		.cd_we_item_value {
 			word-break: break-all;
+		}
+	}
+	.cd_we_deploy_details_bottom {
+		display: flex;
+		justify-content: space-between;
+		.cd_we_view_in_explorer {
+			color: var(--primary-color);
 		}
 	}
 }
