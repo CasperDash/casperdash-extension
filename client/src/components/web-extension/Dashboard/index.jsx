@@ -35,16 +35,14 @@ const WalletDetails = () => {
 
 	return (
 		<section className="cd_we_dashboard_page">
-			<div className="cd_we_content">
-				<div className="cd_we_main_content">
-					<AccountInfo />
-					<SendReceive token={allTokenInfo.find((token) => token.address === 'CSPR')} />
-				</div>
-				<div className="cd_we_main_details">
-					<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
-					<div className="cd_we_action" onClick={onAddToken}>
-						+ Add Custom Token
-					</div>
+			<div className="cd_we_main_content">
+				<AccountInfo />
+				<SendReceive token={allTokenInfo.find((token) => token.address === 'CSPR')} />
+			</div>
+			<div className="cd_we_main_details">
+				<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
+				<div className="cd_we_action" onClick={onAddToken}>
+					+ Add Custom Token
 				</div>
 			</div>
 		</section>

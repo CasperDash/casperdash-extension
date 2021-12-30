@@ -23,7 +23,7 @@ const DeployDetails = () => {
 	} = useLocation();
 
 	return (
-		<section className="cd_we_deploy_details">
+		<section className="cd_we_deploy_details cd_we_single_section">
 			{DETAILS_MAPPING.map(({ label, value, format, copy }, i) => {
 				const deployValue = _get(deploy, value, '');
 				const formattedValue = format ? getValueByFormat(deployValue, { format }) : deployValue;
