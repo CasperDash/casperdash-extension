@@ -13,7 +13,7 @@ jest.mock('../../../actions/stakeActions', () => {
 	};
 });
 
-jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
+jest.mock('../../Common/Layout/HeadingComponent/Heading', () => {
 	return {
 		__esModule: true,
 		default: () => {
@@ -22,7 +22,7 @@ jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
 	};
 });
 
-jest.mock('../hooks/useStakeDeploys', () => {
+jest.mock('../../hooks/useStakeDeploys', () => {
 	return {
 		__esModule: true,
 		useStakeFromValidators: jest.fn(),
