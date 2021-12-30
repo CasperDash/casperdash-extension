@@ -3,6 +3,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Layout from '../../components/web-extension/Common/Layout';
+import OuterLayout from '../../components/web-extension/Common/Layout/OuterLayout';
 import WithAccount from '../../components/Common/Auth/WithAccount';
 import routeConfig from './routeConfig';
 
@@ -36,8 +37,7 @@ const App = () => {
 						{getRoutes(mainRoutes)}
 						{getRoutes(innerRoutes)}
 					</Route>
-
-					{getRoutes(outerRoutes)}
+					<Route element={<OuterLayout />}>{getRoutes(outerRoutes)}</Route>
 				</Routes>
 			</MemoryRouter>
 		</Provider>

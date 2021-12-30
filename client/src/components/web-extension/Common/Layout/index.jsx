@@ -8,6 +8,7 @@ import { REFRESH_TIME } from '../../../../constants/key';
 import { isLoadingRequest } from '../../../../selectors/request';
 import { Header, InnerHeader } from '../Header';
 import BottomBar from './BottomBar';
+import './index.scss';
 
 const Layout = (props) => {
 	// Hook
