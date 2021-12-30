@@ -21,7 +21,7 @@
 }
 
 .btn {
-	border-radius: 40px;
+	border-radius: 32px;
 	&:disabled {
 		background-color: var(--secondary-text-color-med);
 		border-color: var(--secondary-text-color-med);
@@ -51,15 +51,15 @@
 }
 
 input {
-	background-color: var(--secondary-text-color-light);
+	background-color: var(--secondary-text-color-light) !important;
 	color: var(--primary-text-color) !important;
-	border-radius: 20px;
-	padding: 12px;
-	border: 0;
+	border-radius: 18px !important;
+	padding: 10px !important;
+	border: 0 !important;
 }
 
 .cd_we_input_label {
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 600;
 	color: var(--secondary-text-color);
 }

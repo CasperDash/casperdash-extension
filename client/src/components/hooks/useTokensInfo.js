@@ -17,7 +17,7 @@ export const useTokenInfo = (token) => {
 
 	// Effect
 	useAutoRefreshEffect(() => {
-		if (!isFetching) {
+		if (!isFetching && publicKey) {
 			dispatch(fetchTokensInfoWithBalance(tokensAddressList, publicKey));
 		}
 	}, [publicKey, JSON.stringify(tokensAddressList)]);

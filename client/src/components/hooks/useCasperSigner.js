@@ -24,7 +24,7 @@ const useCasperSigner = () => {
 
 	//Selector
 	const publicKey = useSelector(getPublicKey);
-	const { isUnlocked, isConnected, isAvailable } = useSelector(getSignerStatus);
+	const { isConnected, isAvailable } = useSelector(getSignerStatus);
 
 	//State
 	const [errorMessage, setErrorMessage] = useState();
