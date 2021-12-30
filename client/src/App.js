@@ -1,11 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import store from './store';
 import modules from './components';
 import Page404 from './components/Common/Page404';
 import Layout from './components/Common/Layout';
 
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './assets/css/style.scss';
@@ -27,6 +29,17 @@ const App = () => {
 					</Routes>
 				</Layout>
 			</BrowserRouter>
+			<ToastContainer
+				position="bottom-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
 		</Provider>
 	);
 };

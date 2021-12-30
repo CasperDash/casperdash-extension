@@ -13,6 +13,15 @@ jest.mock('../../actions/stakeActions', () => {
 	};
 });
 
+jest.mock('../Common/Layout/HeadingComponent/Heading', () => {
+	return {
+		__esModule: true,
+		default: () => {
+			return <div />;
+		},
+	};
+});
+
 jest.mock('../hooks/useStakeDeploys', () => {
 	return {
 		__esModule: true,
