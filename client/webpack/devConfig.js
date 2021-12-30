@@ -8,6 +8,7 @@ module.exports = (isWeb) =>
 					historyApiFallback: true,
 					port: 3000,
 				},
+				devtool: 'eval-source-map',
 		  }
 		: {
 				output: {

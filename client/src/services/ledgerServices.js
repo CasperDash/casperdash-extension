@@ -34,12 +34,9 @@ export const getLedgerPublicKey = async (app, keyPath = 0) => {
 	return await app.getAddressAndPubKey(`m/44'/506'/0'/0/${keyPath}`);
 };
 
-export const handleLedgerError = (error) => {
+export const getLedgerError = (error) => {
 	if ('TransportInterfaceNotAvailable' === error.name) {
-		alert('You must open the Casper app on your Ledger device to connect.');
-	} else if ('TransportOpenUserCancelled' === error.name) {
-		alert(error.message);
-	} else {
-		alert(error);
+		return 'You must open the Casper app on your Ledger device to connect.';
 	}
+	return error.message;
 };

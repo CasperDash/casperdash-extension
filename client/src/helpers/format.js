@@ -55,6 +55,9 @@ export const displayNaN = (value) => {
  * @param {number} end
  */
 export const getEndString = (fullString, end) => {
+	if (typeof fullString !== 'string') {
+		return fullString;
+	}
 	if (typeof end === 'string') {
 		return end;
 	} else if (typeof end === 'number') {
