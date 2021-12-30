@@ -53,9 +53,27 @@
 input {
 	background-color: var(--secondary-text-color-light) !important;
 	color: var(--primary-text-color) !important;
-	border-radius: 16px !important;
+	border-radius: 12px !important;
 	padding: 10px !important;
 	border: 0 !important;
+}
+.cd_we_dropdown {
+	input {
+		background-color: transparent !important;
+	}
+	div[class$='-control'] {
+		border: 0;
+		background: var(--secondary-text-color-light);
+		border-radius: 12px;
+	}
+	div[class$='-option'] {
+		background-color: var(--secondary-text-color-light);
+		color: var(--secondary-text-color) !important;
+		&:hover {
+			color: var(--primary-text-color) !important;
+			cursor: pointer;
+		}
+	}
 }
 
 .cd_we_input_label {

@@ -17,17 +17,21 @@ export const SendReceive = ({ token }) => {
 		<div className="cd_we_send_receive_buttons">
 			<div className="cd_we_send_receive_item" onClick={onSendClick}>
 				<div className="cd_we_send_receiver_icon">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="currentColor"
-						className="bi bi-arrow-up"
-						viewBox="0 0 16 16"
-					>
+					<svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
-							fillRule="evenodd"
-							d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
+							d="M6.4162 10.7646L14.5 2.68079M14.5 2.68079L22.5838 10.7646M14.5 2.68079V19.3819"
+							stroke="#FA2852"
+							strokeWidth="3"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
+						<path
+							opacity="0.2"
+							d="M8 24.7606H21"
+							stroke="#FA2852"
+							strokeWidth="3"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						/>
 					</svg>
 				</div>
@@ -35,17 +39,21 @@ export const SendReceive = ({ token }) => {
 			</div>
 			<div className="cd_we_send_receive_item" onClick={onReceiveClick}>
 				<div className="cd_we_send_receiver_icon">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="currentColor"
-						className="bi bi-arrow-down"
-						viewBox="0 0 16 16"
-					>
+					<svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
-							fillRule="evenodd"
-							d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"
+							d="M6.4162 11.2982L14.5 19.382M14.5 19.382L22.5838 11.2982M14.5 19.382V2.68081"
+							stroke="#FA2852"
+							strokeWidth="3"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
+						<path
+							opacity="0.2"
+							d="M8 24.7606H21"
+							stroke="#FA2852"
+							strokeWidth="3"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						/>
 					</svg>
 				</div>
