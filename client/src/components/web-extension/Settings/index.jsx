@@ -62,7 +62,7 @@ const Settings = () => {
 	const dispatch = useDispatch();
 
 	return (
-		<section className="cd_we_single_section">
+		<section className="cd_we_single_section no_bottom_bar">
 			{SETTINGS.map((setting) => {
 				return (
 					<div className="cd_setting_row" key={setting.name} onClick={() => setting.action(dispatch)}>

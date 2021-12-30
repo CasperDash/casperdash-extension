@@ -16,6 +16,8 @@ const Layout = (props) => {
 	const ref = useRef(null);
 	const location = useLocation();
 
+	const isInnerPage = props.modules && props.modules.includes(location.pathname);
+
 	// Selector
 	const isLoading = useSelector(isLoadingRequest);
 	// const publicKey = useSelector(getPublicKey);
@@ -41,17 +43,11 @@ const Layout = (props) => {
 	return (
 		<div className={`cd_all_pages_content`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} className="loading_indicator" />
-			{props.modules && props.modules.includes(location.pathname) ? (
-				<>
-					<Header />
-					<BottomBar modules={props.modules} />
-				</>
-			) : (
-				<InnerHeader />
-			)}
+			{isInnerPage ? <Header /> : <InnerHeader />}
 			<div className="cd_web_extension_content">
 				<Outlet />
 			</div>
+			{isInnerPage && <BottomBar modules={props.modules} />}
 		</div>
 	);
 };

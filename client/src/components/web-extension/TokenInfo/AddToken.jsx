@@ -33,7 +33,7 @@ export const AddToken = () => {
 	};
 
 	return (
-		<section className="cd_we_add_token cd_we_single_section">
+		<section className="cd_we_add_token cd_we_single_section no_bottom_bar">
 			<div className="cd_we_input_label">Token Address</div>
 			<input value={tokenAddress} onChange={(e) => setTokenAddress(e.target.value)} />
 			<div className="cd_error_text">{error}</div>

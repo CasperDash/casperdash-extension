@@ -9,5 +9,11 @@
 	"browser_action": {
 		"default_icon": "512.png",
 		"default_popup": "popup.html"
+	},
+	"cross_origin_embedder_policy": {
+		"value": "require-corp"
+	},
+	"cross_origin_opener_policy": {
+		"value": "same-origin"
 	}
 }

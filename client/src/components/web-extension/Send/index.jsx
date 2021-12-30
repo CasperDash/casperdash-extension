@@ -13,7 +13,7 @@ const Send = () => {
 	} = location;
 
 	return (
-		<section className="cd_we_send_page cd_we_single_section">
+		<section className="cd_we_send_page cd_we_single_section no_bottom_bar">
 			{hash === '#confirm' ? <ConfirmSend token={token} /> : <SendForm token={token} />}
 		</section>
 	);

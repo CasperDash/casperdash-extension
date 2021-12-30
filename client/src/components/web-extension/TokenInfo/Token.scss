@@ -4,7 +4,8 @@
 		flex-direction: column;
 		align-items: center;
 		background-color: var(--component-background);
-		border-radius: 40px;
+		border-radius: 26px;
+		margin: 0 10px 10px;
 		.cd_we_token_info {
 			display: flex;
 			flex-direction: column;
@@ -26,9 +27,7 @@
 	}
 	.cd_we_token_history {
 		background-color: var(--component-background);
-		border-radius: 40px 40px 0 0;
-		margin-top: 20px;
-		height: 321px;
+		border-radius: 26px 26px 0 0;
 		overflow: auto;
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
@@ -42,7 +41,7 @@
 			.cd_token_status {
 				padding: 5px 10px;
 				margin-right: 10px;
-				border-radius: 40px;
+				border-radius: 26px;
 				&.active,
 				&:hover {
 					background: var(--primary-light-color);

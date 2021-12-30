@@ -1,8 +1,6 @@
 @import '../../assets/css/extension/normalize.scss';
 
 :root {
-	width: 357px;
-	height: 600px;
 	--primary-background: #f6f6f6;
 	--component-background: #ffffff;
 	--primary-text-color: #232635;
@@ -44,10 +42,6 @@
 	&:hover {
 		border-color: var(--primary-color);
 	}
-}
-
-.cd_all_pages_content {
-	color: var(--primary-text-color);
 }
 
 input {
@@ -113,5 +107,20 @@ input {
 			width: 50%;
 			margin: 5px;
 		}
+	}
+}
+
+.cd_all_pages_content {
+	width: 50%;
+	height: 100vh;
+	margin: auto;
+	color: var(--primary-text-color);
+}
+
+@media (max-width: 400px) {
+	.cd_all_pages_content {
+		width: 357px;
+		height: 600px;
+		color: var(--primary-text-color);
 	}
 }
