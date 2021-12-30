@@ -9,6 +9,7 @@ import DeployDetails from '../../components/web-extension/DeployDetails';
 import { AddToken } from '../../components/web-extension/TokenInfo/AddToken';
 import ConnectAccount from '../../components/web-extension/ConnectAccount';
 import { AddPublicKey } from '../../components/web-extension/ConnectAccount/AddPublicKey';
+import Settings from '../../components/web-extension/Settings';
 
 let features;
 try {
@@ -35,6 +36,7 @@ const routes = {
 		{ name: 'token', route: '/token', component: Token },
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
+		{ name: 'Settings', route: '/settings', component: Settings },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

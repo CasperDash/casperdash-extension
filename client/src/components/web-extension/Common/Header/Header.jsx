@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import casperDashLogo from 'assets/image/casperdash-red-black.png';
 import { getUserDetails } from '../../../../actions/userActions';
 import { getPublicKey } from '../../../../selectors/user';
@@ -7,20 +8,24 @@ import { useAutoRefreshEffect } from '../../../../components/hooks/useAutoRefres
 import './Header.scss';
 
 export const Header = () => {
+	// Hook
 	const dispatch = useDispatch();
-	//Selector
+	const navigate = useNavigate();
+
+	// Selector
 	const publicKey = useSelector(getPublicKey);
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
 		}
 	}, publicKey);
+
 	return (
 		<div className="cd_we_header">
 			<div className="cd_we_logo">
 				<img src={casperDashLogo} alt="casperdash-logo" />
 			</div>
-			<div className="cd_we_settings">
+			<div className="cd_we_settings" onClick={() => navigate('/settings', { state: { name: 'Settings' } })}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"

@@ -1,0 +1,32 @@
+.cd_setting_row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 32px;
+	cursor: pointer;
+	.cd_setting_row_left {
+		display: flex;
+		align-items: center;
+		.cd_setting_name {
+			font-size: 16px;
+		}
+		.cd_setting_icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-right: 10px;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			&.cd_we_setting_about {
+				background: var(--primary-light-color);
+			}
+			&.cd_we_setting_sites {
+				background: #b9ccfb;
+			}
+			&.cd_we_setting_lock {
+				background: #daf3cd;
+			}
+		}
+	}
+}

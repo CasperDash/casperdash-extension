@@ -52,3 +52,9 @@ export const getConnectedAccountFromLocalStorage = () => {
 		return undefined;
 	};
 };
+
+export const lockAccount = () => {
+	return (dispatch) => {
+		dispatch(setPublicKey());
+	};
+};
