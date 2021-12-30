@@ -1,28 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
-<<<<<<< Updated upstream:client/src/App.js
+import { ToastContainer } from 'react-toastify';
 import store from './store';
 import modules from './components';
 import Page404 from './components/Common/Page404';
 import Layout from './components/Common/Layout';
 
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './assets/css/style.scss';
 import './assets/css/light-theme.scss';
-=======
-import { ToastContainer } from 'react-toastify';
-import store from '../../store';
-import modules from '../../components/web';
-import Page404 from '../../components/Common/Page404';
-import Layout from '../../components/Common/Layout';
-
-import 'react-toastify/dist/ReactToastify.css';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../../assets/css/style.scss';
-import '../../assets/css/light-theme.scss';
->>>>>>> Stashed changes:client/src/app/web/App.js
 
 const App = () => {
 	const routes = Object.keys(modules).map((item) => {

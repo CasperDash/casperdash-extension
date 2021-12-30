@@ -9,19 +9,16 @@ import { switchTheme } from '../../../../actions/settingActions';
 import { isValidPublicKey } from '../../../../helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
 import { MiddleTruncatedText } from '../../MiddleTruncatedText';
-import { setLedgerOptions } from '../../../../actions/ledgerActions';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
-import { getLedgerPublicKey, handleLedgerError, initLedgerApp } from '../../../../services/ledgerServices';
 import useCasperSigner from '../../../hooks/useCasperSigner';
+import useLedger from '../../../hooks/useLedger';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 
 const HeadingModule = (props) => {
 	// Hook
 	const publicKey = useSelector(getPublicKey);
-
-	const { casperApp } = useSelector(getLedgerOptions);
 	const dispatch = useDispatch();
 	const { ConnectSignerButton, isAvailable } = useCasperSigner();
+	const { handleConnectLedger } = useLedger();
 
 	// Selector
 	const theme = useSelector(getTheme);
@@ -30,33 +27,14 @@ const HeadingModule = (props) => {
 	const [showPublicKeyInput, setShowPublicKeyInput] = useState(false);
 	const [publicKeyError, setPublicKeyError] = useState('');
 
+	// Effect
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
 		}
 	}, [publicKey, dispatch]);
 
-	const handleConnectLedger = async () => {
-		try {
-			const app = await initLedgerApp();
-			const response = await getLedgerPublicKey(app);
-			if (!response.publicKey) {
-				alert('You must unlock the Casper App on your Ledger device to connect.');
-				return;
-			}
-
-			const key = `02${response.publicKey.toString('hex')}`;
-			dispatch(setPublicKey(key));
-			dispatch(
-				setLedgerOptions({
-					app,
-				}),
-			);
-		} catch (error) {
-			handleLedgerError(error);
-		}
-	};
-
+	// Function
 	const onClickViewMode = () => {
 		setShowPublicKeyInput(true);
 	};
