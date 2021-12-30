@@ -90,11 +90,10 @@ const useCasperSigner = () => {
 	const ConnectSignerButton = () => {
 		return (
 			<>
-				{!isConnected && !publicKey && (
-					<Button className="cd_all_page_logout_btn" onClick={handleConnectCasper}>{`Connect Casper`}</Button>
-				)}
-				{isConnected && !isUnlocked && !publicKey && (
-					<Button className="cd_all_page_logout_btn" onClick={handleConnectCasper}>{`Unlock Signer`}</Button>
+				{!publicKey && (
+					<Button className="cd_all_page_logout_btn" onClick={handleConnectCasper}>
+						{!isConnected ? `Connect Casper` : `Unlock Signer`}
+					</Button>
 				)}
 			</>
 		);
