@@ -10,6 +10,18 @@ module.exports = (dir) =>
 		output: {
 			path: path.resolve(dir, 'build_extension'),
 		},
+		module: {
+			rules: [
+				{
+					test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+					type: 'asset/resource',
+				},
+				{
+					test: /\.svg$/,
+					use: ['@svgr/webpack'],
+				},
+			],
+		},
 		plugins: [
 			new HtmlWebpackPlugin({
 				template: path.resolve(dir, '/template/extension/popup.html'),

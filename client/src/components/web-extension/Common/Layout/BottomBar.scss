@@ -21,6 +21,11 @@
 	.cd_page_bottom_bar_items {
 		padding-left: 16px;
 		padding-right: 16px;
+		svg {
+			path {
+				fill: var(--primary-text-color);
+			}
+		}
 		.active {
 			svg {
 				rect {
@@ -28,7 +33,6 @@
 				}
 				path {
 					fill: var(--primary-color);
-					stroke: var(--primary-color);
 				}
 			}
 		}

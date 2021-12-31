@@ -22,10 +22,6 @@ module.exports = (dir) => ({
 				test: /\.html$/,
 				use: ['html-loader'],
 			},
-			{
-				test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
-				type: 'asset/resource',
-			},
 		],
 	},
 	plugins: [
