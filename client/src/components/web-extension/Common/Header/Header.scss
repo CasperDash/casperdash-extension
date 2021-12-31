@@ -2,15 +2,21 @@
 	display: flex;
 	padding: 10px 0 10px 0;
 	width: 100%;
-
+	align-items: center;
 	.cd_we_logo {
 		display: flex;
 		align-items: center;
 		margin-right: 15px;
 		margin-left: 15px;
-		img {
+
+		svg {
 			height: 24px;
+			width: 24px;
 		}
+	}
+	.cd_we_page_name {
+		font-size: 22px;
+		font-weight: 600;
 	}
 	.cd_we_settings {
 		margin-left: auto;

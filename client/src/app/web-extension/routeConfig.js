@@ -1,3 +1,6 @@
+import HomeIcon from 'assets/image/home-icon.svg';
+import NFTIcon from 'assets/image/nft-menu-icon.svg';
+import StackingIcon from 'assets/image/stacking-icon.svg';
 import APP_CONFIGS from '../../config';
 import Stake from '../../components/web/Stake';
 import NFTs from '../../components/web/NFTs';
@@ -25,10 +28,9 @@ try {
 const routes = {
 	// Routes in menu bar
 	mainRoutes: [
-		{ name: 'home', route: '/', component: Wallets },
-		{ name: 'dashboard', route: '/dashboard', component: Wallets },
-		{ name: 'staking', route: '/staking', component: Stake },
-		{ name: 'nfts', route: '/NFTs', component: NFTs },
+		{ name: 'Home', route: '/', component: Wallets, icon: HomeIcon },
+		{ name: 'Stacking', route: '/staking', component: Stake, icon: NFTIcon },
+		{ name: 'My NFTs', route: '/NFTs', component: NFTs, icon: StackingIcon },
 	],
 	// Routes which navigate from main routes
 	innerRoutes: [
