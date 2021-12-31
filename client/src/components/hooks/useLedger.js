@@ -10,7 +10,7 @@ const useLedger = () => {
 	const dispatch = useDispatch();
 
 	// Function
-	const handleConnectLedger = async () => {
+	const handleConnectLedger = async (callback) => {
 		try {
 			const app = await initLedgerApp();
 			const response = await getLedgerPublicKey(app);
@@ -26,6 +26,7 @@ const useLedger = () => {
 					app,
 				}),
 			);
+			typeof callback === 'function' && callback();
 		} catch (error) {
 			toast.error(getLedgerError(error));
 		}

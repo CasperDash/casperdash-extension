@@ -1,12 +1,14 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import store from '../../store';
 import Layout from '../../components/web-extension/Common/Layout';
 import OuterLayout from '../../components/web-extension/Common/Layout/OuterLayout';
 import WithAccount from '../../components/Common/Auth/WithAccount';
 import routeConfig from './routeConfig';
 
+import 'react-toastify/dist/ReactToastify.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
@@ -25,7 +27,7 @@ const App = () => {
 
 	return (
 		<Provider store={store}>
-			<MemoryRouter>
+			<HashRouter>
 				<Routes>
 					<Route
 						element={
@@ -39,7 +41,18 @@ const App = () => {
 					</Route>
 					<Route element={<OuterLayout />}>{getRoutes(outerRoutes)}</Route>
 				</Routes>
-			</MemoryRouter>
+				<ToastContainer
+					position="top-center"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
+			</HashRouter>
 		</Provider>
 	);
 };

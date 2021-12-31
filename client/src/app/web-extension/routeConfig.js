@@ -8,6 +8,7 @@ import Token from '../../components/web-extension/TokenInfo';
 import DeployDetails from '../../components/web-extension/DeployDetails';
 import { AddToken } from '../../components/web-extension/TokenInfo/AddToken';
 import ConnectAccount from '../../components/web-extension/ConnectAccount';
+import ConnectDevice from '../../components/web-extension/ConnectAccount/ConnectDevice';
 import { AddPublicKey } from '../../components/web-extension/ConnectAccount/AddPublicKey';
 import Settings from '../../components/web-extension/Settings';
 
@@ -42,6 +43,7 @@ const routes = {
 	outerRoutes: [
 		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
+		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },
 	],
 };
 export default Object.keys(routes).reduce((out, key) => {

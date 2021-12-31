@@ -15,6 +15,10 @@ module.exports = (dir) =>
 				template: path.resolve(dir, '/template/extension/popup.html'),
 				filename: 'popup.html',
 			}),
+			new HtmlWebpackPlugin({
+				template: path.resolve(dir, '/template/extension/popup.html'),
+				filename: 'home.html',
+			}),
 			new CopyWebpackPlugin({
 				patterns: [
 					{

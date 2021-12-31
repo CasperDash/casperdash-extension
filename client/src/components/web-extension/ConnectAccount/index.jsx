@@ -1,13 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import useLedger from '../../hooks/useLedger';
+import { newTab } from '../../../helpers/extension/tab';
 import casperDashLogo from '../../../assets/image/Logo-only.svg';
 import './index.scss';
 
 const ConnectAccount = () => {
 	const navigate = useNavigate();
-	const { handleConnectLedger } = useLedger();
+
+	const handleConnectLedger = () => {
+		newTab({ route: '/connectDevice' });
+	};
 
 	return (
 		<div className="cd_we_connect_account">
