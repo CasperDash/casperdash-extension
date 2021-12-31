@@ -1,0 +1,16 @@
+.cd_middle_truncated_text {
+	width: 100%;
+	display: inline-flex;
+	flex-wrap: nowrap;
+
+	.cd_middle_truncated_text-begin {
+		flex: 0 1 content;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.cd_middle_truncated_text-end {
+		flex: 1 0 content;
+		white-space: nowrap;
+	}
+}

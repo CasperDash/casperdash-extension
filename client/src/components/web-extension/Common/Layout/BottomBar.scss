@@ -1,0 +1,37 @@
+.cd_page_bottom_bar_nav {
+	top: auto;
+	border: none;
+	bottom: 0;
+	height: 64px;
+	background: var(--component-background);
+	box-shadow: 0px 0px 80px rgba(55, 62, 125, 0.05);
+	border-radius: 40px 40px 0px 0px;
+	margin-bottom: 0;
+	position: fixed;
+	display: flex;
+	z-index: 99999;
+	width: 100%;
+	.cd_page_bottom_bar_item_wrapper {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		padding-left: 16px;
+		padding-right: 16px;
+		align-items: center;
+	}
+	.cd_page_bottom_bar_items {
+		padding-left: 16px;
+		padding-right: 16px;
+		.active {
+			svg {
+				rect {
+					fill: var(--primary-color);
+				}
+				path {
+					fill: var(--primary-color);
+					stroke: var(--primary-color);
+				}
+			}
+		}
+	}
+}

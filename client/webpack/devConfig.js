@@ -11,5 +11,10 @@ module.exports = (isWeb) =>
 				devtool: 'eval-source-map',
 		  }
 		: {
-				devtool: 'cheap-module-source-map',
+				output: {
+					filename: 'static/js/[name].js',
+					assetModuleFilename: 'assets/images/[name][ext][query]',
+					chunkFilename: 'static/js/[name].js',
+				},
+				devtool: 'inline-source-map',
 		  };

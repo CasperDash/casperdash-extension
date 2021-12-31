@@ -1,0 +1,19 @@
+.cd_we_send_page {
+	padding: 20px 10px;
+	div[class^='cd_we_send'] {
+		padding: 10px;
+	}
+	.cd_we_send_actions {
+		width: 100%;
+		.cd_we_send_confirm_btn {
+			width: 100%;
+		}
+	}
+	.cd_we_confirm {
+		.cd_we_confirm_row {
+			.cd_we_confirm_address {
+				word-break: break-all;
+			}
+		}
+	}
+}

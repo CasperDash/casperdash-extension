@@ -6,7 +6,7 @@ const common = require('./commonConfig');
 module.exports = (dir) =>
 	merge(common(dir), {
 		target: ['browserslist'],
-		entry: path.resolve(dir, 'src/index.js'),
+		entry: path.resolve(dir, 'src/app/web/index.js'),
 		output: {
 			path: path.resolve(dir, 'build'),
 		},

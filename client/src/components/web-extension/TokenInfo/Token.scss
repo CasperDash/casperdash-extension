@@ -1,0 +1,53 @@
+.cd_we_token_details_page {
+	.cd_we_token_info_header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: var(--component-background);
+		border-radius: 40px;
+		.cd_we_token_info {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 20px 0;
+			.cd_we_token_info_balance {
+				display: flex;
+				font-weight: bold;
+				font-size: 1.8em;
+				div {
+					padding-left: 5px;
+				}
+			}
+			.cd_we_token_info_value {
+				color: var(--secondary-text-color);
+				font-size: 1.4em;
+			}
+		}
+	}
+	.cd_we_token_history {
+		background-color: var(--component-background);
+		border-radius: 40px 40px 0 0;
+		margin-top: 20px;
+		height: 321px;
+		overflow: auto;
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		.cd_we_token_status_filter {
+			padding: 20px 20px 0;
+			display: flex;
+			.cd_token_status {
+				padding: 5px 10px;
+				margin-right: 10px;
+				border-radius: 40px;
+				&.active,
+				&:hover {
+					background: var(--primary-light-color);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,30 @@
+.cd_we_grid {
+	padding: 15px 10px;
+	.cd_we_item {
+		padding: 15px 5px;
+		border-bottom: 1px solid var(--secondary-text-color-light);
+		display: flex;
+		justify-content: space-between;
+		&.clickable {
+			cursor: pointer;
+		}
+		.cd_we_item_left {
+			max-width: 150px;
+		}
+		.cd_we_item_right {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			max-width: 150px;
+		}
+		.cd_we_item_value {
+			&.secondary {
+				color: var(--secondary-text-color);
+			}
+			&.primary {
+				margin-bottom: 5px;
+				font-weight: bold;
+			}
+		}
+	}
+}

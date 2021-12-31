@@ -1,0 +1,27 @@
+.cd_we_main_content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin: 10px;
+	background: var(--component-background);
+	border-radius: 24px;
+	backdrop-filter: blur(40px);
+}
+.cd_we_main_details {
+	height: 300px;
+	overflow: auto;
+	border-radius: 40px 40px 0 0;
+	padding-bottom: 60px;
+	background: var(--component-background);
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.cd_we_action {
+	margin: 15px;
+	cursor: pointer;
+}

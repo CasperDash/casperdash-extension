@@ -1,0 +1,71 @@
+@import '../../assets/css/extension/normalize.scss';
+
+:root {
+	width: 357px;
+	height: 600px;
+	--primary-background: #f6f6f6;
+	--component-background: #ffffff;
+	--primary-text-color: #232635;
+	--secondary-text-color: #777e91;
+	--secondary-text-color-light: #f6f7fa;
+	--primary-color: #ec1c24;
+	--primary-light-color: #fbd2d3;
+
+	--bs-body-bg: var(--primary-background);
+	--bs-body-font-size: 0.8em;
+	--bs-success: #83bd67;
+	--bs-danger: #fa2852;
+	--bs-warning: #ffcd1a;
+}
+
+.btn-primary {
+	background-color: var(--primary-color);
+	border-color: var(--primary-color);
+	&:hover {
+		background-color: var(--primary-color);
+		border-color: var(--primary-color);
+	}
+}
+
+.cd_all_pages_content {
+	color: var(--primary-text-color);
+}
+
+input {
+	background-color: var(--component-background);
+	color: var(--primary-text-color) !important;
+}
+
+.success {
+	color: var(--bs-success) !important;
+}
+.fail {
+	color: #e2507a !important;
+}
+.pending {
+	color: #f9a22a !important;
+}
+
+.cd_error_text {
+	color: #e2507a;
+	font-size: 0.8em;
+	font-weight: 600;
+}
+
+.cd_we_confirm {
+	.cd_we_confirm_row {
+		padding-bottom: 15px;
+		:first-child {
+			color: #828cae;
+		}
+	}
+	.cd_we_confirm_buttons {
+		display: flex;
+		justify-content: space-around;
+		margin-top: 20px;
+		button {
+			width: 50%;
+			margin: 5px;
+		}
+	}
+}

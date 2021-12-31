@@ -5,6 +5,10 @@ import { TOKENS } from '../store/actionTypes';
 
 export const tokensSelector = getQuerySelector({ type: TOKENS.FETCH_TOKENS_INFO_WITH_BALANCE });
 
+export const isFetchingTokensInfo = createSelector(tokensSelector, (token) => {
+	return token.loading;
+});
+
 export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) => {
 	if (!Array.isArray(data)) {
 		return [];
@@ -25,7 +29,7 @@ export const getMassagedTokenData = createSelector(tokensSelector, ({ data }) =>
 										? parseFloat(datum.balance.hex / 10 ** decimals).toFixed(2)
 										: 0,
 						  }
-						: { displayValue: datum.balance },
+						: { displayValue: datum.balance || 0 },
 				total_supply: {
 					...datum.total_supply,
 					displayValue:
