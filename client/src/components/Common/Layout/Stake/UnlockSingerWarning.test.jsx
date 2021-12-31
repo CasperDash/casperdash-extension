@@ -3,6 +3,15 @@ import { render, cleanup } from '@testing-library/react';
 import * as redux from 'react-redux';
 import UnlockSingerWarning from './UnlockSingerWarning';
 
+jest.mock('../HeadingComponent/Heading', () => {
+	return {
+		__esModule: true,
+		default: () => {
+			return <div />;
+		},
+	};
+});
+
 afterEach(cleanup);
 
 describe('UnlockSingerWarning', () => {
@@ -16,7 +25,6 @@ describe('UnlockSingerWarning', () => {
 		spyOnUseSelector.mockReturnValue([]);
 		const { queryAllByText } = render(<UnlockSingerWarning title="Title" message={'Warning message'} />);
 
-		expect(queryAllByText('Title')[0].textContent).toBe('Title');
 		expect(queryAllByText('Warning message')[0].textContent).toBe('Warning message');
 	});
 });
