@@ -7,6 +7,10 @@ import Send from '../../components/web-extension/Send';
 import Token from '../../components/web-extension/TokenInfo';
 import DeployDetails from '../../components/web-extension/DeployDetails';
 import { AddToken } from '../../components/web-extension/TokenInfo/AddToken';
+import ConnectAccount from '../../components/web-extension/ConnectAccount';
+import ConnectDevice from '../../components/web-extension/ConnectAccount/ConnectDevice';
+import { AddPublicKey } from '../../components/web-extension/ConnectAccount/AddPublicKey';
+import Settings from '../../components/web-extension/Settings';
 
 let features;
 try {
@@ -33,6 +37,13 @@ const routes = {
 		{ name: 'token', route: '/token', component: Token },
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
+		{ name: 'Settings', route: '/settings', component: Settings },
+	],
+	// Routes which do not relate to main routes
+	outerRoutes: [
+		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
+		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
+		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },
 	],
 };
 export default Object.keys(routes).reduce((out, key) => {

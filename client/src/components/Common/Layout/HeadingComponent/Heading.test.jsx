@@ -16,6 +16,35 @@ jest.mock('../../../../selectors/signer', () => {
 	};
 });
 
+jest.mock('../../../../services/localStorage', () => {
+	return {
+		setLocalStorageValue: jest.fn(),
+		getLocalStorageValue: jest.fn(),
+	};
+});
+
+jest.mock('../../../hooks/useCasperSigner', () => {
+	return {
+		__esModule: true,
+		default: () => {
+			return {
+				ConnectSignerButton: () => <div />,
+			};
+		},
+	};
+});
+
+jest.mock('../../../hooks/useLedger', () => {
+	return {
+		__esModule: true,
+		default: () => {
+			return {
+				handleConnectLedger: jest.fn(),
+			};
+		},
+	};
+});
+
 let spyOnUseSelector;
 let spyOnUseDispatch;
 let mockDispatch;

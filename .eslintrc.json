@@ -4,7 +4,8 @@
 		"commonjs": true,
 		"node": true,
 		"es6": true,
-		"jest": true
+		"jest": true,
+		"webextensions": true
 	},
 	"globals": {
 		"describe": true,

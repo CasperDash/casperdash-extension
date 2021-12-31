@@ -3,13 +3,14 @@ import { toast } from 'react-toastify';
 import { setPublicKey } from '../../actions/userActions';
 import { setLedgerOptions } from '../../actions/ledgerActions';
 import { getLedgerPublicKey, getLedgerError, initLedgerApp } from '../../services/ledgerServices';
+import { CONNECTION_TYPES } from '../../constants/settings';
 
 const useLedger = () => {
 	// Hook
 	const dispatch = useDispatch();
 
 	// Function
-	const handleConnectLedger = async () => {
+	const handleConnectLedger = async (callback) => {
 		try {
 			const app = await initLedgerApp();
 			const response = await getLedgerPublicKey(app);
@@ -19,12 +20,13 @@ const useLedger = () => {
 			}
 
 			const key = `02${response.publicKey.toString('hex')}`;
-			dispatch(setPublicKey(key));
+			dispatch(setPublicKey(key, CONNECTION_TYPES.ledger));
 			dispatch(
 				setLedgerOptions({
 					app,
 				}),
 			);
+			typeof callback === 'function' && callback();
 		} catch (error) {
 			toast.error(getLedgerError(error));
 		}

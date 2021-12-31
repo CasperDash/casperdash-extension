@@ -50,8 +50,8 @@ const TokenDetails = () => {
 	};
 
 	return (
-		<section className="cd_we_token_details_page">
-			<div className="cd_we_token_info_header">
+		<section className="cd_we_token_details_page cd_we_multi_section no_bottom_bar">
+			<div className="cd_we_token_info_header main_section">
 				<div className="cd_we_token_info">
 					<div className="cd_we_token_info_balance">
 						<img />
@@ -62,7 +62,7 @@ const TokenDetails = () => {
 				</div>
 				<SendReceive token={tokenInfo} />
 			</div>
-			<div className="cd_we_token_history">
+			<div className="cd_we_token_history sub_section">
 				<div className="cd_we_token_status_filter">
 					{STATUS_MAPPING.map((status, i) => (
 						<div

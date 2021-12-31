@@ -5,9 +5,8 @@
 	height: 64px;
 	background: var(--component-background);
 	box-shadow: 0px 0px 80px rgba(55, 62, 125, 0.05);
-	border-radius: 40px 40px 0px 0px;
+	border-radius: 26px 26px 0px 0px;
 	margin-bottom: 0;
-	position: fixed;
 	display: flex;
 	z-index: 99999;
 	width: 100%;
@@ -22,6 +21,11 @@
 	.cd_page_bottom_bar_items {
 		padding-left: 16px;
 		padding-right: 16px;
+		svg {
+			path {
+				fill: var(--primary-text-color);
+			}
+		}
 		.active {
 			svg {
 				rect {
@@ -29,7 +33,6 @@
 				}
 				path {
 					fill: var(--primary-color);
-					stroke: var(--primary-color);
 				}
 			}
 		}

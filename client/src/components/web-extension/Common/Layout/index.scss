@@ -1,0 +1,21 @@
+.cd_all_pages_content {
+	.cd_web_extension_content {
+		.cd_we_single_section {
+			background: var(--component-background);
+			padding: 20px 15px 0;
+			border-radius: 26px 26px 0 0;
+		}
+		.no_bottom_bar {
+			height: calc(100vh - 63px);
+		}
+		.with_bottom_bar {
+			height: calc(100vh - 63px - 64px);
+		}
+		.main_section {
+			height: 200px;
+		}
+		.sub_section {
+			height: calc(100% - 200px - 10px);
+		}
+	}
+}

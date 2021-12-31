@@ -51,17 +51,17 @@ const ConfirmSend = ({ token }) => {
 	return (
 		<div className="cd_we_confirm">
 			<div className="cd_we_confirm_row">
-				<div>Asset</div>
+				<div className="cd_we_input_label">Asset</div>
 				<div>{symbol}</div>
 			</div>
 			<div className="cd_we_confirm_row">
-				<div>Transfer Amount</div>
+				<div className="cd_we_input_label">Transfer Amount</div>
 				<div>
 					{toFormattedNumber(amount)} ({toFormattedCurrency(amount * price)})
 				</div>
 			</div>
 			<div className="cd_we_confirm_row">
-				<div>Network Fee</div>
+				<div className="cd_we_input_label">Network Fee</div>
 				<div>{fee} CSPR</div>
 			</div>
 			<div className="cd_we_confirm_row">
@@ -69,7 +69,7 @@ const ConfirmSend = ({ token }) => {
 				<div className="cd_we_confirm_address">{toAddress}</div>
 			</div>
 			<div className="cd_we_confirm_row">
-				<div>Transfer ID</div>
+				<div className="cd_we_input_label">Transfer ID</div>
 				<div>{transferId}</div>
 			</div>
 			<div className="cd_we_confirm_row cd_error_text">{error}</div>

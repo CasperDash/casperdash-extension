@@ -54,7 +54,7 @@ const SendForm = ({ token }) => {
 			{({ errors, values, handleChange, handleSubmit }) => (
 				<Form noValidate onSubmit={handleSubmit}>
 					<div className="cd_we_send_token">
-						<div>Assets</div>
+						<div className="cd_we_input_label">Assets</div>
 						<Form.Group controlId="cd_token_dropdown">
 							<Field
 								name="address"
@@ -66,7 +66,7 @@ const SendForm = ({ token }) => {
 						<Form.Control.Feedback type="invalid">{errors.nftContract}</Form.Control.Feedback>
 					</div>
 					<div className="cd_we_send_amount">
-						<div>Transfer Amount</div>
+						<div className="cd_we_input_label">Transfer Amount</div>
 						<FormControl
 							value={values.sendAmount}
 							name="sendAmount"
@@ -80,7 +80,7 @@ const SendForm = ({ token }) => {
 						<Form.Control.Feedback type="invalid">{errors.sendAmount}</Form.Control.Feedback>
 					</div>
 					<div className="cd_we_send_address">
-						<div>Receiving Address</div>
+						<div className="cd_we_input_label">Receiving Address</div>
 						<FormControl
 							value={values.toAddress}
 							name="toAddress"
@@ -94,7 +94,7 @@ const SendForm = ({ token }) => {
 						<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
 					</div>
 					<div className="cd_we_send_transfer_id">
-						<div>Transfer ID (optional)</div>
+						<div className="cd_we_input_label">Transfer ID (optional)</div>
 						<FormControl
 							value={values.transferId}
 							name="transferId"
@@ -109,7 +109,7 @@ const SendForm = ({ token }) => {
 						<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
 					</div>
 					<div className="cd_we_send_fee">
-						<div>Network Fee</div>
+						<div className="cd_we_input_label">Network Fee</div>
 						<div>{token ? token.transferFee : 1} CSPR</div>
 					</div>
 

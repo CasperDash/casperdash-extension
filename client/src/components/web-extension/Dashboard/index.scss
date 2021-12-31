@@ -8,9 +8,9 @@
 	backdrop-filter: blur(40px);
 }
 .cd_we_main_details {
-	height: 300px;
+	height: calc(100% - 200px - 10px + 64px) !important;
 	overflow: auto;
-	border-radius: 40px 40px 0 0;
+	border-radius: 26px 26px 0 0;
 	padding-bottom: 60px;
 	background: var(--component-background);
 	-ms-overflow-style: none; /* IE and Edge */
