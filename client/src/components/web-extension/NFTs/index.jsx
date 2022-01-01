@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import NFTEmptyImage from 'assets/image/nft-empty.png';
 import CasperDashNFTEmpty from 'assets/image/cd-nft-empty.png';
 import nftHeaderImage from 'assets/image/nft-header.png';
 import SearchIcon from 'assets/image/search-icon.svg';
-import ArrowUpIcon from 'assets/image/arrow-up.svg';
 import { getOwnNFTContractHash } from '../../../selectors/NFTs';
 import { getNFTInfo } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
@@ -70,7 +68,14 @@ const NFTs = () => {
 							return (
 								<div key={index} className="cd_we_nft_card">
 									<div className="cd_we_ndt_card_img">
-										<img src={image.value} />
+										<img
+											src={image.value}
+											alt={tokenName}
+											onError={(e) => {
+												e.target.error = null;
+												e.target.src = nftHeaderImage;
+											}}
+										/>
 									</div>
 									<div className="cd_we_nft_name">{tokenName.value}</div>
 									<div className="cd_we_nft_collectible">{nft.name}</div>
