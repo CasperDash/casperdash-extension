@@ -2,7 +2,7 @@ import React from 'react';
 import ArrowUpIcon from 'assets/image/arrow-up.svg';
 
 const SORT_BY = [
-	{ label: 'Collectible', attr: 'collectible' },
+	{ label: 'Collection', attr: 'collection' },
 	{ label: 'Name', attr: 'name' },
 ];
 

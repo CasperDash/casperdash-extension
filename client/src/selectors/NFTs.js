@@ -21,21 +21,27 @@ const getMetadataByKey = (metadata, key) => {
 const sortNFT = memoizeOne((data = [], sortObj) => {
 	const { attr, order } = sortObj;
 	switch (attr) {
-		case 'collectible':
-			//name in NFT info is collectible name
-			return _orderBy(data, 'name', order);
+		case 'collection':
+			//name in NFT info is collection name
+			return _orderBy(data, 'nftContractName', order);
 		case 'name':
-			return _orderBy(
-				data,
-				(datum) => {
-					return getMetadataByKey(datum.metadata, 'name');
-				},
-				order,
-			);
+			return _orderBy(data, 'nftName', order);
 
 		default:
 			return data;
 	}
+});
+
+const massageNFTInfo = memoizeOne((NFTInfo = []) => {
+	return NFTInfo.map((info) => {
+		const nftName = getMetadataByKey(info.metadata, 'name');
+		const image = getMetadataByKey(info.metadata, 'image');
+		return {
+			...info,
+			nftName,
+			image,
+		};
+	});
 });
 
 export const getNFTInfo = (sortObj = { attr: 'name', oder: 'asc' }) =>
@@ -43,7 +49,8 @@ export const getNFTInfo = (sortObj = { attr: 'name', oder: 'asc' }) =>
 		if (!data) {
 			return [];
 		}
-		return sortNFT(data, sortObj);
+		const massagedData = massageNFTInfo(data);
+		return sortNFT(massagedData, sortObj);
 	});
 
 export const NFTContractInfoSelector = getQuerySelector({ type: NFTS.FETCH_NFTS_CONTRACT_INFO });

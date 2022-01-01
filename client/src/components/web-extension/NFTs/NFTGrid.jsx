@@ -8,16 +8,9 @@ export const NFTGrid = ({ NFTInfo }) => {
 			<div className="cd_we_nft_count">{(NFTInfo && NFTInfo.length) || 0} NFTs</div>
 			{NFTInfo && NFTInfo.length ? (
 				<div className="cd_we_nft_grid ">
-					{NFTInfo.map((nft) => {
-						const image = nft.metadata.find((meta) => meta.key === 'image') || {};
-						const tokenName = nft.metadata.find((meta) => meta.key === 'name') || {};
+					{NFTInfo.map(({ tokenId, image, nftName, nftContractName }) => {
 						return (
-							<NFTCard
-								key={nft.tokenId}
-								image={image.value}
-								tokenName={tokenName.value}
-								name={nft.name}
-							/>
+							<NFTCard key={tokenId} image={image} nftName={nftName} collectionName={nftContractName} />
 						);
 					})}
 				</div>
