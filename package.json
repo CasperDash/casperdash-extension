@@ -10,6 +10,7 @@
 		"eslint-plugin-react-hooks": "^4.3.0"
 	},
 	"dependencies": {
+		"fuse.js": "^6.5.3",
 		"memoize-one": "^6.0.0"
 	}
 }

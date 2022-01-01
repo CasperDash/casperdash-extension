@@ -2,6 +2,7 @@ import _orderBy from 'lodash-es/orderBy';
 import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import memoizeOne from 'memoize-one';
+import Fuse from 'fuse.js';
 import { NFTS } from '../store/actionTypes';
 import { formatKeyByPrefix } from '../helpers/key';
 import { userDetailsSelector } from './user';
@@ -44,13 +45,22 @@ const massageNFTInfo = memoizeOne((NFTInfo = []) => {
 	});
 });
 
-export const getNFTInfo = (sortObj = { attr: 'name', oder: 'asc' }) =>
+const searchNFT = memoizeOne((NFTInfo = [], search) => {
+	if (!search) {
+		return NFTInfo;
+	}
+	const fuse = new Fuse(NFTInfo, { keys: ['nftName', 'nftContractName'], threshold: 0.2 });
+	return fuse.search(search).map((result) => result.item);
+});
+
+export const getNFTInfo = (sortObj = { attr: 'name', oder: 'asc' }, search) =>
 	createSelector(NFTSelector, ({ data }) => {
 		if (!data) {
 			return [];
 		}
 		const massagedData = massageNFTInfo(data);
-		return sortNFT(massagedData, sortObj);
+		const searchedInfo = searchNFT(massagedData, search);
+		return sortNFT(searchedInfo, sortObj);
 	});
 
 export const NFTContractInfoSelector = getQuerySelector({ type: NFTS.FETCH_NFTS_CONTRACT_INFO });

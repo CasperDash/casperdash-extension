@@ -24,10 +24,11 @@ const NFTs = () => {
 
 	// State
 	const [sortObj, setSortObj] = useState({ order: 'asc', attr: 'name' });
+	const [search, setSearch] = useState('');
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
-	const NFTInfo = useSelector(getNFTInfo(sortObj));
+	const NFTInfo = useSelector(getNFTInfo(sortObj, search));
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 
 	// Effect
@@ -53,7 +54,7 @@ const NFTs = () => {
 			<div className="cd_we_nft_filter">
 				<div className="cd_we_nft_search">
 					<SearchIcon />
-					<input placeholder="Enter name" />
+					<input placeholder="Enter name" value={search} onChange={(e) => setSearch(e.target.value)} />
 				</div>
 				<Sort sortObj={sortObj} onSortClick={onSortClick} />
 			</div>
