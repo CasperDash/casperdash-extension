@@ -38,6 +38,7 @@
 			justify-content: space-between;
 			margin-top: 10px;
 			.cd_we_nft_sort_by {
+				cursor: pointer;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -59,8 +60,20 @@
 		border-radius: 26px 26px 0 0;
 		padding-bottom: 60px;
 
-		// .cd_we_nft_main_content {
-		// 	padding: 20px;
+		.cd_we_nft_empty {
+			height: 80%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			img {
+				height: 40%;
+				padding-bottom: 10px;
+			}
+			.cd_we_no_nft_message {
+				color: var(--secondary-text-color);
+			}
+		}
 		.cd_we_nft_count {
 			font-weight: 600;
 			margin: 10px 20px;
@@ -72,6 +85,7 @@
 			justify-content: space-between;
 			align-items: center;
 			.cd_we_nft_card {
+				cursor: pointer;
 				border: 1px solid var(--secondary-text-color-light);
 				border-radius: 16px;
 				width: 48%;
@@ -93,11 +107,17 @@
 				.cd_we_nft_name {
 					padding-left: 20px;
 					font-weight: 600;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					overflow: hidden;
 				}
 				.cd_we_nft_collectible {
 					color: var(--secondary-text-color);
 					padding-left: 20px;
 					padding-bottom: 10px;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					overflow: hidden;
 				}
 			}
 		}
