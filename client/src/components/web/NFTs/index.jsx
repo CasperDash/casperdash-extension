@@ -23,7 +23,7 @@ const NFTs = () => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
-	const NFTInfo = useSelector(getNFTInfo);
+	const NFTInfo = useSelector(getNFTInfo());
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 
 	// State

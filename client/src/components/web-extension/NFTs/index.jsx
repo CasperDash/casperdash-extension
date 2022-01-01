@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import NFTEmptyImage from 'assets/image/nft-empty.png';
@@ -16,6 +16,7 @@ import {
 	addCustomNFTAddressToLocalStorage,
 	getNFTAddressesFromLocalStorage,
 } from '../../../actions/NFTActions';
+import { Sort } from './Sort';
 import './index.scss';
 
 const NFTs = () => {
@@ -23,8 +24,12 @@ const NFTs = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+	// State
+	const [sortObj, setSortObj] = useState({ order: 'asc', attr: 'name' });
+
+	// Selector
 	const publicKey = useSelector(getPublicKey);
-	const NFTInfo = useSelector(getNFTInfo);
+	const NFTInfo = useSelector(getNFTInfo(sortObj));
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 
 	// Effect
@@ -38,6 +43,13 @@ const NFTs = () => {
 		}
 	}, [publicKey, dispatch]);
 
+	// Function
+	const onSortClick = (attribute) => {
+		const sortBy = (sortObj.attr === attribute && sortObj.order) || 'asc';
+		const updatedSortBy = sortBy === 'asc' ? 'desc' : 'asc';
+		setSortObj({ attr: attribute, order: updatedSortBy });
+	};
+
 	return (
 		<section className="cd_we_nft_page with_bottom_bar">
 			<div className="cd_we_nft_filter">
@@ -45,17 +57,7 @@ const NFTs = () => {
 					<SearchIcon />
 					<input placeholder="Enter name" />
 				</div>
-
-				<div className="cd_we_nft_sort">
-					<div className="cd_we_nft_sort_by">
-						Collectible
-						<ArrowUpIcon />
-					</div>
-					<div className="cd_we_nft_sort_by">
-						Name
-						<ArrowUpIcon />
-					</div>
-				</div>
+				<Sort sortObj={sortObj} onSortClick={onSortClick} />
 			</div>
 			<img className="cd_we_nft_header_image" src={nftHeaderImage} alt="nft-header" />
 			<div className="cd_we_nft_main hide_scroll_bar">

@@ -46,6 +46,9 @@
 				width: 48%;
 				background: var(--secondary-text-color-light);
 				border-radius: 30px;
+				.cd_we_nft_order_by_desc {
+					transform: rotate(180deg);
+				}
 				svg {
 					margin-right: 10px;
 				}
