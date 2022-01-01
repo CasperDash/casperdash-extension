@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import CasperDashNFTEmpty from 'assets/image/cd-nft-empty.png';
 import nftHeaderImage from 'assets/image/nft-header.png';
 import SearchIcon from 'assets/image/search-icon.svg';
 import { getOwnNFTContractHash } from '../../../selectors/NFTs';
@@ -15,6 +14,7 @@ import {
 	getNFTAddressesFromLocalStorage,
 } from '../../../actions/NFTActions';
 import { Sort } from './Sort';
+import { NFTGrid } from './NFTGrid';
 import './index.scss';
 
 const NFTs = () => {
@@ -59,36 +59,7 @@ const NFTs = () => {
 			</div>
 			<img className="cd_we_nft_header_image" src={nftHeaderImage} alt="nft-header" />
 			<div className="cd_we_nft_main hide_scroll_bar">
-				<div className="cd_we_nft_count">{(NFTInfo && NFTInfo.length) || 0} NFTs</div>
-				{NFTInfo && NFTInfo.length ? (
-					<div className="cd_we_nft_grid ">
-						{NFTInfo.map((nft, index) => {
-							const image = nft.metadata.find((meta) => meta.key === 'image');
-							const tokenName = nft.metadata.find((meta) => meta.key === 'name');
-							return (
-								<div key={index} className="cd_we_nft_card">
-									<div className="cd_we_ndt_card_img">
-										<img
-											src={image.value}
-											alt={tokenName}
-											onError={(e) => {
-												e.target.error = null;
-												e.target.src = nftHeaderImage;
-											}}
-										/>
-									</div>
-									<div className="cd_we_nft_name">{tokenName.value}</div>
-									<div className="cd_we_nft_collectible">{nft.name}</div>
-								</div>
-							);
-						})}
-					</div>
-				) : (
-					<div className="cd_we_nft_empty">
-						<img src={CasperDashNFTEmpty} alt="empty-nft" />
-						<div className="cd_we_no_nft_message">You do not have any NFT collectables yet</div>
-					</div>
-				)}
+				<NFTGrid NFTInfo={NFTInfo} />
 			</div>
 		</section>
 	);
