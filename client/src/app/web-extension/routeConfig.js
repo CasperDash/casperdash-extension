@@ -3,7 +3,7 @@ import NFTIcon from 'assets/image/nft-menu-icon.svg';
 import StackingIcon from 'assets/image/stacking-icon.svg';
 import APP_CONFIGS from '../../config';
 import Stake from '../../components/web/Stake';
-import NFTs from '../../components/web/NFTs';
+import NFTs from '../../components/web-extension/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
 import Receive from '../../components/web-extension/Receive';
 import Send from '../../components/web-extension/Send';
@@ -29,8 +29,8 @@ const routes = {
 	// Routes in menu bar
 	mainRoutes: [
 		{ name: 'Home', route: '/', component: Wallets, icon: HomeIcon },
-		{ name: 'Stacking', route: '/staking', component: Stake, icon: NFTIcon },
-		{ name: 'My NFTs', route: '/NFTs', component: NFTs, icon: StackingIcon },
+		{ name: 'Stacking', route: '/staking', component: Stake, icon: StackingIcon },
+		{ name: 'My NFTs', route: '/NFTs', component: NFTs, icon: NFTIcon },
 	],
 	// Routes which navigate from main routes
 	innerRoutes: [

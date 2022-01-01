@@ -22,14 +22,16 @@ export const Header = ({ currentModule = {} }) => {
 	}, publicKey);
 
 	return (
-		<div className="cd_we_header">
+		<div className={`cd_we_header ${currentModule.route.replace('/', '')}`}>
 			<div className="cd_we_logo">
 				<CasperDashLogo />
 			</div>
 			<div className="cd_we_page_name">{currentModule.name}</div>
-			<div className="cd_we_settings" onClick={() => navigate('/settings', { state: { name: 'Settings' } })}>
-				<SettingIcon />
-			</div>
+			{currentModule.route === '/' && (
+				<div className="cd_we_settings" onClick={() => navigate('/settings', { state: { name: 'Settings' } })}>
+					<SettingIcon />
+				</div>
+			)}
 		</div>
 	);
 };
