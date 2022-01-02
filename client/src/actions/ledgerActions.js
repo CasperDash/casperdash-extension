@@ -5,6 +5,7 @@ export const setLedgerOptions = (opts) => {
 		type: LEDGER.SET_LEDGER_OPTIONS,
 		payload: {
 			casperApp: opts.app,
+			ledgerKeys: opts.ledgerKeys,
 		},
 	};
 };
