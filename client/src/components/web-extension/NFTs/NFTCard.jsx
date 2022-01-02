@@ -15,7 +15,9 @@ export const NFTCard = ({ nftDetails, onNFTClick }) => {
 					}}
 				/>
 			</div>
-			<div className="cd_we_nft_name">{nftName}</div>
+			<div className="cd_we_nft_name" title={nftName}>
+				{nftName}
+			</div>
 			<div className="cd_we_nft_collectible">{nftContractName}</div>
 		</div>
 	);

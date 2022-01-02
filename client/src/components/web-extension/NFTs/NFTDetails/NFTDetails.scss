@@ -1,8 +1,10 @@
 .cd_we_nft_details {
-	.cd_we_nft_image {
+	.cd_we_nft_details_image {
 		height: 200px;
 		display: flex;
-		padding-bottom: 20px;
+		padding: 20px;
+		justify-content: center;
+		align-items: center;
 		img {
 			max-height: 100%;
 			max-width: 100%;
@@ -17,6 +19,13 @@
 		}
 		.cd_we_nft_content_header {
 			margin-bottom: 10px;
+			.cd_we_nft_contract {
+				display: flex;
+				align-items: center;
+				.cd_we_nft_contract_address {
+					max-width: 50%;
+				}
+			}
 			.cd_we_input_label {
 				padding-bottom: 10px;
 			}
