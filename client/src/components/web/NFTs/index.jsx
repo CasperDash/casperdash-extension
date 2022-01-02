@@ -28,7 +28,7 @@ const NFTs = () => {
 
 	// State
 	const [showModal, setShowModal] = useState(false);
-	const [selectedMetadata, setSelectedMetadata] = useState(false);
+	const [selectedNFT, setSelectedNFT] = useState(false);
 	const [showAddTokenModal, setShowAddTokenModal] = useState(false);
 	const [addTokenError, setAddTokenError] = useState('');
 	const [showError, setShowError] = useState(false);
@@ -47,12 +47,12 @@ const NFTs = () => {
 	// Functions
 	const onCloseModal = () => {
 		setShowModal(false);
-		setSelectedMetadata([]);
+		setSelectedNFT({});
 	};
 
-	const onOpenModal = (metadata) => {
+	const onOpenModal = (nftDetails) => {
 		setShowModal(true);
-		setSelectedMetadata(metadata);
+		setSelectedNFT(nftDetails);
 	};
 
 	const onAddNewTokenAddress = () => {
@@ -92,7 +92,7 @@ const NFTs = () => {
 				<div className="cd_nft_row row">
 					{NFTInfo && NFTInfo.length ? (
 						NFTInfo.map((nft, index) => {
-							return <NFTCard key={index} {...nft} onOpenModal={onOpenModal} />;
+							return <NFTCard key={index} nftDetails={nft} onOpenModal={onOpenModal} />;
 						})
 					) : (
 						<div className="cd_nft_empty">
@@ -102,7 +102,7 @@ const NFTs = () => {
 					)}
 				</div>
 
-				<NFTModal show={showModal} handleClose={onCloseModal} metadata={selectedMetadata} />
+				<NFTModal show={showModal} handleClose={onCloseModal} nftDetails={selectedNFT} />
 				<AddTokenModal
 					show={showAddTokenModal}
 					handleClose={onCloseTokenModal}
