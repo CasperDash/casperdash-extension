@@ -21,7 +21,7 @@ const ConfirmSend = ({ token }) => {
 
 	//Function
 	const navigateToTokenPage = () => {
-		navigate('/dashboard', { replace: true });
+		navigate('/', { replace: true });
 	};
 
 	const onSendTransaction = async () => {
