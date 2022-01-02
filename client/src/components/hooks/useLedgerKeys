@@ -15,7 +15,7 @@ const useLedgerKeys = () => {
 	const loadMoreKeys = async (callback) => {
 		try {
 			const keys = [];
-			for (let i = 0; i < 5; i++) {
+			for (let i = 1; i < 6; i++) {
 				const key = `02${(await casperApp.getAddressAndPubKey(`m/44'/506'/0'/0/${i}`)).publicKey.toString(
 					'hex',
 				)}`;
