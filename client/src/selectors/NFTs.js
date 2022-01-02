@@ -35,13 +35,18 @@ const sortNFT = memoizeOne((data = [], sortObj) => {
 
 const massageNFTInfo = memoizeOne((NFTInfo = []) => {
 	return NFTInfo.map((info) => {
-		const nftName = getMetadataByKey(info.metadata, 'name');
-		const image = getMetadataByKey(info.metadata, 'image');
-		return {
-			...info,
-			nftName,
-			image,
-		};
+		if (info.metadata && Array.isArray(info.metadata)) {
+			const nftName = getMetadataByKey(info.metadata, 'name');
+			const image = getMetadataByKey(info.metadata, 'image');
+			const metadata = info.metadata.filter((data) => data.key !== 'name' && data.key !== 'image');
+			return {
+				...info,
+				nftName,
+				image,
+				metadata,
+			};
+		}
+		return info;
 	});
 });
 

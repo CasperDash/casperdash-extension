@@ -1,9 +1,10 @@
 import React from 'react';
 import nftHeaderImage from 'assets/image/nft-header.png';
 
-export const NFTCard = ({ image, nftName, collectionName }) => {
+export const NFTCard = ({ nftDetails, onNFTClick }) => {
+	const { image, nftName, nftContractName } = nftDetails;
 	return (
-		<div className="cd_we_nft_card">
+		<div className="cd_we_nft_card" onClick={() => onNFTClick(nftDetails)}>
 			<div className="cd_we_ndt_card_img">
 				<img
 					src={image}
@@ -15,7 +16,7 @@ export const NFTCard = ({ image, nftName, collectionName }) => {
 				/>
 			</div>
 			<div className="cd_we_nft_name">{nftName}</div>
-			<div className="cd_we_nft_collectible">{collectionName}</div>
+			<div className="cd_we_nft_collectible">{nftContractName}</div>
 		</div>
 	);
 };

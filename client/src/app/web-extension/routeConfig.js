@@ -14,6 +14,7 @@ import ConnectAccount from '../../components/web-extension/ConnectAccount';
 import ConnectDevice from '../../components/web-extension/ConnectAccount/ConnectDevice';
 import { AddPublicKey } from '../../components/web-extension/ConnectAccount/AddPublicKey';
 import Settings from '../../components/web-extension/Settings';
+import { NFTDetails } from '../../components/web-extension/NFTs/NFTDetails';
 
 let features;
 try {
@@ -40,6 +41,7 @@ const routes = {
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
 		{ name: 'Settings', route: '/settings', component: Settings },
+		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

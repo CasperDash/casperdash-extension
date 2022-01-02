@@ -1,0 +1,48 @@
+.cd_we_nft_details {
+	.cd_we_nft_image {
+		height: 200px;
+		display: flex;
+		padding-bottom: 20px;
+		img {
+			max-height: 100%;
+			max-width: 100%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+	.cd_we_nft_content {
+		margin: 15px;
+		h5 {
+			color: var(--secondary-text-color);
+		}
+		.cd_we_nft_content_header {
+			margin-bottom: 10px;
+			.cd_we_input_label {
+				padding-bottom: 10px;
+			}
+		}
+		.cd_we_nft_attr {
+			.cd_we_nft_attr_header {
+				padding-bottom: 10px;
+			}
+			.cd_we_nft_attr_grid {
+				max-height: 210px;
+				overflow: auto;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				.cd_we_nft_attr_card {
+					width: 48%;
+					background-color: var(--component-background);
+					border-radius: 16px;
+					margin-bottom: 10px;
+					padding: 10px;
+					.cd_we_nft_attr_key {
+						color: var(--secondary-text-color);
+						margin-bottom: 5px;
+					}
+				}
+			}
+		}
+	}
+}

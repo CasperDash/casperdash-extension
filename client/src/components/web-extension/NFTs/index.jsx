@@ -28,7 +28,7 @@ const NFTs = () => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
-	const NFTInfo = useSelector(getNFTInfo(sortObj, search));
+	const NFTsInfo = useSelector(getNFTInfo(sortObj, search));
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 
 	// Effect
@@ -49,6 +49,11 @@ const NFTs = () => {
 		setSortObj({ attr: attribute, order: updatedSortBy });
 	};
 
+	const onNFTClick = (nftDetails) => {
+		console.log(nftDetails);
+		navigate('/nftDetails', { state: { name: nftDetails.nftName, nftDetails } });
+	};
+
 	return (
 		<section className="cd_we_nft_page with_bottom_bar">
 			<div className="cd_we_nft_filter">
@@ -60,7 +65,7 @@ const NFTs = () => {
 			</div>
 			<img className="cd_we_nft_header_image" src={nftHeaderImage} alt="nft-header" />
 			<div className="cd_we_nft_main hide_scroll_bar">
-				<NFTGrid NFTInfo={NFTInfo} />
+				<NFTGrid NFTsInfo={NFTsInfo} onNFTClick={onNFTClick} />
 			</div>
 		</section>
 	);
