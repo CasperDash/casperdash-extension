@@ -72,7 +72,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 					),
 				);
 			} else {
-				setSignerError(signedDeploy ? signedDeploy.error.message : 'Error!');
+				setSignerError(signedDeploy ? signedDeploy.error : 'Error!');
 				if (cid) {
 					dispatch(deleteFile(cid.cid));
 				}
