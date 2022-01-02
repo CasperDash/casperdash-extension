@@ -9,22 +9,22 @@ const useLedgerKeys = () => {
 	const dispatch = useDispatch();
 
 	// Selector
-	const {casperApp, ledgerKeys} = useSelector(getLedgerOptions);
+	const {casperApp} = useSelector(getLedgerOptions);
 
 	// Function
 	const loadMoreKeys = async (callback) => {
 		try {
-			const nextKeyPath = ledgerKeys ? ledgerKeys.length : 0;
-			for (let i = nextKeyPath; i < nextKeyPath + 5; i++) {
+			const keys = [];
+			for (let i = 0; i < 5; i++) {
 				const key = `02${(await casperApp.getAddressAndPubKey(`m/44'/506'/0'/0/${i}`)).publicKey.toString(
 					'hex',
 				)}`;
-				ledgerKeys.push({ key, i });
+				keys.push({ key, i });
 			}
 			typeof callback === 'function' && callback();
 			dispatch(setLedgerOptions({
 				app: casperApp,	
-				ledgerKeys
+				ledgerKeys: keys
 			}));
 		} catch (error) {
 			toast.error(getLedgerError(error));
