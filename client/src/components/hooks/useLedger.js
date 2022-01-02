@@ -24,6 +24,7 @@ const useLedger = () => {
 			dispatch(
 				setLedgerOptions({
 					app,
+					ledgerKeys: [{ key, keyPath: 0 }],
 				}),
 			);
 			typeof callback === 'function' && callback();
