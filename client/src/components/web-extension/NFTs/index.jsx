@@ -7,12 +7,7 @@ import { getOwnNFTContractHash } from '../../../selectors/NFTs';
 import { getNFTInfo } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
 import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
-import {
-	fetchNFTInfo,
-	fetchNFTContractInfo,
-	addCustomNFTAddressToLocalStorage,
-	getNFTAddressesFromLocalStorage,
-} from '../../../actions/NFTActions';
+import { fetchNFTInfo, getNFTAddressesFromLocalStorage } from '../../../actions/NFTActions';
 import { Sort } from './Sort';
 import { NFTGrid } from './NFTGrid';
 import './index.scss';
@@ -50,7 +45,6 @@ const NFTs = () => {
 	};
 
 	const onNFTClick = (nftDetails) => {
-		console.log(nftDetails);
 		navigate('/nftDetails', { state: { name: nftDetails.nftName, nftDetails } });
 	};
 
