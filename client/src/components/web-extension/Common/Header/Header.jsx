@@ -19,7 +19,7 @@ export const Header = ({ currentModule = {} }) => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
 		}
-	}, publicKey);
+	}, [publicKey]);
 
 	return (
 		<div className={`cd_we_header ${currentModule.route.replace('/', '')}`}>

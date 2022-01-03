@@ -1,6 +1,7 @@
 import _get from 'lodash-es/get';
 import React from 'react';
 import PropTypes from 'prop-types';
+import CsprIcon from 'assets/image/cspr.png';
 import { getValueByFormat } from '../../../../helpers/format';
 import './index.scss';
 
@@ -18,22 +19,43 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 						{Object.keys(metadata).map((key) => {
 							return (
 								<div className={`cd_we_item_${key}`} key={key}>
-									{metadata[key].map((item, i) => {
-										const Component = item.component;
-										const formattedValue = getValueByFormat(_get(value, item.key), {
-											format: item.format,
-										});
-										return (
-											<div
-												className={`cd_we_item_value ${item.type} ${
-													item.valueAsClass ? formattedValue : ''
-												}`}
-												key={i}
-											>
-												{Component ? <Component>{formattedValue}</Component> : formattedValue}
-											</div>
-										);
-									})}
+									{key === 'left' && value.icon && (
+										<div
+											className={`cd_we_grid_icon ${
+												metadata.left ? metadata.left.iconClassName || '' : ''
+											}`}
+										>
+											<img
+												src={chrome.runtime.getURL(value.icon)}
+												onError={(e) => {
+													e.target.error = null;
+													e.target.src = CsprIcon;
+												}}
+											/>
+										</div>
+									)}
+									<div className="cd_we_item_content">
+										{metadata[key].map((item, i) => {
+											const Component = item.component;
+											const formattedValue = getValueByFormat(_get(value, item.key), {
+												format: item.format,
+											});
+											return (
+												<div
+													className={`cd_we_item_value ${item.type} ${
+														item.valueAsClass ? formattedValue : ''
+													}`}
+													key={i}
+												>
+													{Component ? (
+														<Component>{formattedValue}</Component>
+													) : (
+														formattedValue
+													)}
+												</div>
+											);
+										})}
+									</div>
 								</div>
 							);
 						})}

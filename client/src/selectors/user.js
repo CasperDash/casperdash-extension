@@ -11,6 +11,7 @@ const CSPR_INFO = {
 	address: 'CSPR',
 	transferFee: CSPR_TRANSFER_FEE,
 	minAmount: MIN_CSPR_TRANSFER,
+	icon: 'assets/images/token-icons/cspr.png',
 };
 
 export const getPublicKey = ({ user }) => {
@@ -55,6 +56,7 @@ export const getAllTokenInfo = createSelector(
 						price: tokenPrice,
 						totalPrice: tokenPrice * datum.balance.displayValue,
 						transferFee: TOKEN_TRANSFER_FEE,
+						icon: 'assets/images/token-icons/question-icon.png',
 				  }))
 				: [];
 
