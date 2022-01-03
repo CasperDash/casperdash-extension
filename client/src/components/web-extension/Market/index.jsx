@@ -1,13 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import Grid from '../Common/Grid';
-import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { ChartLine } from '../../Common/Layout/Chart';
 import { getPriceHistory, getCurrentPrice, CSPRMarketInfoSelector } from '../../../selectors/price';
-import { getPublicKey } from '../../../selectors/user';
-import { useDeploysWithStatus } from '../../hooks/useTransferDeploys';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
+import { TransactionHistory } from '../Common/TransactionHistory';
 import './Market.scss';
 
 const chartOptions = {
@@ -28,31 +24,12 @@ const chartOptions = {
 	},
 };
 
-const TRANSFER_METADATA = {
-	left: [
-		{ key: 'deployHash', type: 'primary', component: MiddleTruncatedText },
-		{ key: 'timestamp', type: 'secondary', format: 'date' },
-	],
-	right: [
-		{ key: 'amount', type: 'primary', format: 'number' },
-		{ key: 'status', type: 'secondary', valueAsClass: true },
-	],
-};
-
 const Market = () => {
 	// Hook
 	const priceHistory = useSelector(getPriceHistory);
 	const currentPrice = useSelector(getCurrentPrice);
-	const publicKey = useSelector(getPublicKey);
 	const { data = [] } = useSelector(CSPRMarketInfoSelector);
 	const csprMarketInfo = data && data.length ? data[0] : {};
-	const transferList = useDeploysWithStatus({ symbol: 'CSPR', publicKey, status: '' });
-	const navigate = useNavigate();
-
-	// Function
-	const onTransactionClick = (deploy) => {
-		navigate('/deployDetails', { state: { deploy, name: 'Transaction details' } });
-	};
 
 	return (
 		<section className="cd_we_market with_bottom_bar hide_scroll_bar">
@@ -106,12 +83,7 @@ const Market = () => {
 			</div>
 			<div className="cd_we_transaction_history">
 				<div className="cd_we_input_label">Transaction</div>
-				<Grid
-					data={transferList}
-					metadata={TRANSFER_METADATA}
-					className="cd_we_market_history "
-					onRowClick={onTransactionClick}
-				/>
+				<TransactionHistory symbol="CSPR" />
 			</div>
 		</section>
 	);
