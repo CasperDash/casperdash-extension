@@ -1,13 +1,16 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-export const ChartLine = ({ data }) => {
+export const ChartLine = ({ data, height = 300, chartOptions = {} }) => {
 	const options = {
 		chart: {
 			zoom: {
 				enabled: false,
 			},
 			stacked: false,
+			toolbar: {
+				show: false,
+			},
 		},
 		xaxis: {
 			borderColor: '#999',
@@ -21,6 +24,10 @@ export const ChartLine = ({ data }) => {
 				offsetX: 0,
 				offsetY: 0,
 			},
+			...chartOptions.xaxis,
+		},
+		yaxis: {
+			...chartOptions.yaxis,
 		},
 		tooltip: {
 			x: {
@@ -51,5 +58,5 @@ export const ChartLine = ({ data }) => {
 			},
 		],
 	};
-	return <Chart options={options} series={options.series} type="area" height={300} />;
+	return <Chart options={options} series={options.series} type="area" height={height} />;
 };

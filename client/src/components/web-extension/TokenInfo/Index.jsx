@@ -41,7 +41,6 @@ const TokenDetails = () => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
-	//const tokenInfo = useSelector(getTokenInfoByAddress(token));
 	const transferList = useDeploysWithStatus({ symbol: token.symbol, publicKey, status: selectedStatus });
 
 	// Function

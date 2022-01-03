@@ -1,0 +1,83 @@
+.cd_we_market {
+	height: calc(100vh - 53px) !important;
+	overflow: auto;
+
+	.cd_we_market_price {
+		margin: 10px 15px;
+		font-weight: 600;
+		.cd_we_market_casper_price {
+			display: flex;
+			align-items: center;
+			.cd_we_market_casper_price-price {
+				font-size: 1.5em;
+				margin-right: 15px;
+			}
+			.cd_we_market_casper_price-change {
+				color: var(--secondary-text-color);
+				display: flex;
+				align-items: center;
+				svg {
+					margin-right: 5px;
+				}
+				&.up {
+					color: var(--bs-success);
+					svg {
+						path {
+							stroke: var(--bs-success);
+						}
+					}
+				}
+				&.down {
+					color: var(--bs-danger);
+					svg {
+						transform: rotate(180deg);
+						path {
+							stroke: var(--bs-danger);
+						}
+					}
+				}
+			}
+		}
+	}
+	.cd_we_market_price_chart {
+		background-color: var(--component-background);
+		border-radius: 16px;
+		margin: 0 15px 10px;
+		.apexcharts-xaxis-title {
+			text {
+				padding-top: 5px;
+				fill: var(--secondary-text-color) !important;
+			}
+		}
+	}
+	.cd_we_chart {
+		margin: 0 15px;
+	}
+	.cd_we_market_info {
+		padding: 0 15px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		.cd_we_market_info_item {
+			width: 40%;
+			margin-bottom: 10px;
+			.cd_we_market_info_title {
+				margin-bottom: 5px;
+				color: var(--secondary-text-color);
+			}
+			.cd_we_market_info_value {
+				font-weight: 600;
+			}
+		}
+	}
+	.cd_we_transaction_history {
+		.cd_we_input_label {
+			margin: 0 15px;
+		}
+		.cd_we_market_history {
+			background: var(--component-background);
+			border-radius: 40px 40px 0 0;
+			padding-bottom: 64px;
+		}
+	}
+}

@@ -1,0 +1,18 @@
+.cd_we_token_history {
+	background-color: var(--component-background);
+	border-radius: 26px 26px 0 0;
+	overflow: auto;
+	.cd_we_token_status_filter {
+		padding: 20px 20px 0;
+		display: flex;
+		.cd_token_status {
+			padding: 5px 10px;
+			margin-right: 10px;
+			border-radius: 26px;
+			&.active,
+			&:hover {
+				background: var(--primary-light-color);
+			}
+		}
+	}
+}

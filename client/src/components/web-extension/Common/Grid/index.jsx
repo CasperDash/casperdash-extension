@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { getValueByFormat } from '../../../../helpers/format';
 import './index.scss';
 
-const Grid = ({ data = [], metadata = {}, onRowClick }) => {
+const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 	return (
-		<div className="cd_we_grid">
+		<div className={`cd_we_grid ${className}`}>
 			{data.map((value, i) => {
 				const canClick = typeof onRowClick === 'function';
 				return (
 					<div
-						className={`cd_we_item ${canClick ? 'clickable' : ''}`}
+						className={`cd_we_item ${canClick ? 'clickable' : ''} `}
 						key={i}
 						onClick={() => canClick && onRowClick(value)}
 					>

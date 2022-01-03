@@ -8,8 +8,8 @@
 	border-radius: 26px 26px 0px 0px;
 	margin-bottom: 0;
 	display: flex;
-	z-index: 99999;
-	width: 100%;
+	position: fixed;
+	width: 50%;
 	.cd_page_bottom_bar_item_wrapper {
 		width: 100%;
 		display: flex;
@@ -36,5 +36,11 @@
 				}
 			}
 		}
+	}
+}
+
+@media (max-width: 400px) {
+	.cd_page_bottom_bar_nav {
+		width: 100%;
 	}
 }
