@@ -13,6 +13,18 @@
 	border-radius: 26px 26px 0 0;
 	padding-bottom: 60px;
 	background: var(--component-background);
+	.cd_we_grid {
+		.cd_we_item {
+			.cd_we_item_left {
+				.cd_we_grid_icon {
+					background: var(--primary-light-color);
+					width: 40px;
+					height: 40px;
+					padding: 10px;
+				}
+			}
+		}
+	}
 }
 
 .cd_we_action {

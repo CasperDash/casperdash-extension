@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import memoizeOne from 'memoize-one';
 import { getPublicKey } from '../../../../selectors/user';
 import { useDeploysWithStatus } from '../../../hooks/useTransferDeploys';
 import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
@@ -24,6 +25,22 @@ const TRANSFER_METADATA = {
 		{ key: 'status', type: 'secondary', valueAsClass: true },
 	],
 };
+
+const getTransactionIcon = (type) => {
+	switch (type) {
+		case 'receive':
+			return 'assets/images/receive-icon-small.svg';
+
+		default:
+			return 'assets/images/send-icon-small.svg';
+	}
+};
+
+const massageTransfers = memoizeOne((transferList) => {
+	return transferList.map((transfer) => {
+		return { ...transfer, icon: getTransactionIcon(transfer.type) };
+	});
+});
 
 export const TransactionHistory = ({ symbol, className }) => {
 	// Hook
@@ -54,7 +71,7 @@ export const TransactionHistory = ({ symbol, className }) => {
 					</div>
 				))}
 			</div>
-			<Grid data={transferList} metadata={TRANSFER_METADATA} onRowClick={onTransactionClick} />
+			<Grid data={massageTransfers(transferList)} metadata={TRANSFER_METADATA} onRowClick={onTransactionClick} />
 		</div>
 	);
 };
