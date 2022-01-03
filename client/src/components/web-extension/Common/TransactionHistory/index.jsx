@@ -42,7 +42,7 @@ export const TransactionHistory = ({ symbol, className }) => {
 	};
 
 	return (
-		<div className={`cd_we_token_history ${className}`}>
+		<div className={`cd_we_token_history ${className || ''}`}>
 			<div className="cd_we_token_status_filter">
 				{STATUS_MAPPING.map((status, i) => (
 					<div

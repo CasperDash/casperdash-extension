@@ -6,7 +6,7 @@ import './index.scss';
 
 const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 	return (
-		<div className={`cd_we_grid ${className}`}>
+		<div className={`cd_we_grid ${className || ''}`}>
 			{data.map((value, i) => {
 				const canClick = typeof onRowClick === 'function';
 				return (
