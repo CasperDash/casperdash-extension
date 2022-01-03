@@ -51,7 +51,7 @@ const SendForm = ({ token }) => {
 			}
 			onSubmit={handleSubmit}
 		>
-			{({ errors, values, handleChange, handleSubmit }) => (
+			{({ errors, values, handleChange, handleSubmit, touched }) => (
 				<Form noValidate onSubmit={handleSubmit}>
 					<div className="cd_we_send_token">
 						<div className="cd_we_input_label">Assets</div>
@@ -67,16 +67,18 @@ const SendForm = ({ token }) => {
 					</div>
 					<div className="cd_we_send_amount">
 						<div className="cd_we_input_label">Transfer Amount</div>
-						<FormControl
-							value={values.sendAmount}
-							name="sendAmount"
-							required
-							type="number"
-							className="cd_we_send_input"
-							onChange={handleChange}
-							isInvalid={errors.sendAmount}
-						/>
-
+						<div className="cd_we_amount_input">
+							<FormControl
+								value={values.sendAmount}
+								name="sendAmount"
+								required
+								type="number"
+								className="cd_we_send_input"
+								onChange={handleChange}
+								isInvalid={errors.sendAmount}
+							/>
+							<div className="cd_we_amount_max_btn">Max</div>
+						</div>
 						<Form.Control.Feedback type="invalid">{errors.sendAmount}</Form.Control.Feedback>
 					</div>
 					<div className="cd_we_send_address">
@@ -114,7 +116,11 @@ const SendForm = ({ token }) => {
 					</div>
 
 					<div className="cd_we_send_actions">
-						<Button className="cd_we_send_confirm_btn" type="submit">
+						<Button
+							className="cd_we_send_confirm_btn"
+							type="submit"
+							disabled={errors && Object.keys(errors).length}
+						>
 							Confirm
 						</Button>
 					</div>
