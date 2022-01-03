@@ -37,6 +37,13 @@ const SendForm = ({ token }) => {
 		});
 	};
 
+	// Functions
+	const setBalance = (percent, setFieldValue) => {
+		const balance = (selectedToken && selectedToken.balance && selectedToken.balance.displayValue) || 0;
+		const amount = balance / percent - (selectedToken.address === 'CSPR' ? selectedToken.transferFee : 0);
+		setFieldValue('sendAmount', amount);
+	};
+
 	return (
 		<Formik
 			initialValues={{
@@ -51,7 +58,7 @@ const SendForm = ({ token }) => {
 			}
 			onSubmit={handleSubmit}
 		>
-			{({ errors, values, handleChange, handleSubmit, touched }) => (
+			{({ errors, values, handleChange, handleSubmit, setFieldValue }) => (
 				<Form noValidate onSubmit={handleSubmit}>
 					<div className="cd_we_send_token">
 						<div className="cd_we_input_label">Assets</div>
@@ -77,7 +84,9 @@ const SendForm = ({ token }) => {
 								onChange={handleChange}
 								isInvalid={errors.sendAmount}
 							/>
-							<div className="cd_we_amount_max_btn">Max</div>
+							<div className="cd_we_amount_max_btn" onClick={() => setBalance(1, setFieldValue)}>
+								Max
+							</div>
 						</div>
 						<Form.Control.Feedback type="invalid">{errors.sendAmount}</Form.Control.Feedback>
 					</div>
