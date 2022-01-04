@@ -97,7 +97,7 @@ input {
 
 .cd_we_input_label {
 	font-size: 14px;
-	font-weight: 500;
+	font-weight: 400;
 	color: var(--secondary-text-color);
 	padding-bottom: 5px;
 }
@@ -150,6 +150,10 @@ input {
 	&::-webkit-scrollbar {
 		display: none;
 	}
+}
+
+.overflow_auto {
+	overflow: auto;
 }
 
 @media (max-width: 400px) {

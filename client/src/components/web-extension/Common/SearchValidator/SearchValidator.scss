@@ -1,0 +1,15 @@
+.cd_we_validator_search {
+	height: calc(100vh - 63px);
+	background: var(--component-background);
+	border-radius: 40px 40px 0 0;
+	.cd_we_validator_search_input {
+		padding: 20px 15px;
+		border-bottom: 2px solid var(--secondary-text-color-light);
+	}
+	.cd_we_validator_list {
+		padding: 10px 15px;
+		.cd_we_grid {
+			height: calc(100vh - 212px);
+		}
+	}
+}

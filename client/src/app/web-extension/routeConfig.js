@@ -17,6 +17,7 @@ import Settings from '../../components/web-extension/Settings';
 import { NFTDetails } from '../../components/web-extension/NFTs/NFTDetails';
 import Market from '../../components/web-extension/Market';
 import Staking from '../../components/web-extension/Staking';
+import { SearchValidator } from '../../components/web-extension/Common/SearchValidator';
 
 let features;
 try {
@@ -45,6 +46,7 @@ const routes = {
 		{ name: 'addToken', route: '/addToken', component: AddToken },
 		{ name: 'Settings', route: '/settings', component: Settings },
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
+		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

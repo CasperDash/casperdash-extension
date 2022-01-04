@@ -51,7 +51,8 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 														<Component>{formattedValue}</Component>
 													) : (
 														formattedValue
-													)}
+													)}{' '}
+													{item.suffix}
 												</div>
 											);
 										})}

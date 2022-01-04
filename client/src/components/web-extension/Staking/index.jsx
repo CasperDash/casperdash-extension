@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
+import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
 import { CSPR_AUCTION_DELEGATE_FEE } from '../../../constants/key';
@@ -11,6 +13,9 @@ import './Staking.scss';
 const Staking = () => {
 	// Hook
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { state } = useLocation();
+	const { validator = {} } = state || {};
 
 	// State
 	const [amount, setAmount] = useState(0);
@@ -24,6 +29,11 @@ const Staking = () => {
 	useEffect(() => {
 		dispatch(fetchValidators());
 	});
+
+	// Function
+	const onSearchValidator = () => {
+		navigate('/searchValidator', { state: { name: 'Select Validator' } });
+	};
 
 	return (
 		<section className="cd_we_staking">
@@ -48,8 +58,10 @@ const Staking = () => {
 						<div className="cd_we_input_label">Validator</div>
 						<div className="cd_we_input_network_fee">Network Fee: {CSPR_AUCTION_DELEGATE_FEE} CSPR</div>
 					</div>
-					<div className="cd_we_staking_validator_box">
-						<div className="cd_we_staking_validator_value">Validator 1</div>
+					<div className="cd_we_staking_validator_box" onClick={onSearchValidator}>
+						<div className="cd_we_staking_validator_value">
+							<MiddleTruncatedText>{validator.public_key}</MiddleTruncatedText>
+						</div>
 						<svg
 							className="cd_we_staking_validator_box_arrow"
 							width="10"
