@@ -25,6 +25,9 @@
 			path {
 				fill: var(--primary-text-color);
 			}
+			.stacking-icon_svg__cspr_path {
+				fill: var(--component-background) !important;
+			}
 		}
 		.active {
 			display: flex;
