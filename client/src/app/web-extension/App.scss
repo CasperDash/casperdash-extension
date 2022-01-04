@@ -53,6 +53,10 @@ input {
 	border: 0 !important;
 	font-size: 1em !important;
 	width: 100%;
+	outline: none !important;
+	&:focus {
+		box-shadow: none !important;
+	}
 }
 .invalid-feedback {
 	display: block;
