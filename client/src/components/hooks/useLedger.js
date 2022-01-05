@@ -14,17 +14,29 @@ const useLedger = () => {
 	const { ledgerKeys } = useSelector(getLedgerOptions);
 
 	const isUsingLedger = ledgerKeys && ledgerKeys.length > 0;
+
 	// Function
+	const isLedgerConnected = async () => {
+		try {
+			const app = await initLedgerApp();
+			const response = await getLedgerPublicKey(app);
+			return response.publicKey ? response.publicKey : false;
+		} catch {
+			return false;
+		}
+	};
+
 	const handleConnectLedger = async (callback) => {
 		try {
 			const app = await initLedgerApp();
 			const response = await getLedgerPublicKey(app);
-			if (!response.publicKey) {
+			const { publicKey } = response;
+			if (!publicKey) {
 				toast.error('You must unlock the Casper App on your Ledger device to connect.');
 				return;
 			}
 
-			const key = `02${response.publicKey.toString('hex')}`;
+			const key = `02${publicKey.toString('hex')}`;
 			dispatch(setPublicKey(key, CONNECTION_TYPES.ledger));
 			dispatch(
 				setLedgerOptions({
@@ -38,7 +50,7 @@ const useLedger = () => {
 		}
 	};
 
-	return { handleConnectLedger, isUsingLedger };
+	return { handleConnectLedger, isUsingLedger, isLedgerConnected };
 };
 
 export default useLedger;
