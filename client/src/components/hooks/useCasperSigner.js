@@ -7,6 +7,7 @@ import { isConnectedCasper, getSignerStatus } from '../../selectors/signer';
 import { getPublicKey } from '../../selectors/user';
 import { updatePublicKeyFromSigner } from '../../actions/userActions';
 import { connectCasperSigner } from '../../services/casperServices';
+import useLedger from './useLedger';
 
 const SIGNER_EVENTS = {
 	connected: 'signer:connected',
@@ -21,6 +22,7 @@ const SIGNER_EVENTS = {
 const useCasperSigner = () => {
 	//Hook
 	const dispatch = useDispatch();
+	const { isUsingLedger } = useLedger();
 
 	//Selector
 	const publicKey = useSelector(getPublicKey);
@@ -33,9 +35,13 @@ const useCasperSigner = () => {
 	//Function
 	const dispatchUnlockSinger = useCallback(
 		(event) => {
+			if (isUsingLedger) {
+				toast.error('Please logout first before switching account by Signer addon');
+				return;
+			}
 			dispatch(handleUnlockSigner(event.detail));
 		},
-		[dispatch],
+		[dispatch, isUsingLedger],
 	);
 
 	const dispatchDisconnectedSinger = useCallback(() => {
