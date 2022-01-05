@@ -91,6 +91,9 @@ const HeadingModule = (props) => {
 					{/* Display public key if available */}
 					{publicKey && (
 						<>
+							<div className="cd_heading_public_key">
+								<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
+							</div>
 							<Button
 								className="cd_all_page_logout_btn"
 								onClick={loadMoreLedgerKeys}
@@ -98,9 +101,6 @@ const HeadingModule = (props) => {
 							>
 								{!isLoadingKeys ? 'Load more keys' : 'Loading'}
 							</Button>
-							<div className="cd_heading_public_key">
-								<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
-							</div>
 						</>
 					)}
 
