@@ -60,13 +60,19 @@ const Staking = () => {
 
 	const onAmountChange = (newAmount) => {
 		setFirstLoad(false);
-		setAmount(newAmount);
+		setAmount(parseFloat(newAmount));
 	};
 
 	const onStake = () => {
 		if (Object.keys(formErrors).length) {
 			return;
 		}
+		navigate('/stakeConfirm', {
+			state: {
+				name: 'Delegate',
+				stake: { validator: validator.public_key, amount, fee: CSPR_AUCTION_DELEGATE_FEE },
+			},
+		});
 	};
 
 	return (

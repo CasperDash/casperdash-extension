@@ -48,7 +48,7 @@ const routes = {
 		{ name: 'Settings', route: '/settings', component: Settings },
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
-		{ name: 'Confirm', route: '/confirm', component: Confirm },
+		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

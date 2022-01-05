@@ -12,19 +12,19 @@ export const Confirm = () => {
 
 	return (
 		<section className="cd_we_deploy_details cd_we_single_section no_bottom_bar">
-			<div>
-				<div>Validator</div>
-				<div>
+			<div className="cd_we_confirm_row">
+				<div className="cd_we_input_label">Validator</div>
+				<div className="cd_we_stake_validator_address">
 					{stake.validator} <Copy value={stake.validator} />
 				</div>
 			</div>
-			<div>
-				<div>Amount</div>
-				<div>{toFormattedNumber(stake.amount)} </div>
+			<div className="cd_we_confirm_row">
+				<div className="cd_we_input_label">Amount</div>
+				<div>{toFormattedNumber(stake.amount)} CSPR</div>
 			</div>
-			<div>
-				<div>Network Fee</div>
-				<div>{toFormattedNumber(state.fee)}</div>
+			<div className="cd_we_confirm_row">
+				<div className="cd_we_input_label">Network Fee</div>
+				<div>{toFormattedNumber(stake.fee)} CSPR</div>
 			</div>
 			<Button>{stake.action === 'undelegate' ? 'Undelegate' : 'Delegate'}</Button>
 		</section>
