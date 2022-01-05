@@ -71,8 +71,11 @@ const HeadingModule = (props) => {
 	const loadMoreLedgerKeys = async () => {
 		if (!isLoadingKeys) {
 			setIsLoadingKey(true);
-			await loadMoreKeys();
+			const canLoadMoreKeys = await loadMoreKeys();
 			setIsLoadingKey(false);
+			if (!canLoadMoreKeys) {
+				return;
+			}
 			setShowLedgerKeys(true);
 		}
 	};
