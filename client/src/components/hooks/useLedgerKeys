@@ -5,36 +5,43 @@ import { getLedgerError } from '../../services/ledgerServices';
 import { getLedgerOptions } from '../../selectors/ledgerOptions';
 import useLedger from './useLedger';
 
+const MAX_KEY_PATH = 9;
+
 const useLedgerKeys = () => {
 	// Hook
 	const dispatch = useDispatch();
 	const { isLedgerConnected } = useLedger();
 
 	// Selector
-	const {casperApp} = useSelector(getLedgerOptions);
+	const {casperApp, ledgerKeys} = useSelector(getLedgerOptions);
 	
 
 	// Function
 	const loadMoreKeys = async (callback) => {
+		// Do not load again if loaded 6 key paths before.
+		if (ledgerKeys && ledgerKeys.length === MAX_KEY_PATH) {
+			return ledgerKeys;
+		}
+
 		if (!await isLedgerConnected()) {
 			toast.error('You must unlock the Casper App on your Ledger device to connect.');
 			return false;
 		}
 
 		try {
-			const keys = [];
-			for (let i = 0; i < 6; i++) {
+			const ledgerKeys = [];
+			for (let i = 0; i < MAX_KEY_PATH; i++) {
 				const key = `02${(await casperApp.getAddressAndPubKey(`m/44'/506'/0'/0/${i}`)).publicKey.toString(
 					'hex',
 				)}`;
-				keys.push({ key, i });
+				ledgerKeys.push({ key, i });
 			}
 			typeof callback === 'function' && callback();
 			dispatch(setLedgerOptions({
 				casperApp,	
-				ledgerKeys: keys
+				ledgerKeys
 			}));
-			return keys;
+			return ledgerKeys;
 		} catch (error) {
 			toast.error(getLedgerError(error));
 		}
