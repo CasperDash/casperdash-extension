@@ -35,7 +35,7 @@ const DelegateForm = ({
 
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-	const { casperApp } = useSelector(getLedgerOptions);
+	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const options = validators
 		? validators.map(({ public_key: publicKey, bidInfo }) => ({
@@ -74,7 +74,7 @@ const DelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails, casperApp);
+			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
 			if (signedDeploy.error) {
 				setSignerError(signedDeploy.error.message);
 				return;

@@ -33,7 +33,7 @@ const UndelegateForm = ({
 
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-	const { casperApp } = useSelector(getLedgerOptions);
+	const ledgerOptions = useSelector(getLedgerOptions);
 
 	// Func
 	const handleSubmit = async (values) => {
@@ -53,7 +53,7 @@ const UndelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails, casperApp);
+			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
 			if (signedDeploy.error) {
 				setSignerError(signedDeploy.error.message);
 				return;

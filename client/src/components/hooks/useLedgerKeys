@@ -34,12 +34,12 @@ const useLedgerKeys = () => {
 				const key = `02${(await casperApp.getAddressAndPubKey(`m/44'/506'/0'/0/${i}`)).publicKey.toString(
 					'hex',
 				)}`;
-				ledgerKeys.push({ key, i });
+				ledgerKeys.push({ key, path: i });
 			}
 			typeof callback === 'function' && callback();
 			dispatch(setLedgerOptions({
 				casperApp,	
-				ledgerKeys
+				ledgerKeys,
 			}));
 			return ledgerKeys;
 		} catch (error) {

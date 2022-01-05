@@ -36,7 +36,7 @@ export const SendReceiveSection = ({
 
 	//Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-	const { casperApp } = useSelector(getLedgerOptions);
+	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -48,8 +48,8 @@ export const SendReceiveSection = ({
 
 	const onConfirmTransaction = async (transferId) => {
 		const signedDeploy = !isTokenTransfer
-			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, casperApp)
-			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, casperApp);
+			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)
+			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, ledgerOptions);
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);
