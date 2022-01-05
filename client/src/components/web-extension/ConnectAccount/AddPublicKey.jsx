@@ -19,7 +19,7 @@ export const AddPublicKey = () => {
 	const onAddPublicKey = () => {
 		// fetch token info
 		dispatch(storePublicKey(publicKey));
-		navigate('/dashboard');
+		navigate('/');
 	};
 
 	const onChange = (e) => {

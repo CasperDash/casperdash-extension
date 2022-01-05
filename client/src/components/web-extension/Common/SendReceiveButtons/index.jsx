@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SendIcon from 'assets/image/send-icon.svg';
-import ReceiveIcon from 'assets/image/send-icon.svg';
+import ReceiveIcon from 'assets/image/receive-icon.svg';
 import './index.scss';
 
 export const SendReceive = ({ token }) => {

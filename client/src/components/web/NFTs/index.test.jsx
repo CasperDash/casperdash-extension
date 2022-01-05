@@ -61,7 +61,9 @@ test('NFTs array is null', () => {
 });
 
 test('Have NFT', () => {
-	spyOnUseSelector.mockReturnValue([{ tokenId: 1, metadata: [{ key: 'name', value: 'Token Name' }] }]);
+	spyOnUseSelector.mockReturnValue([
+		{ tokenId: 1, nftName: 'Token Name', metadata: [{ key: 'name', value: 'Token Name' }] },
+	]);
 	const { getByText } = render(<NFTs />);
 
 	expect(getByText(/Token Name/i).textContent).toBe('Token Name');
@@ -71,11 +73,10 @@ test('Click on NFT to display details then close', () => {
 	spyOnUseSelector.mockReturnValue([
 		{
 			tokenId: 1,
-			metadata: [
-				{ key: 'name', value: 'Token Name' },
-				{ key: 'details', value: 'Token Details' },
-				{ key: 'image', value: 'image/nft.png' },
-			],
+
+			nftName: 'Token Name',
+			image: 'image/nft.png',
+			metadata: [{ key: 'details', value: 'Token Details' }],
 		},
 	]);
 	const { getByText, getAllByText, getByAltText } = render(<NFTs />);
@@ -97,17 +98,6 @@ test('Missing TokenId', () => {
 	]);
 	const { queryByText } = render(<NFTs />);
 	expect(queryByText('Token Name')).toBe(null);
-});
-
-test('Missing image', () => {
-	spyOnUseSelector.mockReturnValue([
-		{
-			tokenId: 1,
-			metadata: [{ key: 'name', value: 'Token Name' }],
-		},
-	]);
-	const { getByAltText } = render(<NFTs />);
-	expect(getByAltText('nft-image').src.includes('nft-empty.png')).toBe(true);
 });
 
 test('Missing token name', () => {

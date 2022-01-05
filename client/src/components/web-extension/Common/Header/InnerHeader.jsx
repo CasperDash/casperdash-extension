@@ -5,14 +5,16 @@ import './InnerHeader.scss';
 
 export const InnerHeader = () => {
 	const navigate = useNavigate();
-	const { state } = useLocation();
+	const { state = {} } = useLocation();
 
 	return (
 		<div className="cd_we_inner_header">
 			<div className="cd_we_back_btn" onClick={() => navigate(-1)}>
 				<BackArrow />
 			</div>
-			<div className="cd_we_title">{state && state.name}</div>
+			<div className="cd_we_title" title={state.name}>
+				{state.name}
+			</div>
 		</div>
 	);
 };

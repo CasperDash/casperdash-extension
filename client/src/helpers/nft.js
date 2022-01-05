@@ -15,10 +15,8 @@ export const massageNFTMintFormValues = (values) => {
 	return {
 		nftContract: values.nftContract,
 		recipient: values.toAddress,
-		metadata: [
-			{ key: 'name', value: values.name.trim(), name: 'name' },
-			{ key: 'image', value: values.image, name: 'image' },
-			...metadataAttributes,
-		],
+		nftName: values.name.trim(),
+		image: values.image,
+		metadata: metadataAttributes,
 	};
 };

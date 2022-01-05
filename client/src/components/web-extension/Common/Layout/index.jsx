@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, Outlet } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
@@ -10,17 +10,16 @@ import { Header, InnerHeader } from '../Header';
 import BottomBar from './BottomBar';
 import './index.scss';
 
-const Layout = (props) => {
+const Layout = ({ modules = [] }) => {
 	// Hook
 	const dispatch = useDispatch();
 	const ref = useRef(null);
-	const location = useLocation();
+	const { pathname } = useLocation();
 
-	const isInnerPage = props.modules && props.modules.includes(location.pathname);
+	const mainModule = useMemo(() => modules.find((module) => module.route === pathname), [modules, pathname]);
 
 	// Selector
 	const isLoading = useSelector(isLoadingRequest);
-	// const publicKey = useSelector(getPublicKey);
 
 	// Effect
 	useEffect(() => {
@@ -43,11 +42,11 @@ const Layout = (props) => {
 	return (
 		<div className={`cd_all_pages_content`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} className="loading_indicator" />
-			{isInnerPage ? <Header /> : <InnerHeader />}
+			{mainModule ? <Header currentModule={mainModule} /> : <InnerHeader />}
 			<div className="cd_web_extension_content">
 				<Outlet />
 			</div>
-			{isInnerPage && <BottomBar modules={props.modules} />}
+			{mainModule && <BottomBar modules={modules} currentModule={mainModule} />}
 		</div>
 	);
 };

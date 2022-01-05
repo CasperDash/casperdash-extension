@@ -1,5 +1,8 @@
+import _orderBy from 'lodash-es/orderBy';
 import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
+import memoizeOne from 'memoize-one';
+import Fuse from 'fuse.js';
 import { NFTS } from '../store/actionTypes';
 import { formatKeyByPrefix } from '../helpers/key';
 import { userDetailsSelector } from './user';
@@ -11,9 +14,59 @@ const NFT_TYPE_MAPPING = {
 
 export const NFTSelector = getQuerySelector({ type: NFTS.FETCH_NFTS_INFO });
 
-export const getNFTInfo = createSelector(NFTSelector, ({ data }) => {
-	return data || [];
+const getMetadataByKey = (metadata, key) => {
+	const data = metadata.find((datum) => datum.key === key) || {};
+	return data.value;
+};
+
+const sortNFT = memoizeOne((data = [], sortObj) => {
+	const { attr, order } = sortObj;
+	switch (attr) {
+		case 'collection':
+			//name in NFT info is collection name
+			return _orderBy(data, 'nftContractName', order);
+		case 'name':
+			return _orderBy(data, 'nftName', order);
+
+		default:
+			return data;
+	}
 });
+
+const massageNFTInfo = memoizeOne((NFTInfo = []) => {
+	return NFTInfo.map((info) => {
+		if (info.metadata && Array.isArray(info.metadata)) {
+			const nftName = getMetadataByKey(info.metadata, 'name');
+			const image = getMetadataByKey(info.metadata, 'image');
+			const metadata = info.metadata.filter((data) => data.key !== 'name' && data.key !== 'image');
+			return {
+				...info,
+				nftName,
+				image,
+				metadata,
+			};
+		}
+		return info;
+	});
+});
+
+const searchNFT = memoizeOne((NFTInfo = [], search) => {
+	if (!search) {
+		return NFTInfo;
+	}
+	const fuse = new Fuse(NFTInfo, { keys: ['nftName', 'nftContractName'], threshold: 0.2 });
+	return fuse.search(search).map((result) => result.item);
+});
+
+export const getNFTInfo = (sortObj = { attr: 'name', oder: 'asc' }, search) =>
+	createSelector(NFTSelector, ({ data }) => {
+		if (!data) {
+			return [];
+		}
+		const massagedData = massageNFTInfo(data);
+		const searchedInfo = searchNFT(massagedData, search);
+		return sortNFT(searchedInfo, sortObj);
+	});
 
 export const NFTContractInfoSelector = getQuerySelector({ type: NFTS.FETCH_NFTS_CONTRACT_INFO });
 
