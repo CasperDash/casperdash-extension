@@ -13,6 +13,7 @@ import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
 import { getLedgerOptions } from '../../../selectors/ledgerOptions';
+import { REVIEW_NOTI_MESS } from '../../../constants/ledger';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -49,7 +50,7 @@ export const SendReceiveSection = ({
 
 	const onConfirmTransaction = async (transferId) => {
 		if (ledgerOptions.casperApp) {
-			toast('Transaction submitted. Awaiting your approval in the ledger.');
+			toast(REVIEW_NOTI_MESS);
 		}
 		const signedDeploy = !isTokenTransfer
 			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)

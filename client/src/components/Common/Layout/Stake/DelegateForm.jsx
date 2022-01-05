@@ -13,6 +13,7 @@ import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../consta
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
+import { REVIEW_NOTI_MESS } from '../../../../constants/ledger';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
 
@@ -76,7 +77,7 @@ const DelegateForm = ({
 	const onConfirm = async () => {
 		try {
 			if (ledgerOptions.casperApp) {
-				toast('Transaction submitted. Awaiting your approval in the ledger.');
+				toast(REVIEW_NOTI_MESS);
 			}
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
 			if (signedDeploy.error) {
