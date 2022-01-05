@@ -17,7 +17,7 @@ const STATUS_MAPPING = [
 
 const TRANSFER_METADATA = {
 	left: [
-		{ key: 'deployHash', type: 'primary', component: MiddleTruncatedText },
+		{ key: 'deployHash', type: 'primary', wrapperComponent: MiddleTruncatedText },
 		{ key: 'timestamp', type: 'secondary', format: 'date' },
 	],
 	right: [

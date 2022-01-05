@@ -37,9 +37,14 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 									<div className="cd_we_item_content">
 										{metadata[key].map((item, i) => {
 											const Component = item.component;
-											const formattedValue = getValueByFormat(_get(value, item.key), {
-												format: item.format,
-											});
+											const WrapperComponent = item.wrapperComponent;
+											const compProps = item.props || {};
+											const formattedValue = getValueByFormat(
+												item.value || _get(value, item.key),
+												{
+													format: item.format,
+												},
+											);
 											return (
 												<div
 													className={`cd_we_item_value ${item.type} ${
@@ -47,8 +52,10 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 													}`}
 													key={i}
 												>
-													{Component ? (
-														<Component>{formattedValue}</Component>
+													{WrapperComponent ? (
+														<WrapperComponent>{formattedValue}</WrapperComponent>
+													) : Component ? (
+														<Component {...compProps} {...value} value={formattedValue} />
 													) : (
 														formattedValue
 													)}{' '}

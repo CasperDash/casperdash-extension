@@ -19,6 +19,7 @@ import Market from '../../components/web-extension/Market';
 import Staking from '../../components/web-extension/Staking';
 import { SearchValidator } from '../../components/web-extension/Common/SearchValidator';
 import { Confirm } from '../../components/web-extension/Staking/Confirm';
+import { Undelegate } from '../../components/web-extension/Staking/Undelegate';
 
 let features;
 try {
@@ -49,6 +50,7 @@ const routes = {
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
+		{ name: 'Undelegate', route: '/undelegate', component: Undelegate },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

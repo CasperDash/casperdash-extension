@@ -2,13 +2,13 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
 import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../constants/key';
 import { validateStakeForm } from '../../../helpers/validator';
+import { StakingInfo } from './StakingGrid/StakingInfo';
 import './Staking.scss';
 
 const Staking = () => {
@@ -30,7 +30,7 @@ const Staking = () => {
 	// Effect
 	useEffect(() => {
 		dispatch(fetchValidators());
-	});
+	}, [dispatch]);
 
 	useEffect(() => {
 		validator.public_key && setFirstLoad(false);
@@ -125,9 +125,7 @@ const Staking = () => {
 					Stake Now
 				</Button>
 			</div>
-			<div className="cd_we_staking_info">
-				<div className="cd_we_staking_info_title">Staked Information</div>
-			</div>
+			<StakingInfo publicKey={publicKey} />
 		</section>
 	);
 };

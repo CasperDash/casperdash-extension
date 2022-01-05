@@ -37,6 +37,19 @@
 	}
 }
 
+.btn-primary-outline {
+	background-color: var(--component-background) !important;
+	color: var(--primary-color);
+	&:hover {
+		background-color: var(--primary-color) !important;
+		border-color: var(--primary-color) !important;
+	}
+	&:focus {
+		background-color: var(--primary-color) !important;
+		border-color: var(--primary-color) !important;
+	}
+}
+
 .btn-normal {
 	background-color: transparent;
 	border-color: var(--secondary-text-color);
