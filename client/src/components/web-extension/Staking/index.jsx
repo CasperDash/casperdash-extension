@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -7,7 +7,8 @@ import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
-import { CSPR_AUCTION_DELEGATE_FEE } from '../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../constants/key';
+import { validateStakeForm } from '../../../helpers/validator';
 import './Staking.scss';
 
 const Staking = () => {
@@ -15,10 +16,11 @@ const Staking = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { state } = useLocation();
-	const { validator = {} } = state || {};
+	const { validator = {}, amount: defaultAmount = 0 } = state || {};
 
 	// State
-	const [amount, setAmount] = useState(0);
+	const [amount, setAmount] = useState(defaultAmount);
+	const [firstLoad, setFirstLoad] = useState(true);
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
@@ -30,29 +32,46 @@ const Staking = () => {
 		dispatch(fetchValidators());
 	});
 
+	useEffect(() => {
+		validator.public_key && setFirstLoad(false);
+	}, [validator.public_key]);
+
 	// Function
 	const onSearchValidator = () => {
 		navigate('/searchValidator', { state: { name: 'Select Validator' } });
 	};
 
+	const formErrors = useMemo(() => {
+		if (firstLoad) {
+			return {};
+		}
+		const validatorError = validator.public_key ? {} : { validator: 'Required.' };
+		return {
+			...validateStakeForm({
+				amount: amount,
+				tokenSymbol: 'CSPR',
+				balance,
+				fee: CSPR_AUCTION_DELEGATE_FEE,
+				minAmount: MIN_CSPR_TRANSFER,
+			}),
+			...validatorError,
+		};
+	}, [amount, balance, validator.public_key, firstLoad]);
+
+	const onAmountChange = (newAmount) => {
+		setFirstLoad(false);
+		setAmount(newAmount);
+	};
+
+	const onStake = () => {
+		if (Object.keys(formErrors).length) {
+			return;
+		}
+	};
+
 	return (
 		<section className="cd_we_staking">
 			<div className="cd_we_staking_inputs">
-				<div className="cd_we_staking_amount">
-					<div className="cd_we_staking_amount_header">
-						<div className="cd_we_input_label">Amount</div>
-						<div>Balance: {toFormattedNumber(balance)}</div>
-					</div>
-					<div className="cd_we_staking_amount_text_box">
-						<input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
-						<div
-							className="cd_we_amount_max_btn"
-							onClick={() => setAmount(balance - CSPR_AUCTION_DELEGATE_FEE)}
-						>
-							Max
-						</div>
-					</div>
-				</div>
 				<div className="cd_we_staking_validator">
 					<div className="cd_we_staking_validator_header">
 						<div className="cd_we_input_label">Validator</div>
@@ -78,8 +97,27 @@ const Staking = () => {
 							/>
 						</svg>
 					</div>
+					<div className="cd_error_text">{formErrors.validator}</div>
 				</div>
-				<Button>Stake Now</Button>
+				<div className="cd_we_staking_amount">
+					<div className="cd_we_staking_amount_header">
+						<div className="cd_we_input_label">Amount</div>
+						<div>Balance: {toFormattedNumber(balance)}</div>
+					</div>
+					<div className="cd_we_staking_amount_text_box">
+						<input type="number" value={amount} onChange={(e) => onAmountChange(e.target.value)} />
+						<div
+							className="cd_we_amount_max_btn"
+							onClick={() => onAmountChange(balance - CSPR_AUCTION_DELEGATE_FEE)}
+						>
+							Max
+						</div>
+					</div>
+					<div className="cd_error_text">{formErrors.amount}</div>
+				</div>
+				<Button onClick={onStake} disabled={Object.keys(formErrors).length || firstLoad}>
+					Stake Now
+				</Button>
 			</div>
 			<div className="cd_we_staking_info">
 				<div className="cd_we_staking_info_title">Staked Information</div>

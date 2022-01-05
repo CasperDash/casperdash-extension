@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getValidators } from '../../../../selectors/validator';
@@ -15,8 +15,11 @@ const VALIDATOR_METADATA = {
 };
 
 export const SearchValidator = () => {
+	// State
+	const [searchTerm, setSearchTerm] = useState();
+
 	// Selector
-	const validators = useSelector(getValidators);
+	const validators = useSelector(getValidators(searchTerm));
 
 	// Hook
 	const { state } = useLocation();
@@ -31,7 +34,11 @@ export const SearchValidator = () => {
 		<section className="cd_we_validator_search">
 			<div className="cd_we_validator_search_input">
 				<div className="cd_we_input_label">Validator</div>
-				<input placeholder="Enter validator" />
+				<input
+					placeholder="Enter validator"
+					value={searchTerm}
+					onChange={(e) => setSearchTerm(e.target.value)}
+				/>
 			</div>
 			<div className="cd_we_validator_list">
 				<div className="cd_we_input_label">Validator List</div>

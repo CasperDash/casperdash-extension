@@ -62,7 +62,7 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 export const useStakeFromValidators = (publicKey) => {
 	const dispatch = useDispatch();
 
-	const validators = useSelector(getValidators);
+	const validators = useSelector(getValidators());
 	const pendingStakes = useSelector(getPendingStakes());
 	useEffect(() => {
 		dispatch(getStakeFromLocalStorage(publicKey));
