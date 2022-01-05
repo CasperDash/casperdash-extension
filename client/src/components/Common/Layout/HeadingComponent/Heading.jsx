@@ -21,7 +21,7 @@ const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
 	const { ConnectSignerButton, isAvailable } = useCasperSigner();
-	const { handleConnectLedger, isUsingLedger } = useLedger();
+	const { handleConnectLedger, isUsingLedger, logOutLedger } = useLedger();
 	const { loadMoreKeys } = useLedgerKeys();
 
 	// Selector
@@ -99,13 +99,18 @@ const HeadingModule = (props) => {
 					)}
 
 					{isUsingLedger && (
-						<Button
-							className="cd_all_page_logout_btn"
-							onClick={loadMoreLedgerKeys}
-							disabled={isLoadingKeys}
-						>
-							{!isLoadingKeys ? 'Load more keys' : 'Loading'}
-						</Button>
+						<>
+							<Button
+								className="cd_all_page_logout_btn"
+								onClick={loadMoreLedgerKeys}
+								disabled={isLoadingKeys}
+							>
+								{!isLoadingKeys ? 'Load more keys' : 'Loading'}
+							</Button>
+							<Button className="cd_all_page_logout_btn" onClick={logOutLedger}>
+								Logout
+							</Button>
+						</>
 					)}
 
 					{/* Display connect ledger button if no public key */}
