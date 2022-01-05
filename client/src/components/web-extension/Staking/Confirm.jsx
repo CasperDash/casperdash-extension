@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { getSignedStakeDeploy } from '../../../services/stakeServices';
@@ -8,21 +8,21 @@ import { getPublicKey } from '../../../selectors/user';
 import { putDeploy } from '../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
-import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE } from '../../../constants/stack';
+import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE } from '../../../constants/key';
 import Copy from '../../Common/Button/Copy';
 import './Confirm.scss';
 
 export const Confirm = () => {
-	// State
-	const [errorMessage, setErrorMessage] = useState();
-
 	// Hook
 	const { state } = useLocation();
 	const { stake = {} } = state || {};
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
+	// Selector
 	const publicKey = useSelector(getPublicKey);
 
+	// Function
 	const onConfirm = async () => {
 		const entryPoint = stake.action === 'undelegate' ? ENTRY_POINT_UNDELEGATE : ENTRY_POINT_DELEGATE;
 		try {
@@ -33,7 +33,10 @@ export const Confirm = () => {
 				amount: stake.amount,
 				entryPoint,
 			});
-			const { data } = await dispatch(putDeploy(signedDeploy));
+			const { data, error } = await dispatch(putDeploy(signedDeploy));
+			if (error) {
+				throw new Error(`Error on ${entryPoint}. Please try again later.`);
+			}
 			toast.success(`Deploy hash: ${data.deployHash}`);
 			dispatch(
 				pushStakeToLocalStorage(publicKey, {
@@ -47,8 +50,9 @@ export const Confirm = () => {
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
+			navigate('/staking', { replace: true });
 		} catch (error) {
-			setErrorMessage(error.message);
+			toast.error(error.message);
 		}
 	};
 
@@ -68,7 +72,7 @@ export const Confirm = () => {
 				<div className="cd_we_input_label">Network Fee</div>
 				<div>{toFormattedNumber(stake.fee)} CSPR</div>
 			</div>
-			{errorMessage && <div className="cd_error_text">{errorMessage}</div>}
+
 			<Button onClick={onConfirm}>{stake.action === 'undelegate' ? 'Undelegate' : 'Delegate'}</Button>
 		</section>
 	);
