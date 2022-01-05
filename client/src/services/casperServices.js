@@ -1,4 +1,5 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
+import { toast } from 'react-toastify';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
 import { signByLedger } from '../services/ledgerServices';
 
@@ -44,6 +45,7 @@ export const signDeploy = async (deploy, mainAccountHex, setAccountHex, casperAp
 			const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
 			return signedDeploy;
 		} else {
+			toast('Transaction submitted. Awaiting your approval in the ledger.');
 			const signedDeploy = await signByLedger(deploy, {
 				publicKey: mainAccountHex,
 				keyPath: 0,
