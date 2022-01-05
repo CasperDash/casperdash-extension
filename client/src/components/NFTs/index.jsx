@@ -15,7 +15,8 @@ const NFTs = () => {
 	const NFTInfo = useSelector(getNFTInfo);
 	// State
 	const [showModal, setShowModal] = useState(false);
-	const [selectedMetadata, setSelectedMetadata] = useState(false);
+	const [selectedMetadata, setSelectedMetadata] = useState([]);
+	const [selectedTokenId, setSelectedTokenId] = useState();
 
 	// Effect
 	useAutoRefreshEffect(() => {
@@ -28,9 +29,10 @@ const NFTs = () => {
 		setSelectedMetadata([]);
 	};
 
-	const onOpenModal = (metadata) => {
+	const onOpenModal = (metadata, tokenId) => {
 		setShowModal(true);
 		setSelectedMetadata(metadata);
+		setSelectedTokenId(tokenId);
 	};
 
 	return (
@@ -47,7 +49,7 @@ const NFTs = () => {
 								<div
 									className="cd_nft_col col-lg-3 col-md-3"
 									key={tokenId}
-									onClick={() => onOpenModal(metadata)}
+									onClick={() => onOpenModal(metadata, tokenId)}
 								>
 									<div className="cd_nft_content position-relative">
 										<div className="cd_nft_image">
@@ -56,7 +58,9 @@ const NFTs = () => {
 												alt="nft-image"
 											/>
 										</div>
-										<div className="cd_nft_content_text">{tokenName ? tokenName.value : 'NFT'}</div>
+										<div className="cd_nft_content_text">
+											{tokenName ? tokenName.value : tokenId || 'NFT'}
+										</div>
 									</div>
 								</div>
 							) : null;
@@ -69,7 +73,12 @@ const NFTs = () => {
 					)}
 				</div>
 
-				<NFTModal show={showModal} handleClose={onCloseModal} metadata={selectedMetadata} />
+				<NFTModal
+					show={showModal}
+					handleClose={onCloseModal}
+					metadata={selectedMetadata}
+					tokenId={selectedTokenId}
+				/>
 			</section>
 		</>
 	);

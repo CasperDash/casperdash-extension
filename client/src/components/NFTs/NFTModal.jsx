@@ -1,13 +1,13 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export const NFTModal = ({ show, handleClose, metadata = [] }) => {
+export const NFTModal = ({ show, handleClose, metadata = [], tokenId }) => {
 	const image = metadata && metadata.find((data) => data.key === 'image');
 	const name = metadata && metadata.find((data) => data.key === 'name');
 	return (
 		<Modal show={show} onHide={handleClose} centered className="cd_edit_modal_content" size="lg">
 			<Modal.Header closeButton className="cd_edit_modal_header">
-				<Modal.Title>{name ? name.value : 'NFT'}</Modal.Title>
+				<Modal.Title>{name ? name.value : tokenId || 'NFT'}</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body className="cd_nft_modal_body">
