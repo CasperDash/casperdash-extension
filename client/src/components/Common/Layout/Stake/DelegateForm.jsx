@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
@@ -74,6 +75,9 @@ const DelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
+			if (ledgerOptions.casperApp) {
+				toast('Transaction submitted. Awaiting your approval in the ledger.');
+			}
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
 			if (signedDeploy.error) {
 				setSignerError(signedDeploy.error.message);

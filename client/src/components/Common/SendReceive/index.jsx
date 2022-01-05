@@ -4,6 +4,7 @@ import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
+import { toast } from 'react-toastify';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
@@ -47,6 +48,9 @@ export const SendReceiveSection = ({
 	};
 
 	const onConfirmTransaction = async (transferId) => {
+		if (ledgerOptions.casperApp) {
+			toast('Transaction submitted. Awaiting your approval in the ledger.');
+		}
 		const signedDeploy = !isTokenTransfer
 			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)
 			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, ledgerOptions);

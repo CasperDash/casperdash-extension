@@ -46,7 +46,6 @@ export const signDeploy = async (deploy, mainAccountHex, setAccountHex, { casper
 			const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
 			return signedDeploy;
 		} else {
-			toast('Transaction submitted. Awaiting your approval in the ledger.');
 			const signedDeploy = await signByLedger(deploy, {
 				publicKey: mainAccountHex,
 				keyPath,
