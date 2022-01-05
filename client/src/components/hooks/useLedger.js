@@ -26,6 +26,17 @@ const useLedger = () => {
 		}
 	};
 
+	const logOutLedger = () => {
+		dispatch(setPublicKey(null));
+		dispatch(
+			setLedgerOptions({
+				casperApp: null,
+				ledgerKeys: [],
+				keyPath: 0,
+			}),
+		);
+	};
+
 	const handleConnectLedger = async (callback) => {
 		try {
 			const casperApp = await initLedgerApp();
@@ -50,7 +61,7 @@ const useLedger = () => {
 		}
 	};
 
-	return { handleConnectLedger, isUsingLedger, isLedgerConnected };
+	return { handleConnectLedger, isUsingLedger, isLedgerConnected, logOutLedger };
 };
 
 export default useLedger;
