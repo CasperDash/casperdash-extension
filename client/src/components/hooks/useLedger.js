@@ -5,6 +5,7 @@ import { setLedgerOptions } from '../../actions/ledgerActions';
 import { getLedgerPublicKey, getLedgerError, initLedgerApp } from '../../services/ledgerServices';
 import { CONNECTION_TYPES } from '../../constants/settings';
 import { getLedgerOptions } from '../../selectors/ledgerOptions';
+import { SECP256k1 } from '../../constants/ledger';
 
 const useLedger = () => {
 	// Hook
@@ -47,7 +48,7 @@ const useLedger = () => {
 				return;
 			}
 
-			const key = `02${publicKey.toString('hex')}`;
+			const key = `${SECP256k1}${publicKey.toString('hex')}`;
 			dispatch(setPublicKey(key, CONNECTION_TYPES.ledger));
 			dispatch(
 				setLedgerOptions({
