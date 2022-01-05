@@ -3,19 +3,27 @@ import { toast } from 'react-toastify';
 import { setLedgerOptions } from '../../actions/ledgerActions';
 import { getLedgerError } from '../../services/ledgerServices';
 import { getLedgerOptions } from '../../selectors/ledgerOptions';
+import useLedger from './useLedger';
 
 const useLedgerKeys = () => {
 	// Hook
 	const dispatch = useDispatch();
+	const { isLedgerConnected } = useLedger();
 
 	// Selector
 	const {casperApp} = useSelector(getLedgerOptions);
+	
 
 	// Function
 	const loadMoreKeys = async (callback) => {
+		if (!await isLedgerConnected()) {
+			toast.error('You must unlock the Casper App on your Ledger device to connect.');
+			return false;
+		}
+
 		try {
 			const keys = [];
-			for (let i = 1; i < 6; i++) {
+			for (let i = 0; i < 6; i++) {
 				const key = `02${(await casperApp.getAddressAndPubKey(`m/44'/506'/0'/0/${i}`)).publicKey.toString(
 					'hex',
 				)}`;
@@ -26,6 +34,7 @@ const useLedgerKeys = () => {
 				app: casperApp,	
 				ledgerKeys: keys
 			}));
+			return keys;
 		} catch (error) {
 			toast.error(getLedgerError(error));
 		}
