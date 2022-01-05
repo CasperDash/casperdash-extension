@@ -32,14 +32,14 @@ export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
 	return (
 		<Modal show={show} onHide={onCloseModal} centered className="cd_add_token_modal_content" size={'lg'}>
 			<Modal.Header closeButton className="cd_add_token_modal_header">
-				<Modal.Title>Ledger Keys</Modal.Title>
+				<Modal.Title>Derivable Accounts</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body className="cd_add_token_modal_body">
 				<div className="cd_add_token_modal_row">
 					<div className="cd_add_token_modal_value">
 						<Select
-							placeholder="Select the ledger keys"
+							placeholder="Select the account"
 							options={options}
 							onChange={(option) => setSelectedKey(option.value)}
 						/>
