@@ -13,17 +13,16 @@ const useLedgerKeys = () => {
 	const { isLedgerConnected } = useLedger();
 
 	// Selector
-	const {casperApp, ledgerKeys} = useSelector(getLedgerOptions);
-	
+	const { casperApp, ledgerKeys } = useSelector(getLedgerOptions);
 
 	// Function
 	const loadMoreKeys = async (callback) => {
-		// Do not load again if loaded 6 key paths before.
+		// Do not load again if loaded key paths before.
 		if (ledgerKeys && ledgerKeys.length === MAX_KEY_PATH) {
 			return ledgerKeys;
 		}
 
-		if (!await isLedgerConnected()) {
+		if (!(await isLedgerConnected())) {
 			toast.error('You must unlock the Casper App on your Ledger device to connect.');
 			return false;
 		}
@@ -37,10 +36,12 @@ const useLedgerKeys = () => {
 				ledgerKeys.push({ key, path: i });
 			}
 			typeof callback === 'function' && callback();
-			dispatch(setLedgerOptions({
-				casperApp,	
-				ledgerKeys,
-			}));
+			dispatch(
+				setLedgerOptions({
+					casperApp,
+					ledgerKeys,
+				}),
+			);
 			return ledgerKeys;
 		} catch (error) {
 			toast.error(getLedgerError(error));
