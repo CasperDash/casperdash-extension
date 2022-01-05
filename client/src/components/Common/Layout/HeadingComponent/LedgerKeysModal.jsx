@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import Select from 'react-select';
+import { setKeyPath } from '../../../../actions/ledgerActions';
 import { setPublicKey } from '../../../../actions/userActions';
 
 export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
 	// State
-	const [selectedKey, setSelectedKey] = useState('');
+	const [selectedKey, setSelectedKey] = useState(null);
 
 	// Hook
 	const dispatch = useDispatch();
@@ -15,8 +16,10 @@ export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
 		handleClose();
 	};
 
+	// Function
 	const changeLedgerKey = () => {
-		dispatch(setPublicKey(selectedKey));
+		dispatch(setPublicKey(selectedKey.label));
+		dispatch(setKeyPath(selectedKey.value));
 		handleClose();
 	};
 
@@ -24,7 +27,7 @@ export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
 		? keys.map((obj) => {
 				return {
 					label: obj.key,
-					value: obj.key,
+					value: obj.path,
 				};
 		  })
 		: [];
@@ -41,7 +44,7 @@ export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
 						<Select
 							placeholder="Select the account"
 							options={options}
-							onChange={(option) => setSelectedKey(option.value)}
+							onChange={(option) => setSelectedKey(option)}
 						/>
 					</div>
 				</div>
