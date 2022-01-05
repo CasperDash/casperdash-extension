@@ -1,14 +1,19 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { setPublicKey } from '../../actions/userActions';
 import { setLedgerOptions } from '../../actions/ledgerActions';
 import { getLedgerPublicKey, getLedgerError, initLedgerApp } from '../../services/ledgerServices';
 import { CONNECTION_TYPES } from '../../constants/settings';
+import { getLedgerOptions } from '../../selectors/ledgerOptions';
 
 const useLedger = () => {
 	// Hook
 	const dispatch = useDispatch();
 
+	// Selector
+	const { ledgerKeys } = useSelector(getLedgerOptions);
+
+	const isUsingLedger = ledgerKeys && ledgerKeys.length > 0;
 	// Function
 	const handleConnectLedger = async (callback) => {
 		try {
@@ -33,7 +38,7 @@ const useLedger = () => {
 		}
 	};
 
-	return { handleConnectLedger };
+	return { handleConnectLedger, isUsingLedger };
 };
 
 export default useLedger;
