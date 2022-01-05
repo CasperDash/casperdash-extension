@@ -6,7 +6,7 @@ export const setLedgerOptions = (opts) => {
 		payload: {
 			casperApp: opts.casperApp,
 			ledgerKeys: opts.ledgerKeys,
-			selectedKeypath: opts.selectedKeypath ? opts.selectedKeypath : 0,
+			selectedKeypath: opts.selectedKeypath || 0,
 		},
 	};
 };
