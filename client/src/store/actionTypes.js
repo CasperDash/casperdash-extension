@@ -71,6 +71,7 @@ export const SETTINGS = {
 
 export const LEDGER = {
 	SET_LEDGER_OPTIONS: 'LEDGER.SET_LEDGER_OPTIONS',
+	SET_KEY_PATH: 'LEDGER.SET_KEY_PATH',
 };
 
 export const FILES = {
