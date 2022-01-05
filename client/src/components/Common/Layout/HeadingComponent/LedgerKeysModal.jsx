@@ -51,9 +51,6 @@ export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
 			</Modal.Body>
 
 			<Modal.Footer className="cd_add_token_modal_footer">
-				<div className="cd_add_token_modal_error">
-					<span>{error}</span>
-				</div>
 				<Button variant="primary" onClick={changeLedgerKey}>
 					Change
 				</Button>
