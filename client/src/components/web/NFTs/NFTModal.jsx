@@ -4,10 +4,11 @@ import { Modal, Button } from 'react-bootstrap';
 import nftEmpty from 'assets/image/nft-empty.png';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
 
-export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError, deployHash, isMinting }) => {
-	const { value: imageValue = nftEmpty } = (metadata && metadata.find((data) => data.key === 'image')) || {};
+export const NFTModal = ({ show, handleClose, nftDetails, onMint, deployError, deployHash, isMinting }) => {
+	const { metadata, image: imageValue, nftName: name } = nftDetails;
+	// const { value: imageValue = nftEmpty } = (metadata && metadata.find((data) => data.key === 'image')) || {};
 
-	const name = metadata && metadata.find((data) => data.key === 'name');
+	// const name = metadata && metadata.find((data) => data.key === 'name');
 	const onClose = () => {
 		if (isMinting) {
 			return;
@@ -18,28 +19,33 @@ export const NFTModal = ({ show, handleClose, metadata = [], onMint, deployError
 	return (
 		<Modal show={show} onHide={onClose} centered className="cd_edit_modal_content" size="lg">
 			<Modal.Header closeButton className="cd_edit_modal_header">
-				<Modal.Title>{name ? name.value : 'NFT'}</Modal.Title>
+				<Modal.Title>{name || 'NFT'}</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body className="cd_nft_modal_body">
 				<div className="cd_nft_modal_row">
 					{typeof imageValue === 'string' ? (
 						<div className="cd_nft_image">
-							<img src={imageValue} alt="nft-detail" />
+							<img
+								src={imageValue}
+								alt="nft-detail"
+								onError={(e) => {
+									e.target.error = null;
+									e.target.src = nftEmpty;
+								}}
+							/>
 						</div>
 					) : (
 						<ImagePreview file={imageValue} />
 					)}
 					<div className="cd_nft_modal_metadata">
 						{metadata &&
-							metadata
-								.filter((data) => data.key !== 'image' && data.key !== 'name')
-								.map((meta) => (
-									<div key={meta.key} className="cd_nft_metadata_row">
-										<div className="cd_nft_metadata_name column">{meta.name}:</div>
-										<div className="cd_nft_metadata_value column">{meta.value}</div>
-									</div>
-								))}
+							metadata.map((meta) => (
+								<div key={meta.key} className="cd_nft_metadata_row">
+									<div className="cd_nft_metadata_name column">{meta.name}:</div>
+									<div className="cd_nft_metadata_value column">{meta.value}</div>
+								</div>
+							))}
 					</div>
 				</div>
 			</Modal.Body>

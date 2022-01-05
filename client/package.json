@@ -80,7 +80,10 @@
 		"resetMocks": false,
 		"moduleNameMapper": {
 			"^assets(.*)$": "<rootDir>/src/assets$1"
-		}
+		},
+		"transformIgnorePatterns": [
+			"<rootDir>/node_modules/(?!lodash-es)"
+		]
 	},
 	"devDependencies": {
 		"babel-core": "^6.26.3",

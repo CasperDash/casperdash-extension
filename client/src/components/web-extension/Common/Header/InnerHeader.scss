@@ -11,5 +11,9 @@
 		margin: auto;
 		font-size: 22px;
 		font-weight: bold;
+		overflow: hidden;
+		white-space: nowrap;
+		max-width: 100%;
+		text-overflow: ellipsis;
 	}
 }

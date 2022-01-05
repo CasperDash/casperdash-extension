@@ -32,7 +32,7 @@ const App = () => {
 					<Route
 						element={
 							<WithAccount>
-								<Layout modules={mainRoutes.map((route) => route.route)} />
+								<Layout modules={mainRoutes} />
 							</WithAccount>
 						}
 					>

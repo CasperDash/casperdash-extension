@@ -13,5 +13,5 @@ test('NFTSelector should call getQuerySelector ', () => {
 });
 
 test('getNFTInfo should return NFT data ', () => {
-	expect(getNFTInfo()).toEqual([]);
+	expect(getNFTInfo()()).toEqual([]);
 });

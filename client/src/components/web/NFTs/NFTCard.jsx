@@ -1,16 +1,23 @@
 import React from 'react';
+import nftEmpty from 'assets/image/nft-empty.png';
 
-export const NFTCard = ({ tokenId, metadata, onOpenModal }) => {
-	const image = metadata.find((meta) => meta.key === 'image');
-	const tokenName = metadata.find((meta) => meta.key === 'name');
+export const NFTCard = ({ nftDetails, onOpenModal }) => {
+	const { image, nftName, tokenId } = nftDetails;
 
 	return tokenId ? (
-		<div className="cd_nft_col col-lg-3 col-md-3" key={tokenId} onClick={() => onOpenModal(metadata)}>
+		<div className="cd_nft_col col-lg-3 col-md-3" key={tokenId} onClick={() => onOpenModal(nftDetails)}>
 			<div className="cd_nft_content position-relative">
 				<div className="cd_nft_image">
-					<img src={image ? image.value : 'assets/image/nft-empty.png'} alt="nft-image" />
+					<img
+						src={image}
+						alt="nft-image"
+						onError={(e) => {
+							e.target.error = null;
+							e.target.src = nftEmpty;
+						}}
+					/>
 				</div>
-				<div className="cd_nft_content_text">{tokenName ? tokenName.value : 'NFT'}</div>
+				<div className="cd_nft_content_text">{nftName}</div>
 			</div>
 		</div>
 	) : null;

@@ -1,6 +1,9 @@
+import HomeIcon from 'assets/image/home-icon.svg';
+import NFTIcon from 'assets/image/nft-menu-icon.svg';
+import StackingIcon from 'assets/image/stacking-icon.svg';
 import APP_CONFIGS from '../../config';
 import Stake from '../../components/web/Stake';
-import NFTs from '../../components/web/NFTs';
+import NFTs from '../../components/web-extension/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
 import Receive from '../../components/web-extension/Receive';
 import Send from '../../components/web-extension/Send';
@@ -11,6 +14,7 @@ import ConnectAccount from '../../components/web-extension/ConnectAccount';
 import ConnectDevice from '../../components/web-extension/ConnectAccount/ConnectDevice';
 import { AddPublicKey } from '../../components/web-extension/ConnectAccount/AddPublicKey';
 import Settings from '../../components/web-extension/Settings';
+import { NFTDetails } from '../../components/web-extension/NFTs/NFTDetails';
 
 let features;
 try {
@@ -25,10 +29,9 @@ try {
 const routes = {
 	// Routes in menu bar
 	mainRoutes: [
-		{ name: 'home', route: '/', component: Wallets },
-		{ name: 'dashboard', route: '/dashboard', component: Wallets },
-		{ name: 'staking', route: '/staking', component: Stake },
-		{ name: 'nfts', route: '/NFTs', component: NFTs },
+		{ name: 'Home', route: '/', component: Wallets, icon: HomeIcon },
+		{ name: 'Stacking', route: '/staking', component: Stake, icon: StackingIcon },
+		{ name: 'My NFTs', route: '/NFTs', component: NFTs, icon: NFTIcon },
 	],
 	// Routes which navigate from main routes
 	innerRoutes: [
@@ -38,6 +41,7 @@ const routes = {
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
 		{ name: 'Settings', route: '/settings', component: Settings },
+		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

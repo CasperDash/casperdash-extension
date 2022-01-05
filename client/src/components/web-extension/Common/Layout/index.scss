@@ -13,9 +13,10 @@
 		}
 		.main_section {
 			height: 200px;
+			margin-bottom: 10px;
 		}
 		.sub_section {
-			height: calc(100% - 200px - 10px);
+			height: calc(100% - 200px);
 		}
 	}
 }
