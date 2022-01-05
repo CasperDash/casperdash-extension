@@ -11,7 +11,6 @@ import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
 import { MiddleTruncatedText } from '../../MiddleTruncatedText';
 import useCasperSigner from '../../../hooks/useCasperSigner';
 import useLedger from '../../../hooks/useLedger';
-import useLedgerKeys from '../../../hooks/useLedgerKeys';
 import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 import { LedgerKeysModal } from './LedgerKeysModal';
@@ -21,8 +20,7 @@ const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
 	const { ConnectSignerButton, isAvailable } = useCasperSigner();
-	const { handleConnectLedger, isUsingLedger, logOutLedger } = useLedger();
-	const { loadMoreKeys } = useLedgerKeys();
+	const { handleConnectLedger, isUsingLedger, logOutLedger, loadMoreKeys } = useLedger();
 
 	// Selector
 	const theme = useSelector(getTheme);
