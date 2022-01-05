@@ -31,7 +31,7 @@ const useLedgerKeys = () => {
 			}
 			typeof callback === 'function' && callback();
 			dispatch(setLedgerOptions({
-				app: casperApp,	
+				casperApp,	
 				ledgerKeys: keys
 			}));
 			return keys;
