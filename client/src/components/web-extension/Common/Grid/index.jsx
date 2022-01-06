@@ -10,7 +10,6 @@ import './index.scss';
 const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
 	return (
 		<div className={`cd_we_grid ${className || ''}`}>
-			{isLoading && !data.length && <Bar />}
 			{!isLoading && !data.length && <NoData />}
 			{data.map((value, i) => {
 				const canClick = typeof onRowClick === 'function';
@@ -74,6 +73,7 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 					</div>
 				);
 			})}
+			{isLoading && <Bar />}
 		</div>
 	);
 };

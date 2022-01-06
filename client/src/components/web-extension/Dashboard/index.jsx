@@ -20,7 +20,7 @@ const tokensGridMetadata = {
 const WalletDetails = () => {
 	// Hook
 	const navigate = useNavigate();
-	const { allTokenInfo } = useTokenInfo();
+	const { allTokenInfo, isFetching } = useTokenInfo();
 
 	// Functions
 	const onSelectToken = (token) => {
@@ -40,7 +40,12 @@ const WalletDetails = () => {
 				<SendReceive token={allTokenInfo.find((token) => token.address === 'CSPR')} />
 			</div>
 			<div className="cd_we_main_details sub_section hide_scroll_bar">
-				<Grid data={allTokenInfo} metadata={tokensGridMetadata} onRowClick={onSelectToken} />
+				<Grid
+					data={allTokenInfo}
+					metadata={tokensGridMetadata}
+					onRowClick={onSelectToken}
+					isLoading={isFetching}
+				/>
 				<div className="cd_we_action" onClick={onAddToken}>
 					+ Add Custom Token
 				</div>
