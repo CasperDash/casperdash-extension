@@ -3,13 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CsprIcon from 'assets/image/cspr.png';
 import { Bar } from '../../../Common/Spinner';
+import NoData from '../../../Common/NoData';
 import { getValueByFormat } from '../../../../helpers/format';
 import './index.scss';
 
 const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
 	return (
 		<div className={`cd_we_grid ${className || ''}`}>
-			{isLoading && (!data || !data.length) && <Bar />}
+			{isLoading && !data.length && <Bar />}
+			{!isLoading && !data.length && <NoData />}
 			{data.map((value, i) => {
 				const canClick = typeof onRowClick === 'function';
 				return (

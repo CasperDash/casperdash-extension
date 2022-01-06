@@ -1,0 +1,14 @@
+.cd_we_no_data {
+	height: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	img {
+		width: 30%;
+		padding-bottom: 10px;
+	}
+	.cd_we_no_data_message {
+		color: var(--secondary-text-color);
+	}
+}
