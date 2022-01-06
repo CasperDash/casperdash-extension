@@ -21,6 +21,6 @@ test('userDetailsSelector should call getQuerySelector ', () => {
 });
 
 test('get validators', () => {
-	const validators = getValidators();
+	const validators = getValidators()();
 	expect(validators.length).toBe(1);
 });
