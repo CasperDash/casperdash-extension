@@ -20,6 +20,7 @@ const STAKING_INFO_METADATA = {
 
 export const StakingInfo = ({ publicKey }) => {
 	const stackingList = useStakeFromValidators(publicKey);
+	console.log(stackingList);
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
 
 	return (

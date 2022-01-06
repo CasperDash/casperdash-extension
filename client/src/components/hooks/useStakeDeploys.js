@@ -6,7 +6,12 @@ import { getValidators } from '../../selectors/validator';
 import { getTransferDeploysStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
 import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
+import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL, STAKING_ICON } from '../../constants/icon';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
+
+export const getStakeIcon = (value) => {
+	return value > 0 ? RECEIVE_ICON_SMALL : SEND_ICON_SMALL;
+};
 
 /**
  * Get staked validators and add the pending amount.
@@ -38,10 +43,12 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 		let stakedValidator = {
 			validator: validatorPublicKey,
 			stakedAmount: moteToCspr(foundDelegator.staked_amount),
+			icon: RECEIVE_ICON_SMALL,
 		};
 		if (pendingStake) {
 			stakedValidator.pendingAmount =
 				pendingStake.entryPoint === ENTRY_POINT_UNDELEGATE ? -pendingStake.amount : pendingStake.amount;
+			stakedValidator.icon = getStakeIcon(pendingStake.amount);
 		}
 
 		stakedValidators.push(stakedValidator);
