@@ -15,15 +15,18 @@ const SETTINGS = [
 			className: 'cd_we_setting_about',
 			img: <ContactIcon />,
 		},
-	},
-	{
-		name: 'Connected Sites',
-		hasMenu: true,
-		icon: {
-			className: 'cd_we_setting_sites',
-			img: <SiteIcon />,
+		action: () => {
+			chrome.tabs.create({ url: 'https://casperdash.io' });
 		},
 	},
+	// {
+	// 	name: 'Connected Sites',
+	// 	hasMenu: true,
+	// 	icon: {
+	// 		className: 'cd_we_setting_sites',
+	// 		img: <SiteIcon />,
+	// 	},
+	// },
 	{
 		name: 'Lock',
 		icon: {
