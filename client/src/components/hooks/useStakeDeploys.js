@@ -6,7 +6,7 @@ import { getValidators } from '../../selectors/validator';
 import { getTransferDeploysStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
 import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
-import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL, STAKING_ICON } from '../../constants/icon';
+import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL } from '../../constants/icon';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 export const getStakeIcon = (value) => {
