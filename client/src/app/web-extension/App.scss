@@ -115,10 +115,12 @@ input {
 	padding-bottom: 5px;
 }
 
-.success {
+.success,
+.completed {
 	color: var(--bs-success) !important;
 }
-.fail {
+.fail,
+.failed {
 	color: #e2507a !important;
 }
 .pending {

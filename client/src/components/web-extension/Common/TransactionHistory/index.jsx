@@ -11,20 +11,20 @@ import './TransactionHistory.scss';
 const STATUS_MAPPING = [
 	{ value: '', label: 'All' },
 	{ value: 'pending', label: 'Pending' },
-	{ value: 'fail', label: 'Fail' },
-	{ value: 'success', label: 'Success' },
+	{ value: 'failed', label: 'Failed' },
+	{ value: 'completed', label: 'Completed' },
 ];
 
-const TRANSFER_METADATA = {
+const TRANSFER_METADATA = (symbol) => ({
 	left: [
 		{ key: 'deployHash', type: 'primary', wrapperComponent: MiddleTruncatedText },
 		{ key: 'timestamp', type: 'secondary', format: 'date' },
 	],
 	right: [
-		{ key: 'amount', type: 'primary', format: 'number' },
+		{ key: 'amount', type: 'primary', format: 'number', suffix: symbol },
 		{ key: 'status', type: 'secondary', valueAsClass: true },
 	],
-};
+});
 
 export const TransactionHistory = ({ symbol, className }) => {
 	// Hook
@@ -57,7 +57,7 @@ export const TransactionHistory = ({ symbol, className }) => {
 			</div>
 			<Grid
 				data={enrichTransactionWithIcon(transferList)}
-				metadata={TRANSFER_METADATA}
+				metadata={TRANSFER_METADATA(symbol)}
 				onRowClick={onTransactionClick}
 			/>
 		</div>
