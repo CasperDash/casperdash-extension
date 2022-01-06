@@ -5,6 +5,7 @@ import memoizeOne from 'memoize-one';
 import Fuse from 'fuse.js';
 import { NFTS } from '../store/actionTypes';
 import { formatKeyByPrefix } from '../helpers/key';
+import { toFormattedNumber } from '../helpers/format';
 import { userDetailsSelector } from './user';
 
 const NFT_TYPE_MAPPING = {
@@ -36,14 +37,16 @@ const sortNFT = memoizeOne((data = [], sortObj) => {
 const massageNFTInfo = memoizeOne((NFTInfo = []) => {
 	return NFTInfo.map((info) => {
 		if (info.metadata && Array.isArray(info.metadata)) {
-			const nftName = getMetadataByKey(info.metadata, 'name');
+			const nftName = getMetadataByKey(info.metadata, 'name') || info.tokenId;
 			const image = getMetadataByKey(info.metadata, 'image');
 			const metadata = info.metadata.filter((data) => data.key !== 'name' && data.key !== 'image');
+			const totalSupply = info.totalSupply ? toFormattedNumber(info.totalSupply.hex) : info.totalSupply;
 			return {
 				...info,
 				nftName,
 				image,
 				metadata,
+				totalSupply,
 			};
 		}
 		return info;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import ContactIcon from 'assets/image/contact-icon.svg';
-import SiteIcon from 'assets/image/file-icon.svg';
+//import SiteIcon from 'assets/image/file-icon.svg';
 import LockIcon from 'assets/image/lock-icon.svg';
 import ArrowIcon from 'assets/image/bold-arrow-icon.svg';
 import { lockAccount } from '../../../actions/userActions';
