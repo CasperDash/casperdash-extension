@@ -56,8 +56,9 @@
 		"start-mainnet": "webpack-dev-server --mode development --env=network=mainnet",
 		"start-testnet": "webpack-dev-server --mode development --env=network=testnet",
 		"build-mainnet": "webpack --mode production --env=network=mainnet && react-snapshot",
-		"build-testnet": "webpack --mode production  --env=network=testnet&& react-snapshot",
-		"build-extension": "webpack --mode production --env=type=extension",
+		"build-testnet": "webpack --mode production  --env=network=testnet && react-snapshot",
+		"build-extension-testnet": "webpack --mode production --env=type=extension --env=network=testnet",
+		"build-extension-mainnet": "webpack --mode production --env=type=extension",
 		"test": "react-scripts test --coverage --watchAll ",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage"
 	},
