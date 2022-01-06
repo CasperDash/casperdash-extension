@@ -1505,12 +1505,14 @@ table {
 			margin-right: 5px;
 		}
 	}
-	.cd_transaction_success {
+	.cd_transaction_success,
+	.cd_transaction_completed {
 		&::before {
 			background: $color9;
 		}
 	}
-	.cd_transaction_fail {
+	.cd_transaction_fail,
+	.cd_transaction_failed {
 		&::before {
 			background: $color33;
 		}
