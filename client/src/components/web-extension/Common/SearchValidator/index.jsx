@@ -42,7 +42,7 @@ export const SearchValidator = () => {
 				/>
 			</div>
 			<div className="cd_we_validator_list">
-				<div className="cd_we_input_label">Validator List</div>
+				<div className="cd_we_input_label">Validator List ({validators.length})</div>
 				<Grid
 					data={validators}
 					metadata={VALIDATOR_METADATA}

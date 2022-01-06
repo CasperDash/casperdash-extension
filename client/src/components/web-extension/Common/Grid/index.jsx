@@ -1,7 +1,6 @@
 import _get from 'lodash-es/get';
 import React from 'react';
 import PropTypes from 'prop-types';
-import CsprIcon from 'assets/image/cspr.png';
 import { Bar } from '../../../Common/Spinner';
 import NoData from '../../../Common/NoData';
 import { getValueByFormat } from '../../../../helpers/format';
@@ -28,13 +27,7 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 												metadata.left ? metadata.left.iconClassName || '' : ''
 											}`}
 										>
-											<img
-												src={chrome.runtime.getURL(value.icon)}
-												onError={(e) => {
-													e.target.error = null;
-													e.target.src = CsprIcon;
-												}}
-											/>
+											<img src={value.icon} alt="grid" />
 										</div>
 									)}
 									<div className="cd_we_item_content">
