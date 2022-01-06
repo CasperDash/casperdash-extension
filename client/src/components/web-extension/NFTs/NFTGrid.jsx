@@ -1,20 +1,23 @@
 import React from 'react';
 import NoData from '../../Common/NoData';
+import { Bar } from '../../Common/Spinner';
 import { NFTCard } from './NFTCard';
 
-export const NFTGrid = ({ NFTsInfo, onNFTClick }) => {
+export const NFTGrid = ({ NFTsInfo = [], onNFTClick, isLoading }) => {
 	return (
 		<>
-			<div className="cd_we_nft_count">{(NFTsInfo && NFTsInfo.length) || 0} NFTs</div>
-			{NFTsInfo && NFTsInfo.length ? (
+			<div className="cd_we_nft_count">{NFTsInfo.length} NFTs</div>
+
+			{NFTsInfo.length ? (
 				<div className="cd_we_nft_grid ">
 					{NFTsInfo.map((nftDetails) => {
 						return <NFTCard key={nftDetails.tokenId} nftDetails={nftDetails} onNFTClick={onNFTClick} />;
 					})}
 				</div>
-			) : (
-				<NoData message="You do not have any NFT collectables yet" />
-			)}
+			) : null}
+			{!isLoading && !NFTsInfo.length && <NoData message="You do not have any NFT collectables yet" />}
+
+			{isLoading && <Bar />}
 		</>
 	);
 };
