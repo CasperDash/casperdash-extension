@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { validatorSelector } from '../../../../selectors/validator';
 import { useStakeFromValidators } from '../../../hooks/useStakeDeploys';
 import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
 import Grid from '../../Common/Grid';
@@ -18,12 +20,17 @@ const STAKING_INFO_METADATA = {
 
 export const StakingInfo = ({ publicKey }) => {
 	const stackingList = useStakeFromValidators(publicKey);
+	const { loading: isLoadingValidators } = useSelector(validatorSelector);
 
 	return (
 		<div className="cd_we_staking_info">
 			<div className="cd_we_staking_info_title">Staked Information</div>
-
-			<Grid data={stackingList} metadata={STAKING_INFO_METADATA} />
+			<Grid
+				data={stackingList}
+				metadata={STAKING_INFO_METADATA}
+				className="overflow_auto hide_scroll_bar"
+				isLoading={isLoadingValidators}
+			/>
 		</div>
 	);
 };

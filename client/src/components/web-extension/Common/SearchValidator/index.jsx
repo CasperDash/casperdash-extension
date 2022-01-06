@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getValidators } from '../../../../selectors/validator';
+import { getValidators, validatorSelector } from '../../../../selectors/validator';
 import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
 import Grid from '../../Common/Grid';
 import './SearchValidator.scss';
@@ -20,6 +20,7 @@ export const SearchValidator = () => {
 
 	// Selector
 	const validators = useSelector(getValidators(searchTerm));
+	const { loading } = useSelector(validatorSelector);
 
 	// Hook
 	const { state } = useLocation();
@@ -47,6 +48,7 @@ export const SearchValidator = () => {
 					metadata={VALIDATOR_METADATA}
 					className="overflow_auto hide_scroll_bar"
 					onRowClick={onValidatorClick}
+					isLoading={loading}
 				/>
 			</div>
 		</section>

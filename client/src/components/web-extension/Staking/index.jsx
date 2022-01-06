@@ -125,6 +125,7 @@ const Staking = () => {
 					Stake Now
 				</Button>
 			</div>
+
 			<StakingInfo publicKey={publicKey} />
 		</section>
 	);
