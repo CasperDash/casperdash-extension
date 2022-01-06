@@ -49,5 +49,14 @@ module.exports = (dir) =>
 					},
 				],
 			}),
+			new CopyWebpackPlugin({
+				patterns: [
+					{
+						from: 'src/assets/image/',
+						to: path.join(dir, 'build_extension/assets/images/'),
+						force: true,
+					},
+				],
+			}),
 		],
 	});

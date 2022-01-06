@@ -22,9 +22,9 @@
 .btn {
 	border-radius: 32px;
 	&:disabled {
-		background-color: var(--secondary-text-color-med);
-		border-color: var(--secondary-text-color-med);
-		color: var(--primary-text-color-dark);
+		background-color: var(--secondary-text-color-med) !important;
+		border-color: var(--secondary-text-color-med) !important;
+		color: var(--primary-text-color-dark) !important;
 	}
 }
 
@@ -51,7 +51,26 @@ input {
 	border-radius: 12px !important;
 	padding: 10px !important;
 	border: 0 !important;
+	font-size: 1em !important;
 }
+.invalid-feedback {
+	display: block;
+}
+
+::-webkit-input-placeholder {
+	/* Edge */
+	font-size: 1em;
+}
+
+:-ms-input-placeholder {
+	/* Internet Explorer */
+	font-size: 1em;
+}
+
+::placeholder {
+	font-size: 1em;
+}
+
 .cd_we_dropdown {
 	input {
 		background-color: transparent !important;
@@ -73,8 +92,9 @@ input {
 
 .cd_we_input_label {
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: 500;
 	color: var(--secondary-text-color);
+	padding-bottom: 5px;
 }
 
 .success {
@@ -90,7 +110,7 @@ input {
 .cd_error_text {
 	color: #e2507a;
 	font-size: 0.8em;
-	font-weight: 600;
+	font-weight: 500;
 }
 
 .cd_we_confirm {

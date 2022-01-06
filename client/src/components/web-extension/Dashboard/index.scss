@@ -13,11 +13,17 @@
 	border-radius: 26px 26px 0 0;
 	padding-bottom: 60px;
 	background: var(--component-background);
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
-	/* Hide scrollbar for Chrome, Safari and Opera */
-	&::-webkit-scrollbar {
-		display: none;
+	.cd_we_grid {
+		.cd_we_item {
+			.cd_we_item_left {
+				.cd_we_grid_icon {
+					background: var(--primary-light-color);
+					width: 40px;
+					height: 40px;
+					padding: 10px;
+				}
+			}
+		}
 	}
 }
 

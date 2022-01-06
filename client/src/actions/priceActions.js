@@ -10,3 +10,11 @@ export const fetchPriceHistory = () => ({
 		url: 'api/v3/coins/casper-network/market_chart?vs_currency=usd&days=30&interval=hourly',
 	},
 });
+
+export const fetchCSPRMarketInfo = () => ({
+	type: PRICE.FETCH_CSPR_MARKET_INFO,
+	request: {
+		baseURL: 'https://api.coingecko.com/',
+		url: 'api/v3/coins/markets?vs_currency=usd&ids=casper-network',
+	},
+});
