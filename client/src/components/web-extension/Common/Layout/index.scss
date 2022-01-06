@@ -4,9 +4,10 @@
 			background: var(--component-background);
 			padding: 20px 15px 0;
 			border-radius: 26px 26px 0 0;
+			margin-top: 10px;
 		}
 		.no_bottom_bar {
-			height: calc(100vh - 63px);
+			height: calc(100vh - 73px);
 		}
 		.with_bottom_bar {
 			height: calc(100vh - 63px - 64px);

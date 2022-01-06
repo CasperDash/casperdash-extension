@@ -1,0 +1,30 @@
+.cd_we_token_history {
+	background-color: var(--component-background);
+	border-radius: 26px 26px 0 0;
+	overflow: auto;
+	.cd_we_token_status_filter {
+		padding: 20px 20px 0;
+		display: flex;
+		.cd_token_status {
+			padding: 5px 10px;
+			margin-right: 10px;
+			border-radius: 26px;
+			&.active,
+			&:hover {
+				background: var(--primary-light-color);
+			}
+		}
+	}
+	.cd_we_grid {
+		.cd_we_item {
+			.cd_we_item_left {
+				.cd_we_grid_icon {
+					background: var(--secondary-text-color-light);
+					width: 20px;
+					height: 20px;
+					padding: 5px;
+				}
+			}
+		}
+	}
+}

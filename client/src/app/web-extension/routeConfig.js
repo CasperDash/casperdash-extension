@@ -1,6 +1,7 @@
 import HomeIcon from 'assets/image/home-icon.svg';
 import NFTIcon from 'assets/image/nft-menu-icon.svg';
 import StackingIcon from 'assets/image/stacking-icon.svg';
+import MarketIcon from 'assets/image/market-icon.svg';
 import APP_CONFIGS from '../../config';
 import Stake from '../../components/web/Stake';
 import NFTs from '../../components/web-extension/NFTs';
@@ -15,6 +16,7 @@ import ConnectDevice from '../../components/web-extension/ConnectAccount/Connect
 import { AddPublicKey } from '../../components/web-extension/ConnectAccount/AddPublicKey';
 import Settings from '../../components/web-extension/Settings';
 import { NFTDetails } from '../../components/web-extension/NFTs/NFTDetails';
+import Market from '../../components/web-extension/Market';
 
 let features;
 try {
@@ -32,6 +34,7 @@ const routes = {
 		{ name: 'Home', route: '/', component: Wallets, icon: HomeIcon },
 		{ name: 'Stacking', route: '/staking', component: Stake, icon: StackingIcon },
 		{ name: 'My NFTs', route: '/NFTs', component: NFTs, icon: NFTIcon },
+		{ name: 'Market', route: '/market', component: Market, icon: MarketIcon },
 	],
 	// Routes which navigate from main routes
 	innerRoutes: [

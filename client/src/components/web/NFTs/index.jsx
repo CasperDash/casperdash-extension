@@ -22,8 +22,8 @@ const NFTs = () => {
 	const dispatch = useDispatch();
 
 	// Selector
-	const NFTInfo = useSelector(getNFTInfo());
 	const publicKey = useSelector(getPublicKey);
+	const NFTInfo = useSelector(getNFTInfo());
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 
 	// State

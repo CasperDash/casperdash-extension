@@ -8,8 +8,8 @@
 	border-radius: 26px 26px 0px 0px;
 	margin-bottom: 0;
 	display: flex;
-	z-index: 99999;
-	width: 100%;
+	position: fixed;
+	width: 50%;
 	.cd_page_bottom_bar_item_wrapper {
 		width: 100%;
 		display: flex;
@@ -25,8 +25,14 @@
 			path {
 				fill: var(--primary-text-color);
 			}
+			.stacking-icon_svg__cspr_path {
+				fill: var(--component-background) !important;
+			}
 		}
 		.active {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 			svg {
 				rect {
 					fill: var(--primary-color);
@@ -35,6 +41,21 @@
 					fill: var(--primary-color);
 				}
 			}
+			&:after {
+				border-radius: 50%;
+				content: '';
+				width: 5px;
+				height: 5px;
+				background: var(--primary-color);
+				position: relative;
+				top: 5px;
+			}
 		}
+	}
+}
+
+@media (max-width: 400px) {
+	.cd_page_bottom_bar_nav {
+		width: 100%;
 	}
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, Outlet } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
-import { fetchPriceHistory } from '../../../../actions/priceActions';
+import { fetchPriceHistory, fetchCSPRMarketInfo } from '../../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../../actions/deployActions';
 import { REFRESH_TIME } from '../../../../constants/key';
 import { isLoadingRequest } from '../../../../selectors/request';
@@ -29,6 +29,7 @@ const Layout = ({ modules = [] }) => {
 
 	useEffect(() => {
 		dispatch(fetchPriceHistory());
+		dispatch(fetchCSPRMarketInfo());
 	}, [dispatch]);
 
 	useEffect(() => {
