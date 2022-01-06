@@ -20,9 +20,13 @@ const TokenDetails = () => {
 			<div className="cd_we_token_info_header main_section">
 				<div className="cd_we_token_info">
 					<div className="cd_we_token_info_balance">
-						<img />
-						<div>{tokenInfo.balance && toFormattedNumber(tokenInfo.balance.displayValue)}</div>
-						<div>{tokenInfo.symbol}</div>
+						<div className="cd_we_token_info_icon">
+							<img src={tokenInfo.icon} />
+						</div>
+						<div className="cd_we_token_info_balance_value">
+							<div>{tokenInfo.balance && toFormattedNumber(tokenInfo.balance.displayValue)}</div>
+							<div>{tokenInfo.symbol}</div>
+						</div>
 					</div>
 					<div className="cd_we_token_info_value">~ {toFormattedCurrency(tokenInfo.totalPrice)}</div>
 				</div>

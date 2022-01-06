@@ -10,18 +10,31 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			padding: 20px 0;
+			padding: 15px 0;
 			.cd_we_token_info_balance {
 				display: flex;
-				font-weight: bold;
-				font-size: 1.8em;
+				font-weight: 600;
+				font-size: 1.6em;
+				align-items: center;
+				flex-direction: column;
+				.cd_we_token_info_icon {
+					width: 32px;
+					height: 32px;
+					img {
+						width: 100%;
+						padding-bottom: 5px;
+					}
+				}
+				.cd_we_token_info_balance_value {
+					display: flex;
+				}
 				div {
 					padding-left: 5px;
 				}
 			}
 			.cd_we_token_info_value {
 				color: var(--secondary-text-color);
-				font-size: 1.4em;
+				font-size: 1.1em;
 			}
 		}
 	}

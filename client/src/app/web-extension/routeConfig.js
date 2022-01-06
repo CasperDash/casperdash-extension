@@ -7,7 +7,7 @@ import NFTs from '../../components/web-extension/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
 import Receive from '../../components/web-extension/Receive';
 import Send from '../../components/web-extension/Send';
-import Token from '../../components/web-extension/TokenInfo';
+import TokenInfo from '../../components/web-extension/TokenInfo';
 import DeployDetails from '../../components/web-extension/DeployDetails';
 import { AddToken } from '../../components/web-extension/TokenInfo/AddToken';
 import ConnectAccount from '../../components/web-extension/ConnectAccount';
@@ -43,7 +43,7 @@ const routes = {
 	innerRoutes: [
 		{ name: 'receive', route: '/receive', component: Receive },
 		{ name: 'send', route: '/send', component: Send },
-		{ name: 'token', route: '/token', component: Token },
+		{ name: 'token', route: '/token', component: TokenInfo },
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
 		{ name: 'Settings', route: '/settings', component: Settings },
