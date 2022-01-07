@@ -70,7 +70,7 @@ export const createRecipientAddress = (recipient) => {
  * @param {String} contractHash token contract hash
  * @returns {Deploy} transfer deploy
  */
-export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee) => {
+export const buildTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee) => {
 	const contractHashAsByteArray = [...Buffer.from(contractHash, 'hex')];
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME, 1, DEPLOY_TTL_MS);
 	const transferParams = DeployUtil.ExecutableDeployItem.newStoredContractByHash(

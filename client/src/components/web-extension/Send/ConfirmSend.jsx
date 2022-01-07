@@ -7,7 +7,7 @@ import useSigner from '../../hooks/useSigner';
 import { getPublicKey } from '../../../selectors/user';
 import { getLedgerOptions } from '../../../selectors/ledgerOptions';
 import { putDeploy, pushTransferToLocalStorage } from '../../../actions/deployActions';
-import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
 
@@ -45,7 +45,7 @@ const ConfirmSend = ({ token }) => {
 							},
 							ledgerOptions,
 					  )
-					: await getSignedTransferTokenDeploy(
+					: await getTransferTokenDeploy(
 							{
 								...transferDetails,
 								contractInfo: { address, decimals },

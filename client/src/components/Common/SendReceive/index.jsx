@@ -11,7 +11,7 @@ import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deploy
 import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
-import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import useSigner from '../../hooks/useSigner';
 import { ConfirmModal } from './ConfirmModal';
 
@@ -50,7 +50,7 @@ export const SendReceiveSection = ({
 		try {
 			const deploy = !isTokenTransfer
 				? await getSignedTransferDeploy({ ...transactionDetails, transferId })
-				: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
+				: await getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
 
 			const signedDeploy = await signer.sign(
 				deploy,

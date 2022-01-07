@@ -4,7 +4,7 @@ import * as redux from 'react-redux';
 import * as toastify from 'react-toastify';
 import { render, cleanup, fireEvent, act } from '@testing-library/react';
 import { getSignedTransferDeploy } from '../../../services/userServices';
-import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import { SendReceiveSection } from './index';
 
 jest.mock('../.././../actions/deployActions', () => {
@@ -31,7 +31,7 @@ jest.mock('../../../services/userServices', () => {
 jest.mock('../../../services/tokenServices', () => {
 	return {
 		__esModule: true,
-		getSignedTransferTokenDeploy: jest.fn(),
+		getTransferTokenDeploy: jest.fn(),
 	};
 });
 
@@ -213,7 +213,7 @@ test('Should show dispatch action if no error when confirm cspr transfer transac
 
 test('Should show dispatch action if no error when confirm token transaction', async () => {
 	spyOnUseSelector.mockReturnValue([]);
-	getSignedTransferTokenDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
+	getTransferTokenDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
 	mockDispatch.mockReturnValue({ data: 'testdeploy' });
 	const { getByText, queryAllByText, getByPlaceholderText } = render(
 		<SendReceiveSection displayBalance={1000} fromAddress="testaddress" tokenSymbol="CDAS" />,
