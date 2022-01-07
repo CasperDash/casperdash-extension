@@ -4,7 +4,7 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { deploySelector } from '../../../../selectors/deploy';
@@ -75,7 +75,7 @@ const DelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			const deploy = await getSignedStakeDeploy(stakeDetails);
+			const deploy = await getStakeDeploy(stakeDetails);
 			const signedDeploy = await signer.sign(deploy, stakeDetails.fromAddress, stakeDetails.validator);
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data, error } = deployResult;

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { getSignedStakeDeploy } from '../../../services/stakeServices';
+import { getStakeDeploy } from '../../../services/stakeServices';
 import { getPublicKey } from '../../../selectors/user';
 import { putDeploy } from '../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../actions/stakeActions';
@@ -28,7 +28,7 @@ export const Confirm = () => {
 	const onConfirm = async () => {
 		const entryPoint = stake.action === 'undelegate' ? ENTRY_POINT_UNDELEGATE : ENTRY_POINT_DELEGATE;
 		try {
-			const deploy = await getSignedStakeDeploy({
+			const deploy = await getStakeDeploy({
 				fromAddress: publicKey,
 				validator: stake.validator,
 				fee: stake.fee,

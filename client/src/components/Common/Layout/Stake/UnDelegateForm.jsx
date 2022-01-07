@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { toast } from 'react-toastify';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { deploySelector } from '../../../../selectors/deploy';
@@ -54,7 +54,7 @@ const UndelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			const deploy = await getSignedStakeDeploy(stakeDetails);
+			const deploy = await getStakeDeploy(stakeDetails);
 			const signedDeploy = await signer.sign(deploy, stakeDetails.fromAddress, stakeDetails.validator);
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data, error } = deployResult;

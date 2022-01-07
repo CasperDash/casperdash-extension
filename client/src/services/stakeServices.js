@@ -15,30 +15,16 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 	return DeployUtil.makeDeploy(deployParams, session, payment);
 };
 
-const getStakeDeploy = (delegator, validator, fee, amount, entryPoint) => {
-	return buildStakeDeploy(
-		delegator,
-		entryPoint,
-		{
-			delegator,
-			validator,
-			amount: CLValueBuilder.u512(amount),
-		},
-		fee,
-	);
-};
-
-export const getSignedStakeDeploy = async ({
-	fromAddress,
-	validator,
-	fee,
-	amount,
-	entryPoint = ENTRY_POINT_DELEGATE,
-}) => {
+export const getStakeDeploy = async ({ fromAddress, validator, fee, amount, entryPoint = ENTRY_POINT_DELEGATE }) => {
 	try {
 		const fromAccPk = CLPublicKey.fromHex(fromAddress);
 		const validatorPk = CLPublicKey.fromHex(validator);
-		return getStakeDeploy(fromAccPk, validatorPk, toMotes(fee), toMotes(amount), entryPoint);
+		return buildStakeDeploy(
+			fromAccPk,
+			entryPoint,
+			{ fromAccPk, validatorPk, amount: CLValueBuilder.u512(toMotes(amount)) },
+			toMotes(fee),
+		);
 	} catch (error) {
 		throw new Error(`Failed to get signed stake deploy.`);
 	}
