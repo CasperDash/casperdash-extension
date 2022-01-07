@@ -19,6 +19,10 @@ export const getPublicKey = ({ user }) => {
 	return user.publicKey;
 };
 
+export const getConnectionType = ({ user }) => {
+	return user.connectionType;
+};
+
 export const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
 
 export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {

@@ -12,7 +12,8 @@ const useLedger = () => {
 	const dispatch = useDispatch();
 
 	// Selector
-	const { ledgerKeys, casperApp } = useSelector(getLedgerOptions);
+	const ledgerOptions = useSelector(getLedgerOptions);
+	const { ledgerKeys, casperApp } = ledgerOptions;
 
 	const isUsingLedger = ledgerKeys && ledgerKeys.length > 0;
 
@@ -57,6 +58,7 @@ const useLedger = () => {
 				}),
 			);
 			typeof callback === 'function' && callback();
+			return { casperApp, keyPath: 0 };
 		} catch (error) {
 			toast.error(getLedgerError(error));
 		}
@@ -94,7 +96,7 @@ const useLedger = () => {
 		}
 	};
 
-	return { handleConnectLedger, isUsingLedger, isLedgerConnected, logOutLedger, loadMoreKeys };
+	return { handleConnectLedger, isUsingLedger, isLedgerConnected, logOutLedger, loadMoreKeys, ledgerOptions };
 };
 
 export default useLedger;

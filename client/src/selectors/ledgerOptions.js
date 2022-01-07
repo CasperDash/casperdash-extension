@@ -1,3 +1,3 @@
 export const getLedgerOptions = ({ ledgerOptions }) => {
-	return ledgerOptions;
+	return ledgerOptions || {};
 };

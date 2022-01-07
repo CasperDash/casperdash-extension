@@ -38,20 +38,20 @@ export const buildContractInstallDeploy = (baseAccount, session) => {
  * @param {Object} ledgerOptions ledger's options
  * @returns {Deploy} Signed deploy
  */
-export const signDeploy = async (deploy, mainAccountHex, setAccountHex, ledgerOptions) => {
-	if (!ledgerOptions) {
-		const deployObj = DeployUtil.deployToJson(deploy);
-		const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
-		return signedDeploy;
-	} else {
-		const { casperApp = null, keyPath = 0 } = ledgerOptions;
-		const signedDeploy = await signByLedger(deploy, {
-			publicKey: mainAccountHex,
-			keyPath,
-			app: casperApp,
-		});
-		return DeployUtil.deployToJson(signedDeploy);
-	}
+export const signDeployByCasperSigner = async (deploy, mainAccountHex, setAccountHex) => {
+	const deployObj = DeployUtil.deployToJson(deploy);
+	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
+	return signedDeploy;
+};
+
+export const signDeployByLedger = async (deploy, mainAccountHex, ledgerOptions) => {
+	const { casperApp = null, keyPath = 0 } = ledgerOptions;
+	const signedDeploy = await signByLedger(deploy, {
+		publicKey: mainAccountHex,
+		keyPath,
+		app: casperApp,
+	});
+	return DeployUtil.deployToJson(signedDeploy);
 };
 
 /**
