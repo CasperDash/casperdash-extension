@@ -1,16 +1,16 @@
 import { useSelector } from 'react-redux';
 import { CONNECTION_TYPES } from '../../constants/settings';
-import { getConnectionType } from '../../selectors/user';
+import { getLoginOptions } from '../../selectors/user';
 import { signDeployByCasperSigner } from '../../services/casperServices';
 import { signDeployByLedger } from '../../services/ledgerServices';
 import useLedger from './useLedger';
 
 const useSigner = () => {
-	const connectionType = useSelector(getConnectionType);
-	const { ledgerOptions, handleConnectLedger } = useLedger();
+	const loginOptions = useSelector(getLoginOptions);
+	const { handleConnectLedger } = useLedger();
 
 	const signByLedger = async (deploy, mainAccountHex) => {
-		let options = ledgerOptions;
+		let options = loginOptions;
 		if (!options.casperApp) {
 			options = await handleConnectLedger();
 		}
@@ -26,7 +26,7 @@ const useSigner = () => {
 	};
 
 	const sign = (deploy, mainAccountHex, setAccountHex) => {
-		switch (connectionType) {
+		switch (loginOptions.connectionType) {
 			case CONNECTION_TYPES.ledger:
 				return signByLedger(deploy, mainAccountHex);
 			case CONNECTION_TYPES.casperSigner:

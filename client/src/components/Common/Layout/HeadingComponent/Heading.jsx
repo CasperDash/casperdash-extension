@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { getTheme } from '../../../../selectors/settings';
-import { getUserDetails, setPublicKey } from '../../../../actions/userActions';
+import { getUserDetails, setPublicKey, lockAccount } from '../../../../actions/userActions';
 import { switchTheme } from '../../../../actions/settingActions';
 import { isValidPublicKey } from '../../../../helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
@@ -20,7 +20,7 @@ const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
 	const { ConnectSignerButton, isAvailable } = useCasperSigner();
-	const { handleConnectLedger, isUsingLedger, logOutLedger, loadMoreKeys } = useLedger();
+	const { handleConnectLedger, isUsingLedger, loadMoreKeys } = useLedger();
 
 	// Selector
 	const theme = useSelector(getTheme);
@@ -91,9 +91,18 @@ const HeadingModule = (props) => {
 					</Button>
 					{/* Display public key if available */}
 					{publicKey && (
-						<div className="cd_heading_public_key">
-							<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
-						</div>
+						<>
+							<div className="cd_heading_public_key">
+								<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
+							</div>
+							<Button
+								className="cd_all_page_logout_btn"
+								variant="secondary"
+								onClick={() => dispatch(lockAccount())}
+							>
+								Logout
+							</Button>
+						</>
 					)}
 
 					{isUsingLedger && (
@@ -104,9 +113,6 @@ const HeadingModule = (props) => {
 								disabled={isLoadingKeys}
 							>
 								{!isLoadingKeys ? 'Load more keys' : 'Loading'}
-							</Button>
-							<Button className="cd_all_page_logout_btn" onClick={logOutLedger}>
-								Logout
 							</Button>
 						</>
 					)}

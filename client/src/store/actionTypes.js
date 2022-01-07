@@ -17,6 +17,7 @@ export const STAKE = {
 export const USERS = {
 	SET_USER_ADDRESS: 'USERS.SET_USER_ADDRESS',
 	FETCH_USER_DETAILS: 'USERS.FETCH_USER_DETAILS',
+	SET_KEY_PATH: 'USER.SET_KEY_PATH',
 };
 
 export const SIGNER = {
@@ -68,11 +69,6 @@ export const VALIDATORS = {
 
 export const SETTINGS = {
 	SWITCH_THEME: 'SETTINGS.SWITCH_THEME',
-};
-
-export const LEDGER = {
-	SET_LEDGER_OPTIONS: 'LEDGER.SET_LEDGER_OPTIONS',
-	SET_KEY_PATH: 'LEDGER.SET_KEY_PATH',
 };
 
 export const FILES = {

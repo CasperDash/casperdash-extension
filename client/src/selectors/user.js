@@ -19,8 +19,8 @@ export const getPublicKey = ({ user }) => {
 	return user.publicKey;
 };
 
-export const getConnectionType = ({ user }) => {
-	return user.connectionType;
+export const getLoginOptions = ({ user }) => {
+	return user.loginOptions || {};
 };
 
 export const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });

@@ -27,18 +27,24 @@ export const updatePublicKeyFromSigner = () => {
 	};
 };
 
+const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
+	// should not store casper app obj
+	// eslint-disable-next-line no-unused-vars
+	const { casperApp, ...restOptions } = loginOptions;
+	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, { publicKey, loginOptions: restOptions }, 'set');
+};
+
 /**
  * @param {string} publicKey
  * @param {string} connectionType
  * @returns {object}
  */
-export const setPublicKey = (publicKey, connectionType) => {
-	const accountInfo = { publicKey, connectionType };
-	//Cache public key and connection type
-	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, accountInfo, 'set');
+export const setPublicKey = (publicKey, loginOptions = {}) => {
+	//Cache public key and login options
+	cacheLoginInfoToLocalStorage(publicKey, loginOptions);
 	return {
 		type: USERS.SET_USER_ADDRESS,
-		payload: accountInfo,
+		payload: { publicKey, loginOptions },
 	};
 };
 
@@ -46,7 +52,7 @@ export const getConnectedAccountFromLocalStorage = () => {
 	return (dispatch) => {
 		const connectedAccount = getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
 		if (connectedAccount && connectedAccount.publicKey) {
-			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.connectionType));
+			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.options));
 			return connectedAccount.publicKey;
 		}
 		return undefined;
