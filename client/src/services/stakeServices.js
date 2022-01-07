@@ -1,8 +1,8 @@
+import { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } from 'casper-js-sdk';
+import { NETWORK_NAME, ENTRY_POINT_DELEGATE } from '../constants/key';
+import { contractHashes } from '../constants/stack';
+import { toMotes } from '../helpers/currency';
 import { signDeploy } from './casperServices';
-const { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } = require('casper-js-sdk');
-const { NETWORK_NAME, ENTRY_POINT_DELEGATE } = require('../constants/key');
-const { contractHashes } = require('../constants/stack');
-const { toMotes } = require('../helpers/currency');
 
 const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
@@ -40,6 +40,7 @@ export const getSignedStakeDeploy = async (
 		const signedDeploy = await signDeploy(deploy, fromAddress, validator, ledgerOptions);
 		return signedDeploy;
 	} catch (error) {
-		throw new Error(`Failed to get signed stake deploy due to ${error}`);
+		console.error(error);
+		throw new Error(`Failed to get signed stake deploy.`);
 	}
 };

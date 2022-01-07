@@ -42,10 +42,6 @@ const ConfirmSend = ({ token }) => {
 							...transferDetails,
 							contractInfo: { address, decimals },
 					  });
-			if (!signedDeploy || signedDeploy.error) {
-				toast.error(signedDeploy.error.message);
-				return;
-			}
 			const { data, error } = await dispatch(putDeploy(signedDeploy));
 			if (error) {
 				throw new Error(`Error on sending. Please try again later.`);

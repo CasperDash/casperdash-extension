@@ -25,8 +25,6 @@ test('getSignedTransferTokenDeploy return error', async () => {
 			fee: 1,
 		});
 	} catch (error) {
-		expect(error.message).toBe(
-			'Failed to get signed stake deploy due to Error: invalid BigNumber string (argument="value", value="-", code=INVALID_ARGUMENT, version=bignumber/5.5.0)',
-		);
+		expect(error.message).toBe('Failed to get signed stake deploy.');
 	}
 });

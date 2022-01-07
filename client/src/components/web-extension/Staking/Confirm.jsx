@@ -52,6 +52,7 @@ export const Confirm = () => {
 			);
 			navigate('/staking', { replace: true });
 		} catch (error) {
+			console.error(error);
 			toast.error(error.message);
 		}
 	};

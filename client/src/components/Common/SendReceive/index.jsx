@@ -33,11 +33,10 @@ export const SendReceiveSection = ({
 	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
-	const [signedError, setSignerError] = useState(null);
 	const [deployHash, setDeployHash] = useState(null);
 
 	//Selector
-	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	const { loading: isDeploying } = useSelector(deploySelector);
 	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
@@ -52,11 +51,15 @@ export const SendReceiveSection = ({
 		if (ledgerOptions.casperApp) {
 			toast(REVIEW_NOTI_MESS);
 		}
-		const signedDeploy = !isTokenTransfer
-			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)
-			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, ledgerOptions);
-		if (!signedDeploy.error) {
-			const { data: hash } = await dispatch(putDeploy(signedDeploy));
+		try {
+			const signedDeploy = !isTokenTransfer
+				? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)
+				: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, ledgerOptions);
+
+			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
+			if (error) {
+				throw new Error('Error on confirm transaction. Please try again later.');
+			}
 			setDeployHash(hash.deployHash);
 			dispatch(
 				pushTransferToLocalStorage(fromAddress, {
@@ -69,8 +72,9 @@ export const SendReceiveSection = ({
 					symbol: tokenSymbol,
 				}),
 			);
-		} else {
-			setSignerError(signedDeploy.error.message);
+		} catch (error) {
+			console.error(error);
+			toast(error.message);
 		}
 	};
 
@@ -85,7 +89,6 @@ export const SendReceiveSection = ({
 	};
 
 	const onCloseConfirmModal = () => {
-		setSignerError(null);
 		setDeployHash(null);
 		setShowConfirmModal(false);
 	};
@@ -249,7 +252,6 @@ export const SendReceiveSection = ({
 				fee={transferFee}
 				csprPrice={csprPrice}
 				deployHash={deployHash}
-				deployError={deployHash ? '' : deployError || signedError}
 				isDeploying={isDeploying}
 				tokenSymbol={tokenSymbol}
 				isTokenTransfer={isTokenTransfer}

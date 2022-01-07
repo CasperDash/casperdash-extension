@@ -31,12 +31,11 @@ const DelegateForm = ({
 	const [stakeDetails, setStakeDetails] = useState({});
 	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
-	const [signedError, setSignerError] = useState(null);
 
 	const dispatch = useDispatch();
 
 	// Selector
-	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	const { loading: isDeploying } = useSelector(deploySelector);
 	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const options = validators
@@ -80,12 +79,12 @@ const DelegateForm = ({
 				toast(REVIEW_NOTI_MESS);
 			}
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
-			if (signedDeploy.error) {
-				setSignerError(signedDeploy.error.message);
-				return;
-			}
+
 			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data } = deployResult;
+			const { data, error } = deployResult;
+			if (error) {
+				throw Error('Error on confirm transaction. Please try again later.');
+			}
 			setDeployHash(data.deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
@@ -97,11 +96,11 @@ const DelegateForm = ({
 			);
 			handleToggle();
 		} catch (error) {
-			setSignerError(error.message);
+			console.error(error);
+			toast(error.message);
 		}
 	};
 
-	const error = deployHash ? '' : deployError || signedError;
 	return (
 		<div className="cd_send_receive_content">
 			<div className="cd_send_receive_content_row">
@@ -212,7 +211,6 @@ const DelegateForm = ({
 							onConfirm={onConfirm}
 							deployHash={deployHash}
 							isDeploying={isDeploying}
-							error={error}
 						/>
 					</div>
 				</div>

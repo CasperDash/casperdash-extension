@@ -28,12 +28,11 @@ const UndelegateForm = ({
 	const [stakeDetails, setStakeDetails] = useState({});
 	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
-	const [signedError, setSignerError] = useState(null);
 
 	const dispatch = useDispatch();
 
 	// Selector
-	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	const { loading: isDeploying } = useSelector(deploySelector);
 	const ledgerOptions = useSelector(getLedgerOptions);
 
 	// Func
@@ -58,12 +57,11 @@ const UndelegateForm = ({
 				toast('Transaction submitted. Awaiting your approval in the ledger.');
 			}
 			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
-			if (signedDeploy.error) {
-				setSignerError(signedDeploy.error.message);
-				return;
-			}
 			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data } = deployResult;
+			const { data, error } = deployResult;
+			if (error) {
+				throw Error('Error on confirm transaction. Please try again later.');
+			}
 			setDeployHash(data.deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
@@ -75,7 +73,8 @@ const UndelegateForm = ({
 			);
 			handleToggle();
 		} catch (error) {
-			setSignerError(error.message);
+			console.error(error);
+			toast(error.message);
 		}
 	};
 
@@ -84,7 +83,6 @@ const UndelegateForm = ({
 		setDeployHash(null);
 		setStakeDetails({});
 		setShowModal(false);
-		setSignerError(null);
 	};
 
 	const setBalance = (percent, setFieldValue) => {
@@ -92,7 +90,6 @@ const UndelegateForm = ({
 		setFieldValue('amount', amount);
 	};
 
-	const error = deployHash ? '' : deployError || signedError;
 	return (
 		<>
 			<ValidatorInfo
@@ -204,7 +201,6 @@ const UndelegateForm = ({
 								onConfirm={onConfirm}
 								deployHash={deployHash}
 								isDeploying={isDeploying}
-								error={error}
 							/>
 						</div>
 					</div>

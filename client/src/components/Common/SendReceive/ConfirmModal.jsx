@@ -11,7 +11,6 @@ export const ConfirmModal = ({
 	fee,
 	onConfirm,
 	deployHash,
-	deployError,
 	isDeploying,
 	currentPrice,
 	csprPrice,
@@ -118,7 +117,6 @@ export const ConfirmModal = ({
 				)}
 			</Modal.Body>
 			<Modal.Footer className="cd_confirm_modal_footer">
-				<span className="cd_confirm_modal_error">{deployError}</span>
 				{deployHash ? (
 					<Button className="cd_btn_primary_active" onClick={onClose}>
 						Close
