@@ -11,21 +11,26 @@ import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
 import { MiddleTruncatedText } from '../../MiddleTruncatedText';
 import useCasperSigner from '../../../hooks/useCasperSigner';
 import useLedger from '../../../hooks/useLedger';
+import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
+import { LedgerKeysModal } from './LedgerKeysModal';
 
 const HeadingModule = (props) => {
 	// Hook
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
 	const { ConnectSignerButton, isAvailable } = useCasperSigner();
-	const { handleConnectLedger } = useLedger();
+	const { handleConnectLedger, isUsingLedger, logOutLedger, loadMoreKeys } = useLedger();
 
 	// Selector
 	const theme = useSelector(getTheme);
+	const { ledgerKeys } = useSelector(getLedgerOptions);
 
 	// State
 	const [showPublicKeyInput, setShowPublicKeyInput] = useState(false);
+	const [showLedgerKeys, setShowLedgerKeys] = useState(false);
 	const [publicKeyError, setPublicKeyError] = useState('');
+	const [isLoadingKeys, setIsLoadingKey] = useState(false);
 
 	// Effect
 	useAutoRefreshEffect(() => {
@@ -43,6 +48,10 @@ const HeadingModule = (props) => {
 		setShowPublicKeyInput(false);
 	};
 
+	const onCloseLedgerKeysModal = () => {
+		setShowLedgerKeys(false);
+	};
+
 	const handleAddPublicKey = (pk) => {
 		if (isValidPublicKey(pk)) {
 			dispatch(setPublicKey(pk));
@@ -55,6 +64,18 @@ const HeadingModule = (props) => {
 	const onSwitchTheme = () => {
 		const newTheme = theme === DARK_THEME ? LIGHT_THEME : DARK_THEME;
 		dispatch(switchTheme(newTheme));
+	};
+
+	const loadMoreLedgerKeys = async () => {
+		if (!isLoadingKeys) {
+			setIsLoadingKey(true);
+			const canLoadMoreKeys = await loadMoreKeys();
+			setIsLoadingKey(false);
+			if (!canLoadMoreKeys) {
+				return;
+			}
+			setShowLedgerKeys(true);
+		}
 	};
 
 	return (
@@ -73,6 +94,21 @@ const HeadingModule = (props) => {
 						<div className="cd_heading_public_key">
 							<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
 						</div>
+					)}
+
+					{isUsingLedger && (
+						<>
+							<Button
+								className="cd_all_page_logout_btn"
+								onClick={loadMoreLedgerKeys}
+								disabled={isLoadingKeys}
+							>
+								{!isLoadingKeys ? 'Load more keys' : 'Loading'}
+							</Button>
+							<Button className="cd_all_page_logout_btn" onClick={logOutLedger}>
+								Logout
+							</Button>
+						</>
 					)}
 
 					{/* Display connect ledger button if no public key */}
@@ -98,6 +134,7 @@ const HeadingModule = (props) => {
 					handleAddPublicKey={handleAddPublicKey}
 					error={publicKeyError}
 				/>
+				<LedgerKeysModal show={showLedgerKeys} keys={ledgerKeys} handleClose={onCloseLedgerKeysModal} />
 			</div>
 		</>
 	);

@@ -44,7 +44,7 @@ const getNFTContractDeploy = async () => {
  * @param {String} mainAccount main account public key hex
  * @returns {Object} signed deploy Json
  */
-export const nftContractDeploy = async (mainAccount, name, symbol, casperApp) => {
+export const nftContractDeploy = async (mainAccount, name, symbol, ledgerOptions) => {
 	try {
 		const massagedName = name.includes('nft') ? name : `${name}_nft`;
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
@@ -66,7 +66,7 @@ export const nftContractDeploy = async (mainAccount, name, symbol, casperApp) =>
 			DeployUtil.standardPayment(toMotes(100)),
 		);
 
-		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount, casperApp);
+		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount, ledgerOptions);
 
 		return signedDeploy;
 	} catch (error) {

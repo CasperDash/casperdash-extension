@@ -4,6 +4,7 @@ import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
+import { toast } from 'react-toastify';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
@@ -12,6 +13,7 @@ import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
 import { getLedgerOptions } from '../../../selectors/ledgerOptions';
+import { REVIEW_NOTI_MESS } from '../../../constants/ledger';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -36,7 +38,7 @@ export const SendReceiveSection = ({
 
 	//Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-	const { casperApp } = useSelector(getLedgerOptions);
+	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -47,9 +49,12 @@ export const SendReceiveSection = ({
 	};
 
 	const onConfirmTransaction = async (transferId) => {
+		if (ledgerOptions.casperApp) {
+			toast(REVIEW_NOTI_MESS);
+		}
 		const signedDeploy = !isTokenTransfer
-			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, casperApp)
-			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, casperApp);
+			? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)
+			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, ledgerOptions);
 		if (!signedDeploy.error) {
 			const { data: hash } = await dispatch(putDeploy(signedDeploy));
 			setDeployHash(hash.deployHash);

@@ -1,4 +1,5 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
+import { toast } from 'react-toastify';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
 import { signByLedger } from '../services/ledgerServices';
 
@@ -35,9 +36,10 @@ export const buildContractInstallDeploy = (baseAccount, session) => {
  * @param {Deploy} deploy main account public key
  * @param {String} mainAccountHex hash contract content
  * @param {String} setAccountHex contract's arguments
+ * @param {Object} ledgerOptions ledger's options
  * @returns {Deploy} Signed deploy
  */
-export const signDeploy = async (deploy, mainAccountHex, setAccountHex, casperApp) => {
+export const signDeploy = async (deploy, mainAccountHex, setAccountHex, { casperApp = null, keyPath = 0 }) => {
 	try {
 		if (!casperApp) {
 			const deployObj = DeployUtil.deployToJson(deploy);
@@ -46,7 +48,7 @@ export const signDeploy = async (deploy, mainAccountHex, setAccountHex, casperAp
 		} else {
 			const signedDeploy = await signByLedger(deploy, {
 				publicKey: mainAccountHex,
-				keyPath: 0,
+				keyPath,
 				app: casperApp,
 			});
 			return DeployUtil.deployToJson(signedDeploy);

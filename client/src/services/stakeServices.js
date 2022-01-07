@@ -31,13 +31,13 @@ const getStakeDeploy = (delegator, validator, fee, amount, entryPoint) => {
 
 export const getSignedStakeDeploy = async (
 	{ fromAddress, validator, fee, amount, entryPoint = ENTRY_POINT_DELEGATE },
-	casperApp,
+	ledgerOptions,
 ) => {
 	try {
 		const fromAccPk = CLPublicKey.fromHex(fromAddress);
 		const validatorPk = CLPublicKey.fromHex(validator);
 		const deploy = getStakeDeploy(fromAccPk, validatorPk, toMotes(fee), toMotes(amount), entryPoint);
-		const signedDeploy = await signDeploy(deploy, fromAddress, validator, casperApp);
+		const signedDeploy = await signDeploy(deploy, fromAddress, validator, ledgerOptions);
 		return signedDeploy;
 	} catch (error) {
 		throw new Error(`Failed to get signed stake deploy due to ${error}`);

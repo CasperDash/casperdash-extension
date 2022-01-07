@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import { putDeploy } from '../../../../actions/deployActions';
@@ -12,6 +13,7 @@ import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../consta
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
+import { REVIEW_NOTI_MESS } from '../../../../constants/ledger';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
 
@@ -35,7 +37,7 @@ const DelegateForm = ({
 
 	// Selector
 	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-	const { casperApp } = useSelector(getLedgerOptions);
+	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const options = validators
 		? validators.map(({ public_key: publicKey, bidInfo }) => ({
@@ -74,7 +76,10 @@ const DelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails, casperApp);
+			if (ledgerOptions.casperApp) {
+				toast(REVIEW_NOTI_MESS);
+			}
+			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
 			if (signedDeploy.error) {
 				setSignerError(signedDeploy.error.message);
 				return;

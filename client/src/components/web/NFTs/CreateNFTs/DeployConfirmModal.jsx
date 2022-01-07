@@ -16,7 +16,7 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [deployHash, setDeployHash] = useState();
 
-	const { casperApp } = useSelector(getLedgerOptions);
+	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const formRef = useRef();
 
@@ -48,7 +48,7 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 			publicKey,
 			inputValues.collectionName,
 			inputValues.collectionSymbol,
-			casperApp,
+			ledgerOptions,
 		);
 		if (deploy.error) {
 			setIsLoading(false);
