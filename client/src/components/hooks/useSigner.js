@@ -14,11 +14,13 @@ const useSigner = () => {
 		if (!options.casperApp) {
 			options = await handleConnectLedger();
 		}
-		return await signDeployByLedger(deploy, {
-			publicKey: mainAccountHex,
-			app: options.casperApp,
-			keyPath: options.keyPath,
-		});
+		if (options && options.casperApp) {
+			return await signDeployByLedger(deploy, {
+				publicKey: mainAccountHex,
+				app: options.casperApp,
+				keyPath: options.keyPath,
+			});
+		}
 	};
 
 	const signByCasperSinger = async (deploy, mainAccountHex, setAccountHex) => {

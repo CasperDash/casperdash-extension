@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
+import { toast } from 'react-toastify';
 import { putDeploy } from '../../../../actions/deployActions';
 import { storeFile, deleteFile } from '../../../../actions/fileActions';
 import { updateNFTLocalStorage } from '../../../../actions/NFTActions';
@@ -12,6 +13,7 @@ import { NFT_GATEWAY } from '../../../../constants/key';
 import { validateNFTMintForm } from '../../../../helpers/validator';
 import { massageNFTMintFormValues } from '../../../../helpers/nft';
 import { MAX_METADATA_ATTRIBUTES } from '../../../../constants/nft';
+import useSigner from '../../../hooks/useSigner';
 import { NFTModal } from '../NFTModal';
 import SelectField from './SelectField';
 import { NFTAttributeRow } from './NFTAttributeRow';
@@ -20,65 +22,69 @@ const mintFee = { key: 'fee', name: 'Fee', value: '1 CSPR' };
 
 export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	const dispatch = useDispatch();
+	const signer = useSigner();
 
 	// State
 	const [attributes, setAttributes] = useState([{ attribute0: '', value0: '' }]);
 	const [showNFTModal, setShowNFTModal] = useState(false);
 	const [nftInfo, setNFTInfo] = useState({});
 	const [previewNFT, setPreviewNFT] = useState({});
-	const [signerError, setSignerError] = useState('');
 	const [deployHash, setDeployHash] = useState();
 	const [isMinting, setIsMinting] = useState(false);
 
 	// function
 	const onMintNFT = async () => {
 		setIsMinting(true);
+		let imageCID;
 		try {
 			// store file by nft.storage
 			const { data: cid } = await dispatch(storeFile(nftInfo.image));
 			if (!cid || !cid.cid) {
 				throw new Error('Can not store image');
 			}
-
+			imageCID = cid.cid;
 			// Update name and image and massage metadata
 			const updatedNFT = {
 				...nftInfo,
 				metadata: [
 					...nftInfo.metadata,
-					{ key: 'image', value: `https://${cid.cid}.${NFT_GATEWAY}`, name: 'image' },
+					{ key: 'image', value: `https://${imageCID}.${NFT_GATEWAY}`, name: 'image' },
 					{ key: 'name', value: nftInfo.nftName, name: 'name' },
 				].map((attr) => [attr.name, attr.value]),
 			};
 
 			// Build and request to sign deploy with signer
-			const signedDeploy = await getSingedMintDeploy({ ...updatedNFT, publicKey });
+			const deploy = await getSingedMintDeploy({ ...updatedNFT, publicKey });
+			const signedDeploy = await signer.sign(deploy, publicKey, nftInfo.recipient);
 
-			if (signedDeploy && !signedDeploy.error) {
-				const { data: hash } = await dispatch(putDeploy(signedDeploy));
-				setDeployHash(hash.deployHash);
-				const selectedContract = nftContracts.find((ct) => ct.value === nftInfo.nftContract) || {};
-				dispatch(
-					updateNFTLocalStorage(
-						publicKey,
-						`nfts.deploys.mint`,
-						{
-							hash: hash.deployHash,
-							status: 'pending',
-							timestamp: new Date().toString(),
-							collectionName: selectedContract.symbol || '',
-							recipient: nftInfo.recipient || '',
-						},
-						'push',
-					),
-				);
-			} else {
-				setSignerError(signedDeploy ? signedDeploy.error : 'Error!');
-				if (cid) {
-					dispatch(deleteFile(cid.cid));
-				}
+			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
+			if (error) {
+				console.error(error);
+				throw Error('Error on mint NFT.');
 			}
+			setDeployHash(hash.deployHash);
+
+			const selectedContract = nftContracts.find((ct) => ct.value === nftInfo.nftContract) || {};
+			dispatch(
+				updateNFTLocalStorage(
+					publicKey,
+					`nfts.deploys.mint`,
+					{
+						hash: hash.deployHash,
+						status: 'pending',
+						timestamp: new Date().toString(),
+						collectionName: selectedContract.symbol || '',
+						recipient: nftInfo.recipient || '',
+					},
+					'push',
+				),
+			);
 		} catch (error) {
-			setSignerError(error.message);
+			if (imageCID) {
+				dispatch(deleteFile(imageCID));
+			}
+			console.error(error);
+			toast.error(error.message);
 		}
 
 		setIsMinting(false);
@@ -109,7 +115,6 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 	};
 
 	const clearConfirmState = () => {
-		setSignerError('');
 		setDeployHash('');
 		setPreviewNFT({});
 		setNFTInfo({});
@@ -218,7 +223,6 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 					clearConfirmState();
 				}}
 				onMint={onMintNFT}
-				deployError={signerError}
 				deployHash={deployHash}
 				isMinting={isMinting}
 			/>

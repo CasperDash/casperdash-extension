@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { getTheme } from '../../../../selectors/settings';
-import { getUserDetails, setPublicKey, lockAccount } from '../../../../actions/userActions';
+import {
+	getUserDetails,
+	setPublicKey,
+	lockAccount,
+	getConnectedAccountFromLocalStorage,
+} from '../../../../actions/userActions';
 import { switchTheme } from '../../../../actions/settingActions';
 import { isValidPublicKey } from '../../../../helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
 import { MiddleTruncatedText } from '../../MiddleTruncatedText';
 import useCasperSigner from '../../../hooks/useCasperSigner';
 import useLedger from '../../../hooks/useLedger';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 import { LedgerKeysModal } from './LedgerKeysModal';
 
@@ -24,18 +28,24 @@ const HeadingModule = (props) => {
 
 	// Selector
 	const theme = useSelector(getTheme);
-	const { ledgerKeys } = useSelector(getLedgerOptions);
 
 	// State
 	const [showPublicKeyInput, setShowPublicKeyInput] = useState(false);
 	const [showLedgerKeys, setShowLedgerKeys] = useState(false);
 	const [publicKeyError, setPublicKeyError] = useState('');
 	const [isLoadingKeys, setIsLoadingKey] = useState(false);
+	const [ledgerKeys, setLedgerKeys] = useState([]);
 
 	// Effect
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
+		}
+	}, [publicKey, dispatch]);
+
+	useEffect(() => {
+		if (!publicKey) {
+			dispatch(getConnectedAccountFromLocalStorage());
 		}
 	}, [publicKey, dispatch]);
 

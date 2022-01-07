@@ -26,12 +26,10 @@ export const getSingedMintDeploy = async (nftInfo) => {
 			token_id: tokenId,
 			token_meta: toCLMap(new Map(metadata)),
 		});
-		const deploy = getMintNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, toMotes(1));
-		const signedDeploy = await signDeploy(deploy, publicKey, toAddress);
-
-		return signedDeploy;
+		return getMintNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, toMotes(1));
 	} catch (error) {
-		return { error: error.message };
+		console.error(error);
+		throw new Error(`Failed to get signed mint nft deploy.`);
 	}
 };
 
@@ -44,7 +42,7 @@ const getNFTContractDeploy = async () => {
  * @param {String} mainAccount main account public key hex
  * @returns {Object} signed deploy Json
  */
-export const nftContractDeploy = async (mainAccount, name, symbol, ledgerOptions) => {
+export const nftContractDeploy = async (mainAccount, name, symbol) => {
 	try {
 		const massagedName = name.includes('nft') ? name : `${name}_nft`;
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
@@ -60,16 +58,13 @@ export const nftContractDeploy = async (mainAccount, name, symbol, ledgerOptions
 			runtimeArgs,
 		);
 
-		let deploy = DeployUtil.makeDeploy(
+		return DeployUtil.makeDeploy(
 			new DeployUtil.DeployParams(mainAccountPK, NETWORK_NAME, 1, DEPLOY_TTL_MS),
 			modulesBytes,
 			DeployUtil.standardPayment(toMotes(100)),
 		);
-
-		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount, ledgerOptions);
-
-		return signedDeploy;
 	} catch (error) {
-		return { error: { message: error.message } };
+		console.error(error);
+		throw new Error(`Failed to get signed nft contract deploy.`);
 	}
 };

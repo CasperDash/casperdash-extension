@@ -1,22 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap';
 import { Formik } from 'formik';
+import { toast } from 'react-toastify';
 import { putDeploy } from '../../../../actions/deployActions';
 import { updateNFTLocalStorage } from '../../../../actions/NFTActions';
 import { nftContractDeploy } from '../../../../services/nftServices';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
+import useSigner from '../../../hooks/useSigner';
 
 export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	const dispatch = useDispatch();
+	const signer = useSigner();
 
 	const [step, setStep] = useState('input');
 	const [inputValues, setInputValues] = useState({ collectionName: '', collectionSymbol: '' });
-	const [deployError, setDeployError] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [deployHash, setDeployHash] = useState();
-
-	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const formRef = useRef();
 
@@ -44,18 +43,15 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 
 	const handleConfirmDeployContract = async () => {
 		setIsLoading(true);
-		const deploy = await nftContractDeploy(
-			publicKey,
-			inputValues.collectionName,
-			inputValues.collectionSymbol,
-			ledgerOptions,
-		);
-		if (deploy.error) {
-			setIsLoading(false);
-			setDeployError(deploy.error.message);
-			return;
-		} else {
-			const { data: hash } = await dispatch(putDeploy(deploy));
+		try {
+			const deploy = await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol);
+			const signedDeploy = await signer.sign(deploy, publicKey, publicKey);
+
+			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
+			if (error) {
+				console.error(error);
+				throw Error('Error on deploy NFT contract. Please try again later.');
+			}
 			setDeployHash(hash.deployHash);
 			dispatch(
 				updateNFTLocalStorage(
@@ -70,14 +66,16 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 					'push',
 				),
 			);
-			setIsLoading(false);
+		} catch (error) {
+			console.error(error);
+			toast.error(error.message);
 		}
+		setIsLoading(false);
 	};
 
 	const clearState = () => {
 		setInputValues({ collectionName: '', collectionSymbol: '' });
 		setStep('input');
-		setDeployError('');
 		setDeployHash('');
 	};
 
@@ -167,10 +165,6 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 			<Modal.Footer>
 				{!deployHash ? (
 					<>
-						<div className="cd_error_text">
-							<span>{deployError}</span>
-						</div>
-
 						{step === 'confirm' ? (
 							<>
 								<Button variant="secondary" onClick={() => setStep('input')}>
