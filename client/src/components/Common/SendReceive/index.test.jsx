@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import * as redux from 'react-redux';
+import * as toastify from 'react-toastify';
 import { render, cleanup, fireEvent, act } from '@testing-library/react';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
@@ -33,6 +34,8 @@ jest.mock('../../../services/tokenServices', () => {
 		getSignedTransferTokenDeploy: jest.fn(),
 	};
 });
+
+jest.mock('react-toastify');
 
 afterEach(cleanup);
 let spyOnUseSelector;
@@ -182,7 +185,7 @@ test('Should show error if can not sign transaction', async () => {
 	await act(async () => {
 		fireEvent.click(getByText('Confirm'));
 	});
-	expect(getByText('sign error').textContent).toBe('sign error');
+	expect(toastify.toast).toHaveBeenCalled();
 });
 
 test('Should show dispatch action if no error when confirm cspr transfer transaction', async () => {

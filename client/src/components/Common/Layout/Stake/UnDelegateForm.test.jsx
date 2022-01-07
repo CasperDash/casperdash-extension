@@ -1,8 +1,11 @@
 import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
+import * as toastify from 'react-toastify';
 import { getSignedStakeDeploy } from '../../../../services/stakeServices';
 import UnDelegateForm from './UnDelegateForm';
+
+jest.mock('react-toastify');
 jest.mock('../../../../actions/deployActions', () => {
 	return {
 		__esModule: true,
@@ -259,7 +262,7 @@ describe('Stake with errors', () => {
 			stakedAmount: 1000,
 			tokenSymbol: 'CSPR',
 		};
-		const { getByText, container, queryByText } = render(
+		const { getByText, container } = render(
 			<UnDelegateForm
 				fromAddress="0x000"
 				balance={999999}
@@ -285,7 +288,7 @@ describe('Stake with errors', () => {
 			fireEvent.click(getByText('Confirm'));
 		});
 
-		expect(queryByText('Signed error').textContent).toBe('Signed error');
+		expect(toastify.toast).toHaveBeenCalled();
 	});
 
 	test('Should show error if can not put the deploy', async () => {
@@ -305,7 +308,7 @@ describe('Stake with errors', () => {
 			stakedAmount: 1000,
 			tokenSymbol: 'CSPR',
 		};
-		const { getByText, container, queryByText } = render(
+		const { getByText, container } = render(
 			<UnDelegateForm
 				fromAddress="0x000"
 				balance={999999}
@@ -331,7 +334,7 @@ describe('Stake with errors', () => {
 			fireEvent.click(getByText('Confirm'));
 		});
 
-		expect(queryByText('Failed to put deploy').textContent).toBe('Failed to put deploy');
+		expect(toastify.toast).toHaveBeenCalled();
 	});
 });
 
