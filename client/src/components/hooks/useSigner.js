@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { CONNECTION_TYPES } from '../../constants/settings';
 import { getConnectionType } from '../../selectors/user';
-import { signDeployByCasperSigner, signDeployByLedger } from '../../services/casperServices';
+import { signDeployByCasperSigner } from '../../services/casperServices';
+import { signDeployByLedger } from '../../services/ledgerServices';
 import useLedger from './useLedger';
 
 const useSigner = () => {
@@ -13,7 +14,11 @@ const useSigner = () => {
 		if (!options.casperApp) {
 			options = await handleConnectLedger();
 		}
-		return await signDeployByLedger(deploy, mainAccountHex, options);
+		return await signDeployByLedger(deploy, {
+			publicKey: mainAccountHex,
+			app: options.casperApp,
+			keyPath: options.keyPath,
+		});
 	};
 
 	const signByCasperSinger = async (deploy, mainAccountHex, setAccountHex) => {

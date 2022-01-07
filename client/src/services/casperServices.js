@@ -1,6 +1,5 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
-import { signByLedger } from '../services/ledgerServices';
 
 /**
  * Get Transfer deploy
@@ -42,16 +41,6 @@ export const signDeployByCasperSigner = async (deploy, mainAccountHex, setAccoun
 	const deployObj = DeployUtil.deployToJson(deploy);
 	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
 	return signedDeploy;
-};
-
-export const signDeployByLedger = async (deploy, mainAccountHex, ledgerOptions) => {
-	const { casperApp = null, keyPath = 0 } = ledgerOptions;
-	const signedDeploy = await signByLedger(deploy, {
-		publicKey: mainAccountHex,
-		keyPath,
-		app: casperApp,
-	});
-	return DeployUtil.deployToJson(signedDeploy);
 };
 
 /**
