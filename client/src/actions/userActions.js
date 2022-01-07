@@ -52,7 +52,7 @@ export const getConnectedAccountFromLocalStorage = () => {
 	return (dispatch) => {
 		const connectedAccount = getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
 		if (connectedAccount && connectedAccount.publicKey) {
-			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.options));
+			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
 			return connectedAccount.publicKey;
 		}
 		return undefined;

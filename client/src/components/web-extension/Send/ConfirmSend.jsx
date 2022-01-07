@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import useSigner from '../../hooks/useSigner';
 import { getPublicKey } from '../../../selectors/user';
-import { getLedgerOptions } from '../../../selectors/ledgerOptions';
 import { putDeploy, pushTransferToLocalStorage } from '../../../actions/deployActions';
 import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import { getTransferDeploy } from '../../../services/userServices';
@@ -16,7 +15,6 @@ const ConfirmSend = ({ token }) => {
 
 	//Selector
 	const publicKey = useSelector(getPublicKey);
-	const ledgerOptions = useSelector(getLedgerOptions);
 
 	//Hook
 	const navigate = useNavigate();
@@ -38,20 +36,14 @@ const ConfirmSend = ({ token }) => {
 			};
 			const deploy =
 				token.address === 'CSPR'
-					? await getTransferDeploy(
-							{
-								...transferDetails,
-								transferId,
-							},
-							ledgerOptions,
-					  )
-					: await getTransferTokenDeploy(
-							{
-								...transferDetails,
-								contractInfo: { address, decimals },
-							},
-							ledgerOptions,
-					  );
+					? await getTransferDeploy({
+							...transferDetails,
+							transferId,
+					  })
+					: await getTransferTokenDeploy({
+							...transferDetails,
+							contractInfo: { address, decimals },
+					  });
 
 			const signedDeploy = await signer.sign(deploy, transferDetails.fromAddress, transferDetails.toAddress);
 
