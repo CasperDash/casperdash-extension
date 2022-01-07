@@ -2,7 +2,7 @@ import { CLValueBuilder, CLTypeBuilder, CLPublicKey, RuntimeArgs, DeployUtil } f
 import { None } from 'ts-results';
 import { toMotes } from '../helpers/currency';
 import { NETWORK_NAME, DEPLOY_TTL_MS } from '../constants/key';
-import { createRecipientAddress, toCLMap, signDeploy, contractHashToByteArray } from './casperServices';
+import { createRecipientAddress, toCLMap, contractHashToByteArray } from './casperServices';
 import { request } from './request';
 
 export const getMintNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAmount) => {

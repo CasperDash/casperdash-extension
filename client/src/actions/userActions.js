@@ -28,10 +28,7 @@ export const updatePublicKeyFromSigner = () => {
 };
 
 const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
-	// should not store casper app obj
-	// eslint-disable-next-line no-unused-vars
-	const { casperApp, ...restOptions } = loginOptions;
-	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, { publicKey, loginOptions: restOptions }, 'set');
+	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, { publicKey, loginOptions }, 'set');
 };
 
 /**

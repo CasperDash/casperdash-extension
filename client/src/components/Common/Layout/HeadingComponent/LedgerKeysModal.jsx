@@ -28,7 +28,7 @@ export const LedgerKeysModal = ({ show, handleClose, keys }) => {
 	const options = keys
 		? keys.map((obj) => {
 				return {
-					label: obj.key,
+					label: obj.publicKey,
 					value: obj.path,
 				};
 		  })

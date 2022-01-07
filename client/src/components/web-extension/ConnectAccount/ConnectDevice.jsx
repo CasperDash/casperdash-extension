@@ -9,11 +9,14 @@ import './ConnectDevice.scss';
 const ConnectDevice = () => {
 	const navigate = useNavigate();
 
-	const connectCallback = () => {
-		navigate('/');
-	};
-
 	const { handleConnectLedger } = useLedger();
+
+	const onConnectClick = async () => {
+		const { publicKey } = await handleConnectLedger();
+		if (publicKey) {
+			navigate('/');
+		}
+	};
 
 	return (
 		<div className="cd_we_connect_device">
@@ -22,7 +25,7 @@ const ConnectDevice = () => {
 				<div>Casper Dash</div>
 			</div>
 			<h1>Connect a hardware wallet</h1>
-			<Button variant="normal" onClick={() => handleConnectLedger(connectCallback)}>
+			<Button variant="normal" onClick={onConnectClick}>
 				<HardwareIcon />
 				Connect Ledger
 			</Button>
