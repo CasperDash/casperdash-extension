@@ -8,6 +8,7 @@ import { getPublicKey } from '../../../selectors/user';
 import { putDeploy } from '../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
+import useSigner from '../../hooks/useSigner';
 import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE } from '../../../constants/key';
 import Copy from '../../Common/Button/Copy';
 import './Confirm.scss';
@@ -18,6 +19,7 @@ export const Confirm = () => {
 	const { stake = {} } = state || {};
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const signer = useSigner();
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
@@ -26,13 +28,14 @@ export const Confirm = () => {
 	const onConfirm = async () => {
 		const entryPoint = stake.action === 'undelegate' ? ENTRY_POINT_UNDELEGATE : ENTRY_POINT_DELEGATE;
 		try {
-			const signedDeploy = await getSignedStakeDeploy({
+			const deploy = await getSignedStakeDeploy({
 				fromAddress: publicKey,
 				validator: stake.validator,
 				fee: stake.fee,
 				amount: stake.amount,
 				entryPoint,
 			});
+			const signedDeploy = await signer.sign(deploy, publicKey, stake.validator);
 			const { data, error } = await dispatch(putDeploy(signedDeploy));
 			if (error) {
 				throw new Error(`Error on ${entryPoint}. Please try again later.`);

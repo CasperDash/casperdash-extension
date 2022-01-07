@@ -12,8 +12,7 @@ import { validateStakeForm } from '../../../../helpers/validator';
 import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
-import { REVIEW_NOTI_MESS } from '../../../../constants/ledger';
+import useSigner from '../../../hooks/useSigner';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
 
@@ -32,11 +31,12 @@ const DelegateForm = ({
 	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 
+	// Hook
 	const dispatch = useDispatch();
+	const signer = useSigner();
 
 	// Selector
 	const { loading: isDeploying } = useSelector(deploySelector);
-	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const options = validators
 		? validators.map(({ public_key: publicKey, bidInfo }) => ({
@@ -75,11 +75,8 @@ const DelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			if (ledgerOptions.casperApp) {
-				toast(REVIEW_NOTI_MESS);
-			}
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
-
+			const deploy = await getSignedStakeDeploy(stakeDetails);
+			const signedDeploy = await signer.sign(deploy, stakeDetails.fromAddress, stakeDetails.validator);
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data, error } = deployResult;
 			if (error) {

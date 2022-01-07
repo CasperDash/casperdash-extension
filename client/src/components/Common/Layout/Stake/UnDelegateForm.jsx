@@ -11,7 +11,7 @@ import { deploySelector } from '../../../../selectors/deploy';
 import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
+import useSigner from '../../../hooks/useSigner';
 import ConfirmationModal from './Modal';
 import ValidatorInfo from './ValidatorInfo';
 
@@ -29,11 +29,12 @@ const UndelegateForm = ({
 	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 
+	// Hook
 	const dispatch = useDispatch();
+	const signer = useSigner();
 
 	// Selector
 	const { loading: isDeploying } = useSelector(deploySelector);
-	const ledgerOptions = useSelector(getLedgerOptions);
 
 	// Func
 	const handleSubmit = async (values) => {
@@ -53,10 +54,8 @@ const UndelegateForm = ({
 
 	const onConfirm = async () => {
 		try {
-			if (ledgerOptions.casperApp) {
-				toast('Transaction submitted. Awaiting your approval in the ledger.');
-			}
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
+			const deploy = await getSignedStakeDeploy(stakeDetails);
+			const signedDeploy = await signer.sign(deploy, stakeDetails.fromAddress, stakeDetails.validator);
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data, error } = deployResult;
 			if (error) {

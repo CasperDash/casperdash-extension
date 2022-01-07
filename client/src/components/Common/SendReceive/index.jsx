@@ -12,8 +12,7 @@ import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
-import { getLedgerOptions } from '../../../selectors/ledgerOptions';
-import { REVIEW_NOTI_MESS } from '../../../constants/ledger';
+import useSigner from '../../hooks/useSigner';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -29,6 +28,7 @@ export const SendReceiveSection = ({
 	csprBalance,
 }) => {
 	const dispatch = useDispatch();
+	const signer = useSigner();
 
 	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -37,7 +37,6 @@ export const SendReceiveSection = ({
 
 	//Selector
 	const { loading: isDeploying } = useSelector(deploySelector);
-	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -48,13 +47,16 @@ export const SendReceiveSection = ({
 	};
 
 	const onConfirmTransaction = async (transferId) => {
-		if (ledgerOptions.casperApp) {
-			toast(REVIEW_NOTI_MESS);
-		}
 		try {
-			const signedDeploy = !isTokenTransfer
-				? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)
-				: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, ledgerOptions);
+			const deploy = !isTokenTransfer
+				? await getSignedTransferDeploy({ ...transactionDetails, transferId })
+				: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
+
+			const signedDeploy = await signer.sign(
+				deploy,
+				transactionDetails.fromAddress,
+				transactionDetails.toAddress,
+			);
 
 			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
 			if (error) {

@@ -3,8 +3,8 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import useLedger from '../../hooks/useLedger';
-import { getPublicKey, getConnectionType } from '../../../selectors/user';
+import useSigner from '../../hooks/useSigner';
+import { getPublicKey } from '../../../selectors/user';
 import { getLedgerOptions } from '../../../selectors/ledgerOptions';
 import { putDeploy, pushTransferToLocalStorage } from '../../../actions/deployActions';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
@@ -16,12 +16,12 @@ const ConfirmSend = ({ token }) => {
 
 	//Selector
 	const publicKey = useSelector(getPublicKey);
-	const connectionType = useSelector(getConnectionType);
 	const ledgerOptions = useSelector(getLedgerOptions);
 
 	//Hook
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const signer = useSigner();
 
 	//Function
 	const navigateToTokenPage = () => {
@@ -36,7 +36,7 @@ const ConfirmSend = ({ token }) => {
 				amount,
 				fee,
 			};
-			const signedDeploy =
+			const deploy =
 				token.address === 'CSPR'
 					? await getSignedTransferDeploy(
 							{
@@ -52,6 +52,9 @@ const ConfirmSend = ({ token }) => {
 							},
 							ledgerOptions,
 					  );
+
+			const signedDeploy = await signer.sign(deploy, transferDetails.fromAddress, transferDetails.toAddress);
+
 			const { data, error } = await dispatch(putDeploy(signedDeploy));
 			if (error) {
 				throw new Error(`Error on sending. Please try again later.`);
