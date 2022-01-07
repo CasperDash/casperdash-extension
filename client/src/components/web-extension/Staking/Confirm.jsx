@@ -38,6 +38,7 @@ export const Confirm = () => {
 			const signedDeploy = await signer.sign(deploy, publicKey, stake.validator);
 			const { data, error } = await dispatch(putDeploy(signedDeploy));
 			if (error) {
+				console.error(error);
 				throw new Error(`Error on ${entryPoint}. Please try again later.`);
 			}
 			toast.success(`Deploy hash: ${data.deployHash}`);

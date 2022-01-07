@@ -57,6 +57,7 @@ const ConfirmSend = ({ token }) => {
 
 			const { data, error } = await dispatch(putDeploy(signedDeploy));
 			if (error) {
+				console.error(error);
 				throw new Error(`Error on sending. Please try again later.`);
 			}
 			toast.success(`Deploy hash: ${data.deployHash}`);

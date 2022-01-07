@@ -80,6 +80,7 @@ const DelegateForm = ({
 			const deployResult = await dispatch(putDeploy(signedDeploy));
 			const { data, error } = deployResult;
 			if (error) {
+				console.error(error);
 				throw Error('Error on confirm transaction. Please try again later.');
 			}
 			setDeployHash(data.deployHash);

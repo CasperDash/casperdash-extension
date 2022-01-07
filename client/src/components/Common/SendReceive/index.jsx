@@ -60,6 +60,7 @@ export const SendReceiveSection = ({
 
 			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
 			if (error) {
+				console.error(error);
 				throw new Error('Error on confirm transaction. Please try again later.');
 			}
 			setDeployHash(hash.deployHash);
