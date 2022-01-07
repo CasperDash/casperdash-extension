@@ -6,7 +6,7 @@ import QRCode from 'qrcode.react';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { toast } from 'react-toastify';
 import { validateTransferForm } from '../../../helpers/validator';
-import { getSignedTransferDeploy } from '../../../services/userServices';
+import { getTransferDeploy } from '../../../services/userServices';
 import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { deploySelector } from '../../../selectors/deploy';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
@@ -49,7 +49,7 @@ export const SendReceiveSection = ({
 	const onConfirmTransaction = async (transferId) => {
 		try {
 			const deploy = !isTokenTransfer
-				? await getSignedTransferDeploy({ ...transactionDetails, transferId })
+				? await getTransferDeploy({ ...transactionDetails, transferId })
 				: await getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
 
 			const signedDeploy = await signer.sign(

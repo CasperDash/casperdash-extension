@@ -11,7 +11,7 @@ import { signByLedger } from '../services/ledgerServices';
  * @param {Number} fee transfer fee
  * @returns {Deploy} transfer deploy
  */
-export const getTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
+export const buildTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
 	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transferId);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);

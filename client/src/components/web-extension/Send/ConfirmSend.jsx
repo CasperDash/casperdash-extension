@@ -8,7 +8,7 @@ import { getPublicKey } from '../../../selectors/user';
 import { getLedgerOptions } from '../../../selectors/ledgerOptions';
 import { putDeploy, pushTransferToLocalStorage } from '../../../actions/deployActions';
 import { getTransferTokenDeploy } from '../../../services/tokenServices';
-import { getSignedTransferDeploy } from '../../../services/userServices';
+import { getTransferDeploy } from '../../../services/userServices';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
 
 const ConfirmSend = ({ token }) => {
@@ -38,7 +38,7 @@ const ConfirmSend = ({ token }) => {
 			};
 			const deploy =
 				token.address === 'CSPR'
-					? await getSignedTransferDeploy(
+					? await getTransferDeploy(
 							{
 								...transferDetails,
 								transferId,
