@@ -14,7 +14,6 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	// State
 	const [step, setStep] = useState('input');
 	const [inputValues, setInputValues] = useState({ collectionName: '', collectionSymbol: '' });
-	const [deployHash, setDeployHash] = useState();
 
 	const formRef = useRef();
 
@@ -41,12 +40,11 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	};
 
 	const handleConfirmDeployContract = async () => {
-		const builDeployFn = async () =>
+		const buildDeployFn = async () =>
 			await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol);
-		const { deployHash } = executeDeploy(builDeployFn, publicKey, publicKey);
+		const { deployHash } = executeDeploy(buildDeployFn, publicKey, publicKey);
 
 		if (deployHash) {
-			setDeployHash(deployHash);
 			dispatch(
 				updateNFTLocalStorage(
 					publicKey,
@@ -60,13 +58,13 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 					'push',
 				),
 			);
+			onClose();
 		}
 	};
 
 	const clearState = () => {
 		setInputValues({ collectionName: '', collectionSymbol: '' });
 		setStep('input');
-		setDeployHash('');
 	};
 
 	const onClose = () => {
@@ -153,33 +151,19 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 			</Modal.Body>
 
 			<Modal.Footer>
-				{!deployHash ? (
+				{step === 'confirm' ? (
 					<>
-						{step === 'confirm' ? (
-							<>
-								<Button variant="secondary" onClick={() => setStep('input')}>
-									Back
-								</Button>
-								<Button variant="primary" onClick={handleConfirmDeployContract} disabled={isDeploying}>
-									{isDeploying ? 'Confirming...' : 'Confirm'}
-								</Button>
-							</>
-						) : (
-							<Button variant="primary" onClick={onNext}>
-								Next
-							</Button>
-						)}
-					</>
-				) : (
-					<>
-						<div className="cd_success_text">
-							<span>{deployHash}</span>
-						</div>
-
-						<Button variant="secondary" onClick={onClose}>
-							close
+						<Button variant="secondary" onClick={() => setStep('input')}>
+							Back
+						</Button>
+						<Button variant="primary" onClick={handleConfirmDeployContract} disabled={isDeploying}>
+							{isDeploying ? 'Confirming...' : 'Confirm'}
 						</Button>
 					</>
+				) : (
+					<Button variant="primary" onClick={onNext}>
+						Next
+					</Button>
 				)}
 			</Modal.Footer>
 		</Modal>
