@@ -6,12 +6,13 @@ import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
-import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../constants/key';
 import { validateStakeForm } from '../../../helpers/validator';
+import { getConfigurations } from '../../../services/configurationServices';
 import { StakingInfo } from './StakingGrid/StakingInfo';
 import './Staking.scss';
 
 const Staking = () => {
+	const configurations = getConfigurations();
 	// Hook
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -51,12 +52,19 @@ const Staking = () => {
 				amount: amount,
 				tokenSymbol: 'CSPR',
 				balance,
-				fee: CSPR_AUCTION_DELEGATE_FEE,
-				minAmount: MIN_CSPR_TRANSFER,
+				fee: configurations.CSPR_AUCTION_DELEGATE_FEE,
+				minAmount: configurations.MIN_CSPR_TRANSFER,
 			}),
 			...validatorError,
 		};
-	}, [amount, balance, validator.public_key, firstLoad]);
+	}, [
+		amount,
+		balance,
+		validator.public_key,
+		firstLoad,
+		configurations.CSPR_AUCTION_DELEGATE_FEE,
+		configurations.MIN_CSPR_TRANSFER,
+	]);
 
 	const onAmountChange = (newAmount) => {
 		setFirstLoad(false);
@@ -70,7 +78,7 @@ const Staking = () => {
 		navigate('/stakeConfirm', {
 			state: {
 				name: 'Delegate',
-				stake: { validator: validator.public_key, amount, fee: CSPR_AUCTION_DELEGATE_FEE },
+				stake: { validator: validator.public_key, amount, fee: configurations.CSPR_AUCTION_DELEGATE_FEE },
 			},
 		});
 	};
@@ -81,7 +89,9 @@ const Staking = () => {
 				<div className="cd_we_staking_validator">
 					<div className="cd_we_staking_validator_header">
 						<div className="cd_we_input_label">Validator</div>
-						<div className="cd_we_input_network_fee">Network Fee: {CSPR_AUCTION_DELEGATE_FEE} CSPR</div>
+						<div className="cd_we_input_network_fee">
+							Network Fee: {configurations.CSPR_AUCTION_DELEGATE_FEE} CSPR
+						</div>
 					</div>
 					<div className="cd_we_staking_validator_box" onClick={onSearchValidator}>
 						<div className="cd_we_staking_validator_value">
@@ -114,7 +124,7 @@ const Staking = () => {
 						<input type="number" value={amount} onChange={(e) => onAmountChange(e.target.value)} />
 						<div
 							className="cd_we_amount_max_btn"
-							onClick={() => onAmountChange(balance - CSPR_AUCTION_DELEGATE_FEE)}
+							onClick={() => onAmountChange(balance - configurations.CSPR_AUCTION_DELEGATE_FEE)}
 						>
 							Max
 						</div>

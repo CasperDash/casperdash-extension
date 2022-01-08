@@ -1,17 +1,19 @@
 import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
+import { getConfigurations } from '../services/configurationServices';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { getBase64IdentIcon } from '../helpers/identicon';
 import { USERS } from '../store/actionTypes';
-import { CSPR_TRANSFER_FEE, TOKEN_TRANSFER_FEE, MIN_CSPR_TRANSFER } from '../constants/key';
 import { getCurrentPrice } from './price';
 import { getMassagedTokenData } from './tokens';
+
+const configurations = getConfigurations();
 
 const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
-	transferFee: CSPR_TRANSFER_FEE,
-	minAmount: MIN_CSPR_TRANSFER,
+	transferFee: configurations.CSPR_TRANSFER_FEE,
+	minAmount: configurations.MIN_CSPR_TRANSFER,
 	icon: 'assets/images/token-icons/cspr.png',
 };
 
@@ -57,11 +59,11 @@ export const getAllTokenInfo = createSelector(
 		const tokensInfo =
 			tokensData && tokensData.length
 				? tokensData.map((datum) => ({
-						...datum,
 						price: tokenPrice,
 						totalPrice: tokenPrice * datum.balance.displayValue,
-						transferFee: TOKEN_TRANSFER_FEE,
+						transferFee: configurations.TOKEN_TRANSFER_FEE,
 						icon: getBase64IdentIcon(datum.address),
+						...datum,
 				  }))
 				: [];
 

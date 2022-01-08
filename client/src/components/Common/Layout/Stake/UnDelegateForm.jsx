@@ -5,10 +5,11 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { getStakeDeploy } from '../../../../services/stakeServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
+import { getConfigurations } from '../../../../services/configurationServices';
 import ConfirmationModal from './Modal';
 import ValidatorInfo from './ValidatorInfo';
 
@@ -31,6 +32,8 @@ const UndelegateForm = ({
 	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	// Func
+	const configurations = getConfigurations();
+
 	const handleSubmit = async (values) => {
 		const { amount } = values;
 		if (fromAddress && stakedValidator && amount) {
@@ -98,7 +101,7 @@ const UndelegateForm = ({
 										tokenSymbol,
 										stakedAmount: stakedValidator.stakedAmount,
 										fee,
-										minAmount: MIN_CSPR_TRANSFER,
+										minAmount: configurations.MIN_CSPR_TRANSFER,
 									})
 								}
 								initialValues={{ amount: 0, toAddress: '' }}

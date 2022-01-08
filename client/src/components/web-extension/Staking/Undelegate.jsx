@@ -5,11 +5,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { getMassagedUserDetails } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { toFormattedNumber } from '../../../helpers/format';
-import { CSPR_AUCTION_UNDELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../constants/key';
+import { getConfigurations } from '../../../services/configurationServices';
 import { validateUndelegateForm } from '../../../helpers/validator';
 import './Undelegate.scss';
 
 export const Undelegate = () => {
+	const configurations = getConfigurations();
 	// Hook
 	const navigate = useNavigate();
 	const { state } = useLocation();
@@ -33,12 +34,19 @@ export const Undelegate = () => {
 				amount: amount,
 				tokenSymbol: 'CSPR',
 				balance,
-				fee: CSPR_AUCTION_UNDELEGATE_FEE,
-				minAmount: MIN_CSPR_TRANSFER,
+				fee: configurations.CSPR_AUCTION_UNDELEGATE_FEE,
+				minAmount: configurations.MIN_CSPR_TRANSFER,
 			}),
 			...validatorError,
 		};
-	}, [amount, balance, validator, firstLoad]);
+	}, [
+		amount,
+		balance,
+		validator,
+		firstLoad,
+		configurations.CSPR_AUCTION_UNDELEGATE_FEE,
+		configurations.MIN_CSPR_TRANSFER,
+	]);
 
 	const onAmountChange = (newAmount) => {
 		setFirstLoad(false);
@@ -52,7 +60,12 @@ export const Undelegate = () => {
 		navigate('/stakeConfirm', {
 			state: {
 				name: 'Undelegate',
-				stake: { validator: validator, amount, fee: CSPR_AUCTION_UNDELEGATE_FEE, action: 'undelegate' },
+				stake: {
+					validator: validator,
+					amount,
+					fee: configurations.CSPR_AUCTION_UNDELEGATE_FEE,
+					action: 'undelegate',
+				},
 			},
 		});
 	};
@@ -62,7 +75,9 @@ export const Undelegate = () => {
 			<div className="cd_we_staking_validator">
 				<div className="cd_we_staking_validator_header">
 					<div className="cd_we_input_label">Validator</div>
-					<div className="cd_we_input_network_fee">Network Fee: {CSPR_AUCTION_UNDELEGATE_FEE} CSPR</div>
+					<div className="cd_we_input_network_fee">
+						Network Fee: {configurations.CSPR_AUCTION_UNDELEGATE_FEE} CSPR
+					</div>
 				</div>
 				<div className="cd_we_staking_validator_box">
 					<div className="cd_we_staking_validator_value">

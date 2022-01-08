@@ -6,6 +6,7 @@ import store from '../../store';
 import modules from '../../components/web';
 import Page404 from '../../components/Common/Page404';
 import Layout from '../../components/Common/Layout';
+import WithConfigurations from '../../components/Common/Configurations';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,25 +21,27 @@ const App = () => {
 
 	return (
 		<Provider store={store}>
-			<BrowserRouter>
-				<Layout modules={Object.keys(modules)}>
-					<Routes>
-						{routes}
-						<Route component={Page404} />
-					</Routes>
-				</Layout>
-			</BrowserRouter>
-			<ToastContainer
-				position="bottom-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
+			<WithConfigurations>
+				<BrowserRouter>
+					<Layout modules={Object.keys(modules)}>
+						<Routes>
+							{routes}
+							<Route component={Page404} />
+						</Routes>
+					</Layout>
+				</BrowserRouter>
+				<ToastContainer
+					position="bottom-right"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
+			</WithConfigurations>
 		</Provider>
 	);
 };
