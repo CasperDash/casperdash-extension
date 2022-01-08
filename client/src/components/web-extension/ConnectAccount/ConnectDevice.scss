@@ -5,7 +5,7 @@
 	height: 100vh;
 	background: var(--component-background);
 	.cd_we_connect_account_logo {
-		margin: 12vh 0;
+		margin: 9vh 0;
 		display: flex;
 		flex-direction: column;
 		svg {
@@ -30,6 +30,22 @@
 		svg {
 			margin-right: 10px;
 			margin-left: 10px;
+		}
+	}
+	.cd_we_btn_load_more {
+		justify-content: center;
+		width: 100%;
+		height: 54px;
+	}
+	.cd_we_grid {
+		width: 100%;
+		height: calc(100vh - 600px);
+		overflow: auto;
+		.cd_we_item {
+			overflow-wrap: anywhere;
+			.cd_we_item_left {
+				max-width: 60%;
+			}
 		}
 	}
 }

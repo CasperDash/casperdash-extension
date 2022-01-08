@@ -13,6 +13,19 @@ export const getUserDetails = (publicKey) => ({
 });
 
 /**
+ * @param {string} publicKey
+ * @returns
+ */
+export const getBatchUserDetails = (publicKey) => ({
+	type: USERS.FETCH_BATCH_USER_DETAILS,
+	request: { url: `/user/${publicKey}` },
+	meta: {
+		requestKey: publicKey,
+		requestsCapacity: 20,
+	},
+});
+
+/**
  * @returns
  */
 export const updatePublicKeyFromSigner = () => {

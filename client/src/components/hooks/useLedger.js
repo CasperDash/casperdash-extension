@@ -36,24 +36,31 @@ const useLedger = () => {
 		transport.close();
 	};
 
-	const loadMoreKeys = async (publicKey) => {
+	const loadMoreKeys = async (publicKey, index = 0) => {
 		const { casperApp, transport } = await initLedgerApp();
 
 		try {
 			const cachedKeys = getLocalStorageValue('ledger', 'keys');
 			// Check if keys are already loaded
-			if (cachedKeys && cachedKeys.length && cachedKeys.find((key) => key.publicKey === publicKey)) {
+			if (
+				cachedKeys &&
+				cachedKeys.length &&
+				cachedKeys.find((key) => key.publicKey === publicKey) &&
+				cachedKeys.length < index
+			) {
 				return cachedKeys;
 			}
 			//TODO: get balance for each key
-			const listKeys = await getListKeys(casperApp, 0, MAX_KEY_PATH);
+			const listKeys = await getListKeys(casperApp, index, MAX_KEY_PATH);
 			// Cache keys to local storage
 			setLocalStorageValue('ledger', 'keys', listKeys, 'set');
+
 			return listKeys;
 		} catch (error) {
 			toast.error(getLedgerError(error));
 		}
 		transport.close();
+		return [];
 	};
 
 	return { handleConnectLedger, isUsingLedger, loadMoreKeys };

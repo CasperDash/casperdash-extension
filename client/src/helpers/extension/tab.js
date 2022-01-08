@@ -10,3 +10,7 @@ export const newTab = (options) => {
 		url: extensionURL,
 	});
 };
+
+export const isPopupMode = () => {
+	return window.location.href.includes('popup.html');
+};
