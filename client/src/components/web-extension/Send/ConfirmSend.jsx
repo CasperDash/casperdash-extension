@@ -44,10 +44,10 @@ const ConfirmSend = ({ token }) => {
 			amount,
 			fee,
 		};
-		const deploy = buildTransferDeploy(transferDetails);
+		const buildDeployFn = () => buildTransferDeploy(transferDetails);
 
 		const { deployHash, signedDeploy } = await executeDeploy(
-			deploy,
+			buildDeployFn,
 			transferDetails.fromAddress,
 			transferDetails.toAddress,
 		);

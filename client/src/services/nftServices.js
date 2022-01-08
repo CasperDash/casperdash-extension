@@ -29,7 +29,7 @@ export const getSingedMintDeploy = async (nftInfo) => {
 		return getMintNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, toMotes(1));
 	} catch (error) {
 		console.error(error);
-		throw new Error(`Failed to get signed mint nft deploy.`);
+		throw new Error(`Failed to get mint NFT deploy.`);
 	}
 };
 
@@ -65,6 +65,6 @@ export const nftContractDeploy = async (mainAccount, name, symbol) => {
 		);
 	} catch (error) {
 		console.error(error);
-		throw new Error(`Failed to get signed nft contract deploy.`);
+		throw new Error(`Failed to get NFT contract deploy.`);
 	}
 };

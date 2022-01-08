@@ -73,8 +73,12 @@ const DelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		const deploy = getStakeDeploy(stakeDetails);
-		const { deployHash, signedDeploy } = executeDeploy(deploy, stakeDetails.fromAddress, stakeDetails.validator);
+		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const { deployHash, signedDeploy } = executeDeploy(
+			buildDeployFn,
+			stakeDetails.fromAddress,
+			stakeDetails.validator,
+		);
 		if (deployHash) {
 			setDeployHash(deployHash);
 			dispatch(

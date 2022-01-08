@@ -27,6 +27,6 @@ export const getStakeDeploy = ({ fromAddress, validator, fee, amount, entryPoint
 		);
 	} catch (error) {
 		console.error(error);
-		throw new Error(`Failed to get signed stake deploy.`);
+		throw new Error(`Failed to get stake deploy.`);
 	}
 };

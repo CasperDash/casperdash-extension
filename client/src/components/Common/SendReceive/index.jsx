@@ -62,10 +62,10 @@ export const SendReceiveSection = ({
 	};
 
 	const onConfirmTransaction = async (transferId) => {
-		const deploy = buildDeploy(transferId);
+		const buildDeployFn = () => buildDeploy(transferId);
 
 		const { deployHash, signedDeploy } = await executeDeploy(
-			deploy,
+			buildDeployFn,
 			transactionDetails.fromAddress,
 			transactionDetails.toAddress,
 		);

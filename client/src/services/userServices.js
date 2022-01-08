@@ -10,6 +10,6 @@ export const getTransferDeploy = (transactionDetail = {}) => {
 		return buildTransferDeploy(fromPbKey, toPbKey, toMotes(amount), transferId, fee);
 	} catch (error) {
 		console.error(error);
-		throw new Error(`Failed to get signed transfer.`);
+		throw new Error(`Failed to build deploy.`);
 	}
 };

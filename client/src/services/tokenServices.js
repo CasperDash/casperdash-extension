@@ -9,6 +9,6 @@ export const getTransferTokenDeploy = (transactionDetail = {}) => {
 		const toPbKey = CLPublicKey.fromHex(toAddress);
 		return buildTransferTokenDeploy(fromPbKey, toPbKey, amount * 10 ** decimals.hex, address, fee);
 	} catch (error) {
-		throw new Error(`Failed to get stake deploy.`);
+		throw new Error(`Failed to get token transfer deploy.`);
 	}
 };

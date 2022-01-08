@@ -20,11 +20,13 @@ export const useConfirmDeploy = () => {
 		return hash.deployHash;
 	};
 
-	const executeDeploy = async (deploy, fromPublicKey, toPublicKey) => {
+	const executeDeploy = async (buildDeployFn, fromPublicKey, toPublicKey) => {
 		setIsDeploying(true);
-		const toastId = toast.loading('Please review the deploy');
+		const toastId = toast.loading('Preparing deploy');
 		try {
+			const deploy = buildDeployFn();
 			// Sign with signer
+			toast.update(toastId, { render: 'Please review the deploy' });
 			const signedDeploy = await signer.sign(deploy, fromPublicKey, toPublicKey);
 			// Put deploy on chain
 			toast.update(toastId, { render: 'Putting deploy' });
