@@ -31,7 +31,6 @@ export const SendReceiveSection = ({
 	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
-	const [deployHash, setDeployHash] = useState(null);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -70,7 +69,7 @@ export const SendReceiveSection = ({
 			transactionDetails.toAddress,
 		);
 		if (deployHash) {
-			setDeployHash(deployHash);
+			onCloseConfirmModal();
 			updateLocalStorage({ deployHash, signedDeploy, transferId });
 		}
 	};
@@ -86,7 +85,6 @@ export const SendReceiveSection = ({
 	};
 
 	const onCloseConfirmModal = () => {
-		setDeployHash(null);
 		setShowConfirmModal(false);
 	};
 
@@ -119,7 +117,11 @@ export const SendReceiveSection = ({
 									<div className="cd_send_balance_content">
 										<span className="cd_send_balance_heading">Total Balance</span>
 										<span className="cd_send_balance_value">
-											{toFormattedNumber(displayBalance - values.sendAmount - transferFee)}
+											{toFormattedNumber(
+												displayBalance -
+													values.sendAmount -
+													(isTokenTransfer ? 0 : transferFee),
+											)}
 										</span>
 									</div>
 									<div className="cd_send_qr_address">
@@ -248,7 +250,6 @@ export const SendReceiveSection = ({
 				{...transactionDetails}
 				fee={transferFee}
 				csprPrice={csprPrice}
-				deployHash={deployHash}
 				isDeploying={isDeploying}
 				tokenSymbol={tokenSymbol}
 				isTokenTransfer={isTokenTransfer}
