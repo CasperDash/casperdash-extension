@@ -37,6 +37,19 @@
 	}
 }
 
+.btn-primary-outline {
+	background-color: var(--component-background) !important;
+	color: var(--primary-color);
+	&:hover {
+		background-color: var(--primary-color) !important;
+		border-color: var(--primary-color) !important;
+	}
+	&:focus {
+		background-color: var(--primary-color) !important;
+		border-color: var(--primary-color) !important;
+	}
+}
+
 .btn-normal {
 	background-color: transparent;
 	border-color: var(--secondary-text-color);
@@ -52,6 +65,11 @@ input {
 	padding: 10px !important;
 	border: 0 !important;
 	font-size: 1em !important;
+	width: 100%;
+	outline: none !important;
+	&:focus {
+		box-shadow: none !important;
+	}
 }
 .invalid-feedback {
 	display: block;
@@ -91,16 +109,17 @@ input {
 }
 
 .cd_we_input_label {
-	font-size: 14px;
-	font-weight: 500;
+	font-weight: 400;
 	color: var(--secondary-text-color);
 	padding-bottom: 5px;
 }
 
-.success {
+.success,
+.completed {
 	color: var(--bs-success) !important;
 }
-.fail {
+.fail,
+.failed {
 	color: #e2507a !important;
 }
 .pending {
@@ -111,6 +130,7 @@ input {
 	color: #e2507a;
 	font-size: 0.8em;
 	font-weight: 500;
+	overflow-wrap: anywhere;
 }
 
 .cd_we_confirm {
@@ -125,7 +145,7 @@ input {
 		justify-content: space-around;
 		margin-top: 20px;
 		button {
-			width: 50%;
+			width: 100%;
 			margin: 5px;
 		}
 	}
@@ -145,6 +165,10 @@ input {
 	&::-webkit-scrollbar {
 		display: none;
 	}
+}
+
+.overflow_auto {
+	overflow: auto;
 }
 
 @media (max-width: 400px) {

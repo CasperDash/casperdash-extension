@@ -1,13 +1,15 @@
 import _get from 'lodash-es/get';
 import React from 'react';
 import PropTypes from 'prop-types';
-import CsprIcon from 'assets/image/cspr.png';
+import { Bar } from '../../../Common/Spinner';
+import NoData from '../../../Common/NoData';
 import { getValueByFormat } from '../../../../helpers/format';
 import './index.scss';
 
-const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
+const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
 	return (
 		<div className={`cd_we_grid ${className || ''}`}>
+			{!isLoading && !data.length && <NoData />}
 			{data.map((value, i) => {
 				const canClick = typeof onRowClick === 'function';
 				return (
@@ -25,21 +27,20 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 												metadata.left ? metadata.left.iconClassName || '' : ''
 											}`}
 										>
-											<img
-												src={chrome.runtime.getURL(value.icon)}
-												onError={(e) => {
-													e.target.error = null;
-													e.target.src = CsprIcon;
-												}}
-											/>
+											<img src={value.icon} alt="grid" />
 										</div>
 									)}
 									<div className="cd_we_item_content">
 										{metadata[key].map((item, i) => {
 											const Component = item.component;
-											const formattedValue = getValueByFormat(_get(value, item.key), {
-												format: item.format,
-											});
+											const WrapperComponent = item.wrapperComponent;
+											const compProps = item.props || {};
+											const formattedValue = getValueByFormat(
+												item.value || _get(value, item.key),
+												{
+													format: item.format,
+												},
+											);
 											return (
 												<div
 													className={`cd_we_item_value ${item.type} ${
@@ -47,11 +48,14 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 													}`}
 													key={i}
 												>
-													{Component ? (
-														<Component>{formattedValue}</Component>
+													{WrapperComponent ? (
+														<WrapperComponent>{formattedValue}</WrapperComponent>
+													) : Component ? (
+														<Component {...compProps} {...value} value={formattedValue} />
 													) : (
 														formattedValue
-													)}
+													)}{' '}
+													{item.suffix}
 												</div>
 											);
 										})}
@@ -62,6 +66,7 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className }) => {
 					</div>
 				);
 			})}
+			{isLoading && <Bar />}
 		</div>
 	);
 };

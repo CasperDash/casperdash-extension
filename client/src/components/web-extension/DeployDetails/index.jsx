@@ -29,7 +29,7 @@ const DeployDetails = () => {
 				const formattedValue = format ? getValueByFormat(deployValue, { format }) : deployValue;
 				return (
 					<div key={i} className="cd_we_deploy_details_item">
-						<div className="cd_we_item_label">{label}</div>
+						<div className="cd_we_input_label">{label}</div>
 						<div className={'cd_we_item_value'}>
 							{formattedValue}
 							{copy && <Copy value={deployValue} />}

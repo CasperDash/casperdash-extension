@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import ContactIcon from 'assets/image/contact-icon.svg';
-import SiteIcon from 'assets/image/file-icon.svg';
+//import SiteIcon from 'assets/image/file-icon.svg';
 import LockIcon from 'assets/image/lock-icon.svg';
 import ArrowIcon from 'assets/image/bold-arrow-icon.svg';
 import { lockAccount } from '../../../actions/userActions';
@@ -15,15 +15,18 @@ const SETTINGS = [
 			className: 'cd_we_setting_about',
 			img: <ContactIcon />,
 		},
-	},
-	{
-		name: 'Connected Sites',
-		hasMenu: true,
-		icon: {
-			className: 'cd_we_setting_sites',
-			img: <SiteIcon />,
+		action: () => {
+			chrome.tabs.create({ url: 'https://casperdash.io' });
 		},
 	},
+	// {
+	// 	name: 'Connected Sites',
+	// 	hasMenu: true,
+	// 	icon: {
+	// 		className: 'cd_we_setting_sites',
+	// 		img: <SiteIcon />,
+	// 	},
+	// },
 	{
 		name: 'Lock',
 		icon: {

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
 import { getPublicKey } from '../../../selectors/user';
+import { putDeploy, pushTransferToLocalStorage } from '../../../actions/deployActions';
 import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
 import { getSignedTransferDeploy } from '../../../services/userServices';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
@@ -15,37 +17,52 @@ const ConfirmSend = ({ token }) => {
 
 	//Hook
 	const navigate = useNavigate();
-
-	//State
-	const [error, setError] = useState();
+	const dispatch = useDispatch();
 
 	//Function
 	const navigateToTokenPage = () => {
-		navigate('/', { replace: true });
+		navigate('/token', { replace: true, state: { name: symbol, token } });
 	};
 
 	const onSendTransaction = async () => {
-		const signedDeploy =
-			token.address === 'CSPR'
-				? await getSignedTransferDeploy({
-						fromAddress: publicKey,
-						toAddress,
-						amount,
-						transferId,
-						fee,
-				  })
-				: await getSignedTransferTokenDeploy({
-						fromAddress: publicKey,
-						toAddress,
-						amount,
-						contractInfo: { address, decimals },
-						fee,
-				  });
-		if (!signedDeploy || signedDeploy.error) {
-			setError(signedDeploy.error.message);
-			return;
+		try {
+			const transferDetails = {
+				fromAddress: publicKey,
+				toAddress,
+				amount,
+				fee,
+			};
+			const signedDeploy =
+				token.address === 'CSPR'
+					? await getSignedTransferDeploy({
+							...transferDetails,
+							transferId,
+					  })
+					: await getSignedTransferTokenDeploy({
+							...transferDetails,
+							contractInfo: { address, decimals },
+					  });
+			const { data, error } = await dispatch(putDeploy(signedDeploy));
+			if (error) {
+				throw new Error(`Error on sending. Please try again later.`);
+			}
+			toast.success(`Deploy hash: ${data.deployHash}`);
+			dispatch(
+				pushTransferToLocalStorage(publicKey, {
+					...transferDetails,
+					deployHash: data.deployHash,
+					status: 'pending',
+					timestamp: signedDeploy.deploy.header.timestamp,
+					transferId: transferId,
+					address,
+					decimals,
+					symbol,
+				}),
+			);
+			navigateToTokenPage();
+		} catch (error) {
+			toast.error(error.message);
 		}
-		navigateToTokenPage();
 	};
 
 	return (
@@ -72,11 +89,8 @@ const ConfirmSend = ({ token }) => {
 				<div className="cd_we_input_label">Transfer ID</div>
 				<div>{transferId}</div>
 			</div>
-			<div className="cd_we_confirm_row cd_error_text">{error}</div>
+
 			<div className="cd_we_confirm_buttons">
-				<Button variant="secondary" onClick={navigateToTokenPage}>
-					Cancel
-				</Button>
 				<Button onClick={onSendTransaction}>Send</Button>
 			</div>
 		</div>

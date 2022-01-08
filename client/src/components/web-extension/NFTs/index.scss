@@ -77,6 +77,16 @@
 				color: var(--secondary-text-color);
 			}
 		}
+		.cd_loading_spinner {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			svg {
+				width: 50px;
+				height: 45px;
+			}
+		}
 		.cd_we_nft_count {
 			font-weight: 600;
 			margin: 10px 20px;

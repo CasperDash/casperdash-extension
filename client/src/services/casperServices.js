@@ -1,5 +1,4 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
-import { toast } from 'react-toastify';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
 import { signByLedger } from '../services/ledgerServices';
 
@@ -39,22 +38,19 @@ export const buildContractInstallDeploy = (baseAccount, session) => {
  * @param {Object} ledgerOptions ledger's options
  * @returns {Deploy} Signed deploy
  */
-export const signDeploy = async (deploy, mainAccountHex, setAccountHex, { casperApp = null, keyPath = 0 }) => {
-	try {
-		if (!casperApp) {
-			const deployObj = DeployUtil.deployToJson(deploy);
-			const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
-			return signedDeploy;
-		} else {
-			const signedDeploy = await signByLedger(deploy, {
-				publicKey: mainAccountHex,
-				keyPath,
-				app: casperApp,
-			});
-			return DeployUtil.deployToJson(signedDeploy);
-		}
-	} catch (error) {
-		return { error: { message: error.message } };
+export const signDeploy = async (deploy, mainAccountHex, setAccountHex, ledgerOptions) => {
+	if (!ledgerOptions) {
+		const deployObj = DeployUtil.deployToJson(deploy);
+		const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
+		return signedDeploy;
+	} else {
+		const { casperApp = null, keyPath = 0 } = ledgerOptions;
+		const signedDeploy = await signByLedger(deploy, {
+			publicKey: mainAccountHex,
+			keyPath,
+			app: casperApp,
+		});
+		return DeployUtil.deployToJson(signedDeploy);
 	}
 };
 

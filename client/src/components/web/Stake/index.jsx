@@ -25,7 +25,7 @@ const Stake = () => {
 	// Selector
 	const publicKey = useSelector(getPublicKey);
 	const currentPrice = useSelector(getCurrentPrice);
-	const validators = useSelector(getValidators);
+	const validators = useSelector(getValidators());
 	const { loading: isLoading } = useSelector(validatorSelector);
 	const userDetails = useSelector(getMassagedUserDetails);
 	const pendingStakes = useSelector(getPendingStakes());

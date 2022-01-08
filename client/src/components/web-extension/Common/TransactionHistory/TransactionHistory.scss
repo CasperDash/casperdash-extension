@@ -9,6 +9,7 @@
 			padding: 5px 10px;
 			margin-right: 10px;
 			border-radius: 26px;
+			cursor: pointer;
 			&.active,
 			&:hover {
 				background: var(--primary-light-color);
@@ -22,7 +23,7 @@
 					background: var(--secondary-text-color-light);
 					width: 20px;
 					height: 20px;
-					padding: 5px;
+					padding: 3px 5px;
 				}
 			}
 		}

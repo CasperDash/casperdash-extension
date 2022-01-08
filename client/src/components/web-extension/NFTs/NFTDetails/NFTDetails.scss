@@ -18,7 +18,7 @@
 			color: var(--secondary-text-color);
 		}
 		.cd_we_nft_content_header {
-			margin-bottom: 10px;
+			margin-bottom: 5px;
 			.cd_we_nft_contract {
 				display: flex;
 				align-items: center;
@@ -26,8 +26,8 @@
 					max-width: 50%;
 				}
 			}
-			.cd_we_input_label {
-				padding-bottom: 10px;
+			.cd_we_nft_contract_name {
+				font-weight: 500;
 			}
 		}
 		.cd_we_nft_attr {

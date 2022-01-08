@@ -1,6 +1,7 @@
 import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { convertBalanceFromHex } from '../helpers/balance';
+import { getBase64IdentIcon } from '../helpers/identicon';
 import { USERS } from '../store/actionTypes';
 import { CSPR_TRANSFER_FEE, TOKEN_TRANSFER_FEE, MIN_CSPR_TRANSFER } from '../constants/key';
 import { getCurrentPrice } from './price';
@@ -56,7 +57,7 @@ export const getAllTokenInfo = createSelector(
 						price: tokenPrice,
 						totalPrice: tokenPrice * datum.balance.displayValue,
 						transferFee: TOKEN_TRANSFER_FEE,
-						icon: 'assets/images/token-icons/question-icon.png',
+						icon: getBase64IdentIcon(datum.address),
 				  }))
 				: [];
 

@@ -22,5 +22,5 @@ export const useTokenInfo = (token) => {
 		}
 	}, [publicKey, JSON.stringify(tokensAddressList)]);
 
-	return { allTokenInfo, tokenInfoByAddress };
+	return { allTokenInfo, tokenInfoByAddress, isFetching };
 };

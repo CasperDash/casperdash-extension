@@ -12,6 +12,7 @@ export const getSignedTransferTokenDeploy = async (transactionDetail = {}, ledge
 
 		return signedDeploy;
 	} catch (error) {
-		return { error: { message: error.message } };
+		console.error(error);
+		throw new Error(`Failed to get signed stake deploy.`);
 	}
 };

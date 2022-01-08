@@ -1,3 +1,5 @@
+import { MOTE_RATE } from '../constants/key';
+
 /**
  * Return formatted number.
  * @param {Number} num - Number.
@@ -72,6 +74,10 @@ export const getEndString = (fullString, end) => {
 	}
 };
 
+const toDisplayValueFromMote = (mote, options) => {
+	return toFormattedNumber(mote / MOTE_RATE, options);
+};
+
 export const getValueByFormat = (value, options) => {
 	const { format, ...formatOptions } = options;
 	switch (format) {
@@ -81,6 +87,15 @@ export const getValueByFormat = (value, options) => {
 			return toFormattedNumber(value, formatOptions);
 		case 'date':
 			return toFormattedDate(value, formatOptions);
+		case 'mote':
+			return toDisplayValueFromMote(value, options);
+		case 'percentage':
+			// value store in blockchain is int, the percentage is already multiplied by 100
+			return toFormattedNumber(value / 100, {
+				style: 'percent',
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2,
+			});
 		default:
 			return value;
 	}
