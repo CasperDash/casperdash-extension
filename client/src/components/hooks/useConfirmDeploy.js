@@ -24,7 +24,7 @@ export const useConfirmDeploy = () => {
 		setIsDeploying(true);
 		const toastId = toast.loading('Preparing deploy');
 		try {
-			const deploy = buildDeployFn();
+			const deploy = await buildDeployFn();
 			// Sign with signer
 			toast.update(toastId, { render: 'Please review the deploy' });
 			const signedDeploy = await signer.sign(deploy, fromPublicKey, toPublicKey);

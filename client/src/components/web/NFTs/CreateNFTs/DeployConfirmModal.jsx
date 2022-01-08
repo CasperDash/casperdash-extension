@@ -2,19 +2,18 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
-import { putDeploy } from '../../../../actions/deployActions';
 import { updateNFTLocalStorage } from '../../../../actions/NFTActions';
 import { nftContractDeploy } from '../../../../services/nftServices';
-import useSigner from '../../../hooks/useSigner';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 
 export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
+	// Hook
 	const dispatch = useDispatch();
-	const signer = useSigner();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
+	// State
 	const [step, setStep] = useState('input');
 	const [inputValues, setInputValues] = useState({ collectionName: '', collectionSymbol: '' });
-	const [isLoading, setIsLoading] = useState(false);
 	const [deployHash, setDeployHash] = useState();
 
 	const formRef = useRef();
@@ -42,23 +41,18 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	};
 
 	const handleConfirmDeployContract = async () => {
-		setIsLoading(true);
-		try {
-			const deploy = await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol);
-			const signedDeploy = await signer.sign(deploy, publicKey, publicKey);
+		const builDeployFn = async () =>
+			await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol);
+		const { deployHash } = executeDeploy(builDeployFn, publicKey, publicKey);
 
-			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
-			if (error) {
-				console.error(error);
-				throw Error('Error on deploy NFT contract. Please try again later.');
-			}
-			setDeployHash(hash.deployHash);
+		if (deployHash) {
+			setDeployHash(deployHash);
 			dispatch(
 				updateNFTLocalStorage(
 					publicKey,
 					`nfts.deploys.installContract`,
 					{
-						hash: hash.deployHash,
+						hash: deployHash,
 						status: 'pending',
 						timestamp: new Date().toString(),
 						collectionName: inputValues.collectionSymbol,
@@ -66,11 +60,7 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 					'push',
 				),
 			);
-		} catch (error) {
-			console.error(error);
-			toast.error(error.message);
 		}
-		setIsLoading(false);
 	};
 
 	const clearState = () => {
@@ -170,8 +160,8 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 								<Button variant="secondary" onClick={() => setStep('input')}>
 									Back
 								</Button>
-								<Button variant="primary" onClick={handleConfirmDeployContract} disabled={isLoading}>
-									{isLoading ? 'Confirming...' : 'Confirm'}
+								<Button variant="primary" onClick={handleConfirmDeployContract} disabled={isDeploying}>
+									{isDeploying ? 'Confirming...' : 'Confirm'}
 								</Button>
 							</>
 						) : (
