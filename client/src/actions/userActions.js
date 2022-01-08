@@ -20,7 +20,7 @@ export const updatePublicKeyFromSigner = () => {
 		let publicKey;
 		try {
 			publicKey = await Signer.getActivePublicKey();
-			dispatch(setPublicKey(publicKey, CONNECTION_TYPES.casperSigner));
+			dispatch(setPublicKey(publicKey, { connectionType: CONNECTION_TYPES.casperSigner }));
 		} catch (error) {
 			dispatch({ type: SIGNER.UPDATE_LOCK_STATUS, payload: { isLocked: true } });
 		}
