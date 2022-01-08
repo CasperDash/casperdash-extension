@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
-import { toast } from 'react-toastify';
 import { getStakeDeploy } from '../../../../services/stakeServices';
-import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { deploySelector } from '../../../../selectors/deploy';
 import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
-import useSigner from '../../../hooks/useSigner';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import ConfirmationModal from './Modal';
 import ValidatorInfo from './ValidatorInfo';
 
@@ -31,10 +28,7 @@ const UndelegateForm = ({
 
 	// Hook
 	const dispatch = useDispatch();
-	const signer = useSigner();
-
-	// Selector
-	const { loading: isDeploying } = useSelector(deploySelector);
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	// Func
 	const handleSubmit = async (values) => {
@@ -53,28 +47,23 @@ const UndelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		try {
-			const deploy = await getStakeDeploy(stakeDetails);
-			const signedDeploy = await signer.sign(deploy, stakeDetails.fromAddress, stakeDetails.validator);
-			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data, error } = deployResult;
-			if (error) {
-				console.error(error);
-				throw Error('Error on confirm transaction. Please try again later.');
-			}
-			setDeployHash(data.deployHash);
+		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const { deployHash, signedDeploy } = executeDeploy(
+			buildDeployFn,
+			stakeDetails.fromAddress,
+			stakeDetails.validator,
+		);
+		if (deployHash) {
+			setDeployHash(deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
 			handleToggle();
-		} catch (error) {
-			console.error(error);
-			toast(error.message);
 		}
 	};
 

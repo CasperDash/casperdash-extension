@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
 import { getStakeDeploy } from '../../../../services/stakeServices';
-import { putDeploy } from '../../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { deploySelector } from '../../../../selectors/deploy';
 import { validateStakeForm } from '../../../../helpers/validator';
 import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
-import useSigner from '../../../hooks/useSigner';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
@@ -34,7 +30,6 @@ const DelegateForm = ({
 
 	// Hook
 	const dispatch = useDispatch();
-	const signer = useSigner();
 	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	const options = validators
