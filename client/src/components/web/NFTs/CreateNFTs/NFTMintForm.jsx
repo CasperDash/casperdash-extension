@@ -46,7 +46,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 			...nftInfo,
 			metadata: [
 				...nftInfo.metadata,
-				{ key: 'image', value: `https://${imageCID}.${NFT_GATEWAY}`, name: 'image' },
+				{ key: 'image', value: `https://${cid}.${NFT_GATEWAY}`, name: 'image' },
 				{ key: 'name', value: nftInfo.nftName, name: 'name' },
 			].map((attr) => [attr.name, attr.value]),
 		};
