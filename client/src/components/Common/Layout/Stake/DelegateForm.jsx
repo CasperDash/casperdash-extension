@@ -13,6 +13,7 @@ import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../consta
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import useSigner from '../../../hooks/useSigner';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
 
@@ -34,9 +35,7 @@ const DelegateForm = ({
 	// Hook
 	const dispatch = useDispatch();
 	const signer = useSigner();
-
-	// Selector
-	const { loading: isDeploying } = useSelector(deploySelector);
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	const options = validators
 		? validators.map(({ public_key: publicKey, bidInfo }) => ({
@@ -74,28 +73,19 @@ const DelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		try {
-			const deploy = await getStakeDeploy(stakeDetails);
-			const signedDeploy = await signer.sign(deploy, stakeDetails.fromAddress, stakeDetails.validator);
-			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data, error } = deployResult;
-			if (error) {
-				console.error(error);
-				throw Error('Error on confirm transaction. Please try again later.');
-			}
-			setDeployHash(data.deployHash);
+		const deploy = getStakeDeploy(stakeDetails);
+		const { deployHash, signedDeploy } = executeDeploy(deploy, stakeDetails.fromAddress, stakeDetails.validator);
+		if (deployHash) {
+			setDeployHash(deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
 			handleToggle();
-		} catch (error) {
-			console.error(error);
-			toast(error.message);
 		}
 	};
 

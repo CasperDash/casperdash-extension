@@ -20,13 +20,13 @@ export const useConfirmDeploy = () => {
 		return hash.deployHash;
 	};
 
-	const executeDeploy = async (buildDeployFn, fromPublicKey, toPublicKey) => {
+	const executeDeploy = async (deploy, fromPublicKey, toPublicKey) => {
 		setIsDeploying(true);
-		const toastId = toast.loading('Preparing deploy');
+		const toastId = toast.loading('Please review the deploy');
 		try {
-			const deploy = buildDeployFn();
-			toast.update(toastId, { render: 'Please review the deploy' });
+			// Sign with signer
 			const signedDeploy = await signer.sign(deploy, fromPublicKey, toPublicKey);
+			// Put deploy on chain
 			toast.update(toastId, { render: 'Putting deploy' });
 			const deployHash = await putSignedDeploy(signedDeploy);
 			toast.update(toastId, {
@@ -35,7 +35,7 @@ export const useConfirmDeploy = () => {
 				isLoading: false,
 				autoClose: 5000,
 			});
-
+			setIsDeploying(false);
 			return { deployHash, signedDeploy };
 		} catch (error) {
 			toast.update(toastId, {
@@ -44,10 +44,11 @@ export const useConfirmDeploy = () => {
 				isLoading: false,
 				autoClose: 5000,
 			});
-			console.error(error);
 			setDeployError(true);
+			setIsDeploying(false);
+			console.error(error);
+			return {};
 		}
-		setIsDeploying(false);
 	};
 
 	return { executeDeploy, isDeploying, isError };

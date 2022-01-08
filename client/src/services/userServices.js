@@ -9,6 +9,7 @@ export const getTransferDeploy = (transactionDetail = {}) => {
 		const toPbKey = CLPublicKey.fromHex(toAddress);
 		return buildTransferDeploy(fromPbKey, toPbKey, toMotes(amount), transferId, fee);
 	} catch (error) {
+		console.error(error);
 		throw new Error(`Failed to get signed transfer.`);
 	}
 };

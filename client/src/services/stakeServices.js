@@ -15,7 +15,7 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
 	return DeployUtil.makeDeploy(deployParams, session, payment);
 };
 
-export const getStakeDeploy = async ({ fromAddress, validator, fee, amount, entryPoint = ENTRY_POINT_DELEGATE }) => {
+export const getStakeDeploy = ({ fromAddress, validator, fee, amount, entryPoint = ENTRY_POINT_DELEGATE }) => {
 	try {
 		const fromAccPk = CLPublicKey.fromHex(fromAddress);
 		const validatorPk = CLPublicKey.fromHex(validator);
@@ -26,6 +26,7 @@ export const getStakeDeploy = async ({ fromAddress, validator, fee, amount, entr
 			toMotes(fee),
 		);
 	} catch (error) {
+		console.error(error);
 		throw new Error(`Failed to get signed stake deploy.`);
 	}
 };

@@ -41,7 +41,7 @@ export const SendReceiveSection = ({
 		setFieldValue('sendAmount', amount);
 	};
 
-	const buildDeploy = (transferId) => () => {
+	const buildDeploy = (transferId) => {
 		return !isTokenTransfer
 			? getTransferDeploy({ ...transactionDetails, transferId })
 			: getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
@@ -62,13 +62,17 @@ export const SendReceiveSection = ({
 	};
 
 	const onConfirmTransaction = async (transferId) => {
+		const deploy = buildDeploy(transferId);
+
 		const { deployHash, signedDeploy } = await executeDeploy(
-			buildDeploy(transferId),
+			deploy,
 			transactionDetails.fromAddress,
 			transactionDetails.toAddress,
 		);
-		setDeployHash(deployHash);
-		updateLocalStorage({ deployHash, signedDeploy, transferId });
+		if (deployHash) {
+			setDeployHash(deployHash);
+			updateLocalStorage({ deployHash, signedDeploy, transferId });
+		}
 	};
 
 	const handleSubmit = (values) => {

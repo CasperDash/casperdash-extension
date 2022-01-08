@@ -8,21 +8,18 @@ export const initLedgerApp = async () => {
 	return { casperApp: new CasperApp(transport), transport };
 };
 
-export const signDeployByLedger = async (deployObj, options = {}) => {
+export const signDeployByLedger = async (deploy, options = {}) => {
 	const { casperApp, transport } = await initLedgerApp();
-	const responseDeploy = await casperApp.sign(
-		`m/44'/506'/0'/0/${options.keyPath}`,
-		DeployUtil.deployToBytes(deployObj),
-	);
+	const responseDeploy = await casperApp.sign(`m/44'/506'/0'/0/${options.keyPath}`, DeployUtil.deployToBytes(deploy));
 
 	if (!responseDeploy.signatureRS) {
 		console.error(responseDeploy.errorMessage);
 		transport.close();
-		throw Error(responseDeploy.errorMessage);
+		throw Error(CONNECT_ERROR_MESSAGE);
 	}
 
 	let signedDeploy = DeployUtil.setSignature(
-		deployObj,
+		deploy,
 		responseDeploy.signatureRS,
 		CLPublicKey.fromHex(options.publicKey),
 	);
