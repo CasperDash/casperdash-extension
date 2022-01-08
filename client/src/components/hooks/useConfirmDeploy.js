@@ -20,7 +20,7 @@ export const useConfirmDeploy = () => {
 		return hash.deployHash;
 	};
 
-	const executeDeploy = async (buildDeployFn, fromPublicKey, toPublicKey, callback) => {
+	const executeDeploy = async (buildDeployFn, fromPublicKey, toPublicKey) => {
 		setIsDeploying(true);
 		const toastId = toast.loading('Preparing deploy');
 		try {
@@ -35,7 +35,7 @@ export const useConfirmDeploy = () => {
 				isLoading: false,
 				autoClose: 5000,
 			});
-			callback({ signedDeploy, deployHash });
+
 			return { deployHash, signedDeploy };
 		} catch (error) {
 			toast.update(toastId, {

@@ -10,7 +10,7 @@ import { pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getTransferTokenDeploy } from '../../../services/tokenServices';
-import { useConfirmDeploy } from '../../hooks/useConfirmDeployStatus';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
