@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import nftEmpty from 'assets/image/nft-empty.png';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
 
-export const NFTModal = ({ show, handleClose, nftDetails, onMint, deployHash, isMinting }) => {
+export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting }) => {
 	const { metadata, image: imageValue, nftName: name } = nftDetails;
 
 	const onClose = () => {
@@ -49,19 +49,11 @@ export const NFTModal = ({ show, handleClose, nftDetails, onMint, deployHash, is
 			</Modal.Body>
 
 			<Modal.Footer className="cd_edit_modal_footer">
-				<div className="cd_edit_modal_info">
-					{deployHash && <span className="cd_edit_modal_success">{deployHash}</span>}
-				</div>
+				<div />
 				<div>
-					{typeof onMint === 'function' && !deployHash ? (
-						<Button onClick={onMint} disabled={isMinting}>
-							{isMinting ? 'Minting...' : 'Mint'}
-						</Button>
-					) : (
-						<Button variant="secondary" onClick={onClose}>
-							Close
-						</Button>
-					)}
+					<Button onClick={onMint} disabled={isMinting}>
+						{isMinting ? 'Minting...' : 'Mint'}
+					</Button>
 				</div>
 			</Modal.Footer>
 		</Modal>

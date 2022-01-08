@@ -13,7 +13,7 @@ export const getMintNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAm
 	);
 };
 
-export const getSingedMintDeploy = async (nftInfo) => {
+export const getMintDeploy = (nftInfo) => {
 	try {
 		const { recipient, metadata, publicKey, nftContract } = nftInfo;
 		const toAddress = recipient || publicKey;
