@@ -16,6 +16,11 @@ a {
 		}
 	}
 }
+
+.Toastify__toast-body {
+	overflow-wrap: anywhere;
+}
+
 ul {
 	padding: 0 !important;
 	margin: 0 !important;

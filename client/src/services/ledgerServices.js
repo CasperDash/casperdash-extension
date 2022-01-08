@@ -17,7 +17,8 @@ export const signDeployByLedger = async (deployObj, options = {}) => {
 
 	if (!responseDeploy.signatureRS) {
 		console.error(responseDeploy.errorMessage);
-		throw Error(CONNECT_ERROR_MESSAGE);
+		transport.close();
+		throw Error(responseDeploy.errorMessage);
 	}
 
 	let signedDeploy = DeployUtil.setSignature(

@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
-import { toast } from 'react-toastify';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getTransferDeploy } from '../../../services/userServices';
-import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
-import { deploySelector } from '../../../selectors/deploy';
+import { pushTransferToLocalStorage } from '../.././../actions/deployActions';
 import { CSPR_TRANSFER_FEE } from '../../../constants/key';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getTransferTokenDeploy } from '../../../services/tokenServices';
-import useSigner from '../../hooks/useSigner';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeployStatus';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -28,15 +26,12 @@ export const SendReceiveSection = ({
 	csprBalance,
 }) => {
 	const dispatch = useDispatch();
-	const signer = useSigner();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
 	const [deployHash, setDeployHash] = useState(null);
-
-	//Selector
-	const { loading: isDeploying } = useSelector(deploySelector);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -46,39 +41,34 @@ export const SendReceiveSection = ({
 		setFieldValue('sendAmount', amount);
 	};
 
+	const buildDeploy = (transferId) => () => {
+		return !isTokenTransfer
+			? getTransferDeploy({ ...transactionDetails, transferId })
+			: getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
+	};
+
+	const updateLocalStorage = ({ deployHash, signedDeploy, transferId }) => {
+		dispatch(
+			pushTransferToLocalStorage(fromAddress, {
+				...transactionDetails,
+				deployHash: deployHash,
+				status: 'pending',
+				timestamp: signedDeploy.deploy.header.timestamp,
+				transferId: transferId,
+				...tokenInfo,
+				symbol: tokenSymbol,
+			}),
+		);
+	};
+
 	const onConfirmTransaction = async (transferId) => {
-		try {
-			const deploy = !isTokenTransfer
-				? await getTransferDeploy({ ...transactionDetails, transferId })
-				: await getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
-
-			const signedDeploy = await signer.sign(
-				deploy,
-				transactionDetails.fromAddress,
-				transactionDetails.toAddress,
-			);
-
-			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
-			if (error) {
-				console.error(error);
-				throw new Error('Error on confirm transaction. Please try again later.');
-			}
-			setDeployHash(hash.deployHash);
-			dispatch(
-				pushTransferToLocalStorage(fromAddress, {
-					...transactionDetails,
-					deployHash: hash.deployHash,
-					status: 'pending',
-					timestamp: signedDeploy.deploy.header.timestamp,
-					transferId: transferId,
-					...tokenInfo,
-					symbol: tokenSymbol,
-				}),
-			);
-		} catch (error) {
-			console.error(error);
-			toast(error.message);
-		}
+		const { deployHash, signedDeploy } = await executeDeploy(
+			buildDeploy(transferId),
+			transactionDetails.fromAddress,
+			transactionDetails.toAddress,
+		);
+		setDeployHash(deployHash);
+		updateLocalStorage({ deployHash, signedDeploy, transferId });
 	};
 
 	const handleSubmit = (values) => {

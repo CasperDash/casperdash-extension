@@ -1,7 +1,7 @@
 import { CLPublicKey } from 'casper-js-sdk';
 import { buildTransferTokenDeploy } from './casperServices';
 
-export const getTransferTokenDeploy = async (transactionDetail = {}) => {
+export const getTransferTokenDeploy = (transactionDetail = {}) => {
 	try {
 		const { fromAddress, toAddress, amount, contractInfo = {}, fee } = transactionDetail;
 		const { address, decimals } = contractInfo;
