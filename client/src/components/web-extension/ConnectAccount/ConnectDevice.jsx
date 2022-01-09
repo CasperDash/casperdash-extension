@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CasperDashLogo from 'assets/image/Logo-only.svg';
 import HardwareIcon from 'assets/image/hardware-icon.svg';
 import { toast } from 'react-toastify';
+import { TailSpin } from '../../Common/Spinner';
 import { getBatchUserDetails, setPublicKey } from '../../../actions/userActions';
 import { getMassagedBatchUserDetails } from '../../../selectors/user';
 import { CONNECTION_TYPES } from '../../../constants/settings';
@@ -15,7 +16,14 @@ import './ConnectDevice.scss';
 
 const LIST_KEY_METADATA = {
 	left: [{ key: 'publicKey', type: 'primary' }],
-	right: [{ key: 'balance.displayBalance', type: 'primary', suffix: 'CSPR' }],
+	right: [
+		{
+			key: 'balance.displayBalance',
+			type: 'primary',
+			suffix: 'CSPR',
+			component: ({ isLoading, value }) => <>{isLoading ? <TailSpin width={20} height={20} /> : value}</>,
+		},
+	],
 };
 
 const ConnectDevice = () => {

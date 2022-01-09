@@ -43,9 +43,9 @@ const massageUserDetails = (userDetails) => {
 };
 export const getMassagedBatchUserDetails = (listKeys) => (state) => {
 	return listKeys.map((key) => {
-		const { data } = getQuery(state, { type: USERS.FETCH_BATCH_USER_DETAILS, requestKey: key.publicKey });
+		const { data, loading } = getQuery(state, { type: USERS.FETCH_BATCH_USER_DETAILS, requestKey: key.publicKey });
 		const details = massageUserDetails(data || {});
-		return { ...key, ...details, icon: getBase64IdentIcon(key.publicKey, { size: 30 }) };
+		return { ...key, ...details, icon: getBase64IdentIcon(key.publicKey, { size: 30 }), isLoading: loading };
 	});
 };
 
