@@ -5,7 +5,6 @@ import { getLocalStorageValue, setLocalStorageValue } from './localStorage';
 
 // eslint-disable-next-line no-unused-vars
 export const getConfigurations = memoizeOne((reload) => {
-	console.log(reload);
 	return getLocalStorageValue('casperdash', 'configurations') || {};
 });
 
