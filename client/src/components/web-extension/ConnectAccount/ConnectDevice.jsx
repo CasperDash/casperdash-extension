@@ -55,7 +55,7 @@ const ConnectDevice = () => {
 		dispatch(
 			setPublicKey(key.publicKey, {
 				connectionType: CONNECTION_TYPES.ledger,
-				keyPath: key.path,
+				keyIndex: key.keyIndex,
 			}),
 		);
 		navigate('/');

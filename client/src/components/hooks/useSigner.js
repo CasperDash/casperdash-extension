@@ -12,7 +12,7 @@ const useSigner = () => {
 			case CONNECTION_TYPES.ledger: {
 				return await signDeployByLedger(deploy, {
 					publicKey: mainAccountHex,
-					keyPath: loginOptions.keyPath,
+					keyIndex: loginOptions.keyIndex,
 				});
 			}
 			case CONNECTION_TYPES.casperSigner:

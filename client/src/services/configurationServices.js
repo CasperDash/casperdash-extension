@@ -4,7 +4,12 @@ import * as DEFAULT_CONFIG from '../constants/key';
 import { getLocalStorageValue, setLocalStorageValue } from './localStorage';
 
 export const getConfigurations = memoizeOne(() => {
-	return getLocalStorageValue('casperdash', 'configurations') || DEFAULT_CONFIG;
+	return getLocalStorageValue('casperdash', 'configurations');
+});
+
+export const getConfigKey = memoizeOne((key) => {
+	const configs = getConfigurations();
+	return configs[key] || DEFAULT_CONFIG[key];
 });
 
 export const saveConfigurationToLocalStorage = (config = {}) => {

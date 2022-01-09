@@ -21,7 +21,7 @@ export const LedgerKeysModal = ({ show, handleClose, keys }) => {
 
 	// Function
 	const changeLedgerKey = () => {
-		dispatch(setPublicKey(selectedKey.label, { ...loginOptions, keyPath: selectedKey.value }));
+		dispatch(setPublicKey(selectedKey.label, { ...loginOptions, keyIndex: selectedKey.value }));
 		handleClose();
 	};
 

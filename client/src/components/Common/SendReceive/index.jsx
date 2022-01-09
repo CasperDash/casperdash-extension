@@ -7,13 +7,11 @@ import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getTransferDeploy } from '../../../services/userServices';
 import { pushTransferToLocalStorage } from '../.././../actions/deployActions';
-import { getConfigurations } from '../../../services/configurationServices';
+import { getConfigKey } from '../../../services/configurationServices';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
 import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { ConfirmModal } from './ConfirmModal';
-
-const configurations = getConfigurations();
 
 export const SendReceiveSection = ({
 	handleToggle,
@@ -23,7 +21,7 @@ export const SendReceiveSection = ({
 	csprPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
-	transferFee = configurations.CSPR_TRANSFER_FEE,
+	transferFee = getConfigKey('CSPR_TRANSFER_FEE'),
 	tokenInfo,
 	csprBalance,
 }) => {

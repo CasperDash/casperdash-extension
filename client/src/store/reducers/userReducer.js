@@ -10,7 +10,7 @@ export default function userReducer(
 		case USERS.SET_USER_ADDRESS:
 			return { ...state, publicKey: action.payload.publicKey, loginOptions: action.payload.loginOptions || {} };
 		case USERS.SET_KEY_PATH:
-			return { ...state, loginOptions: { ...state.loginOptions, keyPath: action.payload } };
+			return { ...state, loginOptions: { ...state.loginOptions, keyIndex: action.payload } };
 		default:
 			return state;
 	}

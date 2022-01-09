@@ -9,7 +9,7 @@ import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE } from '../../../..
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
-import { getConfigurations } from '../../../../services/configurationServices';
+import { getConfigKey } from '../../../../services/configurationServices';
 import ConfirmationModal from './Modal';
 import ValidatorInfo from './ValidatorInfo';
 
@@ -30,9 +30,6 @@ const UndelegateForm = ({
 	// Hook
 	const dispatch = useDispatch();
 	const { executeDeploy, isDeploying } = useConfirmDeploy();
-
-	// Func
-	const configurations = getConfigurations();
 
 	const handleSubmit = async (values) => {
 		const { amount } = values;
@@ -101,7 +98,7 @@ const UndelegateForm = ({
 										tokenSymbol,
 										stakedAmount: stakedValidator.stakedAmount,
 										fee,
-										minAmount: configurations.MIN_CSPR_TRANSFER,
+										minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
 									})
 								}
 								initialValues={{ amount: 0, toAddress: '' }}

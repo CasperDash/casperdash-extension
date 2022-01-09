@@ -25,12 +25,14 @@ const useLedger = () => {
 			dispatch(
 				setPublicKey(publicKey, {
 					connectionType: CONNECTION_TYPES.ledger,
-					keyPath: 0,
+					keyIndex: 0,
 				}),
 			);
+			transport.close();
 			// should close transport
-			return { keyPath: 0, publicKey };
+			return { keyIndex: 0, publicKey };
 		} catch (error) {
+			console.error(console.error);
 			toast.error(getLedgerError(error));
 		}
 		transport.close();
@@ -54,9 +56,10 @@ const useLedger = () => {
 			const listKeys = await getListKeys(casperApp, index, MAX_KEY_PATH);
 			// Cache keys to local storage
 			setLocalStorageValue('ledger', 'keys', listKeys, 'set');
-
+			transport.close();
 			return listKeys;
 		} catch (error) {
+			console.error(console.error);
 			toast.error(getLedgerError(error));
 		}
 		transport.close();
