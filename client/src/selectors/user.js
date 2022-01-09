@@ -10,8 +10,7 @@ import { getMassagedTokenData } from './tokens';
 const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
-	transferFee: getConfigKey('CSPR_TRANSFER_FEE'),
-	minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
+
 	icon: 'assets/images/token-icons/cspr.png',
 };
 
@@ -63,6 +62,8 @@ export const getAllTokenInfo = createSelector(
 			balance: { displayValue: CSPRBalance },
 			price: CSPRPrice,
 			totalPrice: CSPRPrice * CSPRBalance,
+			transferFee: getConfigKey('CSPR_TRANSFER_FEE'),
+			minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
 		};
 
 		//TODO: should get price for each token, currently no token issue on Casper blockchain and no source as well
