@@ -19,5 +19,9 @@ test('Should return LEDGER.SET_KEY_PATH keypath state', () => {
 });
 
 test('Should return current state', () => {
-	expect(ledgerReducer(undefined, { type: 'LEDGER.TEST', payload: { test: 'abc' } })).toEqual({});
+	expect(ledgerReducer(undefined, { type: 'LEDGER.TEST', payload: { test: 'abc' } })).toEqual({
+		casperApp: null,
+		keyPath: 0,
+		ledgerKeys: [],
+	});
 });
