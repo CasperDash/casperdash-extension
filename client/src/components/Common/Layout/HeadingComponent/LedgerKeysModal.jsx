@@ -34,6 +34,7 @@ export const LedgerKeysModal = ({ show, handleClose, keys }) => {
 		  })
 		: [];
 
+	console.log('Options', options);
 	return (
 		<Modal show={show} onHide={onCloseModal} centered className="cd_add_token_modal_content" size={'lg'}>
 			<Modal.Header closeButton className="cd_add_token_modal_header">
