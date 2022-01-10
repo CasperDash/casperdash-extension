@@ -6,6 +6,7 @@ import store from '../../store';
 import Layout from '../../components/web-extension/Common/Layout';
 import OuterLayout from '../../components/web-extension/Common/Layout/OuterLayout';
 import WithAccount from '../../components/Common/Auth/WithAccount';
+import WithConfigurations from '../../components/Common/Configurations';
 import routeConfig from './routeConfig';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,32 +28,34 @@ const App = () => {
 
 	return (
 		<Provider store={store}>
-			<HashRouter>
-				<Routes>
-					<Route
-						element={
-							<WithAccount>
-								<Layout modules={mainRoutes} />
-							</WithAccount>
-						}
-					>
-						{getRoutes(mainRoutes)}
-						{getRoutes(innerRoutes)}
-					</Route>
-					<Route element={<OuterLayout />}>{getRoutes(outerRoutes)}</Route>
-				</Routes>
-				<ToastContainer
-					position="top-center"
-					autoClose={5000}
-					hideProgressBar={false}
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					pauseOnFocusLoss
-					draggable
-					pauseOnHover
-				/>
-			</HashRouter>
+			<WithConfigurations>
+				<HashRouter>
+					<Routes>
+						<Route
+							element={
+								<WithAccount>
+									<Layout modules={mainRoutes} />
+								</WithAccount>
+							}
+						>
+							{getRoutes(mainRoutes)}
+							{getRoutes(innerRoutes)}
+						</Route>
+						<Route element={<OuterLayout />}>{getRoutes(outerRoutes)}</Route>
+					</Routes>
+					<ToastContainer
+						position="top-center"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
+				</HashRouter>
+			</WithConfigurations>
 		</Provider>
 	);
 };

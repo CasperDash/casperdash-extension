@@ -22,7 +22,7 @@ export const ChartLine = ({ data, height = 300, chartOptions = {} }) => {
 			title: {
 				text: 'Source - Coingecko',
 				offsetX: 0,
-				offsetY: 0,
+				offsetY: 5,
 			},
 			...chartOptions.xaxis,
 		},

@@ -6,8 +6,8 @@ import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
-import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../constants/key';
 import { validateStakeForm } from '../../../helpers/validator';
+import { getConfigKey } from '../../../services/configurationServices';
 import { StakingInfo } from './StakingGrid/StakingInfo';
 import './Staking.scss';
 
@@ -51,8 +51,8 @@ const Staking = () => {
 				amount: amount,
 				tokenSymbol: 'CSPR',
 				balance,
-				fee: CSPR_AUCTION_DELEGATE_FEE,
-				minAmount: MIN_CSPR_TRANSFER,
+				fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE'),
+				minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
 			}),
 			...validatorError,
 		};
@@ -70,7 +70,7 @@ const Staking = () => {
 		navigate('/stakeConfirm', {
 			state: {
 				name: 'Delegate',
-				stake: { validator: validator.public_key, amount, fee: CSPR_AUCTION_DELEGATE_FEE },
+				stake: { validator: validator.public_key, amount, fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE') },
 			},
 		});
 	};
@@ -81,7 +81,9 @@ const Staking = () => {
 				<div className="cd_we_staking_validator">
 					<div className="cd_we_staking_validator_header">
 						<div className="cd_we_input_label">Validator</div>
-						<div className="cd_we_input_network_fee">Network Fee: {CSPR_AUCTION_DELEGATE_FEE} CSPR</div>
+						<div className="cd_we_input_network_fee">
+							Network Fee: {getConfigKey('CSPR_AUCTION_DELEGATE_FEE')} CSPR
+						</div>
 					</div>
 					<div className="cd_we_staking_validator_box" onClick={onSearchValidator}>
 						<div className="cd_we_staking_validator_value">
@@ -114,7 +116,7 @@ const Staking = () => {
 						<input type="number" value={amount} onChange={(e) => onAmountChange(e.target.value)} />
 						<div
 							className="cd_we_amount_max_btn"
-							onClick={() => onAmountChange(balance - CSPR_AUCTION_DELEGATE_FEE)}
+							onClick={() => onAmountChange(balance - getConfigKey('CSPR_AUCTION_DELEGATE_FEE'))}
 						>
 							Max
 						</div>

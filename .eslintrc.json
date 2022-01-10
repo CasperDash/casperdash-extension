@@ -5,7 +5,8 @@
 		"node": true,
 		"es6": true,
 		"jest": true,
-		"webextensions": true
+		"webextensions": true,
+		"es2020": true
 	},
 	"globals": {
 		"describe": true,

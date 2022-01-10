@@ -12,20 +12,19 @@ import {
 import { formatKeyByPrefix } from '../../../helpers/key';
 import { getWeightByAccountHash } from '../../../helpers/keyManager';
 import {
-	getSignedAccountWeightDeploy,
+	buildAccountWeightDeploy,
 	getKeyManagerContractDeploy,
-	getSignedAccountDeploymentDeploy,
-	getSignedKeyManagementThresholdDeploy,
+	buildAccountDeploymentDeploy,
+	buildKeyManagementThresholdDeploy,
 } from '../../../services/keyManager';
 import {
 	fetchKeyManagerDetails,
-	putWeightDeploy,
-	deployKeyManagerContract,
 	updateKeysManagerLocalStorage,
 	getKeysManagerLocalStorage,
 	getKeysManagerPendingDeploys,
 	updateKeysManagerDeployStatus,
 } from '../../../actions/keyManagerActions';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import KeyList from './KeyList';
 import { DeployConfirmModal } from './ConfirmDeployModal';
 import { AttributeRow } from './AttributeRow';
@@ -33,15 +32,14 @@ import { EditModal } from './EditModal';
 
 const KeyManager = () => {
 	const dispatch = useDispatch();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	// State
 	const [editField, setEditField] = useState('');
 	const [editValue, setEditValue] = useState();
 	const [showEditModal, setShowEditModal] = useState(false);
-	const [deployHash, setDeployHash] = useState();
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [confirmMessage, setConfirmMessage] = useState(null);
-	const [deployError, setDeployError] = useState('');
 
 	//Selector
 	const publicKey = useSelector(getPublicKey);
@@ -71,8 +69,6 @@ const KeyManager = () => {
 
 	// Function
 	const clearState = () => {
-		setDeployError('');
-		setDeployHash('');
 		setEditValue();
 		setEditField('');
 	};
@@ -86,11 +82,6 @@ const KeyManager = () => {
 	const handleCloseEditModal = () => {
 		setShowEditModal(false);
 		clearState();
-	};
-
-	const onShowDeployHash = (deployHash) => {
-		setShowEditModal(true);
-		setDeployHash(deployHash);
 	};
 
 	const handleEditValue = (value) => {
@@ -126,64 +117,50 @@ const KeyManager = () => {
 	};
 
 	const handleConfirmDeployContract = async () => {
-		const deploy = await getKeyManagerContractDeploy(publicKey);
-		if (deploy.error) {
-			setDeployError(deploy.error.message);
-			return;
-		}
-		const { data: hash, error } = await dispatch(deployKeyManagerContract(deploy));
-		if (!error && hash.deployHash) {
-			setDeployHash(hash.deployHash);
+		const buildDeployFn = async () => await getKeyManagerContractDeploy(publicKey);
+		const { deployHash } = await executeDeploy(buildDeployFn, publicKey, publicKey);
+
+		if (deployHash) {
 			dispatch(
 				updateKeysManagerLocalStorage(
 					publicKey,
 					`keysManager.deploys.installContract`,
-					{ hash: hash.deployHash, status: 'pending' },
+					{ hash: deployHash, status: 'pending' },
 					'push',
 				),
 			);
 			handleCloseConfirmModal();
-		} else {
-			setDeployError(error);
 		}
 	};
 
 	const handleSummitChange = async () => {
-		let deploy;
+		let buildDeployFn;
 		switch (editField) {
 			case 'deployment':
-				deploy = await getSignedAccountDeploymentDeploy(editValue, publicKey);
+				buildDeployFn = await buildAccountDeploymentDeploy(editValue, publicKey);
 				break;
 			case 'weight':
-				deploy = await getSignedAccountWeightDeploy(editValue, publicKey, publicKey);
+				buildDeployFn = await buildAccountWeightDeploy(editValue, publicKey, publicKey);
 				break;
 			case 'keyManagement':
-				deploy = await getSignedKeyManagementThresholdDeploy(editValue, publicKey);
+				buildDeployFn = await buildKeyManagementThresholdDeploy(editValue, publicKey);
 				break;
 			case 'associatedKey':
-				deploy = await getSignedAccountWeightDeploy(1, publicKey, editValue);
-				break;
-			default:
-				deploy = {};
+				buildDeployFn = await buildAccountWeightDeploy(1, publicKey, editValue);
 				break;
 		}
-		if (deploy.error) {
-			setDeployError(deploy.error.message);
-		} else {
-			const { data: hash, error } = await dispatch(putWeightDeploy(deploy));
-			if (!error) {
-				setDeployHash(hash.deployHash);
-				dispatch(
-					updateKeysManagerLocalStorage(
-						publicKey,
-						`keysManager.deploys.${editField}`,
-						{ hash: hash.deployHash, status: 'pending' },
-						'push',
-					),
-				);
-			} else {
-				setDeployError(error);
-			}
+		const { deployHash } = await executeDeploy(() => buildDeployFn, publicKey, publicKey);
+
+		if (deployHash) {
+			dispatch(
+				updateKeysManagerLocalStorage(
+					publicKey,
+					`keysManager.deploys.${editField}`,
+					{ hash: deployHash, status: 'pending' },
+					'push',
+				),
+			);
+			handleCloseEditModal();
 		}
 	};
 
@@ -225,7 +202,6 @@ const KeyManager = () => {
 										label="Weight"
 										canEdit={isContractAvailable}
 										onEdit={onEdit}
-										onShowDeployHash={onShowDeployHash}
 									/>
 								</tbody>
 							</Table>
@@ -242,7 +218,6 @@ const KeyManager = () => {
 										label="Deployment"
 										canEdit={isContractAvailable}
 										onEdit={onEdit}
-										onShowDeployHash={onShowDeployHash}
 									/>
 									<AttributeRow
 										valueKey="keyManagement"
@@ -250,7 +225,6 @@ const KeyManager = () => {
 										label="Key Management"
 										canEdit={isContractAvailable}
 										onEdit={onEdit}
-										onShowDeployHash={onShowDeployHash}
 									/>
 								</tbody>
 							</Table>
@@ -278,7 +252,6 @@ const KeyManager = () => {
 														fill="currentColor"
 														className="bi bi-arrow-clockwise"
 														viewBox="0 0 16 16"
-														onClick={() => onShowDeployHash(deploy.hash)}
 													>
 														<path
 															fillRule="evenodd"
@@ -319,15 +292,14 @@ const KeyManager = () => {
 				handleClose={handleCloseEditModal}
 				handleEditValue={handleEditValue}
 				handleSummitChange={handleSummitChange}
-				deployError={deployError}
-				deployHash={deployHash}
+				isDeploying={isDeploying}
 			/>
 			<DeployConfirmModal
 				show={showConfirmModal}
 				handleClose={handleCloseConfirmModal}
 				message={confirmMessage}
 				onDeploy={handleConfirmDeployContract}
-				error={deployError}
+				isDeploying={isDeploying}
 			/>
 		</>
 	);

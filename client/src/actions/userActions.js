@@ -13,6 +13,19 @@ export const getUserDetails = (publicKey) => ({
 });
 
 /**
+ * @param {string} publicKey
+ * @returns
+ */
+export const getBatchUserDetails = (publicKey) => ({
+	type: USERS.FETCH_BATCH_USER_DETAILS,
+	request: { url: `/user/${publicKey}` },
+	meta: {
+		requestKey: publicKey,
+		requestsCapacity: 20,
+	},
+});
+
+/**
  * @returns
  */
 export const updatePublicKeyFromSigner = () => {
@@ -20,11 +33,15 @@ export const updatePublicKeyFromSigner = () => {
 		let publicKey;
 		try {
 			publicKey = await Signer.getActivePublicKey();
-			dispatch(setPublicKey(publicKey, CONNECTION_TYPES.signer));
+			dispatch(setPublicKey(publicKey, { connectionType: CONNECTION_TYPES.casperSigner }));
 		} catch (error) {
 			dispatch({ type: SIGNER.UPDATE_LOCK_STATUS, payload: { isLocked: true } });
 		}
 	};
+};
+
+const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
+	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, { publicKey, loginOptions }, 'set');
 };
 
 /**
@@ -32,13 +49,12 @@ export const updatePublicKeyFromSigner = () => {
  * @param {string} connectionType
  * @returns {object}
  */
-export const setPublicKey = (publicKey, connectionType) => {
-	const accountInfo = { publicKey, connectionType };
-	//Cache public key and connection type
-	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, accountInfo, 'set');
+export const setPublicKey = (publicKey, loginOptions = {}) => {
+	//Cache public key and login options
+	cacheLoginInfoToLocalStorage(publicKey, loginOptions);
 	return {
 		type: USERS.SET_USER_ADDRESS,
-		payload: accountInfo,
+		payload: { publicKey, loginOptions },
 	};
 };
 
@@ -46,7 +62,7 @@ export const getConnectedAccountFromLocalStorage = () => {
 	return (dispatch) => {
 		const connectedAccount = getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
 		if (connectedAccount && connectedAccount.publicKey) {
-			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.connectionType));
+			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
 			return connectedAccount.publicKey;
 		}
 		return undefined;

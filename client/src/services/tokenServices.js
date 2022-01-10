@@ -1,18 +1,14 @@
 import { CLPublicKey } from 'casper-js-sdk';
-import { getTransferTokenDeploy, signDeploy } from './casperServices';
+import { buildTransferTokenDeploy } from './casperServices';
 
-export const getSignedTransferTokenDeploy = async (transactionDetail = {}, ledgerOptions) => {
+export const getTransferTokenDeploy = (transactionDetail = {}) => {
 	try {
 		const { fromAddress, toAddress, amount, contractInfo = {}, fee } = transactionDetail;
 		const { address, decimals } = contractInfo;
 		const fromPbKey = CLPublicKey.fromHex(fromAddress);
 		const toPbKey = CLPublicKey.fromHex(toAddress);
-		const transferDeploy = getTransferTokenDeploy(fromPbKey, toPbKey, amount * 10 ** decimals.hex, address, fee);
-		const signedDeploy = await signDeploy(transferDeploy, fromAddress, toAddress, ledgerOptions);
-
-		return signedDeploy;
+		return buildTransferTokenDeploy(fromPbKey, toPbKey, amount * 10 ** decimals.hex, address, fee);
 	} catch (error) {
-		console.error(error);
-		throw new Error(`Failed to get signed stake deploy.`);
+		throw new Error(`Failed to get token transfer deploy.`);
 	}
 };

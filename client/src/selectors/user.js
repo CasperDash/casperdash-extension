@@ -1,17 +1,16 @@
-import { getQuerySelector } from '@redux-requests/core';
+import { getQuerySelector, getQuery } from '@redux-requests/core';
 import { createSelector } from 'reselect';
+import { getConfigKey } from '../services/configurationServices';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { getBase64IdentIcon } from '../helpers/identicon';
 import { USERS } from '../store/actionTypes';
-import { CSPR_TRANSFER_FEE, TOKEN_TRANSFER_FEE, MIN_CSPR_TRANSFER } from '../constants/key';
 import { getCurrentPrice } from './price';
 import { getMassagedTokenData } from './tokens';
 
 const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
-	transferFee: CSPR_TRANSFER_FEE,
-	minAmount: MIN_CSPR_TRANSFER,
+
 	icon: 'assets/images/token-icons/cspr.png',
 };
 
@@ -19,19 +18,37 @@ export const getPublicKey = ({ user }) => {
 	return user.publicKey;
 };
 
+export const getLoginOptions = ({ user }) => {
+	return user.loginOptions || {};
+};
+
 export const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
 
-export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {
-	const data = userDetails.data || {};
-	const hexBalance = data && data.balance ? data.balance.hex : 0;
+export const batchUserDetailsSelector = (publicKey) =>
+	getQuerySelector({ type: USERS.FETCH_BATCH_USER_DETAILS, requestKey: publicKey });
+
+const massageUserDetails = (userDetails) => {
+	const hexBalance = userDetails && userDetails.balance ? userDetails.balance.hex : 0;
 	return {
-		...data,
+		...userDetails,
 		balance: {
-			...data.balance,
+			...userDetails.balance,
 			mote: parseInt(hexBalance),
 			displayBalance: convertBalanceFromHex(hexBalance),
 		},
 	};
+};
+export const getMassagedBatchUserDetails = (listKeys) => (state) => {
+	return listKeys.map((key) => {
+		const { data, loading } = getQuery(state, { type: USERS.FETCH_BATCH_USER_DETAILS, requestKey: key.publicKey });
+		const details = massageUserDetails(data || {});
+		return { ...key, ...details, icon: getBase64IdentIcon(key.publicKey, { size: 30 }), isLoading: loading };
+	});
+};
+
+// TODO: should refactor to use batch user details
+export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {
+	return massageUserDetails(userDetails.data || {});
 });
 
 export const getAllTokenInfo = createSelector(
@@ -45,6 +62,8 @@ export const getAllTokenInfo = createSelector(
 			balance: { displayValue: CSPRBalance },
 			price: CSPRPrice,
 			totalPrice: CSPRPrice * CSPRBalance,
+			transferFee: getConfigKey('CSPR_TRANSFER_FEE'),
+			minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
 		};
 
 		//TODO: should get price for each token, currently no token issue on Casper blockchain and no source as well
@@ -53,11 +72,11 @@ export const getAllTokenInfo = createSelector(
 		const tokensInfo =
 			tokensData && tokensData.length
 				? tokensData.map((datum) => ({
-						...datum,
 						price: tokenPrice,
 						totalPrice: tokenPrice * datum.balance.displayValue,
-						transferFee: TOKEN_TRANSFER_FEE,
+						transferFee: getConfigKey('TOKEN_TRANSFER_FEE'),
 						icon: getBase64IdentIcon(datum.address),
+						...datum,
 				  }))
 				: [];
 

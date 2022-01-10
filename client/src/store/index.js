@@ -14,7 +14,6 @@ import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
 import settingsReducer from './reducers/settings';
 import { REQUEST } from './actionTypes';
-import ledgerReducer from './reducers/ledgerReducer';
 
 export const initialState = {
 	user: {
@@ -38,9 +37,6 @@ export const initialState = {
 	},
 	settings: {
 		theme: '',
-	},
-	ledgerOptions: {
-		casperApp: null,
 	},
 	nfts: {
 		address: [],
@@ -88,7 +84,6 @@ const main = combineReducers({
 	stakes: stakeReducer,
 	request: requestReducer,
 	settings: settingsReducer,
-	ledgerOptions: ledgerReducer,
 	nfts: nftsReducer,
 });
 

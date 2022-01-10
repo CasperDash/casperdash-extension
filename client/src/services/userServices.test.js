@@ -1,4 +1,4 @@
-import { getSignedTransferDeploy } from './userServices';
+import { getTransferDeploy } from './userServices';
 import { getTransferDeploy, signDeploy } from './casperServices';
 jest.mock('./casperServices', () => {
 	return {
@@ -7,8 +7,8 @@ jest.mock('./casperServices', () => {
 	};
 });
 
-test('getSignedTransferDeploy', () => {
-	getSignedTransferDeploy({
+test('getTransferDeploy', () => {
+	getTransferDeploy({
 		fromAddress: '0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
 		toAddress: '0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
 		amount: 10000,
@@ -19,10 +19,10 @@ test('getSignedTransferDeploy', () => {
 	expect(signDeploy).toHaveBeenCalled();
 });
 
-test('getSignedTransferDeploy return error', () => {
+test('getTransferDeploy return error', () => {
 	let value;
 	try {
-		value = getSignedTransferDeploy();
+		value = getTransferDeploy();
 	} catch {
 		expect(Boolean(value.error)).toBe(true);
 	}

@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { getMassagedUserDetails } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { toFormattedNumber } from '../../../helpers/format';
-import { CSPR_AUCTION_UNDELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../constants/key';
+import { getConfigKey } from '../../../services/configurationServices';
 import { validateUndelegateForm } from '../../../helpers/validator';
 import './Undelegate.scss';
 
@@ -33,8 +33,8 @@ export const Undelegate = () => {
 				amount: amount,
 				tokenSymbol: 'CSPR',
 				balance,
-				fee: CSPR_AUCTION_UNDELEGATE_FEE,
-				minAmount: MIN_CSPR_TRANSFER,
+				fee: getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE'),
+				minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
 			}),
 			...validatorError,
 		};
@@ -52,7 +52,12 @@ export const Undelegate = () => {
 		navigate('/stakeConfirm', {
 			state: {
 				name: 'Undelegate',
-				stake: { validator: validator, amount, fee: CSPR_AUCTION_UNDELEGATE_FEE, action: 'undelegate' },
+				stake: {
+					validator: validator,
+					amount,
+					fee: getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE'),
+					action: 'undelegate',
+				},
 			},
 		});
 	};
@@ -62,7 +67,9 @@ export const Undelegate = () => {
 			<div className="cd_we_staking_validator">
 				<div className="cd_we_staking_validator_header">
 					<div className="cd_we_input_label">Validator</div>
-					<div className="cd_we_input_network_fee">Network Fee: {CSPR_AUCTION_UNDELEGATE_FEE} CSPR</div>
+					<div className="cd_we_input_network_fee">
+						Network Fee: {getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE')} CSPR
+					</div>
 				</div>
 				<div className="cd_we_staking_validator_box">
 					<div className="cd_we_staking_validator_value">

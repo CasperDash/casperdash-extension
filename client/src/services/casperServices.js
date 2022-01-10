@@ -1,6 +1,5 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
-import { signByLedger } from '../services/ledgerServices';
 
 /**
  * Get Transfer deploy
@@ -11,7 +10,7 @@ import { signByLedger } from '../services/ledgerServices';
  * @param {Number} fee transfer fee
  * @returns {Deploy} transfer deploy
  */
-export const getTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
+export const buildTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
 	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transferId);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
@@ -38,20 +37,10 @@ export const buildContractInstallDeploy = (baseAccount, session) => {
  * @param {Object} ledgerOptions ledger's options
  * @returns {Deploy} Signed deploy
  */
-export const signDeploy = async (deploy, mainAccountHex, setAccountHex, ledgerOptions) => {
-	if (!ledgerOptions) {
-		const deployObj = DeployUtil.deployToJson(deploy);
-		const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
-		return signedDeploy;
-	} else {
-		const { casperApp = null, keyPath = 0 } = ledgerOptions;
-		const signedDeploy = await signByLedger(deploy, {
-			publicKey: mainAccountHex,
-			keyPath,
-			app: casperApp,
-		});
-		return DeployUtil.deployToJson(signedDeploy);
-	}
+export const signDeployByCasperSigner = async (deploy, mainAccountHex, setAccountHex) => {
+	const deployObj = DeployUtil.deployToJson(deploy);
+	const signedDeploy = await Signer.sign(deployObj, mainAccountHex, setAccountHex);
+	return signedDeploy;
 };
 
 /**
@@ -70,7 +59,7 @@ export const createRecipientAddress = (recipient) => {
  * @param {String} contractHash token contract hash
  * @returns {Deploy} transfer deploy
  */
-export const getTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee) => {
+export const buildTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee) => {
 	const contractHashAsByteArray = [...Buffer.from(contractHash, 'hex')];
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME, 1, DEPLOY_TTL_MS);
 	const transferParams = DeployUtil.ExecutableDeployItem.newStoredContractByHash(

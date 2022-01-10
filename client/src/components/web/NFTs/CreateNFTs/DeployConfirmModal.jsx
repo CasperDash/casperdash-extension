@@ -1,22 +1,19 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { putDeploy } from '../../../../actions/deployActions';
 import { updateNFTLocalStorage } from '../../../../actions/NFTActions';
 import { nftContractDeploy } from '../../../../services/nftServices';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 
 export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
+	// Hook
 	const dispatch = useDispatch();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
+	// State
 	const [step, setStep] = useState('input');
 	const [inputValues, setInputValues] = useState({ collectionName: '', collectionSymbol: '' });
-	const [deployError, setDeployError] = useState();
-	const [isLoading, setIsLoading] = useState(false);
-	const [deployHash, setDeployHash] = useState();
-
-	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const formRef = useRef();
 
@@ -43,26 +40,17 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	};
 
 	const handleConfirmDeployContract = async () => {
-		setIsLoading(true);
-		const deploy = await nftContractDeploy(
-			publicKey,
-			inputValues.collectionName,
-			inputValues.collectionSymbol,
-			ledgerOptions,
-		);
-		if (deploy.error) {
-			setIsLoading(false);
-			setDeployError(deploy.error.message);
-			return;
-		} else {
-			const { data: hash } = await dispatch(putDeploy(deploy));
-			setDeployHash(hash.deployHash);
+		const buildDeployFn = async () =>
+			await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol);
+		const { deployHash } = executeDeploy(buildDeployFn, publicKey, publicKey);
+
+		if (deployHash) {
 			dispatch(
 				updateNFTLocalStorage(
 					publicKey,
 					`nfts.deploys.installContract`,
 					{
-						hash: hash.deployHash,
+						hash: deployHash,
 						status: 'pending',
 						timestamp: new Date().toString(),
 						collectionName: inputValues.collectionSymbol,
@@ -70,15 +58,13 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 					'push',
 				),
 			);
-			setIsLoading(false);
+			onClose();
 		}
 	};
 
 	const clearState = () => {
 		setInputValues({ collectionName: '', collectionSymbol: '' });
 		setStep('input');
-		setDeployError('');
-		setDeployHash('');
 	};
 
 	const onClose = () => {
@@ -165,37 +151,19 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 			</Modal.Body>
 
 			<Modal.Footer>
-				{!deployHash ? (
+				{step === 'confirm' ? (
 					<>
-						<div className="cd_error_text">
-							<span>{deployError}</span>
-						</div>
-
-						{step === 'confirm' ? (
-							<>
-								<Button variant="secondary" onClick={() => setStep('input')}>
-									Back
-								</Button>
-								<Button variant="primary" onClick={handleConfirmDeployContract} disabled={isLoading}>
-									{isLoading ? 'Confirming...' : 'Confirm'}
-								</Button>
-							</>
-						) : (
-							<Button variant="primary" onClick={onNext}>
-								Next
-							</Button>
-						)}
-					</>
-				) : (
-					<>
-						<div className="cd_success_text">
-							<span>{deployHash}</span>
-						</div>
-
-						<Button variant="secondary" onClick={onClose}>
-							close
+						<Button variant="secondary" onClick={() => setStep('input')}>
+							Back
+						</Button>
+						<Button variant="primary" onClick={handleConfirmDeployContract} disabled={isDeploying}>
+							{isDeploying ? 'Confirming...' : 'Confirm'}
 						</Button>
 					</>
+				) : (
+					<Button variant="primary" onClick={onNext}>
+						Next
+					</Button>
 				)}
 			</Modal.Footer>
 		</Modal>

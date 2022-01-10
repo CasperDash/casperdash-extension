@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { getPublicKey } from '../../../selectors/user';
-import { putDeploy, pushTransferToLocalStorage } from '../../../actions/deployActions';
-import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
-import { getSignedTransferDeploy } from '../../../services/userServices';
+import { pushTransferToLocalStorage } from '../../../actions/deployActions';
+import { getTransferTokenDeploy } from '../../../services/tokenServices';
+import { getTransferDeploy } from '../../../services/userServices';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
 
 const ConfirmSend = ({ token }) => {
@@ -18,39 +18,44 @@ const ConfirmSend = ({ token }) => {
 	//Hook
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	//Function
 	const navigateToTokenPage = () => {
 		navigate('/token', { replace: true, state: { name: symbol, token } });
 	};
 
+	const buildTransferDeploy = (transferDetails) => {
+		return token.address === 'CSPR'
+			? getTransferDeploy({
+					...transferDetails,
+					transferId,
+			  })
+			: getTransferTokenDeploy({
+					...transferDetails,
+					contractInfo: { address, decimals },
+			  });
+	};
+
 	const onSendTransaction = async () => {
-		try {
-			const transferDetails = {
-				fromAddress: publicKey,
-				toAddress,
-				amount,
-				fee,
-			};
-			const signedDeploy =
-				token.address === 'CSPR'
-					? await getSignedTransferDeploy({
-							...transferDetails,
-							transferId,
-					  })
-					: await getSignedTransferTokenDeploy({
-							...transferDetails,
-							contractInfo: { address, decimals },
-					  });
-			const { data, error } = await dispatch(putDeploy(signedDeploy));
-			if (error) {
-				throw new Error(`Error on sending. Please try again later.`);
-			}
-			toast.success(`Deploy hash: ${data.deployHash}`);
+		const transferDetails = {
+			fromAddress: publicKey,
+			toAddress,
+			amount,
+			fee,
+		};
+		const buildDeployFn = () => buildTransferDeploy(transferDetails);
+
+		const { deployHash, signedDeploy } = await executeDeploy(
+			buildDeployFn,
+			transferDetails.fromAddress,
+			transferDetails.toAddress,
+		);
+		if (deployHash) {
 			dispatch(
 				pushTransferToLocalStorage(publicKey, {
 					...transferDetails,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 					transferId: transferId,
@@ -60,8 +65,6 @@ const ConfirmSend = ({ token }) => {
 				}),
 			);
 			navigateToTokenPage();
-		} catch (error) {
-			toast.error(error.message);
 		}
 	};
 
@@ -91,7 +94,9 @@ const ConfirmSend = ({ token }) => {
 			</div>
 
 			<div className="cd_we_confirm_buttons">
-				<Button onClick={onSendTransaction}>Send</Button>
+				<Button onClick={onSendTransaction} disabled={isDeploying}>
+					{isDeploying ? 'Sending' : 'Send'}
+				</Button>
 			</div>
 		</div>
 	);

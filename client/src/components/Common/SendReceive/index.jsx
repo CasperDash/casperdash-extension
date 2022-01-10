@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
-import { toast } from 'react-toastify';
 import { validateTransferForm } from '../../../helpers/validator';
-import { getSignedTransferDeploy } from '../../../services/userServices';
-import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
-import { deploySelector } from '../../../selectors/deploy';
-import { CSPR_TRANSFER_FEE } from '../../../constants/key';
+import { getTransferDeploy } from '../../../services/userServices';
+import { pushTransferToLocalStorage } from '../.././../actions/deployActions';
+import { getConfigKey } from '../../../services/configurationServices';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
-import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
-import { getLedgerOptions } from '../../../selectors/ledgerOptions';
-import { REVIEW_NOTI_MESS } from '../../../constants/ledger';
+import { getTransferTokenDeploy } from '../../../services/tokenServices';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -24,20 +21,16 @@ export const SendReceiveSection = ({
 	csprPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
-	transferFee = CSPR_TRANSFER_FEE,
+	transferFee = getConfigKey('CSPR_TRANSFER_FEE'),
 	tokenInfo,
 	csprBalance,
 }) => {
 	const dispatch = useDispatch();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
-	const [deployHash, setDeployHash] = useState(null);
-
-	//Selector
-	const { loading: isDeploying } = useSelector(deploySelector);
-	const ledgerOptions = useSelector(getLedgerOptions);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -47,34 +40,37 @@ export const SendReceiveSection = ({
 		setFieldValue('sendAmount', amount);
 	};
 
-	const onConfirmTransaction = async (transferId) => {
-		if (ledgerOptions.casperApp) {
-			toast(REVIEW_NOTI_MESS);
-		}
-		try {
-			const signedDeploy = !isTokenTransfer
-				? await getSignedTransferDeploy({ ...transactionDetails, transferId }, ledgerOptions)
-				: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo }, ledgerOptions);
+	const buildDeploy = (transferId) => {
+		return !isTokenTransfer
+			? getTransferDeploy({ ...transactionDetails, transferId })
+			: getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
+	};
 
-			const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
-			if (error) {
-				throw new Error('Error on confirm transaction. Please try again later.');
-			}
-			setDeployHash(hash.deployHash);
-			dispatch(
-				pushTransferToLocalStorage(fromAddress, {
-					...transactionDetails,
-					deployHash: hash.deployHash,
-					status: 'pending',
-					timestamp: signedDeploy.deploy.header.timestamp,
-					transferId: transferId,
-					...tokenInfo,
-					symbol: tokenSymbol,
-				}),
-			);
-		} catch (error) {
-			console.error(error);
-			toast(error.message);
+	const updateLocalStorage = ({ deployHash, signedDeploy, transferId }) => {
+		dispatch(
+			pushTransferToLocalStorage(fromAddress, {
+				...transactionDetails,
+				deployHash: deployHash,
+				status: 'pending',
+				timestamp: signedDeploy.deploy.header.timestamp,
+				transferId: transferId,
+				...tokenInfo,
+				symbol: tokenSymbol,
+			}),
+		);
+	};
+
+	const onConfirmTransaction = async (transferId) => {
+		const buildDeployFn = () => buildDeploy(transferId);
+
+		const { deployHash, signedDeploy } = await executeDeploy(
+			buildDeployFn,
+			transactionDetails.fromAddress,
+			transactionDetails.toAddress,
+		);
+		if (deployHash) {
+			onCloseConfirmModal();
+			updateLocalStorage({ deployHash, signedDeploy, transferId });
 		}
 	};
 
@@ -89,7 +85,6 @@ export const SendReceiveSection = ({
 	};
 
 	const onCloseConfirmModal = () => {
-		setDeployHash(null);
 		setShowConfirmModal(false);
 	};
 
@@ -122,7 +117,11 @@ export const SendReceiveSection = ({
 									<div className="cd_send_balance_content">
 										<span className="cd_send_balance_heading">Total Balance</span>
 										<span className="cd_send_balance_value">
-											{toFormattedNumber(displayBalance - values.sendAmount - transferFee)}
+											{toFormattedNumber(
+												displayBalance -
+													values.sendAmount -
+													(isTokenTransfer ? 0 : transferFee),
+											)}
 										</span>
 									</div>
 									<div className="cd_send_qr_address">
@@ -251,7 +250,6 @@ export const SendReceiveSection = ({
 				{...transactionDetails}
 				fee={transferFee}
 				csprPrice={csprPrice}
-				deployHash={deployHash}
 				isDeploying={isDeploying}
 				tokenSymbol={tokenSymbol}
 				isTokenTransfer={isTokenTransfer}

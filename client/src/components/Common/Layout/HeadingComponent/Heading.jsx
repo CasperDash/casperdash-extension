@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { getTheme } from '../../../../selectors/settings';
-import { getUserDetails, setPublicKey } from '../../../../actions/userActions';
+import {
+	getUserDetails,
+	setPublicKey,
+	lockAccount,
+	getConnectedAccountFromLocalStorage,
+} from '../../../../actions/userActions';
 import { switchTheme } from '../../../../actions/settingActions';
 import { isValidPublicKey } from '../../../../helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
 import { MiddleTruncatedText } from '../../MiddleTruncatedText';
 import useCasperSigner from '../../../hooks/useCasperSigner';
 import useLedger from '../../../hooks/useLedger';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 import { LedgerKeysModal } from './LedgerKeysModal';
 
@@ -20,22 +24,28 @@ const HeadingModule = (props) => {
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
 	const { ConnectSignerButton, isAvailable } = useCasperSigner();
-	const { handleConnectLedger, isUsingLedger, logOutLedger, loadMoreKeys } = useLedger();
+	const { handleConnectLedger, isUsingLedger, loadMoreKeys } = useLedger();
 
 	// Selector
 	const theme = useSelector(getTheme);
-	const { ledgerKeys } = useSelector(getLedgerOptions);
 
 	// State
 	const [showPublicKeyInput, setShowPublicKeyInput] = useState(false);
 	const [showLedgerKeys, setShowLedgerKeys] = useState(false);
 	const [publicKeyError, setPublicKeyError] = useState('');
 	const [isLoadingKeys, setIsLoadingKey] = useState(false);
+	const [ledgerKeys, setLedgerKeys] = useState([]);
 
 	// Effect
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
+		}
+	}, [publicKey, dispatch]);
+
+	useEffect(() => {
+		if (!publicKey) {
+			dispatch(getConnectedAccountFromLocalStorage());
 		}
 	}, [publicKey, dispatch]);
 
@@ -69,11 +79,12 @@ const HeadingModule = (props) => {
 	const loadMoreLedgerKeys = async () => {
 		if (!isLoadingKeys) {
 			setIsLoadingKey(true);
-			const canLoadMoreKeys = await loadMoreKeys();
+			const keys = await loadMoreKeys(publicKey);
 			setIsLoadingKey(false);
-			if (!canLoadMoreKeys) {
+			if (!keys) {
 				return;
 			}
+			setLedgerKeys(keys);
 			setShowLedgerKeys(true);
 		}
 	};
@@ -91,9 +102,18 @@ const HeadingModule = (props) => {
 					</Button>
 					{/* Display public key if available */}
 					{publicKey && (
-						<div className="cd_heading_public_key">
-							<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
-						</div>
+						<>
+							<div className="cd_heading_public_key">
+								<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
+							</div>
+							<Button
+								className="cd_all_page_logout_btn"
+								variant="secondary"
+								onClick={() => dispatch(lockAccount())}
+							>
+								Logout
+							</Button>
+						</>
 					)}
 
 					{isUsingLedger && (
@@ -104,9 +124,6 @@ const HeadingModule = (props) => {
 								disabled={isLoadingKeys}
 							>
 								{!isLoadingKeys ? 'Load more keys' : 'Loading'}
-							</Button>
-							<Button className="cd_all_page_logout_btn" onClick={logOutLedger}>
-								Logout
 							</Button>
 						</>
 					)}

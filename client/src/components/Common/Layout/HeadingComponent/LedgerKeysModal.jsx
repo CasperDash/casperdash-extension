@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { setKeyPath } from '../../../../actions/ledgerActions';
 import { setPublicKey } from '../../../../actions/userActions';
+import { getLoginOptions } from '../../../../selectors/user';
 
-export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
+export const LedgerKeysModal = ({ show, handleClose, keys }) => {
 	// State
 	const [selectedKey, setSelectedKey] = useState(null);
 
 	// Hook
 	const dispatch = useDispatch();
+
+	// Selector
+	const loginOptions = useSelector(getLoginOptions);
 
 	const onCloseModal = () => {
 		handleClose();
@@ -18,15 +21,14 @@ export const LedgerKeysModal = ({ show, handleClose, keys, error }) => {
 
 	// Function
 	const changeLedgerKey = () => {
-		dispatch(setPublicKey(selectedKey.label));
-		dispatch(setKeyPath(selectedKey.value));
+		dispatch(setPublicKey(selectedKey.label, { ...loginOptions, keyIndex: selectedKey.value }));
 		handleClose();
 	};
 
 	const options = keys
 		? keys.map((obj) => {
 				return {
-					label: obj.key,
+					label: obj.publicKey,
 					value: obj.path,
 				};
 		  })
