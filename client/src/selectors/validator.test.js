@@ -6,7 +6,7 @@ jest.mock('@redux-requests/core', () => {
 		getQuerySelector: jest.fn().mockReturnValue(() => ({
 			data: [
 				{
-					validator: '0x00',
+					public_key: '0x00',
 				},
 			],
 		})),
@@ -21,6 +21,23 @@ test('userDetailsSelector should call getQuerySelector ', () => {
 });
 
 test('get validators', () => {
+	getQuerySelector.mockReturnValue(() => ({
+		data: [
+			{
+				public_key: '0x00',
+			},
+		],
+	}));
 	const validators = getValidators()();
 	expect(validators.length).toBe(1);
 });
+
+test('get validators with search tem', () => {
+	const validators = getValidators('0x00')();
+	expect(validators.length).toBe(1);
+});
+
+// test('get empty validators', () => {
+// 	const validators = getValidators()();
+// 	expect(validators.length).toBe(0);
+// });
