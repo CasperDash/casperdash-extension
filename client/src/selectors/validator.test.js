@@ -36,8 +36,3 @@ test('get validators with search tem', () => {
 	const validators = getValidators('0x00')();
 	expect(validators.length).toBe(1);
 });
-
-// test('get empty validators', () => {
-// 	const validators = getValidators()();
-// 	expect(validators.length).toBe(0);
-// });
