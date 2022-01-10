@@ -95,7 +95,6 @@ const HeadingModule = (props) => {
 				<div className="cd_all_page_heading">
 					<h2>{props.name}</h2>
 				</div>
-
 				<div className="cd_all_page_notify_logout_btn">
 					<Button className="cd_theme_switch" onClick={onSwitchTheme}>
 						<i className={`bi ${theme === DARK_THEME ? 'bi-brightness-high-fill' : 'bi-moon-fill'}`} />

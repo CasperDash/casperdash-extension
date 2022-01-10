@@ -1,6 +1,7 @@
 import React from 'react';
 import * as redux from 'react-redux';
 import { render, cleanup, fireEvent } from '@testing-library/react';
+import { getTheme } from '../../../../selectors/settings';
 import Heading from './Heading';
 
 afterEach(cleanup);
@@ -40,8 +41,21 @@ jest.mock('../../../hooks/useLedger', () => {
 		default: () => {
 			return {
 				handleConnectLedger: jest.fn(),
+				isUsingLedger: true,
+				loadMoreKeys: jest.fn().mockReturnValue([
+					{
+						publicKey: '0x123',
+					},
+				]),
 			};
 		},
+	};
+});
+
+jest.mock('../../../../selectors/settings', () => {
+	return {
+		__esModule: true,
+		getTheme: jest.fn(),
 	};
 });
 
@@ -116,4 +130,27 @@ test('Should change theme', () => {
 
 	fireEvent.click(switchThemeBtn);
 	expect(baseElement.querySelector('cd_page_dark_mode')).toBe(null);
+});
+
+test('Should change switch theme class name', () => {
+	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('');
+	getTheme.mockReturnValue('cd_page_dark_mode');
+	const { baseElement } = render(<Heading />);
+	expect(baseElement.querySelector('bi-brightness-high-fill')).toBe(null);
+});
+
+test('Should handle lock account button', async () => {
+	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('');
+	const { queryAllByText } = render(<Heading />);
+	const lockAccountBtn = queryAllByText('Logout')[0];
+	await fireEvent.click(lockAccountBtn);
+	expect(queryAllByText('Connect Ledger')).toBeDefined();
+});
+
+test('Should show load more ledger keys modal', async () => {
+	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('0x123');
+	const { queryAllByText } = render(<Heading />);
+	const loadMoreLedgerKeyBtn = queryAllByText('Load more keys')[0];
+	await fireEvent.click(loadMoreLedgerKeyBtn);
+	expect(queryAllByText('Select the account')).toBeDefined();
 });
