@@ -4,7 +4,6 @@ import React from 'react';
 import { getLedgerPublicKey, initLedgerApp, getLedgerError } from '../../services/ledgerServices';
 import { setPublicKey } from '../../actions/userActions';
 import useLedger from './useLedger';
-import { joinRequest } from '@redux-requests/core';
 
 jest.mock('../../actions/userActions', () => {
 	return {
