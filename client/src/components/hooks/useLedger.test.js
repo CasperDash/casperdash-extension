@@ -1,7 +1,8 @@
 import { cleanup } from '@testing-library/react';
 import * as redux from 'react-redux';
 import React from 'react';
-import { getLedgerPublicKey, initLedgerApp, getLedgerError } from '../../services/ledgerServices';
+import { getLedgerPublicKey, initLedgerApp, getListKeys, getLedgerError } from '../../services/ledgerServices';
+import { getLocalStorageValue, setLocalStorageValue } from '../../services/localStorage';
 import { setPublicKey } from '../../actions/userActions';
 import useLedger from './useLedger';
 
@@ -18,6 +19,7 @@ jest.mock('../../services/ledgerServices', () => {
 		initLedgerApp: jest.fn(),
 		getLedgerPublicKey: jest.fn(),
 		getLedgerError: jest.fn(),
+		getListKeys: jest.fn(),
 	};
 });
 
@@ -27,6 +29,15 @@ jest.mock('../../actions/deployActions', () => {
 		getTransferDeploysStatus: jest.fn(),
 	};
 });
+
+jest.mock('../../services/localStorage', () => {
+	return {
+		__esModule: true,
+		setLocalStorageValue: jest.fn(),
+		getLocalStorageValue: jest.fn(),
+	};
+});
+
 afterEach(cleanup);
 let spyOnUseSelector;
 let spyOnUseDispatch;
@@ -70,15 +81,6 @@ test('Handle connect ledger without error', async () => {
 		keyIndex: 0,
 	});
 });
-// test('Ledger cannot connect', async () => {
-// 	spyOnUseSelector.mockReturnValue({
-// 		casperApp: {},
-// 		ledgerKeys: ['0x123'],
-// 	});
-// 	getLedgerPublicKey.mockReturnValue({});
-// 	const { isLedgerConnected } = useLedger();
-// 	expect(await isLedgerConnected()).toBe(false);
-// });
 
 test('Handle connect ledger with error', async () => {
 	initLedgerApp.mockReturnValue({
@@ -91,4 +93,49 @@ test('Handle connect ledger with error', async () => {
 	const { handleConnectLedger } = useLedger();
 	const result = await handleConnectLedger();
 	expect(result).toBe(undefined);
+});
+
+test('Load more keys having cached keys', async () => {
+	getLocalStorageValue.mockReturnValue([{ publicKey: '0x123' }]);
+	const { loadMoreKeys } = useLedger();
+	const keys = await loadMoreKeys('0x123', 2);
+	expect(keys.length).toBe(1);
+	expect(keys[0].publicKey).toBe('0x123');
+});
+
+test('Load more keys without cached keys', async () => {
+	getLocalStorageValue.mockReturnValue([{}]);
+	getListKeys.mockReturnValue([
+		{
+			publicKey: '0x123',
+		},
+		{
+			publicKey: '0x124',
+		},
+	]);
+	const { loadMoreKeys } = useLedger();
+	const keys = await loadMoreKeys();
+	expect(setLocalStorageValue).toHaveBeenCalledWith(
+		'ledger',
+		'keys',
+		[
+			{
+				publicKey: '0x123',
+			},
+			{
+				publicKey: '0x124',
+			},
+		],
+		'set',
+	);
+	expect(keys.length).toBe(2);
+});
+
+test('Load more keys with error', async () => {
+	getLocalStorageValue.mockReturnValue([{}]);
+	getListKeys.mockRejectedValue(new Error('Async Error'));
+	const { loadMoreKeys } = useLedger();
+	const keys = await loadMoreKeys();
+	expect(getLedgerError).toHaveBeenCalledWith(new Error('Async Error'));
+	expect(keys.length).toBe(0);
 });
