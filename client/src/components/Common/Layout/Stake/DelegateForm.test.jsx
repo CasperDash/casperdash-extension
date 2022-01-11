@@ -25,6 +25,29 @@ jest.mock('../../../../services/stakeServices', () => {
 		getStakeDeploy: jest.fn(),
 	};
 });
+
+jest.mock('../../../hooks/useConfirmDeploy', () => {
+	return {
+		__esModule: true,
+		useConfirmDeploy: () => {
+			return {
+				executeDeploy: () => {
+					return {
+						deployHash: '0x113',
+						signedDeploy: {
+							deploy: {
+								header: {
+									timestamp: 1234,
+								},
+							},
+						},
+					};
+				},
+			};
+		},
+	};
+});
+
 afterEach(cleanup);
 let spyOnUseSelector;
 let spyOnUseDispatch;
@@ -160,96 +183,6 @@ describe('Should show error if not valid form when click send', () => {
 	});
 });
 
-describe('Stake with errors', () => {
-	test('Should show error if can not sign the transaction', async () => {
-		spyOnUseSelector.mockReturnValue([]);
-		getStakeDeploy.mockRejectedValue(new Error('Signed error'));
-		const validators = [
-			{
-				public_key: '0x123',
-				bidInfo: {
-					bid: {
-						delegate_rate: 1,
-					},
-				},
-			},
-		];
-		const { getByText, container } = render(
-			<DelegateForm
-				fromAddress="0x000"
-				defaultValidator="0x123"
-				balance={999999}
-				fee={1}
-				validators={validators}
-				tokenSymbol="CSPR"
-			/>,
-		);
-
-		const stakeBtn = getByText('Stake');
-		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
-		await act(async () => {
-			fireEvent.change(stakeAmountInput, {
-				target: { value: 9 },
-			});
-		});
-
-		await act(async () => {
-			fireEvent.click(stakeBtn);
-		});
-
-		await act(async () => {
-			fireEvent.click(getByText('Confirm'));
-		});
-
-		expect(toastify.toast).toHaveBeenCalled();
-	});
-
-	test('Should show error if can not put the deploy', async () => {
-		spyOnUseSelector.mockReturnValue([]);
-		getStakeDeploy.mockReturnValue({});
-		mockDispatch.mockRejectedValue(new Error('Failed to put deploy'));
-		const validators = [
-			{
-				public_key: '0x123',
-				bidInfo: {
-					bid: {
-						delegate_rate: 1,
-					},
-				},
-			},
-		];
-		const { getByText, container } = render(
-			<DelegateForm
-				fromAddress="0x000"
-				defaultValidator="0x123"
-				balance={999999}
-				fee={1}
-				validators={validators}
-				tokenSymbol="CSPR"
-				csprPrice={0.001}
-			/>,
-		);
-
-		const stakeBtn = getByText('Stake');
-		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
-		await act(async () => {
-			fireEvent.change(stakeAmountInput, {
-				target: { value: 9 },
-			});
-		});
-
-		await act(async () => {
-			fireEvent.click(stakeBtn);
-		});
-
-		await act(async () => {
-			fireEvent.click(getByText('Confirm'));
-		});
-
-		expect(toastify.toast).toHaveBeenCalled();
-	});
-});
-
 describe('Success to stake the valid amount', () => {
 	test('Should show deploy hash', async () => {
 		spyOnUseSelector.mockReturnValue([]);
@@ -275,7 +208,7 @@ describe('Success to stake the valid amount', () => {
 				},
 			},
 		];
-		const { getByText, container, queryAllByText } = render(
+		const { getByText, container, queryAllByText, debug } = render(
 			<DelegateForm
 				fromAddress="0x000"
 				defaultValidator="0x123"
@@ -284,6 +217,7 @@ describe('Success to stake the valid amount', () => {
 				validators={validators}
 				tokenSymbol="CSPR"
 				csprPrice={0.001}
+				handleToggle={() => {}}
 			/>,
 		);
 
@@ -304,5 +238,10 @@ describe('Success to stake the valid amount', () => {
 		});
 
 		expect(queryAllByText('0x113')[0].textContent).toBe('0x113');
+		await act(async () => {
+			fireEvent.click(getByText('Close'));
+		});
+
+		expect(queryAllByText('0x113').length).toBe(0);
 	});
 });
