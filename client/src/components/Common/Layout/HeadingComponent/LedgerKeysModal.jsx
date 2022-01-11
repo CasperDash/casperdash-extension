@@ -29,7 +29,7 @@ export const LedgerKeysModal = ({ show, handleClose, keys }) => {
 		? keys.map((obj) => {
 				return {
 					label: obj.publicKey,
-					value: obj.path,
+					value: obj.keyIndex,
 				};
 		  })
 		: [];

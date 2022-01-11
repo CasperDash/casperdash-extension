@@ -8,11 +8,17 @@ const WithConfigurations = ({ children }) => {
 
 	useEffect(() => {
 		async function getConfig() {
-			const { data, error } = await dispatch(getConfigurations());
-			if (!error) {
-				saveConfigurationToLocalStorage(data);
+			try {
+				const { data, error } = await dispatch(getConfigurations());
+
+				if (!error) {
+					saveConfigurationToLocalStorage(data);
+				}
+			} catch (error) {
+				console.error(error);
 			}
 		}
+
 		getConfig();
 	}, [dispatch]);
 

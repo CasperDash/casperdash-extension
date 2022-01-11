@@ -56,6 +56,8 @@
 	"scripts": {
 		"dev": "webpack-dev-server --mode development",
 		"dev-extension": "webpack --mode development --env=type=extension --watch",
+		"dev-extension-mainnet": "webpack --mode development --env=type=extension --env=network=mainnet --watch",
+		"dev-extension-testnet": "webpack --mode development --env=type=extension --env=network=testnet --watch",
 		"start-mainnet": "webpack-dev-server --mode development --env=network=mainnet",
 		"start-testnet": "webpack-dev-server --mode development --env=network=testnet",
 		"build-mainnet": "webpack --mode production --env=network=mainnet && react-snapshot",
