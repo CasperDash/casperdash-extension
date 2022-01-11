@@ -1,8 +1,10 @@
 import { cleanup } from '@testing-library/react';
 import * as redux from 'react-redux';
 import React from 'react';
-import { getLedgerPublicKey } from '../../services/ledgerServices';
+import { getLedgerPublicKey, initLedgerApp, getLedgerError } from '../../services/ledgerServices';
+import { setPublicKey } from '../../actions/userActions';
 import useLedger from './useLedger';
+import { joinRequest } from '@redux-requests/core';
 
 jest.mock('../../actions/userActions', () => {
 	return {
@@ -16,6 +18,7 @@ jest.mock('../../services/ledgerServices', () => {
 		__esModule: true,
 		initLedgerApp: jest.fn(),
 		getLedgerPublicKey: jest.fn(),
+		getLedgerError: jest.fn(),
 	};
 });
 
@@ -42,31 +45,51 @@ beforeEach(() => {
 	jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {});
 });
 
-test('Ledger is connected', async () => {
+test('Is using ledger', async () => {
 	spyOnUseSelector.mockReturnValue({
-		casperApp: {},
-		ledgerKeys: ['0x123'],
+		connectionType: 'ledger',
 	});
-	getLedgerPublicKey.mockReturnValue({
-		publicKey: '0x123',
-	});
-	const { isLedgerConnected } = useLedger();
-	expect(await isLedgerConnected()).toBe('0x123');
+	const { isUsingLedger } = useLedger();
+	expect(isUsingLedger).toBe(true);
 });
 
-test('Ledger cannot connect', async () => {
-	spyOnUseSelector.mockReturnValue({
+test('Handle connect ledger without error', async () => {
+	initLedgerApp.mockReturnValue({
 		casperApp: {},
-		ledgerKeys: ['0x123'],
+		transport: {
+			close: jest.fn(),
+		},
 	});
-	getLedgerPublicKey.mockReturnValue({});
-	const { isLedgerConnected } = useLedger();
-	expect(await isLedgerConnected()).toBe(false);
-});
 
-test('Ledger throw exceptions when connecting', async () => {
-	spyOnUseSelector.mockReturnValue({ casperApp: {}, ledgerKeys: ['0x123'] });
+	getLedgerPublicKey.mockReturnValue('0x123');
+	const { handleConnectLedger } = useLedger();
+	const result = await handleConnectLedger();
+	expect(result.publicKey).toBe('0x123');
+	expect(result.keyIndex).toBe(0);
+	expect(setPublicKey).toHaveBeenCalledWith('0x123', {
+		connectionType: 'ledger',
+		keyIndex: 0,
+	});
+});
+// test('Ledger cannot connect', async () => {
+// 	spyOnUseSelector.mockReturnValue({
+// 		casperApp: {},
+// 		ledgerKeys: ['0x123'],
+// 	});
+// 	getLedgerPublicKey.mockReturnValue({});
+// 	const { isLedgerConnected } = useLedger();
+// 	expect(await isLedgerConnected()).toBe(false);
+// });
+
+test('Handle connect ledger with error', async () => {
+	initLedgerApp.mockReturnValue({
+		casperApp: {},
+		transport: {
+			close: jest.fn(),
+		},
+	});
 	getLedgerPublicKey.mockRejectedValue(new Error('Async error'));
-	const { isLedgerConnected } = useLedger();
-	expect(await isLedgerConnected()).toBe(false);
+	const { handleConnectLedger } = useLedger();
+	const result = await handleConnectLedger();
+	expect(result).toBe(undefined);
 });
