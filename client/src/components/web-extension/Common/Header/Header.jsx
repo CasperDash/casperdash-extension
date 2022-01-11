@@ -22,7 +22,7 @@ export const Header = ({ currentModule = {} }) => {
 	}, [publicKey]);
 
 	return (
-		<div className={`cd_we_header ${currentModule.route.replace('/', '')}`}>
+		<div className={`cd_we_header ${currentModule.route && currentModule.route.replace('/', '')}`}>
 			<div className="cd_we_logo">
 				<CasperDashLogo />
 			</div>
