@@ -1,9 +1,9 @@
 import { CLPublicKey, DeployUtil, Signer } from 'casper-js-sdk';
 import {
-	getTransferDeploy,
+	buildTransferDeploy,
 	buildContractInstallDeploy,
-	signDeploy,
-	getTransferTokenDeploy,
+	signDeployByCasperSigner,
+	buildTransferTokenDeploy,
 	connectCasperSigner,
 } from './casperServices';
 
@@ -12,7 +12,7 @@ test('getTransferDeploy', () => {
 	const spyOnNewTransfer = jest.spyOn(DeployUtil.ExecutableDeployItem, 'newTransfer');
 	const spyOnPayment = jest.spyOn(DeployUtil, 'standardPayment');
 	const spyOnMakeDeploy = jest.spyOn(DeployUtil, 'makeDeploy');
-	const deploy = getTransferDeploy(
+	const deploy = buildTransferDeploy(
 		CLPublicKey.fromHex('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad'),
 		CLPublicKey.fromHex('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad'),
 		1000000000,
@@ -40,18 +40,18 @@ test('buildContractInstallDeploy', () => {
 	}
 });
 
-test('signDeploy', async () => {
-	const deploy = getTransferDeploy(
+test('signDeployByCasperSigner', async () => {
+	const deploy = buildTransferTokenDeploy(
 		CLPublicKey.fromHex('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad'),
 		CLPublicKey.fromHex('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad'),
 		1000000000,
-		0,
+		'123123123',
 		10,
 	);
 	const spyOnDeployToJson = jest.spyOn(DeployUtil, 'deployToJson');
 	const spyOnSign = jest.spyOn(Signer, 'sign');
 	spyOnSign.mockImplementation(() => 'signed');
-	const signed = await signDeploy(
+	const signed = await signDeployByCasperSigner(
 		deploy,
 		'0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
 		'0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
@@ -66,7 +66,7 @@ test('getTransferTokenDeploy', async () => {
 	const spyOnNewStoredContractByHash = jest.spyOn(DeployUtil.ExecutableDeployItem, 'newStoredContractByHash');
 	const spyOnPayment = jest.spyOn(DeployUtil, 'standardPayment');
 	const spyOnMakeDeploy = jest.spyOn(DeployUtil, 'makeDeploy');
-	const deploy = await getTransferTokenDeploy(
+	const deploy = await buildTransferTokenDeploy(
 		CLPublicKey.fromHex('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad'),
 		CLPublicKey.fromHex('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad'),
 		1000,

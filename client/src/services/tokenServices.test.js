@@ -1,8 +1,8 @@
 import { getTransferTokenDeploy } from './tokenServices';
-import { getTransferTokenDeploy, signDeploy } from './casperServices';
+import { buildTransferTokenDeploy } from './casperServices';
 jest.mock('./casperServices', () => {
 	return {
-		getTransferTokenDeploy: jest.fn(),
+		buildTransferTokenDeploy: jest.fn(),
 		signDeploy: jest.fn(),
 	};
 });
@@ -15,15 +15,13 @@ test('getTransferTokenDeploy', () => {
 		contractInfo: { address: 'test', decimals: 10 },
 		fee: 1,
 	});
-	expect(getTransferTokenDeploy).toHaveBeenCalled();
-	expect(signDeploy).toHaveBeenCalled();
+	expect(buildTransferTokenDeploy).toHaveBeenCalled();
 });
 
 test('getTransferTokenDeploy return error', () => {
-	let value;
 	try {
-		value = getTransferTokenDeploy();
+		getTransferTokenDeploy();
 	} catch {
-		expect(Boolean(value.error)).toBe(true);
+		expect(console.error).toHaveBeenCalled();
 	}
 });
