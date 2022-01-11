@@ -1,4 +1,4 @@
-import { getSignedStakeDeploy } from './stakeServices';
+import { getStakeDeploy } from './stakeServices';
 import { signDeploy } from './casperServices';
 jest.mock('./casperServices', () => {
 	return {
@@ -6,8 +6,8 @@ jest.mock('./casperServices', () => {
 	};
 });
 
-test('getSignedTransferTokenDeploy', () => {
-	getSignedStakeDeploy({
+test('getTransferTokenDeploy', () => {
+	getStakeDeploy({
 		fromAddress: '01f61a91b5da6e870995aa60ccefee17a38a42823a877343c8d468c971e9ab3d06',
 		validator: '0101a458AA2b551C5a49E56326f9BB298bb308e1babc875647aE0290C42F13feac',
 		amount: 10000,
@@ -16,9 +16,9 @@ test('getSignedTransferTokenDeploy', () => {
 	expect(signDeploy).toHaveBeenCalled();
 });
 
-test('getSignedTransferTokenDeploy return error', async () => {
+test('getTransferTokenDeploy return error', async () => {
 	try {
-		await getSignedStakeDeploy({
+		await getStakeDeploy({
 			fromAddress: '01f61a91b5da6e870995aa60ccefee17a38a42823a877343c8d468c971e9ab3d06',
 			validator: '0101a458AA2b551C5a49E56326f9BB298bb308e1babc875647aE0290C42F13feac',
 			amount: 'casperdash',

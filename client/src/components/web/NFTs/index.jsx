@@ -71,6 +71,7 @@ const NFTs = () => {
 		const response = await dispatch(fetchNFTContractInfo(tokenAddress));
 		const { error, data } = response;
 		if (error) {
+			console.error(error);
 			setAddTokenError('Can not find NFT info');
 		} else {
 			data && data.name && dispatch(addCustomNFTAddressToLocalStorage(tokenAddress, publicKey));

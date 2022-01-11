@@ -2,12 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { getSignedStakeDeploy } from '../../../services/stakeServices';
+import { getStakeDeploy } from '../../../services/stakeServices';
 import { getPublicKey } from '../../../selectors/user';
-import { putDeploy } from '../../../actions/deployActions';
 import { pushStakeToLocalStorage } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE } from '../../../constants/key';
 import Copy from '../../Common/Button/Copy';
 import './Confirm.scss';
@@ -18,6 +17,7 @@ export const Confirm = () => {
 	const { stake = {} } = state || {};
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
@@ -25,19 +25,17 @@ export const Confirm = () => {
 	// Function
 	const onConfirm = async () => {
 		const entryPoint = stake.action === 'undelegate' ? ENTRY_POINT_UNDELEGATE : ENTRY_POINT_DELEGATE;
-		try {
-			const signedDeploy = await getSignedStakeDeploy({
+
+		const buildDeployFn = () =>
+			getStakeDeploy({
 				fromAddress: publicKey,
 				validator: stake.validator,
 				fee: stake.fee,
 				amount: stake.amount,
 				entryPoint,
 			});
-			const { data, error } = await dispatch(putDeploy(signedDeploy));
-			if (error) {
-				throw new Error(`Error on ${entryPoint}. Please try again later.`);
-			}
-			toast.success(`Deploy hash: ${data.deployHash}`);
+		const { deployHash, signedDeploy } = executeDeploy(buildDeployFn, publicKey, stake.validator);
+		if (deployHash) {
 			dispatch(
 				pushStakeToLocalStorage(publicKey, {
 					amount: stake.amount,
@@ -45,15 +43,12 @@ export const Confirm = () => {
 					fee: stake.fee,
 					fromAddress: publicKey,
 					validator: stake.validator,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
 			navigate('/staking', { replace: true });
-		} catch (error) {
-			console.error(error);
-			toast.error(error.message);
 		}
 	};
 
@@ -74,7 +69,9 @@ export const Confirm = () => {
 				<div>{toFormattedNumber(stake.fee)} CSPR</div>
 			</div>
 
-			<Button onClick={onConfirm}>{stake.action === 'undelegate' ? 'Undelegate' : 'Delegate'}</Button>
+			<Button onClick={onConfirm} disabled={isDeploying}>
+				{stake.action === 'undelegate' ? 'Undelegate' : 'Delegate'}
+			</Button>
 		</section>
 	);
 };

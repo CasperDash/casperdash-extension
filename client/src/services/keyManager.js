@@ -1,6 +1,6 @@
 import { CLPublicKey, DeployUtil, RuntimeArgs, CLValueBuilder } from 'casper-js-sdk';
 import { MOTE_RATE, PAYMENT_AMOUNT, NETWORK_NAME } from '../constants/key';
-import { buildContractInstallDeploy, signDeploy } from './casperServices';
+import { buildContractInstallDeploy } from './casperServices';
 import { request } from './request';
 
 const DEPLOY_PAYMENT_AMOUNT = 1 * MOTE_RATE;
@@ -84,16 +84,15 @@ export const getKeyManagementThresholdDeploy = (fromAccount, weight, payment) =>
  * @param {String} secondAccount target account public key hex
  * @returns {Object} signed deploy Json
  */
-export const getSignedAccountWeightDeploy = async (weight, mainAccount, secondAccount) => {
+export const buildAccountWeightDeploy = async (weight, mainAccount, secondAccount) => {
 	try {
 		const setAccount = secondAccount || mainAccount;
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
 		const secondAccountPK = CLPublicKey.fromHex(setAccount);
-		const deploy = getKeyWeightDeploy(mainAccountPK, secondAccountPK, weight, DEPLOY_PAYMENT_AMOUNT);
-		const signedDeploy = await signDeploy(deploy, mainAccount, setAccount);
-		return signedDeploy;
+		return getKeyWeightDeploy(mainAccountPK, secondAccountPK, weight, DEPLOY_PAYMENT_AMOUNT);
 	} catch (error) {
-		return { error: { message: error.message } };
+		console.error(error);
+		throw Error('Error on build set account weight deploy');
 	}
 };
 
@@ -103,14 +102,13 @@ export const getSignedAccountWeightDeploy = async (weight, mainAccount, secondAc
  * @param {String} mainAccount main account public key hex
  * @returns {Object} signed deploy Json
  */
-export const getSignedAccountDeploymentDeploy = async (weight, mainAccount) => {
+export const buildAccountDeploymentDeploy = async (weight, mainAccount) => {
 	try {
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
-		const deploy = getDeploymentThresholdDeploy(mainAccountPK, weight, DEPLOY_PAYMENT_AMOUNT);
-		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount);
-		return signedDeploy;
+		return getDeploymentThresholdDeploy(mainAccountPK, weight, DEPLOY_PAYMENT_AMOUNT);
 	} catch (error) {
-		return { error: { message: error.message } };
+		console.error(error);
+		throw Error('Error on build set account deployment deploy');
 	}
 };
 
@@ -120,14 +118,13 @@ export const getSignedAccountDeploymentDeploy = async (weight, mainAccount) => {
  * @param {String} mainAccount main account public key hex
  * @returns {Object} signed deploy Json
  */
-export const getSignedKeyManagementThresholdDeploy = async (weight, mainAccount) => {
+export const buildKeyManagementThresholdDeploy = async (weight, mainAccount) => {
 	try {
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
-		const deploy = getKeyManagementThresholdDeploy(mainAccountPK, weight, DEPLOY_PAYMENT_AMOUNT);
-		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount);
-		return signedDeploy;
+		return getKeyManagementThresholdDeploy(mainAccountPK, weight, DEPLOY_PAYMENT_AMOUNT);
 	} catch (error) {
-		return { error: { message: error.message } };
+		console.error(error);
+		throw Error('Error on build set account threshold deploy');
 	}
 };
 
@@ -151,11 +148,9 @@ export const getKeyManagerContractDeploy = async (mainAccount) => {
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
 		const deploySession = await getKeysManagerDeploy();
 		const deployFromJson = DeployUtil.deployFromJson(deploySession);
-		const deploy = buildContractInstallDeploy(mainAccountPK, deployFromJson.val.session);
-		const signedDeploy = await signDeploy(deploy, mainAccount, mainAccount);
-		delete signedDeploy.deploy.session;
-		return signedDeploy;
+		return buildContractInstallDeploy(mainAccountPK, deployFromJson.val.session);
 	} catch (error) {
-		return { error: { message: error.message } };
+		console.error(error);
+		throw Error('Error on build set key manager contract deploy');
 	}
 };

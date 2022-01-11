@@ -1,4 +1,6 @@
-import { SIGNER, USERS } from '../store/actionTypes';
+import { SIGNER } from '../store/actionTypes';
+import { CONNECTION_TYPES } from '../constants/settings';
+import { setPublicKey } from './userActions';
 
 /**
  * @param {boolean} isConnected
@@ -23,7 +25,7 @@ export const updateLockStatus = (isLocked) => {
 export const handleUnlockSigner = ({ isUnlocked, activeKey }) => {
 	return (dispatch) => {
 		dispatch({ type: SIGNER.UPDATE_LOCK_STATUS, payload: { isUnlocked } });
-		dispatch({ type: USERS.SET_USER_ADDRESS, payload: { publicKey: activeKey } });
+		dispatch(setPublicKey(activeKey, { connectionType: CONNECTION_TYPES.casperSigner }));
 	};
 };
 

@@ -19,6 +19,10 @@
 	--bs-warning: #ffcd1a;
 }
 
+.Toastify__toast-body {
+	overflow-wrap: anywhere;
+}
+
 .btn {
 	border-radius: 32px;
 	&:disabled {

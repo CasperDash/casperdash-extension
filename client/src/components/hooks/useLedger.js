@@ -1,100 +1,72 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { setPublicKey } from '../../actions/userActions';
-import { setLedgerOptions } from '../../actions/ledgerActions';
-import { getLedgerPublicKey, getLedgerError, initLedgerApp } from '../../services/ledgerServices';
+import { getLedgerPublicKey, getLedgerError, initLedgerApp, getListKeys } from '../../services/ledgerServices';
+import { setLocalStorageValue, getLocalStorageValue } from '../../services/localStorage';
+import { getLoginOptions } from '../../selectors/user';
 import { CONNECTION_TYPES } from '../../constants/settings';
-import { getLedgerOptions } from '../../selectors/ledgerOptions';
-import { SECP256k1, MAX_KEY_PATH } from '../../constants/ledger';
+import { MAX_KEY_PATH } from '../../constants/ledger';
 
 const useLedger = () => {
 	// Hook
 	const dispatch = useDispatch();
 
 	// Selector
-	const { ledgerKeys, casperApp } = useSelector(getLedgerOptions);
-
-	const isUsingLedger = ledgerKeys && ledgerKeys.length > 0;
+	const loginOptions = useSelector(getLoginOptions);
+	const isUsingLedger = loginOptions.connectionType === CONNECTION_TYPES.ledger;
 
 	// Function
-	const isLedgerConnected = async () => {
+	const handleConnectLedger = async () => {
+		// TODO: show list of keys for user to chose at initial
+		const { casperApp, transport } = await initLedgerApp();
 		try {
-			const app = await initLedgerApp();
-			const response = await getLedgerPublicKey(app);
-			return response.publicKey ? response.publicKey : false;
-		} catch {
-			return false;
-		}
-	};
+			const publicKey = await getLedgerPublicKey(casperApp);
 
-	const logOutLedger = () => {
-		dispatch(setPublicKey(null));
-		dispatch(
-			setLedgerOptions({
-				casperApp: null,
-				ledgerKeys: [],
-				keyPath: 0,
-			}),
-		);
-	};
-
-	const handleConnectLedger = async (callback) => {
-		try {
-			const casperApp = await initLedgerApp();
-			const response = await getLedgerPublicKey(casperApp);
-			const { publicKey } = response;
-			if (!publicKey) {
-				toast.error('You must unlock the Casper App on your Ledger device to connect.');
-				return;
-			}
-
-			const key = `${SECP256k1}${publicKey.toString('hex')}`;
-			dispatch(setPublicKey(key, CONNECTION_TYPES.ledger));
 			dispatch(
-				setLedgerOptions({
-					casperApp,
-					ledgerKeys: [{ key, keyPath: 0 }],
+				setPublicKey(publicKey, {
+					connectionType: CONNECTION_TYPES.ledger,
+					keyIndex: 0,
 				}),
 			);
-			typeof callback === 'function' && callback();
+			transport.close();
+			// should close transport
+			return { keyIndex: 0, publicKey };
 		} catch (error) {
+			console.error(console.error);
 			toast.error(getLedgerError(error));
 		}
+		transport.close();
 	};
 
-	const loadMoreKeys = async (callback) => {
-		// Do not load again if loaded key paths before.
-		if (ledgerKeys && ledgerKeys.length === MAX_KEY_PATH) {
-			return ledgerKeys;
-		}
-
-		if (!(await isLedgerConnected())) {
-			toast.error('You must unlock the Casper App on your Ledger device to connect.');
-			return false;
-		}
+	const loadMoreKeys = async (publicKey, index = 0) => {
+		const { casperApp, transport } = await initLedgerApp();
 
 		try {
-			const ledgerKeys = [];
-			for (let i = 0; i < MAX_KEY_PATH; i++) {
-				const response = await getLedgerPublicKey(casperApp, i);
-				const { publicKey } = response;
-				const key = `${SECP256k1}${publicKey.toString('hex')}`;
-				ledgerKeys.push({ key, path: i });
+			const cachedKeys = getLocalStorageValue('ledger', 'keys');
+			// Check if keys are already loaded
+			if (
+				cachedKeys &&
+				cachedKeys.length &&
+				cachedKeys.find((key) => key.publicKey === publicKey) &&
+				cachedKeys.length < index
+			) {
+				return cachedKeys;
 			}
-			typeof callback === 'function' && callback();
-			dispatch(
-				setLedgerOptions({
-					casperApp,
-					ledgerKeys,
-				}),
-			);
-			return ledgerKeys;
+			//TODO: get balance for each key
+			const listKeys = await getListKeys(casperApp, index, MAX_KEY_PATH);
+			// Cache keys to local storage
+			setLocalStorageValue('ledger', 'keys', listKeys, 'set');
+			transport.close();
+			return listKeys;
 		} catch (error) {
+			console.error(console.error);
 			toast.error(getLedgerError(error));
 		}
+		transport.close();
+		return [];
 	};
 
-	return { handleConnectLedger, isUsingLedger, isLedgerConnected, logOutLedger, loadMoreKeys };
+	return { handleConnectLedger, isUsingLedger, loadMoreKeys };
 };
 
 export default useLedger;

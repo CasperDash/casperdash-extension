@@ -10,7 +10,6 @@ export const ConfirmModal = ({
 	amount,
 	fee,
 	onConfirm,
-	deployHash,
 	isDeploying,
 	currentPrice,
 	csprPrice,
@@ -64,16 +63,13 @@ export const ConfirmModal = ({
 					<div className="cd_confirm_modal_row">
 						<span className="cd_confirm_modal_label">Transfer Id (optional)</span>
 						<div className="cd_confirm_modal_value">
-							{!deployHash ? (
-								<input
-									type="number"
-									value={transferId}
-									onChange={(e) => setTransferId(e.target.value)}
-									placeholder="Transfer ID"
-								/>
-							) : (
-								<span className="cd_confirm_modal_value">{transferId}</span>
-							)}
+							<input
+								type="number"
+								value={transferId}
+								onChange={(e) => setTransferId(e.target.value)}
+								placeholder="Transfer ID"
+								disabled={isDeploying}
+							/>
 						</div>
 					</div>
 				)}
@@ -108,24 +104,11 @@ export const ConfirmModal = ({
 						</span>
 					</div>
 				)}
-
-				{deployHash && (
-					<div className="cd_confirm_modal_row">
-						<span className="cd_confirm_modal_label">Transaction Hash</span>
-						<span className="cd_confirm_modal_value_success">{deployHash}</span>
-					</div>
-				)}
 			</Modal.Body>
 			<Modal.Footer className="cd_confirm_modal_footer">
-				{deployHash ? (
-					<Button className="cd_btn_primary_active" onClick={onClose}>
-						Close
-					</Button>
-				) : (
-					<Button className="cd_btn_primary_active" onClick={onConfirmTransaction} disabled={isDeploying}>
-						{isDeploying ? 'Confirming...' : 'Confirm'}
-					</Button>
-				)}
+				<Button className="cd_btn_primary_active" onClick={onConfirmTransaction} disabled={isDeploying}>
+					{isDeploying ? 'Confirming...' : 'Confirm'}
+				</Button>
 			</Modal.Footer>
 		</Modal>
 	);

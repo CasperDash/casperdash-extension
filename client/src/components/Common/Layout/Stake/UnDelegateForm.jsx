@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
-import { toast } from 'react-toastify';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
-import { putDeploy } from '../../../../actions/deployActions';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { deploySelector } from '../../../../selectors/deploy';
-import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
+import { getConfigKey } from '../../../../services/configurationServices';
 import ConfirmationModal from './Modal';
 import ValidatorInfo from './ValidatorInfo';
 
@@ -29,13 +27,10 @@ const UndelegateForm = ({
 	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 
+	// Hook
 	const dispatch = useDispatch();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
-	// Selector
-	const { loading: isDeploying } = useSelector(deploySelector);
-	const ledgerOptions = useSelector(getLedgerOptions);
-
-	// Func
 	const handleSubmit = async (values) => {
 		const { amount } = values;
 		if (fromAddress && stakedValidator && amount) {
@@ -52,29 +47,23 @@ const UndelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		try {
-			if (ledgerOptions.casperApp) {
-				toast('Transaction submitted. Awaiting your approval in the ledger.');
-			}
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
-			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data, error } = deployResult;
-			if (error) {
-				throw Error('Error on confirm transaction. Please try again later.');
-			}
-			setDeployHash(data.deployHash);
+		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const { deployHash, signedDeploy } = executeDeploy(
+			buildDeployFn,
+			stakeDetails.fromAddress,
+			stakeDetails.validator,
+		);
+		if (deployHash) {
+			setDeployHash(deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
 			handleToggle();
-		} catch (error) {
-			console.error(error);
-			toast(error.message);
 		}
 	};
 
@@ -109,7 +98,7 @@ const UndelegateForm = ({
 										tokenSymbol,
 										stakedAmount: stakedValidator.stakedAmount,
 										fee,
-										minAmount: MIN_CSPR_TRANSFER,
+										minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
 									})
 								}
 								initialValues={{ amount: 0, toAddress: '' }}

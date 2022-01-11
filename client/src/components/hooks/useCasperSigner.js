@@ -4,9 +4,10 @@ import { Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { updateConnectStatus, handleUnlockSigner, handleLockSigner } from '../../actions/signerActions';
 import { isConnectedCasper, getSignerStatus } from '../../selectors/signer';
-import { getPublicKey } from '../../selectors/user';
+import { getPublicKey, getLoginOptions } from '../../selectors/user';
 import { updatePublicKeyFromSigner } from '../../actions/userActions';
 import { connectCasperSigner } from '../../services/casperServices';
+import { CONNECTION_TYPES } from '../../constants/settings';
 import useLedger from './useLedger';
 
 const SIGNER_EVENTS = {
@@ -27,6 +28,7 @@ const useCasperSigner = () => {
 	//Selector
 	const publicKey = useSelector(getPublicKey);
 	const { isConnected, isAvailable } = useSelector(getSignerStatus);
+	const loginOptions = useSelector(getLoginOptions);
 
 	//State
 	const [errorMessage, setErrorMessage] = useState();
@@ -83,7 +85,7 @@ const useCasperSigner = () => {
 
 	useEffect(() => {
 		(async function () {
-			if (!publicKey) {
+			if (!publicKey && loginOptions.connectionType === CONNECTION_TYPES.casperSigner) {
 				const isConnected = await isConnectedCasper();
 				dispatch(updateConnectStatus(isConnected));
 				if (isConnected) {
@@ -91,7 +93,7 @@ const useCasperSigner = () => {
 				}
 			}
 		})();
-	}, [isConnected, dispatch, publicKey, isSignerInjected]);
+	}, [isConnected, dispatch, publicKey, isSignerInjected, loginOptions.connectionType]);
 
 	const ConnectSignerButton = () => {
 		return (

@@ -3,8 +3,8 @@ import React from 'react';
 import * as redux from 'react-redux';
 import * as toastify from 'react-toastify';
 import { render, cleanup, fireEvent, act } from '@testing-library/react';
-import { getSignedTransferDeploy } from '../../../services/userServices';
-import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { getTransferDeploy } from '../../../services/userServices';
+import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import { SendReceiveSection } from './index';
 
 jest.mock('../.././../actions/deployActions', () => {
@@ -24,14 +24,14 @@ jest.mock('qrcode.react', () => {
 jest.mock('../../../services/userServices', () => {
 	return {
 		__esModule: true,
-		getSignedTransferDeploy: jest.fn(),
+		getTransferDeploy: jest.fn(),
 	};
 });
 
 jest.mock('../../../services/tokenServices', () => {
 	return {
 		__esModule: true,
-		getSignedTransferTokenDeploy: jest.fn(),
+		getTransferTokenDeploy: jest.fn(),
 	};
 });
 
@@ -168,7 +168,7 @@ test('Should show confirm modal on click send if form is valid', async () => {
 
 test('Should show error if can not sign transaction', async () => {
 	spyOnUseSelector.mockReturnValue([]);
-	getSignedTransferDeploy.mockReturnValue({ error: { message: 'sign error' } });
+	getTransferDeploy.mockReturnValue({ error: { message: 'sign error' } });
 	const { getByText, queryAllByText, getByPlaceholderText } = render(
 		<SendReceiveSection displayBalance={1000} fromAddress="testaddress" />,
 	);
@@ -190,7 +190,7 @@ test('Should show error if can not sign transaction', async () => {
 
 test('Should show dispatch action if no error when confirm cspr transfer transaction', async () => {
 	spyOnUseSelector.mockReturnValue([]);
-	getSignedTransferDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
+	getTransferDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
 	mockDispatch.mockReturnValue({ data: 'testdeploy' });
 	const { getByText, queryAllByText, getByPlaceholderText } = render(
 		<SendReceiveSection displayBalance={1000} fromAddress="testaddress" />,
@@ -213,7 +213,7 @@ test('Should show dispatch action if no error when confirm cspr transfer transac
 
 test('Should show dispatch action if no error when confirm token transaction', async () => {
 	spyOnUseSelector.mockReturnValue([]);
-	getSignedTransferTokenDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
+	getTransferTokenDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
 	mockDispatch.mockReturnValue({ data: 'testdeploy' });
 	const { getByText, queryAllByText, getByPlaceholderText } = render(
 		<SendReceiveSection displayBalance={1000} fromAddress="testaddress" tokenSymbol="CDAS" />,

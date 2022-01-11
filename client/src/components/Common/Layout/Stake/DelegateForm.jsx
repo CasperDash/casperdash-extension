@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
-import { putDeploy } from '../../../../actions/deployActions';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { deploySelector } from '../../../../selectors/deploy';
 import { validateStakeForm } from '../../../../helpers/validator';
 import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
-import { getLedgerOptions } from '../../../../selectors/ledgerOptions';
-import { REVIEW_NOTI_MESS } from '../../../../constants/ledger';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
 
@@ -32,11 +28,9 @@ const DelegateForm = ({
 	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 
+	// Hook
 	const dispatch = useDispatch();
-
-	// Selector
-	const { loading: isDeploying } = useSelector(deploySelector);
-	const ledgerOptions = useSelector(getLedgerOptions);
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	const options = validators
 		? validators.map(({ public_key: publicKey, bidInfo }) => ({
@@ -74,30 +68,23 @@ const DelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		try {
-			if (ledgerOptions.casperApp) {
-				toast(REVIEW_NOTI_MESS);
-			}
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails, ledgerOptions);
-
-			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data, error } = deployResult;
-			if (error) {
-				throw Error('Error on confirm transaction. Please try again later.');
-			}
-			setDeployHash(data.deployHash);
+		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const { deployHash, signedDeploy } = executeDeploy(
+			buildDeployFn,
+			stakeDetails.fromAddress,
+			stakeDetails.validator,
+		);
+		if (deployHash) {
+			setDeployHash(deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
 			handleToggle();
-		} catch (error) {
-			console.error(error);
-			toast(error.message);
 		}
 	};
 

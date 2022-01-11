@@ -7,7 +7,7 @@ ledger : Ledger device
 default: custom adding, view mode
 */
 export const CONNECTION_TYPES = {
-	signer: 'caspersigner',
+	casperSigner: 'caspersigner',
 	ledger: 'ledger',
 };
 

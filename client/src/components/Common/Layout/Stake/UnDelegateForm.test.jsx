@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
 import * as toastify from 'react-toastify';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import UnDelegateForm from './UnDelegateForm';
 
 jest.mock('react-toastify');
@@ -22,7 +22,7 @@ jest.mock('../../../../actions/stakeActions', () => {
 jest.mock('../../../../services/stakeServices', () => {
 	return {
 		__esModule: true,
-		getSignedStakeDeploy: jest.fn(),
+		getStakeDeploy: jest.fn(),
 	};
 });
 afterEach(cleanup);
@@ -248,7 +248,7 @@ describe('Should show error if not valid form when click send', () => {
 describe('Stake with errors', () => {
 	test('Should show error if can not sign the transaction', async () => {
 		spyOnUseSelector.mockReturnValue([]);
-		getSignedStakeDeploy.mockRejectedValue(new Error('Signed error'));
+		getStakeDeploy.mockRejectedValue(new Error('Signed error'));
 		const stakedValidator = {
 			validator: '0x11',
 			info: {
@@ -293,7 +293,7 @@ describe('Stake with errors', () => {
 
 	test('Should show error if can not put the deploy', async () => {
 		spyOnUseSelector.mockReturnValue([]);
-		getSignedStakeDeploy.mockReturnValue({});
+		getStakeDeploy.mockReturnValue({});
 		mockDispatch.mockRejectedValue(new Error('Failed to put deploy'));
 		const stakedValidator = {
 			validator: '0x11',
@@ -341,7 +341,7 @@ describe('Stake with errors', () => {
 describe('Success to undelegate the valid amount', () => {
 	test('Should show deploy hash', async () => {
 		spyOnUseSelector.mockReturnValue([]);
-		getSignedStakeDeploy.mockReturnValue({
+		getStakeDeploy.mockReturnValue({
 			deploy: {
 				header: {
 					timestamp: '00001',
