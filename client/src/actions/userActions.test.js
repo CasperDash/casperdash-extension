@@ -1,5 +1,4 @@
 import { Signer } from 'casper-js-sdk';
-import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
 import { getUserDetails, updatePublicKeyFromSigner, setPublicKey } from './userActions';
 
 jest.mock('../services/localStorage', () => {
@@ -26,7 +25,12 @@ describe('getTokenAddressFromLocalStorage', () => {
 		expect(mockDispatch).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalledWith({
 			type: 'USERS.SET_USER_ADDRESS',
-			payload: { publicKey: 'test', connectionType: 'caspersigner' },
+			payload: {
+				publicKey: 'test',
+				loginOptions: {
+					connectionType: 'caspersigner',
+				},
+			},
 		});
 	});
 
@@ -52,6 +56,6 @@ describe('getTokenAddressFromLocalStorage', () => {
 test('setPublicKey', () => {
 	expect(setPublicKey('test')).toEqual({
 		type: 'USERS.SET_USER_ADDRESS',
-		payload: { publicKey: 'test' },
+		payload: { publicKey: 'test', loginOptions: {} },
 	});
 });

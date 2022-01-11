@@ -98,16 +98,3 @@ test('Show deploy contract modal when click on deploy link', () => {
 	fireEvent.click(deployBtn);
 	expect(getByText(/Deploy keys manager contract *./i).textContent).toBe('Deploy keys manager contract *.');
 });
-
-test('Should display pending add associated key transaction', () => {
-	spyOnUseSelector
-		.mockReturnValue([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce({ associatedKey: [{ hash: 'testdeploy' }] });
-
-	const { getByText, container } = render(<KeyManager />);
-	const viewHashBtn = container.querySelector('.bi-arrow-clockwise');
-	expect(Boolean(viewHashBtn.className)).toBe(true);
-	fireEvent.click(viewHashBtn);
-	expect(getByText(/testdeploy/i).textContent).toBe('testdeploy');
-});

@@ -79,12 +79,10 @@ test('Click on NFT to display details then close', () => {
 			metadata: [{ key: 'details', value: 'Token Details' }],
 		},
 	]);
-	const { getByText, getAllByText, getByAltText } = render(<NFTs />);
+	const { getByText, getByAltText } = render(<NFTs />);
 	expect(getByAltText('nft-image').src.includes('image/nft.png')).toBe(true);
 	fireEvent.click(getByText('Token Name'));
 	expect(getByText(/Token Details/i).textContent).toBe('Token Details');
-	fireEvent.click(getAllByText('Close')[0]);
-	expect(getByText(/Token Name/i).textContent).toBe('Token Name');
 });
 
 test('Missing TokenId', () => {
