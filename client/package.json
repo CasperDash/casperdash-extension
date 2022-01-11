@@ -6,6 +6,7 @@
 	"author": "CasperDash",
 	"license": "MIT",
 	"dependencies": {
+		"@babel/plugin-transform-runtime": "^7.16.7",
 		"@ledgerhq/hw-transport-webusb": "^6.20.0",
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
@@ -24,8 +25,10 @@
 		"dayjs": "^1.8.29",
 		"dotenv": "^10.0.0",
 		"formik": "^2.2.9",
+		"fuse.js": "^6.5.3",
 		"identicon.js": "^2.3.3",
 		"lodash-es": "^4.17.21",
+		"memoize-one": "^6.0.0",
 		"qrcode.react": "^1.0.1",
 		"qs": "^6.9.4",
 		"react": "^17.0.2",
@@ -43,9 +46,7 @@
 		"redux-thunk": "^2.3.0",
 		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
-		"ts-results": "^3.3.0",
-		"fuse.js": "^6.5.3",
-		"memoize-one": "^6.0.0"
+		"ts-results": "^3.3.0"
 	},
 	"reactSnapshot": {
 		"exclude": [
@@ -90,6 +91,7 @@
 		]
 	},
 	"devDependencies": {
+		"@svgr/webpack": "^6.1.2",
 		"babel-core": "^6.26.3",
 		"babel-loader": "^8.2.3",
 		"babel-preset-env": "^1.7.0",
@@ -109,7 +111,6 @@
 		"webpack-bundle-analyzer": "^4.5.0",
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.6.0",
-		"webpack-merge": "^5.8.0",
-		"@svgr/webpack": "^6.1.2"
+		"webpack-merge": "^5.8.0"
 	}
 }
