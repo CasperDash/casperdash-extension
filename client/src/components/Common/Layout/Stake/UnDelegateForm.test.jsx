@@ -19,6 +19,28 @@ jest.mock('../../../../actions/stakeActions', () => {
 	};
 });
 
+jest.mock('../../../hooks/useConfirmDeploy', () => {
+	return {
+		__esModule: true,
+		useConfirmDeploy: () => {
+			return {
+				executeDeploy: () => {
+					return {
+						deployHash: '0x123',
+						signedDeploy: {
+							deploy: {
+								header: {
+									timestamp: 1234,
+								},
+							},
+						},
+					};
+				},
+			};
+		},
+	};
+});
+
 jest.mock('../../../../services/stakeServices', () => {
 	return {
 		__esModule: true,
@@ -245,99 +267,6 @@ describe('Should show error if not valid form when click send', () => {
 	});
 });
 
-describe('Stake with errors', () => {
-	test('Should show error if can not sign the transaction', async () => {
-		spyOnUseSelector.mockReturnValue([]);
-		getStakeDeploy.mockRejectedValue(new Error('Signed error'));
-		const stakedValidator = {
-			validator: '0x11',
-			info: {
-				bidInfo: {
-					bid: {
-						delegation_rate: 2,
-						staked_amount: 3000000000,
-					},
-				},
-			},
-			stakedAmount: 1000,
-			tokenSymbol: 'CSPR',
-		};
-		const { getByText, container } = render(
-			<UnDelegateForm
-				fromAddress="0x000"
-				balance={999999}
-				fee={1}
-				stakedValidator={stakedValidator}
-				tokenSymbol="CSPR"
-			/>,
-		);
-
-		const undelegateBtn = container.querySelector('.cd_undelegate_btn');
-		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
-		await act(async () => {
-			fireEvent.change(stakeAmountInput, {
-				target: { value: 9 },
-			});
-		});
-
-		await act(async () => {
-			fireEvent.click(undelegateBtn);
-		});
-
-		await act(async () => {
-			fireEvent.click(getByText('Confirm'));
-		});
-
-		expect(toastify.toast).toHaveBeenCalled();
-	});
-
-	test('Should show error if can not put the deploy', async () => {
-		spyOnUseSelector.mockReturnValue([]);
-		getStakeDeploy.mockReturnValue({});
-		mockDispatch.mockRejectedValue(new Error('Failed to put deploy'));
-		const stakedValidator = {
-			validator: '0x11',
-			info: {
-				bidInfo: {
-					bid: {
-						delegation_rate: 2,
-						staked_amount: 3000000000,
-					},
-				},
-			},
-			stakedAmount: 1000,
-			tokenSymbol: 'CSPR',
-		};
-		const { getByText, container } = render(
-			<UnDelegateForm
-				fromAddress="0x000"
-				balance={999999}
-				fee={1}
-				stakedValidator={stakedValidator}
-				tokenSymbol="CSPR"
-			/>,
-		);
-
-		const unDelegateBtn = container.querySelector('.cd_undelegate_btn');
-		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
-		await act(async () => {
-			fireEvent.change(stakeAmountInput, {
-				target: { value: 9 },
-			});
-		});
-
-		await act(async () => {
-			fireEvent.click(unDelegateBtn);
-		});
-
-		await act(async () => {
-			fireEvent.click(getByText('Confirm'));
-		});
-
-		expect(toastify.toast).toHaveBeenCalled();
-	});
-});
-
 describe('Success to undelegate the valid amount', () => {
 	test('Should show deploy hash', async () => {
 		spyOnUseSelector.mockReturnValue([]);
@@ -348,11 +277,7 @@ describe('Success to undelegate the valid amount', () => {
 				},
 			},
 		});
-		mockDispatch.mockReturnValue({
-			data: {
-				deployHash: '0x113',
-			},
-		});
+
 		const stakedValidator = {
 			validator: '0x11',
 			info: {
@@ -366,13 +291,14 @@ describe('Success to undelegate the valid amount', () => {
 			stakedAmount: 1000,
 			tokenSymbol: 'CSPR',
 		};
-		const { getByText, container, queryAllByText } = render(
+		const { getByText, container, queryAllByText, debug } = render(
 			<UnDelegateForm
 				fromAddress="0x000"
 				balance={999999}
 				fee={1}
 				stakedValidator={stakedValidator}
 				tokenSymbol="CSPR"
+				handleToggle={() => {}}
 			/>,
 		);
 
@@ -392,6 +318,11 @@ describe('Success to undelegate the valid amount', () => {
 			fireEvent.click(getByText('Confirm'));
 		});
 
-		expect(queryAllByText('0x113')[0].textContent).toBe('0x113');
+		expect(queryAllByText('0x123')[0].textContent).toBe('0x123');
+
+		await act(async () => {
+			fireEvent.click(getByText('Close'));
+		});
+		expect(queryAllByText('0x123').length).toBe(0);
 	});
 });
