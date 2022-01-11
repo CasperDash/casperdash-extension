@@ -50,7 +50,7 @@ export const getListKeys = async (app, startPath = 0, numberOfKey = 1) => {
 	let publicKeys = [];
 	for (let index = 0; index < numberOfKey; index++) {
 		const keyIndex = startPath + index;
-		publicKeys.push({ publicKey: await getLedgerPublicKey(app, keyIndex), path: keyIndex });
+		publicKeys.push({ publicKey: await getLedgerPublicKey(app, keyIndex), keyIndex });
 	}
 	return publicKeys;
 };

@@ -10,7 +10,5 @@
 	"action": {
 		"default_icon": "512.png",
 		"default_popup": "popup.html"
-	},
-
-	"permissions": ["tabs", "webRequest"]
+	}
 }
