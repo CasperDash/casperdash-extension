@@ -1,8 +1,8 @@
 import { getTransferDeploy } from './userServices';
-import { getTransferDeploy, signDeploy } from './casperServices';
+import { buildTransferDeploy } from './casperServices';
 jest.mock('./casperServices', () => {
 	return {
-		getTransferDeploy: jest.fn(),
+		buildTransferDeploy: jest.fn(),
 		signDeploy: jest.fn(),
 	};
 });
@@ -15,15 +15,14 @@ test('getTransferDeploy', () => {
 		transferId: 0,
 		fee: 1,
 	});
-	expect(getTransferDeploy).toHaveBeenCalled();
-	expect(signDeploy).toHaveBeenCalled();
+	expect(buildTransferDeploy).toHaveBeenCalled();
 });
 
 test('getTransferDeploy return error', () => {
-	let value;
 	try {
-		value = getTransferDeploy();
-	} catch {
-		expect(Boolean(value.error)).toBe(true);
+		getTransferDeploy();
+	} catch (error) {
+		expect(console.error).toHaveBeenCalled();
+		expect(error.message).toBe('Failed to build transfer deploy.');
 	}
 });

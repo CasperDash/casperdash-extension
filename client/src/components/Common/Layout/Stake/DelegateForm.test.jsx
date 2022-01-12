@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
-import * as toastify from 'react-toastify';
 import { getStakeDeploy } from '../../../../services/stakeServices';
 import DelegateForm from './DelegateForm';
 
@@ -208,7 +207,7 @@ describe('Success to stake the valid amount', () => {
 				},
 			},
 		];
-		const { getByText, container, queryAllByText, debug } = render(
+		const { getByText, container, queryAllByText } = render(
 			<DelegateForm
 				fromAddress="0x000"
 				defaultValidator="0x123"

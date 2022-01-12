@@ -9,6 +9,7 @@ export const getTransferTokenDeploy = (transactionDetail = {}) => {
 		const toPbKey = CLPublicKey.fromHex(toAddress);
 		return buildTransferTokenDeploy(fromPbKey, toPbKey, amount * 10 ** decimals.hex, address, fee);
 	} catch (error) {
+		console.error(error);
 		throw new Error(`Failed to get token transfer deploy.`);
 	}
 };

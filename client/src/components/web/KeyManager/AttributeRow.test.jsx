@@ -22,20 +22,3 @@ test('Display all keys', () => {
 	fireEvent.click(editBtn);
 	expect(onEdit).toHaveBeenCalled();
 });
-
-test('Display deploy hash', () => {
-	spyOnUseSelector.mockReturnValue({ weight: [{ hash: 'testdeployhash' }] });
-	const onShowDeployHash = jest.fn();
-	const { getByText, container } = render(
-		<table>
-			<tbody>
-				<AttributeRow label="Weight" canEdit value={1} onShowDeployHash={onShowDeployHash} valueKey="weight" />
-			</tbody>
-		</table>,
-	);
-
-	expect(getByText('Weight').textContent).toBe('Weight');
-	const editBtn = container.querySelector('.bi-arrow-clockwise');
-	fireEvent.click(editBtn);
-	expect(onShowDeployHash).toHaveBeenCalled();
-});

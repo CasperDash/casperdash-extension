@@ -2,7 +2,7 @@
 import React from 'react';
 import * as redux from 'react-redux';
 import { render, fireEvent, cleanup, act } from '@testing-library/react';
-import { getSignedAccountWeightDeploy } from '../../../services/keyManager';
+import { buildAccountWeightDeploy } from '../../../services/keyManager';
 import KeyManager from './index';
 
 //Set up
@@ -24,7 +24,7 @@ jest.mock('../../../services/keyManager', () => {
 	//Mock the default export and named export 'foo'
 	return {
 		__esModule: true,
-		getSignedAccountWeightDeploy: jest.fn(),
+		buildAccountWeightDeploy: jest.fn(),
 	};
 });
 
@@ -76,38 +76,10 @@ test('Show no account with key management info ', async () => {
 	const addKeyBtn = container.querySelector('.bi-plus-circle');
 	fireEvent.click(addKeyBtn);
 	expect(getByText(/Edit Key/i).textContent).toBe('Edit Key');
-	getSignedAccountWeightDeploy.mockReturnValue({});
+	buildAccountWeightDeploy.mockReturnValue({});
 	mockDispatch.mockReturnValue({ data: { hash: 'test' } });
 	await act(async () => {
 		fireEvent.click(getByText(/Save/i));
 	});
 	expect(getByText(/Edit Key/i).textContent).toBe('Edit Key');
-});
-
-test('Show deploy contract modal when click on deploy link', () => {
-	spyOnUseSelector
-		.mockReturnValue([])
-		.mockReturnValueOnce('test')
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce(undefined);
-
-	const { getByText } = render(<KeyManager />);
-	const deployBtn = getByText('Click to deploy.');
-	fireEvent.click(deployBtn);
-	expect(getByText(/Deploy keys manager contract *./i).textContent).toBe('Deploy keys manager contract *.');
-});
-
-test('Should display pending add associated key transaction', () => {
-	spyOnUseSelector
-		.mockReturnValue([])
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce({ associatedKey: [{ hash: 'testdeploy' }] });
-
-	const { getByText, container } = render(<KeyManager />);
-	const viewHashBtn = container.querySelector('.bi-arrow-clockwise');
-	expect(Boolean(viewHashBtn.className)).toBe(true);
-	fireEvent.click(viewHashBtn);
-	expect(getByText(/testdeploy/i).textContent).toBe('testdeploy');
 });

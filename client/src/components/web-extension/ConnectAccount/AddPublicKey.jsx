@@ -31,7 +31,7 @@ export const AddPublicKey = () => {
 	return (
 		<section className="cd_we_add_public_key">
 			<div className="cd_we_input_label">Public Key</div>
-			<input value={publicKey} onChange={onChange} />
+			<input value={publicKey} onChange={onChange} placeholder="Enter public key" />
 			<div className="cd_error_text">{error}</div>
 			<Button onClick={onAddPublicKey} disabled={Boolean(error)}>
 				Add
