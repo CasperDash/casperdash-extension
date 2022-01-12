@@ -140,7 +140,7 @@ test('Should change switch theme class name', () => {
 });
 
 test('Should handle lock account button', async () => {
-	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('');
+	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('test');
 	const { queryAllByText } = render(<Heading />);
 	const lockAccountBtn = queryAllByText('Logout')[0];
 	await fireEvent.click(lockAccountBtn);

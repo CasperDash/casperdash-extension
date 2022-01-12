@@ -1,10 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import * as redux from 'react-redux';
-import * as toastify from 'react-toastify';
 import { render, cleanup, fireEvent, act } from '@testing-library/react';
-import { getTransferDeploy } from '../../../services/userServices';
-import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import { SendReceiveSection } from './index';
 
 jest.mock('../.././../actions/deployActions', () => {
@@ -164,74 +161,6 @@ test('Should show confirm modal on click send if form is valid', async () => {
 	expect(getByText('Recipient').textContent).toBe('Recipient');
 	expect(getByText('Transfer Id (optional)').textContent).toBe('Transfer Id (optional)');
 	expect(baseElement.querySelector('.cd_confirm_modal_content').className.includes('show')).toBe(true);
-});
-
-test('Should show error if can not sign transaction', async () => {
-	spyOnUseSelector.mockReturnValue([]);
-	getTransferDeploy.mockReturnValue({ error: { message: 'sign error' } });
-	const { getByText, queryAllByText, getByPlaceholderText } = render(
-		<SendReceiveSection displayBalance={1000} fromAddress="testaddress" />,
-	);
-	const addressInput = getByPlaceholderText('Insert address');
-	const sendBtn = queryAllByText('Send')[1];
-	await act(async () => {
-		fireEvent.change(addressInput, {
-			target: { value: '0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad' },
-		});
-	});
-	await act(async () => {
-		fireEvent.click(sendBtn);
-	});
-	await act(async () => {
-		fireEvent.click(getByText('Confirm'));
-	});
-	expect(toastify.toast).toHaveBeenCalled();
-});
-
-test('Should show dispatch action if no error when confirm cspr transfer transaction', async () => {
-	spyOnUseSelector.mockReturnValue([]);
-	getTransferDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
-	mockDispatch.mockReturnValue({ data: 'testdeploy' });
-	const { getByText, queryAllByText, getByPlaceholderText } = render(
-		<SendReceiveSection displayBalance={1000} fromAddress="testaddress" />,
-	);
-	const addressInput = getByPlaceholderText('Insert address');
-	const sendBtn = queryAllByText('Send')[1];
-	await act(async () => {
-		fireEvent.change(addressInput, {
-			target: { value: '0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad' },
-		});
-	});
-	await act(async () => {
-		fireEvent.click(sendBtn);
-	});
-	await act(async () => {
-		fireEvent.click(getByText('Confirm'));
-	});
-	expect(mockDispatch).toBeCalledTimes(2);
-});
-
-test('Should show dispatch action if no error when confirm token transaction', async () => {
-	spyOnUseSelector.mockReturnValue([]);
-	getTransferTokenDeploy.mockReturnValue({ deploy: { header: { timestamp: '2021' } } });
-	mockDispatch.mockReturnValue({ data: 'testdeploy' });
-	const { getByText, queryAllByText, getByPlaceholderText } = render(
-		<SendReceiveSection displayBalance={1000} fromAddress="testaddress" tokenSymbol="CDAS" />,
-	);
-	const addressInput = getByPlaceholderText('Insert address');
-	const sendBtn = queryAllByText('Send')[1];
-	await act(async () => {
-		fireEvent.change(addressInput, {
-			target: { value: '0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad' },
-		});
-	});
-	await act(async () => {
-		fireEvent.click(sendBtn);
-	});
-	await act(async () => {
-		fireEvent.click(getByText('Confirm'));
-	});
-	expect(mockDispatch).toBeCalledTimes(2);
 });
 
 test('Should copy address when click on copy button', async () => {
