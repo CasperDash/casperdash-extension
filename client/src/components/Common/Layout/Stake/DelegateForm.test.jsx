@@ -207,7 +207,7 @@ describe('Success to stake the valid amount', () => {
 				},
 			},
 		];
-		const { getByText, container, queryAllByText, debug } = render(
+		const { getByText, container, queryAllByText } = render(
 			<DelegateForm
 				fromAddress="0x000"
 				defaultValidator="0x123"
