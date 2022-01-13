@@ -1,4 +1,4 @@
-import { toMotes } from './currency';
+import { toMotes, toCSPR } from './currency';
 
 describe('toMotes', () => {
 	test('can convert cspr to mote with valid string number', () => {
@@ -15,5 +15,14 @@ describe('toMotes', () => {
 
 	test('can not covert cspr to mote with string', () => {
 		expect(toMotes('casperdash')).toEqual('-');
+	});
+});
+
+describe('toCSPR', () => {
+	test('can convert mote to CSPR with valid string number', () => {
+		expect(toCSPR(10000000000).toString()).toEqual('10');
+	});
+	test('can not covert mote to CSPR with string', () => {
+		expect(toCSPR('casperdash')).toEqual('-');
 	});
 });
