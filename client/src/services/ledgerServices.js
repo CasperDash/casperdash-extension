@@ -19,7 +19,7 @@ export const signDeployByLedger = async (deploy, options = {}) => {
 	if (!responseDeploy.signatureRS) {
 		console.error(responseDeploy.errorMessage);
 		transport.close();
-		throw Error(CONNECT_ERROR_MESSAGE);
+		throw Error(getLedgerError({}, responseDeploy.returnCode));
 	}
 
 	let signedDeploy = DeployUtil.setSignature(
@@ -55,9 +55,12 @@ export const getListKeys = async (app, startPath = 0, numberOfKey = 1) => {
 	return publicKeys;
 };
 
-export const getLedgerError = (error) => {
-	if ('TransportInterfaceNotAvailable' === error.name) {
+export const getLedgerError = (error, code) => {
+	if ('TransportInterfaceNotAvailable' === error.name || code === 27014) {
 		return CONNECT_ERROR_MESSAGE;
+	}
+	if (code === 27012) {
+		return 'Unsupported Deploy';
 	}
 	return error.message;
 };

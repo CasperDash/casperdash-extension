@@ -236,11 +236,6 @@ describe('Success to stake the valid amount', () => {
 			fireEvent.click(getByText('Confirm'));
 		});
 
-		expect(queryAllByText('0x113')[0].textContent).toBe('0x113');
-		await act(async () => {
-			fireEvent.click(getByText('Close'));
-		});
-
 		expect(queryAllByText('0x113').length).toBe(0);
 	});
 });

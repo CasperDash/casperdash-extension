@@ -25,7 +25,6 @@ const DelegateForm = ({
 }) => {
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
-	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 
 	// Hook
@@ -43,7 +42,6 @@ const DelegateForm = ({
 
 	// Function
 	const onCloseModal = () => {
-		setDeployHash(null);
 		setStakeDetails({});
 		setShowModal(false);
 	};
@@ -69,13 +67,12 @@ const DelegateForm = ({
 
 	const onConfirm = async () => {
 		const buildDeployFn = () => getStakeDeploy(stakeDetails);
-		const { deployHash, signedDeploy } = executeDeploy(
+		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,
 			stakeDetails.fromAddress,
 			stakeDetails.validator,
 		);
 		if (deployHash) {
-			setDeployHash(deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
@@ -84,6 +81,7 @@ const DelegateForm = ({
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
+			onCloseModal();
 			handleToggle();
 		}
 	};
@@ -196,7 +194,6 @@ const DelegateForm = ({
 							currentPrice={csprPrice}
 							onClose={onCloseModal}
 							onConfirm={onConfirm}
-							deployHash={deployHash}
 							isDeploying={isDeploying}
 						/>
 					</div>

@@ -51,9 +51,15 @@ export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting }) =
 			<Modal.Footer className="cd_edit_modal_footer">
 				<div />
 				<div>
-					<Button onClick={onMint} disabled={isMinting}>
-						{isMinting ? 'Minting...' : 'Mint'}
-					</Button>
+					{typeof onMint === 'function' ? (
+						<Button onClick={onMint} disabled={isMinting}>
+							{isMinting ? 'Minting...' : 'Mint'}
+						</Button>
+					) : (
+						<Button onClick={handleClose} variant="secondary">
+							Close
+						</Button>
+					)}
 				</div>
 			</Modal.Footer>
 		</Modal>

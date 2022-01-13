@@ -34,7 +34,7 @@ export const Confirm = () => {
 				amount: stake.amount,
 				entryPoint,
 			});
-		const { deployHash, signedDeploy } = executeDeploy(buildDeployFn, publicKey, stake.validator);
+		const { deployHash, signedDeploy } = await executeDeploy(buildDeployFn, publicKey, stake.validator);
 		if (deployHash) {
 			dispatch(
 				pushStakeToLocalStorage(publicKey, {
