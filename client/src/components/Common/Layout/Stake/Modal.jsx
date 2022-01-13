@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import ModalRow from '../Modal/Row';
-import SuccessRow from '../Modal/SuccessRow';
 import CurrencyModalRow from '../Modal/CurrencyModalRow';
 
 export const ConfirmationModal = ({
@@ -12,7 +11,6 @@ export const ConfirmationModal = ({
 	amount,
 	fee,
 	currentPrice,
-	deployHash,
 	isDeploying,
 	onClose,
 	onConfirm,
@@ -37,18 +35,11 @@ export const ConfirmationModal = ({
 			<CurrencyModalRow label="Transaction fee" amount={fee} currentPrice={currentPrice} />
 			<hr />
 			<CurrencyModalRow label="Total" amount={amount + fee} currentPrice={currentPrice} customClass="total" />
-			{deployHash && <SuccessRow label="Deploy hash" value={deployHash} />}
 		</Modal.Body>
 		<Modal.Footer className="cd_confirm_modal_footer">
-			{deployHash ? (
-				<Button className="cd_btn_primary_active" onClick={onClose}>
-					Close
-				</Button>
-			) : (
-				<Button className="cd_btn_primary_active" onClick={onConfirm}>
-					{isDeploying ? 'Confirming...' : 'Confirm'}
-				</Button>
-			)}
+			<Button className="cd_btn_primary_active" onClick={onConfirm} disabled={isDeploying}>
+				{isDeploying ? 'Confirming...' : 'Confirm'}
+			</Button>
 		</Modal.Footer>
 	</Modal>
 );

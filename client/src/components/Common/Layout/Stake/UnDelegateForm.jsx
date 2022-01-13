@@ -24,7 +24,6 @@ const UndelegateForm = ({
 }) => {
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
-	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 
 	// Hook
@@ -48,13 +47,12 @@ const UndelegateForm = ({
 
 	const onConfirm = async () => {
 		const buildDeployFn = () => getStakeDeploy(stakeDetails);
-		const { deployHash, signedDeploy } = executeDeploy(
+		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,
 			stakeDetails.fromAddress,
 			stakeDetails.validator,
 		);
 		if (deployHash) {
-			setDeployHash(deployHash);
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
@@ -63,13 +61,13 @@ const UndelegateForm = ({
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
+			onCloseModal();
 			handleToggle();
 		}
 	};
 
 	// Function
 	const onCloseModal = () => {
-		setDeployHash(null);
 		setStakeDetails({});
 		setShowModal(false);
 	};
@@ -188,7 +186,6 @@ const UndelegateForm = ({
 								currentPrice={csprPrice}
 								onClose={onCloseModal}
 								onConfirm={onConfirm}
-								deployHash={deployHash}
 								isDeploying={isDeploying}
 							/>
 						</div>
