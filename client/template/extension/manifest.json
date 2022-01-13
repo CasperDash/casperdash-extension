@@ -1,0 +1,14 @@
+{
+	"short_name": "CasperDash",
+	"name": "CasperDash",
+	"description": "A Casper Wallet",
+	"version": "1.0.0",
+	"manifest_version": 3,
+	"icons": {
+		"512": "512.png"
+	},
+	"action": {
+		"default_icon": "512.png",
+		"default_popup": "popup.html"
+	}
+}

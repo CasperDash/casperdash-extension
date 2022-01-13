@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
+import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { validateTransferForm } from '../../../helpers/validator';
-import { getSignedTransferDeploy } from '../../../services/userServices';
-import { putDeploy, pushTransferToLocalStorage } from '../.././../actions/deployActions';
-import { deploySelector } from '../../../selectors/deploy';
-import { CSPR_TRANSFER_FEE } from '../../../constants/key';
+import { getTransferDeploy } from '../../../services/userServices';
+import { pushTransferToLocalStorage } from '../.././../actions/deployActions';
+import { getConfigKey } from '../../../services/configurationServices';
 import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format';
-import { getSignedTransferTokenDeploy } from '../../../services/tokenServices';
+import { getTransferTokenDeploy } from '../../../services/tokenServices';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { ConfirmModal } from './ConfirmModal';
 
 export const SendReceiveSection = ({
@@ -20,20 +21,16 @@ export const SendReceiveSection = ({
 	csprPrice,
 	tokenSymbol = 'CSPR',
 	minAmount = 2.5,
-	transferFee = CSPR_TRANSFER_FEE,
+	transferFee = getConfigKey('CSPR_TRANSFER_FEE'),
 	tokenInfo,
 	csprBalance,
 }) => {
 	const dispatch = useDispatch();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 	const [transactionDetails, setTransactionDetails] = useState({});
-	const [signedError, setSignerError] = useState(null);
-	const [deployHash, setDeployHash] = useState(null);
-
-	//Selector
-	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
 
 	const isTokenTransfer = tokenSymbol !== 'CSPR';
 
@@ -43,26 +40,37 @@ export const SendReceiveSection = ({
 		setFieldValue('sendAmount', amount);
 	};
 
+	const buildDeploy = (transferId) => {
+		return !isTokenTransfer
+			? getTransferDeploy({ ...transactionDetails, transferId })
+			: getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
+	};
+
+	const updateLocalStorage = ({ deployHash, signedDeploy, transferId }) => {
+		dispatch(
+			pushTransferToLocalStorage(fromAddress, {
+				...transactionDetails,
+				deployHash: deployHash,
+				status: 'pending',
+				timestamp: signedDeploy.deploy.header.timestamp,
+				transferId: transferId,
+				...tokenInfo,
+				symbol: tokenSymbol,
+			}),
+		);
+	};
+
 	const onConfirmTransaction = async (transferId) => {
-		const signedDeploy = !isTokenTransfer
-			? await getSignedTransferDeploy({ ...transactionDetails, transferId })
-			: await getSignedTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
-		if (!signedDeploy.error) {
-			const { data: hash } = await dispatch(putDeploy(signedDeploy));
-			setDeployHash(hash.deployHash);
-			dispatch(
-				pushTransferToLocalStorage(fromAddress, {
-					...transactionDetails,
-					deployHash: hash.deployHash,
-					status: 'pending',
-					timestamp: signedDeploy.deploy.header.timestamp,
-					transferId: transferId,
-					...tokenInfo,
-					symbol: tokenSymbol,
-				}),
-			);
-		} else {
-			setSignerError(signedDeploy.error.message);
+		const buildDeployFn = () => buildDeploy(transferId);
+
+		const { deployHash, signedDeploy } = await executeDeploy(
+			buildDeployFn,
+			transactionDetails.fromAddress,
+			transactionDetails.toAddress,
+		);
+		if (deployHash) {
+			onCloseConfirmModal();
+			updateLocalStorage({ deployHash, signedDeploy, transferId });
 		}
 	};
 
@@ -77,8 +85,6 @@ export const SendReceiveSection = ({
 	};
 
 	const onCloseConfirmModal = () => {
-		setSignerError(null);
-		setDeployHash(null);
 		setShowConfirmModal(false);
 	};
 
@@ -104,14 +110,18 @@ export const SendReceiveSection = ({
 							{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit}>
 									<h3 className="cd_send_receive_heading">
-										<img src="assets/image/receive-heading-icon.svg" alt="receive-icon" />
+										<img src={receiveHeading} alt="receive-icon" />
 										Send <span className="cd_send_receive_token_symbol">{tokenSymbol}</span>
 									</h3>
 
 									<div className="cd_send_balance_content">
 										<span className="cd_send_balance_heading">Total Balance</span>
 										<span className="cd_send_balance_value">
-											{toFormattedNumber(displayBalance - values.sendAmount - transferFee)}
+											{toFormattedNumber(
+												displayBalance -
+													values.sendAmount -
+													(isTokenTransfer ? 0 : transferFee),
+											)}
 										</span>
 									</div>
 									<div className="cd_send_qr_address">
@@ -185,7 +195,7 @@ export const SendReceiveSection = ({
 				<div className="cd_send_receive_content_column">
 					<div className="cd_send_receive_inner_content">
 						<h3 className="cd_send_receive_heading cd_receive_heading">
-							<img src="assets/image/receive-heading-icon.svg" alt="send-icon" />
+							<img src={receiveHeading} alt="send-icon" />
 							Receive
 						</h3>
 						<div className="cd_receive_address_content">
@@ -240,8 +250,6 @@ export const SendReceiveSection = ({
 				{...transactionDetails}
 				fee={transferFee}
 				csprPrice={csprPrice}
-				deployHash={deployHash}
-				deployError={deployHash ? '' : deployError || signedError}
 				isDeploying={isDeploying}
 				tokenSymbol={tokenSymbol}
 				isTokenTransfer={isTokenTransfer}

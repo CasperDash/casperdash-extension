@@ -1,15 +1,11 @@
 import * as casper from 'casper-js-sdk';
 import * as keyManager from './keyManager';
-import * as casperServices from './casperServices';
-import * as request from './request';
 
 const spyOnDeployParams = jest.spyOn(casper.DeployUtil, 'DeployParams');
 const spyFromMap = jest.spyOn(casper.RuntimeArgs, 'fromMap');
 const spyOnNewStoredContractByName = jest.spyOn(casper.DeployUtil.ExecutableDeployItem, 'newStoredContractByName');
 const spyStandardPayment = jest.spyOn(casper.DeployUtil, 'standardPayment');
 const spyMakeDeploy = jest.spyOn(casper.DeployUtil, 'makeDeploy');
-const spySignDeploy = jest.spyOn(casperServices, 'signDeploy');
-const spyDeployFromJson = jest.spyOn(casper.DeployUtil, 'deployFromJson');
 
 test('buildKeyManagerDeploy', () => {
 	const pk = casper.CLPublicKey.fromHex('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad');
@@ -54,56 +50,38 @@ test('getKeyManagementThresholdDeploy', () => {
 	]);
 });
 
-test('getSignedAccountWeightDeploy', async () => {
-	keyManager.getSignedAccountWeightDeploy(2, '0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad');
-	expect(spySignDeploy).toHaveBeenCalled();
+test('buildAccountWeightDeploy return error', async () => {
+	try {
+		keyManager.buildAccountWeightDeploy(
+			2,
+			'0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
+			'test',
+		);
+	} catch (error) {
+		expect(error.message).toBe('Error on build set account weight deploy');
+	}
 });
 
-test('getSignedAccountWeightDeploy return error', async () => {
-	const value = await keyManager.getSignedAccountWeightDeploy(
-		2,
-		'0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
-		'test',
-	);
-	expect(Boolean(value.error)).toBe(true);
+test('buildAccountDeploymentDeploy return error', async () => {
+	try {
+		keyManager.buildAccountDeploymentDeploy(2, 'test');
+	} catch (error) {
+		expect(error.message).toBe('Error on build set account deployment deploy');
+	}
 });
 
-test('getSignedAccountDeploymentDeploy', async () => {
-	await keyManager.getSignedAccountDeploymentDeploy(
-		2,
-		'0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
-	);
-	expect(spySignDeploy).toHaveBeenCalled();
-});
-
-test('getSignedAccountDeploymentDeploy return error', async () => {
-	const value = await keyManager.getSignedAccountDeploymentDeploy(2, 'test');
-	expect(Boolean(value.error)).toBe(true);
-});
-
-test('getSignedKeyManagementThresholdDeploy', async () => {
-	await keyManager.getSignedKeyManagementThresholdDeploy(
-		2,
-		'0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad',
-	);
-	expect(spySignDeploy).toHaveBeenCalled();
-});
-
-test('getSignedKeyManagementThresholdDeploy return error', async () => {
-	const value = await keyManager.getSignedKeyManagementThresholdDeploy(2, 'test');
-	expect(Boolean(value.error)).toBe(true);
-});
-
-test('getKeyManagerContractDeploy', async () => {
-	const spyOnRequest = jest.spyOn(request, 'request');
-	spyOnRequest.mockReturnValue({});
-	await keyManager.getKeyManagerContractDeploy('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad');
-	expect(spySignDeploy).toHaveBeenCalled();
-	expect(spyOnRequest).toHaveBeenCalled();
-	expect(spyDeployFromJson).toHaveBeenCalled();
+test('buildKeyManagementThresholdDeploy return error', async () => {
+	try {
+		keyManager.buildKeyManagementThresholdDeploy(2, 'test');
+	} catch (error) {
+		expect(error.message).toBe('Error on build set account threshold deploy');
+	}
 });
 
 test('getKeyManagerContractDeploy return error', async () => {
-	const value = await keyManager.getKeyManagerContractDeploy('test');
-	expect(Boolean(value.error)).toBe(true);
+	try {
+		await keyManager.getKeyManagerContractDeploy('test');
+	} catch (error) {
+		expect(error.message).toBe('Error on build set key manager contract deploy');
+	}
 });

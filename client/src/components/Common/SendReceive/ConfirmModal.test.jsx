@@ -19,12 +19,6 @@ test('Should update transfer id', () => {
 	expect(transferIdInput.value).toBe('123123');
 });
 
-test('Should show deploy hash if any', () => {
-	const { getByText } = render(<ConfirmModal show deployHash="testdeployhash" />);
-	expect(getByText('testdeployhash').textContent).toBe('testdeployhash');
-	expect(getByText('Transaction Hash').textContent).toBe('Transaction Hash');
-});
-
 test('Should show total fee in usd ', () => {
 	const { getByText } = render(
 		<ConfirmModal show deployHash="testdeployhash" amount={100} currentPrice={1} csprPrice={10} fee={2} />,

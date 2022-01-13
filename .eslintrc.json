@@ -4,7 +4,9 @@
 		"commonjs": true,
 		"node": true,
 		"es6": true,
-		"jest": true
+		"jest": true,
+		"webextensions": true,
+		"es2020": true
 	},
 	"globals": {
 		"describe": true,

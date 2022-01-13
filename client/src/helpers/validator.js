@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
+import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
 
 /**
  * Check value is public key.
@@ -15,10 +16,62 @@ export const isValidPublicKey = (publicKey) => {
 	}
 };
 
+/**
+ * validate NFT Mint Form
+ * @param {object} values
+ */
+export const validateNFTMintForm = (values) => {
+	let errors = {};
+	if (!values.nftContract) {
+		errors.nftContract = 'Required';
+	}
+	if (!values.name) {
+		errors.name = 'Required';
+	}
+	if (!values.image) {
+		errors.image = 'Required';
+	}
+	if (values.image && values.image.type && !values.image.type.includes('image')) {
+		errors.image = 'Should be image.';
+	}
+	if (values.toAddress && !isValidPublicKey(values.toAddress)) {
+		errors.toAddress = 'Invalid address.';
+	}
+
+	new Array(MAX_METADATA_ATTRIBUTES).fill().forEach((value, index) => {
+		const attrName = `attribute${index}`;
+		const attrValue = `value${index}`;
+		if (values[attrName] && values[attrName].length > 20) {
+			errors[attrName] = 'Max is 20 chars.';
+		}
+		if (values[attrValue] && values[attrValue].length > 20) {
+			errors[attrValue] = 'Max is 20 chars.';
+		}
+	});
+
+	return errors;
+};
+
 const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
 	NOT_ENOUGH_BALANCE: 'Not enough balance.',
 	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
+};
+
+const getSendAmountError = ({ sendAmount, minAmount, tokenSymbol, displayBalance, transferFee }) => {
+	if (minAmount && sendAmount < minAmount) {
+		return `Amount must be at least ${minAmount} ${tokenSymbol}.`;
+	}
+	if (sendAmount <= 0) {
+		return `Amount must be more than 0 ${tokenSymbol}.`;
+	}
+	if (sendAmount > displayBalance) {
+		return 'Not enough balance.';
+	}
+	if (tokenSymbol === 'CSPR' && sendAmount + transferFee > displayBalance) {
+		return 'Not enough balance.';
+	}
+	return '';
 };
 
 /**
@@ -38,27 +91,19 @@ export const validateTransferForm = ({
 	let errors = {};
 	// to address
 	if (!toAddress) {
-		return { toAddress: 'Required.' };
+		errors.toAddress = 'Required.';
 	}
-	if (!isValidPublicKey(toAddress)) {
-		return { toAddress: 'Invalid address.' };
+	if (toAddress && !isValidPublicKey(toAddress)) {
+		errors.toAddress = 'Invalid address.';
 	}
 	// send amount
-	if (sendAmount < minAmount) {
-		return { sendAmount: `Amount must be at least ${minAmount} ${tokenSymbol}.` };
-	}
-	if (sendAmount <= 0) {
-		return { sendAmount: `Amount must be more than 0 ${tokenSymbol}.` };
-	}
-	if (sendAmount > displayBalance) {
-		return { sendAmount: 'Not enough balance.' };
-	}
-	if (tokenSymbol === 'CSPR' && sendAmount + transferFee > displayBalance) {
-		return { sendAmount: 'Not enough balance.' };
+	const sendAmountError = getSendAmountError({ sendAmount, minAmount, tokenSymbol, displayBalance, transferFee });
+	if (sendAmountError) {
+		errors.sendAmount = sendAmountError;
 	}
 	//cspr balance
 	if (csprBalance < transferFee) {
-		return { transferFee: 'Not enough CSPR balance.' };
+		errors.transferFee = 'Not enough CSPR balance.';
 	}
 	return errors;
 };

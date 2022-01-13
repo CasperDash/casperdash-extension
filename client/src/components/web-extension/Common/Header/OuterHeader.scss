@@ -1,0 +1,15 @@
+.cd_we_outer_header {
+	display: flex;
+	padding: 15px;
+	width: 100%;
+	align-items: center;
+	.cd_we_back_btn {
+		padding-right: 10px;
+		cursor: pointer;
+	}
+	.cd_we_title {
+		margin: auto;
+		font-size: 22px;
+		font-weight: 600;
+	}
+}

@@ -1,6 +1,13 @@
 import { Signer } from 'casper-js-sdk';
 import { getUserDetails, updatePublicKeyFromSigner, setPublicKey } from './userActions';
 
+jest.mock('../services/localStorage', () => {
+	return {
+		setLocalStorageValue: jest.fn(),
+		getLocalStorageValue: jest.fn(),
+	};
+});
+
 test('getUserDetails', () => {
 	expect(getUserDetails('test')).toEqual({
 		type: 'USERS.FETCH_USER_DETAILS',
@@ -16,7 +23,15 @@ describe('getTokenAddressFromLocalStorage', () => {
 		await updatePublicKeyFromSigner()(mockDispatch);
 		expect(spyGetPublicKey).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
-		expect(mockDispatch).toHaveBeenCalledWith({ type: 'USERS.SET_USER_ADDRESS', payload: { publicKey: 'test' } });
+		expect(mockDispatch).toHaveBeenCalledWith({
+			type: 'USERS.SET_USER_ADDRESS',
+			payload: {
+				publicKey: 'test',
+				loginOptions: {
+					connectionType: 'caspersigner',
+				},
+			},
+		});
 	});
 
 	test('Should dispatch to set status to lock if can not get public key from signer', async () => {
@@ -41,6 +56,6 @@ describe('getTokenAddressFromLocalStorage', () => {
 test('setPublicKey', () => {
 	expect(setPublicKey('test')).toEqual({
 		type: 'USERS.SET_USER_ADDRESS',
-		payload: { publicKey: 'test' },
+		payload: { publicKey: 'test', loginOptions: {} },
 	});
 });

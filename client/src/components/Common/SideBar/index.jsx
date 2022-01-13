@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logoFullSilver from 'assets/image/casperdash-beta-red-silver.png';
+import logo from 'assets/image/Logo-only-beta.png';
+import logoFullBlack from 'assets/image/casperdash-beta-red-black.png';
+import rightIcon from 'assets/image/right-two-arrow.svg';
 import './css/SideBar.css';
-
 const SIDEBAR_ITEMS = [
 	{
 		key: 'dashboard',
@@ -185,18 +188,10 @@ const SideBar = ({ modules }) => {
 							</svg>
 						</button>
 						<Link to={'/dashboard'} onClick={() => setSelectedTitle('dashboard')}>
+							<img src={logoFullSilver} alt="logo" className="img-fluid cd_main_logo" />
+							<img src={logo} alt="logo" className="img-fluid cd_mini_sidebar_logo" />
 							<img
-								src="assets/image/casperdash-beta-red-silver.png"
-								alt="logo"
-								className="img-fluid cd_main_logo"
-							/>
-							<img
-								src="assets/image/Logo-only-beta.png"
-								alt="logo"
-								className="img-fluid cd_mini_sidebar_logo"
-							/>
-							<img
-								src="assets/image/casperdash-beta-red-black.png"
+								src={logoFullBlack}
 								alt="light-logo"
 								className="img-fluid cd_light_theme_logo d-none"
 							/>
@@ -218,7 +213,7 @@ const SideBar = ({ modules }) => {
 						))}
 					</ul>
 					<button className="cd_page_sidebar_toggle_icon" onClick={handleToggle}>
-						<img src="assets/image/right-two-arrow.svg" alt="right-two-arrow" />
+						<img src={rightIcon} alt="right-two-arrow" />
 					</button>
 				</div>
 			</section>

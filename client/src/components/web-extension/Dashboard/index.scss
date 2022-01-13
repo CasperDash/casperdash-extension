@@ -1,0 +1,33 @@
+.cd_we_main_content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin: 10px;
+	background: var(--component-background);
+	border-radius: 24px;
+	backdrop-filter: blur(40px);
+}
+.cd_we_main_details {
+	height: calc(100% - 200px - 10px + 64px) !important;
+	overflow: auto;
+	border-radius: 26px 26px 0 0;
+	padding-bottom: 60px;
+	background: var(--component-background);
+	.cd_we_grid {
+		.cd_we_item {
+			.cd_we_item_left {
+				.cd_we_grid_icon {
+					background: var(--primary-light-color);
+					width: 40px;
+					height: 40px;
+					padding: 10px;
+				}
+			}
+		}
+	}
+}
+
+.cd_we_action {
+	margin: 15px;
+	cursor: pointer;
+}

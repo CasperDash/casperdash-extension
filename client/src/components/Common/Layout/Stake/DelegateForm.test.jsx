@@ -1,8 +1,10 @@
 import React from 'react';
 import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import DelegateForm from './DelegateForm';
+
+jest.mock('react-toastify');
 jest.mock('../../../../actions/deployActions', () => {
 	return {
 		__esModule: true,
@@ -19,9 +21,32 @@ jest.mock('../../../../actions/stakeActions', () => {
 jest.mock('../../../../services/stakeServices', () => {
 	return {
 		__esModule: true,
-		getSignedStakeDeploy: jest.fn(),
+		getStakeDeploy: jest.fn(),
 	};
 });
+
+jest.mock('../../../hooks/useConfirmDeploy', () => {
+	return {
+		__esModule: true,
+		useConfirmDeploy: () => {
+			return {
+				executeDeploy: () => {
+					return {
+						deployHash: '0x113',
+						signedDeploy: {
+							deploy: {
+								header: {
+									timestamp: 1234,
+								},
+							},
+						},
+					};
+				},
+			};
+		},
+	};
+});
+
 afterEach(cleanup);
 let spyOnUseSelector;
 let spyOnUseDispatch;
@@ -157,106 +182,10 @@ describe('Should show error if not valid form when click send', () => {
 	});
 });
 
-describe('Stake with errors', () => {
-	test('Should show error if can not sign the transaction', async () => {
-		spyOnUseSelector.mockReturnValue([]);
-		getSignedStakeDeploy.mockRejectedValue(new Error('Signed error'));
-		const validators = [
-			{
-				public_key: '0x123',
-				bidInfo: {
-					bid: {
-						delegate_rate: 1,
-					},
-				},
-			},
-		];
-		const { getByText, container, queryByText } = render(
-			<DelegateForm
-				fromAddress="0x000"
-				defaultValidator="0x123"
-				balance={999999}
-				fee={1}
-				validators={validators}
-				tokenSymbol="CSPR"
-			/>,
-		);
-
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
-		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
-		await act(async () => {
-			fireEvent.change(stakeAmountInput, {
-				target: { value: 9 },
-			});
-		});
-
-		await act(async () => {
-			fireEvent.click(stakeBtn);
-		});
-
-		await act(async () => {
-			fireEvent.click(getByText('Confirm'));
-		});
-
-		expect(queryByText('Signed error').textContent).toBe('Signed error');
-	});
-
-	test('Should show error if can not put the deploy', async () => {
-		spyOnUseSelector.mockReturnValue([]);
-		getSignedStakeDeploy.mockReturnValue({});
-		mockDispatch.mockRejectedValue(new Error('Failed to put deploy'));
-		const validators = [
-			{
-				public_key: '0x123',
-				bidInfo: {
-					bid: {
-						delegate_rate: 1,
-					},
-				},
-			},
-		];
-		const { getByText, container, queryByText } = render(
-			<DelegateForm
-				fromAddress="0x000"
-				defaultValidator="0x123"
-				balance={999999}
-				fee={1}
-				validators={validators}
-				tokenSymbol="CSPR"
-				csprPrice={0.001}
-			/>,
-		);
-
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
-		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
-		await act(async () => {
-			fireEvent.change(stakeAmountInput, {
-				target: { value: 9 },
-			});
-		});
-
-		await act(async () => {
-			fireEvent.click(stakeBtn);
-		});
-
-		await act(async () => {
-			fireEvent.click(getByText('Confirm'));
-		});
-
-		expect(queryByText('Failed to put deploy').textContent).toBe('Failed to put deploy');
-
-		await act(async () => {
-			fireEvent.click(getByText('Close'));
-		});
-
-		expect(container.querySelector('.cd_confirm_modal_content')).toBeNull();
-	});
-});
-
 describe('Success to stake the valid amount', () => {
 	test('Should show deploy hash', async () => {
 		spyOnUseSelector.mockReturnValue([]);
-		getSignedStakeDeploy.mockReturnValue({
+		getStakeDeploy.mockReturnValue({
 			deploy: {
 				header: {
 					timestamp: '00001',
@@ -287,10 +216,11 @@ describe('Success to stake the valid amount', () => {
 				validators={validators}
 				tokenSymbol="CSPR"
 				csprPrice={0.001}
+				handleToggle={() => {}}
 			/>,
 		);
 
-		const stakeBtn = container.querySelector('.cd_send_currency_btn');
+		const stakeBtn = getByText('Stake');
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
@@ -306,6 +236,6 @@ describe('Success to stake the valid amount', () => {
 			fireEvent.click(getByText('Confirm'));
 		});
 
-		expect(queryAllByText('0x113')[0].textContent).toBe('0x113');
+		expect(queryAllByText('0x113').length).toBe(0);
 	});
 });

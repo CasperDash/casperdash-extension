@@ -7,6 +7,6 @@ jest.mock('@redux-requests/core', () => {
 });
 
 test('get empty validators', () => {
-	const validators = getValidators();
+	const validators = getValidators()();
 	expect(validators.length).toBe(0);
 });

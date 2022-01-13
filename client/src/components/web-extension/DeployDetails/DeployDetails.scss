@@ -1,0 +1,15 @@
+.cd_we_deploy_details {
+	.cd_we_deploy_details_item {
+		padding-bottom: 15px;
+		.cd_we_item_value {
+			word-break: break-all;
+		}
+	}
+	.cd_we_deploy_details_bottom {
+		display: flex;
+		justify-content: space-between;
+		.cd_we_view_in_explorer {
+			color: var(--primary-color);
+		}
+	}
+}

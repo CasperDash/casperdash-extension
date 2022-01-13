@@ -1,15 +1,13 @@
 {
 	"short_name": "CasperDash",
 	"name": "CasperDash",
-	"icons": [
-		{
-			"src": "favicon.ico",
-			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/x-icon"
-		}
-	],
-	"start_url": ".",
-	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff"
+	"version": "1.0.0",
+	"manifest_version": 2,
+	"icons": {
+		"512": "512.png"
+	},
+	"browser_action": {
+		"default_icon": "512.png",
+		"default_popup": "popup.html"
+	}
 }

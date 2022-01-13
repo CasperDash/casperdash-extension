@@ -17,5 +17,5 @@ test('getPriceHistory should return price data ', () => {
 });
 
 test('getCurrentPrice should return current price', () => {
-	expect(getCurrentPrice()).toEqual('11.0000');
+	expect(getCurrentPrice()).toEqual(0);
 });

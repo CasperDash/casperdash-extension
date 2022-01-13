@@ -2,7 +2,8 @@ import { Signer } from 'casper-js-sdk';
 
 export const isConnectedCasper = async () => {
 	try {
-		return await Signer.isConnected();
+		const isConnected = await Signer.isConnected();
+		return isConnected;
 	} catch (error) {
 		return undefined;
 	}

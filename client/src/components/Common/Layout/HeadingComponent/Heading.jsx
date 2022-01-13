@@ -1,101 +1,65 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../../selectors/user';
 import { getTheme } from '../../../../selectors/settings';
-import { isConnectedCasper, getSignerStatus } from '../../../../selectors/signer';
-import { updateConnectStatus, handleUnlockSigner, handleLockSigner } from '../../../../actions/signerActions';
-import { updatePublicKeyFromSigner, getUserDetails, setPublicKey } from '../../../../actions/userActions';
+import {
+	getUserDetails,
+	setPublicKey,
+	lockAccount,
+	getConnectedAccountFromLocalStorage,
+} from '../../../../actions/userActions';
 import { switchTheme } from '../../../../actions/settingActions';
-import { connectCasperSigner } from '../../../../services/casperServices';
 import { isValidPublicKey } from '../../../../helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
-import { MiddleTruncatedText } from '../../MiddleTruncatedText/MiddleTruncatedText';
+import { MiddleTruncatedText } from '../../MiddleTruncatedText';
+import useCasperSigner from '../../../hooks/useCasperSigner';
+import useLedger from '../../../hooks/useLedger';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
-
-const SIGNER_EVENTS = {
-	connected: 'signer:connected',
-	disconnected: 'signer:disconnected',
-	tabUpdated: 'signer:tabUpdated',
-	activeKeyChanged: 'signer:activeKeyChanged',
-	locked: 'signer:locked',
-	unlocked: 'signer:unlocked',
-};
+import { LedgerKeysModal } from './LedgerKeysModal';
 
 const HeadingModule = (props) => {
+	// Hook
 	const publicKey = useSelector(getPublicKey);
-	const { isUnlocked, isConnected, isAvailable } = useSelector(getSignerStatus);
+	const dispatch = useDispatch();
+	const { ConnectSignerButton, isAvailable } = useCasperSigner();
+	const { handleConnectLedger, isUsingLedger, loadMoreKeys } = useLedger();
+
+	// Selector
 	const theme = useSelector(getTheme);
 
-	const [showError, setShowError] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
+	// State
 	const [showPublicKeyInput, setShowPublicKeyInput] = useState(false);
+	const [showLedgerKeys, setShowLedgerKeys] = useState(false);
 	const [publicKeyError, setPublicKeyError] = useState('');
+	const [isLoadingKeys, setIsLoadingKey] = useState(false);
+	const [ledgerKeys, setLedgerKeys] = useState([]);
 
-	const dispatch = useDispatch();
-
-	const dispatchUnlockSinger = useCallback(
-		(event) => {
-			dispatch(handleUnlockSigner(event.detail));
-		},
-		[dispatch],
-	);
-
-	const dispatchDisconnectedSinger = useCallback(() => {
-		dispatch(handleLockSigner());
-	}, [dispatch]);
-
-	useEffect(() => {
-		[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged, SIGNER_EVENTS.connected].forEach((event) =>
-			window.addEventListener(event, dispatchUnlockSinger),
-		);
-		[SIGNER_EVENTS.locked, SIGNER_EVENTS.disconnected].forEach((event) =>
-			window.addEventListener(event, dispatchDisconnectedSinger),
-		);
-
-		return () => {
-			[SIGNER_EVENTS.unlocked, SIGNER_EVENTS.activeKeyChanged, SIGNER_EVENTS.connected].forEach((event) =>
-				window.removeEventListener(event, dispatchUnlockSinger),
-			);
-			[SIGNER_EVENTS.locked, SIGNER_EVENTS.disconnected].forEach((event) =>
-				window.removeEventListener(event, dispatchDisconnectedSinger),
-			);
-		};
-	});
-
-	useEffect(() => {
-		isConnectedCasper().then((isConnected) => {
-			dispatch(updateConnectStatus(isConnected));
-			if (isConnected) {
-				dispatch(updatePublicKeyFromSigner());
-			}
-		});
-	}, [isConnected, dispatch]);
-
+	// Effect
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
 		}
 	}, [publicKey, dispatch]);
 
-	const handleCloseError = () => setShowError(false);
-	const handleShowError = () => setShowError(true);
-
-	const handleConnectCasper = () => {
-		const connectMessage = connectCasperSigner();
-		if (connectMessage) {
-			handleShowError();
-			setErrorMessage(connectMessage);
+	useEffect(() => {
+		if (!publicKey) {
+			dispatch(getConnectedAccountFromLocalStorage());
 		}
-	};
+	}, [publicKey, dispatch]);
 
+	// Function
 	const onClickViewMode = () => {
 		setShowPublicKeyInput(true);
 	};
 
 	const onClosePublicKeyModal = () => {
 		setShowPublicKeyInput(false);
+	};
+
+	const onCloseLedgerKeysModal = () => {
+		setShowLedgerKeys(false);
 	};
 
 	const handleAddPublicKey = (pk) => {
@@ -112,57 +76,81 @@ const HeadingModule = (props) => {
 		dispatch(switchTheme(newTheme));
 	};
 
+	const loadMoreLedgerKeys = async () => {
+		if (!isLoadingKeys) {
+			setIsLoadingKey(true);
+			const keys = await loadMoreKeys(publicKey);
+			setIsLoadingKey(false);
+			if (!keys) {
+				return;
+			}
+			setLedgerKeys(keys);
+			setShowLedgerKeys(true);
+		}
+	};
+
 	return (
 		<>
 			<div className="cd_all_page_heading_section">
 				<div className="cd_all_page_heading">
 					<h2>{props.name}</h2>
 				</div>
-
 				<div className="cd_all_page_notify_logout_btn">
 					<Button className="cd_theme_switch" onClick={onSwitchTheme}>
 						<i className={`bi ${theme === DARK_THEME ? 'bi-brightness-high-fill' : 'bi-moon-fill'}`} />
 					</Button>
+					{/* Display public key if available */}
+					{publicKey && (
+						<>
+							<div className="cd_heading_public_key">
+								<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
+							</div>
+							<Button
+								className="cd_all_page_logout_btn"
+								variant="secondary"
+								onClick={() => dispatch(lockAccount())}
+							>
+								Logout
+							</Button>
+						</>
+					)}
+
+					{isUsingLedger && (
+						<>
+							<Button
+								className="cd_all_page_logout_btn"
+								onClick={loadMoreLedgerKeys}
+								disabled={isLoadingKeys}
+							>
+								{!isLoadingKeys ? 'Load more keys' : 'Loading'}
+							</Button>
+						</>
+					)}
+
+					{/* Display connect ledger button if no public key */}
+					{!publicKey && (
+						<Button
+							className="cd_all_page_logout_btn"
+							onClick={handleConnectLedger}
+						>{`Connect Ledger`}</Button>
+					)}
+
+					{/* Display view mode button if no casper signed installed */}
 					{!publicKey && !isAvailable && (
 						<Button className="cd_all_page_logout_btn" onClick={onClickViewMode}>
 							View Mode
 						</Button>
 					)}
-					{!isConnected ? (
-						<Button
-							className="cd_all_page_logout_btn"
-							onClick={handleConnectCasper}
-						>{`Connect Casper`}</Button>
-					) : !isUnlocked ? (
-						<Button
-							className="cd_all_page_logout_btn"
-							onClick={handleConnectCasper}
-						>{`Unlock Casper`}</Button>
-					) : (
-						<div className="cd_heading_public_key">
-							<MiddleTruncatedText placement="bottom">{publicKey}</MiddleTruncatedText>
-						</div>
-					)}
+
+					<ConnectSignerButton />
 				</div>
-				<Modal
-					size="lg"
-					aria-labelledby="contained-modal-title-vcenter"
-					show={showError}
-					onHide={handleCloseError}
-				>
-					<Modal.Body>
-						<p>{errorMessage}</p>
-					</Modal.Body>
-					<Modal.Footer>
-						<Button onClick={handleCloseError}>Close</Button>
-					</Modal.Footer>
-				</Modal>
 				<AddPublicKeyModal
 					show={showPublicKeyInput}
 					handleClose={onClosePublicKeyModal}
 					handleAddPublicKey={handleAddPublicKey}
 					error={publicKeyError}
 				/>
+				<LedgerKeysModal show={showLedgerKeys} keys={ledgerKeys} handleClose={onCloseLedgerKeysModal} />
 			</div>
 		</>
 	);

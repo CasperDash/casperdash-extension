@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
-import { putDeploy } from '../../../../actions/deployActions';
+import receiveHeading from 'assets/image/receive-heading-icon.svg';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { deploySelector } from '../../../../selectors/deploy';
-import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE, MIN_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
+import { getConfigKey } from '../../../../services/configurationServices';
 import ConfirmationModal from './Modal';
 import ValidatorInfo from './ValidatorInfo';
 
@@ -23,16 +24,12 @@ const UndelegateForm = ({
 }) => {
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
-	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
-	const [signedError, setSignerError] = useState(null);
 
+	// Hook
 	const dispatch = useDispatch();
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
-	// Selector
-	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
-
-	// Func
 	const handleSubmit = async (values) => {
 		const { amount } = values;
 		if (fromAddress && stakedValidator && amount) {
@@ -49,31 +46,30 @@ const UndelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		try {
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
-			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data } = deployResult;
-			setDeployHash(data.deployHash);
+		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const { deployHash, signedDeploy } = await executeDeploy(
+			buildDeployFn,
+			stakeDetails.fromAddress,
+			stakeDetails.validator,
+		);
+		if (deployHash) {
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
+			onCloseModal();
 			handleToggle();
-		} catch (error) {
-			setSignerError(error.message);
 		}
 	};
 
 	// Function
 	const onCloseModal = () => {
-		setDeployHash(null);
 		setStakeDetails({});
 		setShowModal(false);
-		setSignerError(null);
 	};
 
 	const setBalance = (percent, setFieldValue) => {
@@ -81,7 +77,6 @@ const UndelegateForm = ({
 		setFieldValue('amount', amount);
 	};
 
-	const error = deployHash ? '' : deployError || signedError;
 	return (
 		<>
 			<ValidatorInfo
@@ -101,7 +96,7 @@ const UndelegateForm = ({
 										tokenSymbol,
 										stakedAmount: stakedValidator.stakedAmount,
 										fee,
-										minAmount: MIN_TRANSFER,
+										minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
 									})
 								}
 								initialValues={{ amount: 0, toAddress: '' }}
@@ -110,7 +105,7 @@ const UndelegateForm = ({
 								{({ errors, values, handleChange, setFieldValue, handleSubmit }) => (
 									<Form noValidate onSubmit={handleSubmit} className="cd_undelegate_form">
 										<h3 className="cd_send_receive_heading">
-											<img src="assets/image/receive-heading-icon.svg" alt="undelegate" />
+											<img src={receiveHeading} alt="undelegate" />
 											Undelegate
 										</h3>
 										<div className="cd_send_balance_content">
@@ -191,9 +186,7 @@ const UndelegateForm = ({
 								currentPrice={csprPrice}
 								onClose={onCloseModal}
 								onConfirm={onConfirm}
-								deployHash={deployHash}
 								isDeploying={isDeploying}
-								error={error}
 							/>
 						</div>
 					</div>

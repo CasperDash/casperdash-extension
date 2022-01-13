@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { getSignedStakeDeploy } from '../../../../services/stakeServices';
-import { putDeploy } from '../../../../actions/deployActions';
+import { useDispatch } from 'react-redux';
+import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
+import { getStakeDeploy } from '../../../../services/stakeServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { deploySelector } from '../../../../selectors/deploy';
 import { validateStakeForm } from '../../../../helpers/validator';
-import { CSPR_AUCTION_DELEGATE_FEE, MIN_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
+import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
 
@@ -25,14 +25,11 @@ const DelegateForm = ({
 }) => {
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
-	const [deployHash, setDeployHash] = useState(null);
 	const [showModal, setShowModal] = useState(false);
-	const [signedError, setSignerError] = useState(null);
 
+	// Hook
 	const dispatch = useDispatch();
-
-	// Selector
-	const { error: deployError, loading: isDeploying } = useSelector(deploySelector);
+	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	const options = validators
 		? validators.map(({ public_key: publicKey, bidInfo }) => ({
@@ -45,7 +42,6 @@ const DelegateForm = ({
 
 	// Function
 	const onCloseModal = () => {
-		setDeployHash(null);
 		setStakeDetails({});
 		setShowModal(false);
 	};
@@ -69,27 +65,27 @@ const DelegateForm = ({
 		setFieldValue('amount', amount);
 	};
 
-	const onComfirm = async () => {
-		try {
-			const signedDeploy = await getSignedStakeDeploy(stakeDetails);
-			const deployResult = await dispatch(putDeploy(signedDeploy));
-			const { data } = deployResult;
-			setDeployHash(data.deployHash);
+	const onConfirm = async () => {
+		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const { deployHash, signedDeploy } = await executeDeploy(
+			buildDeployFn,
+			stakeDetails.fromAddress,
+			stakeDetails.validator,
+		);
+		if (deployHash) {
 			dispatch(
 				pushStakeToLocalStorage(stakeDetails.fromAddress, {
 					...stakeDetails,
-					deployHash: data.deployHash,
+					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
 				}),
 			);
+			onCloseModal();
 			handleToggle();
-		} catch (error) {
-			setSignerError(error.message);
 		}
 	};
 
-	const error = deployHash ? '' : deployError || signedError;
 	return (
 		<div className="cd_send_receive_content">
 			<div className="cd_send_receive_content_row">
@@ -104,7 +100,7 @@ const DelegateForm = ({
 									balance,
 									tokenSymbol,
 									fee,
-									minAmount: MIN_TRANSFER,
+									minAmount: MIN_CSPR_TRANSFER,
 								})
 							}
 							onSubmit={handleSubmit}
@@ -112,7 +108,7 @@ const DelegateForm = ({
 							{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
 								<Form noValidate onSubmit={handleSubmit} className="cd-staking-form">
 									<h3 className="cd_send_receive_heading">
-										<img src="assets/image/receive-heading-icon.svg" alt="delegate" />
+										<img src={receiveHeadingIcon} alt="delegate" />
 										Delegate
 									</h3>
 									<div className="cd_send_balance_content">
@@ -162,19 +158,19 @@ const DelegateForm = ({
 									<div className="cd_send_currency_btn_text">
 										<Button
 											className="cd_send_currency_btn"
+											variant="secondary"
+											onClick={handleToggle}
+										>
+											Back
+										</Button>
+										<Button
+											className="cd_send_currency_btn"
 											variant="primary"
 											type="submit"
 											disabled={!values.amount || !values.validator}
 											onClick={handleSubmit}
 										>
 											Stake
-										</Button>
-										<Button
-											className="cd_send_currency_btn"
-											variant="secondary"
-											onClick={handleToggle}
-										>
-											Back
 										</Button>
 										<div className="cd_send_currency_text">
 											<p>
@@ -197,10 +193,8 @@ const DelegateForm = ({
 							fee={stakeDetails.fee}
 							currentPrice={csprPrice}
 							onClose={onCloseModal}
-							onConfirm={onComfirm}
-							deployHash={deployHash}
+							onConfirm={onConfirm}
 							isDeploying={isDeploying}
-							error={error}
 						/>
 					</div>
 				</div>

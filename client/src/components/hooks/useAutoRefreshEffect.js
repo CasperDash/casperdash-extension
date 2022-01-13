@@ -4,6 +4,12 @@ import { getLatestBlockHash } from '../../selectors/deploy';
 
 export const useAutoRefreshEffect = (callback, dependencies) => {
 	const latestBlockHash = useSelector(getLatestBlockHash);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(callback, [...dependencies, latestBlockHash]);
+
+	useEffect(() => {
+		//only refresh if tab is active
+		if (document && document.visibilityState === 'visible') {
+			callback();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [...dependencies, latestBlockHash]);
 };

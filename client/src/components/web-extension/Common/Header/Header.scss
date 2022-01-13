@@ -1,0 +1,39 @@
+.cd_we_header {
+	display: flex;
+	padding: 10px 0 10px 0;
+	width: 100%;
+	align-items: center;
+
+	.cd_we_logo {
+		display: flex;
+		align-items: center;
+		margin-right: 15px;
+		margin-left: 15px;
+
+		svg {
+			height: 24px;
+			width: 24px;
+		}
+	}
+	.cd_we_page_name {
+		font-size: 22px;
+		font-weight: 600;
+	}
+	.cd_we_settings {
+		margin-left: auto;
+		margin-right: 20px;
+		text-align: center;
+		width: 33px;
+		height: 33px;
+		border-radius: 50%;
+		background: var(--component-background);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		.bi {
+			width: 22px;
+			height: 22px;
+		}
+	}
+}

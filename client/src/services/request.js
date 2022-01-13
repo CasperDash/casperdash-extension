@@ -16,6 +16,6 @@ const requester = axios.create({
 });
 
 export const request = async (options) => {
-	const response = await requester(options);
+	const response = await requester(`${baseUrl}${options}`);
 	return response.data;
 };

@@ -1,0 +1,29 @@
+.cd_we_send_receive_buttons {
+	display: flex;
+	.cd_we_send_receive_item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		cursor: pointer;
+		margin: 0 15px;
+		.cd_we_send_receiver_icon {
+			width: 42px;
+			height: 42px;
+			line-height: 42px;
+			background-color: var(--primary-light-color);
+			border-radius: 50%;
+			align-items: center;
+			justify-content: center;
+			display: flex;
+			svg {
+				path {
+					fill: var(--primary-color);
+				}
+			}
+			margin-bottom: 10px;
+		}
+		.cd_we_send_receiver_text {
+			color: var(--secondary-text-color);
+		}
+	}
+}

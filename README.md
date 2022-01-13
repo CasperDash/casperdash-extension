@@ -29,8 +29,8 @@
     -   [x] Edit Deployment/ Key management threshold
     -   [x] Add new associated key
     -   [ ] Edit associated account weight
--   [ ] Stacking
-    -   [ ] Stacking CSPR
+-   [ ] Staking
+    -   [ ] Staking CSPR
 -   [ ] Account management
     -   [ ] Create/update/manage public/private keys
     -   [ ] Import/backup account from private key file or mnemonic words
@@ -93,7 +93,7 @@ or by editing .env.\*.local
 REACT_APP_API_ROOT=https://localhost:3001  //api endpoint
 REACT_APP_NETWORK_NAME=casper-test // casper network
 REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2  // contract hash for delegation
-REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","keyManager","stacking"] //Features can be enabled/disabled
+REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","keyManager","staking"] //Features can be enabled/disabled
 ```
 
 ```shell

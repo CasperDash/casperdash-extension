@@ -1,17 +1,15 @@
 import { CLPublicKey } from 'casper-js-sdk';
 import { toMotes } from '../helpers/currency';
-import { getTransferDeploy, signDeploy } from './casperServices';
+import { buildTransferDeploy } from './casperServices';
 
-export const getSignedTransferDeploy = async (transactionDetail = {}) => {
+export const getTransferDeploy = (transactionDetail = {}) => {
 	try {
 		const { fromAddress, toAddress, amount, transferId = 0, fee } = transactionDetail;
 		const fromPbKey = CLPublicKey.fromHex(fromAddress);
 		const toPbKey = CLPublicKey.fromHex(toAddress);
-		const transferDeploy = getTransferDeploy(fromPbKey, toPbKey, toMotes(amount), transferId, fee);
-		const signedDeploy = await signDeploy(transferDeploy, fromAddress, toAddress);
-
-		return signedDeploy;
+		return buildTransferDeploy(fromPbKey, toPbKey, toMotes(amount), transferId, fee);
 	} catch (error) {
-		return { error: { message: error.message } };
+		console.error(error);
+		throw new Error(`Failed to build transfer deploy.`);
 	}
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import * as redux from 'react-redux';
 import { render, cleanup, fireEvent } from '@testing-library/react';
+import { getTheme } from '../../../../selectors/settings';
 import Heading from './Heading';
 
 afterEach(cleanup);
@@ -13,6 +14,48 @@ jest.mock('../../../../selectors/signer', () => {
 				resolve('connected');
 			});
 		},
+	};
+});
+
+jest.mock('../../../../services/localStorage', () => {
+	return {
+		setLocalStorageValue: jest.fn(),
+		getLocalStorageValue: jest.fn(),
+	};
+});
+
+jest.mock('../../../hooks/useCasperSigner', () => {
+	return {
+		__esModule: true,
+		default: () => {
+			return {
+				ConnectSignerButton: () => <div />,
+			};
+		},
+	};
+});
+
+jest.mock('../../../hooks/useLedger', () => {
+	return {
+		__esModule: true,
+		default: () => {
+			return {
+				handleConnectLedger: jest.fn(),
+				isUsingLedger: true,
+				loadMoreKeys: jest.fn().mockReturnValue([
+					{
+						publicKey: '0x123',
+					},
+				]),
+			};
+		},
+	};
+});
+
+jest.mock('../../../../selectors/settings', () => {
+	return {
+		__esModule: true,
+		getTheme: jest.fn(),
 	};
 });
 
@@ -29,10 +72,10 @@ beforeEach(() => {
 	spyOnUseDispatch.mockReturnValue(mockDispatch);
 });
 
-test('Should show show Connect Casper if no public key', () => {
+test('Should show Connect Ledger if no public key', () => {
 	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce(undefined);
 	const { getByText } = render(<Heading />);
-	expect(getByText('Connect Casper').textContent).toBe('Connect Casper');
+	expect(getByText('Connect Ledger').textContent).toBe('Connect Ledger');
 });
 
 test('Should show error if input invalid public key', () => {
@@ -63,25 +106,6 @@ test('Should show public key if enter valid public key', async () => {
 	expect(input.value).toBe('0160d88b3f847221f4dc6c5549dcfc26772c02f253a24de226a88b4536bc61d4ad');
 });
 
-test('Should show error if no casper sign extension', () => {
-	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce(undefined);
-	const { getByText } = render(<Heading />);
-	const connectBtn = getByText('Connect Casper');
-	fireEvent.click(connectBtn);
-	expect(
-		getByText(
-			'Content script not found - make sure you have the Signer installed and refresh the page before trying again.',
-		).textContent.includes('Content script not found'),
-	).toBe(true);
-});
-
-test('Should show unlock button if connected to casper sign', () => {
-	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce(undefined).mockReturnValueOnce({ isConnected: true });
-	const { getByText } = render(<Heading />);
-
-	expect(getByText('Unlock Casper').textContent).toBe('Unlock Casper');
-});
-
 test('Should show public key if connected and unlocked casper sign', () => {
 	spyOnUseSelector
 		.mockReturnValue([])
@@ -106,4 +130,27 @@ test('Should change theme', () => {
 
 	fireEvent.click(switchThemeBtn);
 	expect(baseElement.querySelector('cd_page_dark_mode')).toBe(null);
+});
+
+test('Should change switch theme class name', () => {
+	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('');
+	getTheme.mockReturnValue('cd_page_dark_mode');
+	const { baseElement } = render(<Heading />);
+	expect(baseElement.querySelector('bi-brightness-high-fill')).toBe(null);
+});
+
+test('Should handle lock account button', async () => {
+	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('test');
+	const { queryAllByText } = render(<Heading />);
+	const lockAccountBtn = queryAllByText('Logout')[0];
+	await fireEvent.click(lockAccountBtn);
+	expect(queryAllByText('Connect Ledger')).toBeDefined();
+});
+
+test('Should show load more ledger keys modal', async () => {
+	spyOnUseSelector.mockReturnValue('cd_page_dark_mode').mockReturnValueOnce('0x123');
+	const { queryAllByText } = render(<Heading />);
+	const loadMoreLedgerKeyBtn = queryAllByText('Load more keys')[0];
+	await fireEvent.click(loadMoreLedgerKeyBtn);
+	expect(queryAllByText('Select the account')).toBeDefined();
 });

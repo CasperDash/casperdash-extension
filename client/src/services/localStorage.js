@@ -1,5 +1,6 @@
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
+
 /**
  * Set value to local storage by path
  * @param {string} key storage key

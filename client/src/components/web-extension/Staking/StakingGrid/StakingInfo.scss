@@ -1,0 +1,23 @@
+.cd_we_staking_info {
+	padding: 10px 15px;
+	.cd_we_staking_info_title {
+		color: var(--secondary-text-color);
+	}
+	.cd_we_grid {
+		height: calc(100vh - 390px);
+		padding: 0 !important;
+		.cd_we_item {
+			button {
+				height: 28px;
+				line-height: 14px;
+				font-size: 1em;
+			}
+		}
+		.cd_we_grid_icon {
+			width: 20px;
+			height: 20px;
+			padding: 3px 5px;
+			background: var(--secondary-text-color-light);
+		}
+	}
+}
