@@ -32,4 +32,5 @@ test('Should show Ledger Keys Modal', () => {
 	spyOnUseSelector.mockReturnValue({});
 	const { getByText } = render(<LedgerKeysModal show={true} keys={[{ publicKey: '0x123', path: '00' }]} />);
 	expect(getByText('Select the account').textContent).toBe('Select the account');
+	expect(getByText('Change').textContent).toBe('Change');
 });

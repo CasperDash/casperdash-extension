@@ -5,6 +5,13 @@ import { NETWORK_NAME, DEPLOY_TTL_MS } from '../constants/key';
 import { createRecipientAddress, toCLMap, contractHashToByteArray } from './casperServices';
 import { request } from './request';
 
+/**
+ * Get mint NFT deploy
+ * @param {CLPublicKey} publicKey
+ * @param {object} runtimeArgs
+ * @param {string} contractHash
+ * @param {number} paymentAmount
+ */
 export const getMintNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAmount) => {
 	return DeployUtil.makeDeploy(
 		new DeployUtil.DeployParams(publicKey, NETWORK_NAME, 1, DEPLOY_TTL_MS),
@@ -13,6 +20,10 @@ export const getMintNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAm
 	);
 };
 
+/**
+ * Get mint nft deploy
+ * @param {object} nftInfo
+ */
 export const getMintDeploy = (nftInfo) => {
 	try {
 		const { recipient, metadata, publicKey, nftContract } = nftInfo;
@@ -33,6 +44,9 @@ export const getMintDeploy = (nftInfo) => {
 	}
 };
 
+/**
+ * get NFT contract
+ */
 const getNFTContractDeploy = async () => {
 	return await request('/nfts/getNFTContractDeploy');
 };

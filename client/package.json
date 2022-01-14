@@ -86,7 +86,8 @@
 		],
 		"resetMocks": false,
 		"moduleNameMapper": {
-			"^assets(.*)$": "<rootDir>/src/assets$1"
+			"^assets(.*)$": "<rootDir>/src/assets$1",
+			"^.+\\.(css|scss)$": "<rootDir>/src/__mocks__/styleMock.js"
 		},
 		"transformIgnorePatterns": [
 			"<rootDir>/node_modules/(?!lodash-es)"
