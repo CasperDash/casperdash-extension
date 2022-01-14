@@ -3,7 +3,7 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { useLocation } from 'react-router-dom';
 import { useTokenInfo } from '../../hooks/useTokensInfo';
-import TokenDetails from './';
+import TokenDetails from './index';
 
 afterEach(cleanup);
 
