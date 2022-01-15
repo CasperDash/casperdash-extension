@@ -76,7 +76,7 @@ export const updateNFTLocalStorage = (publicKey, patch, value, action) => {
 };
 
 /**
- *
+ *	get nft deploys from local storage
  * @param {string} publicKey
  */
 export const getNFTDeploysFromLocalStorage = (publicKey) => {
@@ -89,6 +89,10 @@ export const getNFTDeploysFromLocalStorage = (publicKey) => {
 	};
 };
 
+/**
+ * get pending NFT deploy status
+ * @param {string} deployHash
+ */
 export const getNFTPendingDeploysStatus = (deployHash) => ({
 	type: NFTS.GET_DEPLOYS_STATUS,
 	request: {
@@ -99,6 +103,12 @@ export const getNFTPendingDeploysStatus = (deployHash) => ({
 	},
 });
 
+/**
+ * Update NFT deploy status
+ * @param {string} publicKey
+ * @param {string} path
+ * @param {array} listHash
+ */
 export const updateNFTDeploysStatus = (publicKey, path, listHash = []) => {
 	return (dispatch) => {
 		const deployStorageValue = getLocalStorageValue(publicKey, path);

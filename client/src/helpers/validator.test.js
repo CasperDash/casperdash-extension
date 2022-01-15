@@ -1,4 +1,10 @@
-import { isValidPublicKey, validateTransferForm, validateStakeForm, validateUndelegateForm } from './validator';
+import {
+	isValidPublicKey,
+	validateTransferForm,
+	validateStakeForm,
+	validateUndelegateForm,
+	validateNFTMintForm,
+} from './validator';
 
 describe('isValidPublicKey', () => {
 	test('valid public key', () => {
@@ -184,5 +190,46 @@ describe('validateUndelegateForm', () => {
 				stakedAmount: 2,
 			}),
 		).toEqual({ amount: 'Insufficient balance. System requires 5 CSPR minimum balance.' });
+	});
+});
+
+describe('validateNFTMintForm', () => {
+	test('Should return no error', () => {
+		expect(validateNFTMintForm({ nftContract: 'test', name: 'test', image: 'test', toAddress: '' })).toEqual({});
+	});
+	test('Should return required error', () => {
+		expect(validateNFTMintForm({ nftContract: '', name: '', toAddress: '' })).toEqual({
+			image: 'Required',
+			name: 'Required',
+			nftContract: 'Required',
+		});
+	});
+	test('Should return image error', () => {
+		expect(validateNFTMintForm({ nftContract: 'test', name: 'test', image: { type: 'test' } })).toEqual({
+			image: 'Should be image.',
+		});
+	});
+	test('Should return to address error', () => {
+		expect(
+			validateNFTMintForm({ nftContract: 'test', name: 'test', image: { type: 'image' }, toAddress: 'test' }),
+		).toEqual({
+			toAddress: 'Invalid address.',
+		});
+	});
+
+	test('Should return to attribute error', () => {
+		expect(
+			validateNFTMintForm({
+				nftContract: 'test',
+				name: 'test',
+				image: { type: 'image' },
+
+				attribute1: '123123123123123123123123123123123123123123',
+				value1: '123123123123123123123123123123123123123123',
+			}),
+		).toEqual({
+			attribute1: 'Max is 20 chars.',
+			value1: 'Max is 20 chars.',
+		});
 	});
 });

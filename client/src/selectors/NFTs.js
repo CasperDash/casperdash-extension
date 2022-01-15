@@ -15,12 +15,20 @@ const NFT_TYPE_MAPPING = {
 
 export const NFTSelector = getQuerySelector({ type: NFTS.FETCH_NFTS_INFO });
 
-const getMetadataByKey = (metadata, key) => {
+/**
+ * Get metadata object by key
+ * @param {array} metadata
+ * @param {string} key
+ */
+export const getMetadataByKey = (metadata, key) => {
 	const data = metadata.find((datum) => datum.key === key) || {};
 	return data.value;
 };
 
-const sortNFT = memoizeOne((data = [], sortObj) => {
+/**
+ * Sort NFT
+ */
+export const sortNFT = memoizeOne((data = [], sortObj = {}) => {
 	const { attr, order } = sortObj;
 	switch (attr) {
 		case 'collection':
@@ -34,7 +42,11 @@ const sortNFT = memoizeOne((data = [], sortObj) => {
 	}
 });
 
-const massageNFTInfo = memoizeOne((NFTInfo = []) => {
+/**
+ * Massage NFT to display on UI
+ * @param {array} NFTInfo
+ */
+export const massageNFTInfo = memoizeOne((NFTInfo = []) => {
 	return NFTInfo.map((info) => {
 		if (info.metadata && Array.isArray(info.metadata)) {
 			const nftName = getMetadataByKey(info.metadata, 'name') || info.tokenId;
@@ -53,7 +65,12 @@ const massageNFTInfo = memoizeOne((NFTInfo = []) => {
 	});
 });
 
-const searchNFT = memoizeOne((NFTInfo = [], search) => {
+/**
+ * Search NFT
+ * @param {array} NFTInfo NFTs
+ * @param {string} search search term
+ */
+export const searchNFT = memoizeOne((NFTInfo = [], search) => {
 	if (!search) {
 		return NFTInfo;
 	}
@@ -61,6 +78,11 @@ const searchNFT = memoizeOne((NFTInfo = [], search) => {
 	return fuse.search(search).map((result) => result.item);
 });
 
+/**
+ * Get NFTs information
+ * @param {object} sortObj sort object
+ * @param {string} search search term
+ */
 export const getNFTInfo = (sortObj = { attr: 'name', oder: 'asc' }, search) =>
 	createSelector(NFTSelector, ({ data }) => {
 		if (!data) {
@@ -85,6 +107,9 @@ export const getNFTAddressList = ({ nfts }) => {
 	return [...new Set([...tokensAddress])];
 };
 
+/**
+ * Get own nft contract hash
+ */
 export const getOwnNFTContractHash = createSelector(
 	userDetailsSelector,
 	getNFTAddressList,
@@ -99,6 +124,10 @@ export const getOwnNFTContractHash = createSelector(
 	},
 );
 
+/**
+ * get pending nft deploy
+ * @param {object} nfts
+ */
 export const getPendingDeploys = ({ nfts }) => {
 	if (!nfts || !nfts.deploys) {
 		return {};
@@ -112,6 +141,9 @@ export const getPendingDeploys = ({ nfts }) => {
 	return pendingDeploys;
 };
 
+/**
+ * get pending deploy hash
+ */
 export const getPendingDeployHashes = createSelector(getPendingDeploys, (pendingDeploys) => {
 	if (!pendingDeploys) {
 		return [];
@@ -124,6 +156,10 @@ export const getPendingDeployHashes = createSelector(getPendingDeploys, (pending
 	}, []);
 });
 
+/**
+ * Get NFT Deploy History
+ * @param {object} nfts
+ */
 export const getNFTDeployHistory = ({ nfts }) => {
 	if (!nfts || !nfts.deploys) {
 		return [];

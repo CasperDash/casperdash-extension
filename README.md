@@ -30,7 +30,7 @@
     -   [x] Add new associated key
     -   [ ] Edit associated account weight
 -   [ ] Staking
-    -   [ ] Staking CSPR
+    -   [x] Staking CSPR
 -   [ ] Account management
     -   [ ] Create/update/manage public/private keys
     -   [ ] Import/backup account from private key file or mnemonic words
@@ -38,7 +38,7 @@
 
 #### Will be on separated repository
 
--   [ ] Web extension wallet
+-   [x] Web extension wallet
 -   [ ] IOS app
 -   [ ] Android app
 
@@ -68,7 +68,7 @@ React web app provides user a simple and convenient dashboard to explore the blo
 -   yarn >= 1.22.5
 -   nodejs >= 12
 
-# Client
+# Web Client
 
 ### Install
 
@@ -97,8 +97,32 @@ REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","keyM
 ```
 
 ```shell
-yarn start // start web with dev config
-yarn build // publish
-yarn test  // run unit test
-yarn build-style // build css
+yarn dev             // start web with dev config
+yarn start-mainnet  // start web with testnet config
+yarn start-testnet // start web with mainnet config
+yarn test         // run test with coverage
 ```
+
+# Browser Extension
+
+```shell
+yarn dev-extension      // watch extension with dev config
+```
+
+## Load into Chrome
+
+To load the built files into Chrome, open
+
+![](https://i.imgur.com/kxZk0EW.png)
+
+Enable "Developer mode" if it's not enabled yet:
+
+![](https://i.imgur.com/zdPemcj.png)
+
+Click on "Load unpacked":
+
+![](https://i.imgur.com/HRDH6p8.png)
+
+Find the `YOUR_WORKING_DIRECTORY/casperdash-client/build_extension/` directory on your system and open it.
+
+The extension should be now at the top of the page:

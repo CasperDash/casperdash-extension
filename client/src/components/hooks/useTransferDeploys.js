@@ -8,9 +8,9 @@ import {
 import { getTransfersDeploy, getPendingTransferDeployHash } from '../../selectors/deploy';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
-const sortByTimeStampDesc = (a, b) => b.timestamp.localeCompare(a.timestamp);
+const sortByTimeStampDesc = (a, b) => b.timestamp && b.timestamp.localeCompare(a.timestamp);
 
-export const useDeploysWithStatus = ({ symbol, publicKey, status }) => {
+export const useDeploysWithStatus = ({ symbol, publicKey, status } = {}) => {
 	const dispatch = useDispatch();
 
 	const transfersDeployList = useSelector(getTransfersDeploy(symbol));

@@ -1,7 +1,7 @@
 {
 	"name": "casperdash_client",
 	"description": "CasperDash Client",
-	"version": "1.3.0",
+	"version": "1.1.1",
 	"private": false,
 	"author": "CasperDash",
 	"license": "MIT",
@@ -86,7 +86,8 @@
 		],
 		"resetMocks": false,
 		"moduleNameMapper": {
-			"^assets(.*)$": "<rootDir>/src/assets$1"
+			"^assets(.*)$": "<rootDir>/src/assets$1",
+			"^.+\\.(css|scss)$": "<rootDir>/src/__mocks__/styleMock.js"
 		},
 		"transformIgnorePatterns": [
 			"<rootDir>/node_modules/(?!lodash-es)"

@@ -5,3 +5,5 @@ global.console = {
 	warn: jest.fn(),
 	info: jest.fn(),
 };
+
+global.navigator.clipboard = { writeText: jest.fn() };

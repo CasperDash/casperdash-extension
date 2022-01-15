@@ -47,6 +47,10 @@ export const toFormattedDate = (
 	return new Intl.DateTimeFormat(locales, options).format(date);
 };
 
+/**
+ * Return - if NaN
+ * @param {number} value
+ */
 export const displayNaN = (value) => {
 	return Number.isNaN(value) || 'NaN' === value ? '-' : value;
 };
@@ -74,7 +78,12 @@ export const getEndString = (fullString, end) => {
 	}
 };
 
-const toDisplayValueFromMote = (mote, options) => {
+/**
+ * get display value from mote
+ * @param {number} mote
+ * @param {object} options
+ */
+export const toDisplayValueFromMote = (mote, options) => {
 	return toFormattedNumber(mote / MOTE_RATE, options);
 };
 
