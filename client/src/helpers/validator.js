@@ -108,6 +108,10 @@ export const validateTransferForm = ({
 	return errors;
 };
 
+/**
+ * Validate stake form
+ * @param {object} stake
+ */
 export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount }) => {
 	let errors = {};
 	if (amount <= 0) {
@@ -123,6 +127,10 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 	return errors;
 };
 
+/**
+ * Validate undelegate form
+ * @param {object} undelegate
+ */
 export const validateUndelegateForm = ({ amount, tokenSymbol, balance, fee, stakedAmount, minAmount }) => {
 	let errors = {};
 	if (amount <= 0) {

@@ -1,5 +1,12 @@
 import { Signer } from 'casper-js-sdk';
-import { getUserDetails, updatePublicKeyFromSigner, setPublicKey } from './userActions';
+import { getLocalStorageValue } from '../services/localStorage';
+import {
+	getUserDetails,
+	updatePublicKeyFromSigner,
+	setPublicKey,
+	getConnectedAccountFromLocalStorage,
+	lockAccount,
+} from './userActions';
 
 jest.mock('../services/localStorage', () => {
 	return {
@@ -58,4 +65,27 @@ test('setPublicKey', () => {
 		type: 'USERS.SET_USER_ADDRESS',
 		payload: { publicKey: 'test', loginOptions: {} },
 	});
+});
+
+test('getConnectedAccountFromLocalStorage have account', () => {
+	const mockDispatch = jest.fn();
+	getLocalStorageValue.mockReturnValue({ publicKey: 'testpk' });
+	const value = getConnectedAccountFromLocalStorage()(mockDispatch);
+	expect(mockDispatch).toHaveBeenCalled();
+	expect(value).toEqual('testpk');
+});
+
+test('getConnectedAccountFromLocalStorage do not have account', () => {
+	const mockDispatch = jest.fn();
+	getLocalStorageValue.mockReturnValue({});
+	const value = getConnectedAccountFromLocalStorage()(mockDispatch);
+
+	expect(value).toEqual(undefined);
+});
+
+test('lockAccount', () => {
+	const mockDispatch = jest.fn();
+
+	lockAccount()(mockDispatch);
+	expect(mockDispatch).toHaveBeenCalled();
 });

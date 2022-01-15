@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import * as redux from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { pushStakeToLocalStorage } from '../../../actions/stakeActions';
 import { Confirm } from './Confirm';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 afterEach(cleanup);
 let spyOnUseSelector;
