@@ -35,10 +35,9 @@
     -   [ ] Create/update/manage public/private keys
     -   [ ] Import/backup account from private key file or mnemonic words
     -   [ ] Provide method to sign contract from external site
-
+-   [x] Web extension wallet
 #### Will be on separated repository
 
--   [x] Web extension wallet
 -   [ ] IOS app
 -   [ ] Android app
 
@@ -60,6 +59,7 @@ Web server is implemented in [Express.js](https://expressjs.com/). It allows us 
 React web app provides user a simple and convenient dashboard to explore the blocks and manipulate the wallets.
 
 <!-- GETTING STARTED -->
+
 
 ## Development
 
@@ -126,3 +126,6 @@ Click on "Load unpacked":
 Find the `YOUR_WORKING_DIRECTORY/casperdash-client/build_extension/` directory on your system and open it.
 
 The extension should be now at the top of the page:
+
+## Workflow and contributions
+https://github.com/CasperDash/casperdash-client/wiki/Development-Workflow
