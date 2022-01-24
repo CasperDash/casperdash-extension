@@ -22,7 +22,7 @@ export const getStakeDeploy = ({ fromAddress, validator, fee, amount, entryPoint
 		return buildStakeDeploy(
 			fromAccPk,
 			entryPoint,
-			{ fromAccPk, validatorPk, amount: CLValueBuilder.u512(toMotes(amount)) },
+			{ delegator: fromAccPk, validator: validatorPk, amount: CLValueBuilder.u512(toMotes(amount)) },
 			toMotes(fee),
 		);
 	} catch (error) {
