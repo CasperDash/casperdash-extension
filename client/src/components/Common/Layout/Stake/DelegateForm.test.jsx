@@ -91,7 +91,7 @@ describe('DelegateForm displays normally', () => {
 		await act(async () => {
 			fireEvent.click(getByText('1/4'));
 		});
-		expect(stakeAmountInput.value).toBe('245');
+		expect(stakeAmountInput.value).toBe('247.5');
 	});
 
 	test('Should set the quick staked amount by a half of balance', async () => {
@@ -103,7 +103,7 @@ describe('DelegateForm displays normally', () => {
 		await act(async () => {
 			fireEvent.click(getByText('Half'));
 		});
-		expect(stakeAmountInput.value).toBe('495');
+		expect(stakeAmountInput.value).toBe('497.5');
 	});
 
 	test('Should set the quick staked amount by all in', async () => {
@@ -115,7 +115,7 @@ describe('DelegateForm displays normally', () => {
 		await act(async () => {
 			fireEvent.click(getByText('All'));
 		});
-		expect(stakeAmountInput.value).toBe('995');
+		expect(stakeAmountInput.value).toBe('997.5');
 	});
 });
 
