@@ -1,10 +1,10 @@
 # Welcome to Casper Dash 👋
 
+> A non-custodial wallet for Casper blockchain
+
 [![codecov](https://codecov.io/gh/CasperDash/casperdash-client/branch/develop/graph/badge.svg?token=3KWLVN3DPV)](https://codecov.io/gh/CasperDash/casperdash-client)
 
 ![](https://i.imgur.com/N0DGupc.png)
-
-> A web wallet for Casper blockchain
 
 ### 🏠 [casperdash.io ](casperdash.io) ( beta )
 
@@ -29,22 +29,25 @@
     -   [x] Edit Deployment/ Key management threshold
     -   [x] Add new associated key
     -   [ ] Edit associated account weight
--   [ ] Staking
+-   [x] Staking
     -   [x] Staking CSPR
 -   [ ] Account management
     -   [ ] Create/update/manage public/private keys
     -   [ ] Import/backup account from private key file or mnemonic words
     -   [ ] Provide method to sign contract from external site
 -   [x] Web extension wallet
+
 #### Will be on separated repository
 
 -   [ ] IOS app
 -   [ ] Android app
 
-### Built With
+## Development
 
--   [React.js](https://reactjs.org/)
--   [Nodejs](https://nodejs.org/)
+### Prerequisites
+
+-   yarn >= 1.22.5
+-   nodejs >= 14
 
 ## Architecture
 
@@ -56,38 +59,34 @@ Web server is implemented in [Express.js](https://expressjs.com/). It allows us 
 
 ### Client
 
+[React.js](https://reactjs.org/) + [Flux structure](https://www.javatpoint.com/react-flux-concept#:~:text=Flux%20is%20an%20application%20architecture,a%20library%20nor%20a%20framework.&text=It%20is%20a%20kind%20of,of%20Unidirectional%20Data%20Flow%20model.)
+
 React web app provides user a simple and convenient dashboard to explore the blocks and manipulate the wallets.
 
-<!-- GETTING STARTED -->
+There are 2 parts, web and browser extension which are sharing similar logic and dataflow. The main different is user interfaces.
 
+[Webpack](https://webpack.js.org/) is using for building each platform.
 
-## Development
+#### I. Web
 
-### Prerequisites
-
--   yarn >= 1.22.5
--   nodejs >= 12
-
-# Web Client
-
-### Install
+##### 1. Install
 
 ```sh
 cd YOUR_WORKING_DIRECTORY/casperdash-client/client
 yarn install
 ```
 
-### Usage
+##### 2. UI components
 
-#### Configuration
-
-The configuration can be configurated at
+The main UI components of web are placed under
 
 ```
-YOUR_WORKING_DIRECTORY/casperdash-client/client/src/config/index.js
+YOUR_WORKING_DIRECTORY/casperdash-client/client/src/components/web
 ```
 
-or by editing .env.\*.local
+##### 3. Configurations
+
+The configuration can be configurated by editing .env.\*.local
 
 ```
 REACT_APP_API_ROOT=https://localhost:3001  //api endpoint
@@ -96,6 +95,8 @@ REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb32
 REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","keyManager","staking"] //Features can be enabled/disabled
 ```
 
+##### 4. Usage
+
 ```shell
 yarn dev             // start web with dev config
 yarn start-mainnet  // start web with testnet config
@@ -103,13 +104,42 @@ yarn start-testnet // start web with mainnet config
 yarn test         // run test with coverage
 ```
 
-# Browser Extension
+#### II. Browser Extension
 
-```shell
-yarn dev-extension      // watch extension with dev config
+##### 1. Install
+
+```sh
+cd YOUR_WORKING_DIRECTORY/casperdash-client/client
+yarn install
 ```
 
-## Load into Chrome
+##### 2. UI components
+
+The main UI components of web-extension are placed under
+
+```
+YOUR_WORKING_DIRECTORY/casperdash-client/client/src/components/web-extension
+```
+
+##### 3. Configurations
+
+The configuration can be configurated by editing .env.\*.local
+
+```
+REACT_APP_API_ROOT=https://localhost:3001  //api endpoint
+REACT_APP_NETWORK_NAME=casper-test // casper network
+REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2  // contract hash for delegation
+```
+
+##### 4. Usage
+
+```shell
+yarn dev-extension              // watch extension with dev config
+yarn dev-extension-mainnet      // watch extension with mainet config
+yarn dev-extension-testnet      // watch extension with testnet config
+```
+
+##### 5. Load into Chrome
 
 To load the built files into Chrome, open
 
@@ -128,4 +158,9 @@ Find the `YOUR_WORKING_DIRECTORY/casperdash-client/build_extension/` directory o
 The extension should be now at the top of the page:
 
 ## Workflow and contributions
+
 https://github.com/CasperDash/casperdash-client/wiki/Development-Workflow
+
+### License
+
+[MIT](https://raw.githubusercontent.com/CasperDash/casperdash-api/master/LICENSE)
