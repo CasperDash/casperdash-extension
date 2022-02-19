@@ -8,11 +8,20 @@ export const getConfigurations = memoizeOne((reload) => {
 	return getLocalStorageValue('casperdash', 'configurations') || {};
 });
 
+/**
+ * Get the value of a configuration key
+ * @param key - The key of the configuration you want to get.
+ * @returns The value of the key in the configuration object.
+ */
 export const getConfigKey = (key) => {
 	const configs = getConfigurations(false);
 	return configs[key] || DEFAULT_CONFIG[key];
 };
 
+/**
+ * Save the configuration to local storage
+ * @param [config] - The configuration object to save.
+ */
 export const saveConfigurationToLocalStorage = (config = {}) => {
 	const currentConfig = getLocalStorageValue('casperdash', 'configurations');
 

@@ -58,6 +58,14 @@ const COMMON_ERROR_MESSAGE = {
 	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
 };
 
+/**
+ * If the send amount is less than the minimum amount, return an error message.
+ * If the send amount is zero, return an error message.
+ * If the send amount is more than the balance, return an error message.
+ * If the token symbol is CSPR and the send amount plus the transfer fee is more than the balance,
+ * return an error message. Otherwise, return an empty string
+ * @returns The error message if the send amount is invalid.
+ */
 const getSendAmountError = ({ sendAmount, minAmount, tokenSymbol, displayBalance, transferFee }) => {
 	if (minAmount && sendAmount < minAmount) {
 		return `Amount must be at least ${minAmount} ${tokenSymbol}.`;

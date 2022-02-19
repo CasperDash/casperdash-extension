@@ -87,6 +87,12 @@ export const toDisplayValueFromMote = (mote, options) => {
 	return toFormattedNumber(mote / MOTE_RATE, options);
 };
 
+/**
+ * Given a value and an options object, return the value formatted according to the options
+ * @param value - The value to be formatted.
+ * @param options - {
+ * @returns The value is being returned in the format specified by the format option.
+ */
 export const getValueByFormat = (value, options) => {
 	const { format, ...formatOptions } = options;
 	switch (format) {

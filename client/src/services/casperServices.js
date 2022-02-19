@@ -86,6 +86,11 @@ export const connectCasperSigner = () => {
 	}
 };
 
+/**
+ * It takes a JavaScript map and returns a CLValue of type `Map<String, String>`
+ * @param map - The map to convert to a CLValue.
+ * @returns A CLValue of type `Map<String, String>`
+ */
 export const toCLMap = (map) => {
 	const clMap = CLValueBuilder.map([CLTypeBuilder.string(), CLTypeBuilder.string()]);
 	for (const [key, value] of Array.from(map.entries())) {
@@ -94,4 +99,8 @@ export const toCLMap = (map) => {
 	return clMap;
 };
 
+/**
+ * Convert a contract hash to a byte array
+ * @param contractHash - The contract hash of the contract you want to get the bytecode of.
+ */
 export const contractHashToByteArray = (contractHash) => Uint8Array.from(Buffer.from(contractHash, 'hex'));
