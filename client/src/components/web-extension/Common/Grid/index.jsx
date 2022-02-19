@@ -41,7 +41,8 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 													format: item.format,
 												},
 											);
-											return (
+											return typeof item.shouldDisplay === 'function' &&
+												!item.shouldDisplay(_get(value, item.key)) ? null : (
 												<div
 													className={`cd_we_item_value ${item.type} ${
 														item.valueAsClass ? formattedValue : ''

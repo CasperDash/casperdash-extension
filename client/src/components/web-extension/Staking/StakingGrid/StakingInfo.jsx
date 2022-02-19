@@ -14,7 +14,13 @@ const STAKING_INFO_METADATA = {
 	],
 	right: [
 		{ key: 'stakedAmount', type: 'primary', format: 'number', suffix: 'CSPR' },
-		{ key: 'pendingAmount', type: 'secondary', format: 'number', suffix: 'CSPR' },
+		{
+			key: 'pendingAmount',
+			type: 'secondary',
+			format: 'number',
+			suffix: 'CSPR (pending)',
+			shouldDisplay: (value) => value && value !== 0,
+		},
 	],
 };
 
