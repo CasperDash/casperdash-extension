@@ -48,7 +48,7 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 		if (pendingStake) {
 			stakedValidator.pendingAmount =
 				pendingStake.entryPoint === ENTRY_POINT_UNDELEGATE ? -pendingStake.amount : pendingStake.amount;
-			stakedValidator.icon = getStakeIcon(pendingStake.amount);
+			stakedValidator.icon = stakedValidator.pendingAmount > 0 ? RECEIVE_ICON_SMALL : SEND_ICON_SMALL;
 		}
 
 		stakedValidators.push(stakedValidator);
