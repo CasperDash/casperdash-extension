@@ -2,7 +2,6 @@ import HomeIcon from 'assets/image/home-icon.svg';
 import NFTIcon from 'assets/image/nft-menu-icon.svg';
 import StakingIcon from 'assets/image/staking-icon.svg';
 import MarketIcon from 'assets/image/market-icon.svg';
-import APP_CONFIGS from '../../config';
 import NFTs from '../../components/web-extension/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
 import Receive from '../../components/web-extension/Receive';
@@ -22,14 +21,6 @@ import { Confirm } from '../../components/web-extension/Staking/Confirm';
 import { Undelegate } from '../../components/web-extension/Staking/Undelegate';
 
 let features;
-try {
-	features =
-		typeof APP_CONFIGS.AVAILABLE_FEATURES === 'string'
-			? JSON.parse(APP_CONFIGS.AVAILABLE_FEATURES)
-			: APP_CONFIGS.AVAILABLE_FEATURES;
-} catch (error) {
-	features = undefined;
-}
 
 const routes = {
 	// Routes in menu bar
