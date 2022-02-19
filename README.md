@@ -13,10 +13,10 @@
 ## Features/Road map
 
 -   [x] Integrate with Casper Singer
--   [x] Dashboad
+-   [x] Dashboard
     -   [x] View CSPR balance
-    -   [x] Send/Receive CRPR
-    -   [x] CRPS price chart
+    -   [x] Send/Receive CSPR
+    -   [x] CSPR price chart
 -   [x] Tokens (ERC20)
     -   [x] View token info/balance
     -   [x] Send/Receive tokens
