@@ -1,5 +1,10 @@
 import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
 
+/**
+ * It takes the form values and returns a new object with the form values that are relevant to the NFT
+ * minting transaction
+ * @param values - The form values.
+ */
 export const massageNFTMintFormValues = (values) => {
 	const metadataAttributes = new Array(MAX_METADATA_ATTRIBUTES)
 		.fill()

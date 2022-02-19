@@ -7,6 +7,9 @@ import { getLoginOptions } from '../../selectors/user';
 import { CONNECTION_TYPES } from '../../constants/settings';
 import { MAX_KEY_PATH } from '../../constants/ledger';
 
+/**
+ * It returns a set of functions that are used to connect to the ledger and load more keys.
+ */
 const useLedger = () => {
 	// Hook
 	const dispatch = useDispatch();
@@ -38,6 +41,11 @@ const useLedger = () => {
 		transport.close();
 	};
 
+	/**
+	 * Get the list of keys from the ledger and cache them in local storage.
+	 * @param publicKey - The public key of the account you want to load the keys for.
+	 * @param [index=0] - The index of the key to start loading from.
+	 */
 	const loadMoreKeys = async (publicKey, index = 0) => {
 		const { casperApp, transport } = await initLedgerApp();
 
