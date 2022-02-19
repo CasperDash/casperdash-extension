@@ -9,10 +9,6 @@ import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } fr
 import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL } from '../../constants/icon';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
-export const getStakeIcon = (value) => {
-	return value > 0 ? RECEIVE_ICON_SMALL : SEND_ICON_SMALL;
-};
-
 /**
  * Get staked validators and add the pending amount.
  *
