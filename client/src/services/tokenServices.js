@@ -1,6 +1,11 @@
 import { CLPublicKey } from 'casper-js-sdk';
 import { buildTransferTokenDeploy } from './casperServices';
 
+/**
+ * It builds a transfer token deploy.
+ * @param [transactionDetail] - {
+ * @returns The transaction object.
+ */
 export const getTransferTokenDeploy = (transactionDetail = {}) => {
 	try {
 		const { fromAddress, toAddress, amount, contractInfo = {}, fee } = transactionDetail;

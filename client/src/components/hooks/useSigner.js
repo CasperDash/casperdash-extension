@@ -4,6 +4,10 @@ import { getLoginOptions } from '../../selectors/user';
 import { signDeployByCasperSigner } from '../../services/casperServices';
 import { signDeployByLedger } from '../../services/ledgerServices';
 
+/**
+ * Use the signer specified in the login options to sign a deploy.
+ * @returns The signed deploy is being returned.
+ */
 const useSigner = () => {
 	const loginOptions = useSelector(getLoginOptions);
 

@@ -20,6 +20,9 @@ const SIGNER_EVENTS = {
 	unlocked: 'signer:unlocked',
 };
 
+/**
+ * This function is used to connect to the Casper Signer extension
+ */
 const useCasperSigner = () => {
 	//Hook
 	const dispatch = useDispatch();
