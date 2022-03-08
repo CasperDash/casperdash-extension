@@ -9,10 +9,6 @@ import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } fr
 import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL } from '../../constants/icon';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
-export const getStakeIcon = (value) => {
-	return value > 0 ? RECEIVE_ICON_SMALL : SEND_ICON_SMALL;
-};
-
 /**
  * Get staked validators and add the pending amount.
  *
@@ -48,7 +44,7 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 		if (pendingStake) {
 			stakedValidator.pendingAmount =
 				pendingStake.entryPoint === ENTRY_POINT_UNDELEGATE ? -pendingStake.amount : pendingStake.amount;
-			stakedValidator.icon = getStakeIcon(pendingStake.amount);
+			stakedValidator.icon = stakedValidator.pendingAmount > 0 ? RECEIVE_ICON_SMALL : SEND_ICON_SMALL;
 		}
 
 		stakedValidators.push(stakedValidator);

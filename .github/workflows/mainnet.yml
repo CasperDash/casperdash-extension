@@ -53,4 +53,4 @@ jobs:
         aws s3 sync ./build/ s3://casperdash.io/ --delete
         aws cloudfront create-invalidation --distribution-id ${{ secrets.MAINNET_DISTRIBUTION_ID }} --paths "/*" --no-cli-pager
       env:
-        CI: false 
+        CI: false
