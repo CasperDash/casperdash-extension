@@ -19,6 +19,8 @@ import Staking from '../../components/web-extension/Staking';
 import { SearchValidator } from '../../components/web-extension/Common/SearchValidator';
 import { Confirm } from '../../components/web-extension/Staking/Confirm';
 import { Undelegate } from '../../components/web-extension/Staking/Undelegate';
+import CreateWallet from '../../components/web-extension/CreateWallet';
+import { DoubleCheck } from '../../components/web-extension/CreateWallet/DoubleCheck';
 
 let features;
 
@@ -48,6 +50,8 @@ const routes = {
 		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },
+		{ name: 'Create Wallet', route: '/createWallet', component: CreateWallet },
+		{ name: 'Double Check', route: '/doubleCheck', component: DoubleCheck },
 	],
 };
 export default Object.keys(routes).reduce((out, key) => {

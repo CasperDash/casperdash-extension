@@ -24,11 +24,11 @@ module.exports = (dir) =>
 		},
 		plugins: [
 			new HtmlWebpackPlugin({
-				template: path.resolve(dir, '/template/extension/popup.html'),
+				template: path.resolve(dir, 'template/extension/popup.html'),
 				filename: 'popup.html',
 			}),
 			new HtmlWebpackPlugin({
-				template: path.resolve(dir, '/template/extension/popup.html'),
+				template: path.resolve(dir, 'template/extension/popup.html'),
 				filename: 'home.html',
 			}),
 			new CopyWebpackPlugin({

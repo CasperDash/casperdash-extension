@@ -1,0 +1,29 @@
+.cd_we_create_wallet {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.cd_recovery_phase {
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		.cd_recovery_phase_left,
+		.cd_recovery_phase_right {
+			height: 70vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+			div {
+				font-size: 16px;
+				line-height: 24px;
+				span {
+					padding-right: 15px;
+					color: #828489;
+				}
+			}
+		}
+	}
+	button {
+		margin-top: 20px;
+		width: 80%;
+	}
+}

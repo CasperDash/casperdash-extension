@@ -24,6 +24,10 @@ const ConnectAccount = () => {
 				<AddIcon />
 				View Mode
 			</Button>
+			<Button variant="normal" onClick={() => navigate('/createWallet', { state: { name: 'Recovery Phrase' } })}>
+				<AddIcon />
+				Create new wallet
+			</Button>
 			<Button variant="normal" onClick={handleConnectLedger}>
 				<HardwareIcon />
 				Connect Ledger
