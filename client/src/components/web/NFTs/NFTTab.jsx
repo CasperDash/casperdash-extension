@@ -14,6 +14,11 @@ export const NFTTab = ({ activeTab = '/NFTs' }) => {
 					Mint NFT
 				</Link>
 			</div>
+			<div className="cd_tab">
+				<Link to="/transferNFT" className={`${activeTab === '/transferNFT' ? 'active' : ''}`}>
+					Transfer NFT
+				</Link>
+			</div>
 		</div>
 	);
 };
