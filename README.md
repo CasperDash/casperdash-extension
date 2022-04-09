@@ -47,7 +47,7 @@
 ### Prerequisites
 
 -   yarn >= 1.22.5
--   nodejs >= 14
+-   nodejs = 14
 
 ## Architecture
 
