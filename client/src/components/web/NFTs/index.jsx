@@ -4,13 +4,14 @@ import nftEmpty from 'assets/image/nft-empty.png';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../selectors/user';
-import { getOwnNFTContractHash } from '../../../selectors/NFTs';
+import { getNFTDeployHistory, getOwnNFTContractHash } from '../../../selectors/NFTs';
 import { getNFTInfo } from '../../../selectors/NFTs';
 import {
 	fetchNFTInfo,
 	fetchNFTContractInfo,
 	addCustomNFTAddressToLocalStorage,
 	getNFTAddressesFromLocalStorage,
+	getNFTDeploysFromLocalStorage,
 } from '../../../actions/NFTActions';
 import { MessageModal } from '../../Common/Layout/Modal/MessageModal';
 import { AddTokenModal } from '../../Common/Layout/Modal/AddTokenModal';
@@ -25,6 +26,7 @@ const NFTs = () => {
 	const publicKey = useSelector(getPublicKey);
 	const NFTInfo = useSelector(getNFTInfo());
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
+	const nftDeployHistory = useSelector(getNFTDeployHistory);
 
 	// State
 	const [showModal, setShowModal] = useState(false);
@@ -41,6 +43,7 @@ const NFTs = () => {
 	useEffect(() => {
 		if (publicKey) {
 			dispatch(getNFTAddressesFromLocalStorage(publicKey));
+			dispatch(getNFTDeploysFromLocalStorage(publicKey));
 		}
 	}, [publicKey, dispatch]);
 
@@ -108,7 +111,8 @@ const NFTs = () => {
 					handleClose={onCloseModal}
 					nftDetails={selectedNFT}
 					publicKey={publicKey}
-					haveTransferForm={true}
+					enableTransferForm={true}
+					nftDeployHistory={nftDeployHistory}
 				/>
 				<AddTokenModal
 					show={showAddTokenModal}

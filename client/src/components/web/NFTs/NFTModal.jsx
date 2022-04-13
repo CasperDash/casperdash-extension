@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, FormControl, Form } from 'react-bootstrap';
 import nftEmpty from 'assets/image/nft-empty.png';
 import { Formik } from 'formik';
@@ -9,11 +9,34 @@ import { getTransferDeploy } from '../../../services/nftServices';
 import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { updateNFTLocalStorage } from '../../../actions/NFTActions';
 import { validateNftTransferForm } from '../../../helpers/validator';
+import { EXPLORER_URL } from '../../../constants/key';
 
-export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting, publicKey, haveTransferForm }) => {
+export const NFTModal = ({
+	show,
+	handleClose,
+	nftDetails,
+	onMint,
+	isMinting,
+	publicKey,
+	nftDeployHistory,
+	enableTransferForm,
+}) => {
 	const { metadata, image: imageValue, nftName: name, tokenId, contractAddress, symbol } = nftDetails;
 	const { executeDeploy, isDeploying: isTransferring } = useConfirmDeploy();
 	const dispatch = useDispatch();
+
+	const [pendingTransfer, setPendingTransfer] = useState(false);
+
+	useEffect(() => {
+		if (!show) {
+			return;
+		}
+
+		const foundDeploy = nftDeployHistory?.find(
+			(deploy) => deploy.tokenId === tokenId && deploy.status === 'pending' && deploy.type === 'Transfer',
+		);
+		setPendingTransfer(foundDeploy);
+	}, [show, tokenId, nftDeployHistory]);
 
 	const onClose = () => {
 		if (isMinting || isTransferring) {
@@ -45,6 +68,7 @@ export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting, pub
 						timestamp: new Date().toString(),
 						collectionName: symbol,
 						recipient: toAddress,
+						tokenId: tokenId,
 					},
 					'push',
 				),
@@ -85,39 +109,54 @@ export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting, pub
 							))}
 					</div>
 				</div>
-				{haveTransferForm && (
+				{enableTransferForm && (
 					<div className="cd_nft_modal_row cd_nft_mint">
-						<Formik
-							onSubmit={handleSubmit}
-							initialValues={{ toAddress: '' }}
-							validate={validateNftTransferForm}
-						>
-							{({ values, errors, handleSubmit, handleChange }) => (
-								<Form noValidate onSubmit={handleSubmit} className="cd_nft_mint_form transfer_from">
-									<div className="cd_nft_transfer_recipient">
-										<h3>Recipient</h3>
-										<FormControl
-											placeholder="Insert address"
-											name="toAddress"
-											value={values.toAddress}
-											onChange={handleChange}
-											isInvalid={errors.toAddress}
-										/>
-										<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
-									</div>
-									<div className="cd_send_currency_btn_text">
-										<Button
-											type="submit"
-											onClick={handleSubmit}
-											className="cd_send_currency_btn"
-											disabled={Object.keys(errors).length || isTransferring}
-										>
-											{isTransferring ? 'Transferring...' : 'Transfer'}
-										</Button>
-									</div>
-								</Form>
-							)}
-						</Formik>
+						{!pendingTransfer ? (
+							<Formik
+								onSubmit={handleSubmit}
+								initialValues={{ toAddress: '' }}
+								validate={validateNftTransferForm}
+							>
+								{({ values, errors, handleSubmit, handleChange }) => (
+									<Form noValidate onSubmit={handleSubmit} className="cd_nft_mint_form transfer_from">
+										<div className="cd_nft_transfer_recipient">
+											<h3>Recipient</h3>
+											<FormControl
+												placeholder="Insert address"
+												name="toAddress"
+												value={values.toAddress}
+												onChange={handleChange}
+												isInvalid={errors.toAddress}
+											/>
+											<Form.Control.Feedback type="invalid">
+												{errors.toAddress}
+											</Form.Control.Feedback>
+										</div>
+										<div className="cd_send_currency_btn_text">
+											<Button
+												type="submit"
+												onClick={handleSubmit}
+												className="cd_send_currency_btn"
+												disabled={Object.keys(errors).length || isTransferring}
+											>
+												{isTransferring ? 'Transferring...' : 'Transfer'}
+											</Button>
+										</div>
+									</Form>
+								)}
+							</Formik>
+						) : (
+							<div className="cd_error_text">
+								This NFT is having the pending transfer.{' '}
+								<a
+									target="_blank"
+									rel="noreferrer"
+									href={`${EXPLORER_URL}/deploy/${pendingTransfer.hash}`}
+								>
+									See more details.
+								</a>
+							</div>
+						)}
 					</div>
 				)}
 			</Modal.Body>
