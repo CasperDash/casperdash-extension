@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { updateNFTLocalStorage } from '../../../../actions/NFTActions';
+import { validateNftTransferForm } from '../../../../helpers/validator';
 import { getTransferDeploy } from '../../../../services/nftServices';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import SelectField from '../CreateNFTs/SelectField';
@@ -45,7 +46,7 @@ const NFTTransferForm = ({ publicKey, NFTs }) => {
 	};
 
 	return (
-		<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '' }}>
+		<Formik onSubmit={handleSubmit} initialValues={{ toAddress: '', name: '' }} validate={validateNftTransferForm}>
 			{({ values, errors, handleSubmit, handleChange, resetForm }) => (
 				<Form noValidate onSubmit={handleSubmit} className="cd_nft_mint_form">
 					<div className="cd_nft_mint_contract">
