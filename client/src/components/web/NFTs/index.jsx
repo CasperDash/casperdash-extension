@@ -103,7 +103,13 @@ const NFTs = () => {
 					)}
 				</div>
 
-				<NFTModal show={showModal} handleClose={onCloseModal} nftDetails={selectedNFT} />
+				<NFTModal
+					show={showModal}
+					handleClose={onCloseModal}
+					nftDetails={selectedNFT}
+					publicKey={publicKey}
+					haveTransferForm={true}
+				/>
 				<AddTokenModal
 					show={showAddTokenModal}
 					handleClose={onCloseTokenModal}
