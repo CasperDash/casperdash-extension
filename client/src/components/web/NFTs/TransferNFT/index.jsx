@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNFTInfo, getNFTDeploysFromLocalStorage } from '../../../../actions/NFTActions';
-import { getNFTDeployHistory, getNFTInfo, getOwnNFTContractHash } from '../../../../selectors/NFTs';
+import {
+	fetchNFTInfo,
+	getNFTDeploysFromLocalStorage,
+	getNFTPendingDeploysStatus,
+	updateNFTDeploysStatus,
+} from '../../../../actions/NFTActions';
+import {
+	getNFTDeployHistory,
+	getNFTInfo,
+	getOwnNFTContractHash,
+	getPendingDeployHashes,
+} from '../../../../selectors/NFTs';
 import { getPublicKey } from '../../../../selectors/user';
 import HeadingModule from '../../../Common/Layout/HeadingComponent/Heading';
 import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
@@ -17,11 +27,21 @@ const TransferNFT = () => {
 	const NFTInfo = useSelector(getNFTInfo());
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 	const nftDeployHistory = useSelector(getNFTDeployHistory);
+	const pendingDeployHashes = useSelector(getPendingDeployHashes);
 
 	// Effect
 	useAutoRefreshEffect(() => {
 		dispatch(fetchNFTInfo(publicKey, ownNFTContracts));
 	}, [dispatch, publicKey, JSON.stringify(ownNFTContracts)]);
+
+	useAutoRefreshEffect(() => {
+		if (pendingDeployHashes.length) {
+			(async () => {
+				const { data } = await dispatch(getNFTPendingDeploysStatus(pendingDeployHashes));
+				dispatch(updateNFTDeploysStatus(publicKey, 'nfts.deploys', data));
+			})();
+		}
+	}, [JSON.stringify(pendingDeployHashes), dispatch]);
 
 	useEffect(() => {
 		if (!publicKey) {

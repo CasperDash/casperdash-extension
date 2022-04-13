@@ -71,7 +71,7 @@ export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }
 			recipient: createRecipientAddress(recipientPK),
 			token_id: CLValueBuilder.string(tokenId),
 		});
-		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, toMotes(1));
+		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, toMotes(2.5));
 	} catch (error) {
 		console.error(error);
 		throw new Error(`Failed to get transfer NFT deploy due to ${error}`);
