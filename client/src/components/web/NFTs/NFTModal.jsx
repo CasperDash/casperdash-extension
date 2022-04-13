@@ -1,19 +1,58 @@
 /* eslint-disable complexity */
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, FormControl, Form } from 'react-bootstrap';
 import nftEmpty from 'assets/image/nft-empty.png';
+import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
+import { getTransferDeploy } from '../../../services/nftServices';
+import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
+import { updateNFTLocalStorage } from '../../../actions/NFTActions';
+import { validateNftTransferForm } from '../../../helpers/validator';
 
-export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting }) => {
-	const { metadata, image: imageValue, nftName: name } = nftDetails;
+export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting, publicKey, haveTransferForm }) => {
+	const { metadata, image: imageValue, nftName: name, tokenId, contractAddress, symbol } = nftDetails;
+	const { executeDeploy, isDeploying: isTransferring } = useConfirmDeploy();
+	const dispatch = useDispatch();
 
 	const onClose = () => {
-		if (isMinting) {
+		if (isMinting || isTransferring) {
 			return;
 		} else {
 			handleClose();
 		}
 	};
+
+	const handleSubmit = async ({ toAddress }) => {
+		const buildTransferDeploy = () => {
+			return getTransferDeploy({
+				publicKey,
+				nftContract: contractAddress,
+				tokenId,
+				recipient: toAddress,
+			});
+		};
+
+		const { deployHash } = await executeDeploy(buildTransferDeploy, publicKey, toAddress);
+		if (deployHash) {
+			dispatch(
+				updateNFTLocalStorage(
+					publicKey,
+					'nfts.deploys.transfer',
+					{
+						hash: deployHash,
+						status: 'pending',
+						timestamp: new Date().toString(),
+						collectionName: symbol,
+						recipient: toAddress,
+					},
+					'push',
+				),
+			);
+			handleClose();
+		}
+	};
+
 	return (
 		<Modal show={show} onHide={onClose} centered className="cd_edit_modal_content" size="lg">
 			<Modal.Header closeButton className="cd_edit_modal_header">
@@ -46,6 +85,41 @@ export const NFTModal = ({ show, handleClose, nftDetails, onMint, isMinting }) =
 							))}
 					</div>
 				</div>
+				{haveTransferForm && (
+					<div className="cd_nft_modal_row cd_nft_mint">
+						<Formik
+							onSubmit={handleSubmit}
+							initialValues={{ toAddress: '' }}
+							validate={validateNftTransferForm}
+						>
+							{({ values, errors, handleSubmit, handleChange }) => (
+								<Form noValidate onSubmit={handleSubmit} className="cd_nft_mint_form transfer_from">
+									<div className="cd_nft_transfer_recipient">
+										<h3>Recipient</h3>
+										<FormControl
+											placeholder="Insert address"
+											name="toAddress"
+											value={values.toAddress}
+											onChange={handleChange}
+											isInvalid={errors.toAddress}
+										/>
+										<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
+									</div>
+									<div className="cd_send_currency_btn_text">
+										<Button
+											type="submit"
+											onClick={handleSubmit}
+											className="cd_send_currency_btn"
+											disabled={Object.keys(errors).length || isTransferring}
+										>
+											{isTransferring ? 'Transferring...' : 'Transfer'}
+										</Button>
+									</div>
+								</Form>
+							)}
+						</Formik>
+					</div>
+				)}
 			</Modal.Body>
 
 			<Modal.Footer className="cd_edit_modal_footer">
