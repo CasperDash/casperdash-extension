@@ -162,7 +162,6 @@ export const getPendingDeployHashes = createSelector(getPendingDeploys, (pending
  * @param {object} nfts
  */
 export const getNFTDeployHistory = ({ nfts }) => {
-	console.log('NFT', nfts);
 	if (!nfts || !nfts.deploys) {
 		return [];
 	}
