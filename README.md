@@ -4,7 +4,11 @@
 
 [![codecov](https://codecov.io/gh/CasperDash/casperdash-client/branch/develop/graph/badge.svg?token=3KWLVN3DPV)](https://codecov.io/gh/CasperDash/casperdash-client)
 
+<img width="354" alt="image" src="https://user-images.githubusercontent.com/6711653/163332067-359844e1-c468-4be9-917e-c86b4b2403a9.png">
+
 ![](https://i.imgur.com/N0DGupc.png)
+
+
 
 ### 🏠 [casperdash.io ](casperdash.io) ( beta )
 
