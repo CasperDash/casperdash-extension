@@ -27,3 +27,38 @@ test('Display name as NFT if missing name', () => {
 	const { getByText } = render(<NFTModal nftDetails={nftDetails} show />);
 	expect(getByText(/NFT/i).textContent).toBe('NFT');
 });
+
+test('NFT has pending deploy', () => {
+	const nftDeployHistory = [
+		{
+			tokenId: '123456',
+			type: 'Transfer',
+			status: 'pending',
+		},
+	];
+	const nftDetails = {
+		image: 'image/ntf-123456.png',
+		nftName: 'CDAS NFT SAMPLE',
+		tokenId: '123456',
+	};
+
+	const { getByText } = render(
+		<NFTModal show enableTransferForm={true} nftDetails={nftDetails} nftDeployHistory={nftDeployHistory} />,
+	);
+	expect(getByText(/This NFT is having the pending transfer/i).textContent).toBe(
+		'This NFT is having the pending transfer. See more details.',
+	);
+});
+
+test('Display transfer form', () => {
+	const nftDetails = {
+		image: 'image/ntf-1.png',
+		nftName: 'SPECIAL NFT',
+		metadata: [{ key: 'image', value: 'image/ntf-1.png' }],
+		tokenId: '1234',
+	};
+
+	const { getByText } = render(<NFTModal show enableTransferForm={true} nftDetails={nftDetails} />);
+	expect(getByText(/Recipient/i).textContent).toBe('Recipient');
+	expect(getByText(/Transfer/i).textContent).toBe('Transfer');
+});

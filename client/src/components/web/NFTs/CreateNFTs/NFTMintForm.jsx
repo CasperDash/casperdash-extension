@@ -68,7 +68,7 @@ export const NFTMintForm = ({ publicKey, nftContracts }) => {
 			dispatch(
 				updateNFTLocalStorage(
 					publicKey,
-					`nfts.deploys.mint`,
+					'nfts.deploys.mint',
 					{
 						hash: deployHash,
 						status: 'pending',

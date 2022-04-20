@@ -52,6 +52,26 @@ export const validateNFTMintForm = (values) => {
 	return errors;
 };
 
+/**
+ * Validate NFT transfer form
+ *
+ * @param values - The values of the form.
+ * @returns An object with the key of toAddress and the value of 'Invalid address.'
+ */
+export const validateNftTransferForm = (values) => {
+	let errors = {};
+
+	if (!values.toAddress) {
+		errors.toAddress = 'Required';
+	}
+
+	if (values.toAddress && !isValidPublicKey(values.toAddress)) {
+		errors.toAddress = 'Invalid address.';
+	}
+
+	return errors;
+};
+
 const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
 	NOT_ENOUGH_BALANCE: 'Not enough balance.',
