@@ -62,16 +62,3 @@ test('Display transfer form', () => {
 	expect(getByText(/Recipient/i).textContent).toBe('Recipient');
 	expect(getByText(/Transfer/i).textContent).toBe('Transfer');
 });
-
-test('Display transfer form in transferring state', () => {
-	const nftDetails = {
-		image: 'image/ntf-123.png',
-		nftName: 'CDAS NFT SPECIAL',
-		metadata: [{ key: 'image', value: 'image/ntf-123.png' }],
-		tokenId: '12345',
-	};
-
-	const { getByText } = render(<NFTModal show enableTransferForm={true} nftDetails={nftDetails} />);
-	expect(getByText(/Recipient/i).textContent).toBe('Recipient');
-	expect(getByText(/Transfer/i).textContent).toBe('Transfer');
-});
