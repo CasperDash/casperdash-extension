@@ -56,13 +56,10 @@ test('NFT has pending deploy', () => {
 
 test('Display transfer form', () => {
 	const nftDetails = {
-		image: 'image/ntf.png',
-		nftName: 'CDAS NFT',
-		metadata: [
-			{ key: 'image', value: 'image/ntf.png' },
-			{ key: 'attribute', value: 'Test Attribute' },
-		],
-		tokenId: '123',
+		image: 'image/ntf-transfer.png',
+		nftName: 'TRANSFER NFT',
+		metadata: [{ key: 'image', value: 'image/ntf-transfer.png' }],
+		tokenId: '1234',
 	};
 
 	const { getByText } = render(<NFTModal show enableTransferForm={true} nftDetails={nftDetails} />);
@@ -72,13 +69,10 @@ test('Display transfer form', () => {
 
 test('Display transfer form in transferring state', () => {
 	const nftDetails = {
-		image: 'image/ntf.png',
-		nftName: 'CDAS NFT',
-		metadata: [
-			{ key: 'image', value: 'image/ntf.png' },
-			{ key: 'attribute', value: 'Test Attribute' },
-		],
-		tokenId: '123',
+		image: 'image/ntf-transferring.png',
+		nftName: 'CDAS NFT TRANSFERRING',
+		metadata: [{ key: 'image', value: 'image/ntf-transferring.png' }],
+		tokenId: '12345',
 	};
 
 	const { getByText } = render(<NFTModal show enableTransferForm={true} nftDetails={nftDetails} />);

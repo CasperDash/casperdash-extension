@@ -7,18 +7,6 @@ jest.mock('../../hooks/useConfirmDeploy', () => {
 		__esModule: true,
 		useConfirmDeploy: jest.fn(() => {
 			return {
-				executeDeploy: jest.fn(() => {
-					return {
-						deployHash: '0x123',
-						signedDeploy: {
-							deploy: {
-								header: {
-									timestamp: 1234,
-								},
-							},
-						},
-					};
-				}),
 				isDeploying: true,
 			};
 		}),
@@ -28,13 +16,9 @@ afterEach(cleanup);
 
 test('Display transfer form in transferring state', () => {
 	const nftDetails = {
-		image: 'image/ntf.png',
-		nftName: 'CDAS NFT',
-		metadata: [
-			{ key: 'image', value: 'image/ntf.png' },
-			{ key: 'attribute', value: 'Test Attribute' },
-		],
-		tokenId: '123',
+		image: 'image/ntf-transferring-state-test.png',
+		nftName: 'TRANSFER STATE NFT',
+		tokenId: '123456',
 	};
 
 	const { getByText } = render(<NFTModal show enableTransferForm={true} nftDetails={nftDetails} />);
