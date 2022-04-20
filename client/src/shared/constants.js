@@ -19,7 +19,6 @@ const defaultRoutes = {
 	staking: '/staking',
 	nfts: '/NFTs',
 	createnft: '/createNFT',
-	transferNft: '/transferNFT',
 };
 
 export const routes = features
