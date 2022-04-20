@@ -23,5 +23,5 @@ test('Display transfer form in transferring state', () => {
 
 	const { getByText } = render(<NFTModal show enableTransferForm={true} nftDetails={nftDetails} />);
 	expect(getByText(/Recipient/i).textContent).toBe('Recipient');
-	expect(getByText(/Transfer/i).textContent).toBe('Transferring...');
+	expect(getByText(/Transferring.../i).textContent).toBe('Transferring...');
 });

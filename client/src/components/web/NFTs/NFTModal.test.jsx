@@ -31,19 +31,15 @@ test('Display name as NFT if missing name', () => {
 test('NFT has pending deploy', () => {
 	const nftDeployHistory = [
 		{
-			tokenId: '123',
+			tokenId: '123456',
 			type: 'Transfer',
 			status: 'pending',
 		},
 	];
 	const nftDetails = {
-		image: 'image/ntf.png',
-		nftName: 'CDAS NFT',
-		metadata: [
-			{ key: 'image', value: 'image/ntf.png' },
-			{ key: 'attribute', value: 'Test Attribute' },
-		],
-		tokenId: '123',
+		image: 'image/ntf-123456.png',
+		nftName: 'CDAS NFT SAMPLE',
+		tokenId: '123456',
 	};
 
 	const { getByText } = render(
@@ -56,9 +52,9 @@ test('NFT has pending deploy', () => {
 
 test('Display transfer form', () => {
 	const nftDetails = {
-		image: 'image/ntf-transfer.png',
-		nftName: 'TRANSFER NFT',
-		metadata: [{ key: 'image', value: 'image/ntf-transfer.png' }],
+		image: 'image/ntf-1.png',
+		nftName: 'SPECIAL NFT',
+		metadata: [{ key: 'image', value: 'image/ntf-1.png' }],
 		tokenId: '1234',
 	};
 
@@ -69,9 +65,9 @@ test('Display transfer form', () => {
 
 test('Display transfer form in transferring state', () => {
 	const nftDetails = {
-		image: 'image/ntf-transferring.png',
-		nftName: 'CDAS NFT TRANSFERRING',
-		metadata: [{ key: 'image', value: 'image/ntf-transferring.png' }],
+		image: 'image/ntf-123.png',
+		nftName: 'CDAS NFT SPECIAL',
+		metadata: [{ key: 'image', value: 'image/ntf-123.png' }],
 		tokenId: '12345',
 	};
 
