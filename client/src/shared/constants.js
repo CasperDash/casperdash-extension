@@ -18,7 +18,7 @@ const defaultRoutes = {
 	keyManager: '/keyManager',
 	staking: '/staking',
 	nfts: '/NFTs',
-	createnft: '/createNFT',
+	createnft: '/create-nft',
 };
 
 export const routes = features
