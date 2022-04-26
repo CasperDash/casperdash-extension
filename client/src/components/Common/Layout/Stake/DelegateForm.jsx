@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,7 @@ import { getStakeDeploy } from '../../../../services/stakeServices';
 import { getConfigKey } from '../../../../services/configurationServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { validateStakeForm } from '../../../../helpers/validator';
-import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
