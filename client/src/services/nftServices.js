@@ -4,6 +4,7 @@ import { toMotes } from '../helpers/currency';
 import { NETWORK_NAME, DEPLOY_TTL_MS } from '../constants/key';
 import { createRecipientAddress, toCLMap, contractHashToByteArray } from './casperServices';
 import { request } from './request';
+import { getConfigKey } from './configurationServices';
 
 /**
  * Get mint NFT deploy
@@ -25,13 +26,14 @@ export const getMintNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAm
  * @param publicKey - The public key of the account that will be used to deploy the contract.
  * @param runtimeArgs - The arguments to pass to the contract.
  * @param contractHash - The hash of the contract to be deployed.
+ * @param entryPoint - The entry point.
  * @param paymentAmount - The amount of tokens to pay for the deploy.
  * @returns The deploy is being returned.
  */
-export const getTransferNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAmount) => {
+export const getTransferNFTDeploy = (publicKey, runtimeArgs, contractHash, entryPoint, paymentAmount) => {
 	return DeployUtil.makeDeploy(
 		new DeployUtil.DeployParams(publicKey, NETWORK_NAME, 1, DEPLOY_TTL_MS),
-		DeployUtil.ExecutableDeployItem.newStoredContractByHash(contractHash, 'transfer_token', runtimeArgs),
+		DeployUtil.ExecutableDeployItem.newStoredContractByHash(contractHash, entryPoint, runtimeArgs),
 		DeployUtil.standardPayment(paymentAmount),
 	);
 };
@@ -65,13 +67,26 @@ export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }
 		const recipientPK = CLPublicKey.fromHex(recipient);
 		const contractHashByteArray = contractHashToByteArray(nftContract);
 		const pbKey = CLPublicKey.fromHex(publicKey);
-
-		const runtimeArgs = RuntimeArgs.fromMap({
+		let mapping = {
 			sender: createRecipientAddress(pbKey),
 			recipient: createRecipientAddress(recipientPK),
-			token_id: CLValueBuilder.string(tokenId),
-		});
-		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, toMotes(2.5));
+		};
+
+		const oldNFTAddresses = getConfigKey('OLD_NFT_SMART_CONTRACT_ADDRESSES')
+			? getConfigKey('OLD_NFT_SMART_CONTRACT_ADDRESSES')
+			: [];
+
+		let entryPoint = 'transfer';
+		if (oldNFTAddresses.indexOf(nftContract) > 0) {
+			entryPoint = 'transfer_token';
+			mapping['token_id'] = CLValueBuilder.string(tokenId);
+		} else {
+			mapping['token_ids'] = CLValueBuilder.list([CLValueBuilder.string(tokenId)]);
+		}
+
+		const runtimeArgs = RuntimeArgs.fromMap(mapping);
+
+		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, entryPoint, toMotes(2.5));
 	} catch (error) {
 		console.error(error);
 		throw new Error(`Failed to get transfer NFT deploy due to ${error}`);
