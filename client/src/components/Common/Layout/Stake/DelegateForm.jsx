@@ -36,7 +36,7 @@ const DelegateForm = ({
 				value: publicKey,
 				label: name ? `${name} (${publicKey})` : publicKey,
 				rate: bidInfo.bid.delegation_rate,
-				icon: logo ? <img width={20} height={23} src={logo} /> : <i className="bi bi-person" />,
+				icon: logo ? <img width={30} height={33} src={logo} /> : <i className="bi bi-person" />,
 				name,
 				priority,
 				logo,
