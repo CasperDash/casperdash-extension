@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
@@ -46,17 +47,36 @@ const Staking = () => {
 			return {};
 		}
 		const validatorError = validator.public_key ? {} : { validator: 'Required.' };
+
+		const selectedValidator = {
+			...validator,
+			numOfDelegator:
+				(validator.bidInfo &&
+					validator.bidInfo.bid &&
+					validator.bidInfo.bid.delegators &&
+					validator.bidInfo.bid.delegators.length) ||
+				0,
+			hasDelegated:
+				validator.bidInfo &&
+				validator.bidInfo.bid &&
+				validator.bidInfo.bid.delegators &&
+				validator.bidInfo.bid.delegators.find((delegator) => delegator.public_key === publicKey),
+		};
 		return {
 			...validateStakeForm({
 				amount: amount,
 				tokenSymbol: 'CSPR',
 				balance,
 				fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE'),
-				minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
+				minAmount:
+					selectedValidator && selectedValidator.hasDelegated
+						? getConfigKey('MIN_CSPR_TRANSFER')
+						: getConfigKey('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR'),
+				selectedValidator,
 			}),
 			...validatorError,
 		};
-	}, [amount, balance, validator.public_key, firstLoad]);
+	}, [amount, balance, firstLoad, publicKey, validator]);
 
 	const onAmountChange = (newAmount) => {
 		setFirstLoad(false);

@@ -4,9 +4,10 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
 import { getStakeDeploy } from '../../../../services/stakeServices';
+import { getConfigKey } from '../../../../services/configurationServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { validateStakeForm } from '../../../../helpers/validator';
-import { CSPR_AUCTION_DELEGATE_FEE, MIN_CSPR_TRANSFER } from '../../../../constants/key';
+import { CSPR_AUCTION_DELEGATE_FEE } from '../../../../constants/key';
 import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
@@ -32,11 +33,19 @@ const DelegateForm = ({
 	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	const options = validators
-		? validators.map(({ public_key: publicKey, bidInfo }) => ({
+		? validators.map(({ public_key: publicKey, bidInfo, name, priority, logo }) => ({
 				value: publicKey,
-				label: publicKey,
+				label: name ? `${name} (${publicKey})` : publicKey,
 				rate: bidInfo.bid.delegation_rate,
-				icon: <i className="bi bi-person" />,
+				numOfDelegator: bidInfo.bid && bidInfo.bid.delegators && bidInfo.bid.delegators.length,
+				hasDelegated:
+					bidInfo.bid &&
+					bidInfo.bid.delegators &&
+					bidInfo.bid.delegators.find((delegator) => delegator.public_key === fromAddress),
+				icon: logo ? <img width={30} height={33} src={logo} /> : <i className="bi bi-person" />,
+				name,
+				priority,
+				logo,
 		  }))
 		: [];
 
@@ -94,15 +103,20 @@ const DelegateForm = ({
 						<Formik
 							enableReinitialize
 							initialValues={{ amount: 0, validator: defaultValidator }}
-							validate={(values) =>
-								validateStakeForm({
+							validate={(values) => {
+								const selectedValidator = options.find((option) => option.value === values.validator);
+								return validateStakeForm({
 									...values,
 									balance,
 									tokenSymbol,
 									fee,
-									minAmount: MIN_CSPR_TRANSFER,
-								})
-							}
+									minAmount:
+										selectedValidator && selectedValidator.hasDelegated
+											? getConfigKey('MIN_CSPR_TRANSFER')
+											: getConfigKey('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR'),
+									selectedValidator,
+								});
+							}}
 							onSubmit={handleSubmit}
 						>
 							{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
@@ -117,6 +131,7 @@ const DelegateForm = ({
 									</div>
 									<Form.Group className="mb-3" controlId="cd-staking-validator">
 										<Field name={'validator'} component={SelectField} options={options} />
+										{errors.validator && <div className="cd_error_text">{errors.validator}</div>}
 										<Form.Text className="text-muted">
 											<a
 												className="cd-form-text-link"
