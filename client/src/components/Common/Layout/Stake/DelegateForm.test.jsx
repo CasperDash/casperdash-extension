@@ -144,9 +144,7 @@ describe('Should show error if not valid form when click send', () => {
 				target: { value: '1' },
 			});
 		});
-		expect(getByText('Insufficient balance. System requires 2.5 CSPR minimum balance.').textContent).toBe(
-			'Insufficient balance. System requires 2.5 CSPR minimum balance.',
-		);
+		expect(getByText('Not enough balance.').textContent).toBe('Not enough balance.');
 	});
 
 	test('Staked amount is less then zero', async () => {
@@ -175,7 +173,7 @@ describe('Should show error if not valid form when click send', () => {
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
-				target: { value: '9' },
+				target: { value: '100' },
 			});
 		});
 		expect(getByText('Not enough balance.').textContent).toBe('Not enough balance.');
@@ -224,7 +222,7 @@ describe('Success to stake the valid amount', () => {
 		const stakeAmountInput = container.querySelector('.cd_send_currency_input');
 		await act(async () => {
 			fireEvent.change(stakeAmountInput, {
-				target: { value: 9 },
+				target: { value: 600 },
 			});
 		});
 
