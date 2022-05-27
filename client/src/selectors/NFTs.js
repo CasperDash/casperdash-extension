@@ -11,6 +11,7 @@ import { userDetailsSelector } from './user';
 const NFT_TYPE_MAPPING = {
 	installContract: 'Deploy Contract',
 	mint: 'Mint',
+	transfer: 'Transfer',
 };
 
 export const NFTSelector = getQuerySelector({ type: NFTS.FETCH_NFTS_INFO });

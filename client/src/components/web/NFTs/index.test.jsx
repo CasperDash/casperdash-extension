@@ -22,6 +22,7 @@ jest.mock('../../../actions/NFTActions', () => {
 	return {
 		__esModule: true,
 		getNFTAddressesFromLocalStorage: () => {},
+		getNFTDeploysFromLocalStorage: () => {},
 		addCustomNFTAddressToLocalStorage: () => {},
 		fetchNFTContractInfo: () => {},
 		fetchNFTInfo: () => ({ error: { message: 'error message' } }),

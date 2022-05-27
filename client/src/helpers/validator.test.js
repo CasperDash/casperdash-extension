@@ -4,6 +4,7 @@ import {
 	validateStakeForm,
 	validateUndelegateForm,
 	validateNFTMintForm,
+	validateNftTransferForm,
 } from './validator';
 
 describe('isValidPublicKey', () => {
@@ -230,6 +231,36 @@ describe('validateNFTMintForm', () => {
 		).toEqual({
 			attribute1: 'Max is 20 chars.',
 			value1: 'Max is 20 chars.',
+		});
+	});
+});
+
+describe('validateNftTransferForm', () => {
+	test('Should return no error', () => {
+		expect(
+			validateNftTransferForm({
+				toAddress: '0111a5aee38d7506ae9199e62c30b8303298a38ca7e9835545772f21414ea019b0',
+			}),
+		).toEqual({});
+	});
+
+	test('Should return required address error', () => {
+		expect(
+			validateNftTransferForm({
+				toAddress: '',
+			}),
+		).toEqual({
+			toAddress: 'Required',
+		});
+	});
+
+	test('Should return invalid address error', () => {
+		expect(
+			validateNftTransferForm({
+				toAddress: '0x11',
+			}),
+		).toEqual({
+			toAddress: 'Invalid address.',
 		});
 	});
 });

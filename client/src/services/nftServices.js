@@ -21,6 +21,22 @@ export const getMintNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAm
 };
 
 /**
+ * * Create a NFT transfer deploy
+ * @param publicKey - The public key of the account that will be used to deploy the contract.
+ * @param runtimeArgs - The arguments to pass to the contract.
+ * @param contractHash - The hash of the contract to be deployed.
+ * @param paymentAmount - The amount of tokens to pay for the deploy.
+ * @returns The deploy is being returned.
+ */
+export const getTransferNFTDeploy = (publicKey, runtimeArgs, contractHash, paymentAmount) => {
+	return DeployUtil.makeDeploy(
+		new DeployUtil.DeployParams(publicKey, NETWORK_NAME, 1, DEPLOY_TTL_MS),
+		DeployUtil.ExecutableDeployItem.newStoredContractByHash(contractHash, 'transfer_token', runtimeArgs),
+		DeployUtil.standardPayment(paymentAmount),
+	);
+};
+
+/**
  * Get mint nft deploy
  * @param {object} nftInfo
  */
@@ -31,7 +47,7 @@ export const getMintDeploy = (nftInfo) => {
 		const contractHashByteArray = contractHashToByteArray(nftContract.slice(5));
 		const pbKey = CLPublicKey.fromHex(publicKey);
 		const recipientPK = CLPublicKey.fromHex(toAddress);
-		const tokenId = CLValueBuilder.option(None, CLTypeBuilder.string());
+		const tokenId = CLValueBuilder.option(None, CLTypeBuilder.u256());
 		const runtimeArgs = RuntimeArgs.fromMap({
 			recipient: createRecipientAddress(recipientPK),
 			token_id: tokenId,
@@ -41,6 +57,24 @@ export const getMintDeploy = (nftInfo) => {
 	} catch (error) {
 		console.error(error);
 		throw new Error(`Failed to get mint NFT deploy.`);
+	}
+};
+
+export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }) => {
+	try {
+		const recipientPK = CLPublicKey.fromHex(recipient);
+		const contractHashByteArray = contractHashToByteArray(nftContract);
+		const pbKey = CLPublicKey.fromHex(publicKey);
+
+		const runtimeArgs = RuntimeArgs.fromMap({
+			sender: createRecipientAddress(pbKey),
+			recipient: createRecipientAddress(recipientPK),
+			token_id: CLValueBuilder.string(tokenId),
+		});
+		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, toMotes(2.5));
+	} catch (error) {
+		console.error(error);
+		throw new Error(`Failed to get transfer NFT deploy due to ${error}`);
 	}
 };
 
