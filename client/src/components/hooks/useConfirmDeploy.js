@@ -48,7 +48,6 @@ export const useConfirmDeploy = () => {
 			});
 			setDeployError(true);
 			setIsDeploying(false);
-			console.error(error);
 			return {};
 		}
 	};
