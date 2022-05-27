@@ -33,16 +33,19 @@ const DelegateForm = ({
 	const { executeDeploy, isDeploying } = useConfirmDeploy();
 
 	const options = validators
-		? validators.map(({ public_key: publicKey, bidInfo }) => ({
+		? validators.map(({ public_key: publicKey, bidInfo, name, priority, logo }) => ({
 				value: publicKey,
-				label: publicKey,
+				label: name ? `${name} (${publicKey})` : publicKey,
 				rate: bidInfo.bid.delegation_rate,
 				numOfDelegator: bidInfo.bid && bidInfo.bid.delegators && bidInfo.bid.delegators.length,
 				hasDelegated:
 					bidInfo.bid &&
 					bidInfo.bid.delegators &&
 					bidInfo.bid.delegators.find((delegator) => delegator.public_key === fromAddress),
-				icon: <i className="bi bi-person" />,
+				icon: logo ? <img width={30} height={33} src={logo} /> : <i className="bi bi-person" />,
+				name,
+				priority,
+				logo,
 		  }))
 		: [];
 
