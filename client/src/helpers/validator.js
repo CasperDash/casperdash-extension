@@ -1,6 +1,7 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
 import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
+import { getConfigKey } from '../services/configurationServices';
 
 /**
  * Check value is public key.
@@ -76,6 +77,8 @@ const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
 	NOT_ENOUGH_BALANCE: 'Not enough balance.',
 	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
+	LESS_THAN_MIN_AMOUNT: (minAmount, tokenSymbol) =>
+		`Amount must be greater than or equal to ${minAmount} ${tokenSymbol}.`,
 };
 
 /**
@@ -140,7 +143,7 @@ export const validateTransferForm = ({
  * Validate stake form
  * @param {object} stake
  */
-export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount }) => {
+export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount, selectedValidator }) => {
 	let errors = {};
 	if (amount <= 0) {
 		errors.amount = COMMON_ERROR_MESSAGE.MORE_THAN_ZERO(tokenSymbol);
@@ -148,8 +151,20 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
 	}
 
-	if (balance <= minAmount) {
+	if (!errors.amount && balance <= minAmount) {
 		errors.amount = `Insufficient balance. System requires ${minAmount} ${tokenSymbol} minimum balance.`;
+	}
+
+	if (!errors.amount && amount < minAmount) {
+		errors.amount = COMMON_ERROR_MESSAGE.LESS_THAN_MIN_AMOUNT(minAmount, tokenSymbol);
+	}
+
+	if (
+		selectedValidator &&
+		!selectedValidator.hasDelegated &&
+		selectedValidator.numOfDelegator >= getConfigKey('MAX_DELEGATOR_PER_VALIDATOR')
+	) {
+		errors.validator = 'Max delegators';
 	}
 
 	return errors;
