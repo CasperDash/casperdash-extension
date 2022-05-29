@@ -11,6 +11,14 @@
 		.cd_we_grid {
 			height: calc(100vh - 212px);
 			padding: 0;
+			.cd_we_item {
+				.cd_we_item_left {
+					.cd_we_grid_icon {
+						height: 30px;
+						min-width: 30px;
+					}
+				}
+			}
 		}
 	}
 }

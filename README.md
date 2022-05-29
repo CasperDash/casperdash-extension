@@ -103,8 +103,8 @@ REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","keyM
 
 ```shell
 yarn dev             // start web with dev config
-yarn start-mainnet  // start web with testnet config
-yarn start-testnet // start web with mainnet config
+yarn start-mainnet  // start web with mainnet config
+yarn start-testnet // start web with testnet config
 yarn test         // run test with coverage
 ```
 
@@ -139,27 +139,27 @@ REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb32
 
 ```shell
 yarn dev-extension              // watch extension with dev config
-yarn dev-extension-mainnet      // watch extension with mainet config
+yarn dev-extension-mainnet      // watch extension with mainnet config
 yarn dev-extension-testnet      // watch extension with testnet config
 ```
 
 ##### 5. Load into Chrome
 
-To load the built files into Chrome, open
+- To load the built files into Chrome, open
 
 ![](https://i.imgur.com/kxZk0EW.png)
 
-Enable "Developer mode" if it's not enabled yet:
+- Enable "Developer mode" if it's not enabled yet:
 
 ![](https://i.imgur.com/zdPemcj.png)
 
-Click on "Load unpacked":
+- Click on "Load unpacked":
 
 ![](https://i.imgur.com/HRDH6p8.png)
 
-Find the `YOUR_WORKING_DIRECTORY/casperdash-client/build_extension/` directory on your system and open it.
+- Find the `YOUR_WORKING_DIRECTORY/casperdash-client/build_extension/` directory on your system and open it.
 
-The extension should be now at the top of the page:
+- The extension should be now at the top of the page:
 
 ## Workflow and contributions
 
