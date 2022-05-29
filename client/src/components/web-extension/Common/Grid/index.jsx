@@ -21,15 +21,30 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 						{Object.keys(metadata).map((key) => {
 							return (
 								<div className={`cd_we_item_${key}`} key={key}>
-									{key === 'left' && value.icon && (
-										<div
-											className={`cd_we_grid_icon ${
-												metadata.left ? metadata.left.iconClassName || '' : ''
-											}`}
-										>
-											<img src={value.icon} alt="grid" />
-										</div>
-									)}
+									{key === 'left' &&
+										value.icon &&
+										(Array.isArray(value.icon) ? (
+											value.icon.map((ic, i) => {
+												return (
+													<div
+														key={i}
+														className={`cd_we_grid_icon ${
+															metadata.left ? metadata.left.iconClassName || '' : ''
+														}`}
+													>
+														{ic && <img src={ic} alt="grid" />}
+													</div>
+												);
+											})
+										) : (
+											<div
+												className={`cd_we_grid_icon ${
+													metadata.left ? metadata.left.iconClassName || '' : ''
+												}`}
+											>
+												<img src={value.icon} alt="grid" />
+											</div>
+										))}
 									<div className="cd_we_item_content">
 										{metadata[key].map((item, i) => {
 											const Component = item.component;
@@ -41,8 +56,9 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 													format: item.format,
 												},
 											);
-											return typeof item.shouldDisplay === 'function' &&
-												!item.shouldDisplay(_get(value, item.key)) ? null : (
+											return (typeof item.shouldDisplay === 'function' &&
+												!item.shouldDisplay(_get(value, item.key))) ||
+												!_get(value, item.key) ? null : (
 												<div
 													className={`cd_we_item_value ${item.type} ${
 														item.valueAsClass ? formattedValue : ''

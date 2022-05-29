@@ -4,6 +4,7 @@ import Fuse from 'fuse.js';
 import memoizeOne from 'memoize-one';
 import { getBase64IdentIcon } from '../helpers/identicon';
 import { VALIDATORS } from '../store/actionTypes';
+import priorityIcon from '../assets/image/red-casper.png';
 
 export const validatorSelector = getQuerySelector({ type: VALIDATORS.FETCH_ACTIVE_VALIDATORS });
 
@@ -17,7 +18,11 @@ const searchValidator = memoizeOne((validators, searchTerm) => {
 
 const addValidatorIcon = memoizeOne((validators) => {
 	return validators.map((validator) => {
-		return { ...validator, icon: getBase64IdentIcon(validator.public_key, { size: 30 }) };
+		const icon = validator.logo || getBase64IdentIcon(validator.public_key, { size: 30 });
+		return {
+			...validator,
+			icon: [validator.priority ? priorityIcon : '', icon],
+		};
 	});
 });
 
