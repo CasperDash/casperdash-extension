@@ -1,7 +1,6 @@
 node_modules
 .vscode
 *.db
-.env
 db-config.json
 build
 coverage
