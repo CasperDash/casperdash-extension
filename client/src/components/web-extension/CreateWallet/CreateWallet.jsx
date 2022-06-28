@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { Button } from 'react-bootstrap';
 import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
 import { useNavigate } from 'react-router-dom';
+import CreateWalletProvider from "./Context";
+import RecoveryPhrasePage from "./RecoveryPhrasePage";
+import ValidateKeyphrasePage from "./ValidateKeyphrasePage";
 
 const encryptionType = EncryptionType.Ed25519;
 
@@ -66,12 +69,12 @@ const CreateWallet = () => {
   }, [keyPharses]);
 
   return (
-		<section className="cd_we_add_public_key">
-			<div className="cd_we_input_label">
-        {keyPharses}
-      </div>
-      <Button onClick={onGenerate}>Generate</Button>
-		</section>
+    <CreateWalletProvider>
+      <section className="cd_we_add_public_key">
+        <RecoveryPhrasePage />
+        <ValidateKeyphrasePage />
+      </section>
+    </CreateWalletProvider>
 	);
 };
 

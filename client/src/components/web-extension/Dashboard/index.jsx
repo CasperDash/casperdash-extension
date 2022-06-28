@@ -21,6 +21,7 @@ const WalletDetails = () => {
 	// Hook
 	const navigate = useNavigate();
 	const { allTokenInfo, isFetching } = useTokenInfo();
+  console.log(`🚀 ~ WalletDetails ~ allTokenInfo`, allTokenInfo)
 
 	// Functions
 	const onSelectToken = (token) => {
