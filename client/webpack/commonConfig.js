@@ -43,6 +43,11 @@ module.exports = (dir) => ({
 		extensions: ['.js', '.jsx'],
 		alias: {
 			assets: path.resolve(dir, 'src/assets'),
+      components: path.resolve(dir, 'src/components'),
+      common: path.resolve(dir, 'src/components/common'),
+      hooks: path.resolve(dir, 'src/components/hooks'),
+      web: path.resolve(dir, 'src/components/web'),
+      "web-extension": path.resolve(dir, 'src/components/web-extension'),
 		},
 	},
 });
