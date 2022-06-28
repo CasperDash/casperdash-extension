@@ -20,6 +20,10 @@ const ConnectAccount = () => {
 				<CasperDashLogo />
 				<div>Casper Dash</div>
 			</div>
+      <Button variant="normal" onClick={() => navigate('/createWallet', { state: { name: 'Add' } })}>
+				<AddIcon />
+				Manage Wallet 
+			</Button>
 			<Button variant="normal" onClick={() => navigate('/addPublicKey', { state: { name: 'Add' } })}>
 				<AddIcon />
 				View Mode
