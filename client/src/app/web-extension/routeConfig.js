@@ -2,6 +2,7 @@ import HomeIcon from 'assets/image/home-icon.svg';
 import NFTIcon from 'assets/image/nft-menu-icon.svg';
 import StakingIcon from 'assets/image/staking-icon.svg';
 import MarketIcon from 'assets/image/market-icon.svg';
+import CreateWallet from "web-extension/CreateWallet";
 import NFTs from '../../components/web-extension/NFTs';
 import Wallets from '../../components/web-extension/Dashboard';
 import Receive from '../../components/web-extension/Receive';
@@ -48,6 +49,7 @@ const routes = {
 		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },
+    { name: 'Manage Wallet', route: '/createWallet', component: CreateWallet }
 	],
 };
 export default Object.keys(routes).reduce((out, key) => {
