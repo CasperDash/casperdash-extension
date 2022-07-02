@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Button } from 'react-bootstrap';
 import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
 import { useNavigate } from 'react-router-dom';
-import CreateWalletProvider from "./Context";
+// import CreateWalletProvider from "./Context";
 import RecoveryPhrasePage from "./RecoveryPhrasePage";
 import ValidateKeyphrasePage from "./ValidateKeyphrasePage";
+import "./CreateWallet.scss";
 
 const encryptionType = EncryptionType.Ed25519;
 
@@ -69,12 +69,12 @@ const CreateWallet = () => {
   }, [keyPharses]);
 
   return (
-    <CreateWalletProvider>
-      <section className="cd_we_add_public_key">
+    // <CreateWalletProvider>
+      <section className="cd_we_page--root">
         <RecoveryPhrasePage />
         <ValidateKeyphrasePage />
       </section>
-    </CreateWalletProvider>
+    // </CreateWalletProvider>
 	);
 };
 

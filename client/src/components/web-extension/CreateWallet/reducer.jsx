@@ -3,7 +3,7 @@ export const initialState = {
   keyPhrase: null
 };
 
-export const reducer = (state = initialState, { type }) => {
+export const reducer = (state = initialState, { payload, type }) => {
   switch (type) {
     case "CREATE_WALLET/NEXT_STEP":
       return {
@@ -19,6 +19,16 @@ export const reducer = (state = initialState, { type }) => {
       return {
         ...state,
         currentStep: 0
+      }
+    case "CREATE_WALLET/CREATE_KEYPHRASE":
+      return {
+        ...state,
+        keyPhrase: payload
+      }
+    case "CREATE_WALLET/CLEAR_KEYPHRASE":
+      return {
+        ...state,
+        keyPhrase: null
       }
     default:
       return state;

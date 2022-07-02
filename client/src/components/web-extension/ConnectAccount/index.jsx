@@ -8,11 +8,20 @@ import { newTab, isPopupMode } from '../../../helpers/extension/tab';
 import './index.scss';
 
 const ConnectAccount = () => {
+  const createWalletConfigs = {
+    0: "Recovery Phrase",
+    1: "Doube Check",
+    2: "Enter Password"
+  }
 	const navigate = useNavigate();
 
 	const handleConnectLedger = () => {
 		isPopupMode() ? newTab({ route: '/connectDevice' }) : navigate('/connectDevice');
 	};
+
+  const handleManageWallet = () => {
+    navigate('/createWallet', { state: { name: 'Recovery Phrase', ...createWalletConfigs }});
+  }
 
 	return (
 		<div className="cd_we_connect_account">
@@ -20,7 +29,7 @@ const ConnectAccount = () => {
 				<CasperDashLogo />
 				<div>Casper Dash</div>
 			</div>
-      <Button variant="normal" onClick={() => navigate('/createWallet', { state: { name: 'Add' } })}>
+      <Button variant="normal" onClick={handleManageWallet}>
 				<AddIcon />
 				Manage Wallet 
 			</Button>
