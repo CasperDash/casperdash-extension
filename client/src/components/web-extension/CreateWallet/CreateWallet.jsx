@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 // import CreateWalletProvider from "./Context";
 import RecoveryPhrasePage from "./RecoveryPhrasePage";
 import ValidateKeyphrasePage from "./ValidateKeyphrasePage";
+import useCreateWalletStore from "./useCreateWallet";
 import "./CreateWallet.scss";
 
 const encryptionType = EncryptionType.Ed25519;
 
 const CreateWallet = () => {
   const navigate = useNavigate();
+  const { currentStep } = useCreateWalletStore();
   const keyManager = KeyFactory.getInstance();
   const [keyPharses, setKeyphrase] = useState(null);
 
@@ -71,8 +73,9 @@ const CreateWallet = () => {
   return (
     // <CreateWalletProvider>
       <section className="cd_we_page--root">
-        <RecoveryPhrasePage />
-        <ValidateKeyphrasePage />
+        {currentStep === 0 && <RecoveryPhrasePage />}
+        {currentStep === 1 && <ValidateKeyphrasePage />}
+
       </section>
     // </CreateWalletProvider>
 	);

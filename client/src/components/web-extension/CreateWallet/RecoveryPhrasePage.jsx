@@ -6,17 +6,17 @@ import useCreateWalletStore from './useCreateWallet';
 import './RecoveryPhrasePage.scss';
 
 const RecoveryPhrasePage = () => {
-  const { keyPhrase, onGenerateKeyphrase, currentStep, setNextStep } = useCreateWalletStore();
-  const TOTAL_KEYWORDS = 12;
-  const arrKeys = keyPhrase?.split(' ');
-  const leftKeys = dropRight(arrKeys, TOTAL_KEYWORDS / 2);
-  const rightKeys = drop(arrKeys, TOTAL_KEYWORDS / 2);
+  const { keyPhraseAsMap, onGenerateKeyphrase, totalKeywords: TOTAL_KEYWORDS, setNextStep } = useCreateWalletStore();
+  const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
+  const leftKeys = dropRight(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
+  const rightKeys = drop(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
   const onClickNextHandler = useCallback(() => {
     setNextStep();
   }, [setNextStep]);
 
   useEffect(() => {
     onGenerateKeyphrase();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -40,7 +40,7 @@ const RecoveryPhrasePage = () => {
         </ul>
       </div>
       <div className="cd_we_page--bottom">
-        <Button className="cd_we_btn-next" nClick={onClickNextHandler}>
+        <Button className="cd_we_btn-next" onClick={onClickNextHandler}>
           Next
         </Button>
       </div>
