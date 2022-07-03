@@ -4,6 +4,7 @@ import reduce from 'lodash-es/reduce';
 import every from "lodash-es/every";
 import useCreateWalletStore from "./useCreateWallet";
 import WordsGroup from "./WordsGroup";
+import "./ValidateKeyphrase.scss";
 
 const ValidateKeyphrasePage = () => {
   const { keyPhraseAsMap, currentStep, onGenerateWordcheck, totalWordCheck } = useCreateWalletStore();
@@ -89,14 +90,16 @@ const ValidateKeyphrasePage = () => {
   }
 
   return (
-    <div className="cd_we_create-keyphrase--wrapper">
-      <div className="cd_we_create-keyphrase--validate-wrapper">
+    <div className="cd_we_create-wallet-layout--root">
+      <div className="cd_we_create-wallet-layout--body">
         <p>You need to choose {totalWordCheck} correct words to complete</p>
-        {wordsTemplate.map((group, groupIndex) => {
-          return (
-            <WordsGroup key={`group-${groupIndex}`} groupIndex={groupIndex} onSelect={onWordSelectHandler} data={group} />
-          )
-        })}
+        <div className="cd_we_validate-keyphrase--wrapper">
+          {wordsTemplate.map((group, groupIndex) => {
+            return (
+              <WordsGroup key={`group-${groupIndex}`} groupIndex={groupIndex} onSelect={onWordSelectHandler} data={group} />
+            )
+          })}
+        </div>
       </div>
       <div className="cd_we_page--bottom">
         <Button className="cd_we_btn-next" disabled={shouldDisableNextButton} onClick={onClickHandler}>

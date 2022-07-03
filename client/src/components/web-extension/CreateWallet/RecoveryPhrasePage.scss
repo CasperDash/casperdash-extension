@@ -1,12 +1,6 @@
 .cd_we {
   &_create-keyphrase {
-    &--wrapper {
-      display: flex;
-      flex-flow: column nowrap;
-      height: 100%;
-    }
-
-    &--keypharse {
+    &--box {
       border-radius: 16px;
       border: 1px solid var(--secondary-text-color-light);
       display: flex;

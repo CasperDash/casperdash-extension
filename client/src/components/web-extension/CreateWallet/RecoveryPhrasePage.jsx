@@ -20,8 +20,8 @@ const RecoveryPhrasePage = () => {
   }, []);
 
   return (
-    <div className="cd_we_create-keyphrase--wrapper">
-      <div className="cd_we_create-keyphrase--keypharse">
+    <div className="cd_we_create-wallet-layout--root">
+      <div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
         <ul className="cd_we_create-keyphrase--column">
           {leftKeys?.map((word, index) => (
             <li className="cd_we_keyphrase--word" key={`left-${word}`}>

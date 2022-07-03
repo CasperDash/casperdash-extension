@@ -15,4 +15,16 @@
       margin-top: auto;
     }
   }
+
+  &_create-wallet-layout {
+    &--root {
+      display: flex;
+      flex-flow: column nowrap;
+      height: 100%;
+    }
+
+    &--body {
+      
+    }
+  }
 }
