@@ -3,8 +3,7 @@ export const initialState = {
   totalKeywords: 12,
   totalWordCheck: 8,
   keyPhrase: null,
-  keyPhraseAsMap: [],
-  validator: undefined
+  keyPhraseAsMap: []
 };
 
 export const reducer = (state = initialState, { payload, type }) => {
@@ -30,12 +29,8 @@ export const reducer = (state = initialState, { payload, type }) => {
         keyPhrase: payload.keyphrase,
         keyPhraseAsMap: payload.map ?? {}
       }
-    case "CREATE_WALLET/CLEAR_KEYPHRASE":
-      return {
-        ...state,
-        keyPhrase: null,
-        keyPhraseAsMap: []
-      }
+    case "CREATE_WALLET/RESET":
+      return initialState;
     case "CREATE_WALLET/GENERATE_VALIDATOR":
       return {
         ...state,

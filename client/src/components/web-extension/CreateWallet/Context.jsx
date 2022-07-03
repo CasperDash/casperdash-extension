@@ -19,15 +19,22 @@ const CreateWalletProvider = props => {
     return map;
   }, []);
 
+  /**
+   * E.g: [1,2,3...11,12]
+   */
   const generateKeyphraseArray = useCallback(() => {
     return  [...(new Array(state.totalKeywords)).keys()]
   }, [state]);
 
+  /**
+   * Generating a keyphrase of 12 words
+   * Then convert result into Map object for re-use in word validating
+   */
   const onGenerateKeyphrase = useCallback(() => {
     const keyphrase = keyManager.generate();
-    const seed = keyManager.toSeed(keyphrase);
-    console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
-    console.log(`🚀 ~ onGenerate ~ seed`, seed)
+    // const seed = keyManager.toSeed(keyphrase);
+    // console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
+    // console.log(`🚀 ~ onGenerate ~ seed`, seed)
     
     dispatch({
       type: "CREATE_WALLET/CREATE_KEYPHRASE",
@@ -41,11 +48,24 @@ const CreateWalletProvider = props => {
     // onCreateUser(keyphrase); 
   }, [generateKeyphraseMap, keyManager]);
 
+  /**
+   * Randomize words from generated keyphrase
+   * Given how many words we'd like to validate,
+   * This will create a random index object using key index only (based on keyphrase generated)
+   * For word conversion, this will be done in actual UI
+   */
   const onGenerateWordcheck = useCallback(() => {
     const { totalWordCheck } = state;
     const initWordKeys = generateKeyphraseArray();
     const randomWordIds = (shuffle(initWordKeys)).splice(0, totalWordCheck);
 
+    /**
+     * Idea:
+     * For each key index:
+     *  - Create another shuffled array from total keyphrase (excluding the current key)
+     *  - Take 2 first elements from the shuffled in Step 1
+     *  - Create a shuffled array from [2 first elements, current key]
+     */
     let final = {};
     randomWordIds.forEach(id => {
       const newWordArr = generateKeyphraseArray();
@@ -54,7 +74,6 @@ const CreateWalletProvider = props => {
       const remaining = dropRight(newRandom, newRandom.length - 2);
       final[id] = { answer: id, options: [...shuffle([...remaining, id])]};
     });
-    console.log(`🚀 ~ onGenerateWordcheck ~ final`, final)
 
     return { checklist: randomWordIds, data: final };
   }, [generateKeyphraseArray, state]);
@@ -63,6 +82,7 @@ const CreateWalletProvider = props => {
     ...state,
     onGenerateKeyphrase,
     onGenerateWordcheck,
+    onResetWalletCreation: () => dispatch({ type: "CREATE_WALLET/RESET"}),
     setNextStep: () => dispatch({ type: "CREATE_WALLET/NEXT_STEP"}),
     setPrevStep: () => dispatch({ type: "CREATE_WALLET/PREVIOUS_STEP"})
   }

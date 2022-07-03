@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import BackArrow from 'assets/image/back-arrow.svg';
 import './OuterHeader.scss';
 import useCreateWalletStore from "web-extension/CreateWallet/useCreateWallet";
 
 export const OuterHeader = () => {
-  const { currentStep } = useCreateWalletStore();
+  const { currentStep, onResetWalletCreation } = useCreateWalletStore();
 	const navigate = useNavigate();
 	const { state } = useLocation();
   const finalLayoutName = useMemo(() => {
@@ -27,13 +27,20 @@ export const OuterHeader = () => {
     return state?.name;
   }, [currentStep, state]);
 
+  const onClickBackHandler = useCallback(() => {
+    if (currentStep !== 0) {
+      onResetWalletCreation();
+    }
+    navigate(-1);
+  }, [currentStep, navigate, onResetWalletCreation]);
+
   if (!finalLayoutName) {
     return null;
   }
 
 	return (
     <div className="cd_we_outer_header">
-      <div className="cd_we_back_btn" onClick={() => navigate(-1)}>
+      <div className="cd_we_back_btn" onClick={onClickBackHandler}>
         <BackArrow />
       </div>
       <div className="cd_we_title">{finalLayoutName}</div>
