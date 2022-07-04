@@ -5,7 +5,6 @@ import "./WordsGroup.scss";
 
 const WordsGroup = (props) => {
 	const { groupIndex, data: { answer, options, value }, onSelect } = props;
-  console.log(`🚀 ~ WordsGroup ~ value`, value)
 	return (
 		<div className="cd_we_wordsgroup">
 			<p className="cd_we_wordsgroup-intro">

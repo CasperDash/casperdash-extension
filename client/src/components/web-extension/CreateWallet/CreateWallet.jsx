@@ -3,9 +3,9 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
 import { useNavigate } from 'react-router-dom';
-// import CreateWalletProvider from "./Context";
 import RecoveryPhrasePage from "./RecoveryPhrasePage";
 import ValidateKeyphrasePage from "./ValidateKeyphrasePage";
+import CreatePasswordPage from "./CreatePasswordPage";
 import useCreateWalletStore from "./useCreateWallet";
 import "./CreateWallet.scss";
 
@@ -71,13 +71,11 @@ const CreateWallet = () => {
   }, [keyPharses]);
 
   return (
-    // <CreateWalletProvider>
-      <section className="cd_we_page--root">
-        {currentStep === 0 && <RecoveryPhrasePage />}
-        {currentStep === 1 && <ValidateKeyphrasePage />}
-
-      </section>
-    // </CreateWalletProvider>
+    <section className="cd_we_page--root">
+      {currentStep === 0 && <RecoveryPhrasePage />}
+      {currentStep === 1 && <ValidateKeyphrasePage />}
+      {currentStep === 2 && <CreatePasswordPage />}
+    </section>
 	);
 };
 

@@ -1,9 +1,10 @@
 export const initialState = {
   currentStep: 0,
   totalKeywords: 12,
-  totalWordCheck: 8,
+  totalWordCheck: 4,
   keyPhrase: null,
-  keyPhraseAsMap: []
+  keyPhraseAsMap: [],
+  answerSheet: undefined
 };
 
 export const reducer = (state = initialState, { payload, type }) => {
@@ -35,6 +36,19 @@ export const reducer = (state = initialState, { payload, type }) => {
       return {
         ...state,
         validator: payload
+      }
+    case "CREATE_WALLET/SET_ANSWER_SHEET":
+      return {
+        ...state,
+        answerSheet: payload
+      }
+    case "CREATE_WALLET/UPDATE_ANSWER_SHEET":
+      return {
+        ...state,
+        answerSheet: {
+          ...state.answerSheet,
+          [payload.groupIdx]: payload.value
+        }
       }
     default:
       return state;

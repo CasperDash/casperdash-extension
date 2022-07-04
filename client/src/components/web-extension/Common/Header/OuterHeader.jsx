@@ -3,9 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import BackArrow from 'assets/image/back-arrow.svg';
 import './OuterHeader.scss';
 import useCreateWalletStore from "web-extension/CreateWallet/useCreateWallet";
+import { generateCWHeader } from "web-extension/CreateWallet/utils";
 
 export const OuterHeader = () => {
-  const { currentStep, onResetWalletCreation } = useCreateWalletStore();
+  const { answerSheet, currentStep, onResetWalletCreation } = useCreateWalletStore();
 	const navigate = useNavigate();
 	const { state } = useLocation();
   const finalLayoutName = useMemo(() => {
@@ -14,18 +15,10 @@ export const OuterHeader = () => {
     }
 
     if (state?.name === "Recovery Phrase") {
-      switch(currentStep) {
-        case 1:
-          return "Double Check";
-        case 2:
-          return "Enter password";
-        default:
-          return "Recovery Phrase"
-      }
+      return generateCWHeader(currentStep, answerSheet);
     }
-    
     return state?.name;
-  }, [currentStep, state]);
+  }, [answerSheet, currentStep, state?.name]);
 
   const onClickBackHandler = useCallback(() => {
     if (currentStep !== 0) {

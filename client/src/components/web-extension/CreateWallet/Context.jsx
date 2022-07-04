@@ -2,7 +2,7 @@ import React, { useCallback, useReducer, createContext } from "react";
 import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
 import dropRight from 'lodash-es/dropRight';
 import { initialState, reducer } from "./reducer";
-import { shuffle } from "./utils";
+import { convertKeyphraseToAnswerObject, shuffle } from "./utils";
 
 const CreateWalletContext = createContext();
 
@@ -33,7 +33,7 @@ const CreateWalletProvider = props => {
   const onGenerateKeyphrase = useCallback(() => {
     const keyphrase = keyManager.generate();
     // const seed = keyManager.toSeed(keyphrase);
-    // console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
+    console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
     // console.log(`🚀 ~ onGenerate ~ seed`, seed)
     
     dispatch({
@@ -78,10 +78,29 @@ const CreateWalletProvider = props => {
     return { checklist: randomWordIds, data: final };
   }, [generateKeyphraseArray, state]);
 
+  const onCreateAnswerSheet = useCallback(idKeys => {
+    dispatch({
+      type: "CREATE_WALLET/SET_ANSWER_SHEET",
+      payload: convertKeyphraseToAnswerObject(idKeys)
+    })
+  }, [dispatch]);
+
+  const onUpdateAnswerSheet = useCallback((groupIdx, value) => {
+    dispatch({
+      type: "CREATE_WALLET/UPDATE_ANSWER_SHEET",
+      payload: {
+        groupIdx,
+        value
+      }
+    })
+  }, [dispatch]);
+
   const value = {
     ...state,
     onGenerateKeyphrase,
     onGenerateWordcheck,
+    onCreateAnswerSheet,
+    onUpdateAnswerSheet,
     onResetWalletCreation: () => dispatch({ type: "CREATE_WALLET/RESET"}),
     setNextStep: () => dispatch({ type: "CREATE_WALLET/NEXT_STEP"}),
     setPrevStep: () => dispatch({ type: "CREATE_WALLET/PREVIOUS_STEP"})

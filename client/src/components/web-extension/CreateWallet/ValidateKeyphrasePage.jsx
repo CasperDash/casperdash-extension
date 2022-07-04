@@ -1,33 +1,33 @@
 import React, { useMemo, useEffect, useState, useCallback } from "react";
 import { Button } from 'react-bootstrap';
-import reduce from 'lodash-es/reduce';
 import every from "lodash-es/every";
 import useCreateWalletStore from "./useCreateWallet";
 import WordsGroup from "./WordsGroup";
 import "./ValidateKeyphrase.scss";
 
 const ValidateKeyphrasePage = () => {
-  const { keyPhraseAsMap, currentStep, onGenerateWordcheck, totalWordCheck } = useCreateWalletStore();
-  const [stage, setStage] = useState(1);
+  const { setNextStep, answerSheet, onUpdateAnswerSheet, onCreateAnswerSheet, keyPhraseAsMap, currentStep, onGenerateWordcheck, totalWordCheck } = useCreateWalletStore();
   const [wordsTemplate, setTemplate] = useState(undefined);
-  const [answerArray, setAnswerArray] = useState(undefined);
   const shouldDisableNextButton = useMemo(() => {
-    if (answerArray) {
-      return every(answerArray, Boolean) ? false : true;
+    if (answerSheet) {
+      return every(answerSheet, Boolean) ? false : true;
     }
     return true;
-  }, [answerArray]);
+  }, [answerSheet]);
   
   const onClickHandler = useCallback(() => {
-  }, []);
-
-  const onWordSelectHandler = useCallback((groupIndex, answer) => {
-    if (!answerArray) {
+    if (shouldDisableNextButton) {
       return;
     }
 
-    // console.log(`>>> `, wordsTemplate[groupIndex].answer?.text, answer)
-    // console.log(`🚀 ~ onWordSelectHandler ~ wordsTemplate`, wordsTemplate)
+    setNextStep();
+  }, [setNextStep, shouldDisableNextButton]);
+
+  const onWordSelectHandler = useCallback((groupIndex, answer) => {
+    if (!answerSheet) {
+      return;
+    }
+
     const newTemplate = wordsTemplate.map((each, index) => {
       if (index === groupIndex) {
         return {
@@ -41,17 +41,11 @@ const ValidateKeyphrasePage = () => {
     setTemplate(newTemplate);
 
     if (wordsTemplate[groupIndex].answer?.text === answer) {
-      setAnswerArray({
-        ...answerArray,
-        [groupIndex]: true
-      });
+      onUpdateAnswerSheet(groupIndex, true);
     } else {
-      setAnswerArray({
-        ...answerArray,
-        [groupIndex]: false
-      });
+      onUpdateAnswerSheet(groupIndex, false);
     }
-  }, [answerArray, wordsTemplate]);
+  }, [answerSheet, onUpdateAnswerSheet, wordsTemplate]);
 
   /**
    * Run only once
@@ -63,12 +57,7 @@ const ValidateKeyphrasePage = () => {
     }
 
     const { checklist, data } = onGenerateWordcheck();
-    const answerArray = reduce(checklist, (result, curr, index) => {
-      return {
-        ...result,
-        [index]: false
-      }
-    }, {});
+    onCreateAnswerSheet(checklist);
 
     const checks = checklist.map(id => {
       const arr = data[id].options.map(wordId => keyPhraseAsMap.get(wordId));
@@ -79,9 +68,7 @@ const ValidateKeyphrasePage = () => {
       }
     });
 
-    setAnswerArray(answerArray);
     setTemplate(checks);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

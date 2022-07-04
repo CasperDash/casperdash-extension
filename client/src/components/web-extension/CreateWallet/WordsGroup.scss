@@ -1,11 +1,9 @@
 .cd_we {
   &_wordsgroup {
+    margin-bottom: 18px;
+
     &:first-child {
       margin-top: 16px;
-    }
-    
-    &:not(:last-child) {
-      margin-bottom: 36px;
     }
 
     &-container {
