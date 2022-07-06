@@ -27,7 +27,7 @@ const CreateWallet = () => {
     const publicKey = await wallet.getPublicKey();
     console.log(`🚀 ~ CreateWal ~ wallet`, wallet)
     console.log(`🚀 ~ CreateWal ~ publicKey`, publicKey)
-    
+
     const userInfo = user.serialize();
     await Storage.getInstance().set("casperwallet_userinformation", userInfo);
 
@@ -73,8 +73,9 @@ const CreateWallet = () => {
   return (
     <section className="cd_we_page--root">
       {currentStep === 0 && <RecoveryPhrasePage />}
-      {currentStep === 1 && <ValidateKeyphrasePage />}
-      {currentStep === 2 && <CreatePasswordPage />}
+      {currentStep === 1 && <CreatePasswordPage />}
+      {/* {currentStep === 1 && <ValidateKeyphrasePage />}
+      {currentStep === 2 && <CreatePasswordPage />} */}
     </section>
 	);
 };
