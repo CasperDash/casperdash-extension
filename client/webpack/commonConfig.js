@@ -43,11 +43,16 @@ module.exports = (dir) => ({
 		extensions: ['.js', '.jsx'],
 		alias: {
 			assets: path.resolve(dir, 'src/assets'),
+      actions: path.resolve(dir, 'src/actions'),
+      helpers: path.resolve(dir, 'src/helpers'),
+      selectors: path.resolve(dir, 'src/selectors'),
+      services: path.resolve(dir, 'src/services'),
+      shared: path.resolve(dir, 'src/shared'),
       components: path.resolve(dir, 'src/components'),
       common: path.resolve(dir, 'src/components/common'),
       hooks: path.resolve(dir, 'src/components/hooks'),
       web: path.resolve(dir, 'src/components/web'),
-      "web-extension": path.resolve(dir, 'src/components/web-extension'),
+      "web-extension": path.resolve(dir, 'src/components/web-extension')
 		},
 	},
 });

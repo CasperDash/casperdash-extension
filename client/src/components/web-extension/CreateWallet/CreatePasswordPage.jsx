@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
+import useCreateUser from "./useCreateUser";
 import "./CreatePasswordPage.scss";
 
 const onValidatePassword = (values) => {
@@ -23,10 +24,15 @@ const onValidatePassword = (values) => {
 };
 
 const CreatePasswordPage = () => {
+  const { onCreateNewUser } = useCreateUser();
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
 	const handleSubmit = useCallback((values) => {
 		console.log(`🚀 ~ >>>V: `, values);
-	}, []);
+    if (values.password) {
+      const res = onCreateNewUser(values.password);
+      console.log(`🚀 ~ handleSubmit ~ res`, res)
+    }
+	}, [onCreateNewUser]);
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
@@ -42,6 +48,9 @@ const CreatePasswordPage = () => {
 					return (
 						<div className="cd_we_create-wallet-layout--body">
 							<Form noValidate onSubmit={handleSubmit}>
+                <Form.Text>
+                  Password length must be 10 or longer, and it must contain at least a lowercase, an uppercase, a numeric and a special character
+                </Form.Text>
 								<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 									<Form.Label>New password (8 characters min)</Form.Label>
 									<FormControl
