@@ -51,7 +51,7 @@ const generateCWHeader = (currentStep, answerSheet) => {
   }
 }
 
-const isStrongPassword = password => ValidatorUtils.verifyStrongPassword(password);
+const isStrongPassword = password => ValidatorUtils.verifyStrongPassword(password)?.status ?? false;
 
 export {
   shuffle,

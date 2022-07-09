@@ -14,7 +14,7 @@ const onValidatePassword = (values) => {
 
   if (!values.confirmPassword) {
 		errors.confirmPassword = 'Password required!';
-	}
+	} 
 
   if (!isStrongPassword(values.password)) {
     errors.password = "Password not strong enough"; 
@@ -58,7 +58,7 @@ const CreatePasswordPage = () => {
                   Password length must be 10 or longer, and it must contain at least a lowercase, an uppercase, a numeric and a special character
                 </Form.Text>
 								<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-									<Form.Label>New password (8 characters min)</Form.Label>
+									<Form.Label>New password</Form.Label>
 									<FormControl
 										onBlur={handleBlur}
 										onChange={handleChange}

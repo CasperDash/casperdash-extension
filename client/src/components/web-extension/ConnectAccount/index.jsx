@@ -1,18 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { StorageManager as Storage } from "casper-storage";
 import CasperDashLogo from 'assets/image/Logo-only.svg';
 import HardwareIcon from 'assets/image/hardware-icon.svg';
 import AddIcon from 'assets/image/add-icon.svg';
-import { newTab, isPopupMode } from '../../../helpers/extension/tab';
+import { newTab, isPopupMode } from 'helpers/extension/tab';
 import './index.scss';
 
 const ConnectAccount = () => {
-  const createWalletConfigs = {
-    0: "Recovery Phrase",
-    1: "Doube Check",
-    2: "Enter Password"
-  }
 	const navigate = useNavigate();
 
 	const handleConnectLedger = () => {
@@ -20,8 +16,19 @@ const ConnectAccount = () => {
 	};
 
   const handleManageWallet = () => {
-    navigate('/createWallet', { state: { name: 'Recovery Phrase', ...createWalletConfigs }});
+    navigate('/createWallet', { state: { name: 'Recovery Phrase' }});
   }
+
+  useEffect(() => {
+    const reload = async () => {
+      if (Storage) {
+        const abc = await Storage.getInstance().get("casperwallet_userinformation");
+        console.log(`🚀 ~ useEffect ~ abc`, abc)
+      }
+    };
+
+    reload();
+  }, []);
 
 	return (
 		<div className="cd_we_connect_account">

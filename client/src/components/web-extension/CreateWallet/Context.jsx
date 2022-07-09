@@ -32,9 +32,7 @@ const CreateWalletProvider = props => {
    */
   const onGenerateKeyphrase = useCallback(() => {
     const keyphrase = keyManager.generate();
-    // const seed = keyManager.toSeed(keyphrase);
     console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
-    // console.log(`🚀 ~ onGenerate ~ seed`, seed)
     
     dispatch({
       type: "CREATE_WALLET/CREATE_KEYPHRASE",
