@@ -1,20 +1,28 @@
 import React, { useCallback } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
+import { isStrongPassword } from "./utils";
 import useCreateUser from "./useCreateUser";
 import "./CreatePasswordPage.scss";
 
 const onValidatePassword = (values) => {
 	const errors = {};
 
-	if (!values.password || !values.confirmPassword) {
+	if (!values.password) {
 		errors.password = 'Password required!';
+	}
+
+  if (!values.confirmPassword) {
 		errors.confirmPassword = 'Password required!';
 	}
 
-	if (values.password?.length < 8) {
-		errors.password = 'Password not long enough';
-	}
+  if (!isStrongPassword(values.password)) {
+    errors.password = "Password not strong enough"; 
+  }
+
+  if (!isStrongPassword(values.confirmPassword)) {
+    errors.confirmPassword = "Password not strong enough"; 
+  }
 
 	if (values.password !== values.confirmPassword) {
 		errors.confirmPassword = "Passwords don't match";
@@ -26,11 +34,9 @@ const onValidatePassword = (values) => {
 const CreatePasswordPage = () => {
   const { onCreateNewUser } = useCreateUser();
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
-	const handleSubmit = useCallback((values) => {
-		console.log(`🚀 ~ >>>V: `, values);
-    if (values.password) {
-      const res = onCreateNewUser(values.password);
-      console.log(`🚀 ~ handleSubmit ~ res`, res)
+	const handleSubmit = useCallback(async (values) => {
+    if (values.password && values.confirmPassword) {
+      await onCreateNewUser(values.password);
     }
 	}, [onCreateNewUser]);
 

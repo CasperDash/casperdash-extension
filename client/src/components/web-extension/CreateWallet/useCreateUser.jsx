@@ -1,8 +1,9 @@
 import { useCallback } from "react";
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
 import { setPublicKey } from "actions/userActions";
+import { isStrongPassword } from "./utils";
 import useCreateWalletStore from './useCreateWallet';
 
 const encryptionType = EncryptionType.Ed25519;
@@ -13,31 +14,46 @@ const useCreateUser = () => {
 
   const onCreateSuccess = useCallback((publicKey) => {
     dispatch(setPublicKey(publicKey));
+
 		navigate('/');
   }, [dispatch, navigate]);
 
-  const onSaveHandler = useCallback(async user => {
+  const onSaveUserHash = useCallback(async user => {
     // Take the hashing options from user's instance
     const hashingOptions = user.getPasswordHashingOptions();
+    const userHashingOptions = JSON.stringify(hashingOptions);
+
+    // Serialize user information to a secure encrypted string 
+    const userInfo = user.serialize();
 
     // Backup it into the storage
-    await Storage.getInstance().set("casperwallet_userhashingoptions", JSON.stringify(hashingOptions));
+    await Storage.getInstance().set("casperwallet_userhashingoptions", userHashingOptions);
+    await Storage.getInstance().set("casperwallet_userinformation", userInfo);
+
+    return {
+      userHashingOptions,
+      userInfo
+    };
+  }, []);
+
+  const onSaveHandler = useCallback(async user => {
+    const result = await onSaveUserHash(user);
 
     // Create Wallet
     const wallet = await user.addWalletAccount(0, new WalletDescriptor("Account 1"));
     const publicKey = await wallet.getPublicKey();
 
-    // Serialize user information to a secure encrypted string 
-    const userInfo = user.serialize();
-    await Storage.getInstance().set("casperwallet_userinformation", userInfo);
+    return { result, publicKey }
+  }, [onSaveUserHash]);
 
-    onCreateSuccess(publicKey);
-  }, [onCreateSuccess]);
-
-  const onCreateNewUser = useCallback(password => {
+  const onCreateNewUser = useCallback(async password => {
     try {
       if (!keyphrase) {
         throw new Error("Missing keyphrase");
+      }
+
+      if (!isStrongPassword(password)) {
+        throw new Error("Password not strong enough");
       }
 
       // Create new User
@@ -46,11 +62,13 @@ const useCreateUser = () => {
       // Set HDWallet info
       user.setHDWallet(keyphrase, encryptionType);
 
-      onSaveHandler(user);
+      const result = await onSaveHandler(user);
+      console.log(`🚀 ~ useCreateUser ~ result`, result)
+      result.publicKey && onCreateSuccess(result.publicKey)
     } catch (err) {
       console.error(`🚀 ~ useCreateUser ~ err`, err);    
     }
-  }, [keyphrase, onSaveHandler]);
+  }, [keyphrase, onCreateSuccess, onSaveHandler]);
 
   return { onCreateNewUser };
 };

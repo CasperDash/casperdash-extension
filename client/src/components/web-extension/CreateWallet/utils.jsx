@@ -1,3 +1,4 @@
+import { ValidatorUtils } from "casper-storage";
 import reduce from 'lodash-es/reduce';
 import filter from 'lodash-es/filter';
 
@@ -50,8 +51,11 @@ const generateCWHeader = (currentStep, answerSheet) => {
   }
 }
 
+const isStrongPassword = password => ValidatorUtils.verifyStrongPassword(password);
+
 export {
   shuffle,
   generateCWHeader,
-  convertKeyphraseToAnswerObject
+  convertKeyphraseToAnswerObject,
+  isStrongPassword
 }
