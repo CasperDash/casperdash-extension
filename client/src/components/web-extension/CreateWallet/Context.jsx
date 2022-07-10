@@ -41,9 +41,6 @@ const CreateWalletProvider = props => {
 
     // const isValid = keyManager.validate(keyphrase);
     // console.log(`🚀 ~ onGenerate ~ isValid`, isValid);
-
-    // Create User
-    // onCreateUser(keyphrase); 
   }, [generateKeyphraseMap, keyManager]);
 
   /**

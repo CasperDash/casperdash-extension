@@ -8,7 +8,9 @@ import { generateCWHeader } from "web-extension/CreateWallet/utils";
 export const OuterHeader = () => {
   const { answerSheet, currentStep, onResetWalletCreation } = useCreateWalletStore();
 	const navigate = useNavigate();
-	const { state } = useLocation();
+	const { pathname, state } = useLocation();
+  console.log(`🚀 ~ OuterHeader ~ pathname`, pathname)
+  // console.log(`🚀 ~ OuterHeader ~ state`, state)
   const finalLayoutName = useMemo(() => {
     if (!state?.name) {
       return undefined;
@@ -24,6 +26,12 @@ export const OuterHeader = () => {
     if (currentStep !== 0) {
       onResetWalletCreation();
     }
+
+    // if (pathname === "/welcomeBack") {
+    //   navigate("/");
+    //   return;
+    // }
+
     navigate(-1);
   }, [currentStep, navigate, onResetWalletCreation]);
 

@@ -24,6 +24,7 @@ const ConnectAccount = () => {
       if (Storage) {
         const abc = await Storage.getInstance().get("casperwallet_userinformation");
         console.log(`🚀 ~ useEffect ~ abc`, abc)
+        navigate("/welcomeBack", { state: { name: 'Welcome Back' }});
       }
     };
 

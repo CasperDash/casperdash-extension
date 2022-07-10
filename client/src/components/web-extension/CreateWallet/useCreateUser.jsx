@@ -61,6 +61,8 @@ const useCreateUser = () => {
 
       // Set HDWallet info
       user.setHDWallet(keyphrase, encryptionType);
+      // const testA = user.getHDWallet();
+      // console.log(`🚀 ~ useCreateUser ~ testA`, testA)
 
       const result = await onSaveHandler(user);
       console.log(`🚀 ~ useCreateUser ~ result`, result)
