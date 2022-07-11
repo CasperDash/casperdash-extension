@@ -6,6 +6,7 @@ import CasperDashLogo from 'assets/image/Logo-only.svg';
 import HardwareIcon from 'assets/image/hardware-icon.svg';
 import AddIcon from 'assets/image/add-icon.svg';
 import { newTab, isPopupMode } from 'helpers/extension/tab';
+import { onGetUserHashingOptions, onGetUserInfo} from "web-extension/CreateWallet/wallet/storage";
 import './index.scss';
 
 const ConnectAccount = () => {
@@ -22,9 +23,11 @@ const ConnectAccount = () => {
   useEffect(() => {
     const reload = async () => {
       if (Storage) {
-        const abc = await Storage.getInstance().get("casperwallet_userinformation");
-        console.log(`🚀 ~ useEffect ~ abc`, abc)
-        navigate("/welcomeBack", { state: { name: 'Welcome Back' }});
+        const cachedUserHash = JSON.parse(await onGetUserHashingOptions());
+        const cachedUserInfo = await onGetUserInfo();
+        if (cachedUserHash && cachedUserInfo) {
+          navigate("/welcomeBack", { state: { name: 'Welcome Back' }});
+        }
       }
     };
 

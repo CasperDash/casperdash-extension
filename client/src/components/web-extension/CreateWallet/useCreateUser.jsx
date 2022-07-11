@@ -1,7 +1,8 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
+import { WalletDescriptor, User, EncryptionType } from "casper-storage";
+import { onSetUserHashingOptions, onSetUserInfo } from "web-extension/CreateWallet/wallet/storage";
 import { setPublicKey } from "actions/userActions";
 import { isStrongPassword } from "./utils";
 import useCreateWalletStore from './useCreateWallet';
@@ -27,8 +28,10 @@ const useCreateUser = () => {
     const userInfo = user.serialize();
 
     // Backup it into the storage
-    await Storage.getInstance().set("casperwallet_userhashingoptions", userHashingOptions);
-    await Storage.getInstance().set("casperwallet_userinformation", userInfo);
+    await onSetUserHashingOptions(userHashingOptions);
+    await onSetUserInfo(userInfo);
+    // await Storage.getInstance().set("casperwallet_userhashingoptions", userHashingOptions);
+    // await Storage.getInstance().set("casperwallet_userinformation", userInfo);
 
     return {
       userHashingOptions,

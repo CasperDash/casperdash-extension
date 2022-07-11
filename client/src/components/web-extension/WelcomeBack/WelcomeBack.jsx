@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { User, StorageManager as Storage } from "casper-storage";
+import { User } from "casper-storage";
 import { isStrongPassword } from 'web-extension/CreateWallet/utils';
+import { onGetUserHashingOptions, onGetUserInfo, onResetUserCache } from "web-extension/CreateWallet/wallet/storage";
 // import useCreateUser from "./useCreateUser";
 import './WelcomeBack.scss';
 
@@ -22,31 +24,47 @@ const onValidatePassword = (values) => {
 
 const WelcomeBackPage = () => {
 	// const { onCreateNewUser } = useCreateUser();
+  const navigate = useNavigate();
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
 	const handleSubmit = useCallback(async (values) => {
 		if (values.password) {
-      const hashingOptions = JSON.parse(await Storage.getInstance().get("casperwallet_userhashingoptions"));
-      console.log(`🚀 ~ handleSubmit ~ hashingOptions`, hashingOptions)
-      const userInfo = await Storage.getInstance().get("casperwallet_userinformation");
-      console.log(`🚀 ~ handleSubmit ~ userInfo`, userInfo)
+      try {  
+        const encryptedHashingOptions = JSON.parse(await onGetUserHashingOptions());
+        const encryptedUserInfo = await onGetUserInfo();
+        
+        console.log(`🚀 ~ >> ~ encryptedHashingOptions`, encryptedHashingOptions)
+        console.log(`🚀 ~ >> ~ encryptedUserInfo`, encryptedUserInfo)
 
-      const user = new User(values.password, hashingOptions);
-      console.log(`🚀 ~ handleSubmit ~ user >>`, user)
+        const user = new User(values.password, encryptedUserInfo, {
+          passwordOptions: encryptedHashingOptions
+        });
+        console.log(`🚀 ~ >> ~ user: `, user)
 
-      const masterKey = user.getHDWallet();
-      console.log(`🚀 ~ handleSubmit ~ masterKey`, masterKey)
+        const testHashingOptions = user.getPasswordHashingOptions();
+        console.log(`🚀 ~ >> ~ testHashingOptions`, testHashingOptions)
 
-      const wallet = await user.getWalletAccount(0);
-      console.log(`🚀 ~ handleSubmit ~ wallet`, wallet)
+        const masterKey = user.getHDWallet();
+        console.log(`🚀 ~ >> ~ masterKey`, masterKey)
 
-      const publicKey = await wallet.getPublicKey();
-      console.log(`🚀 ~ handleSubmit ~ publicKey`, publicKey)
+        const wallet = await user.getWalletAccount(1);
+        console.log(`🚀 ~ >> ~ wallet`, wallet)
 
-      const res = user.deserialize(userInfo);
-      console.log(`🚀 ~ handleSubmit ~ res`, res)
-			// await onCreateNewUser(values.password);
+        const publicKey = await wallet.getPublicKey();
+        console.log(`🚀 ~ >> ~ publicKey`, publicKey)
+
+        const res = user.deserialize(encryptedUserInfo);
+        console.log(`🚀 ~ >> ~ res`, res)
+        // await onCreateNewUser(values.password);
+      } catch (err) {
+        console.log(`🚀 ~ >> ~ err`, err)
+      }
 		}
 	}, []);
+
+  const onReset = useCallback(async () => {
+    await onResetUserCache();
+    navigate("/");
+  }, [navigate]);
 
 	return (
 		<section className="cd_we_page--root">
@@ -84,6 +102,7 @@ const WelcomeBackPage = () => {
 										<Button type="submit" className="cd_we_btn-next" disabled={false}>
 											Unlock
 										</Button>
+                    <button onClick={onReset}>Reset</button>
 									</div>
 								</Form>
 							</div>
