@@ -9,8 +9,8 @@ export const OuterHeader = () => {
   const { answerSheet, currentStep, onResetWalletCreation } = useCreateWalletStore();
 	const navigate = useNavigate();
 	const { pathname, state } = useLocation();
-  console.log(`🚀 ~ OuterHeader ~ pathname`, pathname)
-  // console.log(`🚀 ~ OuterHeader ~ state`, state)
+  const shouldShowBackArrow = pathname !== "/welcomeBack";
+
   const finalLayoutName = useMemo(() => {
     if (!state?.name) {
       return undefined;
@@ -27,11 +27,6 @@ export const OuterHeader = () => {
       onResetWalletCreation();
     }
 
-    // if (pathname === "/welcomeBack") {
-    //   navigate("/");
-    //   return;
-    // }
-
     navigate(-1);
   }, [currentStep, navigate, onResetWalletCreation]);
 
@@ -41,9 +36,11 @@ export const OuterHeader = () => {
 
 	return (
     <div className="cd_we_outer_header">
-      <div className="cd_we_back_btn" onClick={onClickBackHandler}>
-        <BackArrow />
-      </div>
+      {shouldShowBackArrow && (
+        <div className="cd_we_back_btn" onClick={onClickBackHandler}>
+          <BackArrow />
+        </div>
+      )}
       <div className="cd_we_title">{finalLayoutName}</div>
     </div>
 	);

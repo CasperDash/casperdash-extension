@@ -7,10 +7,7 @@ import CreatePasswordPage from "./CreatePasswordPage";
 import useCreateWalletStore from "./useCreateWallet";
 import "./CreateWallet.scss";
 
-// const encryptionType = EncryptionType.Ed25519;
-
 const CreateWallet = () => {
-  // const navigate = useNavigate();
   const { currentStep } = useCreateWalletStore();
 
   return (
