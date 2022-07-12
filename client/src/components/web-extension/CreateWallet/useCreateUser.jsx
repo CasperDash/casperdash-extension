@@ -22,6 +22,7 @@ const useCreateUser = () => {
   const onSaveUserHash = useCallback(async user => {
     // Take the hashing options from user's instance
     const hashingOptions = user.getPasswordHashingOptions();
+    console.log(`🚀 ~ useCreateUser ~ hashingOptions`, hashingOptions)
     const userHashingOptions = JSON.stringify(hashingOptions);
 
     // Serialize user information to a secure encrypted string 

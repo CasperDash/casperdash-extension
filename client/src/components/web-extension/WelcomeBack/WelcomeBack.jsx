@@ -28,32 +28,39 @@ const WelcomeBackPage = () => {
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
 	const handleSubmit = useCallback(async (values) => {
 		if (values.password) {
-      try {  
+      try {
+        // Get encrypted info from Localstorage
         const encryptedHashingOptions = JSON.parse(await onGetUserHashingOptions());
         const encryptedUserInfo = await onGetUserInfo();
         
         console.log(`🚀 ~ >> ~ encryptedHashingOptions`, encryptedHashingOptions)
         console.log(`🚀 ~ >> ~ encryptedUserInfo`, encryptedUserInfo)
 
-        const user = new User(values.password, encryptedUserInfo, {
-          passwordOptions: encryptedHashingOptions
-        });
-        console.log(`🚀 ~ >> ~ user: `, user)
+        // Convert salt info from object to Array
+        // This is used for creating new Uint8Array instance
+        const saltInfo = Object.keys(encryptedHashingOptions.salt).map(key => encryptedHashingOptions.salt[key]);
+        const newSalt = new Uint8Array(saltInfo);
 
-        const testHashingOptions = user.getPasswordHashingOptions();
-        console.log(`🚀 ~ >> ~ testHashingOptions`, testHashingOptions)
+        // Deserialize user info to an instance of User
+        const user = User.deserializeFrom(values.password, encryptedUserInfo, {
+          passwordOptions: { 
+            ...encryptedHashingOptions,
+            salt: newSalt
+          }
+        })
+        console.log(`🚀 ~ >> ~ user: `, user)
 
         const masterKey = user.getHDWallet();
         console.log(`🚀 ~ >> ~ masterKey`, masterKey)
 
-        const wallet = await user.getWalletAccount(1);
+        const wallet = await user.getWalletAccount(0);
         console.log(`🚀 ~ >> ~ wallet`, wallet)
 
         const publicKey = await wallet.getPublicKey();
         console.log(`🚀 ~ >> ~ publicKey`, publicKey)
 
-        const res = user.deserialize(encryptedUserInfo);
-        console.log(`🚀 ~ >> ~ res`, res)
+        // const res = user.deserialize(encryptedUserInfo);
+        // console.log(`🚀 ~ >> ~ res`, res)
         // await onCreateNewUser(values.password);
       } catch (err) {
         console.log(`🚀 ~ >> ~ err`, err)

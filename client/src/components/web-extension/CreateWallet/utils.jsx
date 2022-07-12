@@ -35,6 +35,10 @@ const generateCWHeader = (currentStep, answerSheet) => {
     case 1: {
       const defaultName = "Double check";
       if (answerSheet) {
+        /**
+         * Comment out below line to cheat seeing answer sheet
+         */
+        console.log(`🚀 ~ generateCWHeader ~ answerSheet`, answerSheet)
         const count = filter(answerSheet, value => value !== null);
 
         if (!count?.length) {
