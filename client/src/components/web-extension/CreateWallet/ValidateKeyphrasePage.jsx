@@ -23,7 +23,7 @@ const ValidateKeyphrasePage = () => {
     setNextStep();
   }, [setNextStep, shouldDisableNextButton]);
 
-  const onWordSelectHandler = useCallback((groupIndex, answer) => {
+  const onSelecteWordHandler = useCallback((groupIndex, answer) => {
     if (!answerSheet) {
       return;
     }
@@ -83,7 +83,7 @@ const ValidateKeyphrasePage = () => {
         <div className="cd_we_validate-keyphrase--wrapper">
           {wordsTemplate.map((group, groupIndex) => {
             return (
-              <WordsGroup key={`group-${groupIndex}`} groupIndex={groupIndex} onSelect={onWordSelectHandler} data={group} />
+              <WordsGroup key={`group-${groupIndex}`} groupIndex={groupIndex} onSelect={onSelecteWordHandler} data={group} />
             )
           })}
         </div>

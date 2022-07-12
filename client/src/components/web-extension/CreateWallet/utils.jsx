@@ -24,7 +24,8 @@ const convertKeyphraseToAnswerObject = keyphrase => {
   return reduce(keyphrase, (result, _, index) => {
     return {
       ...result,
-      [index]: false
+      [index]: null
+      // [index]: false // Only used when couting on correct answer
     }
   }, {});
 }
@@ -34,7 +35,7 @@ const generateCWHeader = (currentStep, answerSheet) => {
     case 1: {
       const defaultName = "Double check";
       if (answerSheet) {
-        const count = filter(answerSheet, Boolean);
+        const count = filter(answerSheet, value => value !== null);
 
         if (!count?.length) {
           return defaultName
