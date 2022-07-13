@@ -25,14 +25,12 @@ const useCreateUser = () => {
     console.log(`🚀 ~ useCreateUser ~ hashingOptions`, hashingOptions)
     const userHashingOptions = JSON.stringify(hashingOptions);
 
-    // Serialize user information to a secure encrypted string 
+    // Serialize user information to a secure encrypted string
     const userInfo = user.serialize();
 
     // Backup it into the storage
     await onSetUserHashingOptions(userHashingOptions);
     await onSetUserInfo(userInfo);
-    // await Storage.getInstance().set("casperwallet_userhashingoptions", userHashingOptions);
-    // await Storage.getInstance().set("casperwallet_userinformation", userInfo);
 
     return {
       userHashingOptions,
@@ -72,7 +70,7 @@ const useCreateUser = () => {
       console.log(`🚀 ~ useCreateUser ~ result`, result)
       result.publicKey && onCreateSuccess(result.publicKey)
     } catch (err) {
-      console.error(`🚀 ~ useCreateUser ~ err`, err);    
+      console.error(`🚀 ~ useCreateUser ~ err`, err);
     }
   }, [keyphrase, onCreateSuccess, onSaveHandler]);
 

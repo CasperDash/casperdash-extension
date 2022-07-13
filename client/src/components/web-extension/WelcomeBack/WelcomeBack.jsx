@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Formik, Field } from 'formik';
+import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { User } from "casper-storage";
 import { isStrongPassword } from 'web-extension/CreateWallet/utils';
-import { onGetUserHashingOptions, onGetUserInfo, onResetUserCache } from "web-extension/CreateWallet/wallet/storage";
-// import useCreateUser from "./useCreateUser";
+import { onResetUserCache } from "web-extension/CreateWallet/wallet/storage";
+import useWelcomeBack from "./useWelcomeBack";
 import './WelcomeBack.scss';
 
 const onValidatePassword = (values) => {
@@ -23,50 +22,31 @@ const onValidatePassword = (values) => {
 };
 
 const WelcomeBackPage = () => {
-	// const { onCreateNewUser } = useCreateUser();
+  const { onAuthCredentialSuccess, validateUserCredential } = useWelcomeBack();
   const navigate = useNavigate();
+  const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
 	const handleSubmit = useCallback(async (values) => {
 		if (values.password) {
-      try {
-        // Get encrypted info from Localstorage
-        const encryptedHashingOptions = JSON.parse(await onGetUserHashingOptions());
-        const encryptedUserInfo = await onGetUserInfo();
-        
-        console.log(`🚀 ~ >> ~ encryptedHashingOptions`, encryptedHashingOptions)
-        console.log(`🚀 ~ >> ~ encryptedUserInfo`, encryptedUserInfo)
+      const result = await validateUserCredential(values.password);
 
-        // Convert salt info from object to Array
-        // This is used for creating new Uint8Array instance
-        const saltInfo = Object.keys(encryptedHashingOptions.salt).map(key => encryptedHashingOptions.salt[key]);
-        const newSalt = new Uint8Array(saltInfo);
-
-        // Deserialize user info to an instance of User
-        const user = User.deserializeFrom(values.password, encryptedUserInfo, {
-          passwordOptions: { 
-            ...encryptedHashingOptions,
-            salt: newSalt
-          }
-        })
-        console.log(`🚀 ~ >> ~ user: `, user)
-
-        const masterKey = user.getHDWallet();
-        console.log(`🚀 ~ >> ~ masterKey`, masterKey)
-
-        const wallet = await user.getWalletAccount(0);
-        console.log(`🚀 ~ >> ~ wallet`, wallet)
-
-        const publicKey = await wallet.getPublicKey();
-        console.log(`🚀 ~ >> ~ publicKey`, publicKey)
-
-        // const res = user.deserialize(encryptedUserInfo);
-        // console.log(`🚀 ~ >> ~ res`, res)
-        // await onCreateNewUser(values.password);
-      } catch (err) {
-        console.log(`🚀 ~ >> ~ err`, err)
+      if (!result) {
+        setServerErrors({ message: "Wrong password provided. Please try again"})
+        return;
+      } else {
+        setServerErrors(undefined);
       }
+
+      result.publicKey && onAuthCredentialSuccess(result.publicKey);
 		}
-	}, []);
+	}, [onAuthCredentialSuccess, validateUserCredential]);
+
+  const onChangeHandler = useCallback((e, handler) => {
+    if (e?.target?.value && serverErrors) {
+      setServerErrors(undefined);
+    }
+    handler("password", e?.target?.value);
+  }, [serverErrors]);
 
   const onReset = useCallback(async () => {
     await onResetUserCache();
@@ -83,7 +63,7 @@ const WelcomeBackPage = () => {
 					validate={onValidate}
 					onSubmit={handleSubmit}
 				>
-					{({ errors, touched, handleChange, handleBlur, handleSubmit }) => {
+					{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
 						return (
 							<div className="cd_we_create-wallet-layout--body">
 								<Form noValidate onSubmit={handleSubmit}>
@@ -94,7 +74,7 @@ const WelcomeBackPage = () => {
 										<Form.Label>Enter password</Form.Label>
 										<FormControl
 											onBlur={handleBlur}
-											onChange={handleChange}
+											onChange={e => onChangeHandler(e, setFieldValue)}
 											name="password"
 											type="password"
 											placeholder="Enter password"
@@ -105,6 +85,11 @@ const WelcomeBackPage = () => {
 											</Form.Text>
 										)}
 									</Form.Group>
+                  {serverErrors && (
+                    <Form.Text className="invalid-feedback" id="passwordHelpBlock">
+                      {serverErrors.message}
+                    </Form.Text>
+                  )}
 									<div className="cd_we_page--bottom">
 										<Button type="submit" className="cd_we_btn-next" disabled={false}>
 											Unlock
