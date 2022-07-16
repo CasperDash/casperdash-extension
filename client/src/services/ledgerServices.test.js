@@ -14,7 +14,7 @@ jest.mock('casper-js-sdk', () => ({
 		validateDeploy: jest.fn(),
 		deployToJson: jest.fn(),
 	},
-}));
+})); 
 
 describe('initLedgerApp', () => {
 	test('Should create usb transport obj', () => {

@@ -12,7 +12,13 @@ module.exports = (dir) => ({
 		rules: [
 			{
 				test: /\.(js|jsx)$/,
-				use: ['babel-loader'],
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ["@babel/preset-react", "@babel/preset-env"]
+          }
+        }
 			},
 			{
 				test: /\.(css|scss)$/,
