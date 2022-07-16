@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, createContext } from "react";
-import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
+import { KeyFactory } from "casper-storage";
 import dropRight from 'lodash-es/dropRight';
 import { initialState, reducer } from "./reducer";
 import { convertKeyphraseToAnswerObject, shuffle } from "./utils";

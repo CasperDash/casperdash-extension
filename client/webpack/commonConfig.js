@@ -49,7 +49,7 @@ module.exports = (dir) => ({
       services: path.resolve(dir, 'src/services'),
       shared: path.resolve(dir, 'src/shared'),
       components: path.resolve(dir, 'src/components'),
-      common: path.resolve(dir, 'src/components/common'),
+      common: path.resolve(dir, 'src/components/Common'),
       hooks: path.resolve(dir, 'src/components/hooks'),
       web: path.resolve(dir, 'src/components/web'),
       "web-extension": path.resolve(dir, 'src/components/web-extension')

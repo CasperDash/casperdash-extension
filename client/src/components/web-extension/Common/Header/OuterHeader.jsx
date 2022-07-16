@@ -1,12 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import BackArrow from 'assets/image/back-arrow.svg';
-import './OuterHeader.scss';
 import useCreateWalletStore from "web-extension/CreateWallet/useCreateWallet";
 import { generateCWHeader } from "web-extension/CreateWallet/utils";
+import './OuterHeader.scss';
 
 export const OuterHeader = () => {
   const { answerSheet, currentStep, onResetWalletCreation } = useCreateWalletStore();
+  console.log(`🚀 ~ OuterHeader ~ answerSheet`, answerSheet)
 	const navigate = useNavigate();
 	const { pathname, state } = useLocation();
   const shouldShowBackArrow = pathname !== "/welcomeBack";
