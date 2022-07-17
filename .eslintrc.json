@@ -21,15 +21,18 @@
 		"__dirname": true
 	},
 	"parserOptions": {
-		"ecmaVersion": 6,
+		"ecmaVersion": 9,
 		"sourceType": "module",
 		"ecmaFeatures": {
 			"jsx": true,
 			"modules": true,
 			"classes": true
-		}
+		},
+    "babelOptions": {
+      "configFile": "./client/babel.config.json"
+    }
 	},
-	"parser": "babel-eslint",
+	"parser": "@babel/eslint-parser",
 	"plugins": ["react", "import", "deprecate", "react-hooks"],
 	"settings": {
 		"react": {

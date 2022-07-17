@@ -1,6 +1,7 @@
 {
 	"devDependencies": {
-		"babel-eslint": "^10.1.0",
+		"@babel/core": "^7.18.6",
+		"@babel/eslint-parser": "^7.18.2",
 		"eslint": "^7.2.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-deprecate": "^0.7.0",

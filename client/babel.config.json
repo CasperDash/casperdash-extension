@@ -1,0 +1,45 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": "> 1%"
+        }
+      }
+    ],
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic"
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+        "alias": {
+          "assets": "./src/assets",
+          "actions": "./src/actions",
+          "helpers": "./src/helpers",
+          "selectors": "./src/selectors",
+          "services": "./src/services",
+          "shared": "./src/shared",
+          "components": "./src/components",
+          "common": "./src/components/Common",
+          "hooks": "./src/components/hooks",
+          "web": "./src/components/web",
+          "web-extension": "./src/components/web-extension"
+        }
+      }
+    ]
+  ],
+  "ignore": [
+    "**/__tests__"
+  ]
+}
