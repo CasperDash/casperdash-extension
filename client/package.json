@@ -67,7 +67,7 @@
 		"build-extension-testnet": "webpack --mode production --env=type=extension --env=network=testnet",
 		"build-extension-mainnet": "webpack --mode production --env=type=extension --env=network=mainnet",
 		"test": "react-scripts test --coverage --watchAll ",
-		"test:w": "jest --watchAll",
+		"test:w": "jest --watchAll --no-cache ",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage"
 	},
 	"browserslist": {
