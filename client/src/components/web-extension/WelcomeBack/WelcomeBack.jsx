@@ -94,7 +94,9 @@ const WelcomeBackPage = () => {
 										<Button type="submit" className="cd_we_btn-next" disabled={false}>
 											Unlock
 										</Button>
-                    <button onClick={onReset}>Reset</button>
+                    <div className="cd_we_welcomeBack--bottom">
+                      <Button onClick={onReset} variant="link">Log in as another user?</Button>
+                    </div>
 									</div>
 								</Form>
 							</div>
