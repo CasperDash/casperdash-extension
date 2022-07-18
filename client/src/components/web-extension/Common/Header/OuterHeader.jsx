@@ -37,7 +37,7 @@ export const OuterHeader = () => {
 	return (
     <div className="cd_we_outer_header">
       {shouldShowBackArrow && (
-        <div className="cd_we_back_btn" onClick={onClickBackHandler}>
+        <div data-testid="back-button" className="cd_we_back_btn" onClick={onClickBackHandler}>
           <BackArrow />
         </div>
       )}
