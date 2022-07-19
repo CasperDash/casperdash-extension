@@ -32,6 +32,7 @@ const ConnectAccount = () => {
     };
 
     reload();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 	return (
@@ -42,7 +43,7 @@ const ConnectAccount = () => {
 			</div>
       <Button variant="normal" onClick={handleManageWallet}>
 				<AddIcon />
-				Manage Wallet 
+				Create new wallet
 			</Button>
 			<Button variant="normal" onClick={() => navigate('/addPublicKey', { state: { name: 'Add' } })}>
 				<AddIcon />
