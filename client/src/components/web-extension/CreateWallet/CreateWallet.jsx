@@ -13,7 +13,6 @@ const CreateWallet = () => {
   return (
     <section className="cd_we_page--root">
       {currentStep === 0 && <RecoveryPhrasePage />}
-      {/* {currentStep === 1 && <CreatePasswordPage />} */}
       {currentStep === 1 && <ValidateKeyphrasePage />}
       {currentStep === 2 && <CreatePasswordPage />}
     </section>
@@ -23,7 +22,7 @@ const CreateWallet = () => {
 export default compose(
   connect(
     state => {
-      console.log(`🚀 ~ state`, state)
+      // console.log(`🚀 ~ state`, state)
       return {}
     }
   )
