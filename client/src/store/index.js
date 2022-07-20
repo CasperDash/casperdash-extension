@@ -13,6 +13,7 @@ import deployReducer from './reducers/deploys';
 import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
 import settingsReducer from './reducers/settings';
+import createWalletReducer, { initialState as createWalletInitialState } from "./reducers/createWallet";
 import { REQUEST } from './actionTypes';
 
 export const initialState = {
@@ -41,6 +42,9 @@ export const initialState = {
 	nfts: {
 		address: [],
 	},
+  createWallet: {
+    ...createWalletInitialState
+  }
 };
 
 const setLoadingStatus = (actionType) => {
@@ -85,6 +89,7 @@ const main = combineReducers({
 	request: requestReducer,
 	settings: settingsReducer,
 	nfts: nftsReducer,
+  createWallet: createWalletReducer
 });
 
 const store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
