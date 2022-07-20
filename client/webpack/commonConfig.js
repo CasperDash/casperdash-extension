@@ -32,7 +32,7 @@ module.exports = (dir) => ({
 			process: 'process/browser',
 		}),
 		new MiniCssExtractPlugin({
-			filename: '@cd/assets/css/[name].css',
+			filename: 'assets/css/[name].css',
 		}),
 		new webpack.ProgressPlugin(),
 		new webpack.DefinePlugin({
