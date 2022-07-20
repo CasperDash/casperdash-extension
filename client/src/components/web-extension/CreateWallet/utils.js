@@ -20,20 +20,6 @@ function shuffle(array) {
 	return array;
 }
 
-const convertKeyphraseToAnswerObject = (keyphrase) => {
-	return reduce(
-		keyphrase,
-		(result, _, index) => {
-			return {
-				...result,
-				[index]: null,
-				// [index]: false // Only used when couting on correct answer
-			};
-		},
-		{},
-	);
-};
-
 const generateCWHeader = (currentStep, answerSheet) => {
 	switch (currentStep) {
 		case 1: {
@@ -62,4 +48,4 @@ const generateCWHeader = (currentStep, answerSheet) => {
 
 const isStrongPassword = (password) => ValidatorUtils.verifyStrongPassword(password)?.status ?? false;
 
-export { shuffle, generateCWHeader, convertKeyphraseToAnswerObject, isStrongPassword };
+export { shuffle, generateCWHeader, isStrongPassword };

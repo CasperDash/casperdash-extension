@@ -2,7 +2,7 @@ import React, { useCallback, useReducer, createContext } from "react";
 import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
 import dropRight from 'lodash-es/dropRight';
 import { initialState, reducer } from "./reducer";
-import { convertKeyphraseToAnswerObject, shuffle } from "./utils";
+import { shuffle } from "./utils";
 
 const CreateWalletContext = createContext();
 
@@ -30,18 +30,18 @@ const CreateWalletProvider = props => {
    * Generating a keyphrase of 12 words
    * Then convert result into Map object for re-use in word validating
    */
-  const onGenerateKeyphrase = useCallback(() => {
-    const keyphrase = keyManager.generate();
-    console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
-    
-    dispatch({
-      type: "CREATE_WALLET/CREATE_KEYPHRASE",
-      payload: { keyphrase, map: generateKeyphraseMap(keyphrase) }
-    });
+  // const onGenerateKeyphrase = useCallback(() => {
+  //   const keyphrase = keyManager.generate();
+  //   console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
 
-    // const isValid = keyManager.validate(keyphrase);
-    // console.log(`🚀 ~ onGenerate ~ isValid`, isValid);
-  }, [generateKeyphraseMap, keyManager]);
+  //   dispatch({
+  //     type: "CREATE_WALLET/CREATE_KEYPHRASE",
+  //     payload: { keyphrase, map: generateKeyphraseMap(keyphrase) }
+  //   });
+
+  //   // const isValid = keyManager.validate(keyphrase);
+  //   // console.log(`🚀 ~ onGenerate ~ isValid`, isValid);
+  // }, [generateKeyphraseMap, keyManager]);
 
   /**
    * Randomize words from generated keyphrase
@@ -73,32 +73,32 @@ const CreateWalletProvider = props => {
     return { checklist: randomWordIds, data: final };
   }, [generateKeyphraseArray, state]);
 
-  const onCreateAnswerSheet = useCallback(idKeys => {
-    dispatch({
-      type: "CREATE_WALLET/SET_ANSWER_SHEET",
-      payload: convertKeyphraseToAnswerObject(idKeys)
-    })
-  }, [dispatch]);
+  // const onCreateAnswerSheet = useCallback(idKeys => {
+  //   dispatch({
+  //     type: "CREATE_WALLET/SET_ANSWER_SHEET",
+  //     payload: convertKeyphraseToAnswerObject(idKeys)
+  //   })
+  // }, [dispatch]);
 
-  const onUpdateAnswerSheet = useCallback((groupIdx, value) => {
-    dispatch({
-      type: "CREATE_WALLET/UPDATE_ANSWER_SHEET",
-      payload: {
-        groupIdx,
-        value
-      }
-    })
-  }, [dispatch]);
+  // const onUpdateAnswerSheet = useCallback((groupIdx, value) => {
+  //   dispatch({
+  //     type: "CREATE_WALLET/UPDATE_ANSWER_SHEET",
+  //     payload: {
+  //       groupIdx,
+  //       value
+  //     }
+  //   })
+  // }, [dispatch]);
 
   const value = {
     ...state,
-    onGenerateKeyphrase,
+    // onGenerateKeyphrase,
     onGenerateWordcheck,
-    onCreateAnswerSheet,
-    onUpdateAnswerSheet,
-    onResetWalletCreation: () => dispatch({ type: "CREATE_WALLET/RESET"}),
-    setNextStep: () => dispatch({ type: "CREATE_WALLET/NEXT_STEP"}),
-    setPrevStep: () => dispatch({ type: "CREATE_WALLET/PREVIOUS_STEP"})
+    // onCreateAnswerSheet,
+    // onUpdateAnswerSheet,
+    // onResetWalletCreation: () => dispatch({ type: "CREATE_WALLET/RESET"}),
+    // setNextStep: () => dispatch({ type: "CREATE_WALLET/NEXT_STEP"}),
+    // setPrevStep: () => dispatch({ type: "CREATE_WALLET/PREVIOUS_STEP"})
   }
 
   return (
