@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { User } from 'casper-storage';
-import { isStrongPassword } from 'web-extension/CreateWallet/utils';
-import { onGetUserHashingOptions, onGetUserInfo, onResetUserCache } from 'web-extension/CreateWallet/wallet/storage';
+import { isStrongPassword } from '@cd/web-extension/CreateWallet/utils';
+import { onGetUserHashingOptions, onGetUserInfo, onResetUserCache } from '@cd/web-extension/CreateWallet/wallet/storage';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setPublicKey } from "actions/userActions";
+import { setPublicKey } from "@cd/actions/userActions";
 
 const useWelcomeBack = () => {
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (dir) => ({
 	output: {
 		filename: 'static/js/[name].[contenthash:8].js',
-		assetModuleFilename: 'assets/images/[hash][ext][query]',
+		assetModuleFilename: '@cd/assets/images/[hash][ext][query]',
 		chunkFilename: 'static/js/[name].[contenthash:8].js',
 	},
 	module: {
@@ -32,7 +32,7 @@ module.exports = (dir) => ({
 			process: 'process/browser',
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'assets/css/[name].css',
+			filename: '@cd/assets/css/[name].css',
 		}),
 		new webpack.ProgressPlugin(),
 		new webpack.DefinePlugin({
@@ -42,20 +42,20 @@ module.exports = (dir) => ({
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		alias: {
-			assets: path.resolve(dir, 'src/assets'),
-      actions: path.resolve(dir, 'src/actions'),
-      helpers: path.resolve(dir, 'src/helpers'),
-      selectors: path.resolve(dir, 'src/selectors'),
-      services: path.resolve(dir, 'src/services'),
-      shared: path.resolve(dir, 'src/shared'),
-      store: path.resolve(dir, 'src/store'),
-      config: path.resolve(dir, 'src/config'),
-      constants: path.resolve(dir, 'src/constants'),
-      components: path.resolve(dir, 'src/components'),
-      common: path.resolve(dir, 'src/components/Common'),
-      hooks: path.resolve(dir, 'src/components/hooks'),
-      web: path.resolve(dir, 'src/components/web'),
-      "web-extension": path.resolve(dir, 'src/components/web-extension')
+			"@cd/assets": path.resolve(dir, 'src/assets'),
+      "@cd/actions": path.resolve(dir, 'src/actions'),
+      "@cd/helpers": path.resolve(dir, 'src/helpers'),
+      "@cd/selectors": path.resolve(dir, 'src/selectors'),
+      "@cd/services": path.resolve(dir, 'src/services'),
+      "@cd/shared": path.resolve(dir, 'src/shared'),
+      "@cd/store": path.resolve(dir, 'src/store'),
+      "@cd/config": path.resolve(dir, 'src/config'),
+      "@cd/constants": path.resolve(dir, 'src/constants'),
+      "@cd/common": path.resolve(dir, 'src/components/Common'),
+      "@cd/hooks": path.resolve(dir, 'src/components/hooks'),
+      "@cd/web": path.resolve(dir, 'src/components/web'),
+      "@cd/web-extension": path.resolve(dir, 'src/components/web-extension'),
+      "@cd/components": path.resolve(dir, 'src/components')
 		},
 	},
 });

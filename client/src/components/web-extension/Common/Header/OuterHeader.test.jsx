@@ -11,7 +11,7 @@ jest.mock('react-router-dom', () => ({
 	useLocation: jest.fn(),
 }));
 
-jest.mock('web-extension/CreateWallet/useCreateWallet', () => () => ({
+jest.mock('@cd/web-extension/CreateWallet/useCreateWallet', () => () => ({
 	answerSheet: { 1: true },
 	currentStep: 0,
 	onResetWalletCreation: jest.fn(),

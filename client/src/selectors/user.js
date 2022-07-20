@@ -11,7 +11,7 @@ const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
 
-	icon: 'assets/images/token-icons/cspr.png',
+	icon: '@cd/assets/images/token-icons/cspr.png',
 };
 
 export const getPublicKey = ({ user }) => {

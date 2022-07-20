@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, FormControl, Form } from 'react-bootstrap';
-import nftEmpty from 'assets/image/nft-empty.png';
+import nftEmpty from '@cd/assets/image/nft-empty.png';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { ImagePreview } from '../../Common/Image/ImagePreview';

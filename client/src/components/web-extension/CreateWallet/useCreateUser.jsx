@@ -2,8 +2,8 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { WalletDescriptor, User, EncryptionType } from "casper-storage";
-import { onSetUserHashingOptions, onSetUserInfo } from "web-extension/CreateWallet/wallet/storage";
-import { setPublicKey } from "actions/userActions";
+import { onSetUserHashingOptions, onSetUserInfo } from "@cd/web-extension/CreateWallet/wallet/storage";
+import { setPublicKey } from "@cd/actions/userActions";
 import { isStrongPassword } from "./utils";
 import useCreateWalletStore from './useCreateWallet';
 

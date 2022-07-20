@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import csprIcon from 'assets/image/cspr.png';
+import csprIcon from '@cd/assets/image/cspr.png';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import AllTransactionList from '../../Common/Layout/TransactionList/AllTransactionList';
 import { SendReceiveSection } from '../../Common/SendReceive';

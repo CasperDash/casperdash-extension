@@ -24,20 +24,20 @@
           "./src"
         ],
         "alias": {
-          "assets": "./src/assets",
-          "actions": "./src/actions",
-          "helpers": "./src/helpers",
-          "selectors": "./src/selectors",
-          "services": "./src/services",
-          "shared": "./src/shared",
-          "store": "./src/store",
-          "config": "./src/config",
-          "constants": "./src/constants",
-          "components": "./src/components",
-          "common": "./src/components/Common",
-          "hooks": "./src/components/hooks",
-          "web": "./src/components/web",
-          "web-extension": "./src/components/web-extension"
+          "@cd/assets": "./src/assets",
+          "@cd/actions": "./src/actions",
+          "@cd/helpers": "./src/helpers",
+          "@cd/selectors": "./src/selectors",
+          "@cd/services": "./src/services",
+          "@cd/shared": "./src/shared",
+          "@cd/store": "./src/store",
+          "@cd/config": "./src/config",
+          "@cd/constants": "./src/constants",
+          "@cd/common": "./src/components/Common",
+          "@cd/hooks": "./src/components/hooks",
+          "@cd/web": "./src/components/web",
+          "@cd/web-extension": "./src/components/web-extension",
+          "@cd/components": "./src/components"
         }
       }
     ]

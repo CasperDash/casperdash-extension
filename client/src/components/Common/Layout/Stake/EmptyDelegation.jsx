@@ -1,5 +1,5 @@
 import React from 'react';
-import stakingIcon from 'assets/image/no-staking-icon.svg';
+import stakingIcon from '@cd/assets/image/no-staking-icon.svg';
 
 const EmptyDelegation = ({ isLoading }) => (
 	<div className="cd_empty_delegation_row row">

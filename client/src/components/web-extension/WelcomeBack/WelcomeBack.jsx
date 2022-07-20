@@ -2,8 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { isStrongPassword } from 'web-extension/CreateWallet/utils';
-import { onResetUserCache } from 'web-extension/CreateWallet/wallet/storage';
+import { isStrongPassword } from '@cd/web-extension/CreateWallet/utils';
+import { onResetUserCache } from '@cd/web-extension/CreateWallet/wallet/storage';
 import useWelcomeBack from './useWelcomeBack';
 import './WelcomeBack.scss';
 
