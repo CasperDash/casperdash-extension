@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import BackArrow from '@cd/assets/image/back-arrow.svg';
 import './OuterHeader.scss';
 import useCreateWalletStore from "@cd/web-extension/CreateWallet/useCreateWallet";
-import { generateCWHeader } from "@cd/web-extension/CreateWallet/utils";
+import { generateCWHeader } from "@cd/actions/createWalletActions.utils";
 
 export const OuterHeader = () => {
   const { answerSheet, currentStep, onResetWalletCreation } = useCreateWalletStore();

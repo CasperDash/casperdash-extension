@@ -1,30 +1,27 @@
-import React, { useCallback, useReducer, createContext } from "react";
-import { WalletDescriptor, StorageManager as Storage, User, KeyFactory, EncryptionType } from "casper-storage";
-import dropRight from 'lodash-es/dropRight';
+import React, { useReducer, createContext } from "react";
 import { initialState, reducer } from "./reducer";
-import { shuffle } from "./utils";
 
 const CreateWalletContext = createContext();
 
 const CreateWalletProvider = props => {
   const { children } = props;
-  const keyManager = KeyFactory.getInstance();
-  const [ state, dispatch ] = useReducer(reducer, {
+  // const keyManager = KeyFactory.getInstance();
+  const [ state ] = useReducer(reducer, {
     ...initialState
   });
 
-  const generateKeyphraseMap = useCallback(keyphrase => {
-    const map = new Map();
-    keyphrase.split(" ").forEach((word, index) => map.set(index, word));
-    return map;
-  }, []);
+  // const generateKeyphraseMap = useCallback(keyphrase => {
+  //   const map = new Map();
+  //   keyphrase.split(" ").forEach((word, index) => map.set(index, word));
+  //   return map;
+  // }, []);
 
   /**
    * E.g: [1,2,3...11,12]
    */
-  const generateKeyphraseArray = useCallback(() => {
-    return  [...(new Array(state.totalKeywords)).keys()]
-  }, [state]);
+  // const generateKeyphraseArray = useCallback(() => {
+  //   return  [...(new Array(state.totalKeywords)).keys()]
+  // }, [state]);
 
   /**
    * Generating a keyphrase of 12 words
@@ -43,35 +40,35 @@ const CreateWalletProvider = props => {
   //   // console.log(`🚀 ~ onGenerate ~ isValid`, isValid);
   // }, [generateKeyphraseMap, keyManager]);
 
-  /**
-   * Randomize words from generated keyphrase
-   * Given how many words we'd like to validate,
-   * This will create a random index object using key index only (based on keyphrase generated)
-   * For word conversion, this will be done in actual UI
-   */
-  const onGenerateWordcheck = useCallback(() => {
-    const { totalWordCheck } = state;
-    const initWordKeys = generateKeyphraseArray();
-    const randomWordIds = (shuffle(initWordKeys)).splice(0, totalWordCheck);
+  // /**
+  //  * Randomize words from generated keyphrase
+  //  * Given how many words we'd like to validate,
+  //  * This will create a random index object using key index only (based on keyphrase generated)
+  //  * For word conversion, this will be done in actual UI
+  //  */
+  // const onGenerateWordcheck = useCallback(() => {
+  //   const { totalWordCheck } = state;
+  //   const initWordKeys = generateKeyphraseArray();
+  //   const randomWordIds = (shuffle(initWordKeys)).splice(0, totalWordCheck);
 
-    /**
-     * Idea:
-     * For each key index:
-     *  - Create another shuffled array from total keyphrase (excluding the current key)
-     *  - Take 2 first elements from the shuffled in Step 1
-     *  - Create a shuffled array from [2 first elements, current key]
-     */
-    let final = {};
-    randomWordIds.forEach(id => {
-      const newWordArr = generateKeyphraseArray();
-      const excludedWordIds = newWordArr.filter(k => k !== id);
-      const newRandom = shuffle(excludedWordIds);
-      const remaining = dropRight(newRandom, newRandom.length - 2);
-      final[id] = { answer: id, options: [...shuffle([...remaining, id])]};
-    });
+  //   /**
+  //    * Idea:
+  //    * For each key index:
+  //    *  - Create another shuffled array from total keyphrase (excluding the current key)
+  //    *  - Take 2 first elements from the shuffled in Step 1
+  //    *  - Create a shuffled array from [2 first elements, current key]
+  //    */
+  //   let final = {};
+  //   randomWordIds.forEach(id => {
+  //     const newWordArr = generateKeyphraseArray();
+  //     const excludedWordIds = newWordArr.filter(k => k !== id);
+  //     const newRandom = shuffle(excludedWordIds);
+  //     const remaining = dropRight(newRandom, newRandom.length - 2);
+  //     final[id] = { answer: id, options: [...shuffle([...remaining, id])]};
+  //   });
 
-    return { checklist: randomWordIds, data: final };
-  }, [generateKeyphraseArray, state]);
+  //   return { checklist: randomWordIds, data: final };
+  // }, [generateKeyphraseArray, state]);
 
   // const onCreateAnswerSheet = useCallback(idKeys => {
   //   dispatch({
@@ -93,7 +90,7 @@ const CreateWalletProvider = props => {
   const value = {
     ...state,
     // onGenerateKeyphrase,
-    onGenerateWordcheck,
+    // onGenerateWordcheck,
     // onCreateAnswerSheet,
     // onUpdateAnswerSheet,
     // onResetWalletCreation: () => dispatch({ type: "CREATE_WALLET/RESET"}),

@@ -32,11 +32,17 @@ const selectCreateWalletTotalKeywords = createSelector(
 	state => state.totalKeywords,
 );
 
+const selectCreateWalletTotalWordsForChecking = createSelector(
+	createWalletSelector,
+	state => state.totalWordCheck,
+);
+
 export {
   selectCreateWalletState,
   selectCreateWalletKeyphrase,
   selectCreateWalletKeyphraseAsMap,
   selectCreateWalletCurrentStep,
   selectCreateWalletAnswerSheet,
-  selectCreateWalletTotalKeywords
+  selectCreateWalletTotalKeywords,
+  selectCreateWalletTotalWordsForChecking
 }

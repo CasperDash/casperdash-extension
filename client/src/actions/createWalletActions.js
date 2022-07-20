@@ -9,7 +9,6 @@ import { convertKeyphraseToAnswerObject, generateKeyphraseMap } from "./createWa
 const generateKeyphrase = () => {
   const keyManager = KeyFactory.getInstance();
   const keyphrase = keyManager.generate();
-  // console.log(`🚀 ~ onGenerate ~ keyphrase`, keyphrase.split(" "));
 
   return {
     type: CREATE_WALLET.CREATE_KEYPHRASE,

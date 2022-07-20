@@ -1,27 +1,33 @@
 import React, { useMemo, useEffect, useState, useCallback } from "react";
 import { Button } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 import every from "lodash-es/every";
-import useCreateWalletStore from "./useCreateWallet";
+import { onGenerateWordcheck } from "@cd/actions/createWalletActions.utils";
+import { setNextStep, updateAnswerSheet, createAnswerSheet } from "@cd/actions/createWalletActions";
+import { selectCreateWalletState } from '@cd/selectors/createWallet';
 import WordsGroup from "./WordsGroup";
 import "./ValidateKeyphrase.scss";
 
 const ValidateKeyphrasePage = () => {
-  const { setNextStep, answerSheet, onUpdateAnswerSheet, onCreateAnswerSheet, keyPhraseAsMap, currentStep, onGenerateWordcheck, totalWordCheck } = useCreateWalletStore();
+  const dispatch = useDispatch();
+  const { currentStep, answerSheet, keyPhraseAsMap, totalWordCheck } = useSelector(selectCreateWalletState);
   const [wordsTemplate, setTemplate] = useState(undefined);
+  const onUpdateAnswerSheet = useCallback((groupIndex, value) => dispatch(updateAnswerSheet(groupIndex, value)), [dispatch]);
+  const onCreateAnswerSheet = useCallback(checklist => dispatch(createAnswerSheet(checklist)), [dispatch]);
   const shouldDisableNextButton = useMemo(() => {
     if (answerSheet) {
       return every(answerSheet, Boolean) ? false : true;
     }
     return true;
   }, [answerSheet]);
-  
+
   const onClickHandler = useCallback(() => {
     if (shouldDisableNextButton) {
       return;
     }
 
-    setNextStep();
-  }, [setNextStep, shouldDisableNextButton]);
+    dispatch(setNextStep());
+  }, [dispatch, shouldDisableNextButton]);
 
   const onSelecteWordHandler = useCallback((groupIndex, answer) => {
     if (!answerSheet) {
@@ -56,7 +62,7 @@ const ValidateKeyphrasePage = () => {
       return;
     }
 
-    const { checklist, data } = onGenerateWordcheck();
+    const { checklist, data } = onGenerateWordcheck(totalWordCheck);
     onCreateAnswerSheet(checklist);
 
     const checks = checklist.map(id => {
