@@ -15,8 +15,8 @@ const RecoveryPhrasePage = () => {
   const leftKeys = dropRight(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
   const rightKeys = drop(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
   const onClickNextHandler = useCallback(() => {
-    setNextStep();
-  }, []);
+    dispatch(setNextStep());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(generateKeyphrase());

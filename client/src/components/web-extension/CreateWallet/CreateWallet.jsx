@@ -1,14 +1,13 @@
 import React from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
+import { useSelector } from 'react-redux';
+import { selectCreateWalletCurrentStep } from "@cd/selectors/createWallet";
 import RecoveryPhrasePage from "./RecoveryPhrasePage";
 import ValidateKeyphrasePage from "./ValidateKeyphrasePage";
 import CreatePasswordPage from "./CreatePasswordPage";
-import useCreateWalletStore from "./useCreateWallet";
 import "./CreateWallet.scss";
 
 const CreateWallet = () => {
-  const { currentStep } = useCreateWalletStore();
+  const currentStep = useSelector(selectCreateWalletCurrentStep);
 
   return (
     <section className="cd_we_page--root">
@@ -19,11 +18,4 @@ const CreateWallet = () => {
 	);
 };
 
-export default compose(
-  connect(
-    state => {
-      console.log(`🚀 ~ state`, state)
-      return {}
-    }
-  )
-)(CreateWallet);
+export default CreateWallet;

@@ -1,14 +1,16 @@
 import React, { useMemo, useEffect, useState, useCallback } from "react";
 import { Button } from 'react-bootstrap';
+import { useOutletContext } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import every from "lodash-es/every";
-import { onGenerateWordcheck } from "@cd/actions/createWalletActions.utils";
+import { generateCWHeader, onGenerateWordcheck } from "@cd/actions/createWalletActions.utils";
 import { setNextStep, updateAnswerSheet, createAnswerSheet } from "@cd/actions/createWalletActions";
 import { selectCreateWalletState } from '@cd/selectors/createWallet';
 import WordsGroup from "./WordsGroup";
 import "./ValidateKeyphrase.scss";
 
 const ValidateKeyphrasePage = () => {
+  const [, setHeader] = useOutletContext();
   const dispatch = useDispatch();
   const { currentStep, answerSheet, keyPhraseAsMap, totalWordCheck } = useSelector(selectCreateWalletState);
   const [wordsTemplate, setTemplate] = useState(undefined);
@@ -52,6 +54,12 @@ const ValidateKeyphrasePage = () => {
       onUpdateAnswerSheet(groupIndex, false);
     }
   }, [answerSheet, onUpdateAnswerSheet, wordsTemplate]);
+
+  useEffect(() => {
+    const header = generateCWHeader(currentStep, answerSheet);
+
+    setHeader(header);
+  }, [answerSheet, currentStep, setHeader]);
 
   /**
    * Run only once

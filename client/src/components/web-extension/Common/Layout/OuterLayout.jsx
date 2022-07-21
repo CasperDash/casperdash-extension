@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import CreateWalletProvider from "@cd/web-extension/CreateWallet/Context";
 import { OuterHeader } from '@cd/web-extension/Common/Header/OuterHeader';
 import './OuterLayout.scss';
 
 const OuterLayout = () => {
-	return (
-    <CreateWalletProvider>
-      <div className={`cd_all_pages_content`}>
-        <OuterHeader />
+  const [header, setHeader] = useState(undefined);
 
-        <div className="cd_web_extension_outer_content">
-          <Outlet />
-        </div>
+	return (
+    <div className={`cd_all_pages_content`}>
+      <OuterHeader header={header} />
+
+      <div className="cd_web_extension_outer_content">
+        <Outlet context={[header, setHeader]} />
       </div>
-    </CreateWalletProvider>
+    </div>
 	);
 };
 
