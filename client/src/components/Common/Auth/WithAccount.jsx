@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getLocalStorageValue } from "@cd/services/localStorage";
 import { getConnectedAccountFromLocalStorage } from '../../../actions/userActions';
 import { getPublicKey } from '../../../selectors/user';
 
 const WithAccount = ({ children }) => {
 	// Hook
 	const publicKey = useSelector(getPublicKey);
+  console.log(`🚀 ~ WithAccount ~ publicKey`, publicKey)
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 

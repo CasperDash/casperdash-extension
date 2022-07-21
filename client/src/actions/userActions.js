@@ -61,6 +61,7 @@ export const setPublicKey = (publicKey, loginOptions = {}) => {
 export const getConnectedAccountFromLocalStorage = () => {
 	return (dispatch) => {
 		const connectedAccount = getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
+    console.log(`🚀 ~ return ~ connectedAccount`, connectedAccount)
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
 			return connectedAccount.publicKey;
@@ -72,5 +73,20 @@ export const getConnectedAccountFromLocalStorage = () => {
 export const lockAccount = () => {
 	return (dispatch) => {
 		dispatch(setPublicKey());
+	};
+};
+
+export const onSuccessCreatingWallet = (publicKey, user) => {
+	cacheLoginInfoToLocalStorage(publicKey, {
+		userHashingOptions: user.userHashingOptions,
+	});
+	return {
+		type: USERS.SET_USER_ADDRESS,
+		payload: {
+			publicKey,
+			loginOptions: {
+				...user.userInfo,
+			},
+		},
 	};
 };

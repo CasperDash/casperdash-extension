@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { isStrongPassword } from '@cd/web-extension/CreateWallet/utils';
 import { onResetUserCache } from '@cd/web-extension/CreateWallet/wallet/storage';
 import useWelcomeBack from './useWelcomeBack';
 import './WelcomeBack.scss';
@@ -12,10 +11,6 @@ const onValidatePassword = (values) => {
 
 	if (!values.password) {
 		errors.password = 'Password required!';
-	}
-
-	if (!isStrongPassword(values.password)) {
-		errors.password = 'Password not strong enough';
 	}
 
 	return errors;
