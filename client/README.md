@@ -15,7 +15,7 @@ import { funcA } from "@module/actions";
 
 1. Update *`commonConfig.js`*
 Webpack reads this configs to resolve while building correct paths.
-- Open `commonConfig.js`, looks for `resolve.alias` and update new path as:
+- Open `commonConfig.js`, look for `resolve.alias` and update new path as:
 ```
 ...
   alias: {
@@ -27,7 +27,7 @@ Webpack reads this configs to resolve while building correct paths.
 
 2. Update *`.babelrc`*
 `module-resolver` requires alias the same as ones defined in `commonConfig.js`
-- Open `.babelrc`, looks for `plugins["module-resolver"].alias` and update new path as:
+- Open `.babelrc`, look for `plugins["module-resolver"].alias` and update new path as:
 ```
 ...
 "alias": {
@@ -39,7 +39,7 @@ Webpack reads this configs to resolve while building correct paths.
 
 3. Update *`package.json`*
 CRA requires Jest config from `"jest"` key. So we need to update `moduleNameMapper` in `"jest"` the same as `commonConfig.js`
-- Open `client/package.json`, looks for `jest.moduleNameMapper` and update new path as:
+- Open `client/package.json`, look for `jest.moduleNameMapper` and update new path as:
 ```
 "moduleNameMapper": {
   ...
@@ -49,7 +49,7 @@ CRA requires Jest config from `"jest"` key. So we need to update `moduleNameMapp
 
 4. Update *`jsconfig.json`*
 VSCode requires this so the editor can understand the alias path used throughout the project.
-- Open `jsconfig.json`, looks for `compilerOptions.paths` and update new path as:
+- Open `jsconfig.json`, look for `compilerOptions.paths` and update new path as:
 ```
 "paths: {
   ...
