@@ -27,7 +27,6 @@ function reducer(state = initialState, { payload, type }) {
         currentStep: 0
       }
     case CREATE_WALLET.CREATE_KEYPHRASE:
-      console.log(`🚀 ~ file: createWallet.js ~ line 33 ~ reducer ~ payload.keyphrase`, payload.keyphrase)
       return {
         ...state,
         keyPhrase: payload.keyphrase,
@@ -35,11 +34,6 @@ function reducer(state = initialState, { payload, type }) {
       }
     case CREATE_WALLET.RESET:
       return initialState;
-    case CREATE_WALLET.GENERATE_VALIDATOR:
-      return {
-        ...state,
-        validator: payload
-      }
     case CREATE_WALLET.SET_ANSWER_SHEET:
       return {
         ...state,

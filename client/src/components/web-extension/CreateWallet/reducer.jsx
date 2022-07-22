@@ -32,15 +32,6 @@ export const reducer = (state = initialState, { payload, type }) => {
       }
     case "CREATE_WALLET/RESET":
       return initialState;
-    /**
-     * TODO
-     * Remove "CREATE_WALLET/GENERATE_VALIDATOR"
-     */
-    case "CREATE_WALLET/GENERATE_VALIDATOR":
-      return {
-        ...state,
-        validator: payload
-      }
     case "CREATE_WALLET/SET_ANSWER_SHEET":
       return {
         ...state,

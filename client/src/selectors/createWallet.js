@@ -2,42 +2,56 @@ import { createSelector } from "reselect";
 
 const createWalletSelector = state => state.createWallet;
 
+const makeSelectCreateWallet = state => state;
 const selectCreateWalletState = createSelector(
 	createWalletSelector,
-	state => state
+  makeSelectCreateWallet
 );
 
+const makeSelectCWKeyphrase = state => state.keyPhrase;
 const selectCreateWalletKeyphrase = createSelector(
 	createWalletSelector,
-	state => state.keyPhrase,
+  makeSelectCWKeyphrase
 );
 
+const makeSelectCWKeyphraseAsMap = state => state.keyPhraseAsMap;
 const selectCreateWalletKeyphraseAsMap = createSelector(
 	createWalletSelector,
-	state => state.keyPhraseAsMap,
+  makeSelectCWKeyphraseAsMap
 );
 
+const makeSelectCWKeyCurrentStep = state => state.currentStep;
 const selectCreateWalletCurrentStep = createSelector(
 	createWalletSelector,
-	state => state.currentStep,
+  makeSelectCWKeyCurrentStep
 );
 
+const makeSelectCWAnswerSheet = state => state.answerSheet;
 const selectCreateWalletAnswerSheet = createSelector(
 	createWalletSelector,
-	state => state.answerSheet,
+  makeSelectCWAnswerSheet
 );
 
+const makeSelectCWTotalKeywords = state => state.totalKeywords;
 const selectCreateWalletTotalKeywords = createSelector(
 	createWalletSelector,
-	state => state.totalKeywords,
+  makeSelectCWTotalKeywords
 );
 
+const makeSelectCWTotalWordsForChecking = state => state.totalWordCheck;
 const selectCreateWalletTotalWordsForChecking = createSelector(
 	createWalletSelector,
-	state => state.totalWordCheck,
+  makeSelectCWTotalWordsForChecking
 );
 
 export {
+  makeSelectCreateWallet,
+  makeSelectCWKeyphrase,
+  makeSelectCWKeyphraseAsMap,
+  makeSelectCWKeyCurrentStep,
+  makeSelectCWAnswerSheet,
+  makeSelectCWTotalKeywords,
+  makeSelectCWTotalWordsForChecking,
   selectCreateWalletState,
   selectCreateWalletKeyphrase,
   selectCreateWalletKeyphraseAsMap,
