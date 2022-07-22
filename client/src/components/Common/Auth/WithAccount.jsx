@@ -12,6 +12,9 @@ const WithAccount = ({ children }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+  /**
+   * Navigate to `/welcomeBack` when fount cached User info
+   */
 	useEffect(() => {
 		if (!publicKey && !dispatch(getConnectedAccountFromLocalStorage())) {
 			navigate('/connectAccount');
