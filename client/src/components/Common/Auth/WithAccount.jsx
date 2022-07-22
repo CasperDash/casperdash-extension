@@ -13,7 +13,7 @@ const WithAccount = ({ children }) => {
 	const dispatch = useDispatch();
 
   /**
-   * Navigate to `/welcomeBack` when fount cached User info
+   * Navigate to `/welcomeBack` screen when found cached User info
    */
 	useEffect(() => {
 		if (!publicKey && !dispatch(getConnectedAccountFromLocalStorage())) {
