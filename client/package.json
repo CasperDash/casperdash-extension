@@ -97,11 +97,14 @@
       "^@cd/selectors(.*)$": "<rootDir>/src/selectors$1",
       "^@cd/services(.*)$": "<rootDir>/src/services$1",
       "^@cd/shared(.*)$": "<rootDir>/src/shared$1",
-      "^@cd/components(.*)$": "<rootDir>/src/components$1",
+      "^@cd/store(.*)$": "<rootDir>/src/store$1",
+      "^@cd/config(.*)$": "<rootDir>/src/config$1",
+      "^@cd/constants(.*)$": "<rootDir>/src/constants$1",
       "^@cd/common(.*)$": "<rootDir>/src/components/Common$1",
       "^@cd/hooks(.*)$": "<rootDir>/src/components/hooks$1",
       "^@cd/web/(.*)$": "<rootDir>/src/components/web$1",
-      "^@cd/web-extension(.*)$": "<rootDir>/src/components/web-extension$1"
+      "^@cd/web-extension(.*)$": "<rootDir>/src/components/web-extension$1",
+      "^@cd/components(.*)$": "<rootDir>/src/components$1"
 		},
 		"transformIgnorePatterns": [
 			"<rootDir>/node_modules/(?!lodash-es)"
