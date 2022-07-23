@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
-// import { onSetUserHashingOptions, onSetUserInfo } from '@cd/web-extension/CreateWallet/wallet/storage';
 import { onSuccessCreatingWallet, setPublicKey } from '@cd/actions/userActions';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 
@@ -11,16 +10,16 @@ const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const keyphrase = useSelector(selectCreateWalletKeyphrase);
-
 	const onCreateSuccess = useCallback(
 		(result) => {
 			const { publicKey, user } = result;
 			// dispatch(setPublicKey(publicKey, {
-      //   userHashingOptions: user.userHashingOptions
-      // }));
-      dispatch(onSuccessCreatingWallet(publicKey, user));
+			//   userHashingOptions: user.userHashingOptions
+			// }));
+			dispatch(onSuccessCreatingWallet(publicKey, user));
 
 			navigate('/');
+			return result;
 		},
 		[dispatch, navigate],
 	);
@@ -28,7 +27,6 @@ const useCreateUser = () => {
 	const onSaveUserHash = useCallback(async (user) => {
 		// Take the hashing options from user's instance
 		const hashingOptions = user.getPasswordHashingOptions();
-		console.log(`🚀 ~ useCreateUser ~ hashingOptions`, hashingOptions);
 		const userHashingOptions = JSON.stringify(hashingOptions);
 
 		// Serialize user information to a secure encrypted string
@@ -61,13 +59,20 @@ const useCreateUser = () => {
 				}
 
 				// Create new User
-				const user = new User(password);
+				let user;
+				try {
+					user = new User(password);
+				} catch (error) {
+					return undefined;
+				}
 
 				// Set HDWallet info
 				user.setHDWallet(keyphrase, encryptionType);
 
 				const result = await onSaveHandler(user);
+				// console.log(`🚀 ~ result`, result)
 				result.publicKey && onCreateSuccess(result);
+				return result;
 			} catch (err) {
 				console.error(`🚀 ~ useCreateUser ~ err`, err);
 				return undefined;
