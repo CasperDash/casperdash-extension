@@ -72,14 +72,20 @@ export const getConnectedAccountFromLocalStorage = () => {
 
 export const lockAccount = () => {
 	return (dispatch) => {
+    /**
+     * This clears all cached User hash info in localStorage
+     */
 		dispatch(setPublicKey());
 	};
 };
 
 export const onSuccessCreatingWallet = (publicKey, user) => {
+  // Store user hash (string) into localStorage
 	cacheLoginInfoToLocalStorage(publicKey, {
 		userHashingOptions: user.userHashingOptions,
 	});
+
+  // Store full User object into state
 	return {
 		type: USERS.SET_USER_ADDRESS,
 		payload: {
