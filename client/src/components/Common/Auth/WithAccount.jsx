@@ -7,25 +7,23 @@ import { getPublicKey } from '@cd/selectors/user';
 const WithAccount = ({ children }) => {
   const cacheConnectedAccount = getConnectedAccountLocalStorage();
   const { publicKey: publicKeyCache, loginOptions: loginOptionsCache } = cacheConnectedAccount;
-  console.log(`🚀 ~ WithAccount ~ loginOptionsCache`, loginOptionsCache)
-  console.log(`🚀 ~ WithAccount ~ publicKeyCache`, publicKeyCache)
+
 	// Hook
   /**
    * publicKey is cleared after closing extension (Clicking on CD extension icon)
    * We should store this somewhere else
    */
 	const publicKey = useSelector(getPublicKey);
-  console.log(`🚀 ~ WithAccount ~ publicKey`, publicKey)
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
     /**
      * Navigate to `/welcomeBack` screen when found cached User info
-     * Otherwiest, redirect back to connect Account screen
+     * Otherwise, redirect back to connect Account screen
      */
     if (!publicKey) {
-      if (loginOptionsCache?.userHashingOptions) {
+      if (loginOptionsCache?.userInfo && loginOptionsCache?.userHashingOptions) {
         navigate('/welcomeBack');
         return;
       }

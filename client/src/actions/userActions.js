@@ -1,3 +1,4 @@
+import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTION_TYPES, CONNECTED_ACCOUNT_STORAGE_PATH } from '@cd/constants/settings';
@@ -33,9 +34,9 @@ export const updatePublicKeyFromSigner = () => {
 		let publicKey;
 		try {
 			publicKey = await Signer.getActivePublicKey();
-      const loginOptions = { connectionType: CONNECTION_TYPES.casperSigner };
-      cacheLoginInfoToLocalStorage(publicKey, loginOptions);
-      dispatch(setPublicKeyToStore(publicKey, loginOptions));
+			const loginOptions = { connectionType: CONNECTION_TYPES.casperSigner };
+			cacheLoginInfoToLocalStorage(publicKey, loginOptions);
+			dispatch(setPublicKeyToStore(publicKey, loginOptions));
 		} catch (error) {
 			dispatch({ type: SIGNER.UPDATE_LOCK_STATUS, payload: { isLocked: true } });
 		}
@@ -70,7 +71,6 @@ export const getConnectedAccountLocalStorage = () => getLocalStorageValue('accou
 export const getConnectedAccountFromLocalStorage = () => {
 	return (dispatch) => {
 		const connectedAccount = getConnectedAccountLocalStorage();
-		console.log(`🚀 ~ return ~ connectedAccount`, connectedAccount);
 		/**
 		 * TODO:
 		 * This function has more responsibility than it should have
@@ -115,9 +115,13 @@ export const onClearPublicKey = () => {
 export const onBindingAuthInfo = (publicKey, user) => {
 	// Store full User object into state
 	return (dispatch) => {
+		const userHashOpts = isObject(user.userHashingOptions)
+			? JSON.stringify(user.userHashingOptions)
+			: user.userHashingOptions;
 		// Store user hash (string) into localStorage
 		cacheLoginInfoToLocalStorage(publicKey, {
-			userHashingOptions: user.userHashingOptions,
+			userHashingOptions: userHashOpts,
+			userInfo: user.userInfo,
 		});
 		dispatch(setPublicKeyToStore(publicKey, { userInfo: user.userInfo }));
 	};

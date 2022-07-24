@@ -1,19 +1,12 @@
 import { useCallback } from 'react';
 import { User } from 'casper-storage';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onBindingAuthInfo, getConnectedAccountLocalStorage } from '@cd/actions/userActions';
-import { getLoginOptions } from '@cd/selectors/user';
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	/**
-	 * Without `Locking` account,
-	 * This data is lost when extension is closed
-	 */
-	const loginOptionsStore = useSelector(getLoginOptions);
-	console.log(`🚀 ~ useWelcomeBack ~ loginOptionsStore`, loginOptionsStore);
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
@@ -38,15 +31,10 @@ const useWelcomeBack = () => {
 
 			try {
 				const cacheConnectedAccount = getConnectedAccountLocalStorage();
-				console.log(`🚀 ~ cacheConnectedAccount`, cacheConnectedAccount);
-				const { loginOptions } = cacheConnectedAccount;
+				const { loginOptions: { userHashingOptions, userInfo: encryptedUserInfo } } = cacheConnectedAccount;
 
 				// Get encrypted info from Localstorage
-				const encryptedHashingOptions =
-					typeof loginOptions.userHashingOptions === 'string'
-						? JSON.parse(loginOptions.userHashingOptions)
-						: loginOptions.userHashingOptions;
-				const encryptedUserInfo = loginOptionsStore.userInfo;
+				const encryptedHashingOptions = JSON.parse(userHashingOptions);
 
 				// Convert salt info from object to Array
 				// This is used for creating new Uint8Array instance
@@ -75,7 +63,7 @@ const useWelcomeBack = () => {
 				return undefined;
 			}
 		},
-		[convertSaltInfo, loginOptionsStore.userInfo],
+		[convertSaltInfo],
 	);
 
 	return { validateUserCredential, onAuthCredentialSuccess };

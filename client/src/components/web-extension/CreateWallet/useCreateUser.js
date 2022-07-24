@@ -75,7 +75,6 @@ const useCreateUser = () => {
 				user.setHDWallet(keyphrase, encryptionType);
 
 				const result = await onInitNewUserHandler(user);
-				// console.log(`🚀 ~ result`, result)
 				result.publicKey && onCreateSuccess(result);
 				return result;
 			} catch (err) {
