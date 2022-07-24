@@ -35,7 +35,7 @@ const WelcomeBackPage = () => {
 					setServerErrors(undefined);
 				}
 
-				result.publicKey && onAuthCredentialSuccess(result.publicKey);
+				result.publicKey && onAuthCredentialSuccess(result);
 			}
 		},
 		[onAuthCredentialSuccess, validateUserCredential],

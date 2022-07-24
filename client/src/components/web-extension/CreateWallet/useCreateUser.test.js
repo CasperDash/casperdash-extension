@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { User, KeyFactory } from 'casper-storage';
 import { renderHook } from '@testing-library/react-hooks';
-import { onSuccessCreatingWallet } from '@cd/actions/userActions';
+import { onBindingAuthInfo } from '@cd/actions/userActions';
 import useCreateUser from './useCreateUser';
 
 jest.mock('casper-storage', () => ({
@@ -9,7 +9,7 @@ jest.mock('casper-storage', () => ({
 	User: jest.fn(),
 }));
 jest.mock('@cd/actions/userActions', () => ({
-	onSuccessCreatingWallet: jest.fn(),
+	onBindingAuthInfo: jest.fn(),
 }));
 
 describe('useCreateUser', () => {
@@ -55,7 +55,7 @@ describe('useCreateUser', () => {
 		expect(result).toBeUndefined();
 	});
 
-	it('Should call `onSuccessCreatingWallet` when creating new User successfully', async () => {
+	it('Should call `onBindingAuthInfo` when creating new User successfully', async () => {
 		User.mockReturnValueOnce({
 			setHDWallet: jest.fn(),
 			addWalletAccount: jest.fn().mockImplementation(() => ({
@@ -80,7 +80,7 @@ describe('useCreateUser', () => {
 			},
 		});
 
-		expect(onSuccessCreatingWallet).toHaveBeenCalledTimes(1);
-		expect(onSuccessCreatingWallet).toHaveBeenCalledWith('this-is-public-key', expect.anything());
+		expect(onBindingAuthInfo).toHaveBeenCalledTimes(1);
+		expect(onBindingAuthInfo).toHaveBeenCalledWith('this-is-public-key', expect.anything());
 	});
 });

@@ -112,7 +112,7 @@ export const onClearPublicKey = () => {
 	};
 };
 
-export const onSuccessCreatingWallet = (publicKey, user) => {
+export const onBindingAuthInfo = (publicKey, user) => {
 	// Store full User object into state
 	return (dispatch) => {
 		// Store user hash (string) into localStorage
