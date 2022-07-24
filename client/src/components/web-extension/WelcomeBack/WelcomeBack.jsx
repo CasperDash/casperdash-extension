@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { onResetUserCache } from '@cd/web-extension/CreateWallet/wallet/storage';
+import { lockAccount } from '@cd/actions/userActions';
 import useWelcomeBack from './useWelcomeBack';
 import './WelcomeBack.scss';
 
@@ -18,6 +19,7 @@ const onValidatePassword = (values) => {
 
 const WelcomeBackPage = () => {
 	const { onAuthCredentialSuccess, validateUserCredential } = useWelcomeBack();
+  const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
@@ -50,9 +52,9 @@ const WelcomeBackPage = () => {
 	);
 
 	const onReset = useCallback(async () => {
-		await onResetUserCache();
+    dispatch(lockAccount());
 		navigate('/');
-	}, [navigate]);
+	}, [dispatch, navigate]);
 
 	return (
 		<section className="cd_we_page--root">

@@ -1,7 +1,7 @@
 import { Signer } from 'casper-js-sdk';
-import { USERS, SIGNER } from '../store/actionTypes';
-import { CONNECTION_TYPES, CONNECTED_ACCOUNT_STORAGE_PATH } from '../constants/settings';
-import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
+import { USERS, SIGNER } from '@cd/store/actionTypes';
+import { CONNECTION_TYPES, CONNECTED_ACCOUNT_STORAGE_PATH } from '@cd/constants/settings';
+import { setLocalStorageValue, getLocalStorageValue } from '@cd/services/localStorage';
 
 /**
  * @param {string} publicKey
@@ -44,24 +44,38 @@ const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
 	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, { publicKey, loginOptions }, 'set');
 };
 
+const setPublicKeyToStore = (publicKey, loginOptions) => {
+	console.log(`🚀 ~ setPublicKeyToStore ~ loginOptions`, loginOptions);
+	return {
+		type: USERS.SET_USER_ADDRESS,
+		payload: { publicKey, loginOptions },
+	};
+};
 /**
  * @param {string} publicKey
  * @param {string} connectionType
  * @returns {object}
  */
 export const setPublicKey = (publicKey, loginOptions = {}) => {
-	//Cache public key and login options
-	cacheLoginInfoToLocalStorage(publicKey, loginOptions);
-	return {
-		type: USERS.SET_USER_ADDRESS,
-		payload: { publicKey, loginOptions },
+	return (dispatch) => {
+		//Cache public key and login options
+		cacheLoginInfoToLocalStorage(publicKey, loginOptions);
+		dispatch(setPublicKeyToStore(publicKey, loginOptions));
 	};
 };
 
+export const getConnectedAccountLocalStorage = () => getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
+
 export const getConnectedAccountFromLocalStorage = () => {
 	return (dispatch) => {
-		const connectedAccount = getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
-    console.log(`🚀 ~ return ~ connectedAccount`, connectedAccount)
+		const connectedAccount = getConnectedAccountLocalStorage();
+		console.log(`🚀 ~ return ~ connectedAccount`, connectedAccount);
+		/**
+		 * TODO:
+		 * This function has more responsibility than it should have
+		 * We should dispatch connected info AFTER getting from local storage
+		 * or change function name to its suitable one
+		 */
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
 			return connectedAccount.publicKey;
@@ -72,27 +86,38 @@ export const getConnectedAccountFromLocalStorage = () => {
 
 export const lockAccount = () => {
 	return (dispatch) => {
-    /**
-     * This clears all cached User hash info in localStorage
-     */
+		/**
+		 * This clears all cached User hash info in localStorage
+		 */
 		dispatch(setPublicKey());
 	};
 };
 
-export const onSuccessCreatingWallet = (publicKey, user) => {
-  // Store user hash (string) into localStorage
-	cacheLoginInfoToLocalStorage(publicKey, {
-		userHashingOptions: user.userHashingOptions,
-	});
+export const onClearPublicKey = () => {
+	return (dispatch, getState) => {
+		const {
+			user: { loginOptions: loginOptionsState },
+		} = getState();
+		const connectedAccount = getConnectedAccountLocalStorage();
+		const { loginOptions: loginOptionsCache } = connectedAccount;
+		const emptyPublicKey = '';
+		setLocalStorageValue(
+			'account',
+			CONNECTED_ACCOUNT_STORAGE_PATH,
+			{ publicKey: emptyPublicKey, loginOptions: loginOptionsCache },
+			'set',
+		);
+		dispatch(setPublicKeyToStore(emptyPublicKey, loginOptionsState));
+	};
+};
 
-  // Store full User object into state
-	return {
-		type: USERS.SET_USER_ADDRESS,
-		payload: {
-			publicKey,
-			loginOptions: {
-				...user.userInfo,
-			},
-		},
+export const onSuccessCreatingWallet = (publicKey, user) => {
+	// Store full User object into state
+	return (dispatch) => {
+		// Store user hash (string) into localStorage
+		cacheLoginInfoToLocalStorage(publicKey, {
+			userHashingOptions: user.userHashingOptions,
+		});
+		dispatch(setPublicKeyToStore(publicKey, { userInfo: user.userInfo }));
 	};
 };

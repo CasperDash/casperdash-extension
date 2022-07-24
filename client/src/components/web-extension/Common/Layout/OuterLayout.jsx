@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { connect } from "react-redux";
 import { OuterHeader } from '@cd/web-extension/Common/Header/OuterHeader';
 import './OuterLayout.scss';
 
@@ -17,4 +18,7 @@ const OuterLayout = () => {
 	);
 };
 
-export default OuterLayout;
+export default connect(state => {
+  console.log(`🚀 ~ state`, state)
+  return {};
+})(OuterLayout);

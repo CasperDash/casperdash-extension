@@ -4,7 +4,7 @@ import ContactIcon from '@cd/assets/image/contact-icon.svg';
 //import SiteIcon from '@cd/assets/image/file-icon.svg';
 import LockIcon from '@cd/assets/image/lock-icon.svg';
 import ArrowIcon from '@cd/assets/image/bold-arrow-icon.svg';
-import { lockAccount } from '../../../actions/userActions';
+import { onClearPublicKey, lockAccount } from '@cd/actions/userActions';
 import './index.scss';
 
 const SETTINGS = [
@@ -29,6 +29,16 @@ const SETTINGS = [
 	// },
 	{
 		name: 'Lock',
+		icon: {
+			className: 'cd_we_setting_lock',
+			img: <LockIcon />,
+		},
+		action: (dispatch) => {
+			dispatch(onClearPublicKey());
+		},
+	},
+	{
+		name: 'Delete all data',
 		icon: {
 			className: 'cd_we_setting_lock',
 			img: <LockIcon />,
