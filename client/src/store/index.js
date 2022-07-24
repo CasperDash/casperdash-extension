@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { handleRequests } from '@redux-requests/core';
 import { createDriver } from '@redux-requests/axios';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
@@ -92,5 +92,9 @@ const main = combineReducers({
   createWallet: createWalletReducer
 });
 
-const store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(main, initialState, composeEnhancers(
+  applyMiddleware(thunk, ...requestsMiddleware)
+));
+// const store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
 export default store;

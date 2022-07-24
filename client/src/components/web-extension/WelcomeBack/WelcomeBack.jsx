@@ -31,8 +31,6 @@ const WelcomeBackPage = () => {
 				if (!result) {
 					setServerErrors({ message: 'Wrong password provided. Please try again' });
 					return;
-				} else {
-					setServerErrors(undefined);
 				}
 
 				result.publicKey && onAuthCredentialSuccess(result);

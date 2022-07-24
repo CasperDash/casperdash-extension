@@ -6,7 +6,7 @@ import { resetWalletCreation } from "@cd/actions/createWalletActions";
 import BackArrow from '@cd/assets/image/back-arrow.svg';
 import './OuterHeader.scss';
 
-export const OuterHeader = ({ header }) => {
+export const OuterHeader = ({ setHeader, header }) => {
   const dispatch = useDispatch();
   const currentStep = useSelector(selectCreateWalletCurrentStep);
 	const navigate = useNavigate();
@@ -28,10 +28,11 @@ export const OuterHeader = ({ header }) => {
   const onClickBackHandler = useCallback(() => {
     if (currentStep !== 0) {
       dispatch(resetWalletCreation());
+      setHeader(undefined);
     }
 
     navigate(-1);
-  }, [dispatch, currentStep, navigate]);
+  }, [currentStep, navigate, dispatch, setHeader]);
 
   if (!finalLayoutName) {
     return null;

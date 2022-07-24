@@ -59,7 +59,7 @@ const useWelcomeBack = () => {
 					},
 				};
 			} catch (err) {
-				console.log(`🚀 ~ >> ~ err`, err);
+				console.error(`🚀 ~ >> ~ err`, err);
 				return undefined;
 			}
 		},
