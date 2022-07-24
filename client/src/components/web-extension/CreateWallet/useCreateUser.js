@@ -24,7 +24,7 @@ const useCreateUser = () => {
 		[dispatch, navigate],
 	);
 
-	const onSaveUserHash = useCallback(async (user) => {
+	const onGetUserInfoHash = useCallback(async (user) => {
 		// Take the hashing options from user's instance
 		const hashingOptions = user.getPasswordHashingOptions();
 		const userHashingOptions = JSON.stringify(hashingOptions);
@@ -38,17 +38,22 @@ const useCreateUser = () => {
 		};
 	}, []);
 
-	const onSaveHandler = useCallback(
+  /**
+   * Init new User account.
+   * Aim to return publicKey and User info, including hash info and User info
+   */
+	const onInitNewUserHandler = useCallback(
 		async (user) => {
-			const result = await onSaveUserHash(user);
+      // Get basic User info
+			const result = await onGetUserInfoHash(user);
 
-			// Create Wallet
+			// Create Wallet and get public key
 			const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
 			const publicKey = await wallet.getPublicKey();
 
 			return { user: result, publicKey };
 		},
-		[onSaveUserHash],
+		[onGetUserInfoHash],
 	);
 
 	const onCreateNewUser = useCallback(
@@ -69,7 +74,7 @@ const useCreateUser = () => {
 				// Set HDWallet info
 				user.setHDWallet(keyphrase, encryptionType);
 
-				const result = await onSaveHandler(user);
+				const result = await onInitNewUserHandler(user);
 				// console.log(`🚀 ~ result`, result)
 				result.publicKey && onCreateSuccess(result);
 				return result;
@@ -78,7 +83,7 @@ const useCreateUser = () => {
 				return undefined;
 			}
 		},
-		[keyphrase, onCreateSuccess, onSaveHandler],
+		[keyphrase, onCreateSuccess, onInitNewUserHandler],
 	);
 
 	return { onCreateNewUser };

@@ -1,13 +1,21 @@
 import { useCallback } from 'react';
 import { User } from 'casper-storage';
-import { onGetUserHashingOptions, onGetUserInfo } from '@cd/web-extension/CreateWallet/wallet/storage';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setPublicKey } from "@cd/actions/userActions";
+import { getConnectedAccountLocalStorage } from '@cd/actions/userActions';
+import { getLoginOptions } from "@cd/selectors/user";
 
 const useWelcomeBack = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  /**
+   * Without `Locking` account,
+   * This data is lost when extension is closed
+   */
+  const loginOptionsStore = useSelector(getLoginOptions);
+
+  console.log(`🚀 ~ useWelcomeBack ~ loginOptionsStore`, loginOptionsStore)
 
   const onAuthCredentialSuccess = useCallback((publicKey) => {
     dispatch(setPublicKey(publicKey));
@@ -26,9 +34,12 @@ const useWelcomeBack = () => {
 		}
 
 		try {
+      const cacheConnectedAccount = getConnectedAccountLocalStorage();
+      console.log(`🚀 ~ validateUserCredential ~ cacheConnectedAccount`, cacheConnectedAccount)
+      const { loginOptions } = cacheConnectedAccount;
 			// Get encrypted info from Localstorage
-			const encryptedHashingOptions = JSON.parse(await onGetUserHashingOptions());
-			const encryptedUserInfo = await onGetUserInfo();
+			const encryptedHashingOptions = JSON.parse(loginOptions.userHashingOptions);
+			const encryptedUserInfo = loginOptionsStore.userInfo;
 
 			console.log(`🚀 ~ >> ~ encryptedHashingOptions`, encryptedHashingOptions);
 			console.log(`🚀 ~ >> ~ encryptedUserInfo`, encryptedUserInfo);
@@ -45,23 +56,16 @@ const useWelcomeBack = () => {
 					salt: newSalt,
 				},
 			});
-			console.log(`🚀 ~ >> ~ user: `, user);
-
-			const masterKey = user.getHDWallet();
-			console.log(`🚀 ~ >> ~ masterKey`, masterKey);
 
 			const wallet = await user.getWalletAccount(0);
-			console.log(`🚀 ~ >> ~ wallet`, wallet);
-
 			const publicKey = await wallet.getPublicKey();
-			console.log(`🚀 ~ >> ~ publicKey`, publicKey);
 
       return { publicKey }
 		} catch (err) {
 			console.log(`🚀 ~ >> ~ err`, err);
       return undefined;
 		}
-	}, [convertSaltInfo]);
+	}, [convertSaltInfo, loginOptionsStore.userInfo]);
 
 	return { validateUserCredential, onAuthCredentialSuccess };
 };
