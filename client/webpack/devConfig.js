@@ -13,7 +13,7 @@ module.exports = (isWeb) =>
 		: {
 				output: {
 					filename: 'static/js/[name].js',
-					assetModuleFilename: '@cd/assets/images/[name][ext][query]',
+					assetModuleFilename: 'assets/images/[name][ext][query]',
 					chunkFilename: 'static/js/[name].js',
 				},
 				devtool: 'inline-source-map',

@@ -13,7 +13,7 @@ import {
 import { switchTheme } from '@cd/actions/settingActions';
 import { isValidPublicKey } from '@cd/helpers/validator';
 import { DARK_THEME, LIGHT_THEME } from '@cd/constants/settings';
-import { MiddleTruncatedText } from '@common/MiddleTruncatedText';
+import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import useCasperSigner from '@cd/hooks/useCasperSigner';
 import useLedger from '@cd/hooks/useLedger';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
