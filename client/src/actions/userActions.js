@@ -33,7 +33,9 @@ export const updatePublicKeyFromSigner = () => {
 		let publicKey;
 		try {
 			publicKey = await Signer.getActivePublicKey();
-			dispatch(setPublicKey(publicKey, { connectionType: CONNECTION_TYPES.casperSigner }));
+      const loginOptions = { connectionType: CONNECTION_TYPES.casperSigner };
+      cacheLoginInfoToLocalStorage(publicKey, loginOptions);
+      dispatch(setPublicKeyToStore(publicKey, loginOptions));
 		} catch (error) {
 			dispatch({ type: SIGNER.UPDATE_LOCK_STATUS, payload: { isLocked: true } });
 		}
@@ -44,8 +46,7 @@ const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
 	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, { publicKey, loginOptions }, 'set');
 };
 
-const setPublicKeyToStore = (publicKey, loginOptions) => {
-	console.log(`🚀 ~ setPublicKeyToStore ~ loginOptions`, loginOptions);
+export const setPublicKeyToStore = (publicKey, loginOptions = {}) => {
 	return {
 		type: USERS.SET_USER_ADDRESS,
 		payload: { publicKey, loginOptions },

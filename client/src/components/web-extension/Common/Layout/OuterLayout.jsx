@@ -18,7 +18,8 @@ const OuterLayout = () => {
 	);
 };
 
-export default connect(state => {
-  console.log(`🚀 ~ state`, state)
-  return {};
-})(OuterLayout);
+export default OuterLayout;
+// export default connect(state => {
+//   console.log(`🚀 ~ state`, state)
+//   return {};
+// })(OuterLayout);

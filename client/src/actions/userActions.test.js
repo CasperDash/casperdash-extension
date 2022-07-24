@@ -3,9 +3,10 @@ import { getLocalStorageValue } from '../services/localStorage';
 import {
 	getUserDetails,
 	updatePublicKeyFromSigner,
-	setPublicKey,
+	// setPublicKey,
 	getConnectedAccountFromLocalStorage,
 	lockAccount,
+  setPublicKeyToStore,
 } from './userActions';
 
 jest.mock('../services/localStorage', () => {
@@ -60,8 +61,8 @@ describe('getTokenAddressFromLocalStorage', () => {
 	});
 });
 
-test('setPublicKey', () => {
-	expect(setPublicKey('test')).toEqual({
+test('setPublicKeyToStore', () => {
+	expect(setPublicKeyToStore('test')).toEqual({
 		type: 'USERS.SET_USER_ADDRESS',
 		payload: { publicKey: 'test', loginOptions: {} },
 	});
