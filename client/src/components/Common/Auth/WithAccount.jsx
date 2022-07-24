@@ -10,6 +10,10 @@ const WithAccount = ({ children }) => {
   console.log(`🚀 ~ WithAccount ~ loginOptionsCache`, loginOptionsCache)
   console.log(`🚀 ~ WithAccount ~ publicKeyCache`, publicKeyCache)
 	// Hook
+  /**
+   * publicKey is cleared after closing extension (Clicking on CD extension icon)
+   * We should store this somewhere else
+   */
 	const publicKey = useSelector(getPublicKey);
   console.log(`🚀 ~ WithAccount ~ publicKey`, publicKey)
 	const navigate = useNavigate();
