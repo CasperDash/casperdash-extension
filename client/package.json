@@ -23,6 +23,7 @@
 		"casper-js-sdk": "^2.7.3",
 		"casper-storage": "^0.2.3",
 		"cookie": "^0.4.1",
+		"cross-env": "^7.0.3",
 		"dayjs": "^1.8.29",
 		"dotenv": "^10.0.0",
 		"formik": "^2.2.9",
