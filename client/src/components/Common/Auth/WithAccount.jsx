@@ -7,8 +7,11 @@ import { getPublicKey } from '@cd/selectors/user';
 const WithAccount = ({ children }) => {
   const cacheConnectedAccount = getConnectedAccountLocalStorage();
   const { publicKey: publicKeyCache, loginOptions: loginOptionsCache } = cacheConnectedAccount;
+  console.log(`🚀 ~ WithAccount ~ loginOptionsCache`, loginOptionsCache)
+  console.log(`🚀 ~ WithAccount ~ publicKeyCache`, publicKeyCache)
 	// Hook
 	const publicKey = useSelector(getPublicKey);
+  console.log(`🚀 ~ WithAccount ~ publicKey`, publicKey)
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -17,7 +20,7 @@ const WithAccount = ({ children }) => {
      * Navigate to `/welcomeBack` screen when found cached User info
      * Otherwiest, redirect back to connect Account screen
      */
-    if (!publicKey && !publicKeyCache) {
+    if (!publicKey) {
       if (loginOptionsCache?.userHashingOptions) {
         navigate('/welcomeBack');
         return;
