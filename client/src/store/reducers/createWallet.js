@@ -9,7 +9,7 @@ const initialState = {
   answerSheet: undefined
 };
 
-function reducer(state = initialState, { payload, type }) {
+function reducer(state = initialState, { payload, type } = {}) {
   switch (type) {
     case CREATE_WALLET.NEXT_STEP:
       return {
