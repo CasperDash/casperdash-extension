@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { lockAccount } from '@cd/actions/userActions';
+import messages from "@cd/shared/formMessages";
 import useWelcomeBack from './useWelcomeBack';
 import './WelcomeBack.scss';
 
@@ -11,7 +12,7 @@ const onValidatePassword = (values) => {
 	const errors = {};
 
 	if (!values.password) {
-		errors.password = 'Password required!';
+		errors.password = messages.passwordRequired;
 	}
 
 	return errors;
@@ -29,7 +30,7 @@ const WelcomeBackPage = () => {
 				const result = await validateUserCredential(values.password);
 
 				if (!result) {
-					setServerErrors({ message: 'Wrong password provided. Please try again' });
+					setServerErrors({ message: messages.passwordWrong });
 					return;
 				}
 

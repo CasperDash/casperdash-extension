@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { selectCreateWalletCurrentStep } from "@cd/selectors/createWallet";
 import { generateCWHeader } from "@cd/actions/createWalletActions.utils";
+import messages from "@cd/shared/formMessages";
 import useCreateUser from './useCreateUser';
 import './CreatePasswordPage.scss';
 
@@ -12,15 +13,15 @@ const onValidatePassword = (values) => {
 	const errors = {};
 
 	if (!values.password) {
-		errors.password = 'Password required!';
+		errors.password = messages.passwordRequired;
 	}
 
 	if (!values.confirmPassword) {
-		errors.confirmPassword = 'Password required!';
+		errors.confirmPassword = messages.passwordRequired;
 	}
 
 	if (values.password !== values.confirmPassword) {
-		errors.confirmPassword = "Passwords don't match";
+		errors.confirmPassword = messages.passwordNotMatching;
 	}
 
 	return errors;
@@ -38,7 +39,7 @@ const CreatePasswordPage = () => {
 				const result = await onCreateNewUser(values.password);
 
 				if (!result) {
-          setServerErrors({ message: 'Provided password is not strong enought. Please try another' });
+          setServerErrors({ message: messages.passwordNotStrong });
 					return;
 				}
 			}
