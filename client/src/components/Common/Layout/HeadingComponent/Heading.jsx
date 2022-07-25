@@ -8,7 +8,7 @@ import {
 	getUserDetails,
 	setPublicKey,
 	lockAccount,
-	getConnectedAccountFromLocalStorage,
+	initConnectedAccountFromLocalStorage,
 } from '@cd/actions/userActions';
 import { switchTheme } from '@cd/actions/settingActions';
 import { isValidPublicKey } from '@cd/helpers/validator';
@@ -45,7 +45,7 @@ const HeadingModule = (props) => {
 
 	useEffect(() => {
 		if (!publicKey) {
-			dispatch(getConnectedAccountFromLocalStorage());
+			dispatch(initConnectedAccountFromLocalStorage());
 		}
 	}, [publicKey, dispatch]);
 

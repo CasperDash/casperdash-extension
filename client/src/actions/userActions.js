@@ -68,15 +68,15 @@ export const setPublicKey = (publicKey, loginOptions = {}) => {
 
 export const getConnectedAccountLocalStorage = () => getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
 
-export const getConnectedAccountFromLocalStorage = () => {
+/**
+ * Get connected account info from local storage
+ * then dispatch this info back into store
+ * @returns
+ */
+export const initConnectedAccountFromLocalStorage = () => {
 	return (dispatch) => {
 		const connectedAccount = getConnectedAccountLocalStorage();
-		/**
-		 * TODO:
-		 * This function has more responsibility than it should have
-		 * We should dispatch connected info AFTER getting from local storage
-		 * or change function name to its suitable one
-		 */
+
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
 			return connectedAccount.publicKey;
