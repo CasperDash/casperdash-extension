@@ -23,7 +23,7 @@ const WelcomeBackPage = () => {
 	const navigate = useNavigate();
 	const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
-	const handleSubmit = useCallback(
+	const handleFormSubmit = useCallback(
 		async (values) => {
 			if (values.password) {
 				const result = await validateUserCredential(values.password);
@@ -62,7 +62,7 @@ const WelcomeBackPage = () => {
 						password: '',
 					}}
 					validate={onValidate}
-					onSubmit={handleSubmit}
+					onSubmit={handleFormSubmit}
 				>
 					{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
 						return (

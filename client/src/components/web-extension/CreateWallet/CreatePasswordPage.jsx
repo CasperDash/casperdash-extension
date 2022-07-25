@@ -32,7 +32,7 @@ const CreatePasswordPage = () => {
   const currentStep = useSelector(selectCreateWalletCurrentStep);
   const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
-	const handleSubmit = useCallback(
+	const handleFormSubmit = useCallback(
 		async (values) => {
 			if (values.password && values.confirmPassword) {
 				const result = await onCreateNewUser(values.password);
@@ -72,7 +72,7 @@ const CreatePasswordPage = () => {
 					confirmPassword: '',
 				}}
 				validate={onValidate}
-				onSubmit={handleSubmit}
+				onSubmit={handleFormSubmit}
 			>
 				{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
 					return (

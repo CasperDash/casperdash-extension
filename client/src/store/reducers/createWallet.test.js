@@ -3,25 +3,19 @@ import reducer from "./createWallet";
 
 describe("Create Wallet reducer", () => {
   let initState = undefined;
+  const reset = () => ({
+    currentStep: 2,
+    totalKeywords: 12,
+    totalWordCheck: 4,
+    keyPhrase: null,
+    keyPhraseAsMap: [],
+    answerSheet: undefined
+  })
   beforeEach(() => {
-    initState = {
-      currentStep: 2,
-      totalKeywords: 12,
-      totalWordCheck: 4,
-      keyPhrase: null,
-      keyPhraseAsMap: [],
-      answerSheet: undefined
-    }
+    initState = reset();
   });
   afterEach(() => {
-    initState = {
-      currentStep: 2,
-      totalKeywords: 12,
-      totalWordCheck: 4,
-      keyPhrase: null,
-      keyPhraseAsMap: [],
-      answerSheet: undefined
-    }
+    initState = reset();
   });
   it("Should return CREATE_WALLET.NEXT_STEP state", () => {
     expect(

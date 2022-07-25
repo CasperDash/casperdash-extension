@@ -50,7 +50,7 @@ function reducer(state = initialState, { payload, type }) {
     default:
       return state;
   }
-};
+}
 
 export { initialState };
 export default reducer;

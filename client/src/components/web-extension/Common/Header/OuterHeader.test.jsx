@@ -11,12 +11,6 @@ jest.mock('react-router-dom', () => ({
 	useLocation: jest.fn(),
 }));
 
-// jest.mock('@cd/web-extension/CreateWallet/useCreateWallet', () => () => ({
-// 	answerSheet: { 1: true },
-// 	currentStep: 0,
-// 	onResetWalletCreation: jest.fn(),
-// }));
-
 describe("Back button", () => {
   it('Should show show back button by default', () => {
     useLocation.mockReturnValueOnce({ state: { name: 'test' } });
@@ -34,7 +28,6 @@ describe("Back button", () => {
     expect(queryByTestId('back-button')).not.toBeInTheDocument();
   });
 });
-
 
 test('Should not show title', () => {
 	useLocation.mockReturnValueOnce({});
