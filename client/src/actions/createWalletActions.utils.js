@@ -1,24 +1,17 @@
 import reduce from 'lodash-es/reduce';
 import dropRight from 'lodash-es/dropRight';
 import filter from 'lodash-es/filter';
+import sampleSize from 'lodash-es/sampleSize';
 import { CONSTANTS } from '@cd/shared/constants';
 
-/** Randomize array */
+/**
+ * Randomize array
+ * Noticing randomized array will have exact length as the array input
+ * @param {Array} array 
+ * @returns 
+ */
 function shuffle(array) {
-	let i = array.length,
-		j = 0,
-		temp;
-
-	while (i--) {
-		j = Math.floor(Math.random() * (i + 1));
-
-		// swap randomly chosen element with current element
-		temp = array[i];
-		array[i] = array[j];
-		array[j] = temp;
-	}
-
-	return array;
+  return sampleSize(array, array?.length);
 }
 
 const generateCWHeader = (currentStep, answerSheet) => {
