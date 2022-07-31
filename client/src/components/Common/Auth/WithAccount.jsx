@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getConnectedAccountLocalStorage } from '@cd/actions/userActions';
+import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions';
 import { getPublicKey } from '@cd/selectors/user';
 
 const WithAccount = ({ children }) => {
-  const cacheConnectedAccount = getConnectedAccountLocalStorage();
-  const { publicKey: publicKeyCache, loginOptions: loginOptionsCache } = cacheConnectedAccount;
+  const [cacheConnectedAccount, setCache] = useState(undefined);
 
 	// Hook
   /**
@@ -17,12 +16,17 @@ const WithAccount = ({ children }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+  useEffect(() => {
+    getConnectedAccountChromeLocalStorage().then(data => setCache(data));
+  }, []);
+
 	useEffect(() => {
     /**
      * Navigate to `/welcomeBack` screen when found cached User info
      * Otherwise, redirect back to connect Account screen
      */
-    if (!publicKey) {
+    if (!publicKey && cacheConnectedAccount) {
+      const { loginOptions: loginOptionsCache } = cacheConnectedAccount;
       if (loginOptionsCache?.userInfo && loginOptionsCache?.userHashingOptions) {
         navigate('/welcomeBack');
         return;
@@ -30,7 +34,7 @@ const WithAccount = ({ children }) => {
 
       navigate('/connectAccount');
     }
-	}, [cacheConnectedAccount, publicKey, navigate, dispatch, publicKeyCache, loginOptionsCache]);
+	}, [publicKey, navigate, dispatch, cacheConnectedAccount]);
 
 	return children;
 };

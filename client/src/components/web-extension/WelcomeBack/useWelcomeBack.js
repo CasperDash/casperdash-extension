@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { User } from 'casper-storage';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { onBindingAuthInfo, getConnectedAccountLocalStorage } from '@cd/actions/userActions';
+import { onBindingAuthInfo, getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions';
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
@@ -30,7 +30,7 @@ const useWelcomeBack = () => {
 			}
 
 			try {
-				const cacheConnectedAccount = getConnectedAccountLocalStorage();
+				const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
 				const { loginOptions: { userHashingOptions, userInfo: encryptedUserInfo } } = cacheConnectedAccount;
 
 				// Get encrypted info from Localstorage

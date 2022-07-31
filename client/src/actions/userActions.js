@@ -2,7 +2,7 @@ import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTION_TYPES, CONNECTED_ACCOUNT_STORAGE_PATH } from '@cd/constants/settings';
-import { setLocalStorageValue, getLocalStorageValue } from '@cd/services/localStorage';
+import { getChromeStorageLocal, setChromeStorageLocal, getLocalStorageValue } from '@cd/services/localStorage';
 
 /**
  * @param {string} publicKey
@@ -43,8 +43,20 @@ export const updatePublicKeyFromSigner = () => {
 	};
 };
 
+/**
+ * Experimenting with Chrome Storage API
+ * Testing with low-level method, so see if there's additional works required
+ * Expecting to changes only in this function. No need to change any from outside
+ * @param {*} publicKey 
+ * @param {*} loginOptions 
+ */
 const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
-	setLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH, { publicKey, loginOptions }, 'set');
+  setChromeStorageLocal({ key: "publicKey", value: publicKey });
+  setChromeStorageLocal({ key: "loginOptions", value: loginOptions });
+};
+
+export const getConnectedAccountChromeLocalStorage = async () => {
+  return await getChromeStorageLocal(["publicKey", "loginOptions"]);
 };
 
 export const setPublicKeyToStore = (publicKey, loginOptions = {}) => {
@@ -95,26 +107,21 @@ export const lockAccount = () => {
 };
 
 export const onClearPublicKey = () => {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		const {
 			user: { loginOptions: loginOptionsState },
 		} = getState();
-		const connectedAccount = getConnectedAccountLocalStorage();
+    const connectedAccount = await getConnectedAccountChromeLocalStorage();
 		const { loginOptions: loginOptionsCache } = connectedAccount;
 		const emptyPublicKey = '';
-		setLocalStorageValue(
-			'account',
-			CONNECTED_ACCOUNT_STORAGE_PATH,
-			{ publicKey: emptyPublicKey, loginOptions: loginOptionsCache },
-			'set',
-		);
+    cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
 		dispatch(setPublicKeyToStore(emptyPublicKey, loginOptionsState));
 	};
 };
 
 export const onBindingAuthInfo = (publicKey, user) => {
 	// Store full User object into state
-	return (dispatch) => {
+	return async (dispatch) => {
 		const userHashOpts = isObject(user.userHashingOptions)
 			? JSON.stringify(user.userHashingOptions)
 			: user.userHashingOptions;
