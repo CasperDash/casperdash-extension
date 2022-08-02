@@ -12,7 +12,7 @@ const useWelcomeBack = () => {
 		(result) => {
 			const { publicAddress, user } = result;
 
-			// Passing pubicAddress as publicKey
+			// Passing publicAddress as publicKey
 			dispatch(onBindingAuthInfo(publicAddress, user));
 			navigate('/');
 		},
