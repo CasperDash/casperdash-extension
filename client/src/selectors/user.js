@@ -10,8 +10,7 @@ import { getMassagedTokenData } from './tokens';
 const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
-
-	icon: '@cd/assets/images/token-icons/cspr.png',
+	icon: '/assets/images/token-icons/cspr.png',
 };
 
 export const getPublicKey = ({ user }) => {
