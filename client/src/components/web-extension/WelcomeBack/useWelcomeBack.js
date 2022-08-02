@@ -10,8 +10,10 @@ const useWelcomeBack = () => {
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
-			const { publicKey, user } = result;
-			dispatch(onBindingAuthInfo(publicKey, user));
+			const { publicAddress, user } = result;
+
+			// Passing pubicAddress as publicKey
+			dispatch(onBindingAuthInfo(publicAddress, user));
 			navigate('/');
 		},
 		[dispatch, navigate],
@@ -31,7 +33,9 @@ const useWelcomeBack = () => {
 
 			try {
 				const cacheConnectedAccount = getConnectedAccountLocalStorage();
-				const { loginOptions: { userHashingOptions, userInfo: encryptedUserInfo } } = cacheConnectedAccount;
+				const {
+					loginOptions: { userHashingOptions, userInfo: encryptedUserInfo },
+				} = cacheConnectedAccount;
 
 				// Get encrypted info from Localstorage
 				const encryptedHashingOptions = JSON.parse(userHashingOptions);
@@ -49,9 +53,11 @@ const useWelcomeBack = () => {
 
 				const wallet = await user.getWalletAccount(0);
 				const publicKey = await wallet.getPublicKey();
+				const publicAddress = await wallet.getPublicAddress();
 
 				// Similar to useCreateUser
 				return {
+					publicAddress,
 					publicKey,
 					user: {
 						userHashingOptions: userLoginOptions,
