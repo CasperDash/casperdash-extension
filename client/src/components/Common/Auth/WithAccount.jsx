@@ -8,10 +8,10 @@ const WithAccount = ({ children }) => {
   const [cacheConnectedAccount, setCache] = useState(undefined);
 
 	// Hook
-  /**
-   * publicKey is cleared after closing extension (Clicking on CD extension icon)
-   * We should store this somewhere else
-   */
+	/**
+	 * publicKey is cleared after closing extension (Clicking on CD extension icon)
+	 * We should store this somewhere else
+	 */
 	const publicKey = useSelector(getPublicKey);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();

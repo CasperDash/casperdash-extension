@@ -75,7 +75,6 @@ const getChromeStorageLocal = async (key) => {
   
   return new Promise((resolve, reject) => {
     chrome.storage.local.get(finalkey, (items) => {
-      console.log(`🚀 ~ chrome.storage.local.get ~ items[${finalkey}]`, items)
       // Pass any observed errors down the promise chain.
       if (chrome.runtime.lastError) {
         return reject(chrome.runtime.lastError);
