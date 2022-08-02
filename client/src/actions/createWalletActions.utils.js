@@ -7,8 +7,8 @@ import { CONSTANTS } from '@cd/shared/constants';
 /**
  * Randomize array
  * Noticing randomized array will have exact length as the array input
- * @param {Array} array 
- * @returns 
+ * @param {Array} array
+ * @returns
  */
 function shuffle(array) {
   return sampleSize(array, array?.length);
@@ -76,8 +76,8 @@ const convertKeyphraseToAnswerObject = (keyphrase) => {
  * This will create a random index object using key index only (based on keyphrase generated)
  * For word conversion, this will be done in actual UI
  */
-const onGenerateWordcheck = (totalWordCheck) => {
-	const initWordKeys = generateKeyphraseArray(totalWordCheck);
+const onGenerateWordcheck = (totalKeywords, totalWordCheck) => {
+	const initWordKeys = generateKeyphraseArray(totalKeywords);
 	const randomWordIds = shuffle(initWordKeys).splice(0, totalWordCheck);
 
 	/**

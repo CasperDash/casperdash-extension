@@ -12,7 +12,7 @@ import "./ValidateKeyphrase.scss";
 const ValidateKeyphrasePage = () => {
   const [, setHeader] = useOutletContext();
   const dispatch = useDispatch();
-  const { currentStep, answerSheet, keyPhraseAsMap, totalWordCheck } = useSelector(selectCreateWalletState);
+  const { currentStep, answerSheet, keyPhraseAsMap, totalKeywords, totalWordCheck } = useSelector(selectCreateWalletState);
   const [wordsTemplate, setTemplate] = useState(undefined);
   const onUpdateAnswerSheet = useCallback((groupIndex, value) => dispatch(updateAnswerSheet(groupIndex, value)), [dispatch]);
   const onCreateAnswerSheet = useCallback(checklist => dispatch(createAnswerSheet(checklist)), [dispatch]);
@@ -70,7 +70,7 @@ const ValidateKeyphrasePage = () => {
       return;
     }
 
-    const { checklist, data } = onGenerateWordcheck(totalWordCheck);
+    const { checklist, data } = onGenerateWordcheck(totalKeywords, totalWordCheck);
     onCreateAnswerSheet(checklist);
 
     const checks = checklist.map(id => {
