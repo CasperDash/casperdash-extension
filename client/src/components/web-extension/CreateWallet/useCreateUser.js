@@ -13,10 +13,9 @@ const useCreateUser = () => {
 	const keyphrase = useSelector(selectCreateWalletKeyphrase);
 	const onCreateSuccess = useCallback(
 		(result) => {
-			const { publicAddress, user } = result;
+			const { publicKey, user } = result;
 
-			// Passing publicAddress as publicKey
-			dispatch(onBindingAuthInfo(publicAddress, user));
+			dispatch(onBindingAuthInfo(publicKey, user));
 			dispatch(resetWalletCreation());
 			navigate('/');
 			return result;
@@ -49,10 +48,9 @@ const useCreateUser = () => {
 
 			// Create Wallet and get public key, public address
 			const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
-			const publicKey = await wallet.getPublicKey();
-			const publicAddress = await wallet.getPublicAddress();
+			const publicKey = await wallet.getPublicAddress();
 
-			return { user: result, publicKey, publicAddress };
+			return { user: result, publicKey };
 		},
 		[onGetUserInfoHash],
 	);

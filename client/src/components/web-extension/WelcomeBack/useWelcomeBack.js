@@ -10,10 +10,9 @@ const useWelcomeBack = () => {
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
-			const { publicAddress, user } = result;
+			const { publicKey, user } = result;
 
-			// Passing publicAddress as publicKey
-			dispatch(onBindingAuthInfo(publicAddress, user));
+			dispatch(onBindingAuthInfo(publicKey, user));
 			navigate('/');
 		},
 		[dispatch, navigate],
@@ -52,12 +51,10 @@ const useWelcomeBack = () => {
 				});
 
 				const wallet = await user.getWalletAccount(0);
-				const publicKey = await wallet.getPublicKey();
-				const publicAddress = await wallet.getPublicAddress();
+				const publicKey = await wallet.getPublicAddress();
 
 				// Similar to useCreateUser
 				return {
-					publicAddress,
 					publicKey,
 					user: {
 						userHashingOptions: userLoginOptions,
