@@ -2,7 +2,7 @@ import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTION_TYPES, CONNECTED_ACCOUNT_STORAGE_PATH } from '@cd/constants/settings';
-import { getChromeStorageLocal, setChromeStorageLocal, getLocalStorageValue } from '@cd/services/localStorage';
+import { clearChromeStorageLocal, getChromeStorageLocal, setChromeStorageLocal, getLocalStorageValue } from '@cd/services/localStorage';
 
 /**
  * @param {string} publicKey
@@ -47,10 +47,11 @@ export const updatePublicKeyFromSigner = () => {
  * Experimenting with Chrome Storage API
  * Testing with low-level method, so see if there's additional works required
  * Expecting to changes only in this function. No need to change any from outside
- * @param {*} publicKey 
- * @param {*} loginOptions 
+ * @param {*} publicKey
+ * @param {*} loginOptions
  */
 const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
+  console.log(`🚀 ~ cacheLoginInfoToLocalStorage:: `, publicKey, loginOptions)
   setChromeStorageLocal({ key: "publicKey", value: publicKey });
   setChromeStorageLocal({ key: "loginOptions", value: loginOptions });
 };

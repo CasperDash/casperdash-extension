@@ -57,38 +57,48 @@ const setChromeStorageLocal = ({key, value} = undefined, cb = undefined) => {
    * set might accept a full {key1: value1, key2: value2} object
    * This is for testing so only passing one param
    */
+  // console.log(`🚀 ~ SSSSS: `, chrome.storage)
   chrome.storage.local.set({
     [key]: value
   }, cb);
 }
 
 const getChromeStorageLocal = async (key) => {
-  if (!key) {
+  try {
+    if (!key) {
+      return undefined;
+    }
+
+    /**
+     * `get` might accept an array of keys, rather than only one
+     * This is for testing
+     */
+    const finalkey = typeof key === "string" ? [key] : [...key];
+
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(finalkey, (items) => {
+        // Pass any observed errors down the promise chain.
+        if (chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
+
+        // Pass the data retrieved from storage down the promise chain.
+        return resolve(items);
+      });
+
+    });
+  } catch (err) {
+    console.error(`🚀 ~ getChromeStorageLocal::error `, err)
     return undefined;
   }
-
-  /**
-   * `get` might accept an array of keys, rather than only one
-   * This is for testing
-   */
-  const finalkey = typeof key === "string" ? [key] : [...key];
-  
-  return new Promise((resolve, reject) => {
-    chrome.storage.local.get(finalkey, (items) => {
-      // Pass any observed errors down the promise chain.
-      if (chrome.runtime.lastError) {
-        return reject(chrome.runtime.lastError);
-      }
-
-      // Pass the data retrieved from storage down the promise chain.
-      return resolve(items);
-    });
-  });
 }
+
+const clearChromeStorageLocal = () => chrome.storage.local.clear();
 
 export {
   setLocalStorageValue,
   getLocalStorageValue,
   setChromeStorageLocal,
-  getChromeStorageLocal
+  getChromeStorageLocal,
+  clearChromeStorageLocal
 }
