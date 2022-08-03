@@ -11,6 +11,7 @@ const useWelcomeBack = () => {
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
 			const { publicKey, user } = result;
+
 			dispatch(onBindingAuthInfo(publicKey, user));
 			navigate('/');
 		},
@@ -48,7 +49,7 @@ const useWelcomeBack = () => {
 				});
 
 				const wallet = await user.getWalletAccount(0);
-				const publicKey = await wallet.getPublicKey();
+				const publicKey = await wallet.getPublicAddress();
 
 				// Similar to useCreateUser
 				return {

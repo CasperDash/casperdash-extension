@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
-import { resetWalletCreation } from "@cd/actions/createWalletActions";
+import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 
 const encryptionType = EncryptionType.Ed25519;
@@ -14,8 +14,9 @@ const useCreateUser = () => {
 	const onCreateSuccess = useCallback(
 		(result) => {
 			const { publicKey, user } = result;
+
 			dispatch(onBindingAuthInfo(publicKey, user));
-      dispatch(resetWalletCreation());
+			dispatch(resetWalletCreation());
 			navigate('/');
 			return result;
 		},
@@ -36,18 +37,18 @@ const useCreateUser = () => {
 		};
 	}, []);
 
-  /**
-   * Init new User account.
-   * Aim to return publicKey and User info, including hash info and User info
-   */
+	/**
+	 * Init new User account.
+	 * Aim to return publicKey and User info, including hash info and User info
+	 */
 	const onInitNewUserHandler = useCallback(
 		async (user) => {
-      // Get basic User info
+			// Get basic User info
 			const result = await onGetUserInfoHash(user);
 
-			// Create Wallet and get public key
+			// Create Wallet and get public key, public address
 			const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
-			const publicKey = await wallet.getPublicKey();
+			const publicKey = await wallet.getPublicAddress();
 
 			return { user: result, publicKey };
 		},
