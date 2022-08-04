@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { connect } from "react-redux";
 import { getConnectedAccountLocalStorage } from '@cd/actions/userActions';
 import { getPublicKey } from '@cd/selectors/user';
 
@@ -40,4 +41,7 @@ const WithAccount = ({ children }) => {
 	return children;
 };
 
-export default WithAccount;
+export default connect(state => {
+  console.log(`🚀 ~ state`, state)
+  return state;
+})(WithAccount);

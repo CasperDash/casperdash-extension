@@ -1,12 +1,13 @@
 import React from 'react';
 import { Route, Routes, HashRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import store from '../../store';
-import Layout from '../../components/web-extension/Common/Layout';
-import OuterLayout from '../../components/web-extension/Common/Layout/OuterLayout';
-import WithAccount from '../../components/Common/Auth/WithAccount';
-import WithConfigurations from '../../components/Common/Configurations';
+import store, { persistor } from '@cd/store';
+import Layout from '@cd/web-extension/Common/Layout';
+import OuterLayout from '@cd/web-extension/Common/Layout/OuterLayout';
+import WithAccount from '@cd/common/Auth/WithAccount';
+import WithConfigurations from '@cd/common/Configurations';
 import routeConfig from './routeConfig';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,37 +26,40 @@ const getRoutes = (routes) => {
 
 const App = () => {
 	const { mainRoutes, innerRoutes, outerRoutes } = routeConfig;
+	console.log(`🚀 ~ App ~ mainRoutes`, mainRoutes);
 
 	return (
 		<Provider store={store}>
-			<WithConfigurations>
-				<HashRouter>
-					<Routes>
-						<Route
-							element={
-								<WithAccount>
-									<Layout modules={mainRoutes} />
-								</WithAccount>
-							}
-						>
-							{getRoutes(mainRoutes)}
-							{getRoutes(innerRoutes)}
-						</Route>
-						<Route element={<OuterLayout />}>{getRoutes(outerRoutes)}</Route>
-					</Routes>
-					<ToastContainer
-						position="top-center"
-						autoClose={5000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-					/>
-				</HashRouter>
-			</WithConfigurations>
+			<PersistGate loading={null} persistor={persistor}>
+				<WithConfigurations>
+					<HashRouter>
+						<Routes>
+							<Route
+								element={
+									<WithAccount>
+										<Layout modules={mainRoutes} />
+									</WithAccount>
+								}
+							>
+								{getRoutes(mainRoutes)}
+								{getRoutes(innerRoutes)}
+							</Route>
+							<Route element={<OuterLayout />}>{getRoutes(outerRoutes)}</Route>
+						</Routes>
+						<ToastContainer
+							position="top-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					</HashRouter>
+				</WithConfigurations>
+			</PersistGate>
 		</Provider>
 	);
 };
