@@ -22,7 +22,8 @@ const persistConfig = {
   key: 'root',
   storage: localStorage,
   // Not storing these
-  blacklist: ["createWallet"]
+  // blacklist: ["createWallet"]
+  whitelist: ["settings","user"]
 }
 
 export const initialState = {
