@@ -8,10 +8,9 @@ import { getPublicKey } from '@cd/selectors/user';
 const WithAccount = ({ children }) => {
 	const cacheConnectedAccount = getConnectedAccountLocalStorage();
 
-	// Hook
 	/**
-	 * publicKey is cleared after closing extension (Clicking on CD extension icon)
-	 * We should store this somewhere else
+   * With redux-persist implemented,
+	 * publicKey stays in extension state as long as User doesn't lock
 	 */
 	const publicKey = useSelector(getPublicKey);
 	const navigate = useNavigate();
@@ -41,6 +40,7 @@ const WithAccount = ({ children }) => {
 	return children;
 };
 
+// export default WithAccount;
 export default connect(state => {
   console.log(`🚀 ~ state`, state)
   return state;
