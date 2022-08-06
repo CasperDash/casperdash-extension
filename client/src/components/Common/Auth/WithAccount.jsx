@@ -3,17 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import isObject from 'lodash-es/isObject';
 import isEmpty from 'lodash-es/isEmpty';
-import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions';
+import { connect } from "react-redux";
+import { getConnectedAccountChromeLocalStorage, getConnectedAccountLocalStorage } from '@cd/actions/userActions';
 import { getPublicKey } from '@cd/selectors/user';
 
 const WithAccount = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [cacheConnectedAccount, setCache] = useState(undefined);
 
-	// Hook
 	/**
-	 * publicKey is cleared after closing extension (Clicking on CD extension icon)
-	 * We should store this somewhere else
+   * With redux-persist implemented,
+	 * publicKey stays in extension state as long as User doesn't lock
 	 */
 	const publicKey = useSelector(getPublicKey);
   console.log(`🚀 ~ file: WithAccount.jsx ~ line 19 ~ WithAccount ~ publicKey`, publicKey)
@@ -71,5 +71,9 @@ const WithAccount = ({ children }) => {
 
 	return children;
 };
-44
-export default WithAccount;
+
+// export default WithAccount;
+export default connect(state => {
+  console.log(`🚀 ~ state`, state)
+  return state;
+})(WithAccount);
