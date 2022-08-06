@@ -26,7 +26,6 @@ const getRoutes = (routes) => {
 
 const App = () => {
 	const { mainRoutes, innerRoutes, outerRoutes } = routeConfig;
-	console.log(`🚀 ~ App ~ mainRoutes`, mainRoutes);
 
 	return (
 		<Provider store={store}>

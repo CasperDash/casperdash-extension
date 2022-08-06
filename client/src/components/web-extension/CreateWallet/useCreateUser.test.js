@@ -59,7 +59,7 @@ describe('useCreateUser', () => {
 		User.mockReturnValueOnce({
 			setHDWallet: jest.fn(),
 			addWalletAccount: jest.fn().mockImplementation(() => ({
-				getPublicKey: jest.fn().mockReturnValueOnce('this-is-public-key'),
+				getPublicAddress: jest.fn().mockReturnValueOnce('this-is-public-key'),
 			})),
 			getPasswordHashingOptions: jest.fn(),
 			serialize: jest.fn(),

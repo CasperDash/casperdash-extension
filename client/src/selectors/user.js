@@ -14,7 +14,7 @@ const CSPR_INFO = {
 };
 
 export const getPublicKey = ({ user }) => {
-	return user.publicKey;
+	return user.publicKey ?? "";
 };
 
 export const getLoginOptions = ({ user }) => {

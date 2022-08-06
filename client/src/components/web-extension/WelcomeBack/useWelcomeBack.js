@@ -2,7 +2,8 @@ import { useCallback } from 'react';
 import { User } from 'casper-storage';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { onBindingAuthInfo, getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions';
+import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
+import { onBindingAuthInfo } from '@cd/actions/userActions';
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();

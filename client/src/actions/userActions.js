@@ -1,8 +1,8 @@
 import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
-import { CONNECTION_TYPES, CONNECTED_ACCOUNT_STORAGE_PATH } from '@cd/constants/settings';
-import { clearChromeStorageLocal, getChromeStorageLocal, setChromeStorageLocal, getLocalStorageValue } from '@cd/services/localStorage';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
+import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from "./userActions.utils";
 
 /**
  * @param {string} publicKey
@@ -43,23 +43,6 @@ export const updatePublicKeyFromSigner = () => {
 	};
 };
 
-/**
- * Experimenting with Chrome Storage API
- * Testing with low-level method, so see if there's additional works required
- * Expecting to changes only in this function. No need to change any from outside
- * @param {*} publicKey
- * @param {*} loginOptions
- */
-const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
-  console.log(`🚀 ~ cacheLoginInfoToLocalStorage:: `, publicKey, loginOptions)
-  setChromeStorageLocal({ key: "publicKey", value: publicKey });
-  setChromeStorageLocal({ key: "loginOptions", value: loginOptions });
-};
-
-export const getConnectedAccountChromeLocalStorage = async () => {
-  return await getChromeStorageLocal(["publicKey", "loginOptions"]);
-};
-
 export const setPublicKeyToStore = (publicKey, loginOptions = {}) => {
 	return {
 		type: USERS.SET_USER_ADDRESS,
@@ -79,16 +62,14 @@ export const setPublicKey = (publicKey, loginOptions = {}) => {
 	};
 };
 
-export const getConnectedAccountLocalStorage = () => getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
-
 /**
  * Get connected account info from local storage
  * then dispatch this info back into store
  * @returns
  */
 export const initConnectedAccountFromLocalStorage = () => {
-	return (dispatch) => {
-		const connectedAccount = getConnectedAccountLocalStorage();
+	return async (dispatch) => {
+		const connectedAccount = await getConnectedAccountChromeLocalStorage();
 
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
