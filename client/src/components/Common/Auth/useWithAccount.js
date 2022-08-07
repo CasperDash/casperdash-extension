@@ -19,20 +19,22 @@ const useWithAccount = () => {
   const loadCache = useCallback(async () => {
     const res = await getConnectedAccountChromeLocalStorage();
     console.log(`🚀 ~ CACHE:: `, res);
-    if (res && !isEqual(res, cacheConnectedAccount)) {
-      setCache(res);
-    }
+    setCache(res);
     setLoading(false);
-  }, [cacheConnectedAccount]);
+  }, []);
 
+  /** Called once when Component is mounted */
   useEffect(() => {
     setLoading(true);
     loadCache();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * When publicKey and loginOption from redux store changes
+   * Update latest data (also reload from local store)
+   */
   useEffect(() => {
-    // Update state when publicKey and loginOptions
-    // from store changes
     console.log(`🚀 ~ NEW:: `, storePublicKey, storeLoginOptions)
     setCache({
       publicKey: storePublicKey,
@@ -40,7 +42,7 @@ const useWithAccount = () => {
     });
     setLoading(true);
     loadCache();
-  }, [storePublicKey, storeLoginOptions])
+  }, [storePublicKey, storeLoginOptions, loadCache])
 
   useEffect(() => {
     // Skip
