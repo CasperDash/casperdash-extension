@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import isEmpty from 'lodash-es/isEmpty';
 import isEqual from 'lodash-es/isEqual';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
-import { getPublicKey, getLoginOptions } from '@cd/selectors/user';
+import { getPublicKeyAndLoginOptions } from '@cd/selectors/user';
 
 const useWithAccount = () => {
 	const navigate = useNavigate();
@@ -12,8 +12,7 @@ const useWithAccount = () => {
   const [cacheConnectedAccount, setCache] = useState(undefined);
   console.log(`🚀 ~ cacheConnectedAccount`, loading, cacheConnectedAccount)
 
-	const storePublicKey = useSelector(getPublicKey);
-  const storeLoginOptions = useSelector(getLoginOptions);
+  const { publicKey: storePublicKey, loginOptions: storeLoginOptions } = useSelector(getPublicKeyAndLoginOptions);
   console.log(`🚀 ~ reduxStore:: `, storePublicKey, storeLoginOptions);
 
   const loadCache = useCallback(async () => {
@@ -22,6 +21,7 @@ const useWithAccount = () => {
       console.log(`🚀 ~ CACHE:: `, res, cacheConnectedAccount);
       setCache(res);
     }
+
     setLoading(false);
   }, [cacheConnectedAccount]);
 
@@ -50,7 +50,7 @@ const useWithAccount = () => {
   useEffect(() => {
     // Skip
     if (!cacheConnectedAccount || loading) {
-      console.log("::: SKIP")
+      console.log("::: SKIP: ", loading)
       return;
     }
 
