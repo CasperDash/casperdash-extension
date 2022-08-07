@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import isEmpty from 'lodash-es/isEmpty';
+import isEqual from 'lodash-es/isEqual';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import { getPublicKey, getLoginOptions } from '@cd/selectors/user';
 
@@ -18,9 +19,11 @@ const useWithAccount = () => {
   const loadCache = useCallback(async () => {
     const res = await getConnectedAccountChromeLocalStorage();
     console.log(`🚀 ~ CACHE:: `, res);
-    setCache(res);
+    if (res && !isEqual(res, cacheConnectedAccount)) {
+      setCache(res);
+    }
     setLoading(false);
-  }, []);
+  }, [cacheConnectedAccount]);
 
   useEffect(() => {
     setLoading(true);
@@ -37,7 +40,7 @@ const useWithAccount = () => {
     });
     setLoading(true);
     loadCache();
-  }, [storePublicKey, storeLoginOptions, loadCache])
+  }, [storePublicKey, storeLoginOptions])
 
   useEffect(() => {
     // Skip
