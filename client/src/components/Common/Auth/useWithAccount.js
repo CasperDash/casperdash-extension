@@ -14,19 +14,25 @@ const useWithAccount = () => {
 
 	const storePublicKey = useSelector(getPublicKey);
   const storeLoginOptions = useSelector(getLoginOptions);
-  console.log(`🚀 ~ reduxStore:: `, storePublicKey, storeLoginOptions)
+  console.log(`🚀 ~ reduxStore:: `, storePublicKey, storeLoginOptions);
 
   const loadCache = useCallback(async () => {
     const res = await getConnectedAccountChromeLocalStorage();
-    console.log(`🚀 ~ CACHE:: `, res);
-    setCache(res);
+    if (!isEqual(res, cacheConnectedAccount)) {
+      console.log(`🚀 ~ CACHE:: `, res, cacheConnectedAccount);
+      setCache(res);
+    }
     setLoading(false);
-  }, []);
+  }, [cacheConnectedAccount]);
 
   /** Called once when Component is mounted */
   useEffect(() => {
     setLoading(true);
     loadCache();
+
+    return () => {
+      setLoading(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -35,14 +41,11 @@ const useWithAccount = () => {
    * Update latest data (also reload from local store)
    */
   useEffect(() => {
-    console.log(`🚀 ~ NEW:: `, storePublicKey, storeLoginOptions)
-    setCache({
-      publicKey: storePublicKey,
-      loginOptions: storeLoginOptions
-    });
-    setLoading(true);
-    loadCache();
-  }, [storePublicKey, storeLoginOptions, loadCache])
+    if (cacheConnectedAccount && (cacheConnectedAccount.publicKey !== storePublicKey || (cacheConnectedAccount.loginOptions !== storeLoginOptions))) {
+      setLoading(true);
+      loadCache();
+    }
+  }, [cacheConnectedAccount, loadCache, storeLoginOptions, storePublicKey])
 
   useEffect(() => {
     // Skip
