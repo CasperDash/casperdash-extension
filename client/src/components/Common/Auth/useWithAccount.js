@@ -1,76 +1,71 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import isEmpty from 'lodash-es/isEmpty';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
-import { getPublicKey } from '@cd/selectors/user';
+import { getPublicKey, getLoginOptions } from '@cd/selectors/user';
 
 const useWithAccount = () => {
+	const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [cacheConnectedAccount, setCache] = useState(undefined);
-  console.log(`🚀 ~ useWithAccount ~ cacheConnectedAccount`, cacheConnectedAccount)
+  console.log(`🚀 ~ cacheConnectedAccount`, loading, cacheConnectedAccount)
 
-	/**
-   * With redux-persist implemented,
-	 * publicKey stays in extension state as long as User doesn't lock
-	 */
-	const publicKey = useSelector(getPublicKey);
-	const navigate = useNavigate();
+	const storePublicKey = useSelector(getPublicKey);
+  const storeLoginOptions = useSelector(getLoginOptions);
+  console.log(`🚀 ~ reduxStore:: `, storePublicKey, storeLoginOptions)
 
-  /**
-   * Load cached account info when 
-   * Initial phase when extension is loaded,
-   * Skip when `cacheConnectedAccount` is no longer undefined
-   */
-	useEffect(() => {
-    if (cacheConnectedAccount || loading) {
-      return;
-    }
+  const loadCache = useCallback(async () => {
+    const res = await getConnectedAccountChromeLocalStorage();
+    console.log(`🚀 ~ CACHE:: `, res);
+    setCache(res);
+    setLoading(false);
+  }, []);
 
-    let active = true;
-    load();
-
-    return () => {
-      active = false;
-    }
-
-    async function load() {
-      setLoading(true);
-      const res = await getConnectedAccountChromeLocalStorage();
-
-      if (!active) { return }
-      const final = isEmpty(res) ? undefined : res;
-      setCache(final);
-      setLoading(false);
-    };
-	}, [loading, cacheConnectedAccount, publicKey]);
-
-  /**
-   * Determine whether extension would redirect User back
-   * to welcomeScreen or connectAccount screen when
-   * `cacheConnectedAccount` has info
-   */
   useEffect(() => {
-    if (loading || !loading && !cacheConnectedAccount) {
+    setLoading(true);
+    loadCache();
+  }, []);
+
+  useEffect(() => {
+    // Update state when publicKey and loginOptions
+    // from store changes
+    console.log(`🚀 ~ NEW:: `, storePublicKey, storeLoginOptions)
+    setCache({
+      publicKey: storePublicKey,
+      loginOptions: storeLoginOptions
+    });
+    setLoading(true);
+    loadCache();
+  }, [storePublicKey, storeLoginOptions, loadCache])
+
+  useEffect(() => {
+    // Skip
+    if (!cacheConnectedAccount || loading) {
+      console.log("::: SKIP")
       return;
     }
-    /**
-     * Navigate to `/welcomeBack` screen when found cached User info
-     * Otherwise, redirect back to connect Account screen
-     */
-    if (!publicKey) {
-      if (cacheConnectedAccount) {
-        const { loginOptions: loginOptionsCache } = cacheConnectedAccount;
-        if (loginOptionsCache?.userInfo && loginOptionsCache?.userHashingOptions) {
-          navigate('/welcomeBack');
-          return;
-        }
-      }
 
+    const { publicKey, loginOptions } = cacheConnectedAccount;
+    // Redux store empty
+    // Cache has User info
+    // => navigate to `welcomeBack`
+    // userHashingOptions
+    if (!publicKey && !isEmpty(loginOptions) && loginOptions.userHashingOptions) {
+      console.log("::: WELCOME BACK")
+      navigate('/welcomeBack');
+      return;
+    }
+
+    // Redux store empty
+    // Cache empty
+    // => navigate to `connectAccount`
+    if (!publicKey && isEmpty(storeLoginOptions) && isEmpty(loginOptions)) {
+      console.log("::: CONNECT ACC")
       navigate('/connectAccount');
       return;
     }
-  }, [loading, cacheConnectedAccount, navigate, publicKey]);
+  }, [loading, navigate, cacheConnectedAccount, storeLoginOptions]);
 
   return cacheConnectedAccount;
 };

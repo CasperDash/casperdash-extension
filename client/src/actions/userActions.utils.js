@@ -11,9 +11,11 @@ const getConnectedAccountChromeLocalStorage = async () => {
  * @param {*} publicKey
  * @param {*} loginOptions
  */
-const cacheLoginInfoToLocalStorage = (publicKey, loginOptions) => {
-  setChromeStorageLocal({ key: "publicKey", value: publicKey });
-  setChromeStorageLocal({ key: "loginOptions", value: loginOptions });
+const cacheLoginInfoToLocalStorage = async (publicKey, loginOptions) => {
+  console.log(`🚀 ~ >>>> SAVE::loginOptions`, loginOptions)
+  console.log(`🚀 ~ >>>> SAVE::publicKey`, publicKey)
+  await setChromeStorageLocal({ key: "publicKey", value: publicKey ?? "" });
+  await setChromeStorageLocal({ key: "loginOptions", value: loginOptions });
 };
 
 export {

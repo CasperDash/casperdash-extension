@@ -48,19 +48,17 @@ const getLocalStorageValue = (key, path) => {
 	}
 };
 
-const setChromeStorageLocal = ({key, value} = undefined, cb = undefined) => {
+const setChromeStorageLocal = ({key, value} = undefined) => {
   if (!key) {
     return undefined;
   }
 
-  /**
-   * set might accept a full {key1: value1, key2: value2} object
-   * This is for testing so only passing one param
-   */
-  // console.log(`🚀 ~ SSSSS: `, chrome.storage)
-  chrome.storage.local.set({
-    [key]: value
-  }, cb);
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.set({[key]: value}, () => {
+        const error = chrome.runtime.lastError;
+        error ? reject(error) : resolve();
+    });
+  });
 }
 
 const getChromeStorageLocal = async (key) => {
