@@ -8,6 +8,7 @@ import { getPublicKey } from '@cd/selectors/user';
 const useWithAccount = () => {
   const [loading, setLoading] = useState(false);
   const [cacheConnectedAccount, setCache] = useState(undefined);
+  console.log(`🚀 ~ useWithAccount ~ cacheConnectedAccount`, cacheConnectedAccount)
 
 	/**
    * With redux-persist implemented,
@@ -29,7 +30,9 @@ const useWithAccount = () => {
     let active = true;
     load();
 
-    return () => { active = false }
+    return () => {
+      active = false;
+    }
 
     async function load() {
       setLoading(true);
@@ -59,19 +62,13 @@ const useWithAccount = () => {
       if (cacheConnectedAccount) {
         const { loginOptions: loginOptionsCache } = cacheConnectedAccount;
         if (loginOptionsCache?.userInfo && loginOptionsCache?.userHashingOptions) {
-          try {
-
-            navigate('/welcomeBack'); 
-            return;
-          } catch (err) {
-            console.log(`🚀 ~ useEffect ~ err`, err)
-            
-          }
+          navigate('/welcomeBack');
+          return;
         }
       }
 
-      console.log(">> OOO: ", navigate)
       navigate('/connectAccount');
+      return;
     }
   }, [loading, cacheConnectedAccount, navigate, publicKey]);
 

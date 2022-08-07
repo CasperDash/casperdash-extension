@@ -1,16 +1,15 @@
-
-import React from "react";
 import { renderHook } from '@testing-library/react-hooks';
-// import * as reactRouterDom from 'react-router-dom';
+import { cleanup } from '@testing-library/react';
+import * as reactRouterDom from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import useWithAccount from "./useWithAccount";
 
-// pay attention to write it at the top level of your file
-let mockUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
-  // ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockUsedNavigate
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: jest.fn()
 }));
+
+const { useNavigate }  = reactRouterDom;
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -19,54 +18,60 @@ jest.mock('react', () => ({
 
 jest.mock("@cd/actions/userActions.utils", () => ({
   getConnectedAccountChromeLocalStorage: jest.fn()
-}))
+}));
 
-// beforeAll(() => {
-//   console.log("@ beforeAll")
-//   jest.spyOn(React, 'useEffect').mockImplementation(React.useLayoutEffect)
-// }
-// )
-// afterAll(() => React.useEffect.mockRestore())
+// https://stackoverflow.com/questions/56085458/testing-custom-hook-with-react-hooks-testing-library-throws-an-error
 
 describe("useWithAccount", () => {
+  const mockNavigate = jest.fn(to => {
+    console.log('Mock navigating to:: ', to);
+  });
+
   beforeEach(() => {
-    getConnectedAccountChromeLocalStorage.mockReset();
-    mockUsedNavigate.mockReset();
-  })
-  it('Should return nothing when being called', () => {
+    mockNavigate.mockClear();
+  });
+  afterEach(cleanup);
+
+  it('Should return nothing when being called first time', () => {
+    useNavigate.mockImplementation(() => mockNavigate);
     getConnectedAccountChromeLocalStorage.mockResolvedValue({
       publicKey: "abc",
       loginOptions: {}
     });
-		const { result } = renderHook(() => useWithAccount());
+    const { result } = renderHook(() => useWithAccount());
 
-		expect(result.current).toBeUndefined();
-	});
-
-  it("XX", () => {
-    getConnectedAccountChromeLocalStorage.mockResolvedValue({});
-    mockUsedNavigate.mockReturnValue(value => { console.log(">> Mock: ", value); });
-    renderHook(() => useWithAccount());
-    
-    expect(mockUsedNavigate).toHaveBeenCalled();
-    expect(mockUsedNavigate).toHaveBeenCalledWith("/connectAccount");
+    expect(result.current).toBeUndefined();
   });
 
-  it.skip("YY", () => {
-    // const spyOnUseNavigate = jest.spyOn(reactRouterDom, "useNavigate");
-    getConnectedAccountChromeLocalStorage.mockResolvedValue({
-      publicKey: "",
-      loginOptions: { userInfo: "abc", userHashingOptions: "Test"}
-    });
-    mockUsedNavigate.mockReturnValue(value => value);
-    // const mockNavigate = jest.fn();
-    // spyOnUseNavigate.mockReturnValue(mockNavigate)
-    // useNavigate.mockReturnValue(value => value);
-    renderHook(() => useWithAccount());
+  it("Should redirect user back to /connectAccount screen when not found any cached User info", async () => {
     
-    // console.log(`🚀 ~ it.only ~ mockedUsedNavigate`, mockedUsedNavigate)
-    // console.log(`🚀 ~ it.only ~ mockUsedNavigate`, mockUsedNavigate)
-    expect(mockUsedNavigate).toHaveBeenCalled();
-    expect(mockUsedNavigate).toHaveBeenLastCalledWith("/welcomeBack");
+    useNavigate.mockImplementation(() => mockNavigate);
+    getConnectedAccountChromeLocalStorage
+      .mockResolvedValueOnce({}); 
+  
+    const { waitForNextUpdate } = renderHook(() => useWithAccount());
+    
+    await waitForNextUpdate();
+    
+    expect(useNavigate).toHaveBeenCalled();
+    expect(mockNavigate).toBeCalledTimes(1); 
+    expect(mockNavigate).toHaveBeenCalledWith("/connectAccount");
+  });
+
+  it("Should redirect user back to /welcomeBack screen when found cached User info with empty public key", async () => {
+    useNavigate.mockImplementation(() => mockNavigate);
+    getConnectedAccountChromeLocalStorage
+      .mockResolvedValueOnce({
+        publicKey: "",
+        loginOptions: { userInfo: "abcd", userHashingOptions: "Test"}
+      }); 
+    
+    const { waitForNextUpdate } = renderHook(() => useWithAccount());
+    
+    await waitForNextUpdate();
+    
+    expect(useNavigate).toHaveBeenCalled();
+    expect(mockNavigate).toBeCalledTimes(1); 
+    expect(mockNavigate).toHaveBeenCalledWith("/welcomeBack");
   });
 });
