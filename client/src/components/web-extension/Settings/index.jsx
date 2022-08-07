@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import ContactIcon from '@cd/assets/image/contact-icon.svg';
 import LockIcon from '@cd/assets/image/lock-icon.svg';
 import ArrowIcon from '@cd/assets/image/bold-arrow-icon.svg';
@@ -33,7 +32,7 @@ const SETTINGS = [
 			className: 'cd_we_setting_lock',
 			img: <LockIcon />,
 		},
-		action: ({dispatch}) => {
+		action: dispatch => {
 			dispatch(onClearPublicKey());
 		},
 	},
@@ -43,22 +42,20 @@ const SETTINGS = [
 			className: 'cd_we_setting_lock',
 			img: <LockIcon />,
 		},
-		action: ({dispatch, navigate}) => {
+		action: dispatch => {
 			dispatch(lockAccount());
-      navigate('/');
 		},
 	},
 ];
 
 const Settings = () => {
 	const dispatch = useDispatch();
-  const navigate = useNavigate();
 
 	return (
 		<section className="cd_we_single_section no_bottom_bar">
 			{SETTINGS.map((setting) => {
 				return (
-					<div className="cd_setting_row" key={setting.name} onClick={() => setting.action({ dispatch, navigate })}>
+					<div className="cd_setting_row" key={setting.name} onClick={() => setting.action(dispatch)}>
 						<div className="cd_setting_row_left">
 							<div className={`cd_setting_icon ${setting.icon.className}`}>{setting.icon.img}</div>
 							<div className="cd_setting_name">{setting.name}</div>

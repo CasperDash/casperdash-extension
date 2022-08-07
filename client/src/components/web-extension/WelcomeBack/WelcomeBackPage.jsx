@@ -52,7 +52,7 @@ const WelcomeBackPage = () => {
 
 	const onReset = useCallback(async () => {
     dispatch(lockAccount());
-		navigate('/');
+		navigate('/connectAccount');
 	}, [dispatch, navigate]);
 
 	return (
