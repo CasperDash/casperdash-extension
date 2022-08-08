@@ -21,8 +21,6 @@ import { REQUEST } from './actionTypes';
 const persistConfig = {
   key: 'root',
   storage: localStorage,
-  // Not storing these
-  // blacklist: ["createWallet"]
   whitelist: ["settings","user"]
 }
 
