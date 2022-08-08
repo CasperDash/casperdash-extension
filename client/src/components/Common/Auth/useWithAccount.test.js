@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { renderHook } from '@testing-library/react-hooks';
 import { useSelector } from 'react-redux';
 // import * as reactRedux from "react-redux";
@@ -15,6 +16,7 @@ const { useNavigate }  = reactRouterDom;
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
+  useState: jest.fn(),
 	useEffect: (callback) => callback(),
 }));
 
@@ -41,57 +43,88 @@ describe("useWithAccount", () => {
  
   beforeEach(() => {
     mockNavigate.mockClear();
+    useState.mockClear();
+    useSelector.mockClear();
   });
   afterEach(cleanup);
- 
-  it.skip('Should return nothing when being called first time', async () => {
+
+  it('Should return nothing when being called first time', async () => {
     // const useSelector = jest.spyOn(reactRedux, 'useSelector');
+    useState.mockImplementationOnce(() => [false, jest.fn()]).mockImplementationOnce(() => [{
+        publicKey: "abc",
+        loginOptions: {
+          userHashingOptions: "1"
+        }
+      }, jest.fn()]);
     useSelector
       .mockImplementation(() => ({
         publicKey: "abc",
-        loginOptions: {}
+        loginOptions: {
+          userHashingOptions: "1"
+        }
       }));
     useNavigate.mockImplementation(() => mockNavigate);
     getConnectedAccountChromeLocalStorage.mockResolvedValue({
       publicKey: "abc",
-      loginOptions: {}
+      loginOptions: {
+        userHashingOptions: "1"
+      }
+    }); 
+    const { result } = renderHook(() => useWithAccount());
+    expect(result.current).toEqual({
+      publicKey: "abc",
+      loginOptions: {
+        userHashingOptions: "1"
+      }
     });
-    const { waitForNextUpdate, result } = renderHook(() => useWithAccount());
-    await waitForNextUpdate();
-    console.log(`🚀 ~ it ~ result.current`, result.current)
-    expect(result.current).toBeUndefined();
   });
 
-  it.skip("Should redirect user back to /connectAccount screen when not found any cached User info", async () => {
+  it("Should redirect user back to /connectAccount screen when not found any cached User info", async () => {
+    useState.mockImplementationOnce(() => [false, jest.fn()]).mockImplementationOnce(() => [{
+      publicKey: "",
+      loginOptions: {}
+    }, jest.fn()]);
     useSelector
       .mockImplementation(() => ({
-        publicKey: "abc",
+        publicKey: "",
         loginOptions: {}
       }));
     useNavigate.mockImplementation(() => mockNavigate);
     getConnectedAccountChromeLocalStorage
-      .mockResolvedValueOnce({}); 
+      .mockResolvedValueOnce({
+        publicKey: "",
+        loginOptions: {}
+      }); 
   
-    const { waitForNextUpdate } = renderHook(() => useWithAccount());
-    
-    await waitForNextUpdate();
+    renderHook(() => useWithAccount());
     
     expect(useNavigate).toHaveBeenCalled();
     expect(mockNavigate).toBeCalledTimes(1); 
     expect(mockNavigate).toHaveBeenCalledWith("/connectAccount");
   });
 
-  it.skip("Should redirect user back to /welcomeBack screen when found cached User info with empty public key", async () => {
+  it("Should redirect user back to /welcomeBack screen when found cached User info with empty public key", async () => {
+    useState.mockImplementationOnce(() => [false, jest.fn()]).mockImplementationOnce(() => [{
+      publicKey: "",
+      loginOptions: {
+        userHashingOptions: "Test"
+      }
+    }, jest.fn()]);
+    useSelector
+      .mockImplementation(() => ({
+        publicKey: "",
+        loginOptions: {
+          userHashingOptions: "Test"
+        }
+      }));
     useNavigate.mockImplementation(() => mockNavigate);
     getConnectedAccountChromeLocalStorage
       .mockResolvedValueOnce({
         publicKey: "",
-        loginOptions: { userInfo: "abcd", userHashingOptions: "Test"}
+        loginOptions: { userHashingOptions: "Test"}
       }); 
     
-    const { waitForNextUpdate } = renderHook(() => useWithAccount());
-    
-    await waitForNextUpdate();
+    renderHook(() => useWithAccount());
     
     expect(useNavigate).toHaveBeenCalled();
     expect(mockNavigate).toBeCalledTimes(1); 

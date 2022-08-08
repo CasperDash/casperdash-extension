@@ -10,39 +10,24 @@ const useWithAccount = () => {
 	const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [cacheConnectedAccount, setCache] = useState(undefined);
-  console.log(`🚀 ~ cacheConnectedAccount`, loading, cacheConnectedAccount)
 
   const { publicKey: storePublicKey, loginOptions: storeLoginOptions } = useSelector(getPublicKeyAndLoginOptions);
-  console.log(`🚀 ~ reduxStore:: `, storePublicKey, storeLoginOptions);
 
   const loadCache = useCallback(async () => {
     const res = await getConnectedAccountChromeLocalStorage();
     if (!isEqual(res, cacheConnectedAccount)) {
-      console.log(`🚀 ~ CACHE:: `, res, cacheConnectedAccount);
       setCache(res);
     }
 
     setLoading(false);
   }, [cacheConnectedAccount]);
 
-  /** Called once when Component is mounted */
-  // useEffect(() => {
-  //   setLoading(true);
-  //   loadCache();
-
-  //   return () => {
-  //     setLoading(false);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
- 
   /**
    * When publicKey and loginOption from redux store changes
    * Update latest data (also reload from local store)
    */
   useEffect(() => {
     if (!cacheConnectedAccount || cacheConnectedAccount && (cacheConnectedAccount.publicKey !== storePublicKey || (cacheConnectedAccount.loginOptions !== storeLoginOptions))) {
-      console.log(">>> RELOADING")
       setLoading(true);
       loadCache();
     }
@@ -50,12 +35,11 @@ const useWithAccount = () => {
     return () => {
       setLoading(false);
     }
-  }, [cacheConnectedAccount, loadCache, storeLoginOptions, storePublicKey])
+  }, [loadCache, cacheConnectedAccount, storeLoginOptions, storePublicKey])
 
   useEffect(() => {
     // Skip
     if (!cacheConnectedAccount || loading) {
-      console.log("::: SKIP: ", loading)
       return;
     }
 
@@ -65,7 +49,6 @@ const useWithAccount = () => {
     // => navigate to `welcomeBack`
     // userHashingOptions
     if (!publicKey && !isEmpty(loginOptions) && loginOptions.userHashingOptions) {
-      console.log("::: WELCOME BACK")
       navigate('/welcomeBack');
       return;
     }
@@ -74,7 +57,6 @@ const useWithAccount = () => {
     // Cache empty
     // => navigate to `connectAccount`
     if (!publicKey && isEmpty(storeLoginOptions) && isEmpty(loginOptions)) {
-      console.log("::: CONNECT ACC")
       navigate('/connectAccount');
       return;
     }
