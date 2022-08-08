@@ -58,7 +58,6 @@ const useWithAccount = () => {
     // => navigate to `connectAccount`
     if (!publicKey && isEmpty(storeLoginOptions) && isEmpty(loginOptions)) {
       navigate('/connectAccount');
-      return;
     }
   }, [loading, navigate, cacheConnectedAccount, storeLoginOptions]);
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { renderHook } from '@testing-library/react-hooks';
 import { useSelector } from 'react-redux';
-// import * as reactRedux from "react-redux";
 import { cleanup } from '@testing-library/react';
 import * as reactRouterDom from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
@@ -49,7 +48,6 @@ describe("useWithAccount", () => {
   afterEach(cleanup);
 
   it('Should return nothing when being called first time', async () => {
-    // const useSelector = jest.spyOn(reactRedux, 'useSelector');
     useState.mockImplementationOnce(() => [false, jest.fn()]).mockImplementationOnce(() => [{
         publicKey: "abc",
         loginOptions: {
