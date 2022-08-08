@@ -26,24 +26,29 @@ const useWithAccount = () => {
   }, [cacheConnectedAccount]);
 
   /** Called once when Component is mounted */
-  useEffect(() => {
-    setLoading(true);
-    loadCache();
+  // useEffect(() => {
+  //   setLoading(true);
+  //   loadCache();
 
-    return () => {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  //   return () => {
+  //     setLoading(false);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+ 
   /**
    * When publicKey and loginOption from redux store changes
    * Update latest data (also reload from local store)
    */
   useEffect(() => {
-    if (cacheConnectedAccount && (cacheConnectedAccount.publicKey !== storePublicKey || (cacheConnectedAccount.loginOptions !== storeLoginOptions))) {
+    if (!cacheConnectedAccount || cacheConnectedAccount && (cacheConnectedAccount.publicKey !== storePublicKey || (cacheConnectedAccount.loginOptions !== storeLoginOptions))) {
+      console.log(">>> RELOADING")
       setLoading(true);
       loadCache();
+    }
+
+    return () => {
+      setLoading(false);
     }
   }, [cacheConnectedAccount, loadCache, storeLoginOptions, storePublicKey])
 

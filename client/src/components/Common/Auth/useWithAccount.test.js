@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { cleanup } from '@testing-library/react';
 import * as reactRouterDom from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
-import { getPublicKey, getLoginOptions } from '@cd/selectors/user';
 import useWithAccount from "./useWithAccount";
 
 jest.mock("react-router-dom", () => ({
@@ -47,8 +46,6 @@ describe("useWithAccount", () => {
  
   it.skip('Should return nothing when being called first time', async () => {
     // const useSelector = jest.spyOn(reactRedux, 'useSelector');
-    // getPublicKey.mockImplementation(() => "zzzz");
-    // getLoginOptions.mockImplementation(() => ({ userInfo: "hihi" }));
     useSelector
       .mockImplementation(() => ({
         publicKey: "abc",
@@ -61,6 +58,7 @@ describe("useWithAccount", () => {
     });
     const { waitForNextUpdate, result } = renderHook(() => useWithAccount());
     await waitForNextUpdate();
+    console.log(`🚀 ~ it ~ result.current`, result.current)
     expect(result.current).toBeUndefined();
   });
 
