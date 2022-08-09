@@ -50,7 +50,7 @@ const useWelcomeBack = () => {
 				});
 
 				const wallet = await user.getWalletAccount(0);
-				const publicKey = await wallet.getPublicAddress();
+				const publicKey = await wallet.getPublicKey();
 
 				// Similar to useCreateUser
 				return {

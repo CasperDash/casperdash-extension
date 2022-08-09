@@ -48,7 +48,7 @@ const useCreateUser = () => {
 
 			// Create Wallet and get public key, public address
 			const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
-			const publicKey = await wallet.getPublicAddress();
+			const publicKey = await wallet.getPublicKey();
 
 			return { user: result, publicKey };
 		},
