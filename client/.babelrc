@@ -1,5 +1,48 @@
 {
-	"presets": ["@babel/preset-react", "@babel/preset-env"],
-	"plugins": ["@babel/plugin-transform-runtime"],
-	"ignore": ["**/__tests__", "**/*.test.js", "**/*.test.jsx"]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": "> 1%"
+        }
+      }
+    ],
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic"
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+        "alias": {
+          "@cd/assets": "./src/assets",
+          "@cd/actions": "./src/actions",
+          "@cd/helpers": "./src/helpers",
+          "@cd/selectors": "./src/selectors",
+          "@cd/services": "./src/services",
+          "@cd/shared": "./src/shared",
+          "@cd/store": "./src/store",
+          "@cd/config": "./src/config",
+          "@cd/constants": "./src/constants",
+          "@cd/common": "./src/components/Common",
+          "@cd/hooks": "./src/components/hooks",
+          "@cd/web": "./src/components/web",
+          "@cd/web-extension": "./src/components/web-extension",
+          "@cd/components": "./src/components"
+        }
+      }
+    ]
+  ],
+  "ignore": [
+    "**/__tests__"
+  ]
 }

@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { useAutoRefreshEffect } from '../../../hooks/useAutoRefreshEffect';
-import { getPublicKey } from '../../../../selectors/user';
-import { getTheme } from '../../../../selectors/settings';
+import { useAutoRefreshEffect } from '@cd/hooks/useAutoRefreshEffect';
+import { getPublicKey } from '@cd/selectors/user';
+import { getTheme } from '@cd/selectors/settings';
 import {
 	getUserDetails,
 	setPublicKey,
 	lockAccount,
-	getConnectedAccountFromLocalStorage,
-} from '../../../../actions/userActions';
-import { switchTheme } from '../../../../actions/settingActions';
-import { isValidPublicKey } from '../../../../helpers/validator';
-import { DARK_THEME, LIGHT_THEME } from '../../../../constants/settings';
-import { MiddleTruncatedText } from '../../MiddleTruncatedText';
-import useCasperSigner from '../../../hooks/useCasperSigner';
-import useLedger from '../../../hooks/useLedger';
+	initConnectedAccountFromLocalStorage,
+} from '@cd/actions/userActions';
+import { switchTheme } from '@cd/actions/settingActions';
+import { isValidPublicKey } from '@cd/helpers/validator';
+import { DARK_THEME, LIGHT_THEME } from '@cd/constants/settings';
+import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
+import useCasperSigner from '@cd/hooks/useCasperSigner';
+import useLedger from '@cd/hooks/useLedger';
 import { AddPublicKeyModal } from './AddPublicKeyModal';
 import { LedgerKeysModal } from './LedgerKeysModal';
 
@@ -45,7 +45,7 @@ const HeadingModule = (props) => {
 
 	useEffect(() => {
 		if (!publicKey) {
-			dispatch(getConnectedAccountFromLocalStorage());
+			dispatch(initConnectedAccountFromLocalStorage());
 		}
 	}, [publicKey, dispatch]);
 

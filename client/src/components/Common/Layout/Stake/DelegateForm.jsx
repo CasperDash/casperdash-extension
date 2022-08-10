@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import receiveHeadingIcon from 'assets/image/receive-heading-icon.svg';
+import receiveHeadingIcon from '@cd/assets/image/receive-heading-icon.svg';
 import { getStakeDeploy } from '../../../../services/stakeServices';
 import { getConfigKey } from '../../../../services/configurationServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';

@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { OuterHeader } from '../Header/OuterHeader';
+import { OuterHeader } from '@cd/web-extension/Common/Header/OuterHeader';
 import './OuterLayout.scss';
 
 const OuterLayout = () => {
-	return (
-		<div className={`cd_all_pages_content`}>
-			<OuterHeader />
+  const [header, setHeader] = useState(undefined);
 
-			<div className="cd_web_extension_outer_content">
-				<Outlet />
-			</div>
-		</div>
+	return (
+    <div className={`cd_all_pages_content`}>
+      <OuterHeader header={header} setHeader={setHeader} />
+
+      <div className="cd_web_extension_outer_content">
+        <Outlet context={[header, setHeader]} />
+      </div>
+    </div>
 	);
 };
 

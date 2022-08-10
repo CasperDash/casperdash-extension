@@ -40,6 +40,15 @@ module.exports = (dir) =>
 					},
 				],
 			}),
+      new CopyWebpackPlugin({
+				patterns: [
+					{
+						from: 'template/extension/service-worker.js',
+						to: path.join(dir, 'build_extension'),
+						force: true,
+					},
+				],
+			}),
 			new CopyWebpackPlugin({
 				patterns: [
 					{

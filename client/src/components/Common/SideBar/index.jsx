@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoFullSilver from 'assets/image/casperdash-beta-red-silver.png';
-import logo from 'assets/image/Logo-only-beta.png';
-import logoFullBlack from 'assets/image/casperdash-beta-red-black.png';
-import rightIcon from 'assets/image/right-two-arrow.svg';
+import logoFullSilver from '@cd/assets/image/casperdash-beta-red-silver.png';
+import logo from '@cd/assets/image/Logo-only-beta.png';
+import logoFullBlack from '@cd/assets/image/casperdash-beta-red-black.png';
+import rightIcon from '@cd/assets/image/right-two-arrow.svg';
 import './css/SideBar.css';
 const SIDEBAR_ITEMS = [
 	{

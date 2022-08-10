@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@cd/assets/*": ["client/src/assets/*"],
+      "@cd/actions/*": ["client/src/actions/*"],
+      "@cd/helpers/*": ["client/src/helpers/*"],
+      "@cd/selectors/*": ["client/src/selectors/*"],
+      "@cd/services/*": ["client/src/services/*"],
+      "@cd/shared/*": ["client/src/shared/*"],
+      "@cd/store/*": ["client/src/store/*"],
+      "@cd/config/*": ["client/src/config/*"],
+      "@cd/constants/*": ["client/src/constants/*"],
+      "@cd/components/*": ["client/src/components/*"],
+      "@cd/common/*": ["client/src/components/Common/*"],
+      "@cd/hooks/*": ["client/src/components/hooks/*"],
+      "@cd/web/*": ["client/src/components/web/*"],
+      "@cd/web-extension/*": ["client/src/components/web-extension/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "client/build_extension"]
+}

@@ -11,13 +11,22 @@ jest.mock('react-router-dom', () => ({
 	useLocation: jest.fn(),
 }));
 
-test('Should show show back button', () => {
-	useLocation.mockReturnValueOnce({ state: { name: 'test' } });
-	const { container, getByText } = render(<OuterHeader />);
-	expect(Boolean(container.querySelector('.cd_we_back_btn'))).toBe(true);
-	expect(getByText('test').textContent).toBe('test');
-	fireEvent.click(container.querySelector('.cd_we_back_btn'));
-	expect(mockedUsedNavigate).toHaveBeenCalledTimes(1);
+describe("Back button", () => {
+  it('Should show show back button by default', () => {
+    useLocation.mockReturnValueOnce({ state: { name: 'test' } });
+    const { queryByTestId, getByText } = render(<OuterHeader />);
+    const btnBack = queryByTestId("back-button");
+    expect(btnBack).toBeInTheDocument();
+    expect(getByText('test').textContent).toBe('test');
+    fireEvent.click(btnBack);
+    expect(mockedUsedNavigate).toHaveBeenCalledTimes(1);
+  });
+
+  it.only('Should not show show back button when current screen is WelcomeBack', () => {
+    useLocation.mockReturnValueOnce({ pathname: "/welcomeBack", state: { name: 'test' } });
+    const { queryByTestId } = render(<OuterHeader />);
+    expect(queryByTestId('back-button')).not.toBeInTheDocument();
+  });
 });
 
 test('Should not show title', () => {

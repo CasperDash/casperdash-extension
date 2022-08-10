@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTokenInfo } from '../../hooks/useTokensInfo';
-import { SendReceive } from '../Common/SendReceiveButtons';
-import Grid from '../Common/Grid';
-import { AccountInfo } from '../Common/Account';
+import { useSelector } from 'react-redux';
+import { useTokenInfo } from '@cd/hooks/useTokensInfo';
+import { SendReceive } from '@cd/web-extension/Common/SendReceiveButtons';
+import Grid from '@cd/web-extension/Common/Grid';
+import { AccountInfo } from '@cd/web-extension/Common/Account';
+import { getPublicKeyAndLoginOptions } from '@cd/selectors/user';
+import OverlayLoader from '@cd/web-extension/Common/OverlayLoader';
 import './index.scss';
 
 const tokensGridMetadata = {
@@ -21,6 +24,7 @@ const WalletDetails = () => {
 	// Hook
 	const navigate = useNavigate();
 	const { allTokenInfo, isFetching } = useTokenInfo();
+	const { publicKey } = useSelector(getPublicKeyAndLoginOptions);
 
 	// Functions
 	const onSelectToken = (token) => {
@@ -32,6 +36,10 @@ const WalletDetails = () => {
 			state: { name: 'Add Token' },
 		});
 	};
+
+	if (!publicKey) {
+		return <OverlayLoader />;
+	}
 
 	return (
 		<section className="cd_we_dashboard_page with_bottom_bar">

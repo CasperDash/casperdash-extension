@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import nftEmpty from 'assets/image/nft-empty.png';
+import nftEmpty from '@cd/assets/image/nft-empty.png';
 import HeadingModule from '../../Common/Layout/HeadingComponent/Heading';
 import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { getPublicKey } from '../../../selectors/user';

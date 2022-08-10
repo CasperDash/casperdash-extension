@@ -1,5 +1,5 @@
 import React from 'react';
-import ArrowUpIcon from 'assets/image/arrow-up.svg';
+import ArrowUpIcon from '@cd/assets/image/arrow-up.svg';
 
 const SORT_BY = [
 	{ label: 'Collection', attr: 'collection' },

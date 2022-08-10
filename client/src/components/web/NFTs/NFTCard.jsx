@@ -1,5 +1,5 @@
 import React from 'react';
-import nftEmpty from 'assets/image/nft-empty.png';
+import nftEmpty from '@cd/assets/image/nft-empty.png';
 
 export const NFTCard = ({ nftDetails, onOpenModal }) => {
 	const { image, nftName, tokenId } = nftDetails;

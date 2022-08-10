@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { handleRequests } from '@redux-requests/core';
 import { createDriver } from '@redux-requests/axios';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { localStorage } from 'redux-persist-webextension-storage';
 import thunk from 'redux-thunk';
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
@@ -13,7 +15,14 @@ import deployReducer from './reducers/deploys';
 import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
 import settingsReducer from './reducers/settings';
+import createWalletReducer, { initialState as createWalletInitialState } from "./reducers/createWallet";
 import { REQUEST } from './actionTypes';
+
+const persistConfig = {
+  key: 'root',
+  storage: localStorage,
+  whitelist: ["settings","user"]
+}
 
 export const initialState = {
 	user: {
@@ -41,6 +50,9 @@ export const initialState = {
 	nfts: {
 		address: [],
 	},
+  createWallet: {
+    ...createWalletInitialState
+  }
 };
 
 const setLoadingStatus = (actionType) => {
@@ -74,7 +86,7 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	},
 });
 
-const main = combineReducers({
+const rootReducers = combineReducers({
 	user: userReducer,
 	signer: signerReducer,
 	keysManager: keysManagerReducer,
@@ -85,7 +97,14 @@ const main = combineReducers({
 	request: requestReducer,
 	settings: settingsReducer,
 	nfts: nftsReducer,
+  createWallet: createWalletReducer
 });
 
-const store = createStore(main, initialState, applyMiddleware(thunk, ...requestsMiddleware));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const persistedReducer = persistReducer(persistConfig, rootReducers);
+const store = createStore(persistedReducer, initialState, composeEnhancers(
+  applyMiddleware(thunk, ...requestsMiddleware)
+));
+let persistor = persistStore(store);
+export { persistor };
 export default store;
