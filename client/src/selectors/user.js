@@ -13,10 +13,12 @@ const CSPR_INFO = {
 	icon: '/assets/images/token-icons/cspr.png',
 };
 
-export const getPublicKeyAndLoginOptions = ({ user }) => ({
-  publicKey: user.publicKey ?? "",
-  loginOptions: user.loginOptions || {}
-})
+export const getPublicKeyAndLoginOptions = ({ user }) => {
+  return {
+    publicKey: user?.publicKey ?? "",
+    loginOptions: user?.loginOptions || {}
+  }
+}
 
 export const getPublicKey = ({ user }) => {
 	return user.publicKey ?? "";

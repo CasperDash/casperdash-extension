@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CasperDashLogo from '@cd/assets/image/Logo-only.svg';
 import SettingIcon from '@cd/assets/image/setting.svg';
-import { getUserDetails } from '../../../../actions/userActions';
-import { getPublicKey } from '../../../../selectors/user';
-import { useAutoRefreshEffect } from '../../../../components/hooks/useAutoRefreshEffect';
+import { getUserDetails } from '@cd/actions/userActions';
+import { getPublicKey } from '@cd/selectors/user';
+import { useAutoRefreshEffect } from '@cd/hooks/useAutoRefreshEffect';
 import './Header.scss';
 
 export const Header = ({ currentModule = {} }) => {
@@ -15,6 +15,7 @@ export const Header = ({ currentModule = {} }) => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
+  const shouldRenderSettings = Boolean(publicKey && currentModule.route === '/');
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
@@ -27,7 +28,7 @@ export const Header = ({ currentModule = {} }) => {
 				<CasperDashLogo />
 			</div>
 			<div className="cd_we_page_name">{currentModule.name}</div>
-			{currentModule.route === '/' && (
+			{shouldRenderSettings && (
 				<div className="cd_we_settings" onClick={() => navigate('/settings', { state: { name: 'Settings' } })}>
 					<SettingIcon />
 				</div>
