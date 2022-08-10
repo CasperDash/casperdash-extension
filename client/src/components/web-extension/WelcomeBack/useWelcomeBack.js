@@ -2,7 +2,8 @@ import { useCallback } from 'react';
 import { User } from 'casper-storage';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { onBindingAuthInfo, getConnectedAccountLocalStorage } from '@cd/actions/userActions';
+import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
+import { onBindingAuthInfo } from '@cd/actions/userActions';
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
@@ -31,10 +32,8 @@ const useWelcomeBack = () => {
 			}
 
 			try {
-				const cacheConnectedAccount = getConnectedAccountLocalStorage();
-				const {
-					loginOptions: { userHashingOptions, userInfo: encryptedUserInfo },
-				} = cacheConnectedAccount;
+				const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
+				const { loginOptions: { userHashingOptions, userInfo: encryptedUserInfo } } = cacheConnectedAccount;
 
 				// Get encrypted info from Localstorage
 				const encryptedHashingOptions = JSON.parse(userHashingOptions);
@@ -51,7 +50,7 @@ const useWelcomeBack = () => {
 				});
 
 				const wallet = await user.getWalletAccount(0);
-				const publicKey = await wallet.getPublicAddress();
+				const publicKey = await wallet.getPublicKey();
 
 				// Similar to useCreateUser
 				return {

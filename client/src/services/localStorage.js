@@ -9,7 +9,7 @@ import _get from 'lodash-es/get';
  * @param {string} action push or set
  * @returns {object} new storage value
  */
-export const setLocalStorageValue = (key, path, value, action) => {
+const setLocalStorageValue = (key, path, value, action) => {
 	try {
 		const item = JSON.parse(localStorage.getItem(key)) || {};
 		let updatedItem;
@@ -39,7 +39,7 @@ export const setLocalStorageValue = (key, path, value, action) => {
  * @param {string} key Storage key
  * @param {string} path Object path
  */
-export const getLocalStorageValue = (key, path) => {
+const getLocalStorageValue = (key, path) => {
 	try {
 		const item = JSON.parse(localStorage.getItem(key));
 		return _get(item, path);
@@ -47,3 +47,56 @@ export const getLocalStorageValue = (key, path) => {
 		return undefined;
 	}
 };
+
+const setChromeStorageLocal = ({key, value} = undefined) => {
+  if (!key) {
+    return undefined;
+  }
+
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.set({[key]: value}, () => {
+        const error = chrome.runtime.lastError;
+        error ? reject(error) : resolve();
+    });
+  });
+}
+
+const getChromeStorageLocal = async (key) => {
+  try {
+    if (!key) {
+      return undefined;
+    }
+
+    /**
+     * `get` might accept an array of keys, rather than only one
+     * This is for testing
+     */
+    const finalkey = typeof key === "string" ? [key] : [...key];
+
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(finalkey, (items) => {
+        // Pass any observed errors down the promise chain.
+        if (chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
+
+        // Pass the data retrieved from storage down the promise chain.
+        return resolve(items);
+      });
+
+    });
+  } catch (err) {
+    console.error(`🚀 ~ getChromeStorageLocal::error `, err)
+    return undefined;
+  }
+}
+
+const clearChromeStorageLocal = () => chrome.storage.local.clear();
+
+export {
+  setLocalStorageValue,
+  getLocalStorageValue,
+  setChromeStorageLocal,
+  getChromeStorageLocal,
+  clearChromeStorageLocal
+}
