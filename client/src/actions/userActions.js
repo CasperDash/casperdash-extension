@@ -1,7 +1,8 @@
 import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
-import { CONNECTION_TYPES } from '@cd/constants/settings';
+import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
+import { getLocalStorageValue } from '@cd/services/localStorage';
 import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from "./userActions.utils";
 
 /**
@@ -62,6 +63,8 @@ export const setPublicKey = (publicKey, loginOptions = {}) => {
 	};
 };
 
+export const getConnectedAccountLocalStorage = () => getLocalStorageValue('account', CONNECTED_ACCOUNT_STORAGE_PATH);
+
 /**
  * Get connected account info from local storage
  * then dispatch this info back into store
@@ -69,7 +72,12 @@ export const setPublicKey = (publicKey, loginOptions = {}) => {
  */
 export const initConnectedAccountFromLocalStorage = () => {
 	return async (dispatch) => {
-		const connectedAccount = await getConnectedAccountChromeLocalStorage();
+    let connectedAccount = undefined;
+    const isChromeExtension = Boolean(chrome.storage);
+
+    connectedAccount = isChromeExtension
+      ? await getConnectedAccountChromeLocalStorage()
+      : getConnectedAccountLocalStorage;
 
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
