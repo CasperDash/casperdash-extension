@@ -1,5 +1,6 @@
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
+import isEmpty from 'lodash-es/isEmpty';
 
 /**
  * Set value to local storage by path
@@ -54,7 +55,7 @@ const setChromeStorageLocal = ({key, value} = undefined) => {
       return undefined;
     }
 
-    if (!chrome.storage) {
+    if (!isUsingExtension()) {
       throw new Error("Must be running in Chrome Extension environment");
     }
 
@@ -76,7 +77,7 @@ const getChromeStorageLocal = async (key) => {
       return undefined;
     }
 
-    if (!chrome.storage) {
+    if (!isUsingExtension()) {
       throw new Error("Must be running in Chrome Extension environment");
     }
 
@@ -96,7 +97,7 @@ const getChromeStorageLocal = async (key) => {
         // Pass the data retrieved from storage down the promise chain.
         return resolve(items);
       });
-        
+
 
     });
   } catch (error) {
@@ -106,8 +107,10 @@ const getChromeStorageLocal = async (key) => {
 }
 
 const clearChromeStorageLocal = () => chrome.storage.local.clear();
+const isUsingExtension = () => Boolean(!isEmpty(chrome) && "storage" in chrome);
 
 export {
+  isUsingExtension,
   setLocalStorageValue,
   getLocalStorageValue,
   setChromeStorageLocal,

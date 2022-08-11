@@ -1,5 +1,5 @@
 import { CONNECTED_ACCOUNT_STORAGE_PATH } from '@cd/constants/settings';
-import { setLocalStorageValue, setChromeStorageLocal, getChromeStorageLocal } from '@cd/services/localStorage';
+import { isUsingExtension, setLocalStorageValue, setChromeStorageLocal, getChromeStorageLocal } from '@cd/services/localStorage';
 
 const getConnectedAccountChromeLocalStorage = async () => {
   try {
@@ -18,7 +18,7 @@ const getConnectedAccountChromeLocalStorage = async () => {
  */
 
 const cacheLoginInfoToLocalStorage = async (publicKey, loginOptions) => {
-  const isChromeExtension = Boolean(chrome.storage);
+  const isChromeExtension = isUsingExtension();
 
   if (isChromeExtension) {
     await setChromeStorageLocal({ key: "publicKey", value: publicKey ?? "" });
