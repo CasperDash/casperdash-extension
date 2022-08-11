@@ -1,7 +1,11 @@
 import { setChromeStorageLocal, getChromeStorageLocal } from '@cd/services/localStorage';
 
 const getConnectedAccountChromeLocalStorage = async () => {
-  return getChromeStorageLocal(["publicKey", "loginOptions"]);
+  try {
+    return getChromeStorageLocal(["publicKey", "loginOptions"]);
+  } catch (err) {
+    return undefined;
+  }
 };
 
 /**
