@@ -29,6 +29,7 @@
 		"formik": "^2.2.9",
 		"fuse.js": "^6.5.3",
 		"identicon.js": "^2.3.3",
+		"jest-chrome": "^0.7.2",
 		"lodash-es": "^4.17.21",
 		"memoize-one": "^6.0.0",
 		"qrcode.react": "^1.0.1",

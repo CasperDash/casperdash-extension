@@ -13,3 +13,4 @@ global.console = {
 };
 
 global.navigator.clipboard = { writeText: jest.fn() };
+Object.assign(global, require('jest-chrome'));
