@@ -77,7 +77,7 @@ export const initConnectedAccountFromLocalStorage = () => {
 
     connectedAccount = isChromeExtension
       ? await getConnectedAccountChromeLocalStorage()
-      : getConnectedAccountLocalStorage;
+      : getConnectedAccountLocalStorage();
 
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
