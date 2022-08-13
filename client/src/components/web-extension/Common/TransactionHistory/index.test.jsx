@@ -43,7 +43,7 @@ test('Should show list of history', () => {
 	expect(getByText(/Failed/i)).toBeInTheDocument();
 	expect(getByText(/All/i)).toBeInTheDocument();
 	expect(getByText(/testk/i)).toBeInTheDocument();
-	expect(getByText('10 CSPR')).toBeInTheDocument();
+	expect(getByText("10 CSPR").textContent).toBe("10 CSPR");
 	expect(getAllByText(/pending/i)[1]).toBeInTheDocument();
 	fireEvent.click(container.querySelector('.cd_we_item'));
 	expect(mockUsedNavigate).toHaveBeenCalled();

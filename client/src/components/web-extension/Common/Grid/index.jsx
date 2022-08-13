@@ -8,6 +8,9 @@ import NoData from '@cd/common/NoData';
 import './index.scss';
 
 const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
+  // console.log(`🚀 ~ Grid ~ isLoading`, isLoading)
+  // console.log(`🚀 ~ Grid ~ className`, className)
+  // console.log(`🚀 ~ Grid ~ onRowClick`, onRowClick)
 	// console.log(`🚀 ~ Grid ~ metadata`, metadata);
 	console.log(`🚀 ~ Grid ~ data`, data);
 	const EMPTY_BALANCE = 0;
@@ -43,7 +46,8 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 			return  (
 				<div className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`} key={`${item.key}-${token.symbol}`}>
 					{renderValue({ item, token}, formattedValue)}
-					{item.suffix}
+          {' '}
+          {item.suffix}
 				</div>
 			);
 		},
