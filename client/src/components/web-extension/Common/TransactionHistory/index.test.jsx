@@ -36,15 +36,15 @@ test('Should show list of history', () => {
 		{ deployHash: 'testkhaskd', timestamp: '2022/01/01', amount: 10, status: 'pending' },
 	]);
 	spyOnUseSelector.mockReturnValue('test');
-	const { getByText, container } = render(<TransactionHistory symbol="CSPR" />);
+	const { getAllByText, getByText, container } = render(<TransactionHistory symbol="CSPR" />);
 
-	expect(getByText('Pending').textContent).toBe('Pending');
-	expect(getByText(/Completed/i).textContent).toBe('Completed');
-	expect(getByText(/Failed/i).textContent).toBe('Failed');
-	expect(getByText(/All/i).textContent).toBe('All');
-	expect(getByText(/testk/i).textContent).toBe('testk');
-	expect(getByText('10 CSPR').textContent).toBe('10 CSPR');
-	expect(getByText('pending').textContent).toBe('pending ');
+	expect(getAllByText(/Pending/i)[0]).toBeInTheDocument();
+	expect(getByText(/Completed/i)).toBeInTheDocument();
+	expect(getByText(/Failed/i)).toBeInTheDocument();
+	expect(getByText(/All/i)).toBeInTheDocument();
+	expect(getByText(/testk/i)).toBeInTheDocument();
+	expect(getByText('10 CSPR')).toBeInTheDocument();
+	expect(getAllByText(/pending/i)[1]).toBeInTheDocument();
 	fireEvent.click(container.querySelector('.cd_we_item'));
 	expect(mockUsedNavigate).toHaveBeenCalled();
 });

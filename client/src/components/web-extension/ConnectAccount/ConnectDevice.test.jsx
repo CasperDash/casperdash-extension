@@ -41,9 +41,9 @@ test('Should show keys and load more button', async () => {
 	]);
 	const { getByText } = render(<ConnectDevice />);
 
-	expect(getByText(/testKey/i).textContent).toBe('testKey ');
-	expect(getByText(/10 CSPR/i).textContent).toBe('10 CSPR');
-	expect(getByText(/Load More/i).textContent).toBe('Load More');
+	expect(getByText(/testKey/i)).toBeInTheDocument();
+	expect(getByText(/10 CSPR/i)).toBeInTheDocument();
+	expect(getByText(/Load More/i)).toBeInTheDocument();
 	fireEvent.click(getByText(/testKey/i));
 	expect(useNavigate()).toHaveBeenCalled();
 });
