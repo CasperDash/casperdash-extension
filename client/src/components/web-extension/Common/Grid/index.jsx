@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import get from 'lodash-es/get';
 import isFunction from 'lodash-es/isFunction';
-import PropTypes from 'prop-types';
-import { Bar } from '../../../Common/Spinner';
-import NoData from '../../../Common/NoData';
-import { getValueByFormat } from '../../../../helpers/format';
+import { getValueByFormat } from '@cd/helpers/format';
+import { Bar } from '@cd/common/Spinner';
+import NoData from '@cd/common/NoData';
 import './index.scss';
 
 const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
 	// console.log(`🚀 ~ Grid ~ metadata`, metadata);
-	// console.log(`🚀 ~ Grid ~ data`, data);
+	console.log(`🚀 ~ Grid ~ data`, data);
 	const EMPTY_BALANCE = 0;
 	const getFormattedValue = useCallback((item, token) => {
 		const isEmptyBalance = Boolean(token?.balance?.displayValue === 0);
