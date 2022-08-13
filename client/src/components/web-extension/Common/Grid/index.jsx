@@ -19,12 +19,19 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 					format: item.format,
 			});
 	}, []);
+  const renderValue = useCallback(({item, token}, value) => {
+    if (item.wrapperComponent) {
+      return <item.wrapperComponent>{value}</item.wrapperComponent>
+    };
+
+    if (item.component) {
+      return <item.component {...(item.props && { ...item.props })} {...token} value={value} />
+    }
+    
+    return value;
+  }, []);
 	const renderGridItem = useCallback(
 		(item, token) => {
-      // console.log(`🚀 ~ Grid ~ token`, token)
-			console.log(`🚀 ~ {metadata[key].map ~ item`, item);
-			const Component = item.component;
-			const WrapperComponent = item.wrapperComponent;
 			const formattedValue = getFormattedValue(item, token);
       const shouldRender = (isFunction(item?.shouldDisplay) && !item.shouldDisplay(get(token, item.key))) ||
 				!get(token, item.key);
@@ -35,26 +42,18 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 
 			return  (
 				<div className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`} key={`${item.key}-${token.symbol}`}>
-					{WrapperComponent ? (
-						<WrapperComponent>{formattedValue}</WrapperComponent>
-					) : Component ? (
-						<Component {...(item.props && { ...item.props })} {...token} value={formattedValue} />
-					) : (
-						formattedValue
-					)}{' '}
+					{renderValue({ item, token}, formattedValue)}
 					{item.suffix}
 				</div>
 			);
 		},
-		[getFormattedValue],
+		[getFormattedValue, renderValue],
 	);
 
 	return (
 		<div className={`cd_we_grid ${className || ''}`}>
 			{!isLoading && !data.length && <NoData />}
 			{data.map((value, i) => {
-				// console.log(`🚀 ~ {data.map ~ value`, value);
-				// const isEmptyBalance = Boolean(value?.balance?.displayValue === 0);
 				const canClick = typeof onRowClick === 'function';
 				return (
 					<div
@@ -72,9 +71,7 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 												return (
 													<div
 														key={i}
-														className={`cd_we_grid_icon ${
-															metadata.left ? metadata.left.iconClassName || '' : ''
-														}`}
+														className={`cd_we_grid_icon ${metadata?.left?.iconClassName ?? ""}`}
 													>
 														{ic && <img src={ic} alt="grid" />}
 													</div>
@@ -82,48 +79,13 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 											})
 										) : (
 											<div
-												className={`cd_we_grid_icon ${
-													metadata.left ? metadata.left.iconClassName || '' : ''
-												}`}
+												className={`cd_we_grid_icon ${metadata?.left?.iconClassName ?? ""}`}
 											>
 												<img src={value.icon} alt="grid" />
 											</div>
 										))}
 									<div className="cd_we_item_content">
-										{metadata[key].map((item) => {
-											return renderGridItem(item, value);
-											// console.log(`🚀 ~ {metadata[key].map ~ item`, item);
-											// const Component = item.component;
-											// const WrapperComponent = item.wrapperComponent;
-											// const shouldRenderMarketPrice = Boolean(Component || WrapperComponent);
-											// const compProps = item.props || {};
-											// const formattedValue =
-											// 	item.key === 'price' && isEmptyBalance
-											// 		? EMPTY_BALANCE
-											// 		: getValueByFormat(item.value || get(value, item.key), {
-											// 				format: item.format,
-											// 		  });
-											// return (typeof item.shouldDisplay === 'function' &&
-											// 	!item.shouldDisplay(get(value, item.key))) ||
-											// 	!get(value, item.key) ? null : (
-											// 	<div
-											// 		className={`cd_we_item_value ${item.type} ${
-											// 			item.valueAsClass ? formattedValue : ''
-											// 		}`}
-											// 		key={i}
-											// 	>
-											// 		{WrapperComponent ? (
-											// 			<WrapperComponent>{formattedValue}</WrapperComponent>
-											// 		) : Component ? (
-											// 			<Component {...compProps} {...value} value={formattedValue} />
-											// 		) : (
-											// 			formattedValue
-											// 		)}{' '}
-											// 		{item.suffix}
-											// 	</div>
-											// );
-										})
-                  }
+										{metadata[key].map(item => renderGridItem(item, value))}
 									</div>
 								</div>
 							);
