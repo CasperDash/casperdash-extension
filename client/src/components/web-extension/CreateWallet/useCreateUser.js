@@ -1,16 +1,16 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
+import { WalletDescriptor, User } from 'casper-storage';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
-import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
+import { selectCreateWalletEncryptionType, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 
-const encryptionType = EncryptionType.Ed25519;
 const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const keyphrase = useSelector(selectCreateWalletKeyphrase);
+  const encryptionType = useSelector(selectCreateWalletEncryptionType);
 	const onCreateSuccess = useCallback(
 		(result) => {
 			const { publicKey, user } = result;
@@ -81,7 +81,7 @@ const useCreateUser = () => {
 				return undefined;
 			}
 		},
-		[keyphrase, onCreateSuccess, onInitNewUserHandler],
+		[encryptionType, keyphrase, onCreateSuccess, onInitNewUserHandler],
 	);
 
 	return { onCreateNewUser };

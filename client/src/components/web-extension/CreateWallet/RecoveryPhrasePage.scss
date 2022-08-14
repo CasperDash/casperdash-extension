@@ -4,7 +4,7 @@
       border-radius: 16px;
       border: 1px solid var(--secondary-text-color-light);
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: row wrap;
       padding: 16px;
     }
 
@@ -13,6 +13,19 @@
       width: 50%;
       list-style: none;
       padding-left: 0;
+
+      &-full {
+        width: 100%;
+
+        &.is-label-only {
+          margin: 10px 0 0;
+
+          .form-label {
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
     }
   }
 

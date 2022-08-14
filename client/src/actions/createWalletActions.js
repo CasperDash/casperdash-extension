@@ -63,4 +63,6 @@ const setNextStep = () => ({ type: CREATE_WALLET.NEXT_STEP });
  */
 const setPrevStep = () => ({ type: CREATE_WALLET.PREVIOUS_STEP });
 
-export { createAnswerSheet, updateAnswerSheet, generateKeyphrase, resetWalletCreation, setNextStep, setPrevStep };
+const setEncryptionType = value => ({ type: CREATE_WALLET.SET_ENCRYPTION_TYPE, payload: value });
+
+export { setEncryptionType, createAnswerSheet, updateAnswerSheet, generateKeyphrase, resetWalletCreation, setNextStep, setPrevStep };
