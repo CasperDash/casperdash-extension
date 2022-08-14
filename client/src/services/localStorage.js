@@ -1,5 +1,6 @@
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
+import isEmpty from 'lodash-es/isEmpty';
 
 /**
  * Set value to local storage by path
@@ -49,16 +50,25 @@ const getLocalStorageValue = (key, path) => {
 };
 
 const setChromeStorageLocal = ({key, value} = undefined) => {
-  if (!key) {
+  try {
+    if (!key) {
+      return undefined;
+    }
+
+    if (!isUsingExtension()) {
+      throw new Error("Must be running in Chrome Extension environment");
+    }
+
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.set({[key]: value}, () => {
+          const error = chrome.runtime.lastError;
+          error ? reject(error) : resolve();
+      });
+    });
+  } catch (error) {
+    console.error(`🚀 ~ setChromeStorageLocal::error `, error);
     return undefined;
   }
-
-  return new Promise((resolve, reject) => {
-    chrome.storage.local.set({[key]: value}, () => {
-        const error = chrome.runtime.lastError;
-        error ? reject(error) : resolve();
-    });
-  });
 }
 
 const getChromeStorageLocal = async (key) => {
@@ -67,33 +77,40 @@ const getChromeStorageLocal = async (key) => {
       return undefined;
     }
 
+    if (!isUsingExtension()) {
+      throw new Error("Must be running in Chrome Extension environment");
+    }
+
     /**
      * `get` might accept an array of keys, rather than only one
      * This is for testing
      */
     const finalkey = typeof key === "string" ? [key] : [...key];
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       chrome.storage.local.get(finalkey, (items) => {
         // Pass any observed errors down the promise chain.
         if (chrome.runtime.lastError) {
-          return reject(chrome.runtime.lastError);
+          throw new Error(chrome.runtime.lastError);
         }
 
         // Pass the data retrieved from storage down the promise chain.
         return resolve(items);
       });
 
+
     });
-  } catch (err) {
-    console.error(`🚀 ~ getChromeStorageLocal::error `, err)
+  } catch (error) {
+    console.error(`🚀 ~ getChromeStorageLocal::error `, error);
     return undefined;
   }
 }
 
 const clearChromeStorageLocal = () => chrome.storage.local.clear();
+const isUsingExtension = () => Boolean(!isEmpty(chrome) && "storage" in chrome);
 
 export {
+  isUsingExtension,
   setLocalStorageValue,
   getLocalStorageValue,
   setChromeStorageLocal,
