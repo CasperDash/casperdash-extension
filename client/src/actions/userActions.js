@@ -118,8 +118,8 @@ export const onBindingAuthInfo = (publicKey, user) => {
 		// Store user hash (string) into localStorage
 		await cacheLoginInfoToLocalStorage(publicKey, {
 			userHashingOptions: userHashOpts,
-			userInfo: user.userInfo,
+			userInfo: user.userInfo
 		});
-		dispatch(setPublicKeyToStore(publicKey, { userInfo: user.userInfo }));
+		dispatch(setPublicKeyToStore(publicKey, { connectionType: CONNECTION_TYPES.privateKey, userInfo: user.userInfo }));
 	};
 };

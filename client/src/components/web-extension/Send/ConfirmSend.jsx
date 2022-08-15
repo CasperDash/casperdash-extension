@@ -26,6 +26,7 @@ const ConfirmSend = ({ token }) => {
 	};
 
 	const buildTransferDeploy = (transferDetails) => {
+    console.log(`🚀 ~ buildTransferDeploy ~ transferDetails`, transferDetails)
 		return token.address === 'CSPR'
 			? getTransferDeploy({
 					...transferDetails,
@@ -45,6 +46,7 @@ const ConfirmSend = ({ token }) => {
 			fee,
 		};
 		const buildDeployFn = () => buildTransferDeploy(transferDetails);
+    console.log(`🚀 ~ onSendTransaction ~ buildDeployFn`, buildDeployFn)
 
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,

@@ -1,5 +1,5 @@
 import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
-import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '../constants/key';
+import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '@cd/constants/key';
 
 /**
  * Get Transfer deploy
@@ -14,7 +14,9 @@ export const buildTransferDeploy = (fromAccount, toAccount, amount, transferId, 
 	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
 	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transferId);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
-	return DeployUtil.makeDeploy(deployParams, transferParams, payment);
+  const deploy = DeployUtil.makeDeploy(deployParams, transferParams, payment)
+  console.log(">>> Building deploy: ", deploy);
+	return deploy;
 };
 
 /**

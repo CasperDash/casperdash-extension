@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
-import { CONNECTION_TYPES } from '../../constants/settings';
-import { getLoginOptions } from '../../selectors/user';
-import { signDeployByCasperSigner } from '../../services/casperServices';
-import { signDeployByLedger } from '../../services/ledgerServices';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
+import { getLoginOptions } from '@cd/selectors/user';
+import { signDeployByCasperSigner } from '@cd/services/casperServices';
+import { signDeployByLedger } from '@cd/services/ledgerServices';
+import { signDeployByPrivateKey } from "@cd/services/privateKeyServices";
 
 /**
  * Use the signer specified in the login options to sign a deploy.
@@ -10,6 +11,7 @@ import { signDeployByLedger } from '../../services/ledgerServices';
  */
 const useSigner = () => {
 	const loginOptions = useSelector(getLoginOptions);
+  // console.log(`🚀 ~ useSigner ~ loginOptions`, loginOptions)
 
 	const sign = async (deploy, mainAccountHex, setAccountHex) => {
 		switch (loginOptions.connectionType) {
@@ -21,6 +23,9 @@ const useSigner = () => {
 			}
 			case CONNECTION_TYPES.casperSigner:
 				return await signDeployByCasperSigner(deploy, mainAccountHex, setAccountHex);
+      case CONNECTION_TYPES.privateKey:
+        console.log(">>> HERE")
+        return await signDeployByPrivateKey(deploy);
 			default:
 				throw Error('Can not find signer');
 		}
