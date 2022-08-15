@@ -95,7 +95,7 @@ const ConfirmSend = ({ token }) => {
 
 			<div className="cd_we_confirm_buttons">
 				<Button onClick={onSendTransaction} disabled={isDeploying}>
-					{isDeploying ? 'Sending' : 'Send'}
+					{isDeploying ? 'Sending' : 'Sign'}
 				</Button>
 			</div>
 		</div>
