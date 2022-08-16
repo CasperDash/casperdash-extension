@@ -109,7 +109,7 @@ const getChromeStorageLocal = async (key) => {
 const clearChromeStorageLocal = () => chrome.storage.local.clear();
 const isUsingExtension = () => {
   try {
-    return Boolean(typeof chrome !== undefined && !isEmpty(chrome) && "storage" in chrome)
+    return Boolean(typeof chrome !== "undefined" && !isEmpty(chrome) && "storage" in chrome)
   } catch (err) {
     return false;
   }
