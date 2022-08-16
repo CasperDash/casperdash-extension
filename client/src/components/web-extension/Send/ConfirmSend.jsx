@@ -46,7 +46,6 @@ const ConfirmSend = ({ token }) => {
 			fee,
 		};
 		const buildDeployFn = () => buildTransferDeploy(transferDetails);
-    console.log(`🚀 ~ onSendTransaction ~ buildDeployFn`, buildDeployFn)
 
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,

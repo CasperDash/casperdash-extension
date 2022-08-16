@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
+import UserInstance from "@cd/services/userServices";
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
@@ -11,9 +12,10 @@ const useWelcomeBack = () => {
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
-			const { publicKey, user } = result;
+			const { publicKey, userInfoHash, userInstance } = result;
 
-			dispatch(onBindingAuthInfo(publicKey, user));
+      UserInstance.instance = userInstance;
+			dispatch(onBindingAuthInfo(publicKey, userInfoHash));
 			navigate('/');
 		},
 		[dispatch, navigate],
@@ -55,7 +57,8 @@ const useWelcomeBack = () => {
 				// Similar to useCreateUser
 				return {
 					publicKey,
-					user: {
+          userInstance: user,
+					userInfoHash: {
 						userHashingOptions: userLoginOptions,
 						userInfo: encryptedUserInfo,
 					},

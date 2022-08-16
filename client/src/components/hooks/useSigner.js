@@ -11,7 +11,6 @@ import { signDeployByPrivateKey } from "@cd/services/privateKeyServices";
  */
 const useSigner = () => {
 	const loginOptions = useSelector(getLoginOptions);
-  // console.log(`🚀 ~ useSigner ~ loginOptions`, loginOptions)
 
 	const sign = async (deploy, mainAccountHex, setAccountHex) => {
 		switch (loginOptions.connectionType) {
@@ -24,8 +23,7 @@ const useSigner = () => {
 			case CONNECTION_TYPES.casperSigner:
 				return await signDeployByCasperSigner(deploy, mainAccountHex, setAccountHex);
       case CONNECTION_TYPES.privateKey:
-        console.log(">>> HERE")
-        return await signDeployByPrivateKey(deploy);
+        return await signDeployByPrivateKey(deploy, mainAccountHex, setAccountHex);
 			default:
 				throw Error('Can not find signer');
 		}

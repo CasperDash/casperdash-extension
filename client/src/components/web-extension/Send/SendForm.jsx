@@ -6,8 +6,18 @@ import { Formik, Field } from 'formik';
 import { getAllTokenInfo, getTokenInfoByAddress } from '../../../selectors/user';
 import { validateTransferForm } from '../../../helpers/validator';
 import TokenSelectField from './TokenSelectField';
+import UserInstance from "@cd/services/userServices";
 
 const SendForm = ({ token }) => {
+  const testFnc = async () => {
+    console.log(">>> ", UserInstance.instance);
+    const user = UserInstance.instance; 
+    const wallet = await user.getWalletAccount(0);
+    console.log(`🚀 ~ testFnc ~ wallet`, wallet)
+    const a = wallet.getAsymmetricKey();
+    console.log(`🚀 ~ testFnc ~ a`, a)
+  }
+
 	//Hook
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
@@ -43,6 +53,10 @@ const SendForm = ({ token }) => {
 		const amount = balance / percent - (selectedToken.address === 'CSPR' ? selectedToken.transferFee : 0);
 		setFieldValue('sendAmount', amount);
 	};
+
+  React.useEffect(() => {
+    testFnc();
+  }, [])
 
 	return (
 		<Formik

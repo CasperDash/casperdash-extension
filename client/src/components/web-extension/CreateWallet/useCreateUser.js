@@ -5,6 +5,7 @@ import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
+import UserInstance from "@cd/services/userServices";
 
 const encryptionType = EncryptionType.Ed25519;
 const useCreateUser = () => {
@@ -13,9 +14,10 @@ const useCreateUser = () => {
 	const keyphrase = useSelector(selectCreateWalletKeyphrase);
 	const onCreateSuccess = useCallback(
 		(result) => {
-			const { publicKey, user } = result;
-
-			dispatch(onBindingAuthInfo(publicKey, user));
+			const { publicKey, userInfoHash, userInstance } = result;
+      
+      UserInstance.instance = userInstance;
+			dispatch(onBindingAuthInfo(publicKey, userInfoHash));
 			dispatch(resetWalletCreation());
 			navigate('/');
 			return result;
@@ -50,7 +52,7 @@ const useCreateUser = () => {
 			const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
 			const publicKey = await wallet.getPublicKey();
 
-			return { user: result, publicKey };
+			return { userInstance: user, userInfoHash: result, publicKey };
 		},
 		[onGetUserInfoHash],
 	);
@@ -75,6 +77,7 @@ const useCreateUser = () => {
 
 				const result = await onInitNewUserHandler(user);
 				result.publicKey && onCreateSuccess(result);
+
 				return result;
 			} catch (err) {
 				console.error(`🚀 ~ useCreateUser ~ err`, err);

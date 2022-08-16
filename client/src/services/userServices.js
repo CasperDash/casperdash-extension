@@ -2,6 +2,20 @@ import { CLPublicKey } from 'casper-js-sdk';
 import { toMotes } from '../helpers/currency';
 import { buildTransferDeploy } from './casperServices';
 
+class User {
+  _user;
+
+  constructor() {}
+
+  set instance(user) {
+    this._user = user;
+  }
+
+  get instance() {
+    return this._user ?? undefined;
+  }
+}
+
 /**
  * It builds a transfer deploy.
  * @param transactionDetail
@@ -18,3 +32,5 @@ export const getTransferDeploy = (transactionDetail = {}) => {
 		throw new Error(`Failed to build transfer deploy.`);
 	}
 };
+
+export default new User();
