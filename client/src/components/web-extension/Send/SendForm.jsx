@@ -3,15 +3,16 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
+import UserInstance from "@cd/services/userServices";
 import { getAllTokenInfo, getTokenInfoByAddress } from '../../../selectors/user';
 import { validateTransferForm } from '../../../helpers/validator';
 import TokenSelectField from './TokenSelectField';
-import UserInstance from "@cd/services/userServices";
 
 const SendForm = ({ token }) => {
   const testFnc = async () => {
+
     console.log(">>> ", UserInstance.instance);
-    const user = UserInstance.instance; 
+    const user = UserInstance.instance;
     const wallet = await user.getWalletAccount(0);
     console.log(`🚀 ~ testFnc ~ wallet`, wallet)
     const a = wallet.getAsymmetricKey();

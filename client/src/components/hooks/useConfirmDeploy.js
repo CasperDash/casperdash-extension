@@ -28,7 +28,9 @@ export const useConfirmDeploy = () => {
       console.log(`🚀 ~ executeDeploy ~ deploy`, deploy)
 			// Sign with signer
 			toast.update(toastId, { render: 'Please review the deploy' });
+      console.log(`🚀 ~ file: useConfirmDeploy.js ~ line 32 ~ executeDeploy ~ signer`, signer)
 			const signedDeploy = await signer.sign(deploy, fromPublicKey, toPublicKey);
+      console.log(`🚀 ~ file: useConfirmDeploy.js ~ line 33 ~ executeDeploy ~ signedDeploy`, signedDeploy)
 			// Put deploy on chain
 			toast.update(toastId, { render: 'Putting deploy' });
 			const deployHash = await putSignedDeploy(signedDeploy);
@@ -41,6 +43,7 @@ export const useConfirmDeploy = () => {
 			setIsDeploying(false);
 			return { deployHash, signedDeploy };
 		} catch (error) {
+      console.log(`🚀 ~ ERRROR >>>>>> `, error)
 			toast.update(toastId, {
 				render: error.message,
 				type: 'error',
