@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import webLocalStorage from 'redux-persist/lib/storage'
 import { localStorage as extensionLocalStorage } from 'redux-persist-webextension-storage';
 import thunk from 'redux-thunk';
+import { isUsingExtension } from "@cd/services/localStorage";
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
@@ -19,7 +20,7 @@ import settingsReducer from './reducers/settings';
 import createWalletReducer, { initialState as createWalletInitialState } from "./reducers/createWallet";
 import { REQUEST } from './actionTypes';
 
-const isChromeExtension = Boolean(chrome.storage);
+const isChromeExtension = isUsingExtension();
 const persistConfig = {
   key: 'root',
   storage: isChromeExtension ? extensionLocalStorage : webLocalStorage,

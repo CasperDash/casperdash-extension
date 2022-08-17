@@ -2,7 +2,7 @@ import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
-import { getLocalStorageValue } from '@cd/services/localStorage';
+import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
 import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from "./userActions.utils";
 
 /**
@@ -73,7 +73,7 @@ export const getConnectedAccountLocalStorage = () => getLocalStorageValue('accou
 export const initConnectedAccountFromLocalStorage = () => {
 	return async (dispatch) => {
     let connectedAccount = undefined;
-    const isChromeExtension = Boolean(chrome.storage);
+    const isChromeExtension = isUsingExtension();
 
     connectedAccount = isChromeExtension
       ? await getConnectedAccountChromeLocalStorage()
