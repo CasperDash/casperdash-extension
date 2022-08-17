@@ -50,7 +50,6 @@ describe('Grid', () => {
 			displayValue: 0,
 		},
 		price: 0.03772368,
-		totalPrice: 3.772368,
 		transferFee: 0.1,
 		minAmount: 2.5,
 	};
@@ -64,11 +63,14 @@ describe('Grid', () => {
 			data: [
 				{
 					...sharedProps,
+          totalPrice: 0,
 				},
 			],
 		});
 
-		expect(getByTestId('CSPR-price').textContent).toBe('0 ');
+    expect(getByTestId('CSPR-balance.displayValue').textContent).toBe('0 ');
+		expect(getByTestId('CSPR-totalPrice').textContent).toBe('$0.00 ');
+		expect(getByTestId('CSPR-price').textContent).toBe('$0.04 ');
 	});
 
 	it('Should show value and amount when User has some balances in wallet', () => {
@@ -76,6 +78,7 @@ describe('Grid', () => {
 			data: [
 				{
 					...sharedProps,
+          totalPrice: 3.77,
 					balance: {
 						displayValue: 100,
 					},

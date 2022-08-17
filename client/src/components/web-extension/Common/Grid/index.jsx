@@ -8,14 +8,10 @@ import NoData from '@cd/common/NoData';
 import './index.scss';
 
 const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
-	const EMPTY_BALANCE = 0;
 	const getFormattedValue = useCallback((item, token) => {
-		const isEmptyBalance = Boolean(token?.balance?.displayValue === 0);
-		return item.key === 'price' && isEmptyBalance
-			? EMPTY_BALANCE
-			: getValueByFormat(item.value || get(token, item.key), {
-					format: item.format,
-			});
+    return getValueByFormat(item.value || get(token, item.key), {
+      format: item.format,
+    });
 	}, []);
 	const renderValue = useCallback(({ item, token }, value) => {
 		if (item.wrapperComponent) {
@@ -32,7 +28,7 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 		(item, token) => {
 			const formattedValue = getFormattedValue(item, token);
 			const shouldNotRender =
-				(isFunction(item?.shouldDisplay) && !item.shouldDisplay(get(token, item.key))) || !get(token, item.key);
+				(isFunction(item?.shouldDisplay) && !item.shouldDisplay(get(token, item.key))) || get(token, item.key) === null;
 
 			if (shouldNotRender) {
 				return null;
