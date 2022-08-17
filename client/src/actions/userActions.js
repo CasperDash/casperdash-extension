@@ -3,7 +3,7 @@ import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
 import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
-import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from "./userActions.utils";
+import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from './userActions.utils';
 
 /**
  * @param {string} publicKey
@@ -72,12 +72,12 @@ export const getConnectedAccountLocalStorage = () => getLocalStorageValue('accou
  */
 export const initConnectedAccountFromLocalStorage = () => {
 	return async (dispatch) => {
-    let connectedAccount = undefined;
-    const isChromeExtension = isUsingExtension();
+		let connectedAccount = undefined;
+		const isChromeExtension = isUsingExtension();
 
-    connectedAccount = isChromeExtension
-      ? await getConnectedAccountChromeLocalStorage()
-      : getConnectedAccountLocalStorage();
+		connectedAccount = isChromeExtension
+			? await getConnectedAccountChromeLocalStorage()
+			: getConnectedAccountLocalStorage();
 
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
@@ -101,10 +101,10 @@ export const onClearPublicKey = () => {
 		const {
 			user: { loginOptions: loginOptionsState },
 		} = getState();
-    const connectedAccount = await getConnectedAccountChromeLocalStorage();
+		const connectedAccount = await getConnectedAccountChromeLocalStorage();
 		const { loginOptions: loginOptionsCache } = connectedAccount;
 		const emptyPublicKey = '';
-    await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
+		await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
 		dispatch(setPublicKeyToStore(emptyPublicKey, loginOptionsState));
 	};
 };
@@ -118,8 +118,14 @@ export const onBindingAuthInfo = (publicKey, user) => {
 		// Store user hash (string) into localStorage
 		await cacheLoginInfoToLocalStorage(publicKey, {
 			userHashingOptions: userHashOpts,
-			userInfo: user.userInfo
+			userInfo: user.userInfo,
 		});
-		dispatch(setPublicKeyToStore(publicKey, { connectionType: CONNECTION_TYPES.privateKey, userInfo: user.userInfo }));
+		dispatch(
+			setPublicKeyToStore(publicKey, {
+				connectionType: CONNECTION_TYPES.privateKey,
+				currentWalletIndex: user.currentWalletIndex,
+				userInfo: user.userInfo,
+			}),
+		);
 	};
 };
