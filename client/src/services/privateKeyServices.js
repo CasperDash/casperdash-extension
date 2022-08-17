@@ -25,21 +25,13 @@ export const signDeployByPrivateKey = async (deploy, mainAccountHex, setAccountH
   const secretKey = wallet.getPrivateKeyByteArray();
   console.log(`🚀 ~ file: privateKeyServices.js ~ line 26 ~ signDeployByPrivateKey ~ secretKey`, secretKey)
 
-  const asymKeys = wallet.getAsymmetricKey();
-  console.log(`🚀 ~ >>> asymKeys: `, asymKeys)
+  // const asymKeys = wallet.getAsymmetricKey();
+  // console.log(`🚀 ~ >>> asymKeys: `, asymKeys)
 
   const bsymKey = new Keys.Ed25519({ publicKey, secretKey })
   console.log(`🚀 ~ >>> BKey: `, bsymKey)
 
-  // console.log(`🚀 ~ signDeployByPrivateKey ~ deploy`, deploy);
-  // const deployObj = DeployUtil.deployToJson(deploy);
-  // console.log(`🚀 ~ signDeployByPrivateKey ~ deployObj`, deployObj)
-  // console.log(">>> ZZZZZZ deploy:: ", deploy instanceof DeployUtil.Deploy);
-  console.log(">>> ZZZZZZ2 deploy:: ", deploy);
-  const { hash, header, payment, session } = deploy;
-  const insDeploy = new DeployUtil.Deploy(hash, header, payment, session);
-  console.log(">>> Instance DeployUtil.Deploy:: ", insDeploy instanceof DeployUtil.Deploy)
-  console.log(`🚀 ~ signDeployByPrivateKey ~ insDeploy`, insDeploy)
+  // console.log(">>> ZZZZZZ2 deploy:: ", deploy);
 
   const validate = DeployUtil.validateDeploy(deploy);
   console.log(`🚀 ~ file: privateKeyServices.js ~ line 45 ~ signDeployByPrivateKey ~ validate`, validate);
