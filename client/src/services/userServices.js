@@ -1,19 +1,34 @@
-import { CLPublicKey } from 'casper-js-sdk';
+import { Keys, CLPublicKey } from 'casper-js-sdk';
 import { toMotes } from '../helpers/currency';
 import { buildTransferDeploy } from './casperServices';
 
-class User {
-  _user;
+class UserService {
+	_user;
 
-  constructor() {}
+	constructor() {}
 
-  set instance(user) {
-    this._user = user;
-  }
+	set instance(user) {
+		this._user = user;
+	}
 
-  get instance() {
-    return this._user ?? undefined;
-  }
+	get instance() {
+		return this._user ?? undefined;
+	}
+
+	async generateKeypair(loginInfo = {}) {
+		try {
+			const currentWalletIndex = loginInfo?.currentWalletIndex ?? 0;
+			const encryptionType = loginInfo?.encryptionType ?? 'Ed25519';
+			const user = this.instance;
+
+			const wallet = await user.getWalletAccount(currentWalletIndex);
+			const publicKey = await wallet.getPublicKeyByteArray();
+			const secretKey = wallet.getPrivateKeyByteArray();
+			return Keys[encryptionType].parseKeyPair(publicKey.slice(1), secretKey);
+		} catch (error) {
+			return undefined;
+		}
+	}
 }
 
 /**
@@ -33,4 +48,4 @@ export const getTransferDeploy = (transactionDetail = {}) => {
 	}
 };
 
-export default new User();
+export default new UserService();

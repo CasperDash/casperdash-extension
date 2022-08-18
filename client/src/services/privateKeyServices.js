@@ -1,4 +1,4 @@
-import { DeployUtil, Keys } from 'casper-js-sdk';
+import { DeployUtil } from 'casper-js-sdk';
 import UserInstance from '@cd/services/userServices';
 
 /**
@@ -12,17 +12,14 @@ export const signDeployByPrivateKey = async (deploy) => {
 		throw new Error('User missing');
 	}
 
-	const wallet = await user.getWalletAccount(0);
-	const publicKey = await wallet.getPublicKeyByteArray();
-	const secretKey = wallet.getPrivateKeyByteArray();
-	const bsymKey = Keys.Ed25519.parseKeyPair(publicKey.slice(1), secretKey);
+	const asymKey = await UserInstance.generateKeypair();
 	const validate = DeployUtil.validateDeploy(deploy);
 
-	if (!validate) {
+	if (!validate || !asymKey) {
 		throw new Error('Something went wrong with deploy');
 	}
 
-	const signedDeploy = deploy.sign([bsymKey]);
+	const signedDeploy = deploy.sign([asymKey]);
 	console.log(`🚀 ~ signDeployByPrivateKey ~ signedDeploy`, signedDeploy);
 
 	return DeployUtil.deployToJson(signedDeploy);
