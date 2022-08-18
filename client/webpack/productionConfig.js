@@ -5,7 +5,7 @@ module.exports = {
 		minimize: true,
 		minimizer: [
 			new ESBuildMinifyPlugin({
-				target: 'es2019',
+				target: 'es5',
 				css: true,
 			}),
 		],

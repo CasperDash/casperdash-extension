@@ -8,6 +8,7 @@
 	"dependencies": {
 		"@babel/plugin-transform-runtime": "^7.16.7",
 		"@ledgerhq/hw-transport-webusb": "^6.20.0",
+		"@metamask/obs-store": "^7.0.0",
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
 		"@testing-library/jest-dom": "^4.2.4",
@@ -50,7 +51,8 @@
 		"redux-thunk": "^2.3.0",
 		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
-		"ts-results": "^3.3.0"
+		"ts-results": "^3.3.0",
+		"webextension-polyfill": "^0.10.0"
 	},
 	"reactSnapshot": {
 		"exclude": [
