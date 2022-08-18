@@ -5,7 +5,7 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
 import { toast } from 'react-toastify';
 import { validateTransferForm } from '@cd/helpers/validator';
-import UserInstance from '@cd/services/userServices';
+import UserInstance from '@cd/services/UserService';
 import { getAllTokenInfo, getTokenInfoByAddress } from '@cd/selectors/user';
 import TokenSelectField from './TokenSelectField';
 

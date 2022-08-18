@@ -1,5 +1,5 @@
 import { DeployUtil } from 'casper-js-sdk';
-import UserInstance from '@cd/services/userServices';
+import UserInstance from '@cd/services/UserService';
 
 /**
  * Sign a deploy by singer

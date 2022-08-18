@@ -5,7 +5,7 @@ import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
-import UserInstance from '@cd/services/userServices';
+import UserInstance from '@cd/services/UserService';
 
 const encryptionType = EncryptionType.Ed25519;
 const useCreateUser = () => {

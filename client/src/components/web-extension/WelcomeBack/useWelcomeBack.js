@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
-import UserInstance from '@cd/services/userServices';
+import UserInstance from '@cd/services/UserService';
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
