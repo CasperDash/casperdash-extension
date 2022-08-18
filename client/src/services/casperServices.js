@@ -15,7 +15,6 @@ export const buildTransferDeploy = (fromAccount, toAccount, amount, transferId, 
 	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transferId);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
   const deploy = DeployUtil.makeDeploy(deployParams, transferParams, payment)
-  console.log(">>> Building deploy: ", deploy);
 	return deploy;
 };
 
