@@ -28,7 +28,7 @@ const SendForm = ({ token }) => {
 	};
 
 	const handleSubmit = (values) => {
-		navigate(`${pathname}#confirm`, { state: { token: { ...selectedToken, ...values }, name: 'Confirm' } });
+		navigate(`${pathname}#confirm`, { state: { token: { ...selectedToken, ...values }, name: 'Review' } });
 	};
 
 	const onValidate = (values) => {
