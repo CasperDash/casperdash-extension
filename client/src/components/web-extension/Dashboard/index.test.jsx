@@ -39,14 +39,14 @@ describe("WalletDetails", () => {
     it('Should render full WalletDetail page with token info', async () => {
       spyOnUseSelector.mockReturnValue({ publicKey: "test"});
       const { getByText } = render(<DashBoard />);
-      expect(getByText(/Send/i).textContent).toBe('Send');
-      expect(getByText(/Receive/i).textContent).toBe('Receive');
-      expect(getByText(/Add Custom Token/i).textContent).toBe('+ Add Custom Token');
-      expect(getByText(/CSPR/i).textContent).toBe('CSPR ');
-      expect(getByText(/10/i).textContent).toBe('$10.00 ');
-      expect(getByText(/11/i).textContent).toBe('11 ');
-      expect(getByText(/0.2/i).textContent).toBe('$0.20 ');
-      expect(getByText(/Account 1/i).textContent).toBe('Account 1');
+      expect(getByText(/Send/i)).toBeInTheDocument();
+      expect(getByText(/Receive/i)).toBeInTheDocument();
+      expect(getByText(/Add Custom Token/i)).toBeInTheDocument();
+      expect(getByText(/CSPR/i)).toBeInTheDocument();
+      expect(getByText(/10/i)).toBeInTheDocument();
+      expect(getByText(/11/i)).toBeInTheDocument();
+      expect(getByText(/0.2/i)).toBeInTheDocument();
+      expect(getByText(/Account 1/i)).toBeInTheDocument();
       await fireEvent.click(getByText(/CSPR/i));
       expect(useNavigate()).toHaveBeenCalledTimes(1);
       expect(useNavigate()).toHaveBeenCalledWith('/token', {
