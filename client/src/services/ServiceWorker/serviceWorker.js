@@ -1,5 +1,9 @@
-import { onCreateNewUser } from './AccountManagement';
+import { ObservableStore } from '@metamask/obs-store';
 import RPC from './RPC';
+import AccountController from './Controllers/AccountController';
+
+const appStore = new ObservableStore({});
+const accountController = new AccountController(appStore);
 
 initialize().catch(console.error);
 
@@ -13,5 +17,6 @@ async function setupPopupServices() {
 		source: 'serviceWorker',
 	});
 
-	rpc.register('accountManager.createUser', onCreateNewUser);
+	rpc.register('accountManager.createUser', accountController.createNewUser);
+	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
 }

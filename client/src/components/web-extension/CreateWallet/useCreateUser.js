@@ -6,6 +6,7 @@ import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import UserInstance from '@cd/services/userServices';
+import { createUserService } from '@cd/components/hooks/useServiceWorker';
 
 const encryptionType = EncryptionType.Ed25519;
 const useCreateUser = () => {
@@ -43,19 +44,19 @@ const useCreateUser = () => {
 	 * Init new User account.
 	 * Aim to return publicKey and User info, including hash info and User info
 	 */
-	const onInitNewUserHandler = useCallback(
-		async (user) => {
-			// Get basic User info
-			const result = await onGetUserInfoHash(user);
+	// const onInitNewUserHandler = useCallback(
+	// 	async (user) => {
+	// 		// Get basic User info
+	// 		const result = await onGetUserInfoHash(user);
 
-			// Create Wallet and get public key, public address
-			const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
-			const publicKey = await wallet.getPublicKey();
+	// 		// Create Wallet and get public key, public address
+	// 		const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
+	// 		const publicKey = await wallet.getPublicKey();
 
-			return { userInstance: user, userInfoHash: result, publicKey };
-		},
-		[onGetUserInfoHash],
-	);
+	// 		return { userInstance: user, userInfoHash: result, publicKey };
+	// 	},
+	// 	[onGetUserInfoHash],
+	// );
 
 	const onCreateNewUser = useCallback(
 		async (password) => {
@@ -65,26 +66,29 @@ const useCreateUser = () => {
 				}
 
 				// Create new User
-				let user;
-				try {
-					user = new User(password);
-				} catch (error) {
-					return undefined;
-				}
+				// let user;
+				// try {
+				// 	user = new User(password);
+				// } catch (error) {
+				// 	return undefined;
+				// }
 
-				// Set HDWallet info
-				user.setHDWallet(keyphrase, encryptionType);
+				// // Set HDWallet info
+				// user.setHDWallet(keyphrase, encryptionType);
 
-				const result = await onInitNewUserHandler(user);
-				result.publicKey && onCreateSuccess(result);
+				//const result = await onInitNewUserHandler(user);
+				//result.publicKey && onCreateSuccess(result);
 
-				return result;
+				//return result;
+				const publicKey = await createUserService(password, keyphrase);
+				onCreateSuccess({ publicKey });
+				return publicKey;
 			} catch (err) {
 				console.error(`🚀 ~ useCreateUser ~ err`, err);
 				return undefined;
 			}
 		},
-		[keyphrase, onCreateSuccess, onInitNewUserHandler],
+		[keyphrase, onCreateSuccess],
 	);
 
 	return { onCreateNewUser };

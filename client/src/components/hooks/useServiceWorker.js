@@ -7,23 +7,23 @@ const resultHandler = (response = {}) => {
 	return response.payload;
 };
 
-const useServiceWorker = () => {
-	const options = {
-		source: 'popup',
-		destination: 'serviceWorker',
-		type: 'casperlabs-plugin',
-	};
-
-	const sentMessage = async (payload) => {
-		const result = await browser.runtime.sendMessage({ ...options, payload });
-		return resultHandler(result);
-	};
-
-	const createUserService = async (password, keyphrase) => {
-		return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase } });
-	};
-
-	return { createUserService };
+const options = {
+	source: 'popup',
+	destination: 'serviceWorker',
+	type: 'casperdash-extension',
 };
 
-export default useServiceWorker;
+const sentMessage = async (payload) => {
+	const result = await browser.runtime.sendMessage({ ...options, payload });
+	return resultHandler(result);
+};
+
+const createUserService = async (password, keyphrase) => {
+	return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase } });
+};
+
+const getActivePublicKey = async () => {
+	return sentMessage({ methodName: 'accountManager.getPublicKey' });
+};
+
+export { createUserService, getActivePublicKey };
