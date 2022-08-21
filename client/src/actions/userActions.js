@@ -109,7 +109,7 @@ export const onClearPublicKey = () => {
 	};
 };
 
-export const onBindingAuthInfo = (publicKey, user) => {
+export const onBindingAuthInfo = (publicKey) => {
 	// Store full User object into state
 	return async (dispatch) => {
 		// const userHashOpts = isObject(user.userHashingOptions)
@@ -121,7 +121,7 @@ export const onBindingAuthInfo = (publicKey, user) => {
 		//	userInfo: { publicKey },
 		//});
 		dispatch(
-			setPublicKeyToStore(publicKey, { connectionType: CONNECTION_TYPES.privateKey, userInfo: user.userInfo }),
+			setPublicKeyToStore(publicKey, { connectionType: CONNECTION_TYPES.privateKey }),
 		);
 	};
 };

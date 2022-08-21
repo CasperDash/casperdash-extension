@@ -37,6 +37,7 @@ class AccountController {
 
 	getPublicKey = async () => {
 		const user = this.appStore.getState().user;
+    console.log(`🚀 ~ AccountController ~ getPublicKey= ~ user`, user)
 		if (!user) {
 			throw Error('Cant find user');
 		}

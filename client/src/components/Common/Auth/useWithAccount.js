@@ -41,7 +41,7 @@ const useWithAccount = () => {
 				(cacheConnectedAccount.publicKey !== storePublicKey ||
 					cacheConnectedAccount.loginOptions !== storeLoginOptions))
 		) {
-			//setLoading(true);
+			setLoading(true);
 			loadCache();
 		}
 

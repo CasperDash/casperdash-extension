@@ -15,10 +15,10 @@ const useCreateUser = () => {
 	const keyphrase = useSelector(selectCreateWalletKeyphrase);
 	const onCreateSuccess = useCallback(
 		(result) => {
-			const { publicKey, userInfoHash, userInstance } = result;
+			const { publicKey } = result;
 
-			UserInstance.instance = userInstance;
-			dispatch(onBindingAuthInfo(publicKey, userInfoHash));
+			// UserInstance.instance = userInstance;
+			dispatch(onBindingAuthInfo(publicKey));
 			dispatch(resetWalletCreation());
 			navigate('/');
 			return result;
@@ -81,6 +81,7 @@ const useCreateUser = () => {
 
 				//return result;
 				const publicKey = await createUserService(password, keyphrase);
+        console.log(`🚀 ~ publicKey`, publicKey)
 				onCreateSuccess({ publicKey });
 				return publicKey;
 			} catch (err) {

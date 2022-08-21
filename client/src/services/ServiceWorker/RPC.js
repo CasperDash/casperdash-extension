@@ -12,7 +12,6 @@ export default class RPC {
 		if (method === undefined) {
 			throw new Error('Unregistered method call: ' + payload.methodName);
 		}
-
 		return method(payload.params, caller);
 	}
 

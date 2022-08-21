@@ -19,4 +19,5 @@ async function setupPopupServices() {
 
 	rpc.register('accountManager.createUser', accountController.createNewUser);
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
+	rpc.register('WORKER_KEEP_ALIVE_MESSAGE', () => {});
 }

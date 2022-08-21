@@ -26,4 +26,8 @@ const getActivePublicKey = async () => {
 	return sentMessage({ methodName: 'accountManager.getPublicKey' });
 };
 
-export { createUserService, getActivePublicKey };
+const keepSWAlive = async () => {
+	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
+};
+
+export { keepSWAlive, createUserService, getActivePublicKey };
