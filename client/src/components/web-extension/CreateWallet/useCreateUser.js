@@ -16,7 +16,6 @@ const useCreateUser = () => {
 	const onCreateSuccess = useCallback(
 		(result) => {
 			const { publicKey } = result;
-
 			dispatch(onBindingAuthInfo(publicKey));
 			dispatch(resetWalletCreation());
 			navigate('/');
@@ -25,19 +24,19 @@ const useCreateUser = () => {
 		[dispatch, navigate],
 	);
 
-	const onGetUserInfoHash = useCallback(async (user) => {
-		// Take the hashing options from user's instance
-		const hashingOptions = user.getPasswordHashingOptions();
-		const userHashingOptions = JSON.stringify(hashingOptions);
+	// const onGetUserInfoHash = useCallback(async (user) => {
+	// 	// Take the hashing options from user's instance
+	// 	const hashingOptions = user.getPasswordHashingOptions();
+	// 	const userHashingOptions = JSON.stringify(hashingOptions);
 
-		// Serialize user information to a secure encrypted string
-		const userInfo = user.serialize();
+	// 	// Serialize user information to a secure encrypted string
+	// 	const userInfo = user.serialize();
 
-		return {
-			userHashingOptions,
-			userInfo,
-		};
-	}, []);
+	// 	return {
+	// 		userHashingOptions,
+	// 		userInfo,
+	// 	};
+	// }, []);
 
 	/**
 	 * Init new User account.

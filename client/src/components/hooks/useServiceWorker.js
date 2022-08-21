@@ -22,12 +22,24 @@ const createUserService = async (password, keyphrase) => {
 	return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase } });
 };
 
+const validateReturningUser = async (password) => {
+	return sentMessage({ methodName: 'accountManager.validateReturningUser', params: { password } });
+};
+
 const getActivePublicKey = async () => {
 	return sentMessage({ methodName: 'accountManager.getPublicKey' });
+};
+
+const getCurrentUserSW = async () => {
+	return sentMessage({ methodName: 'accountManager.getCurrentUser' });
+};
+
+const onClearUserSW = async () => {
+	return sentMessage({ methodName: 'accountManager.clearUser' });
 };
 
 const keepSWAlive = async () => {
 	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
 };
 
-export { keepSWAlive, createUserService, getActivePublicKey };
+export { validateReturningUser, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserService, getActivePublicKey };

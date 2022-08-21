@@ -3,6 +3,7 @@ import { Signer } from 'casper-js-sdk';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
 import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
+import { onClearUserSW } from "@cd/hooks/useServiceWorker";
 import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from './userActions.utils';
 
 /**
@@ -58,7 +59,7 @@ export const setPublicKeyToStore = (publicKey, loginOptions = {}) => {
 export const setPublicKey = (publicKey, loginOptions = {}) => {
 	return async (dispatch) => {
 		//Cache public key and login options
-		await cacheLoginInfoToLocalStorage(publicKey, loginOptions);
+		// await cacheLoginInfoToLocalStorage(publicKey, loginOptions);
 		dispatch(setPublicKeyToStore(publicKey, loginOptions));
 	};
 };
@@ -87,25 +88,28 @@ export const initConnectedAccountFromLocalStorage = () => {
 	};
 };
 
+// Delete all data
 export const lockAccount = () => {
 	return (dispatch) => {
 		/**
 		 * This clears all cached User hash info in localStorage
 		 */
+		onClearUserSW();
 		dispatch(setPublicKey());
 	};
 };
 
+// Lock account
 export const onClearPublicKey = () => {
 	return async (dispatch, getState) => {
-		const {
-			user: { loginOptions: loginOptionsState },
-		} = getState();
-		const connectedAccount = await getConnectedAccountChromeLocalStorage();
-		const { loginOptions: loginOptionsCache } = connectedAccount;
+		// const {
+		// 	user: { publicKey },
+		// } = getState();
+    // console.log(`🚀 ~ return ~ publicKey`, publicKey)
+		// const connectedAccount = await getConnectedAccountChromeLocalStorage();
+		// const { loginOptions: loginOptionsCache } = connectedAccount;
 		const emptyPublicKey = '';
-		await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
-		dispatch(setPublicKeyToStore(emptyPublicKey, loginOptionsState));
+		dispatch(setPublicKeyToStore(emptyPublicKey, {}));
 	};
 };
 
