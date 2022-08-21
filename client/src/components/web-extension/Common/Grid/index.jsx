@@ -1,12 +1,52 @@
-import _get from 'lodash-es/get';
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Bar } from '../../../Common/Spinner';
-import NoData from '../../../Common/NoData';
-import { getValueByFormat } from '../../../../helpers/format';
+import get from 'lodash-es/get';
+import isFunction from 'lodash-es/isFunction';
+import { getValueByFormat } from '@cd/helpers/format';
+import { Bar } from '@cd/common/Spinner';
+import NoData from '@cd/common/NoData';
 import './index.scss';
 
 const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
+	const getFormattedValue = useCallback((item, token) => {
+    return getValueByFormat(item.value || get(token, item.key), {
+      format: item.format,
+    });
+	}, []);
+	const renderValue = useCallback(({ item, token }, value) => {
+		if (item.wrapperComponent) {
+			return <item.wrapperComponent>{value}</item.wrapperComponent>;
+		}
+
+		if (item.component) {
+			return <item.component {...(item.props && { ...item.props })} {...token} value={value} />;
+		}
+
+		return value;
+	}, []);
+	const renderGridItem = useCallback(
+		(item, token) => {
+			const formattedValue = getFormattedValue(item, token);
+			const shouldNotRender =
+				(isFunction(item?.shouldDisplay) && !item.shouldDisplay(get(token, item.key))) || get(token, item.key) === null;
+
+			if (shouldNotRender) {
+				return null;
+			}
+
+			return (
+				<div
+					data-testid={`${token.symbol}-${item.key}`}
+					className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`}
+					key={`${token.symbol}-${item.key}`}
+				>
+					{renderValue({ item, token }, formattedValue)} {item.suffix}
+				</div>
+			);
+		},
+		[getFormattedValue, renderValue],
+	);
+
 	return (
 		<div className={`cd_we_grid ${className || ''}`}>
 			{!isLoading && !data.length && <NoData />}
@@ -29,7 +69,7 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 													<div
 														key={i}
 														className={`cd_we_grid_icon ${
-															metadata.left ? metadata.left.iconClassName || '' : ''
+															metadata?.left?.iconClassName ?? ''
 														}`}
 													>
 														{ic && <img src={ic} alt="grid" />}
@@ -37,45 +77,12 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 												);
 											})
 										) : (
-											<div
-												className={`cd_we_grid_icon ${
-													metadata.left ? metadata.left.iconClassName || '' : ''
-												}`}
-											>
+											<div className={`cd_we_grid_icon ${metadata?.left?.iconClassName ?? ''}`}>
 												<img src={value.icon} alt="grid" />
 											</div>
 										))}
 									<div className="cd_we_item_content">
-										{metadata[key].map((item, i) => {
-											const Component = item.component;
-											const WrapperComponent = item.wrapperComponent;
-											const compProps = item.props || {};
-											const formattedValue = getValueByFormat(
-												item.value || _get(value, item.key),
-												{
-													format: item.format,
-												},
-											);
-											return (typeof item.shouldDisplay === 'function' &&
-												!item.shouldDisplay(_get(value, item.key))) ||
-												!_get(value, item.key) ? null : (
-												<div
-													className={`cd_we_item_value ${item.type} ${
-														item.valueAsClass ? formattedValue : ''
-													}`}
-													key={i}
-												>
-													{WrapperComponent ? (
-														<WrapperComponent>{formattedValue}</WrapperComponent>
-													) : Component ? (
-														<Component {...compProps} {...value} value={formattedValue} />
-													) : (
-														formattedValue
-													)}{' '}
-													{item.suffix}
-												</div>
-											);
-										})}
+										{metadata[key].map((item) => renderGridItem(item, value))}
 									</div>
 								</div>
 							);

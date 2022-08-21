@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
-import UserInstance from "@cd/services/userServices";
+import UserInstance from '@cd/services/UserService';
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
@@ -12,10 +12,10 @@ const useWelcomeBack = () => {
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
-			const { publicKey, userInfoHash, userInstance } = result;
+			const { publicKey, userDetails, userInstance } = result;
 
-      UserInstance.instance = userInstance;
-			dispatch(onBindingAuthInfo(publicKey, userInfoHash));
+			UserInstance.instance = userInstance;
+			dispatch(onBindingAuthInfo(publicKey, userDetails));
 			navigate('/');
 		},
 		[dispatch, navigate],
@@ -35,7 +35,9 @@ const useWelcomeBack = () => {
 
 			try {
 				const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
-				const { loginOptions: { userHashingOptions, userInfo: encryptedUserInfo } } = cacheConnectedAccount;
+				const {
+					loginOptions: { userHashingOptions, userInfo: encryptedUserInfo },
+				} = cacheConnectedAccount;
 
 				// Get encrypted info from Localstorage
 				const encryptedHashingOptions = JSON.parse(userHashingOptions);
@@ -51,14 +53,16 @@ const useWelcomeBack = () => {
 					passwordOptions: userLoginOptions,
 				});
 
-				const wallet = await user.getWalletAccount(0);
+				const currentWalletIndex = 0;
+				const wallet = await user.getWalletAccount(currentWalletIndex);
 				const publicKey = await wallet.getPublicKey();
 
 				// Similar to useCreateUser
 				return {
 					publicKey,
-          userInstance: user,
-					userInfoHash: {
+					userInstance: user,
+					userDetails: {
+						currentWalletIndex,
 						userHashingOptions: userLoginOptions,
 						userInfo: encryptedUserInfo,
 					},

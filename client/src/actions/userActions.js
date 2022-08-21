@@ -116,12 +116,17 @@ export const onBindingAuthInfo = (publicKey) => {
 		// 	? JSON.stringify(user.userHashingOptions)
 		// 	: user.userHashingOptions;
 		// Store user hash (string) into localStorage
-		//await cacheLoginInfoToLocalStorage(publicKey, {
-		//userHashingOptions: userHashOpts,
-		//	userInfo: { publicKey },
-		//});
+
+		// await cacheLoginInfoToLocalStorage(publicKey, {
+		// 	userHashingOptions: userHashOpts,
+		// 	userInfo: user.userInfo,
+		// });
 		dispatch(
-			setPublicKeyToStore(publicKey, { connectionType: CONNECTION_TYPES.privateKey }),
+			setPublicKeyToStore(publicKey, {
+				connectionType: CONNECTION_TYPES.privateKey,
+				// currentWalletIndex: user.currentWalletIndex,
+				// userInfo: user.userInfo,
+			}),
 		);
 	};
 };

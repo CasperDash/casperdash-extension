@@ -5,8 +5,8 @@ import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
-import UserInstance from '@cd/services/userServices';
 import { createUserService } from '@cd/components/hooks/useServiceWorker';
+import UserInstance from '@cd/services/UserService';
 
 const encryptionType = EncryptionType.Ed25519;
 const useCreateUser = () => {
@@ -17,7 +17,6 @@ const useCreateUser = () => {
 		(result) => {
 			const { publicKey } = result;
 
-			// UserInstance.instance = userInstance;
 			dispatch(onBindingAuthInfo(publicKey));
 			dispatch(resetWalletCreation());
 			navigate('/');
@@ -44,16 +43,26 @@ const useCreateUser = () => {
 	 * Init new User account.
 	 * Aim to return publicKey and User info, including hash info and User info
 	 */
+
 	// const onInitNewUserHandler = useCallback(
 	// 	async (user) => {
+	// 		const currentWalletIndex = 0;
 	// 		// Get basic User info
 	// 		const result = await onGetUserInfoHash(user);
 
 	// 		// Create Wallet and get public key, public address
-	// 		const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
+	// 		const wallet = await user.addWalletAccount(currentWalletIndex, new WalletDescriptor('Account 1'));
 	// 		const publicKey = await wallet.getPublicKey();
 
-	// 		return { userInstance: user, userInfoHash: result, publicKey };
+	// 		return {
+	// 			publicKey,
+	// 			userInstance: user,
+	// 			userDetails: {
+	// 				currentWalletIndex,
+	// 				userHashingOptions: result.userHashingOptions,
+	// 				userInfo: result.userInfo,
+	// 			},
+	// 		};
 	// 	},
 	// 	[onGetUserInfoHash],
 	// );

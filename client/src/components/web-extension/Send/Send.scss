@@ -10,8 +10,16 @@
 	}
 	.cd_we_confirm {
 		.cd_we_confirm_row {
+			font-size: 14px;
+
 			.cd_we_confirm_address {
+				max-width: 50%;
 				word-break: break-all;
+			}
+			
+			.cd_middle_truncated_text-begin,
+			.cd_middle_truncated_text-end {
+				color: var(--primary-text-color);
 			}
 		}
 	}
