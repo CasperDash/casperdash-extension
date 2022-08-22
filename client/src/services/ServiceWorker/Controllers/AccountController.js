@@ -1,5 +1,6 @@
 import { Keys } from 'casper-js-sdk';
 import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
+import UserService from "@cd/services/UserService";
 
 const encryptionType = EncryptionType.Ed25519;
 
@@ -29,7 +30,7 @@ class AccountController {
 	validateReturningUser = async ({ password }) => {
 		const user = this.getCurrentUser();
 		console.log(`🚀 ~ AccountController ~ validateReturningUser= ~ user`, user)
-		
+
 		if (!user) {
 			throw Error("Missing User");
 		}
@@ -61,20 +62,26 @@ class AccountController {
 		// Create new User
 		let user;
 		try {
-			user = new User(password);
+			const opts = {
+				encryptionType,
+				currentWalletIndex: 0
+			}
+			user = new UserService(new User(password), opts);
+			user.initialize(keyphrase);
 		} catch (error) {
 			console.error(error);
 			throw Error('Error on create new User');
 		}
+	
+		const userInfo = await user.getUserInfoHash();
+		const publicKey = await user.getPublicKey();
 
-		// Set HDWallet info
-		user.setHDWallet(keyphrase, encryptionType);
 
-		const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
-		const publicKey = await wallet.getPublicKey();
-		this.appStore.putState({ user });
-
-		return publicKey;
+		return { publicKey, userDetails: {
+			userHashingOptions: userInfo.userHashingOptions,
+			userInfo: userInfo.userInfo,
+			currentWalletIndex: user.currentWalletIndex
+		}};
 	};
 
 	clearUser = () => {

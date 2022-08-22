@@ -1,22 +1,20 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
 // import UserInstance from '@cd/services/UserService';
 
-const encryptionType = EncryptionType.Ed25519;
 const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const keyphrase = useSelector(selectCreateWalletKeyphrase);
 	const onCreateSuccess = useCallback(
 		(result) => {
-			const { publicKey } = result;
-			dispatch(onBindingAuthInfo(publicKey));
+			const { publicKey, userDetails } = result;
+			dispatch(onBindingAuthInfo(publicKey, userDetails));
 			dispatch(resetWalletCreation());
 			navigate('/');
 			return result;
@@ -73,25 +71,10 @@ const useCreateUser = () => {
 					throw new Error('Missing keyphrase');
 				}
 
-				// Create new User
-				// let user;
-				// try {
-				// 	user = new User(password);
-				// } catch (error) {
-				// 	return undefined;
-				// }
-
-				// // Set HDWallet info
-				// user.setHDWallet(keyphrase, encryptionType);
-
-				//const result = await onInitNewUserHandler(user);
-				//result.publicKey && onCreateSuccess(result);
-
-				//return result;
-				const publicKey = await createUserServiceSW(password, keyphrase);
-        console.log(`🚀 ~ publicKey`, publicKey)
-				onCreateSuccess({ publicKey });
-				return publicKey;
+				const result = await createUserServiceSW(password, keyphrase);
+				console.log(`🚀 ~ result`, result)
+				onCreateSuccess(result);
+				return result;
 			} catch (err) {
 				console.error(`🚀 ~ useCreateUser ~ err`, err);
 				return undefined;

@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import isEmpty from 'lodash-es/isEmpty';
-import isEqual from 'lodash-es/isEqual';
-import { getCurrentUserSW } from '@cd/components/hooks/useServiceWorker';
+import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
+// import { getCurrentUserSW } from '@cd/components/hooks/useServiceWorker';
 
 const asyncAccountValidator = navigate => {
-	return async (dispatch, getState) => {
+	return async (_, getState) => {
 		const {
 			user: { publicKey },
 		} = getState();
-		const user = await getCurrentUserSW();
+		const user = await getConnectedAccountChromeLocalStorage();
+		console.log(`🚀 ~ return ~ user`, user)
 
 		if ( !publicKey && user) {
 			console.log(">> WELCOME BACK")

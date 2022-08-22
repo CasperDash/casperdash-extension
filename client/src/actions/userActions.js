@@ -59,7 +59,7 @@ export const setPublicKeyToStore = (publicKey, loginOptions = {}) => {
 export const setPublicKey = (publicKey, loginOptions = {}) => {
 	return async (dispatch) => {
 		//Cache public key and login options
-		// await cacheLoginInfoToLocalStorage(publicKey, loginOptions);
+		await cacheLoginInfoToLocalStorage(publicKey, loginOptions);
 		dispatch(setPublicKeyToStore(publicKey, loginOptions));
 	};
 };
@@ -102,35 +102,35 @@ export const lockAccount = () => {
 // Lock account
 export const onClearPublicKey = () => {
 	return async (dispatch, getState) => {
-		// const {
-		// 	user: { publicKey },
-		// } = getState();
-    // console.log(`🚀 ~ return ~ publicKey`, publicKey)
-		// const connectedAccount = await getConnectedAccountChromeLocalStorage();
-		// const { loginOptions: loginOptionsCache } = connectedAccount;
+		const {
+			user: { loginOptions: loginOptionsState },
+		} = getState();
+		const connectedAccount = await getConnectedAccountChromeLocalStorage();
+		const { loginOptions: loginOptionsCache } = connectedAccount;
 		const emptyPublicKey = '';
-		dispatch(setPublicKeyToStore(emptyPublicKey, {}));
+		await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
+		dispatch(setPublicKeyToStore(emptyPublicKey, loginOptionsState));
 	};
 };
 
-export const onBindingAuthInfo = (publicKey) => {
+export const onBindingAuthInfo = (publicKey, user) => {
 	// Store full User object into state
 	return async (dispatch) => {
-		// const userHashOpts = isObject(user.userHashingOptions)
-		// 	? JSON.stringify(user.userHashingOptions)
-		// 	: user.userHashingOptions;
+		const userHashOpts = isObject(user.userHashingOptions)
+			? JSON.stringify(user.userHashingOptions)
+			: user.userHashingOptions;
 		// Store user hash (string) into localStorage
 
-		// await cacheLoginInfoToLocalStorage(publicKey, {
-		// 	userHashingOptions: userHashOpts,
-		// 	userInfo: user.userInfo,
-		// });
+		await cacheLoginInfoToLocalStorage(publicKey, {
+			userHashingOptions: userHashOpts,
+			userInfo: user.userInfo,
+			currentWalletIndex: user.currentWalletIndex
+		});
 		dispatch(
-			setPublicKeyToStore(publicKey, {
-				connectionType: CONNECTION_TYPES.privateKey,
-				// currentWalletIndex: user.currentWalletIndex,
-				// userInfo: user.userInfo,
-			}),
+			setPublicKeyToStore(publicKey)
+			// setPublicKeyToStore(publicKey, {
+			// 	connectionType: CONNECTION_TYPES.privateKey
+			// }),
 		);
 	};
 };
