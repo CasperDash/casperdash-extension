@@ -5,12 +5,10 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
 import { toast } from 'react-toastify';
 import { validateTransferForm } from '@cd/helpers/validator';
-import UserInstance from '@cd/services/UserService';
 import { getAllTokenInfo, getTokenInfoByAddress } from '@cd/selectors/user';
 import TokenSelectField from './TokenSelectField';
 
 const SendForm = ({ token }) => {
-	const user = UserInstance.instance;
 
 	//Hook
 	const navigate = useNavigate();
@@ -48,13 +46,13 @@ const SendForm = ({ token }) => {
 		setFieldValue('sendAmount', amount);
 	};
 
-	React.useEffect(() => {
-		if (!user) {
-			toast.warning('Please re-login to continue sending token');
-		};
+	// React.useEffect(() => {
+	// 	if (!user) {
+	// 		toast.warning('Please re-login to continue sending token');
+	// 	};
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
 
 	return (
 		<Formik
@@ -140,7 +138,7 @@ const SendForm = ({ token }) => {
 						<Button
 							className="cd_we_send_confirm_btn"
 							type="submit"
-							disabled={(errors && Object.keys(errors).length) || !user}
+							disabled={(errors && Object.keys(errors).length)}
 						>
 							Confirm
 						</Button>

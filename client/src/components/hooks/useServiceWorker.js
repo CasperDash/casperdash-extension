@@ -18,12 +18,16 @@ const sentMessage = async (payload) => {
 	return resultHandler(result);
 };
 
-const createUserService = async (password, keyphrase) => {
+const createUserServiceSW = async (password, keyphrase) => {
 	return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase } });
 };
 
-const validateReturningUser = async (password) => {
+const validateReturningUserSW = async (password) => {
 	return sentMessage({ methodName: 'accountManager.validateReturningUser', params: { password } });
+};
+
+const generatePrivateKeypairSW = async () => {
+	return sentMessage({ methodName: 'accountManager.generateKeypair' });
 };
 
 const getActivePublicKey = async () => {
@@ -42,4 +46,4 @@ const keepSWAlive = async () => {
 	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
 };
 
-export { validateReturningUser, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserService, getActivePublicKey };
+export { generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };

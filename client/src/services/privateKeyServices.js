@@ -1,5 +1,6 @@
 import { DeployUtil } from 'casper-js-sdk';
-import UserInstance from '@cd/services/UserService';
+import { generatePrivateKeypairSW } from '@cd/components/hooks/useServiceWorker';
+// import UserInstance from '@cd/services/UserService';
 
 /**
  * Sign a deploy by singer
@@ -7,12 +8,13 @@ import UserInstance from '@cd/services/UserService';
  * @returns {Deploy} Signed deploy
  */
 export const signDeployByPrivateKey = async (deploy) => {
-	const user = UserInstance.instance;
-	if (!user) {
-		throw new Error('User missing');
-	}
+	// const user = UserInstance.instance;
+	// if (!user) {
+	// 	throw new Error('User missing');
+	// }
 
-	const asymKey = await UserInstance.generateKeypair();
+	const asymKey = await generatePrivateKeypairSW()
+	console.log(`🚀 ~ signDeployByPrivateKey ~ asymKey`, asymKey)
 	const validate = DeployUtil.validateDeploy(deploy);
 
 	if (!validate || !asymKey) {

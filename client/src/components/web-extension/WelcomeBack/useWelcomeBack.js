@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
-import UserInstance from '@cd/services/UserService';
-import { validateReturningUser } from "@cd/hooks/useServiceWorker";
+// import UserInstance from '@cd/services/UserService';
+import { validateReturningUserSW } from "@cd/hooks/useServiceWorker";
 
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
@@ -58,7 +58,7 @@ const useWelcomeBack = () => {
 				// const wallet = await user.getWalletAccount(currentWalletIndex);
 				// const publicKey = await wallet.getPublicKey();
 
-				const publicKey = await validateReturningUser(password);
+				const publicKey = await validateReturningUserSW(password);
         console.log(`🚀 ~ publicKey`, publicKey)
 
 				// Similar to useCreateUser

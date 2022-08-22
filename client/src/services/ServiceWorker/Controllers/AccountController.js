@@ -1,3 +1,4 @@
+import { Keys } from 'casper-js-sdk';
 import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
 
 const encryptionType = EncryptionType.Ed25519;
@@ -7,8 +8,28 @@ class AccountController {
 		this.appStore = appStore;
 	}
 
+	getCurrentUser = () => this.appStore.getState()?.user ?? undefined;
+
+	generateKeypair = async () => {
+		try {
+			const currentWalletIndex = 0;
+			const encryptionType = 'Ed25519';
+			const user = this.getCurrentUser();
+
+			const wallet = await user.getWalletAccount(currentWalletIndex);
+			const publicKey = await wallet.getPublicKeyByteArray();
+			const secretKey = wallet.getPrivateKeyByteArray();
+			
+			return Keys[encryptionType].parseKeyPair(publicKey.slice(1), secretKey);
+		} catch (error) {
+			return undefined;
+		}
+	}
+
 	validateReturningUser = async ({ password }) => {
 		const user = this.getCurrentUser();
+		console.log(`🚀 ~ AccountController ~ validateReturningUser= ~ user`, user)
+		
 		if (!user) {
 			throw Error("Missing User");
 		}
@@ -59,8 +80,6 @@ class AccountController {
 	clearUser = () => {
 		this.appStore.putState(undefined);
 	}
-
-	getCurrentUser = () => this.appStore.getState()?.user ?? undefined;
 
 	getPublicKey = async () => {
 		const user = this.appStore.getState().user;
