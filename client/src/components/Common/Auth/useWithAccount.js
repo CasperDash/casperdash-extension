@@ -1,16 +1,14 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import isEmpty from 'lodash-es/isEmpty';
 import isEqual from 'lodash-es/isEqual';
-import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
-import { getPublicKeyAndLoginOptions } from '@cd/selectors/user';
-import { getCurrentUserSW, getActivePublicKey } from '@cd/components/hooks/useServiceWorker';
+import { getCurrentUserSW } from '@cd/components/hooks/useServiceWorker';
 
 const asyncAccountValidator = navigate => {
 	return async (dispatch, getState) => {
 		const {
-			user: { publicKey,  },
+			user: { publicKey },
 		} = getState();
 		const user = await getCurrentUserSW();
 
@@ -35,6 +33,7 @@ const useWithAccount = () => {
 
 	useEffect(() => {
 		dispatch(asyncAccountValidator(navigate));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return undefined;

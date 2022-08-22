@@ -11,6 +11,9 @@ export class UserService {
 		return this._user ?? undefined;
 	}
 
+	/** TODO
+	 * Move into SW
+	 */
 	async generateKeypair(loginInfo = {}) {
 		try {
 			const currentWalletIndex = loginInfo?.currentWalletIndex ?? 0;
