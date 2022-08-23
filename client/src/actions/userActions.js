@@ -1,5 +1,6 @@
 import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
+import isFunction from 'lodash-es/isFunction';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
 import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
@@ -113,7 +114,7 @@ export const onClearPublicKey = () => {
 	};
 };
 
-export const onBindingAuthInfo = (publicKey, user) => {
+export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
 		const userHashOpts = isObject(user.userHashingOptions)
@@ -126,11 +127,13 @@ export const onBindingAuthInfo = (publicKey, user) => {
 			userInfo: user.userInfo,
 			currentWalletIndex: user.currentWalletIndex
 		});
+
 		dispatch(
 			setPublicKeyToStore(publicKey)
-			// setPublicKeyToStore(publicKey, {
-			// 	connectionType: CONNECTION_TYPES.privateKey
-			// }),
 		);
+
+    if (isFunction(onCompleted)) {
+      onCompleted();
+    }
 	};
 };

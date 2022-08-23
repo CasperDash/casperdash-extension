@@ -10,7 +10,6 @@ const asyncAccountValidator = navigate => {
 			user: { publicKey },
 		} = getState();
 		const user = await getConnectedAccountChromeLocalStorage();
-		console.log(`🚀 ~ return ~ user`, user)
 
 		if ( !publicKey && user) {
 			console.log(">> WELCOME BACK")

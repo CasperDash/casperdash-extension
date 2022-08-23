@@ -1,6 +1,7 @@
 import { Keys } from 'casper-js-sdk';
-import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
-import UserService from "@cd/services/UserService";
+import { User, EncryptionType } from 'casper-storage';
+import UserService from '@cd/services/UserService';
+import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 
 const encryptionType = EncryptionType.Ed25519;
 
@@ -20,35 +21,25 @@ class AccountController {
 			const wallet = await user.getWalletAccount(currentWalletIndex);
 			const publicKey = await wallet.getPublicKeyByteArray();
 			const secretKey = wallet.getPrivateKeyByteArray();
-			
+
 			return Keys[encryptionType].parseKeyPair(publicKey.slice(1), secretKey);
 		} catch (error) {
 			return undefined;
 		}
-	}
+	};
 
 	validateReturningUser = async ({ password }) => {
-		const user = this.getCurrentUser();
-		console.log(`🚀 ~ AccountController ~ validateReturningUser= ~ user`, user)
+		const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
+		const userCache = UserService.makeUserFromCache(password, cacheConnectedAccount);
 
-		if (!user) {
-			throw Error("Missing User");
+		if (!userCache) {
+			throw Error('Missing User');
 		}
+		const user = new UserService(userCache);
+		const result = await user.prepareStorageData();
 
-		const userHashingOptions = user.getPasswordHashingOptions();
-		const userInfo = user.serialize();
-
-		// Deserialize user info to an instance of User
-		const newUser = User.deserializeFrom(password, userInfo, {
-			passwordOptions: userHashingOptions,
-		});
-
-		const currentWalletIndex = 0;
-		const wallet = await newUser.getWalletAccount(currentWalletIndex);
-		const newPublicKey = await wallet.getPublicKey();
-
-		return newPublicKey;
-	}
+		return result;
+	};
 
 	createNewUser = async ({ password, keyphrase }) => {
 		if (!password) {
@@ -64,29 +55,22 @@ class AccountController {
 		try {
 			const opts = {
 				encryptionType,
-				currentWalletIndex: 0
-			}
+				currentWalletIndex: 0,
+			};
 			user = new UserService(new User(password), opts);
+      // this.appStore.push({user})
 			user.initialize(keyphrase);
 		} catch (error) {
 			console.error(error);
 			throw Error('Error on create new User');
 		}
-	
-		const userInfo = await user.getUserInfoHash();
-		const publicKey = await user.getPublicKey();
 
-
-		return { publicKey, userDetails: {
-			userHashingOptions: userInfo.userHashingOptions,
-			userInfo: userInfo.userInfo,
-			currentWalletIndex: user.currentWalletIndex
-		}};
+		return await user.prepareStorageData();
 	};
 
 	clearUser = () => {
 		this.appStore.putState(undefined);
-	}
+	};
 
 	getPublicKey = async () => {
 		const user = this.appStore.getState().user;
