@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
-// import { getCurrentUserSW } from '@cd/components/hooks/useServiceWorker';
 
 const asyncAccountValidator = navigate => {
 	return async (_, getState) => {

@@ -71,7 +71,6 @@ export class UserService {
 		try {
 			const user = this.instance;
 			const wallet = await user.getWalletAccount(index);
-      console.log(`🚀 ~ file: UserService.js ~ line 74 ~ UserService ~ getPublicKey= ~ wallet`, wallet)
 
 			return wallet?.getPublicKey() ?? undefined;
 		} catch (err) {
@@ -100,13 +99,13 @@ export class UserService {
 		};
 	};
 
-  /**
-   * Return full data needed for storing in redux store
-   * and Google chrome storage API
-   * @returns
-   */
-  prepareStorageData = async () => {
-    const userInfo = await this.getUserInfoHash();
+	/**
+	 * Return full data needed for storing in redux store
+	 * and Google chrome storage API
+	 * @returns
+	 */
+	prepareStorageData = async () => {
+		const userInfo = await this.getUserInfoHash();
 		const publicKey = await this.getPublicKey();
 
 		return {
@@ -117,23 +116,20 @@ export class UserService {
 				currentWalletIndex: this.currentWalletIndex,
 			},
 		};
-  }
+	};
 
-	/** TODO
-	 * Move into SW
-	 */
-	async generateKeypair(loginInfo = {}) {
-		// try {
-		// 	const currentWalletIndex = loginInfo?.currentWalletIndex ?? 0;
-		// 	const encryptionType = loginInfo?.encryptionType ?? 'Ed25519';
-		// 	const user = this.instance;
-		// 	const wallet = await user.getWalletAccount(currentWalletIndex);
-		// 	const publicKey = await wallet.getPublicKeyByteArray();
-		// 	const secretKey = wallet.getPrivateKeyByteArray();
-		// 	return Keys[encryptionType].parseKeyPair(publicKey.slice(1), secretKey);
-		// } catch (error) {
-		// 	return undefined;
-		// }
+	async generateKeypair() {
+		try {
+			const user = this.instance;
+
+			const wallet = await user.getWalletAccount(this.currentWalletIndex);
+			const publicKey = await wallet.getPublicKeyByteArray();
+			const secretKey = wallet.getPrivateKeyByteArray();
+
+			return Keys[this.encryptionType].parseKeyPair(publicKey.slice(1), secretKey);
+		} catch (error) {
+			return undefined;
+		}
 	}
 }
 

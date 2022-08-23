@@ -1,4 +1,3 @@
-import { Keys } from 'casper-js-sdk';
 import { User, EncryptionType } from 'casper-storage';
 import UserService from '@cd/services/UserService';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
@@ -6,6 +5,7 @@ import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.u
 const encryptionType = EncryptionType.Ed25519;
 
 class AccountController {
+	userService;
 	constructor(appStore) {
 		this.appStore = appStore;
 	}
@@ -14,15 +14,11 @@ class AccountController {
 
 	generateKeypair = async () => {
 		try {
-			const currentWalletIndex = 0;
-			const encryptionType = 'Ed25519';
-			const user = this.getCurrentUser();
+			if (!this.userService) {
+				throw new Error('Missing UserService instance');
+			}
 
-			const wallet = await user.getWalletAccount(currentWalletIndex);
-			const publicKey = await wallet.getPublicKeyByteArray();
-			const secretKey = wallet.getPrivateKeyByteArray();
-
-			return Keys[encryptionType].parseKeyPair(publicKey.slice(1), secretKey);
+			return await this.userService.generateKeypair();
 		} catch (error) {
 			return undefined;
 		}
@@ -37,7 +33,7 @@ class AccountController {
 		}
 		const user = new UserService(userCache);
 		const result = await user.prepareStorageData();
-
+		this.userService = user;
 		return result;
 	};
 
@@ -58,8 +54,11 @@ class AccountController {
 				currentWalletIndex: 0,
 			};
 			user = new UserService(new User(password), opts);
-      // this.appStore.push({user})
+
+			// this.appStore.push({user})
 			user.initialize(keyphrase);
+
+			this.userService = user;
 		} catch (error) {
 			console.error(error);
 			throw Error('Error on create new User');
