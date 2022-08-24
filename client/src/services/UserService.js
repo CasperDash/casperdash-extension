@@ -1,6 +1,7 @@
 import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
 import { Keys } from 'casper-js-sdk';
-
+import capitalize from 'lodash-es/capitalize';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
 /**
  * This class serves every tasks related to User
  * From extension to service worker and vice versa
@@ -8,6 +9,7 @@ import { Keys } from 'casper-js-sdk';
 export class UserService {
 	_user;
 	currentWalletIndex = 0;
+  connectionType = CONNECTION_TYPES.privateKey;
 
 	static convertSaltInfo(salt) {
 		const saltInfo = Object.keys(salt).map((key) => salt[key]);
@@ -67,6 +69,20 @@ export class UserService {
 		return this;
 	};
 
+  getConnectionType = async (walletIndex = 0) => {
+		try {
+			// const user = this.instance;
+			// const wallet = await user.getWalletAccount(walletIndex);
+      // console.log(`🚀 ~ file: UserService.js ~ line 74 ~ UserService ~ getConnectionType ~ wallet`, wallet, wallet?.getEncryptionType())
+
+			// return wallet?.getEncryptionType() ?? undefined;
+      return this.connectionType;
+		} catch (err) {
+			console.log(`🚀 ~ UserService::getConnectionType: `, err);
+			return undefined;
+		}
+	};
+
 	getPublicKey = async (index = 0) => {
 		try {
 			const user = this.instance;
@@ -74,7 +90,7 @@ export class UserService {
 
 			return wallet?.getPublicKey() ?? undefined;
 		} catch (err) {
-			console.log(`🚀 ~ UserService ~ getPublicKey= ~ err`, err);
+			console.log(`🚀 ~ UserService::getPublicKey: `, err);
 			return undefined;
 		}
 	};
@@ -118,15 +134,20 @@ export class UserService {
 		};
 	};
 
-	async generateKeypair() {
+	generateKeypair = async () => {
 		try {
 			const user = this.instance;
 
 			const wallet = await user.getWalletAccount(this.currentWalletIndex);
+      const encryptionType = wallet?.getEncryptionType();
+      console.log(`🚀 ~ file: UserService.js ~ line 143 ~ UserService ~ generateKeypair= ~ encryptionType`, encryptionType)
 			const publicKey = await wallet.getPublicKeyByteArray();
+      console.log(`🚀 ~ file: UserService.js ~ line 145 ~ UserService ~ generateKeypair= ~ publicKey`, publicKey)
 			const secretKey = wallet.getPrivateKeyByteArray();
-
-			return Keys[this.encryptionType].parseKeyPair(publicKey.slice(1), secretKey);
+      console.log(`🚀 ~ file: UserService.js ~ line 147 ~ UserService ~ generateKeypair= ~ secretKey`, secretKey)
+      const result = Keys[capitalize(encryptionType)].parseKeyPair(publicKey.slice(1), secretKey);
+      console.log(`🚀 ~ file: UserService.js ~ line 149 ~ UserService ~ generateKeypair= ~ result`, result)
+			return result;
 		} catch (error) {
 			return undefined;
 		}

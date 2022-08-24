@@ -4,6 +4,7 @@ import { getLoginOptions } from '@cd/selectors/user';
 import { signDeployByCasperSigner } from '@cd/services/casperServices';
 import { signDeployByLedger } from '@cd/services/ledgerServices';
 import { signDeployByPrivateKey } from "@cd/services/privateKeyServices";
+import { getConnectionTypeSW } from "@cd/hooks/useServiceWorker";
 
 /**
  * Use the signer specified in the login options to sign a deploy.
@@ -13,7 +14,9 @@ const useSigner = () => {
 	const loginOptions = useSelector(getLoginOptions);
 
 	const sign = async (deploy, mainAccountHex, setAccountHex) => {
-		switch (loginOptions.connectionType) {
+    const connectionType = await getConnectionTypeSW();
+    console.log(`🚀 ~ file: useSigner.js ~ line 18 ~ sign ~ connectionType`, connectionType)
+		switch (connectionType) {
 			case CONNECTION_TYPES.ledger: {
 				return await signDeployByLedger(deploy, {
 					publicKey: mainAccountHex,

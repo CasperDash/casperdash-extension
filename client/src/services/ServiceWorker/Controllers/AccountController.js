@@ -5,6 +5,10 @@ import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.u
 const encryptionType = EncryptionType.Ed25519;
 
 class AccountController {
+  /**
+   * Only available after creating new User or successfully
+   * validate a returning User (WelcomeBack)
+   */
 	userService;
 	constructor(appStore) {
 		this.appStore = appStore;
@@ -33,6 +37,7 @@ class AccountController {
 		}
 		const user = new UserService(userCache);
 		const result = await user.prepareStorageData();
+    console.log(`🚀 ~ file: AccountController.js ~ line 41 ~ AccountController ~ validateReturningUser= ~ user`, user)
 		this.userService = user;
 		return result;
 	};
@@ -78,6 +83,15 @@ class AccountController {
 		}
 		const wallet = await user.getWalletAccount(0);
 		return await wallet.getPublicKey();
+	};
+
+  getConnectionType = async () => {
+    console.log(`🚀 ~ file: AccountController.js ~ line 89 ~ AccountController ~ getConnectionType= ~ this.userService`, this.userService)
+    // const user = this.appStore.getState().user;
+		if (!this.userService) {
+			throw Error('Cant find user');
+		}
+		return await this.userService.getConnectionType();
 	};
 }
 
