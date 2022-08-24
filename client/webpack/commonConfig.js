@@ -12,7 +12,12 @@ module.exports = (dir) => ({
 		rules: [
 			{
 				test: /\.(js|jsx)$/,
-				use: ['babel-loader'],
+				use: {
+					loader: 'babel-loader',
+					options: {
+						plugins: ['@babel/plugin-syntax-top-level-await'],
+					},
+				},
 			},
 			{
 				test: /\.(css|scss)$/,
@@ -39,6 +44,9 @@ module.exports = (dir) => ({
 			'process.env': JSON.stringify(process.env),
 		}),
 	],
+	experiments: {
+		topLevelAwait: true,
+	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		alias: {

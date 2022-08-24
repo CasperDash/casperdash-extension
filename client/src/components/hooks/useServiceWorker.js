@@ -1,4 +1,9 @@
-import browser from 'webextension-polyfill';
+let browser;
+if (window?.chrome?.runtime && chrome.runtime.id) {
+  // Code running in a Chrome extension (content script, background page, etc.)
+  console.log(">>> chrome.", chrome.runtime.id);
+  browser = await import("webextension-polyfill");
+}
 
 const resultHandler = (response = {}) => {
 	if (response.error) {
