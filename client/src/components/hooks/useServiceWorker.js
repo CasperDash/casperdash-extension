@@ -1,5 +1,6 @@
 let browser;
-(async () => {
+(async () => {	
+	console.log(`🚀 ~ window?.chrome`, window?.chrome?.runtime?.id)
 	if (window?.chrome?.runtime && chrome.runtime.id) {
 		// Code running in a Chrome extension (content script, background page, etc.)
 		console.log(">>> chrome.", chrome.runtime.id);
@@ -69,5 +70,5 @@ const onSignPrivateKeySW = async deployJSON => sentMessage({ methodName: "accoun
 const keepSWAlive = async () => {
 	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
 };
-
-export { onSignPrivateKeySW, generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };
+ 
+export { sentMessage, onSignPrivateKeySW, generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };
