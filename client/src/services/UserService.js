@@ -120,25 +120,22 @@ export class UserService {
 		};
 	};
 
+	/**
+	 * Return an AsymmetricKey keyPair from a public key and private key
+	 * @returns AsymmetricKey
+	 */
 	generateKeypair = async () => {
 		try {
 			const user = this.instance;
 
 			const wallet = await user.getWalletAccount(this.currentWalletIndex);
       const encryptionType = wallet?.getEncryptionType();
-      console.log(`🚀 ~ file: UserService.js ~ line 143 ~ UserService ~ generateKeypair= ~ encryptionType`, encryptionType)
-			const publicKey2 = await this.getPublicKey();
-			console.log(`🚀 ~ UserService ~ generateKeypair= ~ publicKey2`, publicKey2)
 
 			const publicKey = await wallet.getPublicKeyByteArray();
-      console.log(`🚀 ~ file: UserService.js ~ line 145 ~ UserService ~ generateKeypair= ~ publicKey`, publicKey)
 			const secretKey = wallet.getPrivateKeyByteArray();
-      console.log(`🚀 ~ file: UserService.js ~ line 147 ~ UserService ~ generateKeypair= ~ secretKey`, secretKey)
-			const trimmed = publicKey.slice(1);
-      console.log(`🚀 ~ UserService ~ generateKeypair= ~ trimmed`, trimmed)
-      const result = Keys[capitalize(encryptionType)].parseKeyPair(trimmed, secretKey);
-      console.log(`🚀 ~ file: UserService.js ~ line 149 ~ UserService ~ generateKeypair= ~ result`, result)
-			return result;
+			const trimmedPublicKey = publicKey.slice(1);
+      
+			return Keys[capitalize(encryptionType)].parseKeyPair(trimmedPublicKey, secretKey);
 		} catch (error) {
 			return undefined;
 		}

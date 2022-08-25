@@ -15,9 +15,8 @@ class AccountController {
 		this.appStore = appStore;
 	}
 
-	// getCurrentUser = () => this.appStore.getState()?.user ?? undefined;
 	getCurrentUser = () => {
-		console.log(">>>> ", this.userService);
+		// return this.appStore.getState()?.user ?? undefined;
 		return this.userService;
 	}
 
@@ -92,7 +91,6 @@ class AccountController {
 
 	signPrivateKeyProcess = async ({ deployJSON }) => {
 		const asymKey = await this.generateKeypair();
-		console.log(`🚀 ~ AccountController ~ signPrivateKeyProcess= ~ asymKey`, asymKey)
 		const deployResult = DeployUtil.deployFromJson(deployJSON);
 		
 		if (deployResult.err) {
@@ -100,7 +98,6 @@ class AccountController {
 		}
 
 		const signedDeploy = deployResult.val.sign([asymKey]);
-		console.log(`🚀 ~ AccountController ~ signPrivateKeyProcess= ~ signedDeploy`, signedDeploy);
 		return DeployUtil.deployToJson(signedDeploy);
 	}
 }
