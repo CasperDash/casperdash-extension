@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
@@ -10,9 +10,7 @@ import { getCurrentUserSW } from "@cd/hooks/useServiceWorker";
 import TokenSelectField from './TokenSelectField';
 
 const SendForm = ({ token }) => {
-	// let user = useRef(undefined);
 	const [user, setUser] = useState(undefined);
-	// console.log(`🚀 ~ SendForm ~ user`, user)
 
 	//Hook
 	const navigate = useNavigate();

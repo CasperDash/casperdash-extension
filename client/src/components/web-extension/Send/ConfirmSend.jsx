@@ -27,7 +27,6 @@ const ConfirmSend = ({ token }) => {
 	};
 
 	const buildTransferDeploy = (transferDetails) => {
-    console.log(`🚀 ~ buildTransferDeploy ~ transferDetails`, transferDetails)
 		return token.address === 'CSPR'
 			? getTransferDeploy({
 					...transferDetails,
