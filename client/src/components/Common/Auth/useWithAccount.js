@@ -11,19 +11,16 @@ const asyncAccountValidator = navigate => {
 		const user = await getConnectedAccountChromeLocalStorage();
 
 		if ( !publicKey && user) {
-			console.log(">> WELCOME BACK")
 			navigate('/welcomeBack');
 			return;
 		}
 
 		if ( !publicKey && !user) {
-			console.log(">> CONNECT ACC")
 			navigate('/connectAccount');
 			return;
 		}
 	}
 }
-
 
 const useWithAccount = () => {
 	const dispatch = useDispatch();
