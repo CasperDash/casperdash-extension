@@ -1,4 +1,5 @@
 import { User, EncryptionType } from 'casper-storage';
+import { DeployUtil } from 'casper-js-sdk';
 import UserService from '@cd/services/UserService';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 
@@ -37,7 +38,7 @@ class AccountController {
 		}
 		const user = new UserService(userCache);
 		const result = await user.prepareStorageData();
-    console.log(`🚀 ~ file: AccountController.js ~ line 41 ~ AccountController ~ validateReturningUser= ~ user`, user)
+
 		this.userService = user;
 		return result;
 	};
@@ -93,6 +94,15 @@ class AccountController {
 		}
 		return await this.userService.getConnectionType();
 	};
+
+	signPrivateKeyProcess = async ({ deployJSON }) => {
+		const asymKey = await this.generateKeypair();
+		const deploy = DeployUtil.deployFromJson(deployJSON);
+
+		const signedDeploy = deploy.sign([asymKey]);
+		console.log(`🚀 ~ AccountController ~ signPrivateKeyProcess= ~ signedDeploy`, signedDeploy);
+		return DeployUtil.deployToJson(signedDeploy);
+	}
 }
 
 export default AccountController;
