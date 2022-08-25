@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import CasperDashLogo from '@cd/assets/image/Logo-only.svg';
@@ -40,10 +39,5 @@ const ConnectAccount = () => {
 		</div>
 	);
 };
- 
-export default connect(state => {
-	console.log(`🚀 ~ state`, state)
-	return state;
-})(ConnectAccount);
 
-// export default ConnectAccount;
+export default ConnectAccount;

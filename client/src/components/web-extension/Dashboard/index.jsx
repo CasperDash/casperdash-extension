@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTokenInfo } from '@cd/hooks/useTokensInfo';
@@ -63,7 +62,4 @@ const WalletDetails = () => {
 	);
 };
 
-export default connect(state => {
-// console.log(`🚀 ~ state`, state)
-	return state;
-})(WalletDetails);
+export default WalletDetails;
