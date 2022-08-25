@@ -22,7 +22,7 @@ async function setupPopupServices() {
 	rpc.register('accountManager.generateKeypair', accountController.generateKeypair);
 
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
-  rpc.register('accountManager.getConnectionType', accountController.getConnectionType);
+  // rpc.register('accountManager.getConnectionType', accountController.getConnectionType);
 	rpc.register('accountManager.getCurrentUser', accountController.getCurrentUser);
 	rpc.register('accountManager.clearUser', accountController.clearUser);
 	rpc.register('WORKER_KEEP_ALIVE_MESSAGE', () => {});

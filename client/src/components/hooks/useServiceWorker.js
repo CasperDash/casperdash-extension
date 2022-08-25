@@ -44,10 +44,6 @@ const getActivePublicKey = async () => {
 	return sentMessage({ methodName: 'accountManager.getPublicKey' });
 };
 
-const getConnectionTypeSW = async () => {
-	return sentMessage({ methodName: 'accountManager.getConnectionType' });
-};
-
 const getCurrentUserSW = async () => {
 	return sentMessage({ methodName: 'accountManager.getCurrentUser' });
 };
@@ -72,4 +68,4 @@ const keepSWAlive = async () => {
 	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
 };
 
-export { onSignPrivateKeySW, getConnectionTypeSW, generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };
+export { onSignPrivateKeySW, generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };

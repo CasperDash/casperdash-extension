@@ -15,7 +15,11 @@ class AccountController {
 		this.appStore = appStore;
 	}
 
-	getCurrentUser = () => this.appStore.getState()?.user ?? undefined;
+	// getCurrentUser = () => this.appStore.getState()?.user ?? undefined;
+	getCurrentUser = () => {
+		console.log(">>>> ", this.userService);
+		return this.userService;
+	}
 
 	generateKeypair = async () => {
 		try {
@@ -84,15 +88,6 @@ class AccountController {
 		}
 		const wallet = await user.getWalletAccount(0);
 		return await wallet.getPublicKey();
-	};
-
-  getConnectionType = async () => {
-    console.log(`🚀 ~ file: AccountController.js ~ line 89 ~ AccountController ~ getConnectionType= ~ this.userService`, this.userService)
-    // const user = this.appStore.getState().user;
-		if (!this.userService) {
-			throw Error('Cant find user');
-		}
-		return await this.userService.getConnectionType();
 	};
 
 	signPrivateKeyProcess = async ({ deployJSON }) => {

@@ -69,20 +69,6 @@ export class UserService {
 		return this;
 	};
 
-  getConnectionType = async (walletIndex = 0) => {
-		try {
-			// const user = this.instance;
-			// const wallet = await user.getWalletAccount(walletIndex);
-      // console.log(`🚀 ~ file: UserService.js ~ line 74 ~ UserService ~ getConnectionType ~ wallet`, wallet, wallet?.getEncryptionType())
-
-			// return wallet?.getEncryptionType() ?? undefined;
-      return this.connectionType;
-		} catch (err) {
-			console.log(`🚀 ~ UserService::getConnectionType: `, err);
-			return undefined;
-		}
-	};
-
 	getPublicKey = async (index = 0) => {
 		try {
 			const user = this.instance;
