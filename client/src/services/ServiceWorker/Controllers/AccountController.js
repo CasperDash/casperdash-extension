@@ -92,9 +92,14 @@ class AccountController {
 
 	signPrivateKeyProcess = async ({ deployJSON }) => {
 		const asymKey = await this.generateKeypair();
-		const deploy = DeployUtil.deployFromJson(deployJSON);
+		console.log(`🚀 ~ AccountController ~ signPrivateKeyProcess= ~ asymKey`, asymKey)
+		const deployResult = DeployUtil.deployFromJson(deployJSON);
+		
+		if (deployResult.err) {
+			throw Error("Something went wrong with deployResult")
+		}
 
-		const signedDeploy = deploy.sign([asymKey]);
+		const signedDeploy = deployResult.val.sign([asymKey]);
 		console.log(`🚀 ~ AccountController ~ signPrivateKeyProcess= ~ signedDeploy`, signedDeploy);
 		return DeployUtil.deployToJson(signedDeploy);
 	}
