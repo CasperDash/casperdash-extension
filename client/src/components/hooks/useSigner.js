@@ -14,9 +14,7 @@ const useSigner = () => {
 	const loginOptions = useSelector(getLoginOptions);
 
 	const sign = async (deploy, mainAccountHex, setAccountHex) => {
-    const connectionType = await getConnectionTypeSW();
-    console.log(`🚀 ~ file: useSigner.js ~ line 18 ~ sign ~ connectionType`, connectionType)
-		switch (connectionType) {
+		switch (loginOptions.connectionType) {
 			case CONNECTION_TYPES.ledger: {
 				return await signDeployByLedger(deploy, {
 					publicKey: mainAccountHex,

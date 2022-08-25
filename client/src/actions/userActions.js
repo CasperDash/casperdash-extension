@@ -129,7 +129,9 @@ export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 		});
 
 		dispatch(
-			setPublicKeyToStore(publicKey)
+			setPublicKeyToStore(publicKey, {
+				connectionType: CONNECTION_TYPES.privateKey
+			}),
 		);
 
     if (isFunction(onCompleted)) {
