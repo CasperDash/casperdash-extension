@@ -23,6 +23,11 @@ const sentMessage = async (payload) => {
 	return resultHandler(result);
 };
 
+/**
+ * 
+ * User actions
+ */
+
 const createUserServiceSW = async (password, keyphrase) => {
 	return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase } });
 };
@@ -51,8 +56,20 @@ const onClearUserSW = async () => {
 	return sentMessage({ methodName: 'accountManager.clearUser' });
 };
 
+/**
+ * 
+ * Signing Deploy actions
+ */
+
+const onSignPrivateKeySW = async deployJSON => sentMessage({ methodName: "accountManager.signPrivateKeyProcess", params: { deployJSON }});
+
+/**
+ * 
+ * Others
+ */
+
 const keepSWAlive = async () => {
 	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
 };
 
-export { getConnectionTypeSW, generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };
+export { onSignPrivateKeySW, getConnectionTypeSW, generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };
