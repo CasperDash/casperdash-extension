@@ -86,6 +86,7 @@ describe('UserInstance', () => {
 		it("Should generate an AsymmetricKey keypair", async () => {
 			const mockParseKeypair = jest.fn().mockImplementation(
 				(pubKey, prvKey) => {
+					// eslint-disable-next-line
 					console.log(`🚀 ~ mockParseKeypair:: `, pubKey, prvKey);
 				}
 			);

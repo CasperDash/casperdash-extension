@@ -41,6 +41,7 @@ jest.mock('react-redux', () => ({
 
 describe('useWithAccount', () => {
 	const mockNavigate = jest.fn().mockImplementation((to) => {
+		// eslint-disable-next-line
 		console.log('Mock navigating to:: ', to);
 	});
 
