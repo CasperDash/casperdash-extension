@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { User, KeyFactory } from 'casper-storage';
+import { KeyFactory } from 'casper-storage';
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
