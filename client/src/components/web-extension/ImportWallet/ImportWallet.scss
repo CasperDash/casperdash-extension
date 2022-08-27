@@ -1,0 +1,26 @@
+.cd_we {
+  &_page {
+    &--root {
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      * {
+        margin: 5px 0;
+      }
+    }
+
+    &--bottom {
+      margin-top: auto;
+    }
+  }
+
+  &_create-wallet-layout {
+    &--root {
+      display: flex;
+      flex-flow: column nowrap;
+      height: 100%;
+    }
+  }
+}

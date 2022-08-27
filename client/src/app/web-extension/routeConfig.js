@@ -4,23 +4,23 @@ import StakingIcon from '@cd/assets/image/staking-icon.svg';
 import MarketIcon from '@cd/assets/image/market-icon.svg';
 import CreateWallet from "@cd/web-extension/CreateWallet";
 import WelcomeBack from "@cd/web-extension/WelcomeBack";
-import NFTs from '../../components/web-extension/NFTs';
-import Wallets from '../../components/web-extension/Dashboard';
-import Receive from '../../components/web-extension/Receive';
-import Send from '../../components/web-extension/Send';
-import TokenInfo from '../../components/web-extension/TokenInfo';
-import DeployDetails from '../../components/web-extension/DeployDetails';
-import { AddToken } from '../../components/web-extension/TokenInfo/AddToken';
-import ConnectAccount from '../../components/web-extension/ConnectAccount';
-import ConnectDevice from '../../components/web-extension/ConnectAccount/ConnectDevice';
-import { AddPublicKey } from '../../components/web-extension/ConnectAccount/AddPublicKey';
-import Settings from '../../components/web-extension/Settings';
-import { NFTDetails } from '../../components/web-extension/NFTs/NFTDetails';
-import Market from '../../components/web-extension/Market';
-import Staking from '../../components/web-extension/Staking';
-import { SearchValidator } from '../../components/web-extension/Common/SearchValidator';
-import { Confirm } from '../../components/web-extension/Staking/Confirm';
-import { Undelegate } from '../../components/web-extension/Staking/Undelegate';
+import NFTs from '@cd/web-extension/NFTs';
+import Wallets from '@cd/web-extension/Dashboard';
+import Receive from '@cd/web-extension/Receive';
+import Send from '@cd/web-extension/Send';
+import TokenInfo from '@cd/web-extension/TokenInfo';
+import DeployDetails from '@cd/web-extension/DeployDetails';
+import { AddToken } from '@cd/web-extension/TokenInfo/AddToken';
+import ConnectAccount from '@cd/web-extension/ConnectAccount';
+import ConnectDevice from '@cd/web-extension/ConnectAccount/ConnectDevice';
+import { AddPublicKey } from '@cd/web-extension/ConnectAccount/AddPublicKey';
+import Settings from '@cd/web-extension/Settings';
+import { NFTDetails } from '@cd/web-extension/NFTs/NFTDetails';
+import Market from '@cd/web-extension/Market';
+import Staking from '@cd/web-extension/Staking';
+import { SearchValidator } from '@cd/web-extension/Common/SearchValidator';
+import { Confirm } from '@cd/web-extension/Staking/Confirm';
+import { Undelegate } from '@cd/web-extension/Staking/Undelegate';
 
 let features;
 
@@ -51,7 +51,8 @@ const routes = {
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },
     { name: 'Manage Wallet', route: '/createWallet', component: CreateWallet },
-    { name: 'Welcome Back', route: '/welcomeBack', component: WelcomeBack }
+    { name: 'Welcome Back', route: '/welcomeBack', component: WelcomeBack },
+		{ name: 'Import Wallet', route: '/importWallet', component: WelcomeBack }
 	]
 };
 export default Object.keys(routes).reduce((out, key) => {
