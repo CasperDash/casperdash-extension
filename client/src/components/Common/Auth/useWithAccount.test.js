@@ -86,6 +86,26 @@ describe('useWithAccount', () => {
 		expect(mockNavigate).toHaveBeenCalledWith('/connectAccount');
 	});
 
+	it('Should redirect user back to /connectAccount screen when cached User has empty loginOptions and no public Key stored', async () => {
+		getConnectedAccountChromeLocalStorage.mockResolvedValueOnce({
+			loginOptions: {},
+			publicKey: ""
+		});
+
+		const store = setupStore({
+			user: {
+				publicKey: '',
+			},
+		});
+		await act(async () => {
+			renderHook(() => useWithAccount(), { wrapper: wrapper(store) });
+		});
+
+		expect(useNavigate).toHaveBeenCalled();
+		expect(mockNavigate).toBeCalledTimes(1);
+		expect(mockNavigate).toHaveBeenCalledWith('/connectAccount');
+	});
+
 	it('Should redirect user back to /welcomeBack screen when found cached User info with empty public key', async () => {
 		getConnectedAccountChromeLocalStorage.mockResolvedValueOnce({
 			publicKey: '',
