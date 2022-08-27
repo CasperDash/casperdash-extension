@@ -21,6 +21,7 @@ import Staking from '@cd/web-extension/Staking';
 import { SearchValidator } from '@cd/web-extension/Common/SearchValidator';
 import { Confirm } from '@cd/web-extension/Staking/Confirm';
 import { Undelegate } from '@cd/web-extension/Staking/Undelegate';
+import ImportWallet from '@cd/web-extension/ImportWallet';
 
 let features;
 
@@ -52,7 +53,7 @@ const routes = {
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },
     { name: 'Manage Wallet', route: '/createWallet', component: CreateWallet },
     { name: 'Welcome Back', route: '/welcomeBack', component: WelcomeBack },
-		{ name: 'Import Wallet', route: '/importWallet', component: WelcomeBack }
+		{ name: 'Import Wallet', route: '/importWallet', component: ImportWallet }
 	]
 };
 export default Object.keys(routes).reduce((out, key) => {
