@@ -1,35 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-// import { useSelector } from 'react-redux';
-// import { selectCreateWalletCurrentStep } from '@cd/selectors/createWallet';
+import { useSelector } from 'react-redux';
+import { Formik, Form } from 'formik';
+import { selectCreateWalletTotalKeywords } from "@cd/selectors/createWallet";
+import FieldKeyphrase from "./FieldKeyphrase";
 import './ImportWallet.scss';
 
-const ImportWallet = () => {
-	const pasteEventHandler = (event) => {
-		console.log('>> PASTE: ', event.clipboardData.getData('text'));
-	};
-	useEffect(() => {
-		window.addEventListener('paste', pasteEventHandler);
 
-		return () => window.removeEventListener('paste', pasteEventHandler);
+const ImportWallet = () => {
+	const TOTAL_KEYWORDS = useSelector(selectCreateWalletTotalKeywords);
+
+	const onValidate = useCallback(values => {
+		console.log(`🚀 ~ onValidate ~ values`, values)
+		const { keyphrase } = values;
+		const errors = {};
+
+		return errors;
 	}, []);
+	
 	return (
 		<section className="cd_we_page--root">
-			<div className="cd_we_create-wallet-layout--root">
-				<div className="cd_we_create-wallet-layout--body">
-					<p>Paste your keyphrase (12 words) here</p>
-					<div>
-						<input />
-					</div>
-				</div>
-				<div className="cd_we_page--bottom">
-					<Button className="cd_we_btn-next" onClick={() => {}}>
-						Next
-					</Button>
-				</div>
-			</div>
+			<Formik
+				initialValues={{
+					keyphrase: new Array(TOTAL_KEYWORDS).fill('')
+				}}
+				validate={onValidate}
+				onSubmit={values => {
+					// same shape as initial values
+					console.log(values);
+				}}
+			>
+				{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
+					return (
+						<Form>
+							<div className="cd_we_create-wallet-layout--root">
+								<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
+									<FieldKeyphrase totalWords={TOTAL_KEYWORDS} />
+								</div>
+								<div className="cd_we_page--bottom">
+									<Button className="cd_we_btn-next" type="submit">
+										Next
+									</Button>
+								</div>
+							</div>
+						</Form>
+					)
+				}}
+			</Formik>
 		</section>
 	);
 };
+
+ImportWallet.propTypes = {};
 
 export default ImportWallet;
