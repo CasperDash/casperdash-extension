@@ -51,7 +51,6 @@ describe('useWithAccount', () => {
 	afterEach(cleanup);
 
 	it('Should return nothing', () => {
-		// useNavigate.mockImplementation(() => mockNavigate);
 		getConnectedAccountChromeLocalStorage.mockResolvedValue({
 			publicKey: 'abc',
 			loginOptions: {

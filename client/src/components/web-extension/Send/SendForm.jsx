@@ -49,7 +49,7 @@ const SendForm = ({ token }) => {
 	};
 
 	React.useEffect(() => {
-		const loadUser = async () => await getCurrentUserSW();
+		const loadUser = async () => getCurrentUserSW();
 		loadUser().then(result => {
 			if (!result) {
 				toast.warning('Please re-login to continue sending token');

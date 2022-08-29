@@ -15,5 +15,5 @@ export const signDeployByPrivateKey = async (deploy) => {
 	}
 
 	const deployJSON = DeployUtil.deployToJson(deploy);
-	return await onSignPrivateKeySW(deployJSON);
+	return onSignPrivateKeySW(deployJSON);
 };

@@ -17,7 +17,6 @@ const asyncAccountValidator = navigate => {
 
 		if ( !publicKey && !user) {
 			navigate('/connectAccount');
-			return;
 		}
 	}
 }

@@ -23,7 +23,7 @@ const useSigner = () => {
 			case CONNECTION_TYPES.casperSigner:
 				return await signDeployByCasperSigner(deploy, mainAccountHex, setAccountHex);
       case CONNECTION_TYPES.privateKey:
-        return await signDeployByPrivateKey(deploy, mainAccountHex, setAccountHex);
+        return signDeployByPrivateKey(deploy, mainAccountHex, setAccountHex);
 			default:
 				throw Error('Can not find signer');
 		}
