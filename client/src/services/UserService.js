@@ -107,7 +107,7 @@ export class UserService {
 	 * @returns
 	 */
 	prepareStorageData = async () => {
-		const userInfo = await this.getUserInfoHash();
+		const userInfo = this.getUserInfoHash();
 		const publicKey = await this.getPublicKey();
 
 		return {

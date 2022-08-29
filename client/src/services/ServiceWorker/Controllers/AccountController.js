@@ -16,7 +16,6 @@ class AccountController {
 	}
 
 	getCurrentUser = () => {
-		// return this.appStore.getState()?.user ?? undefined;
 		return this.userService;
 	}
 
@@ -64,10 +63,10 @@ class AccountController {
 			};
 			user = new UserService(new User(password), opts);
 
-			// this.appStore.push({user})
 			user.initialize(keyphrase);
 
 			this.userService = user;
+			this.appStore.putState({ user });
 		} catch (error) {
 			console.error(error);
 			throw Error('Error on create new User');
@@ -81,12 +80,11 @@ class AccountController {
 	};
 
 	getPublicKey = async () => {
-		const user = this.appStore.getState().user;
-		if (!user) {
-			throw Error('Cant find user');
+		if (!this.userService) {
+			throw new Error('Missing UserService instance');
 		}
-		const wallet = await user.getWalletAccount(0);
-		return await wallet.getPublicKey();
+
+		return this.userService.getPublicKey();
 	};
 
 	signPrivateKeyProcess = async ({ deployJSON }) => {
