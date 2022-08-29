@@ -24,7 +24,6 @@ const asyncAccountValidator = navigate => {
 
 		if ( !publicKey && !isValidUserShape) {
 			navigate('/connectAccount');
-			return;
 		}
 	}
 }
