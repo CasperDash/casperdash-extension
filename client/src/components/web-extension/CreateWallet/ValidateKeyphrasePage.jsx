@@ -28,9 +28,9 @@ const ValidateKeyphrasePage = () => {
 	}, [answerSheet]);
 
 	const onClickHandler = useCallback(() => {
-		// if (shouldDisableNextButton) {
-		//   return;
-		// }
+		if (shouldDisableNextButton) {
+			return;
+		}
 
 		dispatch(setNextStep());
 	}, [dispatch, shouldDisableNextButton]);
