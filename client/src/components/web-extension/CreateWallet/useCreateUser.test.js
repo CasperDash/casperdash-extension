@@ -62,15 +62,6 @@ describe('useCreateUser', () => {
 	});
 
 	it('Should call `onBindingAuthInfo` when creating new User successfully', async () => {
-		/** This mocking block can be moved into SW for re-use purpose  */
-		// User.mockReturnValueOnce({
-		// 	setHDWallet: jest.fn(),
-		// 	addWalletAccount: jest.fn().mockImplementation(() => ({
-		// 		getPublicKey: jest.fn().mockReturnValueOnce('this-is-public-key'),
-		// 	})),
-		// 	getPasswordHashingOptions: jest.fn(),
-		// 	serialize: jest.fn(),
-		// });
 		const keyphrase = KeyFactory.getInstance().generate();
 		// Need to manually create salt info because jest env doesn't honor some internal casper API
 		const saltArray = [154, 122, 96, 217, 57, 201, 196, 63, 217, 99, 148, 81, 232, 180, 58, 50];
