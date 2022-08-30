@@ -16,9 +16,18 @@ const ImportWallet = () => {
 		const { keyphrase } = values;
 		const errors = {};
 
+    /**
+     * Make sure keyphrase has 12 words
+     */
+
+
+    /**
+     * Make sure keyphrase is valid with `KeyFactory.getInstance().validate(keyphrase)`
+     */
+
 		return errors;
 	}, []);
-	
+
 	return (
 		<section className="cd_we_page--root">
 			<Formik
@@ -33,7 +42,7 @@ const ImportWallet = () => {
 			>
 				{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
 					return (
-						<Form>
+						<Form noValidate onSubmit={handleSubmit}>
 							<div className="cd_we_create-wallet-layout--root">
 								<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 									<FieldKeyphrase totalWords={TOTAL_KEYWORDS} />
