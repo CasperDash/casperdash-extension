@@ -13,8 +13,8 @@ const useCreateUser = () => {
 	const onCreateSuccess = useCallback(
 		(result) => {
 			const { publicKey, userDetails } = result;
-      const onCompleted = () => navigate('/');
-			dispatch(onBindingAuthInfo({ publicKey, user: userDetails}, onCompleted));
+			const onCompleted = () => navigate('/');
+			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }, onCompleted));
 			dispatch(resetWalletCreation());
 
 			return result;
@@ -30,7 +30,6 @@ const useCreateUser = () => {
 				}
 
 				const result = await createUserServiceSW(password, keyphrase);
-				// console.log(`🚀 ~ result`, result)
 				onCreateSuccess(result);
 				return result;
 			} catch (err) {

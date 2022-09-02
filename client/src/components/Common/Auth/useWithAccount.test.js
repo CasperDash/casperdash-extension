@@ -41,6 +41,7 @@ jest.mock('react-redux', () => ({
 
 describe('useWithAccount', () => {
 	const mockNavigate = jest.fn().mockImplementation((to) => {
+		// eslint-disable-next-line
 		console.log('Mock navigating to:: ', to);
 	});
 
@@ -69,6 +70,26 @@ describe('useWithAccount', () => {
 
 	it('Should redirect user back to /connectAccount screen when not found cached User info and no public Key stored', async () => {
 		getConnectedAccountChromeLocalStorage.mockResolvedValueOnce(undefined);
+
+		const store = setupStore({
+			user: {
+				publicKey: '',
+			},
+		});
+		await act(async () => {
+			renderHook(() => useWithAccount(), { wrapper: wrapper(store) });
+		});
+
+		expect(useNavigate).toHaveBeenCalled();
+		expect(mockNavigate).toBeCalledTimes(1);
+		expect(mockNavigate).toHaveBeenCalledWith('/connectAccount');
+	});
+
+	it('Should redirect user back to /connectAccount screen when cached User has empty loginOptions and no public Key stored', async () => {
+		getConnectedAccountChromeLocalStorage.mockResolvedValueOnce({
+			loginOptions: {},
+			publicKey: ""
+		});
 
 		const store = setupStore({
 			user: {

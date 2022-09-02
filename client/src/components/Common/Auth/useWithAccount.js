@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import isEmpty from 'lodash-es/isEmpty';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 
 const asyncAccountValidator = navigate => {
@@ -9,13 +10,19 @@ const asyncAccountValidator = navigate => {
 			user: { publicKey },
 		} = getState();
 		const user = await getConnectedAccountChromeLocalStorage();
+		/**
+		 * Make sure user must be valid before navigating to other route
+		 */
+		const isValidUserShape = Boolean(
+			user && !isEmpty(user?.loginOptions)
+		);
 
-		if ( !publicKey && user) {
+		if ( !publicKey && isValidUserShape) {
 			navigate('/welcomeBack');
 			return;
 		}
 
-		if ( !publicKey && !user) {
+		if ( !publicKey && !isValidUserShape) {
 			navigate('/connectAccount');
 		}
 	}

@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux';
-import { User, KeyFactory } from 'casper-storage';
+import { KeyFactory } from 'casper-storage';
+import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
+import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
 import useCreateUser from './useCreateUser';
 
 jest.mock('casper-storage', () => ({
@@ -10,6 +12,10 @@ jest.mock('casper-storage', () => ({
 }));
 jest.mock('@cd/actions/userActions', () => ({
 	onBindingAuthInfo: jest.fn(),
+}));
+jest.mock('@cd/hooks/useServiceWorker', () => ({
+	...jest.requireActual('@cd/hooks/useServiceWorker'),
+	createUserServiceSW: jest.fn(),
 }));
 
 describe('useCreateUser', () => {
@@ -56,14 +62,6 @@ describe('useCreateUser', () => {
 	});
 
 	it('Should call `onBindingAuthInfo` when creating new User successfully', async () => {
-		User.mockReturnValueOnce({
-			setHDWallet: jest.fn(),
-			addWalletAccount: jest.fn().mockImplementation(() => ({
-				getPublicKey: jest.fn().mockReturnValueOnce('this-is-public-key'),
-			})),
-			getPasswordHashingOptions: jest.fn(),
-			serialize: jest.fn(),
-		});
 		const keyphrase = KeyFactory.getInstance().generate();
 		// Need to manually create salt info because jest env doesn't honor some internal casper API
 		const saltArray = [154, 122, 96, 217, 57, 201, 196, 63, 217, 99, 148, 81, 232, 180, 58, 50];
@@ -74,13 +72,27 @@ describe('useCreateUser', () => {
 			},
 		} = renderHook(() => useCreateUser());
 
-		await onCreateNewUser('Abc@QWZ123abAxcvx1!', {
-			passwordOptions: {
-				salt: new Uint8Array(saltArray),
-			},
+		createUserServiceSW.mockResolvedValue({
+			publicKey: "this-is-public-key",
+			userDetails: {
+				loginInfo: "abc"
+			}
+		});
+
+		await act(async () => {
+			await onCreateNewUser('Abc@QWZ123abAxcvx1!', {
+				passwordOptions: {
+					salt: new Uint8Array(saltArray),
+				},
+			});
 		});
 
 		expect(onBindingAuthInfo).toHaveBeenCalledTimes(1);
-		expect(onBindingAuthInfo).toHaveBeenCalledWith('this-is-public-key', expect.anything());
+		expect(onBindingAuthInfo).toHaveBeenCalledWith({
+			publicKey: 'this-is-public-key', 
+			user: {
+				loginInfo: "abc"
+			}
+		}, expect.anything());
 	});
 });

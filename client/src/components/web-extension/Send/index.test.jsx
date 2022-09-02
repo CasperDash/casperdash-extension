@@ -1,8 +1,17 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { useLocation } from 'react-router-dom';
+import { getCurrentUserSW } from '@cd/components/hooks/useServiceWorker';
 import Send from './';
 
+jest.mock('@cd/hooks/useServiceWorker', () => ({
+	...jest.requireActual('@cd/hooks/useServiceWorker'),
+	getCurrentUserSW: jest.fn()
+}));
+
+beforeEach(() => {
+	getCurrentUserSW.mockResolvedValue({ user: "demo" });
+})
 afterEach(cleanup);
 
 test('Should show input screen', async () => {
