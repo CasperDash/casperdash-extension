@@ -10,13 +10,22 @@ const FieldKeyphrase = ({ totalWords }) => {
 		event.preventDefault();
 		
 		const pasteData = event.clipboardData.getData('text');
-		setFieldValue('keyphrase', pasteData.split(' '));
-	}, [setFieldValue]);
+		const words = pasteData.split(' ');
+		if (totalWords - words.length <= 0) {
+			setFieldValue('keyphrase', words.slice(0, totalWords));
+
+			return;
+		} 
+
+		const filledWords = words.concat(new Array(totalWords - words.length).fill(''));
+		setFieldValue('keyphrase', filledWords);
+	}, [setFieldValue, totalWords]);
 
 	useEffect(() => {
 		window.addEventListener('paste', pasteEventHandler);
 
 		return () => window.removeEventListener('paste', pasteEventHandler);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

@@ -11,10 +11,7 @@ const generateKeyphrase = () => {
 	const keyManager = KeyFactory.getInstance();
 	const keyphrase = keyManager.generate();
 
-	return {
-		type: CREATE_WALLET.CREATE_KEYPHRASE,
-		payload: { keyphrase, map: generateKeyphraseMap(keyphrase) },
-	};
+	return dispatch => dispatch(updateKeyphrase(keyphrase));
 };
 
 const updateKeyphrase = (keyphrase) => {
