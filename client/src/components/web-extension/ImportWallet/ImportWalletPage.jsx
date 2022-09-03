@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, Form as FormBS } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { KeyFactory } from 'casper-storage';
@@ -31,7 +31,7 @@ const ImportWallet = () => {
 		 * Make sure keyphrase is valid with `KeyFactory.getInstance().validate(keyphrase)`
 		 */
 		if (!KeyFactory.getInstance().validate(keyphrase.join(' '))) {
-			errors.keyphrase = 'Keypharse does not validated';
+			errors.keyphrase = 'Keypharse is not validated';
 
 			return errors;
 		}
@@ -56,16 +56,19 @@ const ImportWallet = () => {
 		>
 			{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
 				return (
-					<Form noValidate onSubmit={handleSubmit}>
-						<div className="cd_we_create-wallet-layout--root">
-							<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
-								<FieldKeyphrase totalWords={TOTAL_KEYWORDS} />
-							</div>
-							<div className="cd_we_page--bottom">
-								<Button className="cd_we_btn-next" type="submit">
-									Next
-								</Button>
-							</div>
+					<Form noValidate onSubmit={handleSubmit} className="cd_we_create-wallet-layout--root">
+						<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
+							<FieldKeyphrase totalWords={TOTAL_KEYWORDS} />
+						</div>
+						{errors.keyphrase && touched.keyphrase && (
+							<FormBS.Text className="invalid-feedback">
+								{errors.keyphrase}
+							</FormBS.Text>
+						)}
+						<div>
+							<Button className="cd_we_btn-next" type="submit">
+								Next
+							</Button>
 						</div>
 					</Form>
 				)

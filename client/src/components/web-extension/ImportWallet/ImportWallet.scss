@@ -7,7 +7,7 @@
       height: 100%;
 
       * {
-        margin: 5px 0;
+        margin: 3px 0;
       }
     }
 
@@ -21,8 +21,7 @@
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      max-height: 416px;
-      min-height: 380px;
+      height: 365px;
       justify-content: space-between;
       margin-right: -20px;
       padding-left: 10px;
@@ -40,10 +39,15 @@
     }
   }
 
+  &_btn-next {
+    margin-top: 30px;
+  }
+
   &_create-wallet-layout {
     &--root {
       display: flex;
       flex-flow: column nowrap;
+      justify-content: space-between;
       height: 100%;
     }
   }
