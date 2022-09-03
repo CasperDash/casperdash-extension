@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import { selectCreateWalletCurrentStep } from "@cd/selectors/createWallet";
+import CreatePasswordPage from "@cd/common/CreatePasswordPage";
+
 import RecoveryPhrasePage from "./RecoveryPhrasePage";
 import ValidateKeyphrasePage from "./ValidateKeyphrasePage";
-import CreatePasswordPage from "./CreatePasswordPage";
 import "./CreateWallet.scss";
 
 const CreateWallet = () => {

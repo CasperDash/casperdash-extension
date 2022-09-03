@@ -16,6 +16,30 @@
     }
   }
 
+  &_create-keyphrase {
+    &--column {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 416px;
+      min-height: 380px;
+      justify-content: space-between;
+      margin-right: -20px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    &--box {
+      padding: 0 16px;
+    }
+  }
+
+  &_keyphrase {
+    &--word {
+      margin-right: 20px;
+      width: 100%;
+    }
+  }
+
   &_create-wallet-layout {
     &--root {
       display: flex;

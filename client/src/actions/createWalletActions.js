@@ -17,6 +17,13 @@ const generateKeyphrase = () => {
 	};
 };
 
+const updateKeyphrase = (keyphrase) => {
+	return {
+		type: CREATE_WALLET.CREATE_KEYPHRASE,
+		payload: { keyphrase, map: generateKeyphraseMap(keyphrase) },
+	};
+};
+
 /**
  * Ids of selected words for checking
  * @param {Array[Number]} idKeys
@@ -63,4 +70,4 @@ const setNextStep = () => ({ type: CREATE_WALLET.NEXT_STEP });
  */
 const setPrevStep = () => ({ type: CREATE_WALLET.PREVIOUS_STEP });
 
-export { createAnswerSheet, updateAnswerSheet, generateKeyphrase, resetWalletCreation, setNextStep, setPrevStep };
+export { createAnswerSheet, updateAnswerSheet, generateKeyphrase, resetWalletCreation, setNextStep, setPrevStep, updateKeyphrase };
