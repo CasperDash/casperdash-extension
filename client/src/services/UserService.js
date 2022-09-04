@@ -107,7 +107,11 @@ export class UserService {
 	 * @returns
 	 */
 	prepareStorageData = async () => {
-		const userInfo = this.getUserInfoHash();
+		/**
+		 * Ignore removing `await` from Sonarcloud audit.
+		 * This will return user info with hash info
+		 */
+		const userInfo = await this.getUserInfoHash();
 		const publicKey = await this.getPublicKey();
 
 		return {

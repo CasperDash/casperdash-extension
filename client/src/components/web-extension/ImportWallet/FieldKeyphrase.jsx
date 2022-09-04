@@ -25,8 +25,7 @@ const FieldKeyphrase = ({ totalWords }) => {
 		window.addEventListener('paste', pasteEventHandler);
 
 		return () => window.removeEventListener('paste', pasteEventHandler);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [pasteEventHandler]);
 
 	return (
 		<ul className="cd_we_create-keyphrase--column">
