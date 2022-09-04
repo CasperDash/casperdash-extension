@@ -63,12 +63,12 @@ describe('Grid', () => {
 			data: [
 				{
 					...sharedProps,
-          totalPrice: 0,
+					totalPrice: 0,
 				},
 			],
 		});
 
-    expect(getByTestId('CSPR-balance.displayValue').textContent).toBe('0 ');
+		expect(getByTestId('CSPR-balance.displayValue').textContent).toBe('0 ');
 		expect(getByTestId('CSPR-totalPrice').textContent).toBe('$0.00 ');
 		expect(getByTestId('CSPR-price').textContent).toBe('$0.04 ');
 	});
@@ -78,7 +78,7 @@ describe('Grid', () => {
 			data: [
 				{
 					...sharedProps,
-          totalPrice: 3.77,
+					totalPrice: 3.77,
 					balance: {
 						displayValue: 100,
 					},

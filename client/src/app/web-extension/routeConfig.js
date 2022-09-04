@@ -2,8 +2,8 @@ import HomeIcon from '@cd/assets/image/home-icon.svg';
 import NFTIcon from '@cd/assets/image/nft-menu-icon.svg';
 import StakingIcon from '@cd/assets/image/staking-icon.svg';
 import MarketIcon from '@cd/assets/image/market-icon.svg';
-import CreateWallet from "@cd/web-extension/CreateWallet";
-import WelcomeBack from "@cd/web-extension/WelcomeBack";
+import CreateWallet from '@cd/web-extension/CreateWallet';
+import WelcomeBack from '@cd/web-extension/WelcomeBack';
 import NFTs from '@cd/web-extension/NFTs';
 import Wallets from '@cd/web-extension/Dashboard';
 import Receive from '@cd/web-extension/Receive';
@@ -51,10 +51,10 @@ const routes = {
 		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },
-    { name: 'Manage Wallet', route: '/createWallet', component: CreateWallet },
-    { name: 'Welcome Back', route: '/welcomeBack', component: WelcomeBack },
-		{ name: 'Import Wallet', route: '/importWallet', component: ImportWallet }
-	]
+		{ name: 'Manage Wallet', route: '/createWallet', component: CreateWallet },
+		{ name: 'Welcome Back', route: '/welcomeBack', component: WelcomeBack },
+		{ name: 'Import Wallet', route: '/importWallet', component: ImportWallet },
+	],
 };
 export default Object.keys(routes).reduce((out, key) => {
 	return { ...out, [key]: features ? routes[key].filter((route) => features.includes(route.name)) : routes[key] };

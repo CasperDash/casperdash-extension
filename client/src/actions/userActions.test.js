@@ -4,20 +4,20 @@ import {
 	updatePublicKeyFromSigner,
 	initConnectedAccountFromLocalStorage,
 	lockAccount,
-  setPublicKeyToStore
+	setPublicKeyToStore,
 } from './userActions';
-import { isUsingExtension } from "@cd/services/localStorage";
-const getConnectedAccountChromeLocalStorage = require("./userActions.utils").getConnectedAccountChromeLocalStorage;
+import { isUsingExtension } from '@cd/services/localStorage';
+const getConnectedAccountChromeLocalStorage = require('./userActions.utils').getConnectedAccountChromeLocalStorage;
 
-jest.mock("./userActions.utils", () => ({
-  getConnectedAccountChromeLocalStorage: jest.fn(),
-  cacheLoginInfoToLocalStorage: jest.fn()
+jest.mock('./userActions.utils', () => ({
+	getConnectedAccountChromeLocalStorage: jest.fn(),
+	cacheLoginInfoToLocalStorage: jest.fn(),
 }));
 jest.mock('@cd/services/localStorage', () => {
 	return {
-    isUsingExtension: jest.fn(),
-    getChromeStorageLocal: jest.fn(), 
-    setChromeStorageLocal: jest.fn(),
+		isUsingExtension: jest.fn(),
+		getChromeStorageLocal: jest.fn(),
+		setChromeStorageLocal: jest.fn(),
 		setLocalStorageValue: jest.fn(),
 		getLocalStorageValue: jest.fn(),
 	};
@@ -75,24 +75,24 @@ test('setPublicKeyToStore', () => {
 	});
 });
 
-describe("initConnectedAccountFromLocalStorage", () => {
-  it('Should return public key on init successfully', async () => {
-    const mockDispatch = jest.fn();
-    isUsingExtension.mockResolvedValue(true);
-    getConnectedAccountChromeLocalStorage.mockResolvedValue({ publicKey: 'testpk' });
-    const value = await initConnectedAccountFromLocalStorage()(mockDispatch);
-    await expect(mockDispatch).toHaveBeenCalled();
-    await expect(value).toEqual('testpk');
-  });
+describe('initConnectedAccountFromLocalStorage', () => {
+	it('Should return public key on init successfully', async () => {
+		const mockDispatch = jest.fn();
+		isUsingExtension.mockResolvedValue(true);
+		getConnectedAccountChromeLocalStorage.mockResolvedValue({ publicKey: 'testpk' });
+		const value = await initConnectedAccountFromLocalStorage()(mockDispatch);
+		await expect(mockDispatch).toHaveBeenCalled();
+		await expect(value).toEqual('testpk');
+	});
 
-  it('Should return undefined when not found connected account from local storage', async () => {
-    const mockDispatch = jest.fn();
-    isUsingExtension.mockResolvedValue(true);
-    getConnectedAccountChromeLocalStorage.mockResolvedValue();
-    const value = await initConnectedAccountFromLocalStorage()(mockDispatch);
+	it('Should return undefined when not found connected account from local storage', async () => {
+		const mockDispatch = jest.fn();
+		isUsingExtension.mockResolvedValue(true);
+		getConnectedAccountChromeLocalStorage.mockResolvedValue();
+		const value = await initConnectedAccountFromLocalStorage()(mockDispatch);
 
-    expect(value).toEqual(undefined);
-  });
+		expect(value).toEqual(undefined);
+	});
 });
 
 test('lockAccount', () => {

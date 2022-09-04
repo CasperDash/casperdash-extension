@@ -26,7 +26,7 @@ describe('useCreateUser', () => {
 		expect(typeof result.current.onCreateNewUser).toBe('function');
 	});
 
-	it("Should return undefined when no keyphrase provided", async () => {
+	it('Should return undefined when no keyphrase provided', async () => {
 		const {
 			result: {
 				current: { onCreateNewUser },
@@ -73,10 +73,10 @@ describe('useCreateUser', () => {
 		} = renderHook(() => useCreateUser());
 
 		createUserServiceSW.mockResolvedValue({
-			publicKey: "this-is-public-key",
+			publicKey: 'this-is-public-key',
 			userDetails: {
-				loginInfo: "abc"
-			}
+				loginInfo: 'abc',
+			},
 		});
 
 		await act(async () => {
@@ -88,11 +88,14 @@ describe('useCreateUser', () => {
 		});
 
 		expect(onBindingAuthInfo).toHaveBeenCalledTimes(1);
-		expect(onBindingAuthInfo).toHaveBeenCalledWith({
-			publicKey: 'this-is-public-key', 
-			user: {
-				loginInfo: "abc"
-			}
-		}, expect.anything());
+		expect(onBindingAuthInfo).toHaveBeenCalledWith(
+			{
+				publicKey: 'this-is-public-key',
+				user: {
+					loginInfo: 'abc',
+				},
+			},
+			expect.anything(),
+		);
 	});
 });

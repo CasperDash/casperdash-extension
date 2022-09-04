@@ -9,7 +9,7 @@ default: custom adding, view mode
 export const CONNECTION_TYPES = {
 	casperSigner: 'caspersigner',
 	ledger: 'ledger',
-  privateKey: 'privateKey'
+	privateKey: 'privateKey',
 };
 
 export const CONNECTED_ACCOUNT_STORAGE_PATH = 'connectedAccount';

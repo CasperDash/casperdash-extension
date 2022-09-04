@@ -6,20 +6,23 @@ const FieldKeyphrase = ({ totalWords }) => {
 	const keys = Object.keys(new Array(totalWords).fill(''));
 	const { setFieldValue } = useFormikContext();
 
-	const pasteEventHandler = useCallback((event) => {
-		event.preventDefault();
-		
-		const pasteData = event.clipboardData.getData('text');
-		const words = pasteData.split(' ');
-		if (totalWords - words.length <= 0) {
-			setFieldValue('keyphrase', words.slice(0, totalWords));
+	const pasteEventHandler = useCallback(
+		(event) => {
+			event.preventDefault();
 
-			return;
-		} 
+			const pasteData = event.clipboardData.getData('text');
+			const words = pasteData.split(' ');
+			if (totalWords - words.length <= 0) {
+				setFieldValue('keyphrase', words.slice(0, totalWords));
 
-		const filledWords = words.concat(new Array(totalWords - words.length).fill(''));
-		setFieldValue('keyphrase', filledWords);
-	}, [setFieldValue, totalWords]);
+				return;
+			}
+
+			const filledWords = words.concat(new Array(totalWords - words.length).fill(''));
+			setFieldValue('keyphrase', filledWords);
+		},
+		[setFieldValue, totalWords],
+	);
 
 	useEffect(() => {
 		window.addEventListener('paste', pasteEventHandler);
@@ -33,16 +36,16 @@ const FieldKeyphrase = ({ totalWords }) => {
 				<li className="cd_we_keyphrase--word" key={`left-${word}`}>
 					<span className="counter">{index + 1}</span>
 					<span className="value">
-						<Field name={`keyphrase[${index}]`}/>
+						<Field name={`keyphrase[${index}]`} />
 					</span>
 				</li>
 			))}
 		</ul>
-	)
-}
+	);
+};
 
 FieldKeyphrase.propTypes = {
-	totalWords: PropTypes.number.isRequired
-}
+	totalWords: PropTypes.number.isRequired,
+};
 
 export default FieldKeyphrase;
