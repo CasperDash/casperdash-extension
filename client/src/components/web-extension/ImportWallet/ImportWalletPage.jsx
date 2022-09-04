@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { Button, Form as FormBS } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { KeyFactory } from 'casper-storage';
 import { selectCreateWalletTotalKeywords } from "@cd/selectors/createWallet";
