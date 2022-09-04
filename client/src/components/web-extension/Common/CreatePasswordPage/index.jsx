@@ -1,10 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Formik } from 'formik';
-import { useOutletContext } from "react-router-dom";
-import { useSelector } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { selectCreateWalletCurrentStep } from "@cd/selectors/createWallet";
-import { generateCWHeader } from "@cd/actions/createWalletActions.utils";
 import messages from "@cd/shared/formMessages";
 import useCreateUser from './useCreateUser';
 import './CreatePasswordPage.scss';
@@ -28,9 +24,7 @@ const onValidatePassword = (values) => {
 };
 
 const CreatePasswordPage = () => {
-  const [, setHeader] = useOutletContext();
 	const { onCreateNewUser } = useCreateUser();
-  const currentStep = useSelector(selectCreateWalletCurrentStep);
   const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
 	const handleFormSubmit = useCallback(
@@ -56,14 +50,6 @@ const CreatePasswordPage = () => {
 		},
 		[serverErrors],
 	);
-
-  /**
-   * Reset header so OuterHeader can show correct name
-   */
-  useEffect(() => {
-    setHeader(generateCWHeader(currentStep));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
