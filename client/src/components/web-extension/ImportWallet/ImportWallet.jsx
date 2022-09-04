@@ -10,12 +10,15 @@ const ImportWallet = () => {
 	const [, setHeader] = useOutletContext();
 	const currentStep = useSelector(selectCreateWalletCurrentStep);
 	useEffect(() => {
-		if (currentStep === 0) {
-			setHeader('Import keyphrase');
-		}
-
-		if (currentStep === 1) {
-			setHeader('Enter password');
+		switch(currentStep) {
+			case 0:
+				setHeader('Import keyphrase');
+				break;
+			case 1:
+				setHeader('Enter password');
+				break;
+			default:
+				return;
 		}
 	}, [currentStep, setHeader]);
 	return (
