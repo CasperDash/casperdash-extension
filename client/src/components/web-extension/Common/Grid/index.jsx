@@ -9,16 +9,10 @@ import './index.scss';
 
 const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
 	const getFormattedValue = useCallback((item, token) => {
-<<<<<<< Updated upstream
-    return getValueByFormat(item.value || get(token, item.key), {
-      format: item.format,
-    });
-=======
 		return getValueByFormat(item.value || get(token, item.key), {
 			format: item.format,
 			...item.formatOptions,
 		});
->>>>>>> Stashed changes
 	}, []);
 	const renderValue = useCallback(({ item, token }, value) => {
 		if (item.wrapperComponent) {
@@ -35,7 +29,8 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 		(item, token) => {
 			const formattedValue = getFormattedValue(item, token);
 			const shouldNotRender =
-				(isFunction(item?.shouldDisplay) && !item.shouldDisplay(get(token, item.key))) || get(token, item.key) === null;
+				(isFunction(item?.shouldDisplay) && !item.shouldDisplay(get(token, item.key))) ||
+				get(token, item.key) === null;
 
 			if (shouldNotRender) {
 				return null;
