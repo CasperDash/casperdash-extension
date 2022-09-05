@@ -33,7 +33,7 @@ const SETTINGS = [
 			className: 'cd_we_setting_lock',
 			img: <LockIcon />,
 		},
-		action: ({dispatch, navigate}) => {
+		action: ({ dispatch, navigate }) => {
 			dispatch(onClearPublicKey());
 			navigate('/welcomeBack');
 		},
@@ -44,7 +44,7 @@ const SETTINGS = [
 			className: 'cd_we_setting_lock',
 			img: <LockIcon />,
 		},
-		action: ({dispatch, navigate}) => {
+		action: ({ dispatch, navigate }) => {
 			dispatch(lockAccount());
 			navigate('/connectAccount');
 		},
@@ -59,7 +59,11 @@ const Settings = () => {
 		<section className="cd_we_single_section no_bottom_bar">
 			{SETTINGS.map((setting) => {
 				return (
-					<div className="cd_setting_row" key={setting.name} onClick={() => setting.action({dispatch, navigate})}>
+					<div
+						className="cd_setting_row"
+						key={setting.name}
+						onClick={() => setting.action({ dispatch, navigate })}
+					>
 						<div className="cd_setting_row_left">
 							<div className={`cd_setting_icon ${setting.icon.className}`}>{setting.icon.img}</div>
 							<div className="cd_setting_name">{setting.name}</div>

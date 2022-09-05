@@ -8,7 +8,7 @@ import Layout from '@cd/web-extension/Common/Layout';
 import OuterLayout from '@cd/web-extension/Common/Layout/OuterLayout';
 import WithAccount from '@cd/common/Auth/WithAccount';
 import WithConfigurations from '@cd/common/Configurations';
-import { keepSWAlive } from "@cd/hooks/useServiceWorker";
+import { keepSWAlive } from '@cd/hooks/useServiceWorker';
 import routeConfig from './routeConfig';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,7 +33,7 @@ const App = () => {
 			keepSWAlive();
 		}, 1500);
 
-		return () => clearInterval(idInterval)
+		return () => clearInterval(idInterval);
 	}, []);
 
 	return (

@@ -8,17 +8,17 @@ import SendForm from './SendForm';
 
 jest.mock('@cd/hooks/useServiceWorker', () => ({
 	...jest.requireActual('@cd/hooks/useServiceWorker'),
-	getCurrentUserSW: jest.fn()
+	getCurrentUserSW: jest.fn(),
 }));
 
 afterEach(cleanup);
 
 jest.mock('../../../helpers/validator', () => ({
-	validateTransferForm: jest.fn(), 
+	validateTransferForm: jest.fn(),
 }));
 
 test('Should show SendForm ', async () => {
-	getCurrentUserSW.mockResolvedValue({ user: "abc" });
+	getCurrentUserSW.mockResolvedValue({ user: 'abc' });
 	useLocation.mockReturnValue({ state: {} });
 	validateTransferForm.mockReturnValue({});
 	useSelector

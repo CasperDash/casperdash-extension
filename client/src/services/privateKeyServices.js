@@ -7,7 +7,6 @@ import { onSignPrivateKeySW } from '@cd/components/hooks/useServiceWorker';
  * @returns {Deploy} Signed deploy
  */
 export const signDeployByPrivateKey = async (deploy) => {
-
 	const validate = DeployUtil.validateDeploy(deploy);
 
 	if (!validate) {

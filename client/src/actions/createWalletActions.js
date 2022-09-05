@@ -11,7 +11,7 @@ const generateKeyphrase = () => {
 	const keyManager = KeyFactory.getInstance();
 	const keyphrase = keyManager.generate();
 
-	return dispatch => dispatch(updateKeyphrase(keyphrase));
+	return (dispatch) => dispatch(updateKeyphrase(keyphrase));
 };
 
 const updateKeyphrase = (keyphrase) => {
@@ -67,4 +67,12 @@ const setNextStep = () => ({ type: CREATE_WALLET.NEXT_STEP });
  */
 const setPrevStep = () => ({ type: CREATE_WALLET.PREVIOUS_STEP });
 
-export { createAnswerSheet, updateAnswerSheet, generateKeyphrase, resetWalletCreation, setNextStep, setPrevStep, updateKeyphrase };
+export {
+	createAnswerSheet,
+	updateAnswerSheet,
+	generateKeyphrase,
+	resetWalletCreation,
+	setNextStep,
+	setPrevStep,
+	updateKeyphrase,
+};

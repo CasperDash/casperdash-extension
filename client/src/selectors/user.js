@@ -14,14 +14,14 @@ const CSPR_INFO = {
 };
 
 export const getPublicKeyAndLoginOptions = ({ user }) => {
-  return {
-    publicKey: user?.publicKey ?? "",
-    loginOptions: user?.loginOptions || {}
-  }
-}
+	return {
+		publicKey: user?.publicKey ?? '',
+		loginOptions: user?.loginOptions || {},
+	};
+};
 
 export const getPublicKey = ({ user }) => {
-	return user.publicKey ?? "";
+	return user.publicKey ?? '';
 };
 
 export const getLoginOptions = ({ user }) => {

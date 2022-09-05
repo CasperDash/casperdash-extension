@@ -9,7 +9,7 @@ import { CONNECTION_TYPES } from '@cd/constants/settings';
 export class UserService {
 	_user;
 	currentWalletIndex = 0;
-  connectionType = CONNECTION_TYPES.privateKey;
+	connectionType = CONNECTION_TYPES.privateKey;
 
 	static convertSaltInfo(salt) {
 		const saltInfo = Object.keys(salt).map((key) => salt[key]);
@@ -133,17 +133,17 @@ export class UserService {
 			const user = this.instance;
 
 			const wallet = await user.getWalletAccount(this.currentWalletIndex);
-      const encryptionType = wallet?.getEncryptionType();
+			const encryptionType = wallet?.getEncryptionType();
 
 			const publicKey = await wallet.getPublicKeyByteArray();
 			const secretKey = wallet.getPrivateKeyByteArray();
 			const trimmedPublicKey = publicKey.slice(1);
-      
+
 			return Keys[capitalize(encryptionType)].parseKeyPair(trimmedPublicKey, secretKey);
 		} catch (error) {
 			return undefined;
 		}
-	}
+	};
 }
 
 export default UserService;

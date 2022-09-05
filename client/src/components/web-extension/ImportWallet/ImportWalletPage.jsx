@@ -3,22 +3,22 @@ import { Button, Form as FormBS } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { KeyFactory } from 'casper-storage';
-import { selectCreateWalletTotalKeywords } from "@cd/selectors/createWallet";
-import { setNextStep, updateKeyphrase } from "@cd/actions/createWalletActions";
-import FieldKeyphrase from "./FieldKeyphrase";
+import { selectCreateWalletTotalKeywords } from '@cd/selectors/createWallet';
+import { setNextStep, updateKeyphrase } from '@cd/actions/createWalletActions';
+import FieldKeyphrase from './FieldKeyphrase';
 
 const ImportWallet = () => {
 	const dispatch = useDispatch();
 	const TOTAL_KEYWORDS = useSelector(selectCreateWalletTotalKeywords);
 
-	const onValidate = useCallback(values => {
+	const onValidate = useCallback((values) => {
 		const { keyphrase } = values;
 		const errors = {};
 
 		/**
 		 * Make sure keyphrase has 12 words
 		 */
-		if (keyphrase.some(key => key === '')) {
+		if (keyphrase.some((key) => key === '')) {
 			errors.keyphrase = 'Keyphrase required.';
 
 			return errors;
@@ -38,15 +38,15 @@ const ImportWallet = () => {
 
 	const onSubmit = (values) => {
 		const { keyphrase } = values;
-		
+
 		dispatch(updateKeyphrase(keyphrase.join(' ')));
 		dispatch(setNextStep());
-	}
+	};
 
 	return (
 		<Formik
 			initialValues={{
-				keyphrase: new Array(TOTAL_KEYWORDS).fill('')
+				keyphrase: new Array(TOTAL_KEYWORDS).fill(''),
 			}}
 			validate={onValidate}
 			onSubmit={onSubmit}
@@ -58,9 +58,7 @@ const ImportWallet = () => {
 							<FieldKeyphrase totalWords={TOTAL_KEYWORDS} />
 						</div>
 						{errors.keyphrase && touched.keyphrase && (
-							<FormBS.Text className="invalid-feedback">
-								{errors.keyphrase}
-							</FormBS.Text>
+							<FormBS.Text className="invalid-feedback">{errors.keyphrase}</FormBS.Text>
 						)}
 						<div>
 							<Button className="cd_we_btn-next" type="submit">
@@ -68,7 +66,7 @@ const ImportWallet = () => {
 							</Button>
 						</div>
 					</Form>
-				)
+				);
 			}}
 		</Formik>
 	);

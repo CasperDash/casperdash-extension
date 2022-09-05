@@ -11,8 +11,8 @@ import './CreateWallet.scss';
 const CreateWallet = () => {
 	const [, setHeader] = useOutletContext();
 	const currentStep = useSelector(selectCreateWalletCurrentStep);
-	
-  /**
+
+	/**
 	 * Reset header so OuterHeader can show correct name
 	 */
 	useEffect(() => {
