@@ -1,5 +1,6 @@
 .cd_we {
 	&_wordsgroup {
+		padding-top: 8px;
 		margin-bottom: 18px;
 
 		&:first-child {
@@ -27,7 +28,6 @@
 				min-width: 104px;
 				min-height: 40px;
 				text-align: center;
-				text-transform: capitalize;
 
 				&:focus,
 				&:visited {

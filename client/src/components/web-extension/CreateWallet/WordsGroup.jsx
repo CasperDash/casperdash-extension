@@ -11,9 +11,7 @@ const WordsGroup = (props) => {
 	} = props;
 	return (
 		<div className="cd_we_wordsgroup">
-			<p className="cd_we_wordsgroup-intro">
-				Select word <strong>#{answer.id + 1}</strong>
-			</p>
+			<p className="cd_we_wordsgroup-intro">Select word #{answer.id + 1}</p>
 			<div className="cd_we_wordsgroup-container">
 				{options.map((option) => {
 					const isChecked = value === option;
