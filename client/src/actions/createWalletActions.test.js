@@ -5,9 +5,8 @@ import {
 	resetWalletCreation,
 	updateAnswerSheet,
 	createAnswerSheet,
-	generateKeyphrase,
 } from './createWalletActions';
-import { convertKeyphraseToAnswerObject, generateKeyphraseMap } from './createWalletActions.utils';
+import { convertKeyphraseToAnswerObject } from './createWalletActions.utils';
 
 jest.mock('casper-storage', () => ({
 	KeyFactory: {
@@ -16,19 +15,6 @@ jest.mock('casper-storage', () => ({
 		}),
 	},
 }));
-
-describe('generateKeyphrase', () => {
-	it('Should create an action which generates a keyphrase of 12 words', () => {
-		const key = 'one two three four five six seven eight nine ten eleven twelve';
-		expect(generateKeyphrase()).toEqual({
-			type: CREATE_WALLET.CREATE_KEYPHRASE,
-			payload: {
-				keyphrase: key,
-				map: generateKeyphraseMap(key),
-			},
-		});
-	});
-});
 
 describe('createAnswerSheet', () => {
 	it('Should create an answer sheet from selected id keys', () => {
