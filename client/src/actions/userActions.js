@@ -4,7 +4,7 @@ import isFunction from 'lodash-es/isFunction';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
 import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
-import { onClearUserSW } from "@cd/hooks/useServiceWorker";
+import { onClearUserSW } from '@cd/hooks/useServiceWorker';
 import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from './userActions.utils';
 
 /**
@@ -125,17 +125,17 @@ export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 		await cacheLoginInfoToLocalStorage(publicKey, {
 			userHashingOptions: userHashOpts,
 			userInfo: user.userInfo,
-			currentWalletIndex: user.currentWalletIndex
+			currentWalletIndex: user.currentWalletIndex,
 		});
 
 		dispatch(
 			setPublicKeyToStore(publicKey, {
-				connectionType: CONNECTION_TYPES.privateKey
+				connectionType: CONNECTION_TYPES.privateKey,
 			}),
 		);
 
-    if (isFunction(onCompleted)) {
-      onCompleted();
-    }
+		if (isFunction(onCompleted)) {
+			onCompleted();
+		}
 	};
 };

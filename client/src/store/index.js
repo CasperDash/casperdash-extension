@@ -3,10 +3,10 @@ import { handleRequests } from '@redux-requests/core';
 import { createDriver } from '@redux-requests/axios';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import webLocalStorage from 'redux-persist/lib/storage'
+import webLocalStorage from 'redux-persist/lib/storage';
 import { localStorage as extensionLocalStorage } from 'redux-persist-webextension-storage';
 import thunk from 'redux-thunk';
-import { isUsingExtension } from "@cd/services/localStorage";
+import { isUsingExtension } from '@cd/services/localStorage';
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
@@ -17,15 +17,15 @@ import deployReducer from './reducers/deploys';
 import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
 import settingsReducer from './reducers/settings';
-import createWalletReducer, { initialState as createWalletInitialState } from "./reducers/createWallet";
+import createWalletReducer, { initialState as createWalletInitialState } from './reducers/createWallet';
 import { REQUEST } from './actionTypes';
 
 const isChromeExtension = isUsingExtension();
 const persistConfig = {
-  key: 'root',
-  storage: isChromeExtension ? extensionLocalStorage : webLocalStorage,
-  whitelist: ["settings","user"]
-}
+	key: 'root',
+	storage: isChromeExtension ? extensionLocalStorage : webLocalStorage,
+	whitelist: ['settings', 'user'],
+};
 
 export const initialState = {
 	user: {
@@ -53,9 +53,9 @@ export const initialState = {
 	nfts: {
 		address: [],
 	},
-  createWallet: {
-    ...createWalletInitialState
-  }
+	createWallet: {
+		...createWalletInitialState,
+	},
 };
 
 const setLoadingStatus = (actionType) => {
@@ -100,14 +100,16 @@ const rootReducers = combineReducers({
 	request: requestReducer,
 	settings: settingsReducer,
 	nfts: nftsReducer,
-  createWallet: createWalletReducer
+	createWallet: createWalletReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistedReducer = persistReducer(persistConfig, rootReducers);
-const store = createStore(persistedReducer, initialState, composeEnhancers(
-  applyMiddleware(thunk, ...requestsMiddleware)
-));
+const store = createStore(
+	persistedReducer,
+	initialState,
+	composeEnhancers(applyMiddleware(thunk, ...requestsMiddleware)),
+);
 let persistor = persistStore(store);
 export { persistor };
 export default store;

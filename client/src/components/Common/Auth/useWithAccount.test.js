@@ -14,7 +14,10 @@ const setupStore = (data) => {
 	});
 };
 // eslint-disable-next-line react/display-name
-const wrapper = (storeData) => ({ children }) => <Provider store={storeData}>{children}</Provider>;
+const wrapper =
+	(storeData) =>
+	({ children }) =>
+		<Provider store={storeData}>{children}</Provider>;
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
@@ -88,7 +91,7 @@ describe('useWithAccount', () => {
 	it('Should redirect user back to /connectAccount screen when cached User has empty loginOptions and no public Key stored', async () => {
 		getConnectedAccountChromeLocalStorage.mockResolvedValueOnce({
 			loginOptions: {},
-			publicKey: ""
+			publicKey: '',
 		});
 
 		const store = setupStore({
@@ -110,7 +113,7 @@ describe('useWithAccount', () => {
 			publicKey: '',
 			loginOptions: { userHashingOptions: 'Test' },
 		});
-    const store = setupStore({
+		const store = setupStore({
 			user: {
 				publicKey: '',
 			},

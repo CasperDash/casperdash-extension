@@ -1,9 +1,8 @@
 let browser;
-(async () => {	
+(async () => {
 	if (window?.chrome?.runtime && chrome.runtime.id) {
 		// Code running in a Chrome extension (content script, background page, etc.)
-		console.log(">>> chrome.", chrome.runtime.id);
-		browser = await import("webextension-polyfill");
+		browser = await import('webextension-polyfill');
 	}
 })();
 
@@ -26,7 +25,7 @@ const sentMessage = async (payload) => {
 };
 
 /**
- * 
+ *
  * User actions
  */
 
@@ -55,19 +54,30 @@ const onClearUserSW = async () => {
 };
 
 /**
- * 
+ *
  * Signing Deploy actions
  */
 
-const onSignPrivateKeySW = async deployJSON => sentMessage({ methodName: "accountManager.signPrivateKeyProcess", params: { deployJSON }});
+const onSignPrivateKeySW = async (deployJSON) =>
+	sentMessage({ methodName: 'accountManager.signPrivateKeyProcess', params: { deployJSON } });
 
 /**
- * 
+ *
  * Others
  */
 
 const keepSWAlive = async () => {
 	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
 };
- 
-export { sentMessage, onSignPrivateKeySW, generatePrivateKeypairSW, validateReturningUserSW, getCurrentUserSW, onClearUserSW, keepSWAlive, createUserServiceSW, getActivePublicKey };
+
+export {
+	sentMessage,
+	onSignPrivateKeySW,
+	generatePrivateKeypairSW,
+	validateReturningUserSW,
+	getCurrentUserSW,
+	onClearUserSW,
+	keepSWAlive,
+	createUserServiceSW,
+	getActivePublicKey,
+};

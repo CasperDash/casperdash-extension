@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import isEmpty from 'lodash-es/isEmpty';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 
-const asyncAccountValidator = navigate => {
+const asyncAccountValidator = (navigate) => {
 	return async (_, getState) => {
 		const {
 			user: { publicKey },
@@ -13,20 +13,18 @@ const asyncAccountValidator = navigate => {
 		/**
 		 * Make sure user must be valid before navigating to other route
 		 */
-		const isValidUserShape = Boolean(
-			user && !isEmpty(user?.loginOptions)
-		);
+		const isValidUserShape = Boolean(user && !isEmpty(user?.loginOptions));
 
-		if ( !publicKey && isValidUserShape) {
+		if (!publicKey && isValidUserShape) {
 			navigate('/welcomeBack');
 			return;
 		}
 
-		if ( !publicKey && !isValidUserShape) {
+		if (!publicKey && !isValidUserShape) {
 			navigate('/connectAccount');
 		}
-	}
-}
+	};
+};
 
 const useWithAccount = () => {
 	const dispatch = useDispatch();

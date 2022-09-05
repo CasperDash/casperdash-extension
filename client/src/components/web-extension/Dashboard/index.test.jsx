@@ -4,12 +4,12 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
 import DashBoard from './';
 
-jest.mock("@cd/web-extension/Common/Account", () => ({
-  AccountInfo: () => (<div>Account 1</div>)
+jest.mock('@cd/web-extension/Common/Account', () => ({
+	AccountInfo: () => <div>Account 1</div>,
 }));
 
 // eslint-disable-next-line
-jest.mock("@cd/web-extension/Common/OverlayLoader", () => () => (<div>Loading...</div>))
+jest.mock('@cd/web-extension/Common/OverlayLoader', () => () => <div>Loading...</div>);
 
 jest.mock('../../hooks/useTokensInfo', () => ({
 	useTokenInfo: () => ({
@@ -17,56 +17,55 @@ jest.mock('../../hooks/useTokensInfo', () => ({
 	}),
 }));
 
+describe('WalletDetails', () => {
+	let spyOnUseSelector;
+	afterEach(cleanup);
+	beforeEach(() => {
+		spyOnUseSelector = jest.spyOn(redux, 'useSelector');
+		spyOnUseSelector.mockClear();
+	});
 
-describe("WalletDetails", () => {
-  let spyOnUseSelector;
-  afterEach(cleanup);
-  beforeEach(() => {
-    spyOnUseSelector = jest.spyOn(redux, 'useSelector');
-    spyOnUseSelector.mockClear();
-  });
+	describe('Without publicKey', () => {
+		it('Should render only Loading component', () => {
+			spyOnUseSelector.mockReturnValue({ publicKey: '' });
+			const { queryByText } = render(<DashBoard />);
+			expect(queryByText(/Send/i)).not.toBeInTheDocument();
+			expect(queryByText(/Loading.../i)).toBeInTheDocument();
+		});
+	});
 
-  describe("Without publicKey", () => {
-    it("Should render only Loading component", () => {
-      spyOnUseSelector.mockReturnValue({ publicKey: ""});
-      const { queryByText } = render(<DashBoard />);
-      expect(queryByText(/Send/i)).not.toBeInTheDocument();
-      expect(queryByText(/Loading.../i)).toBeInTheDocument();
-    });
-  });
-
-  describe("With publicKey found", () => {
-    it('Should render full WalletDetail page with token info', async () => {
-      spyOnUseSelector.mockReturnValue({ publicKey: "test"});
-      const { getByText } = render(<DashBoard />);
-      expect(getByText(/Send/i)).toBeInTheDocument();
-      expect(getByText(/Receive/i)).toBeInTheDocument();
-      expect(getByText(/Add Custom Token/i)).toBeInTheDocument();
-      expect(getByText(/CSPR/i)).toBeInTheDocument();
-      expect(getByText(/10/i)).toBeInTheDocument();
-      expect(getByText(/11/i)).toBeInTheDocument();
-      expect(getByText(/0.2/i)).toBeInTheDocument();
-      expect(getByText(/Account 1/i)).toBeInTheDocument();
-      await fireEvent.click(getByText(/CSPR/i));
-      expect(useNavigate()).toHaveBeenCalledTimes(1);
-      expect(useNavigate()).toHaveBeenCalledWith('/token', {
-        state: {
-          token: {
-            balance: {
-              displayValue: 11,
-            },
-            price: 0.2,
-            symbol: 'CSPR',
-            totalPrice: 10,
-          },
-          name: 'CSPR',
-        },
-      });
-      await fireEvent.click(getByText(/Add Custom Token/i));
-      expect(useNavigate()).toHaveBeenCalledTimes(2);
-      expect(useNavigate()).toHaveBeenCalledWith('/addToken', {
-        state: { name: 'Add Token' },
-      });
-    });
-  })
-})
+	describe('With publicKey found', () => {
+		it('Should render full WalletDetail page with token info', async () => {
+			spyOnUseSelector.mockReturnValue({ publicKey: 'test' });
+			const { getByText } = render(<DashBoard />);
+			expect(getByText(/Send/i)).toBeInTheDocument();
+			expect(getByText(/Receive/i)).toBeInTheDocument();
+			expect(getByText(/Add Custom Token/i)).toBeInTheDocument();
+			expect(getByText(/CSPR/i)).toBeInTheDocument();
+			expect(getByText(/10/i)).toBeInTheDocument();
+			expect(getByText(/11/i)).toBeInTheDocument();
+			expect(getByText(/0.2/i)).toBeInTheDocument();
+			expect(getByText(/Account 1/i)).toBeInTheDocument();
+			await fireEvent.click(getByText(/CSPR/i));
+			expect(useNavigate()).toHaveBeenCalledTimes(1);
+			expect(useNavigate()).toHaveBeenCalledWith('/token', {
+				state: {
+					token: {
+						balance: {
+							displayValue: 11,
+						},
+						price: 0.2,
+						symbol: 'CSPR',
+						totalPrice: 10,
+					},
+					name: 'CSPR',
+				},
+			});
+			await fireEvent.click(getByText(/Add Custom Token/i));
+			expect(useNavigate()).toHaveBeenCalledTimes(2);
+			expect(useNavigate()).toHaveBeenCalledWith('/addToken', {
+				state: { name: 'Add Token' },
+			});
+		});
+	});
+});

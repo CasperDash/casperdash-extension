@@ -1,26 +1,54 @@
 .cd_we {
-  &_page {
-    &--root {
-      padding: 20px 15px;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+	&_page {
+		&--root {
+			padding: 20px 15px;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
 
-      * {
-        margin: 5px 0;
-      }
-    }
+			* {
+				margin: 3px 0;
+			}
+		}
 
-    &--bottom {
-      margin-top: auto;
-    }
-  }
+		&--bottom {
+			margin-top: auto;
+		}
+	}
 
-  &_create-wallet-layout {
-    &--root {
-      display: flex;
-      flex-flow: column nowrap;
-      height: 100%;
-    }
-  }
+	&_create-keyphrase {
+		&--column {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			height: 365px;
+			justify-content: space-between;
+			margin-right: -20px;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		&--box {
+			padding: 0 16px;
+		}
+	}
+
+	&_keyphrase {
+		&--word {
+			margin-right: 20px;
+			width: 100%;
+		}
+	}
+
+	&_btn-next {
+		margin-top: 30px;
+	}
+
+	&_create-wallet-layout {
+		&--root {
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: space-between;
+			height: 100%;
+		}
+	}
 }
