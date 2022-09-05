@@ -4,6 +4,7 @@ import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
+import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import useCreateUser from './useCreateUser';
 
 jest.mock('casper-storage', () => ({
@@ -16,6 +17,10 @@ jest.mock('@cd/actions/userActions', () => ({
 jest.mock('@cd/hooks/useServiceWorker', () => ({
 	...jest.requireActual('@cd/hooks/useServiceWorker'),
 	createUserServiceSW: jest.fn(),
+}));
+jest.mock('@cd/actions/createWalletActions', () => ({
+	...jest.requireActual('@cd/actions/createWalletActions'),
+	resetWalletCreation: jest.fn(),
 }));
 
 describe('useCreateUser', () => {
@@ -86,7 +91,6 @@ describe('useCreateUser', () => {
 				},
 			});
 		});
-
 		expect(onBindingAuthInfo).toHaveBeenCalledTimes(1);
 		expect(onBindingAuthInfo).toHaveBeenCalledWith(
 			{
@@ -97,5 +101,6 @@ describe('useCreateUser', () => {
 			},
 			expect.anything(),
 		);
+		expect(resetWalletCreation).toHaveBeenCalledTimes(1);
 	});
 });
