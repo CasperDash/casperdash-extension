@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import CasperDashLogo from '@cd/assets/image/Logo-only.svg';
 import HardwareIcon from '@cd/assets/image/hardware-icon.svg';
 import AddIcon from '@cd/assets/image/add-icon.svg';
+import ImportIcon from '@cd/assets/image/import-icon.svg';
 import { newTab, isPopupMode } from '@cd/helpers/extension/tab';
 import './index.scss';
 
@@ -34,14 +35,10 @@ const ConnectAccount = () => {
 			</Button>
 
 			<Button variant="normal" onClick={handleImportWallet}>
-				<AddIcon />
+				<ImportIcon />
 				Import Phrase
 			</Button>
 
-			<Button variant="normal" onClick={() => navigate('/addPublicKey', { state: { name: 'Add' } })}>
-				<AddIcon />
-				View Mode
-			</Button>
 			<Button variant="normal" onClick={handleConnectLedger}>
 				<HardwareIcon />
 				Connect Ledger
