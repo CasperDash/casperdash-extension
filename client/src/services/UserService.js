@@ -85,7 +85,7 @@ export class UserService {
 	 * Return a pair of User login info after creating new User
 	 * @returns { userHashingOptions, userInfo }
 	 */
-	getUserInfoHash = async () => {
+	getUserInfoHash = () => {
 		const user = this.instance;
 
 		// Take the hashing options from user's instance
@@ -111,7 +111,7 @@ export class UserService {
 		 * Ignore removing `await` from Sonarcloud audit.
 		 * This will return user info with hash info
 		 */
-		const userInfo = await this.getUserInfoHash();
+		const userInfo = this.getUserInfoHash();
 		const publicKey = await this.getPublicKey();
 
 		return {
