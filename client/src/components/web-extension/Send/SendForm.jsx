@@ -6,7 +6,7 @@ import { Formik, Field } from 'formik';
 import { toast } from 'react-toastify';
 import { validateTransferForm } from '@cd/helpers/validator';
 import { getAllTokenInfo, getTokenInfoByAddress } from '@cd/selectors/user';
-import { getCurrentUserSW } from "@cd/hooks/useServiceWorker";
+import { getCurrentUserSW } from '@cd/hooks/useServiceWorker';
 import TokenSelectField from './TokenSelectField';
 
 const SendForm = ({ token }) => {
@@ -50,7 +50,7 @@ const SendForm = ({ token }) => {
 
 	React.useEffect(() => {
 		const loadUser = async () => getCurrentUserSW();
-		loadUser().then(result => {
+		loadUser().then((result) => {
 			if (!result) {
 				toast.warning('Please re-login to continue sending token');
 			}

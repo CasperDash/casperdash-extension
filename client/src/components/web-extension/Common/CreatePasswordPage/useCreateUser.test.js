@@ -4,6 +4,7 @@ import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
+import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import useCreateUser from './useCreateUser';
 
 jest.mock('casper-storage', () => ({
@@ -17,6 +18,10 @@ jest.mock('@cd/hooks/useServiceWorker', () => ({
 	...jest.requireActual('@cd/hooks/useServiceWorker'),
 	createUserServiceSW: jest.fn(),
 }));
+jest.mock('@cd/actions/createWalletActions', () => ({
+	...jest.requireActual('@cd/actions/createWalletActions'),
+	resetWalletCreation: jest.fn(),
+}));
 
 describe('useCreateUser', () => {
 	it('Should return a User creation function once called', () => {
@@ -26,7 +31,7 @@ describe('useCreateUser', () => {
 		expect(typeof result.current.onCreateNewUser).toBe('function');
 	});
 
-	it("Should return undefined when no keyphrase provided", async () => {
+	it('Should return undefined when no keyphrase provided', async () => {
 		const {
 			result: {
 				current: { onCreateNewUser },
@@ -73,10 +78,10 @@ describe('useCreateUser', () => {
 		} = renderHook(() => useCreateUser());
 
 		createUserServiceSW.mockResolvedValue({
-			publicKey: "this-is-public-key",
+			publicKey: 'this-is-public-key',
 			userDetails: {
-				loginInfo: "abc"
-			}
+				loginInfo: 'abc',
+			},
 		});
 
 		await act(async () => {
@@ -86,13 +91,16 @@ describe('useCreateUser', () => {
 				},
 			});
 		});
-
 		expect(onBindingAuthInfo).toHaveBeenCalledTimes(1);
-		expect(onBindingAuthInfo).toHaveBeenCalledWith({
-			publicKey: 'this-is-public-key', 
-			user: {
-				loginInfo: "abc"
-			}
-		}, expect.anything());
+		expect(onBindingAuthInfo).toHaveBeenCalledWith(
+			{
+				publicKey: 'this-is-public-key',
+				user: {
+					loginInfo: 'abc',
+				},
+			},
+			expect.anything(),
+		);
+		expect(resetWalletCreation).toHaveBeenCalledTimes(1);
 	});
 });

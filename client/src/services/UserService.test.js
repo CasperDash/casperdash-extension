@@ -12,22 +12,21 @@ jest.mock('casper-js-sdk', () => ({
 	...jest.requireActual('casper-js-sdk'),
 	Keys: {
 		Ed25519: {
-			parseKeyPair: jest.fn()
-		}
+			parseKeyPair: jest.fn(),
+		},
 	},
 }));
 
 describe('UserInstance', () => {
 	it('Should be an instance of UserService class', () => {
-		const user = new  UserInstance();
+		const user = new UserInstance();
 		expect(user instanceof UserService).toBeTrue;
 	});
 
-	describe("When passing a new User from casper-storage", () => {
+	describe('When passing a new User from casper-storage', () => {
 		let user;
-		
+
 		beforeEach(() => {
-			
 			User.mockReturnValueOnce({
 				setHDWallet: jest.fn(),
 				addWalletAccount: jest.fn().mockImplementation(() => ({
@@ -38,15 +37,15 @@ describe('UserInstance', () => {
 				getWalletAccount: jest.fn().mockImplementation(() => ({
 					getPublicKey: jest.fn().mockReturnValueOnce('this-is-public-key'),
 					getEncryptionType: jest.fn().mockReturnValue(EncryptionType.Ed25519),
-					getPublicKeyByteArray: jest.fn().mockReturnValue([1,2,3,4,5,6]),
-					getPrivateKeyByteArray: jest.fn().mockReturnValue([1,2,3,4,5])
+					getPublicKeyByteArray: jest.fn().mockReturnValue([1, 2, 3, 4, 5, 6]),
+					getPrivateKeyByteArray: jest.fn().mockReturnValue([1, 2, 3, 4, 5]),
 				})),
 			});
 			const opts = {
 				encryptionType: EncryptionType.Ed25519,
 				currentWalletIndex: 0,
 			};
-			user = new UserService(new User("6U71C@Wp7r5XtFtQzYrW5iKFT6!"), opts);
+			user = new UserService(new User('6U71C@Wp7r5XtFtQzYrW5iKFT6!'), opts);
 
 			const keyphrase = KeyFactory.getInstance().generate();
 			user.initialize(keyphrase);
@@ -54,13 +53,13 @@ describe('UserInstance', () => {
 
 		afterEach(cleanup);
 
-		it("Should return public key", async () => {	
+		it('Should return public key', async () => {
 			const result = await user.getPublicKey();
-			
+
 			expect(result).toBe('this-is-public-key');
 		});
 
-		it("Should return UserInfoHash", async () => {	
+		it('Should return UserInfoHash', async () => {
 			const result = await user.getUserInfoHash();
 			const hash = JSON.stringify('this-is-password-hash-options');
 			expect(result).toBeTruthy;
@@ -68,36 +67,31 @@ describe('UserInstance', () => {
 			expect(result.userInfo).toEqual('this-is-user-info');
 		});
 
-		it("Should return storage data", async () => {
+		it('Should return storage data', async () => {
 			const result = await user.prepareStorageData();
 			const hash = JSON.stringify('this-is-password-hash-options');
 
 			expect(result).toBeTruthy;
 			expect(result).toEqual({
-				publicKey: "this-is-public-key",
+				publicKey: 'this-is-public-key',
 				userDetails: {
 					userHashingOptions: hash,
-					userInfo: "this-is-user-info",
-					currentWalletIndex: 0
+					userInfo: 'this-is-user-info',
+					currentWalletIndex: 0,
 				},
-			})
+			});
 		});
 
-		it("Should generate an AsymmetricKey keypair", async () => {
-			const mockParseKeypair = jest.fn().mockImplementation(
-				(pubKey, prvKey) => {
-					// eslint-disable-next-line
-					console.log(`🚀 ~ mockParseKeypair:: `, pubKey, prvKey);
-				}
-			);
+		it('Should generate an AsymmetricKey keypair', async () => {
+			const mockParseKeypair = jest.fn().mockImplementation((pubKey, prvKey) => {
+				// eslint-disable-next-line
+				console.log(`🚀 ~ mockParseKeypair:: `, pubKey, prvKey);
+			});
 			Keys.Ed25519.parseKeyPair = mockParseKeypair;
 			await user.generateKeypair();
 
 			expect(mockParseKeypair).toHaveBeenCalledTimes(1);
-			expect(mockParseKeypair).toHaveBeenCalledWith(
-				[2,3,4,5,6],
-				[1,2,3,4,5]
-			)
+			expect(mockParseKeypair).toHaveBeenCalledWith([2, 3, 4, 5, 6], [1, 2, 3, 4, 5]);
 		});
 	});
 });

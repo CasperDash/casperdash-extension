@@ -1,7 +1,7 @@
-import useWithAccount from "./useWithAccount";
+import useWithAccount from './useWithAccount';
 
 const WithAccount = ({ children }) => {
-  useWithAccount();
+	useWithAccount();
 
 	return children;
 };

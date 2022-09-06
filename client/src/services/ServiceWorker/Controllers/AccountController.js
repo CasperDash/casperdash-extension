@@ -6,10 +6,10 @@ import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.u
 const encryptionType = EncryptionType.Ed25519;
 
 class AccountController {
-  /**
-   * Only available after creating new User or successfully
-   * validate a returning User (WelcomeBack)
-   */
+	/**
+	 * Only available after creating new User or successfully
+	 * validate a returning User (WelcomeBack)
+	 */
 	userService;
 	constructor(appStore) {
 		this.appStore = appStore;
@@ -17,7 +17,7 @@ class AccountController {
 
 	getCurrentUser = () => {
 		return this.userService;
-	}
+	};
 
 	generateKeypair = async () => {
 		try {
@@ -90,14 +90,14 @@ class AccountController {
 	signPrivateKeyProcess = async ({ deployJSON }) => {
 		const asymKey = await this.generateKeypair();
 		const deployResult = DeployUtil.deployFromJson(deployJSON);
-		
+
 		if (deployResult.err) {
-			throw Error("Something went wrong with deployResult")
+			throw Error('Something went wrong with deployResult');
 		}
 
 		const signedDeploy = deployResult.val.sign([asymKey]);
 		return DeployUtil.deployToJson(signedDeploy);
-	}
+	};
 }
 
 export default AccountController;

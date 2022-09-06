@@ -115,7 +115,7 @@ const ValidateKeyphrasePage = () => {
 				</div>
 			</div>
 			<div className="cd_we_page--bottom">
-				<Button className="cd_we_btn-next" onClick={onClickHandler}>
+				<Button className="cd_we_btn-next" onClick={onClickHandler} disabled={shouldDisableNextButton}>
 					Next
 				</Button>
 			</div>

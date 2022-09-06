@@ -3,7 +3,7 @@ import { CONNECTION_TYPES } from '@cd/constants/settings';
 import { getLoginOptions } from '@cd/selectors/user';
 import { signDeployByCasperSigner } from '@cd/services/casperServices';
 import { signDeployByLedger } from '@cd/services/ledgerServices';
-import { signDeployByPrivateKey } from "@cd/services/privateKeyServices";
+import { signDeployByPrivateKey } from '@cd/services/privateKeyServices';
 
 /**
  * Use the signer specified in the login options to sign a deploy.
@@ -22,8 +22,8 @@ const useSigner = () => {
 			}
 			case CONNECTION_TYPES.casperSigner:
 				return await signDeployByCasperSigner(deploy, mainAccountHex, setAccountHex);
-      case CONNECTION_TYPES.privateKey:
-        return signDeployByPrivateKey(deploy, mainAccountHex, setAccountHex);
+			case CONNECTION_TYPES.privateKey:
+				return signDeployByPrivateKey(deploy, mainAccountHex, setAccountHex);
 			default:
 				throw Error('Can not find signer');
 		}

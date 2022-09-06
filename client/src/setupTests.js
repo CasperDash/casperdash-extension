@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import "@testing-library/jest-dom/extend-expect";
-import "jest-extended";
-import "mockzilla-webextension";
+import '@testing-library/jest-dom/extend-expect';
+import 'jest-extended';
+import 'mockzilla-webextension';
 import { TextEncoder, TextDecoder } from 'util';
 
 global.TextEncoder = TextEncoder;

@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Formik } from 'formik';
-import { useOutletContext } from "react-router-dom";
-import { useSelector } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { selectCreateWalletCurrentStep } from "@cd/selectors/createWallet";
-import { generateCWHeader } from "@cd/actions/createWalletActions.utils";
-import messages from "@cd/shared/formMessages";
+import messages from '@cd/shared/formMessages';
 import useCreateUser from './useCreateUser';
 import './CreatePasswordPage.scss';
 
@@ -28,10 +24,8 @@ const onValidatePassword = (values) => {
 };
 
 const CreatePasswordPage = () => {
-  const [, setHeader] = useOutletContext();
 	const { onCreateNewUser } = useCreateUser();
-  const currentStep = useSelector(selectCreateWalletCurrentStep);
-  const [serverErrors, setServerErrors] = useState(undefined);
+	const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
 	const handleFormSubmit = useCallback(
 		async (values) => {
@@ -39,7 +33,7 @@ const CreatePasswordPage = () => {
 				const result = await onCreateNewUser(values.password);
 
 				if (!result) {
-          setServerErrors({ message: messages.passwordNotStrong });
+					setServerErrors({ message: messages.passwordNotStrong });
 					return;
 				}
 			}
@@ -47,7 +41,7 @@ const CreatePasswordPage = () => {
 		[onCreateNewUser],
 	);
 
-  const onChangeHandler = useCallback(
+	const onChangeHandler = useCallback(
 		(e, handler, fieldName) => {
 			if (e?.target?.value && serverErrors) {
 				setServerErrors(undefined);
@@ -56,14 +50,6 @@ const CreatePasswordPage = () => {
 		},
 		[serverErrors],
 	);
-
-  /**
-   * Reset header so OuterHeader can show correct name
-   */
-  useEffect(() => {
-    setHeader(generateCWHeader(currentStep));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
@@ -87,7 +73,7 @@ const CreatePasswordPage = () => {
 									<Form.Label>New password</Form.Label>
 									<FormControl
 										onBlur={handleBlur}
-										onChange={e => onChangeHandler(e, setFieldValue, "password")}
+										onChange={(e) => onChangeHandler(e, setFieldValue, 'password')}
 										name="password"
 										type="password"
 										placeholder="New password"
@@ -102,7 +88,7 @@ const CreatePasswordPage = () => {
 									<Form.Label>Confirm password</Form.Label>
 									<FormControl
 										onBlur={handleBlur}
-										onChange={e => onChangeHandler(e, setFieldValue, "confirmPassword")}
+										onChange={(e) => onChangeHandler(e, setFieldValue, 'confirmPassword')}
 										name="confirmPassword"
 										type="password"
 										placeholder="Confirm Password"
@@ -113,11 +99,11 @@ const CreatePasswordPage = () => {
 										</Form.Text>
 									)}
 								</Form.Group>
-                {serverErrors && (
-										<Form.Text className="invalid-feedback" id="passwordHelpBlock">
-											{serverErrors.message}
-										</Form.Text>
-									)}
+								{serverErrors && (
+									<Form.Text className="invalid-feedback" id="passwordHelpBlock">
+										{serverErrors.message}
+									</Form.Text>
+								)}
 								<div className="cd_we_page--bottom">
 									<Button type="submit" className="cd_we_btn-next" disabled={false}>
 										Register

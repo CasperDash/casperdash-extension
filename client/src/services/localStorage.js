@@ -49,77 +49,75 @@ const getLocalStorageValue = (key, path) => {
 	}
 };
 
-const setChromeStorageLocal = ({key, value} = undefined) => {
-  try {
-    if (!key) {
-      return undefined;
-    }
+const setChromeStorageLocal = ({ key, value } = undefined) => {
+	try {
+		if (!key) {
+			return undefined;
+		}
 
-    if (!isUsingExtension()) {
-      throw new Error("Must be running in Chrome Extension environment");
-    }
+		if (!isUsingExtension()) {
+			throw new Error('Must be running in Chrome Extension environment');
+		}
 
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.set({[key]: value}, () => {
-          const error = chrome.runtime.lastError;
-          error ? reject(error) : resolve();
-      });
-    });
-  } catch (error) {
-    console.error(`🚀 ~ setChromeStorageLocal::error `, error);
-    return undefined;
-  }
-}
+		return new Promise((resolve, reject) => {
+			chrome.storage.local.set({ [key]: value }, () => {
+				const error = chrome.runtime.lastError;
+				error ? reject(error) : resolve();
+			});
+		});
+	} catch (error) {
+		console.error(`🚀 ~ setChromeStorageLocal::error `, error);
+		return undefined;
+	}
+};
 
 const getChromeStorageLocal = async (key) => {
-  try {
-    if (!key) {
-      return undefined;
-    }
+	try {
+		if (!key) {
+			return undefined;
+		}
 
-    if (!isUsingExtension()) {
-      throw new Error("Must be running in Chrome Extension environment");
-    }
+		if (!isUsingExtension()) {
+			throw new Error('Must be running in Chrome Extension environment');
+		}
 
-    /**
-     * `get` might accept an array of keys, rather than only one
-     * This is for testing
-     */
-    const finalkey = typeof key === "string" ? [key] : [...key];
+		/**
+		 * `get` might accept an array of keys, rather than only one
+		 * This is for testing
+		 */
+		const finalkey = typeof key === 'string' ? [key] : [...key];
 
-    return new Promise(resolve => {
-      chrome.storage.local.get(finalkey, (items) => {
-        // Pass any observed errors down the promise chain.
-        if (chrome.runtime.lastError) {
-          throw new Error(chrome.runtime.lastError);
-        }
+		return new Promise((resolve) => {
+			chrome.storage.local.get(finalkey, (items) => {
+				// Pass any observed errors down the promise chain.
+				if (chrome.runtime.lastError) {
+					throw new Error(chrome.runtime.lastError);
+				}
 
-        // Pass the data retrieved from storage down the promise chain.
-        return resolve(items);
-      });
-
-
-    });
-  } catch (error) {
-    console.error(`🚀 ~ getChromeStorageLocal::error `, error);
-    return undefined;
-  }
-}
+				// Pass the data retrieved from storage down the promise chain.
+				return resolve(items);
+			});
+		});
+	} catch (error) {
+		console.error(`🚀 ~ getChromeStorageLocal::error `, error);
+		return undefined;
+	}
+};
 
 const clearChromeStorageLocal = () => chrome.storage.local.clear();
 const isUsingExtension = () => {
-  try {
-    return Boolean(typeof chrome !== "undefined" && !isEmpty(chrome) && "storage" in chrome)
-  } catch (err) {
-    return false;
-  }
+	try {
+		return Boolean(typeof chrome !== 'undefined' && !isEmpty(chrome) && 'storage' in chrome);
+	} catch (err) {
+		return false;
+	}
 };
 
 export {
-  isUsingExtension,
-  setLocalStorageValue,
-  getLocalStorageValue,
-  setChromeStorageLocal,
-  getChromeStorageLocal,
-  clearChromeStorageLocal
-}
+	isUsingExtension,
+	setLocalStorageValue,
+	getLocalStorageValue,
+	setChromeStorageLocal,
+	getChromeStorageLocal,
+	clearChromeStorageLocal,
+};
