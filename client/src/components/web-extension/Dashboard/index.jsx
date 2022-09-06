@@ -12,11 +12,15 @@ import './index.scss';
 const tokensGridMetadata = {
 	left: [
 		{ key: 'symbol', type: 'primary' },
-		{ key: 'balance.displayValue', type: 'secondary', format: 'number' },
+		{
+			key: 'balance.displayValue',
+			type: 'secondary',
+			format: 'number',
+		},
 	],
 	right: [
 		{ key: 'totalPrice', type: 'primary', format: 'currency' },
-		{ key: 'price', type: 'secondary', format: 'currency' },
+		{ key: 'price', type: 'secondary', format: 'currency', formatOptions: { minimumFractionDigits: 4 } },
 	],
 };
 
