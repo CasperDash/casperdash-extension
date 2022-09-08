@@ -12,7 +12,7 @@ const OverlayLoader = () => {
 				zIndex: 100,
 				alignItems: 'center',
 				display: 'flex',
-				justifyContent: 'center'
+				justifyContent: 'center',
 			}}
 		>
 			<TailSpin />

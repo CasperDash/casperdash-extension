@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { lockAccount } from '@cd/actions/userActions';
-import messages from "@cd/shared/formMessages";
+import messages from '@cd/shared/formMessages';
 import useWelcomeBack from './useWelcomeBack';
 import './WelcomeBack.scss';
 
@@ -20,7 +20,7 @@ const onValidatePassword = (values) => {
 
 const WelcomeBackPage = () => {
 	const { onAuthCredentialSuccess, validateUserCredential } = useWelcomeBack();
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
@@ -51,7 +51,7 @@ const WelcomeBackPage = () => {
 	);
 
 	const onReset = useCallback(async () => {
-    dispatch(lockAccount());
+		dispatch(lockAccount());
 		navigate('/connectAccount');
 	}, [dispatch, navigate]);
 

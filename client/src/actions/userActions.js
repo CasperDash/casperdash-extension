@@ -1,9 +1,11 @@
 import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
+import isFunction from 'lodash-es/isFunction';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
 import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
-import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from "./userActions.utils";
+import { onClearUserSW } from '@cd/hooks/useServiceWorker';
+import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from './userActions.utils';
 
 /**
  * @param {string} publicKey
@@ -72,12 +74,12 @@ export const getConnectedAccountLocalStorage = () => getLocalStorageValue('accou
  */
 export const initConnectedAccountFromLocalStorage = () => {
 	return async (dispatch) => {
-    let connectedAccount = undefined;
-    const isChromeExtension = isUsingExtension();
+		let connectedAccount = undefined;
+		const isChromeExtension = isUsingExtension();
 
-    connectedAccount = isChromeExtension
-      ? await getConnectedAccountChromeLocalStorage()
-      : getConnectedAccountLocalStorage();
+		connectedAccount = isChromeExtension
+			? await getConnectedAccountChromeLocalStorage()
+			: getConnectedAccountLocalStorage();
 
 		if (connectedAccount && connectedAccount.publicKey) {
 			dispatch(setPublicKey(connectedAccount.publicKey, connectedAccount.loginOptions));
@@ -87,39 +89,53 @@ export const initConnectedAccountFromLocalStorage = () => {
 	};
 };
 
+// Delete all data
 export const lockAccount = () => {
 	return (dispatch) => {
 		/**
 		 * This clears all cached User hash info in localStorage
 		 */
+		onClearUserSW();
 		dispatch(setPublicKey());
 	};
 };
 
+// Lock account
 export const onClearPublicKey = () => {
 	return async (dispatch, getState) => {
 		const {
 			user: { loginOptions: loginOptionsState },
 		} = getState();
-    const connectedAccount = await getConnectedAccountChromeLocalStorage();
+		const connectedAccount = await getConnectedAccountChromeLocalStorage();
 		const { loginOptions: loginOptionsCache } = connectedAccount;
 		const emptyPublicKey = '';
-    await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
+		await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
 		dispatch(setPublicKeyToStore(emptyPublicKey, loginOptionsState));
 	};
 };
 
-export const onBindingAuthInfo = (publicKey, user) => {
+export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
 		const userHashOpts = isObject(user.userHashingOptions)
 			? JSON.stringify(user.userHashingOptions)
 			: user.userHashingOptions;
 		// Store user hash (string) into localStorage
+
 		await cacheLoginInfoToLocalStorage(publicKey, {
 			userHashingOptions: userHashOpts,
 			userInfo: user.userInfo,
+			currentWalletIndex: user.currentWalletIndex,
 		});
-		dispatch(setPublicKeyToStore(publicKey, { userInfo: user.userInfo }));
+
+		dispatch(
+			setPublicKeyToStore(publicKey, {
+				connectionType: CONNECTION_TYPES.privateKey,
+			}),
+		);
+
+		if (isFunction(onCompleted)) {
+			onCompleted();
+		}
 	};
 };

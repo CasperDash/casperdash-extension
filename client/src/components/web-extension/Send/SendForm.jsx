@@ -3,11 +3,15 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
-import { getAllTokenInfo, getTokenInfoByAddress } from '../../../selectors/user';
-import { validateTransferForm } from '../../../helpers/validator';
+import { toast } from 'react-toastify';
+import { validateTransferForm } from '@cd/helpers/validator';
+import { getAllTokenInfo, getTokenInfoByAddress } from '@cd/selectors/user';
+import { getCurrentUserSW } from '@cd/hooks/useServiceWorker';
 import TokenSelectField from './TokenSelectField';
 
 const SendForm = ({ token }) => {
+	const [user, setUser] = useState(undefined);
+
 	//Hook
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
@@ -25,7 +29,7 @@ const SendForm = ({ token }) => {
 	};
 
 	const handleSubmit = (values) => {
-		navigate(`${pathname}#confirm`, { state: { token: { ...selectedToken, ...values }, name: 'Confirm' } });
+		navigate(`${pathname}#confirm`, { state: { token: { ...selectedToken, ...values }, name: 'Review' } });
 	};
 
 	const onValidate = (values) => {
@@ -43,6 +47,17 @@ const SendForm = ({ token }) => {
 		const amount = balance / percent - (selectedToken.address === 'CSPR' ? selectedToken.transferFee : 0);
 		setFieldValue('sendAmount', amount);
 	};
+
+	React.useEffect(() => {
+		const loadUser = async () => getCurrentUserSW();
+		loadUser().then((result) => {
+			if (!result) {
+				toast.warning('Please re-login to continue sending token');
+			}
+			result && setUser(result);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<Formik
@@ -128,7 +143,7 @@ const SendForm = ({ token }) => {
 						<Button
 							className="cd_we_send_confirm_btn"
 							type="submit"
-							disabled={errors && Object.keys(errors).length}
+							disabled={(errors && Object.keys(errors).length) || !user}
 						>
 							Confirm
 						</Button>

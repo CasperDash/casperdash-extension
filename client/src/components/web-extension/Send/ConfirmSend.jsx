@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { getPublicKey } from '../../../selectors/user';
 import { pushTransferToLocalStorage } from '../../../actions/deployActions';
@@ -86,7 +87,9 @@ const ConfirmSend = ({ token }) => {
 			</div>
 			<div className="cd_we_confirm_row">
 				<div>Receiving Address</div>
-				<div className="cd_we_confirm_address">{toAddress}</div>
+				<div className="cd_we_confirm_address">
+					<MiddleTruncatedText>{toAddress}</MiddleTruncatedText>
+				</div>
 			</div>
 			<div className="cd_we_confirm_row">
 				<div className="cd_we_input_label">Transfer ID</div>
@@ -95,7 +98,7 @@ const ConfirmSend = ({ token }) => {
 
 			<div className="cd_we_confirm_buttons">
 				<Button onClick={onSendTransaction} disabled={isDeploying}>
-					{isDeploying ? 'Sending' : 'Send'}
+					{isDeploying ? 'Sending' : 'Sign'}
 				</Button>
 			</div>
 		</div>

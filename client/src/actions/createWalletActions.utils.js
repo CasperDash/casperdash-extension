@@ -11,7 +11,7 @@ import { CONSTANTS } from '@cd/shared/constants';
  * @returns
  */
 function shuffle(array) {
-  return sampleSize(array, array?.length);
+	return sampleSize(array, array?.length);
 }
 
 const generateCWHeader = (currentStep, answerSheet) => {

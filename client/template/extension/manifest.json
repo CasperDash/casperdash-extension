@@ -11,10 +11,8 @@
 		"default_icon": "512.png",
 		"default_popup": "popup.html"
 	},
-  "permissions": [
-    "storage"
-  ],
-  "background": {
-    "service_worker": "service-worker.js"
-  }
+	"permissions": ["storage"],
+	"background": {
+		"service_worker": "/static/js/sw/service-worker.js"
+	}
 }

@@ -15,7 +15,7 @@ export const Header = ({ currentModule = {} }) => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
-  const shouldRenderSettings = Boolean(publicKey && currentModule.route === '/');
+	const shouldRenderSettings = Boolean(publicKey && currentModule.route === '/');
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
