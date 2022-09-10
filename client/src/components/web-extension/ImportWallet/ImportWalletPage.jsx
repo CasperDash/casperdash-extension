@@ -62,7 +62,7 @@ const ImportWallet = () => {
 						{errors.keyphrase && touched.keyphrase && (
 							<FormBS.Text className="invalid-feedback">{errors.keyphrase}</FormBS.Text>
 						)}
-						<div>
+						<div className="cd_we_page--bottom">
 							<Button className="cd_we_btn-next" type="submit">
 								Next
 							</Button>
