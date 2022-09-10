@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import drop from 'lodash-es/drop';
 import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
+import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
 import { selectCreateWalletTotalKeywords, selectCreateWalletKeyphraseAsMap } from '@cd/selectors/createWallet';
 import './RecoveryPhrasePage.scss';
+
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
@@ -14,6 +16,7 @@ const RecoveryPhrasePage = () => {
 	const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
 	const leftKeys = dropRight(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
 	const rightKeys = drop(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
+
 	const onClickNextHandler = useCallback(() => {
 		dispatch(setNextStep());
 	}, [dispatch]);
@@ -25,6 +28,7 @@ const RecoveryPhrasePage = () => {
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
+			<SelectEncryptionType />
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 				<ul className="cd_we_create-keyphrase--column">
 					{leftKeys?.map((word, index) => (

@@ -1,3 +1,4 @@
+import { EncryptionType } from 'casper-storage';
 import { CREATE_WALLET } from '../actionTypes';
 import reducer from './createWallet';
 
@@ -10,6 +11,7 @@ describe('Create Wallet reducer', () => {
 		keyPhrase: null,
 		keyPhraseAsMap: [],
 		answerSheet: undefined,
+		encryptionType: EncryptionType.Ed25519
 	});
 	beforeEach(() => {
 		initState = reset();

@@ -23,6 +23,9 @@ const selectCreateWalletTotalKeywords = createSelector(createWalletSelector, mak
 const makeSelectCWTotalWordsForChecking = (state) => state.totalWordCheck;
 const selectCreateWalletTotalWordsForChecking = createSelector(createWalletSelector, makeSelectCWTotalWordsForChecking);
 
+const makeSelectCWEncryptionType = (state) => state.encryptionType;
+const selectCreateWalletEncryptionType = createSelector(createWalletSelector, makeSelectCWEncryptionType);
+
 export {
 	makeSelectCreateWallet,
 	makeSelectCWKeyphrase,
@@ -31,6 +34,7 @@ export {
 	makeSelectCWAnswerSheet,
 	makeSelectCWTotalKeywords,
 	makeSelectCWTotalWordsForChecking,
+	makeSelectCWEncryptionType,
 	selectCreateWalletState,
 	selectCreateWalletKeyphrase,
 	selectCreateWalletKeyphraseAsMap,
@@ -38,4 +42,5 @@ export {
 	selectCreateWalletAnswerSheet,
 	selectCreateWalletTotalKeywords,
 	selectCreateWalletTotalWordsForChecking,
+	selectCreateWalletEncryptionType
 };

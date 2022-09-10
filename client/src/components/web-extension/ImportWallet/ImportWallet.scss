@@ -16,16 +16,19 @@
 		}
 	}
 
-	&_create-keyphrase {
+	&_import-keyphrase {
 		&--column {
 			display: flex;
 			flex-direction: column;
 			flex-wrap: wrap;
-			height: 365px;
+			height: 280px;
 			justify-content: space-between;
 			margin-right: -20px;
 			padding-left: 10px;
 			padding-right: 10px;
+			flex: 0 0 auto;
+			width: 50%;
+			list-style: none;
 		}
 		&--box {
 			padding: 0 16px;
@@ -36,11 +39,16 @@
 		&--word {
 			margin-right: 20px;
 			width: 100%;
+
+			input {
+				height: 28px;
+				font-size: 12px !important;
+			}
 		}
 	}
 
 	&_btn-next {
-		margin-top: 30px;
+		margin-top: 10px;
 	}
 
 	&_create-wallet-layout {

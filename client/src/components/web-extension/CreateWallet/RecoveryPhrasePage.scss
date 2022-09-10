@@ -9,10 +9,18 @@
 		}
 
 		&--column {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
 			flex: 0 0 auto;
 			width: 50%;
 			list-style: none;
 			padding-left: 0;
+			height: 280px;
+		}
+
+		&--note {
+			margin-top: 10px;
 		}
 	}
 

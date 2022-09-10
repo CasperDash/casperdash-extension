@@ -1,3 +1,4 @@
+import { EncryptionType } from 'casper-storage';
 import { CREATE_WALLET } from '../actionTypes';
 
 const initialState = {
@@ -7,6 +8,7 @@ const initialState = {
 	keyPhrase: null,
 	keyPhraseAsMap: [],
 	answerSheet: undefined,
+	encryptionType: EncryptionType.Ed25519,
 };
 
 function reducer(state = initialState, { payload, type } = {}) {
@@ -47,6 +49,11 @@ function reducer(state = initialState, { payload, type } = {}) {
 					[payload.groupIdx]: payload.value,
 				},
 			};
+		case CREATE_WALLET.UPDATE_ENCRYPTION_TYPE:
+			return {
+				...state,
+				encryptionType: payload.encryptionType
+			}
 		default:
 			return state;
 	}

@@ -62,15 +62,15 @@ module.exports = (dir) =>
 				],
 			}),
 		],
-		optimization: {
-			splitChunks: {
-				cacheGroups: {
-					vendors: {
-						test: /[\\/]node_modules[\\/]/,
-						name: 'vendors',
-						chunks: 'all',
-					},
-				},
-			},
-		},
+		// optimization: {
+		// 	splitChunks: {
+		// 		cacheGroups: {
+		// 			vendors: {
+		// 				test: /[\\/]node_modules[\\/]/,
+		// 				name: 'vendors',
+		// 				chunks: 'all',
+		// 			},
+		// 		},
+		// 	},
+		// },
 	});

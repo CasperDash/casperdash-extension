@@ -21,6 +21,13 @@ const updateKeyphrase = (keyphrase) => {
 	};
 };
 
+const updateEncryptionType = (encryptionType) => {
+	return {
+		type: CREATE_WALLET.UPDATE_ENCRYPTION_TYPE,
+		payload: { encryptionType },
+	};
+};
+
 /**
  * Ids of selected words for checking
  * @param {Array[Number]} idKeys
@@ -75,4 +82,5 @@ export {
 	setNextStep,
 	setPrevStep,
 	updateKeyphrase,
+	updateEncryptionType
 };
