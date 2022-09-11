@@ -50,7 +50,6 @@ const SelectEncryptionType = () => {
             </div>
                 <Select
 	className="cd_we_dropdown"
-	placeholder="Select the algo"
 	styles={{control: customControlStyles}}
 	value={OPTIONS.find((option) => option.value === encryptionType)}
 	options={OPTIONS}
