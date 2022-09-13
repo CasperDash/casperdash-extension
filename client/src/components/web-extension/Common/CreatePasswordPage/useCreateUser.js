@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
-import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
+import { selectCreateWalletEncryptionType, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
 
 const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const keyphrase = useSelector(selectCreateWalletKeyphrase);
+	const encryptionType = useSelector(selectCreateWalletEncryptionType);
+
 	const onCreateSuccess = useCallback(
 		(result) => {
 			const { publicKey, userDetails } = result;
@@ -29,7 +31,7 @@ const useCreateUser = () => {
 					throw new Error('Missing keyphrase');
 				}
 
-				const result = await createUserServiceSW(password, keyphrase);
+				const result = await createUserServiceSW(password, keyphrase, encryptionType);
 				onCreateSuccess(result);
 				return result;
 			} catch (err) {
@@ -37,7 +39,7 @@ const useCreateUser = () => {
 				return undefined;
 			}
 		},
-		[keyphrase, onCreateSuccess],
+		[keyphrase, onCreateSuccess, encryptionType],
 	);
 
 	return { onCreateNewUser };

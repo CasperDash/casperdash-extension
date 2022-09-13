@@ -29,8 +29,8 @@ const sentMessage = async (payload) => {
  * User actions
  */
 
-const createUserServiceSW = async (password, keyphrase) => {
-	return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase } });
+const createUserServiceSW = async (password, keyphrase, encryptionType) => {
+	return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase, encryptionType } });
 };
 
 const validateReturningUserSW = async (password) => {

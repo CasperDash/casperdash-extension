@@ -5,6 +5,7 @@ import { Formik, Form } from 'formik';
 import { KeyFactory } from 'casper-storage';
 import { selectCreateWalletTotalKeywords } from '@cd/selectors/createWallet';
 import { setNextStep, updateKeyphrase } from '@cd/actions/createWalletActions';
+import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
 import FieldKeyphrase from './FieldKeyphrase';
 
 const ImportWallet = () => {
@@ -54,13 +55,14 @@ const ImportWallet = () => {
 			{({ errors, touched, handleSubmit }) => {
 				return (
 					<Form noValidate onSubmit={handleSubmit} className="cd_we_create-wallet-layout--root">
+						<SelectEncryptionType />
 						<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 							<FieldKeyphrase totalWords={TOTAL_KEYWORDS} />
 						</div>
 						{errors.keyphrase && touched.keyphrase && (
 							<FormBS.Text className="invalid-feedback">{errors.keyphrase}</FormBS.Text>
 						)}
-						<div>
+						<div className="cd_we_page--bottom">
 							<Button className="cd_we_btn-next" type="submit">
 								Next
 							</Button>

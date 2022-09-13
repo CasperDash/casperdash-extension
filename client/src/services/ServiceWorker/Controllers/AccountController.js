@@ -3,8 +3,6 @@ import { DeployUtil } from 'casper-js-sdk';
 import UserService from '@cd/services/UserService';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 
-const encryptionType = EncryptionType.Ed25519;
-
 class AccountController {
 	/**
 	 * Only available after creating new User or successfully
@@ -45,7 +43,7 @@ class AccountController {
 		return result;
 	};
 
-	createNewUser = async ({ password, keyphrase }) => {
+	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519}) => {
 		if (!password) {
 			throw Error('Missing password');
 		}

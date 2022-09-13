@@ -13,20 +13,23 @@
 
 		&--bottom {
 			margin-top: auto;
+			margin-bottom: 0;
 		}
 	}
 
-	&_create-keyphrase {
+	&_import-keyphrase {
 		&--column {
 			display: flex;
 			flex-direction: column;
 			flex-wrap: wrap;
-			height: 365px;
+			flex: 0 0 auto;
+			height: 280px;
 			justify-content: space-between;
-			margin-right: -20px;
-			padding-left: 10px;
-			padding-right: 10px;
+			list-style: none;
+			width: 50%;
+			padding: 0;
 		}
+		
 		&--box {
 			padding: 0 16px;
 		}
@@ -36,11 +39,16 @@
 		&--word {
 			margin-right: 20px;
 			width: 100%;
+
+			input {
+				height: 28px;
+				font-size: 12px !important;
+			}
 		}
 	}
 
 	&_btn-next {
-		margin-top: 30px;
+		margin-top: 10px;
 	}
 
 	&_create-wallet-layout {
@@ -49,6 +57,10 @@
 			flex-flow: column nowrap;
 			justify-content: space-between;
 			height: 100%;
+		}
+
+		&--body {
+			margin-bottom: auto;
 		}
 	}
 }
