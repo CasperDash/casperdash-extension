@@ -5,12 +5,14 @@ import drop from 'lodash-es/drop';
 import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
-import { selectCreateWalletTotalKeywords, selectCreateWalletKeyphraseAsMap } from '@cd/selectors/createWallet';
+import { selectCreateWalletTotalKeywords, selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
+import CopyButton from '@cd/components/web-extension/Common/CopyButton';
 import './RecoveryPhrasePage.scss';
 
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
+	const keyPhrase= useSelector(selectCreateWalletKeyphrase);
 	const keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
 	const TOTAL_KEYWORDS = useSelector(selectCreateWalletTotalKeywords);
 	const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
@@ -47,8 +49,9 @@ const RecoveryPhrasePage = () => {
 					))}
 				</ul>
 			</div>
-			<div className="cd_we_page--bottom">
-				<Button className="cd_we_btn-next" onClick={onClickNextHandler}>
+			<div className="cd_we_create-keyphrase--actions">
+				<CopyButton className="cd_we_create-keyphrase__btn" text={keyPhrase} />
+				<Button onClick={onClickNextHandler} className="cd_we_create-keyphrase__btn">
 					Next
 				</Button>
 			</div>

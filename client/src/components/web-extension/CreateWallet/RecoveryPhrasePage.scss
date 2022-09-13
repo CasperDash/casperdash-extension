@@ -22,6 +22,15 @@
 		&--note {
 			margin-top: 10px;
 		}
+
+		&--actions {
+			margin-top: 10px;
+			display: flex;
+			justify-content: space-between;
+		}
+		&__btn {
+			width: 48%;
+		}
 	}
 
 	&_keyphrase {
