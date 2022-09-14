@@ -44,6 +44,7 @@ jobs:
             always() && 
             (needs.build.result == 'failed' || needs.build.result == 'success')
         steps:
+        - uses: actions/checkout@v2
         - name: Send build result to slack channel
           uses: rtCamp/action-slack-notify@v2
           env: 
