@@ -72,7 +72,8 @@
 		"build-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=mainnet",
 		"test": "react-scripts test --coverage --watchAll ",
 		"test:w": "react-scripts test --watchAll ",
-		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage"
+		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage",
+		"build-all": "yarn build-mainnet & yarn build-testnet & yarn build-extension-testnet & yarn build-extension-mainnet"
 	},
 	"browserslist": {
 		"production": [
