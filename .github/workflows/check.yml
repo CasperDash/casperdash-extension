@@ -40,6 +40,9 @@ jobs:
     notification:
         needs: [build]
         runs-on: ubuntu-latest
+        if: |
+            always() && 
+            (needs.build.result == 'failed' || needs.build.result == 'success')
         steps:
         - name: Send build result to slack channel
           uses: rtCamp/action-slack-notify@v2
