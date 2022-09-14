@@ -32,6 +32,7 @@ jobs:
               working-directory: ./client
               run : |
                   yarn
+                  yarn lint
                   yarn run test-ci
                   yarn snapshot
                   yarn build-all
