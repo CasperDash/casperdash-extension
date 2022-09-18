@@ -49,6 +49,18 @@ const getCurrentUserSW = async () => {
 	return sentMessage({ methodName: 'accountManager.getCurrentUser' });
 };
 
+const getUserHDWallets = async () => {
+	return sentMessage({ methodName: 'accountManager.getHDWallets'});
+};
+
+const addWalletAccount = async (index, description) => {
+	return sentMessage({ methodName: 'accountManager.addWalletAccount', params: { index, description }});
+};
+
+const setDefaultWallet = async (index, walletAccount) => {
+	return sentMessage({ methodName: 'accountManager.setDefaultWallet', params: { index, walletAccount }});
+};
+
 const onClearUserSW = async () => {
 	return sentMessage({ methodName: 'accountManager.clearUser' });
 };
@@ -80,4 +92,7 @@ export {
 	keepSWAlive,
 	createUserServiceSW,
 	getActivePublicKey,
+	getUserHDWallets,
+	addWalletAccount,
+	setDefaultWallet
 };

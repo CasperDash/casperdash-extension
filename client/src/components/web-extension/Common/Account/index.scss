@@ -22,4 +22,10 @@
 		font-weight: 600;
 		padding: 15px 0 0;
 	}
+	.cd_we_account_name {
+		cursor: pointer;
+		&:hover {
+			color: var(--primary-light-color);
+		}
+	}
 }

@@ -25,6 +25,9 @@ async function setupPopupServices() {
 
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
 	rpc.register('accountManager.getCurrentUser', accountController.getCurrentUser);
+	rpc.register('accountManager.getHDWallets', accountController.getHDWallets);
+	rpc.register('accountManager.addWalletAccount', accountController.addWalletAccount);
+	rpc.register('accountManager.setDefaultWallet', accountController.setDefaultWallet);
 	rpc.register('accountManager.clearUser', accountController.clearUser);
 	rpc.register('WORKER_KEEP_ALIVE_MESSAGE', () => {});
 }
