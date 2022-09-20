@@ -8,7 +8,7 @@ module.exports = (dir) =>
 	merge(common(dir), {
 		entry: {
 			main: path.resolve(dir, 'src/app/web-extension/index.js'),
-			'sw/service-worker': path.resolve(dir, '/src/services/ServiceWorker/serviceWorker.js'),
+			'sw/service-worker': path.resolve(dir, 'src/services/ServiceWorker/serviceWorker.js'),
 		},
 		output: {
 			path: path.resolve(dir, 'build_extension'),
