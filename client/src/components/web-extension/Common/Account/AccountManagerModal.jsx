@@ -13,10 +13,10 @@ import Divider from '@cd/components/Common/Divider';
 import './AccountManagerModal.scss';
 
 const formatAccountName = (index = 0) => {
-	return `Account ${index}`;
+	return `Account ${index + 1}`;
 }
 
-export const AccountManagerModal = ({ isOpen, onClose, ...resProps }) => {
+export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	const [wallets, setWallets] = useState([]);
 	const dispatch = useDispatch();
 
@@ -32,11 +32,9 @@ export const AccountManagerModal = ({ isOpen, onClose, ...resProps }) => {
 	}, []);
 
 	useEffect(() => {
-		if (!isOpen) {
-			return;
+		if (isOpen) {
+			getUserWallets();
 		}
-
-		getUserWallets();
 	}, [isOpen, getUserWallets]);
 
 	const handleAddNewWallet = () => {
@@ -46,8 +44,8 @@ export const AccountManagerModal = ({ isOpen, onClose, ...resProps }) => {
 			});
 	}
 
-	const handleOnSelectWallet = (index, walletAccount) => {
-		setDefaultWallet(index, walletAccount).then(result => {
+	const handleOnSelectWallet = (index) => {
+		setDefaultWallet(index).then(result => {
 			const { publicKey, userDetails } = result;
 
 			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }));
@@ -58,7 +56,7 @@ export const AccountManagerModal = ({ isOpen, onClose, ...resProps }) => {
 	}
 
 	return (
-		<Modal show={isOpen} onHide={onClose} className="cd_we_accounts-modal" {...resProps}>
+		<Modal show={isOpen} onHide={onClose} className="cd_we_accounts-modal" {...restProps}>
 			<Modal.Header>
 				<div className="cd_we_accounts-modal__btn-close" onClick={onClose}>
 					<CloseIcon/>
@@ -68,7 +66,7 @@ export const AccountManagerModal = ({ isOpen, onClose, ...resProps }) => {
 				<ul className="cd_we_accounts-modal__list">
 					{
 						wallets.map((wallet, index) => (
-							<li key={`wallet-${index}`} className="cd_we_accounts-modal__list-item" onClick={() => handleOnSelectWallet(index, wallet)}>
+							<li key={`wallet-${index}`} className="cd_we_accounts-modal__list-item" onClick={() => handleOnSelectWallet(index)}>
 								<div>{wallet.descriptor ? wallet.descriptor.name.name : formatAccountName(index)}</div>
 								<div className="cd_we_accounts-modal__list-item-address">
 									<MiddleTruncatedText>{wallet.publicKey}</MiddleTruncatedText>

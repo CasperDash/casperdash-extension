@@ -1,6 +1,6 @@
 import React from 'react';
 import './Divider.scss';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
 const Divider = ({ width = '100%', className }) => {
 	return (

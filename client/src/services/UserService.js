@@ -166,7 +166,7 @@ export class UserService {
 	}
 
 	setDefaultWallet = async (index) => {
-		this.currentWalletIndex = index;
+		this.currentWalletIndex = parseInt(index, 10);
 	}
 }
 

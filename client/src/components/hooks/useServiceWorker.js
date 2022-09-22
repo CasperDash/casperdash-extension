@@ -57,8 +57,8 @@ const addWalletAccount = async (index, description) => {
 	return sentMessage({ methodName: 'accountManager.addWalletAccount', params: { index, description }});
 };
 
-const setDefaultWallet = async (index, walletAccount) => {
-	return sentMessage({ methodName: 'accountManager.setDefaultWallet', params: { index, walletAccount }});
+const setDefaultWallet = async (index) => {
+	return sentMessage({ methodName: 'accountManager.setDefaultWallet', params: { index }});
 };
 
 const onClearUserSW = async () => {
