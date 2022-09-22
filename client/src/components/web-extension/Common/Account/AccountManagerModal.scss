@@ -1,103 +1,105 @@
 $padding: 24px;
 
 .cd_we_accounts-modal {
-    top: 15%;
+	top: 15%;
 
-    .modal-content {
-        max-width: 336px;
-        box-shadow: 0px 0px 16px rgba(35, 38, 53, 0.2);
-        border-radius: 16px;
-    }
+	.modal-content {
+		max-width: 336px;
+		box-shadow: 0px 0px 16px rgba(35, 38, 53, 0.2);
+		border-radius: 16px;
+	}
 
-    .modal-header {
-        display: flex;
-        justify-content: flex-end;
-        border-bottom: none !important;
-        padding: 4px !important;
-    }
+	.modal-header {
+		display: flex;
+		justify-content: flex-end;
+		border-bottom: none;
+		padding: 4px;
+	}
 
-    .modal-body {
-        margin-top: 20px;
-        max-height: 200px;
-        overflow-y: auto;
-        padding: 0 $padding !important;
-    }
+	.modal-body {
+		margin-top: 20px;
+		// We show first 5 wallets and a little bit of 6th wallet
+		// so User should know he can scroll down for more
+		max-height: 218px;
+		overflow-y: auto;
+		padding: 0 $padding;
+	}
 
-    .modal-footer {
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        border: none;
-        padding: $padding;
-    }
+	.modal-footer {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		border: none;
+		padding: $padding;
+	}
 
-    &__divider {
-        padding: 0 $padding;
-    }
+	&__divider {
+		padding: 0 $padding;
+	}
 
-    &__list {
-        padding: 0;
-        list-style: none;
-        margin: 0 !important;
+	&__list {
+		padding: 0;
+		list-style: none;
+		margin: 0 !important;
 
-        &-item {
-            display: flex;
-            justify-content: space-between;
-            cursor: pointer;
+		&-item {
+			display: flex;
+			justify-content: space-between;
+			cursor: pointer;
 
-            &:not(:last-child) {
-                margin-bottom: 24px;
-            }
+			&:not(:last-child) {
+				margin-bottom: 22px;
+			}
 
-            &:hover {
-                color: var(--primary-light-color);
-            }
-        }
+			&:hover {
+				color: var(--primary-color);
+			}
+		}
 
-        &-item-address {
-            max-width: 80px;
-        }
-    }
+		&-item-address {
+			max-width: 80px;
+		}
+	}
 
-    &__btn-close {
-        margin-top: 8px;
-        border-radius: 99px !important;
-        border: 1px solid #D1D7E7 !important;
-        padding: 3px 7px !important;
-        margin-right: 10px;
-        cursor: pointer;
+	&__btn-close {
+		border-radius: 50%;
+		border: 1px solid var(--secondary-text-color-med);
+		cursor: pointer;
+		margin-right: 10px;
+		margin-top: 8px;
+		padding: 3px 7px;
+		align-items: center;
+		background-color: transparent;
+		display: flex;
+		height: 28px;
+		justify-content: center;
+		width: 28px;
+	}
 
-        & svg {
-            margin-bottom: 2px;
-            margin-left: 1px;
-        }
-    }
+	&__btn-action.btn {
+		color: var(--primary-text-color-dark);
+		padding: 0;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
 
-    &__btn-action {
-        width: fit-content !important;
-        color: #353945 !important;
-        padding: 0 !important;
-        display: flex;
-        align-items: center;
-        text-decoration: none !important;
+		&:hover {
+			color: var(--primary-color);
+		}
 
-        &:hover {
-            color: var(--primary-light-color) !important;
-        }
+		&:focus {
+			outline: 0;
+			box-shadow: none;
+		}
 
-        &:focus {
-            outline: 0;
-            box-shadow: none !important;
-        }
+		.btn-text {
+			margin-left: 10px;
+		}
 
-        .btn-text {
-            margin-left: 10px;
-        }
-
-        .btn-icon {
-            svg {
-                margin-bottom: 2px;
-            }
-        }
-    }
+		.btn-icon {
+			svg {
+				margin-bottom: 2px;
+			}
+		}
+	}
 }
