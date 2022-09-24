@@ -1,59 +1,46 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React from 'react';
 import { WalletDescriptor } from 'casper-storage';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import isNil from 'lodash-es/isNil';
+
 import { useDispatch } from 'react-redux';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import { onBindingAuthInfo, updateAccountName } from '@cd/actions/userActions';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
-import { getUserHDWallets, addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
-import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
+import { addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 
 import './AccountManagerModal.scss';
-
-const formatAccountName = (index = 0) => {
-	return `Account ${index + 1}`;
-}
+import { useWallets } from './useWallets';
+import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
+import { formatAccountName } from '@cd/helpers/format';
 
 export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
-	const [wallets, setWallets] = useState([]);
 	const dispatch = useDispatch();
 
-	const getUserWallets = useCallback(async() => {
-		let hdWallets = await getUserHDWallets();
-		if (hdWallets.length === 0) {
-			await addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName()));
-			hdWallets = await getUserHDWallets();
-		}
-		
-		setWallets(hdWallets);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		if (isOpen) {
-			getUserWallets();
-		}
-	}, [isOpen, getUserWallets]);
+	const [wallets, loadWallets] = useWallets({
+		isActive: isOpen
+	});
 
 	const handleAddNewWallet = () => {
-		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length)))
-			.then(() => {
-				return getUserWallets();
-			});
-	}
+		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length))).then(() => {
+
+			return loadWallets();
+		});
+	};
 
 	const handleOnSelectWallet = (index) => {
-		setDefaultWallet(index).then(result => {
+		setDefaultWallet(index).then((result) => {
 			const { publicKey, userDetails } = result;
 
 			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }));
 			dispatch(updateAccountName(formatAccountName(index)));
 
 			onClose();
-		})
-	}
+		});
+	};
 
 	return (
 		<Modal show={isOpen} onHide={onClose} className="cd_we_accounts-modal" {...restProps}>
@@ -64,19 +51,26 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 			</Modal.Header>
 			<Modal.Body>
 				<ul className="cd_we_accounts-modal__list">
-					{
-						wallets.map((wallet, index) => (
-							<li key={`wallet-${index}`} className="cd_we_accounts-modal__list-item" onClick={() => handleOnSelectWallet(index)}>
-								<div>{wallet.descriptor ? wallet.descriptor.name.name : formatAccountName(index)}</div>
-								<div className="cd_we_accounts-modal__list-item-address">
-									<MiddleTruncatedText>{wallet.publicKey}</MiddleTruncatedText>
-								</div>
-							</li>
-						))
-					}
+					{wallets.map((wallet, index) => (
+						<li
+							key={`wallet-${index}`}
+							className="cd_we_accounts-modal__list-item"
+							onClick={() => handleOnSelectWallet(index)}
+						>
+							<div>{wallet.descriptor ? wallet.descriptor.name.name : formatAccountName(index)}</div>
+							<div className="cd_we_accounts-modal__list-item-balance">
+								{isNil(wallet.balance) ? (
+									<Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="cd_we_accounts-modal__list-item-loading"/>
+								) : (
+									<MiddleTruncatedText>{`${wallet.balance}`}</MiddleTruncatedText> 
+								)}
+								<span>CSPR</span>
+							</div>
+						</li>
+					))}
 				</ul>
 			</Modal.Body>
-			<Divider className="cd_we_accounts-modal__divider"/>
+			<Divider className="cd_we_accounts-modal__divider" />
 			<Modal.Footer>
 				<Button variant="link" className="cd_we_accounts-modal__btn-action" onClick={handleAddNewWallet}>
 					<span className="btn-icon">
