@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { WalletDescriptor } from 'casper-storage';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import isNil from 'lodash-es/isNil';
 
-import { useDispatch } from 'react-redux';
+import useWallets from './useWallets';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import { onBindingAuthInfo, updateAccountName } from '@cd/actions/userActions';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import { addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
-
-import './AccountManagerModal.scss';
-import useWallets from './useWallets';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
 import { formatAccountName } from '@cd/helpers/format';
-import { useEffect } from 'react';
+
+import './AccountManagerModal.scss';
 
 export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	const dispatch = useDispatch();
