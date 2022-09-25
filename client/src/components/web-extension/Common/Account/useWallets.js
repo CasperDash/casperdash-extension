@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { WalletDescriptor } from 'casper-storage';
 import isNil from 'lodash-es/isNil';
 import get from 'lodash-es/get';
@@ -8,8 +8,8 @@ import { getUserHDWallets, addWalletAccount } from '@cd/hooks/useServiceWorker';
 import { getAccounts } from '@cd/services/userServices';
 import { convertBalanceFromHex } from '@cd/helpers/balance';
 
-
-export const useWallets = ({ isActive }) => {
+const useWallets = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const [wallets, setWallets] = useState([]);
 
     const loadWalletsFromStorage = useCallback(async () => {
@@ -39,6 +39,7 @@ export const useWallets = ({ isActive }) => {
     }, [wallets]);
 
 	const loadWallets = useCallback(async () => {
+		setIsLoading(true);
 		const hdWallets = await loadWalletsFromStorage();
 		setWallets(oldWallets => {
 			return hdWallets.map(wallet => {
@@ -57,13 +58,10 @@ export const useWallets = ({ isActive }) => {
 
         const hdBalanceWallets = await loadBalanceWallets(hdWallets);
 		setWallets(hdBalanceWallets);
+		setIsLoading(false);
 	}, [loadWalletsFromStorage, loadBalanceWallets]);
 
-	useEffect(() => {
-		if (isActive) {
-			loadWallets();
-		}
-	}, [isActive]);
-
-    return [wallets, loadWallets, setWallets];
+    return [wallets, loadWallets, isLoading];
 };
+
+export default useWallets;

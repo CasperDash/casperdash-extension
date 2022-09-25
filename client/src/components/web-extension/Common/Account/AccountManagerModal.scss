@@ -90,6 +90,7 @@ $padding: 24px;
 		display: flex;
 		align-items: center;
 		text-decoration: none;
+		border: 0px solid !important;
 
 		&:hover {
 			color: var(--primary-color);
@@ -108,6 +109,11 @@ $padding: 24px;
 			svg {
 				margin-bottom: 2px;
 			}
+		}
+
+		&:disabled {
+			background-color: transparent !important;
+			color: inherit !important;
 		}
 	}
 }

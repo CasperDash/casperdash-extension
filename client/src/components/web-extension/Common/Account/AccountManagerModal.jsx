@@ -13,16 +13,21 @@ import { addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 
 import './AccountManagerModal.scss';
-import { useWallets } from './useWallets';
+import useWallets from './useWallets';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
 import { formatAccountName } from '@cd/helpers/format';
+import { useEffect } from 'react';
 
 export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	const dispatch = useDispatch();
 
-	const [wallets, loadWallets] = useWallets({
-		isActive: isOpen
-	});
+	const [wallets, loadWallets, isLoading] = useWallets();
+
+	useEffect(() => {
+		if (isOpen) {
+			loadWallets();
+		}
+	}, [isOpen]);
 
 	const handleAddNewWallet = () => {
 		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length))).then(() => {
@@ -72,7 +77,7 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 			</Modal.Body>
 			<Divider className="cd_we_accounts-modal__divider" />
 			<Modal.Footer>
-				<Button variant="link" className="cd_we_accounts-modal__btn-action" onClick={handleAddNewWallet}>
+				<Button variant="link" className="cd_we_accounts-modal__btn-action" disabled={isLoading} onClick={handleAddNewWallet}>
 					<span className="btn-icon">
 						<PlusIcon />
 					</span>
