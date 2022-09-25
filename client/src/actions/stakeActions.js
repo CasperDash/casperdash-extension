@@ -13,10 +13,10 @@ export const getStakeFromLocalStorage = (publicKey) => ({
 	payload: publicKey,
 });
 
-export const fetchValidators = () => ({
+export const fetchValidators = (publicKey) => ({
 	type: VALIDATORS.FETCH_ACTIVE_VALIDATORS,
 	request: {
-		url: '/validators',
+		url: publicKey ? `v2/validators?delegator=${publicKey}&cachedBy=block` : 'v2/validators',
 	},
 });
 
