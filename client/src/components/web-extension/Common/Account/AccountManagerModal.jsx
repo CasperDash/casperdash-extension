@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import isNil from 'lodash-es/isNil';
 
-import useWallets from './useWallets';
+import useGetWallets from '@cd/hooks/useGetWallets';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import { onBindingAuthInfo, updateAccountName } from '@cd/actions/userActions';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
@@ -20,7 +20,7 @@ import './AccountManagerModal.scss';
 export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	const dispatch = useDispatch();
 
-	const [wallets, loadWallets, isLoading] = useWallets();
+	const [wallets, loadWallets, isLoading] = useGetWallets();
 
 	useEffect(() => {
 		if (isOpen) {

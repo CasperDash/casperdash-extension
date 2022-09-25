@@ -8,7 +8,7 @@ import { getUserHDWallets, addWalletAccount } from '@cd/hooks/useServiceWorker';
 import { getAccounts } from '@cd/services/userServices';
 import { convertBalanceFromHex } from '@cd/helpers/balance';
 
-const useWallets = () => {
+const useGetWallets = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [wallets, setWallets] = useState([]);
 
@@ -64,4 +64,4 @@ const useWallets = () => {
     return [wallets, loadWallets, isLoading];
 };
 
-export default useWallets;
+export default useGetWallets;
