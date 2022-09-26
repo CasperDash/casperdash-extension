@@ -41,7 +41,21 @@ const SettingRow = ({ setting }) => {
                 )}
             </div>
             {setting.hasConfirmPopup && (
-                <ConfirmModal isOpen={isOpenModal} onOk={onProcess} onClose={handleOnCloseModal} description="Are your sure want to delete all data?"/>
+                <ConfirmModal 
+                    isOpen={isOpenModal} 
+                    onOk={onProcess} 
+                    onClose={handleOnCloseModal}
+                    title="Are you sure you want to delete your wallet ?"
+                    description={
+                        (
+                            <div className="cd_setting_modal">
+                                <div>Your current wallet, accounts and assets will be removed from this app permanently. This action cannot be undone.</div>
+                                <br/>
+                                <div>Your can ONLY recover this wallet with your Secret Recovery Phase CasperDash does not have your Secret Recovery Phase.</div>
+                            </div>
+                        )
+                    }
+                />
             )}
         </>
 	);
