@@ -103,7 +103,7 @@ class AccountController {
 	};
 
 	addWalletAccount = async ({index, description}) => {
-		this.userService.addWalletAccount(index, description);
+		return this.userService.addWalletAccount(index, description);
 	};
 
 	setDefaultWallet = async ({index}) => {

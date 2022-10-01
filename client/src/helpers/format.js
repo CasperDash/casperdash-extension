@@ -115,3 +115,7 @@ export const getValueByFormat = (value, options) => {
 			return value;
 	}
 };
+
+export const formatAccountName = (index = 0) => {
+	return `Account ${index + 1}`;
+};

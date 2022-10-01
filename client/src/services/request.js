@@ -15,7 +15,7 @@ const requester = axios.create({
 	...DEFAULT_OPTIONS,
 });
 
-export const request = async (options) => {
-	const response = await requester(`${baseUrl}${options}`);
+export const request = async (path, options) => {
+	const response = await requester(`${baseUrl}${path}`, options);
 	return response.data;
 };
