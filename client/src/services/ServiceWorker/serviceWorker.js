@@ -26,12 +26,11 @@ function keepAliveForced() {
 async function keepAlive() {
 	console.info(chrome.tabs.query({}));
 	if (lifeline) return;
-	for (const tab of await chrome.tabs.query({ url: '*://*/*' })) {
+	for (const tab of await chrome.tabs.query({})) {
 		try {
 			await chrome.scripting.executeScript({
 				target: { tabId: tab.id },
-				function: () => chrome.runtime.connect({ name: 'keepAlive' }),
-				// `function` will become `func` in Chrome 93+
+				func: () => chrome.runtime.connect({ name: 'keepAlive' }),
 			});
 			chrome.tabs.onUpdated.removeListener(retryOnTabUpdate);
 			return;
