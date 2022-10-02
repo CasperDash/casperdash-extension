@@ -46,9 +46,10 @@ $padding: 24px;
 			display: flex;
 			justify-content: space-between;
 			cursor: pointer;
+			line-height: 1.8;
 
 			&:not(:last-child) {
-				margin-bottom: 22px;
+				margin-bottom: 18px;
 			}
 
 			&:hover {
@@ -56,8 +57,15 @@ $padding: 24px;
 			}
 		}
 
-		&-item-address {
+		&-item-balance {
 			max-width: 80px;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			
+			&--loading {
+				margin-bottom: -1px;
+			}
 		}
 	}
 
@@ -82,6 +90,7 @@ $padding: 24px;
 		display: flex;
 		align-items: center;
 		text-decoration: none;
+		border: 0px solid !important;
 
 		&:hover {
 			color: var(--primary-color);
@@ -100,6 +109,11 @@ $padding: 24px;
 			svg {
 				margin-bottom: 2px;
 			}
+		}
+
+		&:disabled {
+			background-color: transparent !important;
+			color: inherit !important;
 		}
 	}
 }
