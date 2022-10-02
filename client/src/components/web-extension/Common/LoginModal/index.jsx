@@ -37,10 +37,10 @@ export const LoginModal = () => {
 				}
 
 				result.publicKey && onAuthCredentialSuccess(result);
-                dispatch(setIsOpen(false));
+				dispatch(setIsOpen(false));
 			}
 		},
-		[onAuthCredentialSuccess, validateUserCredential],
+		[dispatch, onAuthCredentialSuccess, validateUserCredential],
 	);
 
 	const onChangeHandler = useCallback(
@@ -54,11 +54,12 @@ export const LoginModal = () => {
 	);
 
 	return (
-		<Modal show={isOpen} className="cd_we_login-modal">
+		<Modal backdropClassName="cd_we_login-modal--backdrop" show={isOpen} className="cd_we_login-modal" centered>
 			<Modal.Header closeButton={false}>
-				<Modal.Title></Modal.Title>
+				<Modal.Title>Your session has expired</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
+				<p>Please login again to continue using Casper Wallet.</p>
 				<div className="cd_we_create-wallet-layout--root">
 					<Formik
 						initialValues={{
@@ -91,11 +92,11 @@ export const LoginModal = () => {
 												{serverErrors.message}
 											</Form.Text>
 										)}
-                                        <div className="cd_we_page--bottom">
-										<Button type="submit" className="cd_we_btn-next" disabled={false}>
-											Unlock
-										</Button>
-									</div>
+										<div className="cd_we_page--bottom">
+											<Button type="submit" className="cd_we_btn-next" disabled={false}>
+												Unlock
+											</Button>
+										</div>
 									</Form>
 								</div>
 							);
