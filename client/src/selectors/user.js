@@ -24,6 +24,10 @@ export const getPublicKey = ({ user }) => {
 	return user.publicKey ?? '';
 };
 
+export const getAccountName = ({ user }) => {
+	return user.accountName;
+};
+
 export const getLoginOptions = ({ user }) => {
 	return user.loginOptions || {};
 };

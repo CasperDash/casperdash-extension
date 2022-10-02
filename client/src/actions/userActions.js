@@ -139,3 +139,9 @@ export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 		}
 	};
 };
+
+export const updateAccountName = (accountName) => {
+	return (dispatch) => {
+		dispatch({ type: USERS.SET_ACCOUNT_NAME, payload: accountName });
+	};
+};

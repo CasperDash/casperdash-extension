@@ -112,7 +112,7 @@ export class UserService {
 		 * This will return user info with hash info
 		 */
 		const userInfo = this.getUserInfoHash();
-		const publicKey = await this.getPublicKey();
+		const publicKey = await this.getPublicKey(this.currentWalletIndex);
 
 		return {
 			publicKey,
@@ -144,6 +144,30 @@ export class UserService {
 			return undefined;
 		}
 	};
+
+	getHDWallets = async () => {
+		const user = this.instance;
+
+		const wallets = await user.getHDWallet()._derivedWallets || [];
+		if (wallets.length === 0) {
+			return wallets;
+		}
+
+		return Promise.all(wallets.map(async (wallet, index) => ({
+			...wallet,
+			publicKey: await this.getPublicKey(index),
+		})));
+	}
+
+	addWalletAccount = async (index, description) => {
+		const user = this.instance;
+
+		return user.addWalletAccount(index, new WalletDescriptor(description));
+	}
+
+	setDefaultWallet = async (index) => {
+		this.currentWalletIndex = parseInt(index, 10);
+	}
 }
 
 export default UserService;
