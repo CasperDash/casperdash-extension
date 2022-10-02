@@ -1,10 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
 import useLoginPassword from '@cd/components/hooks/useLoginPassword';
 import './LoginModal.scss';
+import { getIsOpen } from '@cd/selectors/loginModal';
+import { setIsOpen } from '@cd/actions/loginModalAction';
 
 const onValidatePassword = (values) => {
 	const errors = {};
@@ -16,7 +19,10 @@ const onValidatePassword = (values) => {
 	return errors;
 };
 
-export const LoginModal = ({ isOpen, onOk }) => {
+export const LoginModal = () => {
+	const isOpen = useSelector(getIsOpen);
+	const dispatch = useDispatch();
+
 	const { onAuthCredentialSuccess, validateUserCredential } = useLoginPassword();
 	const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
@@ -30,10 +36,8 @@ export const LoginModal = ({ isOpen, onOk }) => {
 					return;
 				}
 
-                console.log('result: ', result);
-
 				result.publicKey && onAuthCredentialSuccess(result);
-                onOk();
+                dispatch(setIsOpen(false));
 			}
 		},
 		[onAuthCredentialSuccess, validateUserCredential],

@@ -7,6 +7,7 @@ import Copy from '@cd/components/Common/Button/Copy';
 import { AccountManagerModal } from './AccountManagerModal';
 
 import './index.scss';
+import ServiceWorkerRequired from '../../../hocs/ServiceWorkerRequired/index';
 
 export const AccountInfo = () => {
 	const [isOpenAccountModal, setIsOpenAccountModal] = useState(false);
@@ -35,7 +36,9 @@ export const AccountInfo = () => {
 				</div>
 			</div>
 			<div className="cd_we_account_balance">{toFormattedCurrency(totalFiatBalance)}</div>
-			<AccountManagerModal isOpen={isOpenAccountModal} onClose={handleOnCloseAccountModal}/>
+			<ServiceWorkerRequired>
+				<AccountManagerModal isOpen={isOpenAccountModal} onClose={handleOnCloseAccountModal}/>
+			</ServiceWorkerRequired>
 		</div>
 	);
 };
