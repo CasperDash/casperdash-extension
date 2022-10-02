@@ -16,6 +16,7 @@
       "@cd/components/*": ["client/src/components/*"],
       "@cd/common/*": ["client/src/components/Common/*"],
       "@cd/hooks/*": ["client/src/components/hooks/*"],
+      "@cd/hocs/*": ["client/src/components/hocs/*"],
       "@cd/web/*": ["client/src/components/web/*"],
       "@cd/web-extension/*": ["client/src/components/web-extension/*"]
     }

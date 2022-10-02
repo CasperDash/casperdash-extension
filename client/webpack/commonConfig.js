@@ -61,6 +61,7 @@ module.exports = (dir) => ({
 			'@cd/constants': path.resolve(dir, 'src/constants'),
 			'@cd/common': path.resolve(dir, 'src/components/Common'),
 			'@cd/hooks': path.resolve(dir, 'src/components/hooks'),
+			'@cd/hocs': path.resolve(dir, 'src/components/hocs'),
 			'@cd/web': path.resolve(dir, 'src/components/web'),
 			'@cd/web-extension': path.resolve(dir, 'src/components/web-extension'),
 			'@cd/components': path.resolve(dir, 'src/components'),

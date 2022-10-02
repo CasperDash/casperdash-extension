@@ -9,14 +9,12 @@ const ServiceWorkerRequired = ({ children }) => {
 
 	useEffect(() => {
 		workerRef.current = setTimeout(() => {
-			console.log('hello');
 			getCurrentUserSW().then((result) => {
-				console.log('result: ', result);
 				if (!result) {
 					dispatch(setIsOpen(true));
 				}
 			});
-		}, 1000);
+		}, 300);
 
 		return () => clearTimeout(workerRef.current);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
