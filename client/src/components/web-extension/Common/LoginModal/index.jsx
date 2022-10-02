@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
 import useLoginPassword from '@cd/components/hooks/useLoginPassword';
-import './LoginModal.scss';
 import { getIsOpen } from '@cd/selectors/loginModal';
 import { setIsOpen } from '@cd/actions/loginModalAction';
+import './LoginModal.scss';
 
 const onValidatePassword = (values) => {
 	const errors = {};
@@ -59,7 +59,6 @@ export const LoginModal = () => {
 				<Modal.Title>Your session has expired</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<p>Please login again to continue using Casper Wallet.</p>
 				<div className="cd_we_create-wallet-layout--root">
 					<Formik
 						initialValues={{
@@ -73,7 +72,7 @@ export const LoginModal = () => {
 								<div className="cd_we_create-wallet-layout--body">
 									<Form noValidate onSubmit={handleSubmit}>
 										<Form.Group className="mb-3">
-											<Form.Label>Enter password</Form.Label>
+											<Form.Label>Please login again to continue using Casper Wallet.</Form.Label>
 											<FormControl
 												onBlur={handleBlur}
 												onChange={(e) => onChangeHandler(e, setFieldValue)}

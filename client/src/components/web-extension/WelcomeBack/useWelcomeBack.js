@@ -7,6 +7,13 @@ import { validateReturningUserSW } from '@cd/hooks/useServiceWorker';
 const useWelcomeBack = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	/**
+	 * const [] = useAuthLogin({
+	 * 		onAuthCompleted: () => navigate('/')
+	 * });
+	 * 
+	 */
+	
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {

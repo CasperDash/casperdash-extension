@@ -1,19 +1,18 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { validateReturningUserSW } from '@cd/hooks/useServiceWorker';
 
 const useLoginPassword = () => {
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	// const [] = useAuthLogin();
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
 			const { publicKey, userDetails } = result;
 			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }));
 		},
-		[dispatch, navigate],
+		[dispatch],
 	);
 
 	const validateUserCredential = useCallback(async (password) => {
