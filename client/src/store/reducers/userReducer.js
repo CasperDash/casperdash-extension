@@ -2,7 +2,7 @@ import { USERS } from '../actionTypes';
 export default function userReducer(
 	state = {
 		publicKey: '',
-		accountName: '',
+		accountIndex: 0,
 		loginOptions: {},
 	},
 	action,
@@ -12,8 +12,8 @@ export default function userReducer(
 			return { ...state, publicKey: action.payload.publicKey, loginOptions: action.payload.loginOptions || {} };
 		case USERS.SET_KEY_PATH:
 			return { ...state, loginOptions: { ...state.loginOptions, keyIndex: action.payload } };
-		case USERS.SET_ACCOUNT_NAME:
-			return { ...state, accountName: action.payload };
+		case USERS.SET_ACCOUNT_INDEX:
+			return { ...state, accountIndex: action.payload };
 		default:
 			return state;
 	}

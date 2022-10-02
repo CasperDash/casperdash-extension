@@ -53,6 +53,9 @@ $padding: 24px;
 			}
 
 			&:hover {
+				color: var(--primary-light-color);
+			}
+			&.selected {
 				color: var(--primary-color);
 			}
 		}
