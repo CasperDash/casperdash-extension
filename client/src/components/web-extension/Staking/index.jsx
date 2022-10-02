@@ -30,8 +30,8 @@ const Staking = () => {
 
 	// Effect
 	useEffect(() => {
-		dispatch(fetchValidators());
-	}, [dispatch]);
+		dispatch(fetchValidators(publicKey));
+	}, [dispatch, publicKey]);
 
 	useEffect(() => {
 		validator.public_key && setFirstLoad(false);

@@ -32,8 +32,8 @@ const Stake = () => {
 	const stakingDeployList = useStakeFromValidators(publicKey);
 
 	useEffect(() => {
-		dispatch(fetchValidators());
-	}, [dispatch]);
+		dispatch(fetchValidators(publicKey));
+	}, [dispatch, publicKey]);
 
 	// Function
 	const handleToggle = () => {

@@ -68,7 +68,7 @@
 		"start-mainnet": "webpack-dev-server --mode development --env=network=mainnet",
 		"start-testnet": "webpack-dev-server --mode development --env=network=testnet",
 		"build-mainnet": "webpack --mode production --env=network=mainnet && react-snapshot",
-		"build-testnet": "webpack --mode production  --env=network=testnet && react-snapshot",
+		"build-testnet": "webpack --mode production  --env=network=testnet",
 		"build-extension-testnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=testnet",
 		"build-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=mainnet",
 		"test": "react-scripts test --coverage --watchAll ",
