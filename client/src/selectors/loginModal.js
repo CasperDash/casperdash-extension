@@ -1,3 +1,3 @@
-export const getIsOpen = ({ loginModal }) => {
+export const getLoginModalOpen = ({ loginModal }) => {
 	return loginModal.isOpen;
 };

@@ -8,7 +8,7 @@ export default function loginModalReducer(
 ) {
 	switch (action.type) {
 		case LOGIN_MODAL.SET_IS_OPEN:
-			return { ...state, isOpen: action.payload.isOpen };
+			return { ...state, isOpen: action.payload };
 		default:
 			return state;
 	}

@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
 import useLoginPassword from '@cd/components/hooks/useLoginPassword';
-import { getIsOpen } from '@cd/selectors/loginModal';
-import { setIsOpen } from '@cd/actions/loginModalAction';
+import { getLoginModalOpen } from '@cd/selectors/loginModal';
+import { setLoginModalOpen } from '@cd/actions/loginModalAction';
 import './LoginModal.scss';
 
 const onValidatePassword = (values) => {
@@ -20,7 +20,7 @@ const onValidatePassword = (values) => {
 };
 
 export const LoginModal = () => {
-	const isOpen = useSelector(getIsOpen);
+	const isOpen = useSelector(getLoginModalOpen);
 	const dispatch = useDispatch();
 
 	const { onAuthCredentialSuccess, validateUserCredential } = useLoginPassword();
@@ -37,7 +37,7 @@ export const LoginModal = () => {
 				}
 
 				result.publicKey && onAuthCredentialSuccess(result);
-				dispatch(setIsOpen(false));
+				dispatch(setLoginModalOpen(false));
 			}
 		},
 		[dispatch, onAuthCredentialSuccess, validateUserCredential],

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { getCurrentUserSW } from '@cd/components/hooks/useServiceWorker';
 import { useDispatch } from 'react-redux';
-import { setIsOpen } from '@cd/actions/loginModalAction';
+import { setLoginModalOpen } from '@cd/actions/loginModalAction';
 
 const ServiceWorkerRequired = ({ children }) => {
 	const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const ServiceWorkerRequired = ({ children }) => {
 		workerRef.current = setTimeout(() => {
 			getCurrentUserSW().then((result) => {
 				if (!result) {
-					dispatch(setIsOpen(true));
+					dispatch(setLoginModalOpen(true));
 				}
 			});
 		}, 300);
