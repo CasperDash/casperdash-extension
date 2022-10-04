@@ -1,7 +1,10 @@
 $padding: 24px;
 
 .cd_we_accounts-modal {
-	top: 15%;
+	backdrop-filter: blur(3px);
+	&--backdrop {
+		background-color: var(--component-background);
+	}
 
 	.modal-content {
 		max-width: 336px;
@@ -12,7 +15,7 @@ $padding: 24px;
 	.modal-header {
 		display: flex;
 		justify-content: flex-end;
-		border-bottom: none;
+		border: none;
 		padding: 4px;
 	}
 
@@ -53,6 +56,9 @@ $padding: 24px;
 			}
 
 			&:hover {
+				color: var(--primary-light-color);
+			}
+			&.selected {
 				color: var(--primary-color);
 			}
 		}

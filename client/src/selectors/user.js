@@ -6,6 +6,7 @@ import { getBase64IdentIcon } from '../helpers/identicon';
 import { USERS } from '../store/actionTypes';
 import { getCurrentPrice } from './price';
 import { getMassagedTokenData } from './tokens';
+import { formatAccountName } from '@cd/helpers/format';
 
 const CSPR_INFO = {
 	symbol: 'CSPR',
@@ -25,7 +26,11 @@ export const getPublicKey = ({ user }) => {
 };
 
 export const getAccountName = ({ user }) => {
-	return user.accountName;
+	return formatAccountName(user.accountIndex);
+};
+
+export const getAccountIndex = ({ user }) => {
+	return user.accountIndex;
 };
 
 export const getLoginOptions = ({ user }) => {

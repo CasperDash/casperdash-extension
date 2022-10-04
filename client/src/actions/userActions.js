@@ -97,6 +97,7 @@ export const lockAccount = () => {
 		 */
 		onClearUserSW();
 		dispatch(setPublicKey());
+		dispatch(resetAccount());
 	};
 };
 
@@ -140,8 +141,14 @@ export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	};
 };
 
-export const updateAccountName = (accountName) => {
+export const updateAccountIndex = (accountIndex = 0) => {
 	return (dispatch) => {
-		dispatch({ type: USERS.SET_ACCOUNT_NAME, payload: accountName });
+		dispatch({ type: USERS.SET_ACCOUNT_INDEX, payload: accountIndex });
+	};
+};
+
+export const resetAccount = () => {
+	return (dispatch) => {
+		dispatch({ type: USERS.RESET });
 	};
 };

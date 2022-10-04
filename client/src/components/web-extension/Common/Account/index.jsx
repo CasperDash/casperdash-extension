@@ -7,6 +7,7 @@ import ServiceWorkerRequired from '@cd/hocs/ServiceWorkerRequired';
 
 import Copy from '@cd/components/Common/Button/Copy';
 import { AccountManagerModal } from './AccountManagerModal';
+import EditIcon from '@cd/assets/image/edit-icon.svg';
 
 import './index.scss';
 
@@ -28,7 +29,12 @@ export const AccountInfo = () => {
 	return (
 		<div className="cd_we_account">
 			<div className="cd_we_account_info">
-				<div className="cd_we_account_name" onClick={handleOnOpenAccountModal}>{accountName ?? 'Account 1'}</div>
+				<div className="cd_we_account_name" onClick={handleOnOpenAccountModal}>
+					<span>
+						{accountName ?? 'Account 1'}
+					</span>
+					<EditIcon />
+				</div>
 				<div className="cd_we_address_section">
 					<div className="cd_we_account_address">
 						<MiddleTruncatedText end={4}>{publicKey}</MiddleTruncatedText>
