@@ -51,7 +51,7 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	};
 
 	return (
-		<Modal show={isOpen} onHide={onClose} className="cd_we_accounts-modal" {...restProps}>
+		<Modal show={isOpen} onHide={onClose} backdropClassName="cd_we_accounts-modal--backdrop" className="cd_we_accounts-modal" centered {...restProps}>
 			<Modal.Header>
 				<button className="cd_we_accounts-modal__btn-close" onClick={onClose}>
 					<CloseIcon />

@@ -27,5 +27,8 @@
 		&:hover {
 			color: var(--primary-color);
 		}
+		& svg {
+			margin-left: 10px;
+		}
 	}
 }
