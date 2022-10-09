@@ -13,8 +13,9 @@ jest.mock('react-router-dom', () => ({
 
 describe('Back button', () => {
 	it('Should show show back button by default', () => {
+		const mockSetHeader = jest.fn();
 		useLocation.mockReturnValueOnce({ state: { name: 'test' } });
-		const { queryByTestId, getByText } = render(<OuterHeader />);
+		const { queryByTestId, getByText } = render(<OuterHeader setHeader={mockSetHeader} />);
 		const btnBack = queryByTestId('back-button');
 		expect(btnBack).toBeInTheDocument();
 		expect(getByText('test').textContent).toBe('test');
@@ -22,16 +23,38 @@ describe('Back button', () => {
 		expect(mockedUsedNavigate).toHaveBeenCalledTimes(1);
 	});
 
-	it.only('Should not show show back button when current screen is WelcomeBack', () => {
+	it('Should not show show back button when current screen is WelcomeBack', () => {
+		const mockSetHeader = jest.fn();
 		useLocation.mockReturnValueOnce({ pathname: '/welcomeBack', state: { name: 'test' } });
-		const { queryByTestId } = render(<OuterHeader />);
+		const { queryByTestId } = render(<OuterHeader setHeader={mockSetHeader} />);
 		expect(queryByTestId('back-button')).not.toBeInTheDocument();
 	});
 });
 
-test('Should not show title', () => {
-	useLocation.mockReturnValueOnce({});
-	const { queryAllByText } = render(<OuterHeader />);
+describe("Not showing Header", () => {
+	it('Should not show Header when location data is invalid', () => {
+		useLocation.mockReturnValueOnce({});
+		const { queryAllByText } = render(<OuterHeader />);
 
-	expect(queryAllByText('test').length).toBe(0);
-});
+		expect(queryAllByText('test').length).toBe(0);
+	});
+
+	it('Should not show header when state location data is `undefined`', () => {
+		useLocation.mockReturnValueOnce({
+			state: undefined
+		});
+		const { queryAllByText } = render(<OuterHeader />);
+
+		expect(queryAllByText('test').length).toBe(0);
+	});
+
+	it('Should not show header when state location data is invalid', () => {
+		useLocation.mockReturnValueOnce({
+			state: ""
+		});
+		const { queryAllByText } = render(<OuterHeader />);
+
+		expect(queryAllByText('test').length).toBe(0);
+	});
+})
+
