@@ -1,22 +1,21 @@
 import React, { useEffect, useRef } from 'react';
-import { getCurrentUserSW } from '@cd/components/hooks/useServiceWorker';
+import { isUserExist } from '@cd/components/hooks/useServiceWorker';
 import { useDispatch } from 'react-redux';
 import { setLoginModalOpen } from '@cd/actions/loginModalAction';
 
 const ServiceWorkerRequired = ({ children }) => {
 	const dispatch = useDispatch();
-    const workerRef = useRef(null);
 
 	useEffect(() => {
-		workerRef.current = setTimeout(() => {
-			getCurrentUserSW().then((result) => {
+		const timer = setTimeout(() => {
+			isUserExist().then((result) => {
 				if (!result) {
 					dispatch(setLoginModalOpen(true));
 				}
 			});
 		}, 300);
 
-		return () => clearTimeout(workerRef.current);
+		return () => clearTimeout(timer);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

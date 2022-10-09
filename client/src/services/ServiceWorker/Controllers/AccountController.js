@@ -111,6 +111,10 @@ class AccountController {
 
 		return this.userService.prepareStorageData();
 	};
+
+	isUserExist = () => {
+		return !!this.userService;
+	};
 }
 
 export default AccountController;
