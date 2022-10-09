@@ -34,6 +34,11 @@ export const OuterHeader = ({ setHeader, header }) => {
 		navigate(-1);
 	}, [currentStep, navigate, dispatch, setHeader]);
 
+	// Do not show header with pathname.
+	if (['/connectAccount'].includes(pathname)) {
+		return null;
+	}
+
 	if (!finalLayoutName) {
 		return null;
 	}
