@@ -11,7 +11,7 @@ export const OuterHeader = ({ setHeader, header }) => {
 	const currentStep = useSelector(selectCreateWalletCurrentStep);
 	const navigate = useNavigate();
 	const { pathname, state } = useLocation();
-	const shouldShowBackArrow = pathname !== '/welcomeBack';
+	const shouldShowBackArrow = pathname !== '/welcomeBack' && (pathname === '/createWallet' && currentStep !== 0);
 
 	const finalLayoutName = useMemo(() => {
 		if (header && header !== '') {

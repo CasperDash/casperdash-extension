@@ -16,7 +16,7 @@ const ConnectAccount = () => {
 	}, [navigate]);
 
 	const handleManageWallet = useCallback(() => {
-		navigate('/createWallet', { state: { name: 'Recovery Phrase' } });
+		newTab({ route: '/createWallet' });
 	}, [navigate]);
 
 	const handleImportWallet = useCallback(() => {
