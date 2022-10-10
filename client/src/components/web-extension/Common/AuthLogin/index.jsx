@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
@@ -17,7 +18,7 @@ const onValidatePassword = (values) => {
 	return errors;
 };
 
-export const AuthLogin = ({
+const AuthLogin = ({
 	onLoginSuccess = () => {},
 	isShowReset = false,
 	header = null,
@@ -63,56 +64,61 @@ export const AuthLogin = ({
 	}, [dispatch, navigate]);
 
 	return (
-		<div className="cd_we_create-wallet-layout--root">
-			<Formik
-				initialValues={{
-					password: '',
-				}}
-				validate={onValidate}
-				onSubmit={handleFormSubmit}
-			>
-				{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
-					return (
-						<div className="cd_we_create-wallet-layout--body">
-							<Form noValidate onSubmit={handleSubmit}>
-								{header}
-								<Form.Group className="mb-3">
-									<Form.Label>{passwordLabel}</Form.Label>
-									<FormControl
-										onBlur={handleBlur}
-										onChange={(e) => onChangeHandler(e, setFieldValue)}
-										name="password"
-										type="password"
-										placeholder="Enter password"
-									/>
-									{errors.password && touched.password && (
-										<Form.Text className="invalid-feedback" id="passwordHelpBlock">
-											{errors.password}
-										</Form.Text>
-									)}
-								</Form.Group>
-								{serverErrors && (
-									<Form.Text className="invalid-feedback" id="passwordHelpBlock">
-										{serverErrors.message}
-									</Form.Text>
-								)}
-								<div className="cd_we_page--bottom">
-									<Button type="submit" className="cd_we_btn-next" disabled={false}>
-										Unlock
+		<Formik
+			initialValues={{
+				password: '',
+			}}
+			validate={onValidate}
+			onSubmit={handleFormSubmit}
+		>
+			{({ errors, touched, setFieldValue, handleBlur, handleSubmit }) => {
+				return (
+					<Form noValidate onSubmit={handleSubmit}>
+						{header}
+						<Form.Group className="mb-3">
+							<Form.Label>{passwordLabel}</Form.Label>
+							<FormControl
+								onBlur={handleBlur}
+								onChange={(e) => onChangeHandler(e, setFieldValue)}
+								name="password"
+								type="password"
+								placeholder="Enter password"
+							/>
+							{errors.password && touched.password && (
+								<Form.Text className="invalid-feedback" id="passwordHelpBlock">
+									{errors.password}
+								</Form.Text>
+							)}
+						</Form.Group>
+						{serverErrors && (
+							<Form.Text className="invalid-feedback" id="passwordHelpBlock">
+								{serverErrors.message}
+							</Form.Text>
+						)}  
+						<div className="cd_we_page--bottom">
+							<Button type="submit" className="cd_we_btn-next" disabled={false}>
+								Unlock
+							</Button>
+							{isShowReset && (
+								<div className="cd_we_welcomeBack--bottom">
+									<Button onClick={handleOnReset} variant="link">
+										Log in as another user?
 									</Button>
-									{isShowReset && (
-										<div className="cd_we_welcomeBack--bottom">
-											<Button onClick={handleOnReset} variant="link">
-												Log in as another user?
-											</Button>
-										</div>
-									)}
 								</div>
-							</Form>
+							)}
 						</div>
-					);
-				}}
-			</Formik>
-		</div>
+					</Form>
+				);
+			}}
+		</Formik>
 	);
 };
+
+AuthLogin.propTypes = {
+	header: PropTypes.node,
+	isShowReset: PropTypes.bool,
+	onLoginSuccess: PropTypes.func,
+	passwordLabel: PropTypes.string
+}
+
+export default AuthLogin;
