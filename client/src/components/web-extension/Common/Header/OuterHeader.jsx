@@ -6,6 +6,8 @@ import BackArrow from '@cd/assets/image/back-arrow.svg';
 import './OuterHeader.scss';
 import { selectCreateWalletCurrentStep } from '@cd/selectors/createWallet';
 
+const DISALLOWED_PATH_NAMES = ['/connectAccount'];
+
 export const OuterHeader = ({ setHeader, header }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -33,6 +35,10 @@ export const OuterHeader = ({ setHeader, header }) => {
 	}, [navigate, dispatch, setHeader]);
 
 	if (!finalLayoutName) {
+		return null;
+	}
+
+	if (DISALLOWED_PATH_NAMES.includes(pathname)){
 		return null;
 	}
 
