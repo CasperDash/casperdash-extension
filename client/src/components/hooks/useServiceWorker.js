@@ -65,6 +65,10 @@ const onClearUserSW = async () => {
 	return sentMessage({ methodName: 'accountManager.clearUser' });
 };
 
+const isUserExist = async () => {
+	return sentMessage({ methodName: 'accountManager.isUserExist' });
+};
+
 /**
  *
  * Signing Deploy actions
@@ -94,5 +98,6 @@ export {
 	getActivePublicKey,
 	getUserHDWallets,
 	addWalletAccount,
-	setDefaultWallet
+	setDefaultWallet,
+	isUserExist,
 };

@@ -35,6 +35,7 @@
           "@cd/constants": "./src/constants",
           "@cd/common": "./src/components/Common",
           "@cd/hooks": "./src/components/hooks",
+          "@cd/hocs": "./src/components/hocs",
           "@cd/web": "./src/components/web",
           "@cd/web-extension": "./src/components/web-extension",
           "@cd/components": "./src/components"

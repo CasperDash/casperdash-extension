@@ -1,0 +1,15 @@
+.cd_we_login-modal--backdrop {
+	background-color: var(--component-background);
+}
+.cd_we_login-modal {
+	backdrop-filter: blur(3px);
+
+	.modal-title {
+		text-align: center;
+	}
+
+	.modal-header {
+		border: none;
+		padding-bottom: 0;
+	}
+}

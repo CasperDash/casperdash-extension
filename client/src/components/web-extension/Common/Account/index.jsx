@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { getPublicKey, getAccountTotalBalanceInFiat, getAccountName } from '@cd/selectors/user';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import { toFormattedCurrency } from '@cd/helpers/format';
+import ServiceWorkerRequired from '@cd/hocs/ServiceWorkerRequired';
+
 import Copy from '@cd/components/Common/Button/Copy';
 import { AccountManagerModal } from './AccountManagerModal';
 import EditIcon from '@cd/assets/image/edit-icon.svg';
@@ -41,7 +43,9 @@ export const AccountInfo = () => {
 				</div>
 			</div>
 			<div className="cd_we_account_balance">{toFormattedCurrency(totalFiatBalance)}</div>
-			<AccountManagerModal isOpen={isOpenAccountModal} onClose={handleOnCloseAccountModal}/>
+			<ServiceWorkerRequired>
+				<AccountManagerModal isOpen={isOpenAccountModal} onClose={handleOnCloseAccountModal}/>
+			</ServiceWorkerRequired>
 		</div>
 	);
 };

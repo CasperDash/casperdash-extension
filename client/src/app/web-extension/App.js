@@ -14,6 +14,7 @@ import routeConfig from './routeConfig';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
+import { LoginModal } from '@cd/components/web-extension/Common/LoginModal/index';
 
 const getRoutes = (routes) => {
 	return (
@@ -65,6 +66,7 @@ const App = () => {
 							draggable
 							pauseOnHover
 						/>
+						<LoginModal />
 					</HashRouter>
 				</WithConfigurations>
 			</PersistGate>

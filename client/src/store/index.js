@@ -16,6 +16,7 @@ import nftsReducer from './reducers/nfts';
 import deployReducer from './reducers/deploys';
 import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
+import loginModalReducer from './reducers/loginModal';
 import settingsReducer from './reducers/settings';
 import createWalletReducer, { initialState as createWalletInitialState } from './reducers/createWallet';
 import { REQUEST } from './actionTypes';
@@ -101,6 +102,7 @@ const rootReducers = combineReducers({
 	settings: settingsReducer,
 	nfts: nftsReducer,
 	createWallet: createWalletReducer,
+	loginModal: loginModalReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
