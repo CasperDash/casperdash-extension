@@ -11,7 +11,7 @@ const useAuthLogin = ({ onAuthCompleted = () => {} } = {}) => {
 			const { publicKey, userDetails } = result;
 			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }, onAuthCompleted));
 		},
-		[dispatch],
+		[dispatch, onAuthCompleted],
 	);
 
 	const validateUserCredential = useCallback(async (password) => {
