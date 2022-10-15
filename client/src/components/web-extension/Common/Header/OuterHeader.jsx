@@ -1,17 +1,19 @@
 import React, { useCallback, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCreateWalletCurrentStep } from '@cd/selectors/createWallet';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import BackArrow from '@cd/assets/image/back-arrow.svg';
 import './OuterHeader.scss';
+import { selectCreateWalletCurrentStep } from '@cd/selectors/createWallet';
+
+const DISALLOWED_PATH_NAMES = ['/connectAccount'];
 
 export const OuterHeader = ({ setHeader, header }) => {
 	const dispatch = useDispatch();
-	const currentStep = useSelector(selectCreateWalletCurrentStep);
 	const navigate = useNavigate();
+	const currentStep = useSelector(selectCreateWalletCurrentStep);
 	const { pathname, state } = useLocation();
-	const shouldShowBackArrow = pathname !== '/welcomeBack';
+	const shouldShowBackArrow = pathname !== '/welcomeBack' && (pathname !== '/createWallet' || pathname === '/createWallet' && currentStep !== 0);
 
 	const finalLayoutName = useMemo(() => {
 		if (header && header !== '') {
@@ -23,18 +25,20 @@ export const OuterHeader = ({ setHeader, header }) => {
 		}
 
 		return state?.name;
-	}, [header, state?.name]);
+	}, [header, state]);
 
 	const onClickBackHandler = useCallback(() => {
-		if (currentStep !== 0) {
-			dispatch(resetWalletCreation());
-			setHeader(undefined);
-		}
+		dispatch(resetWalletCreation());
+		setHeader(undefined);
 
 		navigate(-1);
-	}, [currentStep, navigate, dispatch, setHeader]);
+	}, [navigate, dispatch, setHeader]);
 
 	if (!finalLayoutName) {
+		return null;
+	}
+
+	if (DISALLOWED_PATH_NAMES.includes(pathname)){
 		return null;
 	}
 
