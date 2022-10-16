@@ -13,12 +13,12 @@ import { addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
 import { formatAccountName } from '@cd/helpers/format';
+import { getAccountIndex } from '@cd/selectors/user';
 
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 
 import './AccountManagerModal.scss';
-import { getAccountIndex } from '@cd/selectors/user';
 
 export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	const dispatch = useDispatch();

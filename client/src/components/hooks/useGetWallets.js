@@ -1,42 +1,35 @@
 import { useState, useCallback } from 'react';
-import { WalletDescriptor } from 'casper-storage';
-import isNil from 'lodash-es/isNil';
-import get from 'lodash-es/get';
-import { formatAccountName } from '@cd/helpers/format';
+import findLastIndex from 'lodash-es/findLastIndex';
+import { loadBalanceWallets } from '@cd/helpers/wallet';
 
-import { getUserHDWallets, addWalletAccount } from '@cd/hooks/useServiceWorker';
-import { getAccounts } from '@cd/services/userServices';
-import { convertBalanceFromHex } from '@cd/helpers/balance';
+import { getUserHDWallets, generateWallets, removeWalletsByPaths } from '@cd/hooks/useServiceWorker';
 
 const useGetWallets = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [wallets, setWallets] = useState([]);
 
+	const generateBalanceWallets = useCallback(async () => {
+		const wallets = await generateWallets(10);
+		const balanceWallets = await loadBalanceWallets(wallets);
+		const foundLastIndex = findLastIndex(balanceWallets, wallet => {
+			return parseInt(wallet.balance, 10) > 0;
+		});
+
+		const ids = balanceWallets.slice(foundLastIndex + 1).map(wallet => wallet._id);
+		if (ids.length > 0) {
+			await removeWalletsByPaths(ids);
+		}
+	}, []);
+
     const loadWalletsFromStorage = useCallback(async () => {
         let hdWallets = await getUserHDWallets();
-		if (hdWallets.length === 0) {
-			await addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName()));
+		if (hdWallets.length <= 1) {
+			await generateBalanceWallets();
 			hdWallets = await getUserHDWallets();
 		}
 
 		return hdWallets;
-    }, []);
-
-    const loadBalanceWallets = useCallback(async(hdWallets) => {
-        const publicKeys = hdWallets.map((wallet) => wallet.publicKey);
-		const accounts = await getAccounts(publicKeys);
-
-		const hdBalanceWallets = hdWallets.map((wallet) => {
-			const foundAccount = accounts.find((account) => account.publicKey === wallet.publicKey && isNil(wallet.balance));
-
-			return {
-				...wallet,
-				balance: foundAccount ? convertBalanceFromHex(foundAccount.balance.hex) : get(wallet, 'balance', 0),
-			};
-		});
-
-		return hdBalanceWallets;
-    }, [wallets]);
+    }, [generateBalanceWallets]);
 
 	const loadWallets = useCallback(async () => {
 		setIsLoading(true);
@@ -59,7 +52,7 @@ const useGetWallets = () => {
         const hdBalanceWallets = await loadBalanceWallets(hdWallets);
 		setWallets(hdBalanceWallets);
 		setIsLoading(false);
-	}, [loadWalletsFromStorage, loadBalanceWallets]);
+	}, [loadWalletsFromStorage]);
 
     return [wallets, loadWallets, isLoading];
 };

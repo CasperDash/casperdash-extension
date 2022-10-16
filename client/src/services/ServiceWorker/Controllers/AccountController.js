@@ -106,6 +106,18 @@ class AccountController {
 		return this.userService.addWalletAccount(index, description);
 	};
 
+	generateWallets = async ({ total }) => {
+		console.log('total: ', total);
+		if (total === 0) {
+			return;
+		}
+		return this.userService.generateWallets(total);
+	};
+
+	removeWalletsByPaths = async ({ paths }) => {
+		return this.userService.removeWalletsByPaths(paths);
+	};
+
 	setDefaultWallet = async ({ index }) => {
 		await this.userService.setDefaultWallet(index);
 

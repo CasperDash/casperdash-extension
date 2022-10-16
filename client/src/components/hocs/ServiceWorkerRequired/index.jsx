@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { isUserExist } from '@cd/components/hooks/useServiceWorker';
 import { useDispatch } from 'react-redux';
 import { setLoginModalOpen } from '@cd/actions/loginModalAction';

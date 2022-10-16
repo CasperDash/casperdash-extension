@@ -69,6 +69,16 @@ const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
 };
 
+const generateWallets = async (total = 0) => {
+	return sentMessage({ methodName: 'accountManager.generateWallets', params: {total} });
+};
+
+const removeWalletsByPaths = async (paths) => {
+	return sentMessage({ methodName: 'accountManager.removeWalletsByPaths', params: {
+		paths
+	}});
+};
+
 /**
  *
  * Signing Deploy actions
@@ -100,4 +110,6 @@ export {
 	addWalletAccount,
 	setDefaultWallet,
 	isUserExist,
+	generateWallets,
+	removeWalletsByPaths
 };

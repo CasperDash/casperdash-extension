@@ -168,6 +168,35 @@ export class UserService {
 	setDefaultWallet = async (index) => {
 		this.currentWalletIndex = parseInt(index, 10);
 	}
+
+	generateWallets = async (total) => {
+		const user = this.instance;
+		const existingWallets = user.getHDWallet()._derivedWallets || [];
+		if (existingWallets.length >= 10) {
+			return;
+		}
+
+		const walletProimises = [...Array(total - existingWallets.length).keys()].map((_value, index) => {
+			return user.addWalletAccount(index + existingWallets.length, new WalletDescriptor(''));
+		});
+
+		await Promise.all(walletProimises);
+		const wallets = user.getHDWallet()._derivedWallets || [];
+
+		return Promise.all(wallets.map(async (wallet, index) => ({
+			...wallet,
+			publicKey: await this.getPublicKey(index),
+		})));
+	}
+
+	removeWalletsByPaths = async (paths) => {
+		const user = this.instance;
+		const wallet = user.getHDWallet();
+
+		paths.forEach(path => {
+			wallet.removeDerivedWallet(path);
+		});
+	}
 }
 
 export default UserService;
