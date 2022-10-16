@@ -1,20 +1,17 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { validateReturningUserSW } from '@cd/hooks/useServiceWorker';
 
-const useWelcomeBack = () => {
-	const navigate = useNavigate();
+const useAuthLogin = ({ onAuthCompleted = () => {} } = {}) => {
 	const dispatch = useDispatch();
 
 	const onAuthCredentialSuccess = useCallback(
 		(result) => {
 			const { publicKey, userDetails } = result;
-			const onCompleted = () => navigate('/');
-			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }, onCompleted));
+			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }, onAuthCompleted));
 		},
-		[dispatch, navigate],
+		[dispatch, onAuthCompleted],
 	);
 
 	const validateUserCredential = useCallback(async (password) => {
@@ -34,6 +31,6 @@ const useWelcomeBack = () => {
 	}, []);
 
 	return { validateUserCredential, onAuthCredentialSuccess };
-};
+}
 
-export default useWelcomeBack;
+export default useAuthLogin;

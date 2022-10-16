@@ -43,7 +43,7 @@ class AccountController {
 		return result;
 	};
 
-	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519}) => {
+	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519 }) => {
 		if (!password) {
 			throw Error('Missing password');
 		}
@@ -94,6 +94,26 @@ class AccountController {
 
 		const signedDeploy = deployResult.val.sign([asymKey]);
 		return DeployUtil.deployToJson(signedDeploy);
+	};
+
+	getHDWallets = async () => {
+		const hdWallets = (await this.userService.getHDWallets()) || [];
+
+		return hdWallets;
+	};
+
+	addWalletAccount = async ({ index, description }) => {
+		return this.userService.addWalletAccount(index, description);
+	};
+
+	setDefaultWallet = async ({ index }) => {
+		await this.userService.setDefaultWallet(index);
+
+		return this.userService.prepareStorageData();
+	};
+
+	isUserExist = () => {
+		return !!this.userService;
 	};
 }
 

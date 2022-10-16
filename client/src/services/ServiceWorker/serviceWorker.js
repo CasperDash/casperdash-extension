@@ -5,6 +5,48 @@ import AccountController from './Controllers/AccountController';
 const appStore = new ObservableStore({});
 const accountController = new AccountController(appStore);
 
+let lifeline;
+
+keepAlive();
+
+chrome.runtime.onConnect.addListener((port) => {
+	if (port.name === 'keepAlive') {
+		lifeline = port;
+		setTimeout(keepAliveForced, 295e3); // 5 minutes minus 5 seconds
+		port.onDisconnect.addListener(keepAliveForced);
+	}
+});
+
+function keepAliveForced() {
+	lifeline?.disconnect();
+	lifeline = null;
+	keepAlive();
+}
+
+async function keepAlive() {
+	console.info(chrome.tabs.query({}));
+	if (lifeline) return;
+	for (const tab of await chrome.tabs.query({})) {
+		try {
+			await chrome.scripting.executeScript({
+				target: { tabId: tab.id },
+				func: () => chrome.runtime.connect({ name: 'keepAlive' }),
+			});
+			chrome.tabs.onUpdated.removeListener(retryOnTabUpdate);
+			return;
+		} catch (e) {
+			console.error(e);
+		}
+	}
+	chrome.tabs.onUpdated.addListener(retryOnTabUpdate);
+}
+
+async function retryOnTabUpdate(_tabId, info) {
+	if (info.url && /^(file|https?):/.test(info.url)) {
+		keepAlive();
+	}
+}
+
 initialize().catch(console.error);
 
 async function initialize() {
@@ -25,6 +67,11 @@ async function setupPopupServices() {
 
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
 	rpc.register('accountManager.getCurrentUser', accountController.getCurrentUser);
+	rpc.register('accountManager.getHDWallets', accountController.getHDWallets);
+	rpc.register('accountManager.addWalletAccount', accountController.addWalletAccount);
+	rpc.register('accountManager.setDefaultWallet', accountController.setDefaultWallet);
 	rpc.register('accountManager.clearUser', accountController.clearUser);
+	rpc.register('accountManager.isUserExist', accountController.isUserExist);
+
 	rpc.register('WORKER_KEEP_ALIVE_MESSAGE', () => {});
 }

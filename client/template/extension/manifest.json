@@ -11,7 +11,8 @@
 		"default_icon": "512.png",
 		"default_popup": "popup.html"
 	},
-	"permissions": ["storage"],
+	"permissions": ["storage", "scripting"],
+	"host_permissions": ["<all_urls>"],
 	"background": {
 		"service_worker": "/static/js/sw/service-worker.js"
 	}
