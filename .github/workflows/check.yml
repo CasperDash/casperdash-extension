@@ -35,16 +35,22 @@ jobs:
                   yarn run test-ci
                   yarn snapshot
                   yarn build-all
-            
+            - name: 'Get message'
+              id: 'deploy-message'
+              run: |
+                    echo "::set-output name=commit_msg::$(git log -1 --format=%B)"
+                    echo "::set-output name=commit_sha::$(git log -1 --format=%H)" 
             - name: Send build result to slack channel
               uses: rtCamp/action-slack-notify@v2
               if: always()
               with:
                 status: ${{ job.status }}
                 notification_title: "*{repo}*"
+                message_format: "{emoji} *{workflow}* *{status_message}* in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>"
                 footer: "<{run_url}|View Run>"
               env:
                   SLACK_WEBHOOK: ${{ secrets.ORG_SLACK_URL }}
                   SLACK_COLOR: ${{ job.status }}
                   SLACK_TITLE: Hello Builders
                   SLACK_FOOTER: Powered by CasperDash
+                  SLACK_MESSAGE: ${{ steps.deploy-message.outputs.commit_msg }}
