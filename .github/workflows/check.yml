@@ -3,7 +3,9 @@
 
 name: Node.js CI
 
-on: [push, pull_request]
+on:
+    pull_request:
+        branches: [develop, master]
 
 jobs:
     build:
@@ -16,6 +18,9 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
+              with:
+                # We need to fetch with a depth of 2 for pull_request so we can do HEAD^2
+                fetch-depth: 2
 
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v2
@@ -33,11 +38,12 @@ jobs:
                   yarn run test-ci
                   yarn snapshot
                   yarn build-all
-            - name: 'Get message'
-              id: 'deploy-message'
-              run: |
-                    echo "::set-output name=commit_msg::$(git log -1 --format=%B)"
-                    echo "::set-output name=commit_sha::$(git log -1 --format=%H)" 
+
+            - name: "[Pull Request] Get commit message"
+              if: github.event_name == 'pull_request'
+              id: pr_get_commit_message
+              run: echo ::set-output name=pr_commit_message::$(git log --format=%B -n 1 HEAD^2)
+
             - name: Send build result to slack channel
               uses: rtCamp/action-slack-notify@v2
               if: always()
@@ -51,3 +57,4 @@ jobs:
                   SLACK_COLOR: ${{ job.status }}
                   SLACK_TITLE: Hello Builders
                   SLACK_FOOTER: Powered by CasperDash
+                  SLACK_MESSAGE: ${{ steps.pr_get_commit_message.outputs.pr_commit_message }}
