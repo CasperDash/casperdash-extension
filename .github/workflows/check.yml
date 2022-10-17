@@ -3,9 +3,7 @@
 
 name: Node.js CI
 
-on:
-    pull_request:
-        branches: [develop, master, feature/add-ci-check]
+on: [push, pull_request]
 
 jobs:
     build:
@@ -53,4 +51,3 @@ jobs:
                   SLACK_COLOR: ${{ job.status }}
                   SLACK_TITLE: Hello Builders
                   SLACK_FOOTER: Powered by CasperDash
-                  SLACK_MESSAGE: ${{ steps.deploy-message.outputs.commit_msg }}
