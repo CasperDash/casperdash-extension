@@ -89,20 +89,25 @@ export const initConnectedAccountFromLocalStorage = () => {
 	};
 };
 
-// Delete all data
-export const lockAccount = () => {
+/**
+ * Delete User data:
+ * - Clears all cached User hash info in localStorage
+ */
+export const deleteAllUserData = () => {
 	return (dispatch) => {
-		/**
-		 * This clears all cached User hash info in localStorage
-		 */
 		onClearUserSW();
 		dispatch(setPublicKey());
 		dispatch(resetAccount());
 	};
 };
 
-// Lock account
-export const onClearPublicKey = () => {
+/**
+ * 
+ * Lock account:
+ * - Delete public key data
+ * - Keep loginOptions data
+ */
+export const lockAccount = () => {
 	return async (dispatch, getState) => {
 		const {
 			user: { loginOptions: loginOptionsState },

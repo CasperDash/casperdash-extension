@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ConfirmModal from '@cd/components/Common/ConfirmModal';
-import { lockAccount } from '@cd/actions/userActions';
+import { deleteAllUserData } from '@cd/actions/userActions';
 
 const DeleteAllDataButton = () => {
 	const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const DeleteAllDataButton = () => {
 	};
 
 	const onConfirmHandler = () => {
-		dispatch(lockAccount());
+		dispatch(deleteAllUserData());
 		navigate('/connectAccount');
 	};
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ContactIcon from '@cd/assets/image/contact-icon.svg';
 import LockIcon from '@cd/assets/image/lock-icon.svg';
-import { onClearPublicKey } from '@cd/actions/userActions';
+import { lockAccount } from '@cd/actions/userActions';
 import DeleteAllDataButton from '@cd/components/web-extension/Common/DeleteAllDataButton';
 import SettingRow from './SettingRow';
 import './index.scss';
@@ -33,7 +33,7 @@ const SETTINGS = [
 			img: <LockIcon />,
 		},
 		action: ({ dispatch, navigate }) => {
-			dispatch(onClearPublicKey());
+			dispatch(lockAccount());
 			navigate('/welcomeBack');
 		},
 	},
