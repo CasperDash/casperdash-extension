@@ -49,4 +49,15 @@
 	margin-top: 74px;
 	display: flex;
 	justify-content: center;
+
+	.btn--delete-all-data {
+		font-size: 14px;
+		padding-left: 18px;
+		padding-right: 18px;
+		
+		&:hover {
+			color: var(--primary-color);
+		}
+	}
+
 }
