@@ -2,34 +2,36 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { ConfirmModal } from '@cd/components/Common/ConfirmModal';
+import ConfirmModal from '@cd/components/Common/ConfirmModal';
 import { lockAccount } from '@cd/actions/userActions';
 
 const DeleteAllDataButton = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 
 	const handleOnClick = () => {
 		setIsOpenModal(true);
 	};
 
-	const handleOnCloseModal = () => {
+	const onCloseModalHandler = () => {
 		setIsOpenModal(false);
 	};
 
-    const handleOnOk = () => {
-        dispatch(lockAccount());
-        navigate('/connectAccount');
-    }
+	const onConfirmHandler = () => {
+		dispatch(lockAccount());
+		navigate('/connectAccount');
+	};
 
 	return (
 		<>
-			<Button variant="normal" onClick={handleOnClick}>Delete All Data</Button>
+			<Button variant="normal" className="btn--delete-all-data" onClick={handleOnClick}>
+				Delete All Data
+			</Button>
 			<ConfirmModal
 				isOpen={isOpenModal}
-				onOk={handleOnOk}
-				onClose={handleOnCloseModal}
+				onConfirm={onConfirmHandler}
+				onClose={onCloseModalHandler}
 				title="Are you sure you want to delete your wallet ?"
 				description={
 					<div className="cd_setting_modal">
