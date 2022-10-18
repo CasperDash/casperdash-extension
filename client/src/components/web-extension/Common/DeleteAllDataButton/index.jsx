@@ -32,18 +32,16 @@ const DeleteAllDataButton = () => {
 				isOpen={isOpenModal}
 				onConfirm={onConfirmHandler}
 				onClose={onCloseModalHandler}
-				title="Are you sure you want to delete your wallet ?"
+				title="Delete all your Data?"
+				buttonOkText="Delete data"
 				description={
 					<div className="cd_setting_modal">
-						<div>
-							Your current wallet, accounts and assets will be removed from this app permanently. This
-							action cannot be undone.
-						</div>
-						<br />
-						<div>
-							Your can ONLY recover this wallet with your Secret Recovery Phase CasperDash does not have
-							your Secret Recovery Phase.
-						</div>
+						<p>
+							Your current wallet, including <strong>accounts</strong> and <strong>assets</strong> <strong style={{ color: "#fa2852" }}>will be removed from this device permanently</strong>. Please acknowledge this action <strong>cannot be undone.</strong>
+						</p>
+						<p>
+							You can <strong>ONLY</strong> recover with your Secret CasperDash Recovery Phrase which you provided when setting up this wallet. Make sure you're having a copy of your correct Secret Recovery Phrase.
+						</p>
 					</div>
 				}
 			/>
