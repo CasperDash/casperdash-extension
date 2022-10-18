@@ -1,4 +1,4 @@
-import { nftContractDeploy, getMintDeploy, getTransferNFTDeploy, getTransferDeploy } from './nftServices';
+import { nftContractDeploy, getMintDeploy, getTransferDeploy } from './nftServices';
 
 test('failed to get NFT contract deploy', async () => {
 	try {

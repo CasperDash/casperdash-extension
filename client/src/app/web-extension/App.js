@@ -8,13 +8,11 @@ import Layout from '@cd/web-extension/Common/Layout';
 import OuterLayout from '@cd/web-extension/Common/Layout/OuterLayout';
 import WithAccount from '@cd/common/Auth/WithAccount';
 import WithConfigurations from '@cd/common/Configurations';
-import { keepSWAlive } from '@cd/hooks/useServiceWorker';
+import { LoginModal } from '@cd/components/web-extension/Common/LoginModal/index';
 import routeConfig from './routeConfig';
-
 import 'react-toastify/dist/ReactToastify.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
-import { LoginModal } from '@cd/components/web-extension/Common/LoginModal/index';
 
 const getRoutes = (routes) => {
 	return (
@@ -28,14 +26,6 @@ const getRoutes = (routes) => {
 
 const App = () => {
 	const { mainRoutes, innerRoutes, outerRoutes } = routeConfig;
-
-	React.useEffect(() => {
-		const idInterval = setInterval(() => {
-			keepSWAlive();
-		}, 1500);
-
-		return () => clearInterval(idInterval);
-	}, []);
 
 	return (
 		<Provider store={store}>

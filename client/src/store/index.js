@@ -31,6 +31,8 @@ const persistConfig = {
 export const initialState = {
 	user: {
 		publicKey: '',
+		accountIndex: 0,
+		loginOptions: {},
 		balance: null,
 	},
 	signer: {

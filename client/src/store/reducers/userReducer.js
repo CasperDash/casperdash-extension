@@ -1,13 +1,8 @@
 import { USERS } from '../actionTypes';
-
-const DEFAULT_STATE = {
-	publicKey: '',
-	accountIndex: 0,
-	loginOptions: {},
-};
+import { initialState } from '../index';
 
 export default function userReducer(
-	state = DEFAULT_STATE,
+	state = initialState.user,
 	action,
 ) {
 	switch (action.type) {
@@ -18,7 +13,7 @@ export default function userReducer(
 		case USERS.SET_ACCOUNT_INDEX:
 			return { ...state, accountIndex: action.payload };
 		case USERS.RESET:
-			return { ...state, ...DEFAULT_STATE };
+			return { ...state, ...initialState.user };
 		default:
 			return state;
 	}
