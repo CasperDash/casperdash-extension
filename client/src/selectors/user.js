@@ -1,12 +1,12 @@
 import { getQuerySelector, getQuery } from '@redux-requests/core';
 import { createSelector } from 'reselect';
+import { formatAccountName } from '@cd/helpers/format';
 import { getConfigKey } from '../services/configurationServices';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { getBase64IdentIcon } from '../helpers/identicon';
 import { USERS } from '../store/actionTypes';
 import { getCurrentPrice } from './price';
 import { getMassagedTokenData } from './tokens';
-import { formatAccountName } from '@cd/helpers/format';
 
 const CSPR_INFO = {
 	symbol: 'CSPR',

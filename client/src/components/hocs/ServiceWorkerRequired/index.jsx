@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { isUserExist } from '@cd/components/hooks/useServiceWorker';
 import { useDispatch } from 'react-redux';
 import { setLoginModalOpen } from '@cd/actions/loginModalAction';
-
+import createReactClass from 'create-react-class';
 const ServiceWorkerRequired = ({ children }) => {
 	const dispatch = useDispatch();
 
@@ -23,13 +23,17 @@ const ServiceWorkerRequired = ({ children }) => {
 };
 
 export const withServiceWorkerRequired = (Component) => {
-	return function (props) {
-		return (
-			<ServiceWorkerRequired>
-				<Component {...props} />
-			</ServiceWorkerRequired>
-		);
-	};
+	// eslint-disable-next-line react/prefer-es6-class
+	return createReactClass({
+		displayName: 'ServiceWorkerRequired',
+		render: function () {
+			return (
+				<ServiceWorkerRequired>
+					<Component {...this.props} />
+				</ServiceWorkerRequired>
+			);
+		},
+	});
 };
 
 export default ServiceWorkerRequired;

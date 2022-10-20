@@ -6,17 +6,14 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import isNil from 'lodash-es/isNil';
 import clsx from 'clsx';
-
 import useGetWallets from '@cd/hooks/useGetWallets';
 import { onBindingAuthInfo, updateAccountIndex } from '@cd/actions/userActions';
 import { addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
 import { formatAccountName } from '@cd/helpers/format';
-
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
-
 import './AccountManagerModal.scss';
 import { getAccountIndex } from '@cd/selectors/user';
 
@@ -30,7 +27,7 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 		if (isOpen) {
 			loadWallets();
 		}
-	}, [isOpen]);
+	}, [isOpen, loadWallets]);
 
 	const handleAddNewWallet = () => {
 		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length))).then(() => {
