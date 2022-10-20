@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { isUserExist } from '@cd/components/hooks/useServiceWorker';
-import { useDispatch } from 'react-redux';
-import { setLoginModalOpen } from '@cd/actions/loginModalAction';
 import createReactClass from 'create-react-class';
+import { useDispatch } from 'react-redux';
+import { isUserExist } from '@cd/components/hooks/useServiceWorker';
+import { setLoginModalOpen } from '@cd/actions/loginModalAction';
 const ServiceWorkerRequired = ({ children }) => {
 	const dispatch = useDispatch();
 
