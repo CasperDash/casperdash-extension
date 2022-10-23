@@ -95,27 +95,29 @@ describe('UserInstance', () => {
 			expect(mockParseKeypair).toHaveBeenCalledWith([2, 3, 4, 5, 6], [1, 2, 3, 4, 5]);
 		});
 	});
+});
 
-	describe('generateHDWallets', () => {
-		const opts = {
-			encryptionType: EncryptionType.Ed25519,
-			currentWalletIndex: 0,
-		};
+describe('generateHDWallets', () => {
+	const opts = {
+		encryptionType: EncryptionType.Ed25519,
+		currentWalletIndex: 0,
+	};
 
-		function getUserService() {
-			const user = new User('6U71C@Wp7r5XtFtQzYrW5iKFT6!');
-			const keyphrase = KeyFactory.getInstance().generate();
+	function getUserService() {
+		const user = new User('6U71C@Wp7r5XtFtQzYrW5iKFT6!');
+		const keyphrase = KeyFactory.getInstance().generate();
 
-			const userService = new UserService(user, opts);
-			userService.initialize(keyphrase);
+		const userService = new UserService(user, opts);
+		userService.initialize(keyphrase);
 
-			return userService;
-		}
+		return userService;
+	}
 
-		beforeEach(() => {
-			User.mockClear();
-		});
+	beforeEach(() => {
+		User.mockClear();
+	});
 
+	describe('When opening accounts modal', () => {
 		it('Should return empty array with total is equal to 0', async () => {
 			const mockGetHDWallet = jest.fn().mockImplementation(() => []);
 			User.mockReturnValueOnce({
@@ -221,5 +223,5 @@ describe('UserInstance', () => {
 
 			expect(generatedWallets).toEqual([]);
 		});
-	})
+	});
 });
