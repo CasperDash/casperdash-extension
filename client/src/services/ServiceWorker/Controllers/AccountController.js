@@ -109,10 +109,11 @@ class AccountController {
 	};
 
 	generateHDWallets = async ({ total }) => {
+		if (total === 0) {
+			return [];
+		}
+		
 		try {
-			if (total === 0) {
-				return [];
-			}
 			return this.userService.generateHDWallets(total);
 		} catch(err) {
 			return [];

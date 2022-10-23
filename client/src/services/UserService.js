@@ -177,17 +177,17 @@ export class UserService {
 	generateHDWallets = async (total) => {
 		const user = this.instance;
 		const existingWallets = await this.getHDWallets();
+
 		if (existingWallets.length >= total) {
 			return [];
 		}
 
-		const walletPromises = [...Array(total - existingWallets.length).keys()].map((_value, index) => {
+		const walletPromises = [...Array(total - existingWallets.length).keys()].map(async (_value, index) => {
 			return user.addWalletAccount(index + existingWallets.length, new WalletDescriptor(''));
 		});
-
 		await Promise.all(walletPromises);
-		const wallets = await this.getHDWallets();
 
+		const wallets = await this.getHDWallets();
 		return Promise.all(wallets.map(async (wallet, index) => ({
 			...wallet,
 			publicKey: await this.getPublicKey(index),
