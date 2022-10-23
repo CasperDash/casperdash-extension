@@ -74,6 +74,4 @@ async function setupPopupServices() {
 	rpc.register('accountManager.isUserExist', accountController.isUserExist);
 	rpc.register('accountManager.generateWallets', accountController.generateWallets);
 	rpc.register('accountManager.removeWalletsByPaths', accountController.removeWalletsByPaths);
-
-	rpc.register('WORKER_KEEP_ALIVE_MESSAGE', () => {});
 }

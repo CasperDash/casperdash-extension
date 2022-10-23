@@ -50,15 +50,15 @@ const getCurrentUserSW = async () => {
 };
 
 const getUserHDWallets = async () => {
-	return sentMessage({ methodName: 'accountManager.getHDWallets'});
+	return sentMessage({ methodName: 'accountManager.getHDWallets' });
 };
 
 const addWalletAccount = async (index, description) => {
-	return sentMessage({ methodName: 'accountManager.addWalletAccount', params: { index, description }});
+	return sentMessage({ methodName: 'accountManager.addWalletAccount', params: { index, description } });
 };
 
 const setDefaultWallet = async (index) => {
-	return sentMessage({ methodName: 'accountManager.setDefaultWallet', params: { index }});
+	return sentMessage({ methodName: 'accountManager.setDefaultWallet', params: { index } });
 };
 
 const onClearUserSW = async () => {
@@ -87,15 +87,6 @@ const removeWalletsByPaths = async (paths) => {
 const onSignPrivateKeySW = async (deployJSON) =>
 	sentMessage({ methodName: 'accountManager.signPrivateKeyProcess', params: { deployJSON } });
 
-/**
- *
- * Others
- */
-
-const keepSWAlive = async () => {
-	return sentMessage({ methodName: 'WORKER_KEEP_ALIVE_MESSAGE' });
-};
-
 export {
 	sentMessage,
 	onSignPrivateKeySW,
@@ -103,7 +94,6 @@ export {
 	validateReturningUserSW,
 	getCurrentUserSW,
 	onClearUserSW,
-	keepSWAlive,
 	createUserServiceSW,
 	getActivePublicKey,
 	getUserHDWallets,

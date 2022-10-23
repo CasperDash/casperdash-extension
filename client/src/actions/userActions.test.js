@@ -1,4 +1,5 @@
 import { Signer } from 'casper-js-sdk';
+import { isUsingExtension } from '@cd/services/localStorage';
 import {
 	getUserDetails,
 	updatePublicKeyFromSigner,
@@ -6,7 +7,6 @@ import {
 	lockAccount,
 	setPublicKeyToStore,
 } from './userActions';
-import { isUsingExtension } from '@cd/services/localStorage';
 const getConnectedAccountChromeLocalStorage = require('./userActions.utils').getConnectedAccountChromeLocalStorage;
 
 jest.mock('./userActions.utils', () => ({

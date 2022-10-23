@@ -16,6 +16,7 @@ const setupStore = (data) => {
 // eslint-disable-next-line react/display-name
 const wrapper =
 	(storeData) =>
+	// eslint-disable-next-line react/display-name
 	({ children }) =>
 		<Provider store={storeData}>{children}</Provider>;
 
