@@ -29,8 +29,8 @@ const useGetWallets = () => {
 		if (hdWallets.length <= 1) {
 			setIsGeneratingWallets(true);
 			await generateBalanceWallets();
-			hdWallets = await getUserHDWallets();
 			setIsGeneratingWallets(false);
+			hdWallets = await getUserHDWallets();
 		}
 
 		return hdWallets;

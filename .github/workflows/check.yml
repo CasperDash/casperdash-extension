@@ -33,7 +33,6 @@ jobs:
                   yarn
                   yarn lint
                   yarn run test-ci
-                  yarn snapshot
                   yarn build-all
 
             - name: Send build result to slack channel

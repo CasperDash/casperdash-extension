@@ -15,7 +15,6 @@ import { formatAccountName } from '@cd/helpers/format';
 import { getAccountIndex } from '@cd/selectors/user';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
-
 import './AccountManagerModal.scss';
 
 export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
