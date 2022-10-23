@@ -1,10 +1,11 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import findLastIndex from 'lodash-es/findLastIndex';
 import { loadBalanceWallets } from '@cd/helpers/wallet';
 import { getUserHDWallets, generateHDWallets, removeHDWalletsByIds } from '@cd/hooks/useServiceWorker';
 import { MAXIMUM_GENERATE_WALLETS } from '@cd/constants/wallet';
 
 const useGetWallets = () => {
+	const preventGeneratingRef = useRef(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isGeneratingWallets, setIsGeneratingWallets] = useState(false);
 	const [wallets, setWallets] = useState([]);
@@ -27,9 +28,13 @@ const useGetWallets = () => {
     const loadWalletsFromStorage = useCallback(async () => {
         let hdWallets = await getUserHDWallets();
 		if (hdWallets.length <= 1) {
-			setIsGeneratingWallets(true);
-			await generateBalanceWallets();
-			setIsGeneratingWallets(false);
+			if (!preventGeneratingRef.current) {
+				setIsGeneratingWallets(true);
+				await generateBalanceWallets();
+				setIsGeneratingWallets(false);
+				preventGeneratingRef.current = true;
+			}
+
 			hdWallets = await getUserHDWallets();
 		}
 
