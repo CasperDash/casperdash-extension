@@ -146,10 +146,14 @@ export class UserService {
 		}
 	};
 
-	getHDWallets = async () => {
+	getHDWallets = async ({includePublicKey} = { includePublicKey: false }) => {
 		const user = this.instance;
 
 		const wallets = await user.getHDWallet()._derivedWallets || [];
+		if (!includePublicKey) {
+			return wallets;
+		}
+
 		if (wallets.length === 0) {
 			return wallets;
 		}
@@ -170,19 +174,19 @@ export class UserService {
 		this.currentWalletIndex = parseInt(index, 10);
 	}
 
-	generateWallets = async (total) => {
+	generateHDWallets = async (total) => {
 		const user = this.instance;
-		const existingWallets = user.getHDWallet()._derivedWallets || [];
-		if (existingWallets.length >= 10) {
-			return;
+		const existingWallets = await this.getHDWallets();
+		if (existingWallets.length >= total) {
+			return [];
 		}
 
-		const walletProimises = [...Array(total - existingWallets.length).keys()].map((_value, index) => {
+		const walletPromises = [...Array(total - existingWallets.length).keys()].map((_value, index) => {
 			return user.addWalletAccount(index + existingWallets.length, new WalletDescriptor(''));
 		});
 
-		await Promise.all(walletProimises);
-		const wallets = user.getHDWallet()._derivedWallets || [];
+		await Promise.all(walletPromises);
+		const wallets = await this.getHDWallets();
 
 		return Promise.all(wallets.map(async (wallet, index) => ({
 			...wallet,
@@ -190,12 +194,12 @@ export class UserService {
 		})));
 	}
 
-	removeWalletsByPaths = async (paths) => {
+	removeHDWalletsByIds = async (ids) => {
 		const user = this.instance;
 		const wallet = user.getHDWallet();
 
-		paths.forEach(path => {
-			wallet.removeDerivedWallet(path);
+		ids.forEach(id => {
+			wallet.removeDerivedWallet(id);
 		});
 	}
 }

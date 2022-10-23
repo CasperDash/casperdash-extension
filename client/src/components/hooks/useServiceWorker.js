@@ -69,13 +69,13 @@ const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
 };
 
-const generateWallets = async (total = 0) => {
-	return sentMessage({ methodName: 'accountManager.generateWallets', params: {total} });
+const generateHDWallets = async (total = 0) => {
+	return sentMessage({ methodName: 'accountManager.generateHDWallets', params: {total} });
 };
 
-const removeWalletsByPaths = async (paths) => {
-	return sentMessage({ methodName: 'accountManager.removeWalletsByPaths', params: {
-		paths
+const removeHDWalletsByIds = async (ids) => {
+	return sentMessage({ methodName: 'accountManager.removeHDWalletsByIds', params: {
+		ids
 	}});
 };
 
@@ -100,6 +100,6 @@ export {
 	addWalletAccount,
 	setDefaultWallet,
 	isUserExist,
-	generateWallets,
-	removeWalletsByPaths
+	generateHDWallets,
+	removeHDWalletsByIds
 };

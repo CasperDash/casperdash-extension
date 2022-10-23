@@ -97,25 +97,30 @@ class AccountController {
 	};
 
 	getHDWallets = async () => {
-		const hdWallets = (await this.userService.getHDWallets()) || [];
-
-		return hdWallets;
+		try {
+			return this.userService.getHDWallets({includePublicKey: true});
+		} catch(err) {
+			return [];
+		}
 	};
 
 	addWalletAccount = async ({ index, description }) => {
 		return this.userService.addWalletAccount(index, description);
 	};
 
-	generateWallets = async ({ total }) => {
-		console.log('total: ', total);
-		if (total === 0) {
-			return;
+	generateHDWallets = async ({ total }) => {
+		try {
+			if (total === 0) {
+				return [];
+			}
+			return this.userService.generateHDWallets(total);
+		} catch(err) {
+			return [];
 		}
-		return this.userService.generateWallets(total);
 	};
 
-	removeWalletsByPaths = async ({ paths }) => {
-		return this.userService.removeWalletsByPaths(paths);
+	removeHDWalletsByIds = async ({ ids }) => {
+		return this.userService.removeHDWalletsByIds(ids);
 	};
 
 	setDefaultWallet = async ({ index }) => {

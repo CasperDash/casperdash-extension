@@ -1,15 +1,14 @@
 import { useState, useCallback } from 'react';
 import findLastIndex from 'lodash-es/findLastIndex';
 import { loadBalanceWallets } from '@cd/helpers/wallet';
-
-import { getUserHDWallets, generateWallets, removeWalletsByPaths } from '@cd/hooks/useServiceWorker';
+import { getUserHDWallets, generateHDWallets, removeHDWalletsByIds } from '@cd/hooks/useServiceWorker';
 
 const useGetWallets = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [wallets, setWallets] = useState([]);
 
 	const generateBalanceWallets = useCallback(async () => {
-		const wallets = await generateWallets(10);
+		const wallets = await generateHDWallets(10);
 		const balanceWallets = await loadBalanceWallets(wallets);
 		const foundLastIndex = findLastIndex(balanceWallets, wallet => {
 			return parseInt(wallet.balance, 10) > 0;
@@ -17,7 +16,7 @@ const useGetWallets = () => {
 
 		const ids = balanceWallets.slice(foundLastIndex + 1).map(wallet => wallet._id);
 		if (ids.length > 0) {
-			await removeWalletsByPaths(ids);
+			await removeHDWalletsByIds(ids);
 		}
 	}, []);
 
