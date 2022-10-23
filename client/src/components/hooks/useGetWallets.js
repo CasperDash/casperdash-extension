@@ -5,6 +5,7 @@ import { getUserHDWallets, generateHDWallets, removeHDWalletsByIds } from '@cd/h
 
 const useGetWallets = () => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [isGeneratingWallets, setIsGeneratingWallets] = useState(false);
 	const [wallets, setWallets] = useState([]);
 
 	const generateBalanceWallets = useCallback(async () => {
@@ -23,8 +24,10 @@ const useGetWallets = () => {
     const loadWalletsFromStorage = useCallback(async () => {
         let hdWallets = await getUserHDWallets();
 		if (hdWallets.length <= 1) {
+			setIsGeneratingWallets(true);
 			await generateBalanceWallets();
 			hdWallets = await getUserHDWallets();
+			setIsGeneratingWallets(false);
 		}
 
 		return hdWallets;
@@ -53,7 +56,7 @@ const useGetWallets = () => {
 		setIsLoading(false);
 	}, [loadWalletsFromStorage]);
 
-    return [wallets, loadWallets, isLoading];
+    return {wallets, loadWallets, isLoading, isGeneratingWallets};
 };
 
 export default useGetWallets;

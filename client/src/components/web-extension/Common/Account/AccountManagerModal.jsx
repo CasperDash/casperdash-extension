@@ -22,7 +22,7 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	const dispatch = useDispatch();
 	const accountIndex = useSelector(getAccountIndex);
 
-	const [wallets, loadWallets, isLoading] = useGetWallets();
+	const { wallets, loadWallets, isLoading, isGeneratingWallets } = useGetWallets();
 
 	useEffect(() => {
 		if (isOpen) {
@@ -48,6 +48,9 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 		});
 	};
 
+
+	const isCreateNewAccountDisabled = isLoading || isGeneratingWallets;
+
 	return (
 		<Modal show={isOpen} onHide={onClose} backdropClassName="cd_we_accounts-modal--backdrop" className="cd_we_accounts-modal" centered {...restProps}>
 			<Modal.Header>
@@ -56,31 +59,39 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 				</button>
 			</Modal.Header>
 			<Modal.Body>
-				<ul className="cd_we_accounts-modal__list">
-					{wallets.map((wallet, index) => (
-						<li
-							key={`wallet-${index}`}
-							className={
-								clsx('cd_we_accounts-modal__list-item', { selected: index === accountIndex})
-							}
-							onClick={() => handleOnSelectWallet(index)}
-						>
-							<div>{wallet.descriptor ? wallet.descriptor.name.name : formatAccountName(index)}</div>
-							<div className="cd_we_accounts-modal__list-item-balance">
-								{isNil(wallet.balance) ? (
-									<Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="cd_we_accounts-modal__list-item-loading"/>
-								) : (
-									<MiddleTruncatedText>{`${wallet.balance}`}</MiddleTruncatedText> 
-								)}
-								<span>CSPR</span>
-							</div>
-						</li>
-					))}
-				</ul>
+				{
+					isGeneratingWallets ? (
+						<div className="cd_we_accounts-modal--loading">
+							<Spinner as="span" className="cd_we_accounts-modal__spinner" animation="border" size="sm" role="status" aria-hidden="true"/>
+						</div>
+					) : (
+						<ul className="cd_we_accounts-modal__list">
+							{wallets.map((wallet, index) => (
+								<li
+									key={`wallet-${index}`}
+									className={
+										clsx('cd_we_accounts-modal__list-item', { selected: index === accountIndex})
+									}
+									onClick={() => handleOnSelectWallet(index)}
+								>
+									<div>{wallet.descriptor ? wallet.descriptor.name.name : formatAccountName(index)}</div>
+									<div className="cd_we_accounts-modal__list-item-balance">
+										{isNil(wallet.balance) ? (
+											<Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="cd_we_accounts-modal__list-item-loading"/>
+										) : (
+											<MiddleTruncatedText>{`${wallet.balance}`}</MiddleTruncatedText> 
+										)}
+										<span>CSPR</span>
+									</div>
+								</li>
+							))}
+						</ul>
+					)
+				}
 			</Modal.Body>
 			<Divider className="cd_we_accounts-modal__divider" />
 			<Modal.Footer>
-				<Button variant="link" className="cd_we_accounts-modal__btn-action" disabled={isLoading} onClick={handleAddNewWallet}>
+				<Button variant="link" className="cd_we_accounts-modal__btn-action" disabled={isCreateNewAccountDisabled} onClick={handleAddNewWallet}>
 					<span className="btn-icon">
 						<PlusIcon />
 					</span>

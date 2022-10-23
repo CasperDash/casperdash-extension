@@ -6,6 +6,15 @@ $padding: 24px;
 		background-color: var(--component-background);
 	}
 
+	&--loading {
+		display: flex;
+		min-height: 30px;
+	}
+
+	&__spinner {
+		margin: 0 auto;
+	}
+
 	.modal-content {
 		max-width: 336px;
 		box-shadow: 0px 0px 16px rgba(35, 38, 53, 0.2);
