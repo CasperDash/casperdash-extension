@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import findLastIndex from 'lodash-es/findLastIndex';
 import { loadBalanceWallets } from '@cd/helpers/wallet';
 import { getUserHDWallets, generateHDWallets, removeHDWalletsByIds } from '@cd/hooks/useServiceWorker';
+import { MAXIMUM_GENERATE_WALLETS } from '@cd/constants/wallet';
 
 const useGetWallets = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -9,13 +10,15 @@ const useGetWallets = () => {
 	const [wallets, setWallets] = useState([]);
 
 	const generateBalanceWallets = useCallback(async () => {
-		const wallets = await generateHDWallets(10);
+		const wallets = await generateHDWallets(MAXIMUM_GENERATE_WALLETS);
 		const balanceWallets = await loadBalanceWallets(wallets);
 		const foundLastIndex = findLastIndex(balanceWallets, wallet => {
 			return parseInt(wallet.balance, 10) > 0;
 		});
+		// Always keep first wallet.
+		const fromIndex = Math.max(foundLastIndex + 1, 1);
 
-		const ids = balanceWallets.slice(foundLastIndex + 1).map(wallet => wallet._id);
+		const ids = balanceWallets.slice(fromIndex).map(wallet => wallet._id);
 		if (ids.length > 0) {
 			await removeHDWalletsByIds(ids);
 		}

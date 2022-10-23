@@ -1,0 +1,1 @@
+export const MAXIMUM_GENERATE_WALLETS = 10;
