@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
 import useAuthLogin from '@cd/components/hooks/useAuthLogin';
-import { lockAccount } from '@cd/actions/userActions';
+import { deleteAllUserData } from '@cd/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -59,7 +59,7 @@ const AuthLogin = ({
 	);
 
 	const handleOnReset = useCallback(async () => {
-		dispatch(lockAccount());
+		dispatch(deleteAllUserData());
 		navigate('/connectAccount');
 	}, [dispatch, navigate]);
 

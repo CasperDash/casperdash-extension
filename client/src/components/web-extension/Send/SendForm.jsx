@@ -5,8 +5,8 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
 import { validateTransferForm } from '@cd/helpers/validator';
 import { getAllTokenInfo, getTokenInfoByAddress } from '@cd/selectors/user';
-import TokenSelectField from './TokenSelectField';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired/index';
+import TokenSelectField from './TokenSelectField';
 
 const SendForm = ({ token }) => {
 	//Hook

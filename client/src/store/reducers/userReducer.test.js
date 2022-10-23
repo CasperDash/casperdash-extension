@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { _initialState } from '../index';
 import userReducer from './userReducer';
 
 test('Should return new SET_USER_ADDRESS  state', () => {
@@ -5,6 +7,7 @@ test('Should return new SET_USER_ADDRESS  state', () => {
 		accountIndex: 0,
 		loginOptions: {},
 		publicKey: 'testpkey',
+		balance: null,
 	});
 });
 

@@ -7,7 +7,7 @@ import { getTheme } from '@cd/selectors/settings';
 import {
 	getUserDetails,
 	setPublicKey,
-	lockAccount,
+	deleteAllUserData,
 	initConnectedAccountFromLocalStorage,
 } from '@cd/actions/userActions';
 import { switchTheme } from '@cd/actions/settingActions';
@@ -108,7 +108,7 @@ const HeadingModule = (props) => {
 							<Button
 								className="cd_all_page_logout_btn"
 								variant="secondary"
-								onClick={() => dispatch(lockAccount())}
+								onClick={() => dispatch(deleteAllUserData())}
 							>
 								Logout
 							</Button>

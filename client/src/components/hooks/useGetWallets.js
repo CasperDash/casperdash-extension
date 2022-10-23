@@ -3,7 +3,6 @@ import { WalletDescriptor } from 'casper-storage';
 import isNil from 'lodash-es/isNil';
 import get from 'lodash-es/get';
 import { formatAccountName } from '@cd/helpers/format';
-
 import { getUserHDWallets, addWalletAccount } from '@cd/hooks/useServiceWorker';
 import { getAccounts } from '@cd/services/userServices';
 import { convertBalanceFromHex } from '@cd/helpers/balance';
@@ -20,7 +19,7 @@ const useGetWallets = () => {
 		}
 
 		return hdWallets;
-    }, []);
+    }, [wallets.length]);
 
     const loadBalanceWallets = useCallback(async(hdWallets) => {
         const publicKeys = hdWallets.map((wallet) => wallet.publicKey);
@@ -36,7 +35,7 @@ const useGetWallets = () => {
 		});
 
 		return hdBalanceWallets;
-    }, [wallets]);
+    }, []);
 
 	const loadWallets = useCallback(async () => {
 		setIsLoading(true);

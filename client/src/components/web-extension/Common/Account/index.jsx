@@ -4,10 +4,9 @@ import { getPublicKey, getAccountTotalBalanceInFiat, getAccountName } from '@cd/
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import { toFormattedCurrency } from '@cd/helpers/format';
 import ServiceWorkerRequired from '@cd/hocs/ServiceWorkerRequired';
-
 import Copy from '@cd/components/Common/Button/Copy';
-import { AccountManagerModal } from './AccountManagerModal';
 import EditIcon from '@cd/assets/image/edit-icon.svg';
+import { AccountManagerModal } from './AccountManagerModal';
 
 import './index.scss';
 

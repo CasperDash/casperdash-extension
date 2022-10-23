@@ -1,13 +1,15 @@
 import { Signer } from 'casper-js-sdk';
+import { act } from '@testing-library/react';
 import { isUsingExtension } from '@cd/services/localStorage';
 import {
 	getUserDetails,
 	updatePublicKeyFromSigner,
 	initConnectedAccountFromLocalStorage,
-	lockAccount,
+	deleteAllUserData,
 	setPublicKeyToStore,
+	lockAccount
 } from './userActions';
-const getConnectedAccountChromeLocalStorage = require('./userActions.utils').getConnectedAccountChromeLocalStorage;
+import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from "./userActions.utils";
 
 jest.mock('./userActions.utils', () => ({
 	getConnectedAccountChromeLocalStorage: jest.fn(),
@@ -22,6 +24,10 @@ jest.mock('@cd/services/localStorage', () => {
 		getLocalStorageValue: jest.fn(),
 	};
 });
+
+jest.mock("@cd/hooks/useServiceWorker", () => ({
+	onClearUserSW: jest.fn()
+}))
 
 test('getUserDetails', () => {
 	expect(getUserDetails('test')).toEqual({
@@ -95,9 +101,30 @@ describe('initConnectedAccountFromLocalStorage', () => {
 	});
 });
 
-test('lockAccount', () => {
-	const mockDispatch = jest.fn();
+describe("Delete all data", () => {
+	test('deleteAllUserData', () => {
+		const mockDispatch = jest.fn();
 
-	lockAccount()(mockDispatch);
-	expect(mockDispatch).toHaveBeenCalled();
-});
+		deleteAllUserData()(mockDispatch);
+		expect(mockDispatch).toHaveBeenCalled();
+	});
+})
+
+describe("lockAccount", () => {
+	test('lockAccount', async () => {
+		getConnectedAccountChromeLocalStorage.mockResolvedValue({ publicKey: 'testpk', loginOptions: { name: "Test"} });
+		const mockDispatch = jest.fn();
+		const mockGetState = jest.fn().mockImplementation(() => ({
+			user: {
+				loginOptions: { name: "Test" }
+			}
+		}));
+
+		await act(async () => {
+			await lockAccount()(mockDispatch, mockGetState);
+		})
+
+		expect(cacheLoginInfoToLocalStorage).toHaveBeenCalledWith("", { name: "Test"});
+		expect(mockDispatch).toHaveBeenCalled();
+	});
+})
