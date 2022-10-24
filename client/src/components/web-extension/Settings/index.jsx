@@ -37,6 +37,17 @@ const SETTINGS = [
 			navigate('/welcomeBack');
 		},
 	},
+	{
+		name: 'Recovery Phrase',
+		isRequiredPassword: true,
+		icon: {
+			className: 'cd_we_setting_recovery_phrase',
+			img: <LockIcon />,
+		},
+		action: ({ navigate }) => {
+			navigate('/recoveryPhrase', { state: { name: 'Recovery Phrase' } } );
+		},
+	},
 ];
 
 const Settings = () => {

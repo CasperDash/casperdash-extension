@@ -22,6 +22,7 @@ import { SearchValidator } from '@cd/web-extension/Common/SearchValidator';
 import { Confirm } from '@cd/web-extension/Staking/Confirm';
 import { Undelegate } from '@cd/web-extension/Staking/Undelegate';
 import ImportWallet from '@cd/web-extension/ImportWallet';
+import RecoveryPhrase from '@cd/components/web-extension/RecoveryPhrase';
 
 let features;
 
@@ -45,6 +46,7 @@ const routes = {
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
 		{ name: 'Undelegate', route: '/undelegate', component: Undelegate },
+		{ name: 'Recovery Phrase', route: '/recoveryPhrase', component: RecoveryPhrase },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

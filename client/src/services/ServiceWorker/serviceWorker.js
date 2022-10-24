@@ -64,6 +64,7 @@ async function setupPopupServices() {
 
 	rpc.register('accountManager.generateKeypair', accountController.generateKeypair);
 	rpc.register('accountManager.signPrivateKeyProcess', accountController.signPrivateKeyProcess);
+	rpc.register('accountManager.getKeyphrase', accountController.getKeyphrase);
 
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
 	rpc.register('accountManager.getCurrentUser', accountController.getCurrentUser);
