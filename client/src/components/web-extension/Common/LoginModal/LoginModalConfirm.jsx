@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import AuthLogin from '@cd/components/web-extension/Common/AuthLogin';
 import './LoginModal.scss';
 
-const LoginModalConfirm = ({isOpen, onLoginSuccess, title = ''}) => {
+const LoginModalConfirm = ({isOpen, onLoginSuccess, title = '', onCloseModal, closeButton = true}) => {
 	return (
-		<Modal backdropClassName="cd_we_login-modal--backdrop" show={isOpen} className="cd_we_login-modal" centered>
-			<Modal.Header closeButton={false}>
+		<Modal backdropClassName="cd_we_login-modal--backdrop" onHide={onCloseModal} show={isOpen} className="cd_we_login-modal" centered>
+			<Modal.Header closeButton={closeButton}>
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
@@ -26,8 +26,10 @@ const LoginModalConfirm = ({isOpen, onLoginSuccess, title = ''}) => {
 
 LoginModalConfirm.propTypes = {
 	onLoginSuccess: PropTypes.func,
+	onCloseModal: PropTypes.func,
     isOpen: PropTypes.bool,
-    title: PropTypes.string
+    title: PropTypes.string,
+	closeButton: PropTypes.bool,
 };
 
 export default LoginModalConfirm;
