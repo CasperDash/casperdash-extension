@@ -69,6 +69,10 @@ const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
 };
 
+const getCurrentIndexByPublicKey = async (publicKey) => {
+	return sentMessage({ methodName: 'accountManager.getCurrentIndexByPublicKey',  params: { publicKey } });
+};
+
 /**
  *
  * Signing Deploy actions
@@ -90,4 +94,5 @@ export {
 	addWalletAccount,
 	setDefaultWallet,
 	isUserExist,
+	getCurrentIndexByPublicKey
 };

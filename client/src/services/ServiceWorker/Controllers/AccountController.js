@@ -102,6 +102,10 @@ class AccountController {
 		return hdWallets;
 	};
 
+	getCurrentIndexByPublicKey = async ({ publicKey }) => {
+		return this.userService.getCurrentIndexByPublicKey(publicKey);
+	}
+
 	addWalletAccount = async ({ index, description }) => {
 		return this.userService.addWalletAccount(index, description);
 	};

@@ -3,6 +3,13 @@ import * as redux from 'react-redux';
 import { render, cleanup } from '@testing-library/react';
 import { AccountInfo } from './index';
 
+
+jest.mock('@cd/components/hooks/useServiceWorker', () => {
+	return {
+		getCurrentIndexByPublicKey: jest.fn(() => Promise.resolve(0)),
+	};
+});
+
 afterEach(cleanup);
 let spyOnUseSelector;
 beforeEach(() => {
@@ -11,7 +18,7 @@ beforeEach(() => {
 });
 
 test('Should display account info', () => {
-	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce('test').mockReturnValueOnce('Account 1').mockReturnValueOnce(10);
+	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce('test').mockReturnValueOnce(10);
 
 	const { getByText } = render(<AccountInfo />);
 	expect(getByText('Account 1').textContent).toBe('Account 1');
