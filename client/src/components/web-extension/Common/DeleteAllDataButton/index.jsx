@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ConfirmModal from '@cd/components/Common/ConfirmModal';
 import { deleteAllUserData } from '@cd/actions/userActions';
+import LoginModalConfirm from '@cd/components/web-extension/Common/LoginModal/LoginModalConfirm';
 
 const DeleteAllDataButton = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [isOpenModal, setIsOpenModal] = useState(false);
+	const [isOpenLoginModal, setIsOpenLoginModal] = useState(false);
 
 	const handleOnClick = () => {
 		setIsOpenModal(true);
@@ -19,9 +21,19 @@ const DeleteAllDataButton = () => {
 	};
 
 	const onConfirmHandler = () => {
+		setIsOpenModal(false);
+		setIsOpenLoginModal(true);
+	};
+
+	const handleOnLoginSuccess = () => {
+		setIsOpenLoginModal(false);
 		dispatch(deleteAllUserData());
 		navigate('/connectAccount');
-	};
+	}
+
+	const handleOnCloseLoginModal = () => {
+		setIsOpenLoginModal(false);
+	}
 
 	return (
 		<>
@@ -45,6 +57,7 @@ const DeleteAllDataButton = () => {
 					</div>
 				}
 			/>
+			<LoginModalConfirm isOpen={isOpenLoginModal} onLoginSuccess={handleOnLoginSuccess} onCloseModal={handleOnCloseLoginModal}/>
 		</>
 	);
 };
