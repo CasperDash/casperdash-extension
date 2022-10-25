@@ -13,14 +13,16 @@ import './ValidateKeyphrase.scss';
 const ValidateKeyphrasePage = () => {
 	const [, setHeader] = useOutletContext();
 	const dispatch = useDispatch();
-	const { currentStep, answerSheet, keyPhraseAsMap, totalKeywords, totalWordCheck } =
-		useSelector(selectCreateWalletState);
+	const { currentStep, answerSheet, keyPhraseAsMap } = useSelector(selectCreateWalletState);
 	const [wordsTemplate, setTemplate] = useState(undefined);
 	const onUpdateAnswerSheet = useCallback(
 		(groupIndex, value) => dispatch(updateAnswerSheet(groupIndex, value)),
 		[dispatch],
 	);
 	const onCreateAnswerSheet = useCallback((checklist) => dispatch(createAnswerSheet(checklist)), [dispatch]);
+
+	const totalWordCheck = keyPhraseAsMap.size / 3;
+
 	const shouldDisableNextButton = useMemo(() => {
 		//can skip if debugging
 		if (CONSTANTS.DEBUG_ENV) {
@@ -83,7 +85,7 @@ const ValidateKeyphrasePage = () => {
 			return;
 		}
 
-		const { checklist, data } = onGenerateWordcheck(totalKeywords, totalWordCheck);
+		const { checklist, data } = onGenerateWordcheck(keyPhraseAsMap.size, totalWordCheck);
 		onCreateAnswerSheet(checklist);
 
 		const checks = checklist.map((id) => {
