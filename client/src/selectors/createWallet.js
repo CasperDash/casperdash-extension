@@ -17,12 +17,6 @@ const selectCreateWalletCurrentStep = createSelector(createWalletSelector, makeS
 const makeSelectCWAnswerSheet = (state) => state.answerSheet;
 const selectCreateWalletAnswerSheet = createSelector(createWalletSelector, makeSelectCWAnswerSheet);
 
-const makeSelectCWTotalKeywords = (state) => state.totalKeywords;
-const selectCreateWalletTotalKeywords = createSelector(createWalletSelector, makeSelectCWTotalKeywords);
-
-const makeSelectCWTotalWordsForChecking = (state) => state.totalWordCheck;
-const selectCreateWalletTotalWordsForChecking = createSelector(createWalletSelector, makeSelectCWTotalWordsForChecking);
-
 const makeSelectCWEncryptionType = (state) => state.encryptionType;
 const selectCreateWalletEncryptionType = createSelector(createWalletSelector, makeSelectCWEncryptionType);
 
@@ -32,15 +26,11 @@ export {
 	makeSelectCWKeyphraseAsMap,
 	makeSelectCWKeyCurrentStep,
 	makeSelectCWAnswerSheet,
-	makeSelectCWTotalKeywords,
-	makeSelectCWTotalWordsForChecking,
 	makeSelectCWEncryptionType,
 	selectCreateWalletState,
 	selectCreateWalletKeyphrase,
 	selectCreateWalletKeyphraseAsMap,
 	selectCreateWalletCurrentStep,
 	selectCreateWalletAnswerSheet,
-	selectCreateWalletTotalKeywords,
-	selectCreateWalletTotalWordsForChecking,
-	selectCreateWalletEncryptionType
+	selectCreateWalletEncryptionType,
 };

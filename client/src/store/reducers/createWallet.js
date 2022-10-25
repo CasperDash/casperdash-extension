@@ -3,7 +3,6 @@ import { CREATE_WALLET } from '../actionTypes';
 
 const initialState = {
 	currentStep: 0,
-	totalKeywords: 12,
 	keyPhrase: null,
 	keyPhraseAsMap: [],
 	answerSheet: undefined,

@@ -1,4 +1,10 @@
 .cd_we_number_of_words {
 	display: flex;
 	gap: 8px;
+	.btn {
+		height: 24px;
+		align-items: center;
+		text-align: center;
+		display: flex;
+	}
 }

@@ -1,58 +1,59 @@
 .cd_we_recovery-keyphrase {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    height: 100%;
-    font-size: 16px;
-    padding: 20px 15px;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	height: 100%;
+	font-size: 16px;
+	padding: 20px 15px;
 
-    &__wrapper {
-        border-radius: 16px;
-        border: 1px solid var(--secondary-text-color-med);
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        padding: 16px;
-    }
+	&__wrapper {
+		border-radius: 16px;
+		border: 1px solid var(--secondary-text-color-med);
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		padding: 16px;
+	}
 
-    &__column {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        flex: 0 0 auto;
-        height: 280px;
-        justify-content: space-between;
-        list-style: none;
-        width: 50%;
-        padding: 0;
-    }
+	&__column {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		flex: 0 0 auto;
+		height: 270px;
+		overflow: auto;
+		justify-content: space-between;
+		list-style: none;
+		width: 48%;
+		padding: 0;
+	}
 
-    &__footer {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-    }
+	&__footer {
+		margin-top: 20px;
+		display: flex;
+		justify-content: center;
+	}
 
-    &__copy-btn {
-        width: 40%;
-    }
-    
-    &__box {
-        padding: 0 16px;
-    }
+	&__copy-btn {
+		width: 40%;
+	}
+
+	&__box {
+		padding: 0 16px;
+	}
 
 	&__word {
-        margin-top: 20px;
-        margin-right: 20px;
-        width: 100%;
+		margin-top: 20px;
+		margin-right: 20px;
+		width: 100%;
 
-        & .counter {
-            color: #777E91;
-        }
+		& .counter {
+			color: #777e91;
+		}
 
-        & .value {
-            height: 28px;
-            margin-left: 20px;
-        }
-    }
+		& .value {
+			height: 28px;
+			margin-left: 20px;
+		}
+	}
 }
