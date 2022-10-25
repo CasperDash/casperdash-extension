@@ -160,6 +160,13 @@ export class UserService {
 		})));
 	}
 
+	getCurrentIndexByPublicKey = async (publicKey) => {
+		const wallets = await this.getHDWallets();
+		const foundIndex = wallets.findIndex((wallet) => wallet.publicKey === publicKey);
+
+		return Math.max(foundIndex, 0);
+	}
+
 	addWalletAccount = async (index, description) => {
 		const user = this.instance;
 
