@@ -75,6 +75,7 @@ export const VALIDATORS = {
 
 export const SETTINGS = {
 	SWITCH_THEME: 'SETTINGS.SWITCH_THEME',
+	SET_AUTO_LOCK_TIME: 'SETTINGS.SET_AUTO_LOCK_TIME'
 };
 
 export const FILES = {

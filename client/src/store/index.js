@@ -7,6 +7,7 @@ import webLocalStorage from 'redux-persist/lib/storage';
 import { localStorage as extensionLocalStorage } from 'redux-persist-webextension-storage';
 import thunk from 'redux-thunk';
 import { isUsingExtension } from '@cd/services/localStorage';
+import { ONE_MINUTE } from '@cd/constants/time';
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
@@ -52,6 +53,7 @@ export const initialState = {
 	},
 	settings: {
 		theme: '',
+		autoLockTime: 5 * ONE_MINUTE
 	},
 	nfts: {
 		address: [],

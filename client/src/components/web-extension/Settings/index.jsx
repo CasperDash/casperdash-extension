@@ -48,6 +48,16 @@ const SETTINGS = [
 			navigate('/recoveryPhrase', { state: { name: 'Recovery Phrase' } } );
 		},
 	},
+	{
+		name: 'Advanced',
+		icon: {
+			className: 'cd_we_setting_recovery_phrase',
+			img: <LockIcon />,
+		},
+		action: ({ navigate }) => {
+			navigate('/advanced', { state: { name: 'Advanced' } } );
+		},
+	},
 ];
 
 const Settings = () => {
