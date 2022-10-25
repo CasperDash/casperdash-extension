@@ -96,6 +96,11 @@ class AccountController {
 		return DeployUtil.deployToJson(signedDeploy);
 	};
 
+
+	getKeyphrase = () => {
+		return this.userService.getKeyphrase();
+	}
+
 	getHDWallets = async () => {
 		try {
 			return this.userService.getHDWallets({includePublicKey: true});
@@ -103,6 +108,10 @@ class AccountController {
 			return [];
 		}
 	};
+
+	getCurrentIndexByPublicKey = async ({ publicKey }) => {
+		return this.userService.getCurrentIndexByPublicKey(publicKey);
+	}
 
 	addWalletAccount = async ({ index, description }) => {
 		return this.userService.addWalletAccount(index, description);

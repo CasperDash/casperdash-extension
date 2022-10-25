@@ -77,6 +77,14 @@ const removeHDWalletsByIds = async (ids) => {
 	return sentMessage({ methodName: 'accountManager.removeHDWalletsByIds', params: {
 		ids
 	}});
+}
+
+const getCurrentIndexByPublicKey = async (publicKey) => {
+	return sentMessage({ methodName: 'accountManager.getCurrentIndexByPublicKey', params: { publicKey } });
+};
+
+const getKeyphrase = async () => {
+	return sentMessage({ methodName: 'accountManager.getKeyphrase' });
 };
 
 /**
@@ -101,5 +109,7 @@ export {
 	setDefaultWallet,
 	isUserExist,
 	generateHDWallets,
-	removeHDWalletsByIds
+	removeHDWalletsByIds,
+	getKeyphrase,
+	getCurrentIndexByPublicKey,
 };

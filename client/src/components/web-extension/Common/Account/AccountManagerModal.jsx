@@ -12,14 +12,14 @@ import { addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
 import { formatAccountName } from '@cd/helpers/format';
-import { getAccountIndex } from '@cd/selectors/user';
+import { getPublicKey } from '@cd/selectors/user';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import './AccountManagerModal.scss';
 
 export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 	const dispatch = useDispatch();
-	const accountIndex = useSelector(getAccountIndex);
+	const accountIndex = useSelector(getPublicKey);
 
 	const { wallets, loadWallets, isLoading, isGeneratingWallets } = useGetWallets();
 
@@ -69,7 +69,7 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 								<li
 									key={`wallet-${index}`}
 									className={
-										clsx('cd_we_accounts-modal__list-item', { selected: index === accountIndex})
+										clsx('cd_we_accounts-modal__list-item', { selected: wallet.publicKey === accountIndex})
 									}
 									onClick={() => handleOnSelectWallet(index)}
 								>
