@@ -70,7 +70,11 @@ const isUserExist = async () => {
 };
 
 const getCurrentIndexByPublicKey = async (publicKey) => {
-	return sentMessage({ methodName: 'accountManager.getCurrentIndexByPublicKey',  params: { publicKey } });
+	return sentMessage({ methodName: 'accountManager.getCurrentIndexByPublicKey', params: { publicKey } });
+};
+
+const getKeyphrase = async () => {
+	return sentMessage({ methodName: 'accountManager.getKeyphrase' });
 };
 
 /**
@@ -94,5 +98,6 @@ export {
 	addWalletAccount,
 	setDefaultWallet,
 	isUserExist,
-	getCurrentIndexByPublicKey
+	getCurrentIndexByPublicKey,
+	getKeyphrase,
 };
