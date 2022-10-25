@@ -18,12 +18,7 @@ const onValidatePassword = (values) => {
 	return errors;
 };
 
-const AuthLogin = ({
-	onLoginSuccess = () => {},
-	isShowReset = false,
-	header = null,
-	passwordLabel = 'Enter password',
-}) => {
+const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = 'Enter password' }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { onAuthCredentialSuccess, validateUserCredential } = useAuthLogin({
@@ -94,18 +89,11 @@ const AuthLogin = ({
 							<Form.Text className="invalid-feedback" id="passwordHelpBlock">
 								{serverErrors.message}
 							</Form.Text>
-						)}  
+						)}
 						<div className="cd_we_page--bottom">
 							<Button type="submit" className="cd_we_btn-next" disabled={false}>
 								Unlock
 							</Button>
-							{isShowReset && (
-								<div className="cd_we_welcomeBack--bottom">
-									<Button onClick={handleOnReset} variant="link">
-										Log in as another user?
-									</Button>
-								</div>
-							)}
 						</div>
 					</Form>
 				);
@@ -118,7 +106,7 @@ AuthLogin.propTypes = {
 	header: PropTypes.node,
 	isShowReset: PropTypes.bool,
 	onLoginSuccess: PropTypes.func,
-	passwordLabel: PropTypes.string
-}
+	passwordLabel: PropTypes.string,
+};
 
 export default AuthLogin;

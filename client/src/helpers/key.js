@@ -10,3 +10,7 @@ const KEY_PREFIX_REGEX = new RegExp(KEY_PREFIX.map((prefix) => `^${prefix}`).joi
 export const formatKeyByPrefix = (key = '') => {
 	return key.replace(KEY_PREFIX_REGEX, '');
 };
+
+export const getVersion = () => {
+	return process.env.REACT_APP_VERSION;
+};

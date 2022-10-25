@@ -6,7 +6,7 @@ import './index.scss';
 import LoginModalConfirm from '../Common/LoginModal/LoginModalForm';
 
 const SettingRow = ({ setting }) => {
-	const [isOpenModal, setIsOpenModal] = useState()
+	const [isOpenModal, setIsOpenModal] = useState();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ const SettingRow = ({ setting }) => {
 	const handleOnClick = () => {
 		if (setting.isRequiredPassword) {
 			setIsOpenModal(true);
-			return;	
+			return;
 		}
 
 		onProcess();
@@ -23,7 +23,7 @@ const SettingRow = ({ setting }) => {
 
 	const handleOnLoginSuccess = () => {
 		onProcess();
-	}
+	};
 
 	return (
 		<div className="cd_setting--wrapper">
@@ -32,13 +32,14 @@ const SettingRow = ({ setting }) => {
 					<div className={`cd_setting_icon ${setting.icon.className}`}>{setting.icon.img}</div>
 					<div className="cd_setting_name">{setting.name}</div>
 				</div>
+				{setting.value && <div>{setting.value}</div>}
 				{setting.hasMenu && (
 					<div>
 						<ArrowIcon />
 					</div>
 				)}
 			</div>
-			<LoginModalConfirm isOpen={isOpenModal} onLoginSuccess={handleOnLoginSuccess}/>
+			<LoginModalConfirm isOpen={isOpenModal} onLoginSuccess={handleOnLoginSuccess} />
 		</div>
 	);
 };
