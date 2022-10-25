@@ -6,6 +6,7 @@ import every from 'lodash-es/every';
 import { generateCWHeader, onGenerateWordcheck } from '@cd/actions/createWalletActions.utils';
 import { setNextStep, updateAnswerSheet, createAnswerSheet } from '@cd/actions/createWalletActions';
 import { selectCreateWalletState } from '@cd/selectors/createWallet';
+import { CONSTANTS } from '@cd/shared/constants';
 import WordsGroup from './WordsGroup';
 import './ValidateKeyphrase.scss';
 
@@ -21,6 +22,10 @@ const ValidateKeyphrasePage = () => {
 	);
 	const onCreateAnswerSheet = useCallback((checklist) => dispatch(createAnswerSheet(checklist)), [dispatch]);
 	const shouldDisableNextButton = useMemo(() => {
+		//can skip if debugging
+		if (CONSTANTS.DEBUG_ENV) {
+			return false;
+		}
 		if (answerSheet) {
 			return every(answerSheet, Boolean) ? false : true;
 		}
@@ -37,7 +42,8 @@ const ValidateKeyphrasePage = () => {
 
 	const onSelecteWordHandler = useCallback(
 		(groupIndex, answer) => {
-			if (!answerSheet) {
+			//can skip if debugging
+			if (!answerSheet && !CONSTANTS.DEBUG_ENV) {
 				return;
 			}
 

@@ -1,4 +1,3 @@
-import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import isFunction from 'lodash-es/isFunction';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
@@ -102,7 +101,7 @@ export const deleteAllUserData = () => {
 };
 
 /**
- * 
+ *
  * Lock account:
  * - Delete public key data
  * - Keep loginOptions data
@@ -123,13 +122,7 @@ export const lockAccount = () => {
 export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
-		const userHashOpts = isObject(user.userHashingOptions)
-			? JSON.stringify(user.userHashingOptions)
-			: user.userHashingOptions;
-		// Store user hash (string) into localStorage
-
 		await cacheLoginInfoToLocalStorage(publicKey, {
-			userHashingOptions: userHashOpts,
 			userInfo: user.userInfo,
 			currentWalletIndex: user.currentWalletIndex,
 		});

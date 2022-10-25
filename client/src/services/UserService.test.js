@@ -61,21 +61,17 @@ describe('UserInstance', () => {
 
 		it('Should return UserInfoHash', async () => {
 			const result = await user.getUserInfoHash();
-			const hash = JSON.stringify('this-is-password-hash-options');
 			expect(result).toBeTruthy;
-			expect(result.userHashingOptions).toEqual(hash);
 			expect(result.userInfo).toEqual('this-is-user-info');
 		});
 
 		it('Should return storage data', async () => {
 			const result = await user.prepareStorageData();
-			const hash = JSON.stringify('this-is-password-hash-options');
 
 			expect(result).toBeTruthy;
 			expect(result).toEqual({
 				publicKey: 'this-is-public-key',
 				userDetails: {
-					userHashingOptions: hash,
 					userInfo: 'this-is-user-info',
 					currentWalletIndex: 0,
 				},

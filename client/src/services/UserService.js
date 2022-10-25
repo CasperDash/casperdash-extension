@@ -16,25 +16,13 @@ export class UserService {
 		return new Uint8Array(saltInfo);
 	}
 
-	static makeUserFromCache(password, cacheConnectedAccount) {
+	static async makeUserFromCache(password, cacheConnectedAccount) {
 		const {
-			loginOptions: { userHashingOptions, userInfo: encryptedUserInfo },
+			loginOptions: { userInfo: encryptedUserInfo },
 		} = cacheConnectedAccount;
 
-		// Get encrypted info from Localstorage
-		const encryptedHashingOptions = JSON.parse(userHashingOptions);
-
-		// Convert salt info from object to Array
-		// This is used for creating new Uint8Array instance
-		const userLoginOptions = {
-			...encryptedHashingOptions,
-			salt: UserService.convertSaltInfo(encryptedHashingOptions.salt),
-		};
-
 		// Deserialize user info to an instance of User
-		return User.deserializeFrom(password, encryptedUserInfo, {
-			passwordOptions: userLoginOptions,
-		});
+		return await User.deserializeFrom(password, encryptedUserInfo);
 	}
 
 	constructor(user, opts = {}) {
@@ -84,20 +72,15 @@ export class UserService {
 
 	/**
 	 * Return a pair of User login info after creating new User
-	 * @returns { userHashingOptions, userInfo }
+	 * @returns {  userInfo }
 	 */
-	getUserInfoHash = () => {
+	getUserInfoHash = async () => {
 		const user = this.instance;
 
-		// Take the hashing options from user's instance
-		const hashingOptions = user.getPasswordHashingOptions();
-		const userHashingOptions = JSON.stringify(hashingOptions);
-
 		// Serialize user information to a secure encrypted string
-		const userInfo = user.serialize();
+		const userInfo = await user.serialize();
 
 		return {
-			userHashingOptions,
 			userInfo,
 		};
 	};
@@ -112,13 +95,12 @@ export class UserService {
 		 * Ignore removing `await` from Sonarcloud audit.
 		 * This will return user info with hash info
 		 */
-		const userInfo = this.getUserInfoHash();
+		const userInfo = await this.getUserInfoHash();
 		const publicKey = await this.getPublicKey(this.currentWalletIndex);
 
 		return {
 			publicKey,
 			userDetails: {
-				userHashingOptions: userInfo.userHashingOptions,
 				userInfo: userInfo.userInfo,
 				currentWalletIndex: this.currentWalletIndex,
 			},
@@ -149,40 +131,41 @@ export class UserService {
 	getHDWallets = async () => {
 		const user = this.instance;
 
-		const wallets = await user.getHDWallet()._derivedWallets || [];
+		const wallets = (await user.getHDWallet()._derivedWallets) || [];
 		if (wallets.length === 0) {
 			return wallets;
 		}
 
-		return Promise.all(wallets.map(async (wallet, index) => ({
-			...wallet,
-			publicKey: await this.getPublicKey(index),
-		})));
-	}
+		return Promise.all(
+			wallets.map(async (wallet, index) => ({
+				...wallet,
+				publicKey: await this.getPublicKey(index),
+			})),
+		);
+	};
 
 	getCurrentIndexByPublicKey = async (publicKey) => {
 		const wallets = await this.getHDWallets();
 		const foundIndex = wallets.findIndex((wallet) => wallet.publicKey === publicKey);
 
 		return Math.max(foundIndex, 0);
-	}
+	};
 
 	addWalletAccount = async (index, description) => {
 		const user = this.instance;
 
 		return user.addWalletAccount(index, new WalletDescriptor(description));
-	}
+	};
 
 	getKeyphrase = async () => {
 		const user = this.instance;
 
-		return user.getHDWallet().id;
-	}
-
+		return user.getHDWallet().keyPhrase;
+	};
 
 	setDefaultWallet = async (index) => {
 		this.currentWalletIndex = parseInt(index, 10);
-	}
+	};
 }
 
 export default UserService;

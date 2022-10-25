@@ -31,7 +31,7 @@ class AccountController {
 
 	validateReturningUser = async ({ password }) => {
 		const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
-		const userCache = UserService.makeUserFromCache(password, cacheConnectedAccount);
+		const userCache = await UserService.makeUserFromCache(password, cacheConnectedAccount);
 
 		if (!userCache) {
 			throw Error('Missing User');
@@ -96,10 +96,9 @@ class AccountController {
 		return DeployUtil.deployToJson(signedDeploy);
 	};
 
-
 	getKeyphrase = () => {
 		return this.userService.getKeyphrase();
-	}
+	};
 
 	getHDWallets = async () => {
 		const hdWallets = (await this.userService.getHDWallets()) || [];
@@ -109,7 +108,7 @@ class AccountController {
 
 	getCurrentIndexByPublicKey = async ({ publicKey }) => {
 		return this.userService.getCurrentIndexByPublicKey(publicKey);
-	}
+	};
 
 	addWalletAccount = async ({ index, description }) => {
 		return this.userService.addWalletAccount(index, description);

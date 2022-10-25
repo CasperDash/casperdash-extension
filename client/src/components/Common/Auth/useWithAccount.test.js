@@ -58,9 +58,7 @@ describe('useWithAccount', () => {
 	it('Should return nothing', () => {
 		getConnectedAccountChromeLocalStorage.mockResolvedValue({
 			publicKey: 'abc',
-			loginOptions: {
-				userHashingOptions: '1',
-			},
+			loginOptions: {},
 		});
 		const store = setupStore({
 			user: {
@@ -112,7 +110,9 @@ describe('useWithAccount', () => {
 	it('Should redirect user back to /welcomeBack screen when found cached User info with empty public key', async () => {
 		getConnectedAccountChromeLocalStorage.mockResolvedValueOnce({
 			publicKey: '',
-			loginOptions: { userHashingOptions: 'Test' },
+			loginOptions: {
+				userInfo: '',
+			},
 		});
 		const store = setupStore({
 			user: {
