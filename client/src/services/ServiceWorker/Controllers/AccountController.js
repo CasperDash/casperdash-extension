@@ -96,6 +96,11 @@ class AccountController {
 		return DeployUtil.deployToJson(signedDeploy);
 	};
 
+
+	getKeyphrase = () => {
+		return this.userService.getKeyphrase();
+	}
+
 	getHDWallets = async () => {
 		const hdWallets = (await this.userService.getHDWallets()) || [];
 

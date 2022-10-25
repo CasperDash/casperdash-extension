@@ -69,6 +69,10 @@ const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
 };
 
+const getKeyphrase = async () => {
+	return sentMessage({ methodName: 'accountManager.getKeyphrase' });
+};
+
 /**
  *
  * Signing Deploy actions
@@ -90,4 +94,5 @@ export {
 	addWalletAccount,
 	setDefaultWallet,
 	isUserExist,
+	getKeyphrase,
 };

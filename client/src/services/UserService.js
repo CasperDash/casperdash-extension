@@ -166,6 +166,13 @@ export class UserService {
 		return user.addWalletAccount(index, new WalletDescriptor(description));
 	}
 
+	getKeyphrase = async () => {
+		const user = this.instance;
+
+		return user.getHDWallet().id;
+	}
+
+
 	setDefaultWallet = async (index) => {
 		this.currentWalletIndex = parseInt(index, 10);
 	}
