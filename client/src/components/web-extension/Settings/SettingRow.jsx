@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import LoginModalConfirm from '@cd/components/web-extension/Common/LoginModal/LoginModalConfirm';
 import ArrowIcon from '@cd/assets/image/bold-arrow-icon.svg';
 import './index.scss';
-import LoginModalConfirm from '../Common/LoginModal/LoginModalForm';
 
 const SettingRow = ({ setting }) => {
 	const [isOpenModal, setIsOpenModal] = useState();
@@ -25,6 +25,10 @@ const SettingRow = ({ setting }) => {
 		onProcess();
 	};
 
+	const handleOnCloseLoginModal = () => {
+		setIsOpenModal(false);
+	};
+
 	return (
 		<div className="cd_setting--wrapper">
 			<div className="cd_setting_row" key={setting.name} onClick={handleOnClick}>
@@ -39,7 +43,11 @@ const SettingRow = ({ setting }) => {
 					</div>
 				)}
 			</div>
-			<LoginModalConfirm isOpen={isOpenModal} onLoginSuccess={handleOnLoginSuccess} />
+			<LoginModalConfirm
+				isOpen={isOpenModal}
+				onLoginSuccess={handleOnLoginSuccess}
+				onCloseModal={handleOnCloseLoginModal}
+			/>
 		</div>
 	);
 };
