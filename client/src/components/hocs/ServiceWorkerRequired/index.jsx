@@ -1,25 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import createReactClass from 'create-react-class';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { isUserExist } from '@cd/components/hooks/useServiceWorker';
 import { setLoginModalOpen } from '@cd/actions/loginModalAction';
+import { getLoginModalOpen } from '@cd/selectors/loginModal';
+
 const ServiceWorkerRequired = ({ children }) => {
 	const dispatch = useDispatch();
+	const isOpen = useSelector(getLoginModalOpen);
+
+	const [isExistUser, setIsExistUser] = useState();
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			isUserExist().then((result) => {
-				if (!result) {
+				if (!result && !isOpen) {
 					dispatch(setLoginModalOpen(true));
 				}
+				setIsExistUser(result);
 			});
 		}, 300);
 
 		return () => clearTimeout(timer);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [dispatch, isOpen]);
 
-	return children;
+	return React.cloneElement(children, { isExistUser });
 };
 
 export const withServiceWorkerRequired = (Component) => {

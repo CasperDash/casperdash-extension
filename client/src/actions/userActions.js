@@ -2,7 +2,7 @@ import { Signer } from 'casper-js-sdk';
 import isFunction from 'lodash-es/isFunction';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
-import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
+import { isUsingExtension, getLocalStorageValue, clearChromeStorageLocal } from '@cd/services/localStorage';
 import { onClearUserSW } from '@cd/hooks/useServiceWorker';
 import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from './userActions.utils';
 
@@ -97,6 +97,7 @@ export const deleteAllUserData = () => {
 		onClearUserSW();
 		dispatch(setPublicKey());
 		dispatch(resetAccount());
+		clearChromeStorageLocal();
 	};
 };
 
@@ -122,26 +123,16 @@ export const lockAccount = () => {
 export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
-		await cacheLoginInfoToLocalStorage(publicKey, {
-			userInfo: user.userInfo,
-			currentWalletIndex: user.currentWalletIndex,
-		});
-
 		dispatch(
 			setPublicKeyToStore(publicKey, {
-				connectionType: CONNECTION_TYPES.privateKey,
+				selectedWallet: user.selectedWallet,
+				connectionType: user.connectionType,
 			}),
 		);
 
 		if (isFunction(onCompleted)) {
 			onCompleted();
 		}
-	};
-};
-
-export const updateAccountIndex = (accountIndex = 0) => {
-	return (dispatch) => {
-		dispatch({ type: USERS.SET_ACCOUNT_INDEX, payload: accountIndex });
 	};
 };
 

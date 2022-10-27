@@ -3,13 +3,6 @@ import * as redux from 'react-redux';
 import { render, cleanup } from '@testing-library/react';
 import { AccountInfo } from './index';
 
-
-jest.mock('@cd/components/hooks/useServiceWorker', () => {
-	return {
-		getCurrentIndexByPublicKey: jest.fn(() => Promise.resolve(0)),
-	};
-});
-
 afterEach(cleanup);
 let spyOnUseSelector;
 beforeEach(() => {

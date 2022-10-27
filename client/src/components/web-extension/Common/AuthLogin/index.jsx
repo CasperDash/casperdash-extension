@@ -4,9 +4,6 @@ import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
 import useAuthLogin from '@cd/components/hooks/useAuthLogin';
-import { deleteAllUserData } from '@cd/actions/userActions';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 const onValidatePassword = (values) => {
 	const errors = {};
@@ -19,8 +16,6 @@ const onValidatePassword = (values) => {
 };
 
 const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = 'Enter password' }) => {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
 	const { onAuthCredentialSuccess, validateUserCredential } = useAuthLogin({
 		onAuthCompleted: onLoginSuccess,
 	});
@@ -52,11 +47,6 @@ const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = '
 		},
 		[serverErrors],
 	);
-
-	const handleOnReset = useCallback(async () => {
-		dispatch(deleteAllUserData());
-		navigate('/connectAccount');
-	}, [dispatch, navigate]);
 
 	return (
 		<Formik
