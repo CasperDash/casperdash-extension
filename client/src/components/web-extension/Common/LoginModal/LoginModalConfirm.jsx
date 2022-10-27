@@ -4,19 +4,29 @@ import PropTypes from 'prop-types';
 import AuthLogin from '@cd/components/web-extension/Common/AuthLogin';
 import './LoginModal.scss';
 
-const LoginModalConfirm = ({isOpen, onLoginSuccess, title = '', onCloseModal, closeButton = true}) => {
+const LoginModalConfirm = ({
+	isOpen,
+	onLoginSuccess,
+	title = '',
+	onCloseModal,
+	closeButton = true,
+	description = 'Please login again to continue using Casper Wallet.',
+}) => {
 	return (
-		<Modal backdropClassName="cd_we_login-modal--backdrop" onHide={onCloseModal} show={isOpen} className="cd_we_login-modal" centered>
+		<Modal
+			backdropClassName="cd_we_login-modal--backdrop"
+			onHide={onCloseModal}
+			show={isOpen}
+			className="cd_we_login-modal"
+			centered
+		>
 			<Modal.Header closeButton={closeButton}>
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<div className="cd_we_create-wallet-layout--root">
-					<div className="cd_we_create-wallet-layout--body">
-						<AuthLogin
-							onLoginSuccess={onLoginSuccess}
-							passwordLabel="Please login again to continue using Casper Wallet."
-						/>
+					<div className="layout--body">
+						<AuthLogin onLoginSuccess={onLoginSuccess} passwordLabel={description} />
 					</div>
 				</div>
 			</Modal.Body>
@@ -27,8 +37,8 @@ const LoginModalConfirm = ({isOpen, onLoginSuccess, title = '', onCloseModal, cl
 LoginModalConfirm.propTypes = {
 	onLoginSuccess: PropTypes.func,
 	onCloseModal: PropTypes.func,
-    isOpen: PropTypes.bool,
-    title: PropTypes.string,
+	isOpen: PropTypes.bool,
+	title: PropTypes.string,
 	closeButton: PropTypes.bool,
 };
 
