@@ -93,7 +93,7 @@ export const initConnectedAccountFromLocalStorage = () => {
  * - Clears all cached User hash info in localStorage
  */
 export const deleteAllUserData = () => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		onClearUserSW();
 		dispatch(setPublicKey());
 		dispatch(resetAccount());

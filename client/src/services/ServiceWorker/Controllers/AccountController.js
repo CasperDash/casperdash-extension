@@ -57,16 +57,15 @@ class AccountController {
 		try {
 			const opts = {
 				encryptionType,
-				currentWalletIndex: 0,
 			};
 			const user = new UserService(new User(password), opts);
 
-			user.initialize(keyphrase);
+			await user.initialize(keyphrase);
 
 			this.userService = user;
 			this.appStore.putState({ user });
 
-			return await user.prepareStorageData();
+			return await this.userService.prepareStorageData();
 		} catch (error) {
 			console.error(error);
 			throw Error('Error on create new User');

@@ -53,12 +53,13 @@ export class UserService {
 		const selectedWallet = wallets[0];
 
 		this.setSelectedWallet(selectedWallet.uid);
-		return this;
+		return user;
 	};
 
 	getWalletDetails = async (uid) => {
 		const user = this.instance;
 		const fullWalletInfo = user.getWalletInfo(uid);
+
 		if (fullWalletInfo.isHDWallet) {
 			const index = fullWalletInfo.index;
 			const wallet = await user.getWalletAccount(index);
