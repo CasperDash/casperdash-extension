@@ -100,4 +100,5 @@ export {
 	isUserExist,
 	getCurrentIndexByPublicKey,
 	getKeyphrase,
+	browser,
 };

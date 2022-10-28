@@ -2,15 +2,14 @@ import React from 'react';
 import Select from 'react-select';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAutoLockTime } from '@cd/selectors/settings';
-import { ONE_MINUTE } from '@cd/constants/time';
 import { updateAutoLockTime } from '@cd/actions/settingActions';
 
 const OPTIONS = [
-	{ value: 0.5 * ONE_MINUTE, label: '30s' },
-	{ value: ONE_MINUTE, label: '1 minute' },
-	{ value: 5 * ONE_MINUTE, label: '5 minutes' },
-	{ value: 10 * ONE_MINUTE, label: '10 minutes' },
-	{ value: 30 * ONE_MINUTE, label: '30 minutes' },
+	{ value: 0.5, label: '30s' },
+	{ value: 1, label: '1 minute' },
+	{ value: 5, label: '5 minutes' },
+	{ value: 10, label: '10 minutes' },
+	{ value: 30, label: '30 minutes' },
 ];
 
 const AutoLockTimer = () => {

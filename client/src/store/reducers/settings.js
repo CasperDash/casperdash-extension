@@ -1,10 +1,9 @@
-import { ONE_MINUTE } from '@cd/constants/time';
 import { SETTINGS } from '../actionTypes';
 
 export default function userReducer(
 	state = {
 		theme: '',
-		autoLockTime: 5 * ONE_MINUTE
+		autoLockTime: 5
 	},
 	action,
 ) {

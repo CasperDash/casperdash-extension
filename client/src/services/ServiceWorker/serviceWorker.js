@@ -1,4 +1,6 @@
 import { ObservableStore } from '@metamask/obs-store';
+import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
+import { AUTO_LOCK_TIMEOUT_ALARM } from '@cd/constants/alarm';
 import RPC from './RPC';
 import AccountController from './Controllers/AccountController';
 
@@ -41,6 +43,27 @@ async function keepAlive() {
 	chrome.tabs.onUpdated.addListener(retryOnTabUpdate);
 }
 
+function registerAlarmActions() {
+	chrome.alarms.onAlarm.addListener(() => {
+		chrome.alarms.getAll(async (alarms) => {
+			const hasAlarm = alarms.find(
+				(alarm) => alarm.name === AUTO_LOCK_TIMEOUT_ALARM,
+			);
+			if (hasAlarm) {
+				const connectedAccount = await getConnectedAccountChromeLocalStorage();
+				const { loginOptions: loginOptionsCache } = connectedAccount;
+				const emptyPublicKey = '';
+				await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
+				chrome.runtime.sendMessage({
+					type: 'LOCK_WALLET'
+				});
+
+				chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
+			}
+		});
+	});
+}
+
 async function retryOnTabUpdate(_tabId, info) {
 	if (info.url && /^(file|https?):/.test(info.url)) {
 		keepAlive();
@@ -51,6 +74,7 @@ initialize().catch(console.error);
 
 async function initialize() {
 	await setupPopupServices();
+	registerAlarmActions();
 }
 
 async function setupPopupServices() {
