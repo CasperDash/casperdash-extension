@@ -9,7 +9,7 @@ const ServiceWorkerRequired = ({ children }) => {
 	const dispatch = useDispatch();
 	const isOpen = useSelector(getLoginModalOpen);
 
-	const [isExistUser, setIsExistUser] = useState();
+	const [isUserExisting, setUserExistingState] = useState();
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -17,14 +17,14 @@ const ServiceWorkerRequired = ({ children }) => {
 				if (!result && !isOpen) {
 					dispatch(setLoginModalOpen(true));
 				}
-				setIsExistUser(result);
+				setUserExistingState(result);
 			});
 		}, 300);
 
 		return () => clearTimeout(timer);
 	}, [dispatch, isOpen]);
 
-	return React.cloneElement(children, { isExistUser });
+	return React.cloneElement(children, { isUserExisting });
 };
 
 export const withServiceWorkerRequired = (Component) => {
