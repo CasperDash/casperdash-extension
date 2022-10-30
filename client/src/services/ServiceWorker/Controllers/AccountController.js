@@ -31,13 +31,14 @@ class AccountController {
 
 	validateReturningUser = async ({ password }) => {
 		const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
-		const userCache = await UserService.makeUserFromCache(password, cacheConnectedAccount);
+
+		const { userCache, selectedWallet } = await UserService.makeUserFromCache(password, cacheConnectedAccount);
 
 		if (!userCache) {
 			throw Error('Missing User');
 		}
-		const user = new UserService(userCache);
-		const result = await user.prepareStorageData();
+		const user = new UserService(userCache, { selectedWalletUID: selectedWallet.uid });
+		const result = await user.prepareStorageData(true);
 
 		this.userService = user;
 		return result;
@@ -56,16 +57,15 @@ class AccountController {
 		try {
 			const opts = {
 				encryptionType,
-				currentWalletIndex: 0,
 			};
 			const user = new UserService(new User(password), opts);
 
-			user.initialize(keyphrase);
+			await user.initialize(keyphrase);
 
 			this.userService = user;
 			this.appStore.putState({ user });
 
-			return await user.prepareStorageData();
+			return await this.userService.prepareStorageData();
 		} catch (error) {
 			console.error(error);
 			throw Error('Error on create new User');
@@ -106,16 +106,12 @@ class AccountController {
 		return hdWallets;
 	};
 
-	getCurrentIndexByPublicKey = async ({ publicKey }) => {
-		return this.userService.getCurrentIndexByPublicKey(publicKey);
-	};
-
 	addWalletAccount = async ({ index, description }) => {
 		return this.userService.addWalletAccount(index, description);
 	};
 
-	setDefaultWallet = async ({ index }) => {
-		await this.userService.setDefaultWallet(index);
+	setSelectedWallet = async ({ uid }) => {
+		await this.userService.setSelectedWallet(uid);
 
 		return this.userService.prepareStorageData();
 	};

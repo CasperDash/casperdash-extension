@@ -7,9 +7,9 @@ import {
 	initConnectedAccountFromLocalStorage,
 	deleteAllUserData,
 	setPublicKeyToStore,
-	lockAccount
+	lockAccount,
 } from './userActions';
-import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from "./userActions.utils";
+import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from './userActions.utils';
 
 jest.mock('./userActions.utils', () => ({
 	getConnectedAccountChromeLocalStorage: jest.fn(),
@@ -22,12 +22,13 @@ jest.mock('@cd/services/localStorage', () => {
 		setChromeStorageLocal: jest.fn(),
 		setLocalStorageValue: jest.fn(),
 		getLocalStorageValue: jest.fn(),
+		clearChromeStorageLocal: jest.fn(),
 	};
 });
 
-jest.mock("@cd/hooks/useServiceWorker", () => ({
-	onClearUserSW: jest.fn()
-}))
+jest.mock('@cd/hooks/useServiceWorker', () => ({
+	onClearUserSW: jest.fn(),
+}));
 
 test('getUserDetails', () => {
 	expect(getUserDetails('test')).toEqual({
@@ -101,30 +102,33 @@ describe('initConnectedAccountFromLocalStorage', () => {
 	});
 });
 
-describe("Delete all data", () => {
+describe('Delete all data', () => {
 	test('deleteAllUserData', () => {
 		const mockDispatch = jest.fn();
 
 		deleteAllUserData()(mockDispatch);
 		expect(mockDispatch).toHaveBeenCalled();
 	});
-})
+});
 
-describe("lockAccount", () => {
+describe('lockAccount', () => {
 	test('lockAccount', async () => {
-		getConnectedAccountChromeLocalStorage.mockResolvedValue({ publicKey: 'testpk', loginOptions: { name: "Test"} });
+		getConnectedAccountChromeLocalStorage.mockResolvedValue({
+			publicKey: 'testpk',
+			loginOptions: { name: 'Test' },
+		});
 		const mockDispatch = jest.fn();
 		const mockGetState = jest.fn().mockImplementation(() => ({
 			user: {
-				loginOptions: { name: "Test" }
-			}
+				loginOptions: { name: 'Test' },
+			},
 		}));
 
 		await act(async () => {
 			await lockAccount()(mockDispatch, mockGetState);
-		})
+		});
 
-		expect(cacheLoginInfoToLocalStorage).toHaveBeenCalledWith("", { name: "Test"});
+		expect(cacheLoginInfoToLocalStorage).toHaveBeenCalledWith('', { name: 'Test' });
 		expect(mockDispatch).toHaveBeenCalled();
 	});
-})
+});

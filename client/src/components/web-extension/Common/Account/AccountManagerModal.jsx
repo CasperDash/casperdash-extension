@@ -7,19 +7,18 @@ import Spinner from 'react-bootstrap/Spinner';
 import isNil from 'lodash-es/isNil';
 import clsx from 'clsx';
 import useGetWallets from '@cd/hooks/useGetWallets';
-import { onBindingAuthInfo, updateAccountIndex } from '@cd/actions/userActions';
-import { addWalletAccount, setDefaultWallet } from '@cd/hooks/useServiceWorker';
+import { onBindingAuthInfo } from '@cd/actions/userActions';
+import { addWalletAccount, setSelectedWallet } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
-import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
 import { formatAccountName } from '@cd/helpers/format';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import './AccountManagerModal.scss';
-import { getPublicKey } from '@cd/selectors/user';
+import { getSelectedWallet } from '@cd/selectors/user';
 
-export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
+export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps }) => {
 	const dispatch = useDispatch();
-	const accountIndex = useSelector(getPublicKey);
+	const selectedWallet = useSelector(getSelectedWallet);
 
 	const [wallets, loadWallets, isLoading] = useGetWallets();
 
@@ -27,28 +26,33 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 		if (isOpen) {
 			loadWallets();
 		}
-	}, [isOpen, loadWallets]);
+		// isExistUser here because we should reload list wallets if lose session and login again
+	}, [isOpen, loadWallets, isExistUser]);
 
 	const handleAddNewWallet = () => {
 		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length))).then(() => {
-
 			return loadWallets();
 		});
 	};
 
-	const handleOnSelectWallet = (index) => {
-		setDefaultWallet(index).then((result) => {
+	const handleOnSelectWallet = (uid) => {
+		setSelectedWallet(uid).then((result) => {
 			const { publicKey, userDetails } = result;
-
 			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }));
-			dispatch(updateAccountIndex(index));
 
 			onClose();
 		});
 	};
 
 	return (
-		<Modal show={isOpen} onHide={onClose} backdropClassName="cd_we_accounts-modal--backdrop" className="cd_we_accounts-modal" centered {...restProps}>
+		<Modal
+			show={isOpen}
+			onHide={onClose}
+			backdropClassName="cd_we_accounts-modal--backdrop"
+			className="cd_we_accounts-modal"
+			centered
+			{...restProps}
+		>
 			<Modal.Header>
 				<button className="cd_we_accounts-modal__btn-close" onClick={onClose}>
 					<CloseIcon />
@@ -56,20 +60,27 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 			</Modal.Header>
 			<Modal.Body>
 				<ul className="cd_we_accounts-modal__list">
-					{wallets.map((wallet, index) => (
+					{wallets.map((wallet) => (
 						<li
-							key={`wallet-${index}`}
-							className={
-								clsx('cd_we_accounts-modal__list-item', { selected: wallet.publicKey === accountIndex})
-							}
-							onClick={() => handleOnSelectWallet(index)}
+							key={wallet.uid}
+							className={clsx('cd_we_accounts-modal__list-item', {
+								selected: wallet.uid === selectedWallet.uid,
+							})}
+							onClick={() => handleOnSelectWallet(wallet.uid)}
 						>
-							<div>{wallet.descriptor ? wallet.descriptor.name.name : formatAccountName(index)}</div>
+							<div>{wallet.descriptor.name}</div>
 							<div className="cd_we_accounts-modal__list-item-balance">
 								{isNil(wallet.balance) ? (
-									<Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="cd_we_accounts-modal__list-item-loading"/>
+									<Spinner
+										as="span"
+										animation="border"
+										size="sm"
+										role="status"
+										aria-hidden="true"
+										className="cd_we_accounts-modal__list-item-loading"
+									/>
 								) : (
-									<MiddleTruncatedText>{`${wallet.balance}`}</MiddleTruncatedText> 
+									wallet.balance
 								)}
 								<span>CSPR</span>
 							</div>
@@ -79,7 +90,12 @@ export const AccountManagerModal = ({ isOpen, onClose, ...restProps }) => {
 			</Modal.Body>
 			<Divider className="cd_we_accounts-modal__divider" />
 			<Modal.Footer>
-				<Button variant="link" className="cd_we_accounts-modal__btn-action" disabled={isLoading} onClick={handleAddNewWallet}>
+				<Button
+					variant="link"
+					className="cd_we_accounts-modal__btn-action"
+					disabled={isLoading}
+					onClick={handleAddNewWallet}
+				>
 					<span className="btn-icon">
 						<PlusIcon />
 					</span>

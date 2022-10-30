@@ -24,7 +24,6 @@ function keepAliveForced() {
 }
 
 async function keepAlive() {
-	console.info(chrome.tabs.query({}));
 	if (lifeline) return;
 	for (const tab of await chrome.tabs.query({})) {
 		try {
@@ -67,11 +66,9 @@ async function setupPopupServices() {
 	rpc.register('accountManager.getKeyphrase', accountController.getKeyphrase);
 
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
-	rpc.register('accountManager.getCurrentUser', accountController.getCurrentUser);
 	rpc.register('accountManager.getHDWallets', accountController.getHDWallets);
 	rpc.register('accountManager.addWalletAccount', accountController.addWalletAccount);
-	rpc.register('accountManager.setDefaultWallet', accountController.setDefaultWallet);
+	rpc.register('accountManager.setSelectedWallet', accountController.setSelectedWallet);
 	rpc.register('accountManager.clearUser', accountController.clearUser);
 	rpc.register('accountManager.isUserExist', accountController.isUserExist);
-	rpc.register('accountManager.getCurrentIndexByPublicKey', accountController.getCurrentIndexByPublicKey);
 }

@@ -1,34 +1,30 @@
-import { WalletDescriptor, User, EncryptionType } from 'casper-storage';
+import { WalletDescriptor, User, EncryptionType, CasperLegacyWallet } from 'casper-storage';
 import { Keys } from 'casper-js-sdk';
-import capitalize from 'lodash-es/capitalize';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
+import { setChromeStorageLocal, getChromeStorageLocal } from '@cd/services/localStorage';
 /**
  * This class serves every tasks related to User
  * From extension to service worker and vice versa
  */
 export class UserService {
 	_user;
-	currentWalletIndex = 0;
+	selectedWalletUID;
 	connectionType = CONNECTION_TYPES.privateKey;
-
-	static convertSaltInfo(salt) {
-		const saltInfo = Object.keys(salt).map((key) => salt[key]);
-		return new Uint8Array(saltInfo);
-	}
 
 	static async makeUserFromCache(password, cacheConnectedAccount) {
 		const {
-			loginOptions: { userInfo: encryptedUserInfo },
+			loginOptions: { userInfo: encryptedUserInfo, selectedWallet },
 		} = cacheConnectedAccount;
 
 		// Deserialize user info to an instance of User
-		return await User.deserializeFrom(password, encryptedUserInfo);
+		const userCache = await User.deserializeFrom(password, encryptedUserInfo);
+		return { userCache, selectedWallet };
 	}
 
 	constructor(user, opts = {}) {
 		this.instance = user;
 		this.encryptionType = opts?.encryptionType ?? EncryptionType.Ed25519;
-		this.currentWalletIndex = opts?.currentWalletIndex ?? 0;
+		this.selectedWalletUID = opts?.selectedWalletUID;
 	}
 
 	/**
@@ -53,14 +49,30 @@ export class UserService {
 		// Set HDWallet info
 		user.setHDWallet(keyphrase, this.encryptionType);
 		await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
+		const wallets = user.getHDWallet().derivedWallets || [];
+		const selectedWallet = wallets[0];
 
-		return this;
+		this.setSelectedWallet(selectedWallet.uid);
+		return user;
 	};
 
-	getPublicKey = async (index = 0) => {
-		try {
-			const user = this.instance;
+	getWalletDetails = async (uid) => {
+		const user = this.instance;
+		const fullWalletInfo = user.getWalletInfo(uid);
+
+		if (fullWalletInfo.isHDWallet) {
+			const index = fullWalletInfo.index;
 			const wallet = await user.getWalletAccount(index);
+			return wallet;
+		} else if (fullWalletInfo.isLegacy) {
+			const wallet = new CasperLegacyWallet(fullWalletInfo.id, fullWalletInfo.encryptionType);
+			return wallet;
+		}
+	};
+
+	getPublicKey = async (uid) => {
+		try {
+			const wallet = await this.getWalletDetails(uid);
 
 			return wallet?.getPublicKey() ?? undefined;
 		} catch (err) {
@@ -80,29 +92,53 @@ export class UserService {
 		// Serialize user information to a secure encrypted string
 		const userInfo = await user.serialize();
 
-		return {
-			userInfo,
-		};
+		return userInfo;
+	};
+
+	/* Storing the public key and login options in the chrome storage. */
+	storeData = async (publicKey, loginOptions) => {
+		if (publicKey) {
+			await setChromeStorageLocal({ key: 'publicKey', value: publicKey ?? '' });
+		}
+		const storedLoginOptions = await getChromeStorageLocal('loginOptions');
+
+		await setChromeStorageLocal({
+			key: 'loginOptions',
+			value: { ...(storedLoginOptions && storedLoginOptions.loginOptions), ...loginOptions },
+		});
 	};
 
 	/**
 	 * Return full data needed for storing in redux store
 	 * and Google chrome storage API
+	 * isLoad : no need to store data if loading user
 	 * @returns
 	 */
-	prepareStorageData = async () => {
+	prepareStorageData = async (isLoad) => {
 		/**
 		 * Ignore removing `await` from Sonarcloud audit.
 		 * This will return user info with hash info
 		 */
+		const user = this.instance;
 		const userInfo = await this.getUserInfoHash();
-		const publicKey = await this.getPublicKey(this.currentWalletIndex);
+		const publicKey = await this.getPublicKey(this.selectedWalletUID);
+		const walletDetails = await this.getWalletDetails(this.selectedWalletUID);
+		const wallet = user.getWalletInfo(walletDetails.getReferenceKey());
+
+		const selectedWallet = {
+			descriptor: wallet.descriptor,
+			uid: wallet.uid,
+			encryptionType: wallet.encryptionType,
+		};
+		if (!isLoad) {
+			await this.storeData(publicKey, { userInfo, selectedWallet, connectionType: this.connectionType });
+		}
 
 		return {
 			publicKey,
 			userDetails: {
-				userInfo: userInfo.userInfo,
-				currentWalletIndex: this.currentWalletIndex,
+				selectedWallet,
+				connectionType: this.connectionType,
 			},
 		};
 	};
@@ -113,16 +149,23 @@ export class UserService {
 	 */
 	generateKeypair = async () => {
 		try {
-			const user = this.instance;
+			let publicKey;
+			let privateKey;
+			const walletDetails = await this.getWalletDetails(this.selectedWalletUID);
+			if (walletDetails) {
+				publicKey = await walletDetails.getPublicKeyByteArray();
+				privateKey = walletDetails.getPrivateKeyByteArray();
 
-			const wallet = await user.getWalletAccount(this.currentWalletIndex);
-			const encryptionType = wallet?.getEncryptionType();
-
-			const publicKey = await wallet.getPublicKeyByteArray();
-			const secretKey = wallet.getPrivateKeyByteArray();
-			const trimmedPublicKey = publicKey.slice(1);
-
-			return Keys[capitalize(encryptionType)].parseKeyPair(trimmedPublicKey, secretKey);
+				// need to slice prefix
+				const trimmedPublicKey = publicKey.slice(1);
+				if (walletDetails.encryptionType === EncryptionType.Ed25519) {
+					return Keys.Ed25519.parseKeyPair(trimmedPublicKey, privateKey);
+				} else {
+					return Keys.Secp256K1.parseKeyPair(trimmedPublicKey, privateKey, 'raw');
+				}
+			} else {
+				throw Error('Error on get Keys');
+			}
 		} catch (error) {
 			return undefined;
 		}
@@ -131,30 +174,27 @@ export class UserService {
 	getHDWallets = async () => {
 		const user = this.instance;
 
-		const wallets = (await user.getHDWallet()._derivedWallets) || [];
+		const wallets = (await user.getHDWallet().derivedWallets) || [];
+
 		if (wallets.length === 0) {
 			return wallets;
 		}
 
 		return Promise.all(
-			wallets.map(async (wallet, index) => ({
-				...wallet,
-				publicKey: await this.getPublicKey(index),
+			wallets.map(async (wallet) => ({
+				//should not spread wallet here, wallet have some sensitive info
+				descriptor: wallet.descriptor,
+				uid: wallet.uid,
+				encryptionType: wallet.encryptionType,
+				publicKey: await this.getPublicKey(wallet.uid),
 			})),
 		);
 	};
 
-	getCurrentIndexByPublicKey = async (publicKey) => {
-		const wallets = await this.getHDWallets();
-		const foundIndex = wallets.findIndex((wallet) => wallet.publicKey === publicKey);
-
-		return Math.max(foundIndex, 0);
-	};
-
 	addWalletAccount = async (index, description) => {
 		const user = this.instance;
-
-		return user.addWalletAccount(index, new WalletDescriptor(description));
+		user.addWalletAccount(index, description);
+		return await this.prepareStorageData();
 	};
 
 	getKeyphrase = async () => {
@@ -163,8 +203,8 @@ export class UserService {
 		return user.getHDWallet().keyPhrase;
 	};
 
-	setDefaultWallet = async (index) => {
-		this.currentWalletIndex = parseInt(index, 10);
+	setSelectedWallet = (uid) => {
+		this.selectedWalletUID = uid;
 	};
 }
 

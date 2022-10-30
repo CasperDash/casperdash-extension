@@ -107,7 +107,7 @@ const ValidateKeyphrasePage = () => {
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
-			<div className="cd_we_create-wallet-layout--body">
+			<div className="cd_we_create-wallet-layout--body cd_we_validate-keyphrase--body">
 				<p>You need to choose {totalWordCheck} correct words to complete</p>
 				<div className="cd_we_validate-keyphrase--wrapper">
 					{wordsTemplate.map((group, groupIndex) => {

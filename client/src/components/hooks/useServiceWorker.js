@@ -45,10 +45,6 @@ const getActivePublicKey = async () => {
 	return sentMessage({ methodName: 'accountManager.getPublicKey' });
 };
 
-const getCurrentUserSW = async () => {
-	return sentMessage({ methodName: 'accountManager.getCurrentUser' });
-};
-
 const getUserHDWallets = async () => {
 	return sentMessage({ methodName: 'accountManager.getHDWallets' });
 };
@@ -57,8 +53,8 @@ const addWalletAccount = async (index, description) => {
 	return sentMessage({ methodName: 'accountManager.addWalletAccount', params: { index, description } });
 };
 
-const setDefaultWallet = async (index) => {
-	return sentMessage({ methodName: 'accountManager.setDefaultWallet', params: { index } });
+const setSelectedWallet = async (uid) => {
+	return sentMessage({ methodName: 'accountManager.setSelectedWallet', params: { uid } });
 };
 
 const onClearUserSW = async () => {
@@ -67,10 +63,6 @@ const onClearUserSW = async () => {
 
 const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
-};
-
-const getCurrentIndexByPublicKey = async (publicKey) => {
-	return sentMessage({ methodName: 'accountManager.getCurrentIndexByPublicKey', params: { publicKey } });
 };
 
 const getKeyphrase = async () => {
@@ -90,14 +82,12 @@ export {
 	onSignPrivateKeySW,
 	generatePrivateKeypairSW,
 	validateReturningUserSW,
-	getCurrentUserSW,
 	onClearUserSW,
 	createUserServiceSW,
 	getActivePublicKey,
 	getUserHDWallets,
 	addWalletAccount,
-	setDefaultWallet,
+	setSelectedWallet,
 	isUserExist,
-	getCurrentIndexByPublicKey,
 	getKeyphrase,
 };
