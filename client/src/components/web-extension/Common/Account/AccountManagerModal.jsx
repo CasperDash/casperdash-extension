@@ -15,10 +15,13 @@ import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import './AccountManagerModal.scss';
 import { getSelectedWallet } from '@cd/selectors/user';
+import ImportAccount from '@cd/assets/image/ic-import-account.svg';
+import { useNavigate } from 'react-router-dom';
 
 export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps }) => {
 	const dispatch = useDispatch();
 	const selectedWallet = useSelector(getSelectedWallet);
+	const navigate = useNavigate();
 
 	const [wallets, loadWallets, isLoading] = useGetWallets();
 
@@ -101,14 +104,18 @@ export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps
 					</span>
 					<span className="btn-text">Create New Account</span>
 				</Button>
-				{/* 
-				// TODO: Show button after feature developed.
-				<Button variant="link" onClick={onClose} className="cd_we_accounts-modal__btn-action import-account">
+
+				{/* // TODO: Show button after feature developed. */}
+				<Button
+					variant="link"
+					onClick={() => navigate('/importAccount', { state: { name: 'Import Account' } })}
+					className="cd_we_accounts-modal__btn-action import-account"
+				>
 					<span className="btn-icon">
 						<ImportAccount />
 					</span>
 					<span className="btn-text">Import Account</span>
-				</Button> */}
+				</Button>
 			</Modal.Footer>
 		</Modal>
 	);

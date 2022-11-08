@@ -61,7 +61,6 @@ async function setupPopupServices() {
 	rpc.register('accountManager.createUser', accountController.createNewUser);
 	rpc.register('accountManager.validateReturningUser', accountController.validateReturningUser);
 
-	rpc.register('accountManager.generateKeypair', accountController.generateKeypair);
 	rpc.register('accountManager.signPrivateKeyProcess', accountController.signPrivateKeyProcess);
 	rpc.register('accountManager.getKeyphrase', accountController.getKeyphrase);
 
@@ -71,4 +70,5 @@ async function setupPopupServices() {
 	rpc.register('accountManager.setSelectedWallet', accountController.setSelectedWallet);
 	rpc.register('accountManager.clearUser', accountController.clearUser);
 	rpc.register('accountManager.isUserExist', accountController.isUserExist);
+	rpc.register('accountManager.addLegacyAccount', accountController.addLegacyAccount);
 }
