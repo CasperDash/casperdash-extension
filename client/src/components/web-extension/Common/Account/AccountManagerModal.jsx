@@ -108,7 +108,10 @@ export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps
 				{/* // TODO: Show button after feature developed. */}
 				<Button
 					variant="link"
-					onClick={() => navigate('/importAccount', { state: { name: 'Import Account' } })}
+					onClick={() => {
+						onClose();
+						navigate('/importAccount', { state: { name: 'Import Account' } });
+					}}
 					className="cd_we_accounts-modal__btn-action import-account"
 				>
 					<span className="btn-icon">

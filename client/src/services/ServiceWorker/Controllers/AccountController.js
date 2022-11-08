@@ -88,10 +88,10 @@ class AccountController {
 		return this.userService.getKeyphrase();
 	};
 
-	getHDWallets = async () => {
-		const hdWallets = (await this.userService.getHDWallets()) || [];
+	getWallets = async () => {
+		const wallets = (await this.userService.getWallets()) || [];
 
-		return hdWallets;
+		return wallets;
 	};
 
 	addWalletAccount = async ({ index, description }) => {

@@ -65,7 +65,7 @@ async function setupPopupServices() {
 	rpc.register('accountManager.getKeyphrase', accountController.getKeyphrase);
 
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
-	rpc.register('accountManager.getHDWallets', accountController.getHDWallets);
+	rpc.register('accountManager.getWallets', accountController.getWallets);
 	rpc.register('accountManager.addWalletAccount', accountController.addWalletAccount);
 	rpc.register('accountManager.setSelectedWallet', accountController.setSelectedWallet);
 	rpc.register('accountManager.clearUser', accountController.clearUser);

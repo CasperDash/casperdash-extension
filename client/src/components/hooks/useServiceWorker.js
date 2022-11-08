@@ -41,8 +41,8 @@ const getActivePublicKey = async () => {
 	return sentMessage({ methodName: 'accountManager.getPublicKey' });
 };
 
-const getUserHDWallets = async () => {
-	return sentMessage({ methodName: 'accountManager.getHDWallets' });
+const getUserWallets = async () => {
+	return sentMessage({ methodName: 'accountManager.getWallets' });
 };
 
 const addWalletAccount = async (index, description) => {
@@ -84,7 +84,7 @@ export {
 	onClearUserSW,
 	createUserServiceSW,
 	getActivePublicKey,
-	getUserHDWallets,
+	getUserWallets,
 	addWalletAccount,
 	setSelectedWallet,
 	isUserExist,
