@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { addLegacyAccount } from '@cd/components/hooks/useServiceWorker';
-import useGetWallets from '@cd/hooks/useGetWallets';
+import { onBindingAuthInfo } from '@cd/actions/userActions';
 import './ImportAccount.scss';
+import { useDispatch } from 'react-redux';
 
 const ImportAccount = () => {
 	const navigate = useNavigate();
-	const [, loadWallets] = useGetWallets();
+	const dispatch = useDispatch();
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [name, setName] = useState();
@@ -17,8 +18,9 @@ const ImportAccount = () => {
 	const onImportAccount = async () => {
 		try {
 			setIsLoading(true);
-			await addLegacyAccount(name, secretKey);
-			await loadWallets();
+			const { publicKey, userDetails } = await addLegacyAccount(name, secretKey);
+
+			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }));
 			setIsLoading(false);
 			navigate('/');
 		} catch (error) {
