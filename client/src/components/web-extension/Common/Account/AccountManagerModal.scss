@@ -64,11 +64,10 @@ $padding: 24px;
 		}
 
 		&-item-balance {
-			max-width: 80px;
 			display: flex;
 			align-items: center;
 			gap: 4px;
-			
+
 			&--loading {
 				margin-bottom: -1px;
 			}
