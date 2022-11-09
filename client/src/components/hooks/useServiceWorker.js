@@ -37,16 +37,12 @@ const validateReturningUserSW = async (password) => {
 	return sentMessage({ methodName: 'accountManager.validateReturningUser', params: { password } });
 };
 
-const generatePrivateKeypairSW = async () => {
-	return sentMessage({ methodName: 'accountManager.generateKeypair' });
-};
-
 const getActivePublicKey = async () => {
 	return sentMessage({ methodName: 'accountManager.getPublicKey' });
 };
 
-const getUserHDWallets = async () => {
-	return sentMessage({ methodName: 'accountManager.getHDWallets' });
+const getUserWallets = async () => {
+	return sentMessage({ methodName: 'accountManager.getWallets' });
 };
 
 const addWalletAccount = async (index, description) => {
@@ -69,6 +65,10 @@ const getKeyphrase = async () => {
 	return sentMessage({ methodName: 'accountManager.getKeyphrase' });
 };
 
+const addLegacyAccount = async (name, secretKey) => {
+	return sentMessage({ methodName: 'accountManager.addLegacyAccount', params: { name, secretKey } });
+};
+
 /**
  *
  * Signing Deploy actions
@@ -80,14 +80,14 @@ const onSignPrivateKeySW = async (deployJSON) =>
 export {
 	sentMessage,
 	onSignPrivateKeySW,
-	generatePrivateKeypairSW,
 	validateReturningUserSW,
 	onClearUserSW,
 	createUserServiceSW,
 	getActivePublicKey,
-	getUserHDWallets,
+	getUserWallets,
 	addWalletAccount,
 	setSelectedWallet,
 	isUserExist,
 	getKeyphrase,
+	addLegacyAccount,
 };

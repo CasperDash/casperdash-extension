@@ -17,18 +17,6 @@ class AccountController {
 		return this.userService;
 	};
 
-	generateKeypair = async () => {
-		try {
-			if (!this.userService) {
-				throw new Error('Missing UserService instance');
-			}
-
-			return await this.userService.generateKeypair();
-		} catch (error) {
-			return undefined;
-		}
-	};
-
 	validateReturningUser = async ({ password }) => {
 		const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
 
@@ -100,10 +88,10 @@ class AccountController {
 		return this.userService.getKeyphrase();
 	};
 
-	getHDWallets = async () => {
-		const hdWallets = (await this.userService.getHDWallets()) || [];
+	getWallets = async () => {
+		const wallets = (await this.userService.getWallets()) || [];
 
-		return hdWallets;
+		return wallets;
 	};
 
 	addWalletAccount = async ({ index, description }) => {
@@ -118,6 +106,10 @@ class AccountController {
 
 	isUserExist = () => {
 		return !!this.userService;
+	};
+
+	addLegacyAccount = async ({ name, secretKey }) => {
+		return await this.userService.addLegacyAccount(name, secretKey);
 	};
 }
 

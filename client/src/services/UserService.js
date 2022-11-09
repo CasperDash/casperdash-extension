@@ -1,4 +1,4 @@
-import { WalletDescriptor, User, EncryptionType, CasperLegacyWallet } from 'casper-storage';
+import { WalletDescriptor, User, EncryptionType, CasperLegacyWallet, KeyParser } from 'casper-storage';
 import { Keys } from 'casper-js-sdk';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
 import { setChromeStorageLocal, getChromeStorageLocal } from '@cd/services/localStorage';
@@ -39,6 +39,10 @@ export class UserService {
 	 */
 	get instance() {
 		return this._user ?? undefined;
+	}
+
+	set selectedWalletUID(uid) {
+		this.selectedWalletUID = uid;
 	}
 
 	/**
@@ -114,15 +118,15 @@ export class UserService {
 	 * isLoad : no need to store data if loading user
 	 * @returns
 	 */
-	prepareStorageData = async (isLoad) => {
+	prepareStorageData = async (isLoad, uid) => {
 		/**
 		 * Ignore removing `await` from Sonarcloud audit.
 		 * This will return user info with hash info
 		 */
 		const user = this.instance;
 		const userInfo = await this.getUserInfoHash();
-		const publicKey = await this.getPublicKey(this.selectedWalletUID);
-		const walletDetails = await this.getWalletDetails(this.selectedWalletUID);
+		const publicKey = await this.getPublicKey(uid || this.selectedWalletUID);
+		const walletDetails = await this.getWalletDetails(uid || this.selectedWalletUID);
 		const wallet = user.getWalletInfo(walletDetails.getReferenceKey());
 
 		const selectedWallet = {
@@ -171,17 +175,17 @@ export class UserService {
 		}
 	};
 
-	getHDWallets = async () => {
+	getWallets = async () => {
 		const user = this.instance;
 
-		const wallets = (await user.getHDWallet().derivedWallets) || [];
-
-		if (wallets.length === 0) {
-			return wallets;
+		const wallets = user.getHDWallet().derivedWallets || [];
+		const legacyWallets = user.getLegacyWallets() || [];
+		if (wallets.length === 0 && legacyWallets.length === 0) {
+			return [];
 		}
 
-		return Promise.all(
-			wallets.map(async (wallet) => ({
+		return await Promise.all(
+			wallets.concat(legacyWallets).map(async (wallet) => ({
 				//should not spread wallet here, wallet have some sensitive info
 				descriptor: wallet.descriptor,
 				uid: wallet.uid,
@@ -205,6 +209,22 @@ export class UserService {
 
 	setSelectedWallet = (uid) => {
 		this.selectedWalletUID = uid;
+	};
+
+	addLegacyAccount = async (name, secretKey) => {
+		try {
+			const user = this.instance;
+			const keyParser = KeyParser.getInstance();
+			const keyValue = keyParser.convertPEMToPrivateKey(secretKey);
+			const wallet = new CasperLegacyWallet(keyValue.key, keyValue.encryptionType);
+
+			user.addLegacyWallet(wallet, new WalletDescriptor(name));
+			const walletInfo = user.getWalletInfo(wallet.getReferenceKey());
+			this.selectedWalletUID = walletInfo.uid;
+			return await this.prepareStorageData(false, walletInfo.uid);
+		} catch (error) {
+			throw Error(error.message);
+		}
 	};
 }
 

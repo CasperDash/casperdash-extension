@@ -3,7 +3,7 @@ import { WalletDescriptor } from 'casper-storage';
 import isNil from 'lodash-es/isNil';
 import get from 'lodash-es/get';
 import { formatAccountName } from '@cd/helpers/format';
-import { getUserHDWallets, addWalletAccount } from '@cd/hooks/useServiceWorker';
+import { getUserWallets, addWalletAccount } from '@cd/hooks/useServiceWorker';
 import { getAccounts } from '@cd/services/userServices';
 import { convertBalanceFromHex } from '@cd/helpers/balance';
 
@@ -12,10 +12,10 @@ const useGetWallets = () => {
 	const [wallets, setWallets] = useState([]);
 
 	const loadWalletsFromStorage = useCallback(async () => {
-		let hdWallets = await getUserHDWallets();
+		let hdWallets = await getUserWallets();
 		if (hdWallets.length === 0) {
 			await addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName()));
-			hdWallets = await getUserHDWallets();
+			hdWallets = await getUserWallets();
 		}
 
 		return hdWallets;
