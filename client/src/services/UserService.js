@@ -41,10 +41,6 @@ export class UserService {
 		return this._user ?? undefined;
 	}
 
-	set selectedWalletUID(uid) {
-		this.selectedWalletUID = uid;
-	}
-
 	/**
 	 * Initialize with `keyphrase` passed when creating new User
 	 */
