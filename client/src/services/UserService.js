@@ -226,6 +226,16 @@ export class UserService {
 			throw Error(error.message);
 		}
 	};
+
+	getPrivateKeyPEM = async (uid) => {
+		try {
+			const wallet = await this.getWalletDetails(uid);
+			return wallet?.getPrivateKeyInPEM();
+		} catch (error) {
+			console.error(error);
+			throw Error(error.message);
+		}
+	};
 }
 
 export default UserService;

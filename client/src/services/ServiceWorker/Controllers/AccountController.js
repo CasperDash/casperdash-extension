@@ -111,6 +111,16 @@ class AccountController {
 	addLegacyAccount = async ({ name, secretKey }) => {
 		return await this.userService.addLegacyAccount(name, secretKey);
 	};
+
+	getPrivateKey = async ({ password }) => {
+		try {
+			const { userDetails } = await this.validateReturningUser({ password });
+			return await this.userService.getPrivateKeyPEM(userDetails.selectedWallet.uid);
+		} catch (error) {
+			console.error(error);
+			throw Error('Invalid password');
+		}
+	};
 }
 
 export default AccountController;

@@ -8,7 +8,7 @@ import isNil from 'lodash-es/isNil';
 import clsx from 'clsx';
 import useGetWallets from '@cd/hooks/useGetWallets';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
-import { addWalletAccount, setSelectedWallet } from '@cd/hooks/useServiceWorker';
+import { addWalletAccount, setSelectedWallet, getPrivateKey } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 import { formatAccountName } from '@cd/helpers/format';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
@@ -18,11 +18,15 @@ import { getSelectedWallet } from '@cd/selectors/user';
 import ImportAccount from '@cd/assets/image/ic-import-account.svg';
 import Key from '@cd/assets/image/ic-key.svg';
 import { useNavigate } from 'react-router-dom';
+import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
+import { useState } from 'react';
+import { useCallback } from 'react';
 
 export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps }) => {
 	const dispatch = useDispatch();
 	const selectedWallet = useSelector(getSelectedWallet);
 	const navigate = useNavigate();
+	const [showEnterPassword, setShowEnterPassword] = useState(false);
 
 	const [wallets, loadWallets, isLoading] = useGetWallets();
 
@@ -47,6 +51,16 @@ export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps
 			onClose();
 		});
 	};
+
+	const onViewPrivateKey = useCallback(
+		async (password) => {
+			const privateKey = await getPrivateKey(password);
+			navigate('/viewPrivateKey', {
+				state: { name: 'Private Key', privateKey: privateKey, accountName: selectedWallet.descriptor.name },
+			});
+		},
+		[navigate, selectedWallet],
+	);
 
 	return (
 		<Modal
@@ -122,8 +136,7 @@ export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps
 				<Button
 					variant="link"
 					onClick={() => {
-						onClose();
-						navigate('/importAccount', { state: { name: 'Import Account' } });
+						setShowEnterPassword(true);
 					}}
 					className="cd_we_accounts-modal__btn-action import-account"
 				>
@@ -133,6 +146,15 @@ export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps
 					<span className="btn-text">View PrivateKey</span>
 				</Button>
 			</Modal.Footer>
+			{showEnterPassword && (
+				<EnterPasswordModal
+					isOpen={showEnterPassword}
+					onCloseModal={() => setShowEnterPassword(false)}
+					title="View Private Key"
+					description="Enter password to continue"
+					onSubmitPassword={onViewPrivateKey}
+				/>
+			)}
 		</Modal>
 	);
 };

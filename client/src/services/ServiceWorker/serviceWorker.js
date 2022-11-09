@@ -71,4 +71,5 @@ async function setupPopupServices() {
 	rpc.register('accountManager.clearUser', accountController.clearUser);
 	rpc.register('accountManager.isUserExist', accountController.isUserExist);
 	rpc.register('accountManager.addLegacyAccount', accountController.addLegacyAccount);
+	rpc.register('accountManager.getPrivateKey', accountController.getPrivateKey);
 }
