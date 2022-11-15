@@ -1,9 +1,10 @@
+import { DEFAULT_AUTO_LOCK_TIME } from '@cd/constants/key';
 import { SETTINGS } from '../actionTypes';
 
 export default function userReducer(
 	state = {
 		theme: '',
-		autoLockTime: 5
+		autoLockTime: DEFAULT_AUTO_LOCK_TIME,
 	},
 	action,
 ) {
