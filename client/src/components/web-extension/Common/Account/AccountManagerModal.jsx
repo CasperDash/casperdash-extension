@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { WalletDescriptor } from 'casper-storage';
 import Modal from 'react-bootstrap/Modal';
@@ -19,8 +19,6 @@ import ImportAccount from '@cd/assets/image/ic-import-account.svg';
 import Key from '@cd/assets/image/ic-key.svg';
 import { useNavigate } from 'react-router-dom';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
-import { useState } from 'react';
-import { useCallback } from 'react';
 
 export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps }) => {
 	const dispatch = useDispatch();
