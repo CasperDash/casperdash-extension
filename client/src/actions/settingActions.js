@@ -11,3 +11,7 @@ export const switchTheme = (theme) => {
 	}
 	return { type: SETTINGS.SWITCH_THEME, payload: { theme } };
 };
+
+export const updateAutoLockTime = (autoLockTime) => {
+	return { type: SETTINGS.SET_AUTO_LOCK_TIME, payload: { autoLockTime } };
+};

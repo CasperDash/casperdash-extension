@@ -52,6 +52,16 @@ const SETTINGS = [
 		},
 	},
 	{
+		name: 'Advanced',
+		icon: {
+			className: 'cd_we_setting_recovery_phrase',
+			img: <LockIcon />,
+		},
+		action: ({ navigate }) => {
+			navigate('/advanced', { state: { name: 'Advanced' } });
+		},
+	},
+	{
 		name: 'Version',
 		icon: {
 			className: 'cd_we_setting_recovery_phrase',

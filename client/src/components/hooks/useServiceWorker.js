@@ -93,6 +93,7 @@ export {
 	setSelectedWallet,
 	isUserExist,
 	getKeyphrase,
+	browser,
 	addLegacyAccount,
 	getPrivateKey,
 };

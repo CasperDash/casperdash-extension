@@ -33,7 +33,7 @@ const ConfirmModal = ({
 
 ConfirmModal.propTypes = {
 	title: PropTypes.string,
-	description: PropTypes.string,
+	description: PropTypes.oneOfType([PropTypes.string | PropTypes.object]),
 	buttonOkText: PropTypes.string,
 	buttonCloseText: PropTypes.string,
 	isOpen: PropTypes.bool,

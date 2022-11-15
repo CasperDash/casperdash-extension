@@ -16,7 +16,7 @@ const asyncAccountValidator = (navigate, location) => {
 		 */
 		const isValidUserShape = Boolean(user && !isEmpty(user?.loginOptions));
 
-		if (!publicKey && isValidUserShape) {
+		if (isValidUserShape && !user.publicKey) {
 			navigate('/welcomeBack');
 			return;
 		}
@@ -40,6 +40,7 @@ const useWithAccount = () => {
 
 	useEffect(() => {
 		dispatch(asyncAccountValidator(navigate, location));
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -20,6 +20,7 @@ import loginModalReducer from './reducers/loginModal';
 import settingsReducer from './reducers/settings';
 import createWalletReducer, { initialState as createWalletInitialState } from './reducers/createWallet';
 import { REQUEST } from './actionTypes';
+import { DEFAULT_AUTO_LOCK_TIME } from '@cd/constants/key';
 
 const isChromeExtension = isUsingExtension();
 const persistConfig = {
@@ -52,6 +53,7 @@ export const initialState = {
 	},
 	settings: {
 		theme: '',
+		autoLockTime: DEFAULT_AUTO_LOCK_TIME,
 	},
 	nfts: {
 		address: [],
