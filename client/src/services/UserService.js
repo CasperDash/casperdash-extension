@@ -41,10 +41,6 @@ export class UserService {
 		return this._user ?? undefined;
 	}
 
-	set selectedWalletUID(uid) {
-		this.selectedWalletUID = uid;
-	}
-
 	/**
 	 * Initialize with `keyphrase` passed when creating new User
 	 */
@@ -223,6 +219,16 @@ export class UserService {
 			this.selectedWalletUID = walletInfo.uid;
 			return await this.prepareStorageData(false, walletInfo.uid);
 		} catch (error) {
+			throw Error(error.message);
+		}
+	};
+
+	getPrivateKeyPEM = async (uid) => {
+		try {
+			const wallet = await this.getWalletDetails(uid);
+			return wallet?.getPrivateKeyInPEM();
+		} catch (error) {
+			console.error(error);
 			throw Error(error.message);
 		}
 	};

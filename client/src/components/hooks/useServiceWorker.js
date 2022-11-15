@@ -69,6 +69,10 @@ const addLegacyAccount = async (name, secretKey) => {
 	return sentMessage({ methodName: 'accountManager.addLegacyAccount', params: { name, secretKey } });
 };
 
+const getPrivateKey = async (password) => {
+	return sentMessage({ methodName: 'accountManager.getPrivateKey', params: { password } });
+};
+
 /**
  *
  * Signing Deploy actions
@@ -90,4 +94,5 @@ export {
 	isUserExist,
 	getKeyphrase,
 	addLegacyAccount,
+	getPrivateKey,
 };

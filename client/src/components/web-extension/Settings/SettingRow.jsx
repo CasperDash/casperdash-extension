@@ -47,6 +47,8 @@ const SettingRow = ({ setting }) => {
 				isOpen={isOpenModal}
 				onLoginSuccess={handleOnLoginSuccess}
 				onCloseModal={handleOnCloseLoginModal}
+				title="Recovery Phrase"
+				description="Please enter password to continue"
 			/>
 		</div>
 	);

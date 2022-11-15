@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { WalletDescriptor } from 'casper-storage';
 import isNil from 'lodash-es/isNil';
 import get from 'lodash-es/get';
-import { formatAccountName } from '@cd/helpers/format';
+import { formatAccountName, toFormattedNumber } from '@cd/helpers/format';
 import { getUserWallets, addWalletAccount } from '@cd/hooks/useServiceWorker';
 import { getAccounts } from '@cd/services/userServices';
 import { convertBalanceFromHex } from '@cd/helpers/balance';
@@ -32,7 +32,9 @@ const useGetWallets = () => {
 
 			return {
 				...wallet,
-				balance: foundAccount ? convertBalanceFromHex(foundAccount.balance.hex) : get(wallet, 'balance', 0),
+				balance: foundAccount
+					? toFormattedNumber(convertBalanceFromHex(foundAccount.balance.hex))
+					: get(wallet, 'balance', 0),
 			};
 		});
 

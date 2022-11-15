@@ -24,7 +24,7 @@
 		overflow: auto;
 		justify-content: space-between;
 		list-style: none;
-		width: 48%;
+		width: 100%;
 		padding: 0;
 	}
 
@@ -45,7 +45,7 @@
 	&__word {
 		margin-top: 20px;
 		margin-right: 20px;
-		width: 100%;
+		width: 50%;
 
 		& .counter {
 			color: #777e91;

@@ -13,10 +13,14 @@ const ImportAccount = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [name, setName] = useState();
 	const [secretKey, setSecretKey] = useState();
-	const [error, setError] = useState('');
+	const [error, setError] = useState({});
 
 	const onImportAccount = async () => {
 		try {
+			if (!name) {
+				setError({ name: 'Name is required' });
+				return;
+			}
 			setIsLoading(true);
 			const { publicKey, userDetails } = await addLegacyAccount(name, secretKey);
 
@@ -24,7 +28,8 @@ const ImportAccount = () => {
 			setIsLoading(false);
 			navigate('/');
 		} catch (error) {
-			setError('Invalid key');
+			setError({ privateKey: 'Invalid key' });
+			setIsLoading(false);
 		}
 	};
 	return (
@@ -35,6 +40,7 @@ const ImportAccount = () => {
 			</div>
 			<div className="cd_we_input_label">Name</div>
 			<input placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
+			{error.name && <div className="cd_error_text">{error.name}</div>}
 			<div className="cd_we_input_label">Secret Key</div>
 			<textarea
 				placeholder="Enter your secret key"
@@ -42,7 +48,7 @@ const ImportAccount = () => {
 				value={secretKey}
 				onChange={(e) => setSecretKey(e.target.value)}
 			/>
-			{error && <div className="cd_error_text">{error}</div>}
+			{error.privateKey && <div className="cd_error_text">{error.privateKey}</div>}
 			<div className="actions">
 				<Button variant="normal" onClick={() => navigate('/')} disabled={isLoading}>
 					Cancel
