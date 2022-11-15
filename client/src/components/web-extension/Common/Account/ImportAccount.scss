@@ -1,0 +1,21 @@
+.cd_we_import_account {
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+	background-color: white;
+	border-radius: 18px 18px 0 0;
+	gap: 8px;
+	height: calc(100vh - 64px);
+	.secret-key-input {
+		height: 150px;
+	}
+	.actions {
+		margin-top: 20px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 24px;
+		flex-grow: 1;
+	}
+}

@@ -20,3 +20,4 @@ export const EXPLORER_URL = NETWORK_NAME === 'casper' ? 'https://cspr.live' : 'h
 export const CASPER_SYMBOL = 'CSPR';
 export const NFT_GATEWAY = 'ipfs.dweb.link';
 export const CASPER_KEY_PATH = `m/44'/506'/0'/0/`;
+export const NUMBER_OF_RECOVERY_WORDS = [12, 24];

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
-import useAuthLogin from '@cd/components/hooks/useAuthLogin';
 
 const onValidatePassword = (values) => {
 	const errors = {};
@@ -15,27 +14,21 @@ const onValidatePassword = (values) => {
 	return errors;
 };
 
-const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = 'Enter password' }) => {
-	const { onAuthCredentialSuccess, validateUserCredential } = useAuthLogin({
-		onAuthCompleted: onLoginSuccess,
-	});
+const PasswordForm = ({ header = null, passwordLabel = 'Enter password', onSubmitPassword }) => {
 	const [serverErrors, setServerErrors] = useState(undefined);
 	const onValidate = useCallback((values) => onValidatePassword(values), []);
 
 	const handleFormSubmit = useCallback(
 		async (values) => {
-			if (values.password) {
-				const result = await validateUserCredential(values.password);
-
-				if (!result) {
-					setServerErrors({ message: messages.passwordWrong });
-					return;
+			if (values.password && onSubmitPassword) {
+				try {
+					await onSubmitPassword(values.password);
+				} catch (error) {
+					setServerErrors({ message: error.message });
 				}
-
-				result.publicKey && onAuthCredentialSuccess(result);
 			}
 		},
-		[onAuthCredentialSuccess, validateUserCredential],
+		[onSubmitPassword],
 	);
 
 	const onChangeHandler = useCallback(
@@ -92,11 +85,11 @@ const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = '
 	);
 };
 
-AuthLogin.propTypes = {
+PasswordForm.propTypes = {
 	header: PropTypes.node,
 	isShowReset: PropTypes.bool,
-	onLoginSuccess: PropTypes.func,
+	onSubmitPassword: PropTypes.func,
 	passwordLabel: PropTypes.string,
 };
 
-export default AuthLogin;
+export default PasswordForm;

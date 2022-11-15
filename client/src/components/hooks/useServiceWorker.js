@@ -37,28 +37,20 @@ const validateReturningUserSW = async (password) => {
 	return sentMessage({ methodName: 'accountManager.validateReturningUser', params: { password } });
 };
 
-const generatePrivateKeypairSW = async () => {
-	return sentMessage({ methodName: 'accountManager.generateKeypair' });
-};
-
 const getActivePublicKey = async () => {
 	return sentMessage({ methodName: 'accountManager.getPublicKey' });
 };
 
-const getCurrentUserSW = async () => {
-	return sentMessage({ methodName: 'accountManager.getCurrentUser' });
-};
-
-const getUserHDWallets = async () => {
-	return sentMessage({ methodName: 'accountManager.getHDWallets' });
+const getUserWallets = async () => {
+	return sentMessage({ methodName: 'accountManager.getWallets' });
 };
 
 const addWalletAccount = async (index, description) => {
 	return sentMessage({ methodName: 'accountManager.addWalletAccount', params: { index, description } });
 };
 
-const setDefaultWallet = async (index) => {
-	return sentMessage({ methodName: 'accountManager.setDefaultWallet', params: { index } });
+const setSelectedWallet = async (uid) => {
+	return sentMessage({ methodName: 'accountManager.setSelectedWallet', params: { uid } });
 };
 
 const onClearUserSW = async () => {
@@ -69,12 +61,16 @@ const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
 };
 
-const getCurrentIndexByPublicKey = async (publicKey) => {
-	return sentMessage({ methodName: 'accountManager.getCurrentIndexByPublicKey', params: { publicKey } });
-};
-
 const getKeyphrase = async () => {
 	return sentMessage({ methodName: 'accountManager.getKeyphrase' });
+};
+
+const addLegacyAccount = async (name, secretKey) => {
+	return sentMessage({ methodName: 'accountManager.addLegacyAccount', params: { name, secretKey } });
+};
+
+const getPrivateKey = async (password) => {
+	return sentMessage({ methodName: 'accountManager.getPrivateKey', params: { password } });
 };
 
 /**
@@ -88,17 +84,16 @@ const onSignPrivateKeySW = async (deployJSON) =>
 export {
 	sentMessage,
 	onSignPrivateKeySW,
-	generatePrivateKeypairSW,
 	validateReturningUserSW,
-	getCurrentUserSW,
 	onClearUserSW,
 	createUserServiceSW,
 	getActivePublicKey,
-	getUserHDWallets,
+	getUserWallets,
 	addWalletAccount,
-	setDefaultWallet,
+	setSelectedWallet,
 	isUserExist,
-	getCurrentIndexByPublicKey,
 	getKeyphrase,
 	browser,
+	addLegacyAccount,
+	getPrivateKey,
 };

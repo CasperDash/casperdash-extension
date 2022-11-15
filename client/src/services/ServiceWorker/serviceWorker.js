@@ -26,7 +26,6 @@ function keepAliveForced() {
 }
 
 async function keepAlive() {
-	console.info(chrome.tabs.query({}));
 	if (lifeline) return;
 	for (const tab of await chrome.tabs.query({})) {
 		try {
@@ -46,16 +45,14 @@ async function keepAlive() {
 function registerAlarmActions() {
 	chrome.alarms.onAlarm.addListener(() => {
 		chrome.alarms.getAll(async (alarms) => {
-			const hasAlarm = alarms.find(
-				(alarm) => alarm.name === AUTO_LOCK_TIMEOUT_ALARM,
-			);
+			const hasAlarm = alarms.find((alarm) => alarm.name === AUTO_LOCK_TIMEOUT_ALARM);
 			if (hasAlarm) {
 				const connectedAccount = await getConnectedAccountChromeLocalStorage();
 				const { loginOptions: loginOptionsCache } = connectedAccount;
 				const emptyPublicKey = '';
 				await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
 				chrome.runtime.sendMessage({
-					type: 'LOCK_WALLET'
+					type: 'LOCK_WALLET',
 				});
 
 				chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
@@ -86,16 +83,15 @@ async function setupPopupServices() {
 	rpc.register('accountManager.createUser', accountController.createNewUser);
 	rpc.register('accountManager.validateReturningUser', accountController.validateReturningUser);
 
-	rpc.register('accountManager.generateKeypair', accountController.generateKeypair);
 	rpc.register('accountManager.signPrivateKeyProcess', accountController.signPrivateKeyProcess);
 	rpc.register('accountManager.getKeyphrase', accountController.getKeyphrase);
 
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
-	rpc.register('accountManager.getCurrentUser', accountController.getCurrentUser);
-	rpc.register('accountManager.getHDWallets', accountController.getHDWallets);
+	rpc.register('accountManager.getWallets', accountController.getWallets);
 	rpc.register('accountManager.addWalletAccount', accountController.addWalletAccount);
-	rpc.register('accountManager.setDefaultWallet', accountController.setDefaultWallet);
+	rpc.register('accountManager.setSelectedWallet', accountController.setSelectedWallet);
 	rpc.register('accountManager.clearUser', accountController.clearUser);
 	rpc.register('accountManager.isUserExist', accountController.isUserExist);
-	rpc.register('accountManager.getCurrentIndexByPublicKey', accountController.getCurrentIndexByPublicKey);
+	rpc.register('accountManager.addLegacyAccount', accountController.addLegacyAccount);
+	rpc.register('accountManager.getPrivateKey', accountController.getPrivateKey);
 }

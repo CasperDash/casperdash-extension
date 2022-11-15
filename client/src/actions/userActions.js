@@ -1,9 +1,8 @@
-import isObject from 'lodash-es/isObject';
 import { Signer } from 'casper-js-sdk';
 import isFunction from 'lodash-es/isFunction';
 import { USERS, SIGNER } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
-import { isUsingExtension, getLocalStorageValue } from '@cd/services/localStorage';
+import { isUsingExtension, getLocalStorageValue, clearChromeStorageLocal } from '@cd/services/localStorage';
 import { onClearUserSW } from '@cd/hooks/useServiceWorker';
 import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from './userActions.utils';
 
@@ -94,15 +93,16 @@ export const initConnectedAccountFromLocalStorage = () => {
  * - Clears all cached User hash info in localStorage
  */
 export const deleteAllUserData = () => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		onClearUserSW();
 		dispatch(setPublicKey());
 		dispatch(resetAccount());
+		clearChromeStorageLocal();
 	};
 };
 
 /**
- * 
+ *
  * Lock account:
  * - Delete public key data
  * - Keep loginOptions data
@@ -123,32 +123,16 @@ export const lockAccount = () => {
 export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
-		const userHashOpts = isObject(user.userHashingOptions)
-			? JSON.stringify(user.userHashingOptions)
-			: user.userHashingOptions;
-		// Store user hash (string) into localStorage
-
-		await cacheLoginInfoToLocalStorage(publicKey, {
-			userHashingOptions: userHashOpts,
-			userInfo: user.userInfo,
-			currentWalletIndex: user.currentWalletIndex,
-		});
-
 		dispatch(
 			setPublicKeyToStore(publicKey, {
-				connectionType: CONNECTION_TYPES.privateKey,
+				selectedWallet: user.selectedWallet,
+				connectionType: user.connectionType,
 			}),
 		);
 
 		if (isFunction(onCompleted)) {
 			onCompleted();
 		}
-	};
-};
-
-export const updateAccountIndex = (accountIndex = 0) => {
-	return (dispatch) => {
-		dispatch({ type: USERS.SET_ACCOUNT_INDEX, payload: accountIndex });
 	};
 };
 

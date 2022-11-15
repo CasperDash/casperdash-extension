@@ -37,6 +37,10 @@ export const getLoginOptions = ({ user }) => {
 	return user.loginOptions || {};
 };
 
+export const getSelectedWallet = ({ user }) => {
+	return (user.loginOptions && user.loginOptions.selectedWallet) || {};
+};
+
 export const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
 
 export const batchUserDetailsSelector = (publicKey) =>

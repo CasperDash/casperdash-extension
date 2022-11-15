@@ -1,12 +1,12 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
-import AuthLogin from '@cd/components/web-extension/Common/AuthLogin';
+import PasswordForm from '@cd/components/web-extension/Common/AuthLogin/PasswordForm';
 import './LoginModal.scss';
 
-const LoginModalConfirm = ({
+const EnterPasswordModal = ({
 	isOpen,
-	onLoginSuccess,
+	onSubmitPassword,
 	title = '',
 	onCloseModal,
 	closeButton = true,
@@ -26,7 +26,7 @@ const LoginModalConfirm = ({
 			<Modal.Body>
 				<div className="cd_we_create-wallet-layout--root">
 					<div className="layout--body">
-						<AuthLogin onLoginSuccess={onLoginSuccess} passwordLabel={description} />
+						<PasswordForm onSubmitPassword={onSubmitPassword} passwordLabel={description} />
 					</div>
 				</div>
 			</Modal.Body>
@@ -34,12 +34,12 @@ const LoginModalConfirm = ({
 	);
 };
 
-LoginModalConfirm.propTypes = {
-	onLoginSuccess: PropTypes.func,
+EnterPasswordModal.propTypes = {
+	onSubmitPassword: PropTypes.func,
 	onCloseModal: PropTypes.func,
 	isOpen: PropTypes.bool,
 	title: PropTypes.string,
 	closeButton: PropTypes.bool,
 };
 
-export default LoginModalConfirm;
+export default EnterPasswordModal;

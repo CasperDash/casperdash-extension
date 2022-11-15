@@ -6,21 +6,28 @@ import every from 'lodash-es/every';
 import { generateCWHeader, onGenerateWordcheck } from '@cd/actions/createWalletActions.utils';
 import { setNextStep, updateAnswerSheet, createAnswerSheet } from '@cd/actions/createWalletActions';
 import { selectCreateWalletState } from '@cd/selectors/createWallet';
+import { CONSTANTS } from '@cd/shared/constants';
 import WordsGroup from './WordsGroup';
 import './ValidateKeyphrase.scss';
 
 const ValidateKeyphrasePage = () => {
 	const [, setHeader] = useOutletContext();
 	const dispatch = useDispatch();
-	const { currentStep, answerSheet, keyPhraseAsMap, totalKeywords, totalWordCheck } =
-		useSelector(selectCreateWalletState);
+	const { currentStep, answerSheet, keyPhraseAsMap } = useSelector(selectCreateWalletState);
 	const [wordsTemplate, setTemplate] = useState(undefined);
 	const onUpdateAnswerSheet = useCallback(
 		(groupIndex, value) => dispatch(updateAnswerSheet(groupIndex, value)),
 		[dispatch],
 	);
 	const onCreateAnswerSheet = useCallback((checklist) => dispatch(createAnswerSheet(checklist)), [dispatch]);
+
+	const totalWordCheck = keyPhraseAsMap.size / 3;
+
 	const shouldDisableNextButton = useMemo(() => {
+		//can skip if debugging
+		if (CONSTANTS.DEBUG_ENV) {
+			return false;
+		}
 		if (answerSheet) {
 			return every(answerSheet, Boolean) ? false : true;
 		}
@@ -37,7 +44,8 @@ const ValidateKeyphrasePage = () => {
 
 	const onSelecteWordHandler = useCallback(
 		(groupIndex, answer) => {
-			if (!answerSheet) {
+			//can skip if debugging
+			if (!answerSheet && !CONSTANTS.DEBUG_ENV) {
 				return;
 			}
 
@@ -77,7 +85,7 @@ const ValidateKeyphrasePage = () => {
 			return;
 		}
 
-		const { checklist, data } = onGenerateWordcheck(totalKeywords, totalWordCheck);
+		const { checklist, data } = onGenerateWordcheck(keyPhraseAsMap.size, totalWordCheck);
 		onCreateAnswerSheet(checklist);
 
 		const checks = checklist.map((id) => {
@@ -99,7 +107,7 @@ const ValidateKeyphrasePage = () => {
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
-			<div className="cd_we_create-wallet-layout--body">
+			<div className="cd_we_create-wallet-layout--body cd_we_validate-keyphrase--body">
 				<p>You need to choose {totalWordCheck} correct words to complete</p>
 				<div className="cd_we_validate-keyphrase--wrapper">
 					{wordsTemplate.map((group, groupIndex) => {

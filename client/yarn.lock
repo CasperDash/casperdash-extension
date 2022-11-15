@@ -4100,11 +4100,6 @@ adjust-sourcemap-loader@3.0.0:
     loader-utils "^2.0.0"
     regex-parser "^2.2.11"
 
-aes-js@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/aes-js/-/aes-js-3.1.2.tgz#db9aabde85d5caabbfc0d4f2a4446960f627146a"
-  integrity sha512-e5pEa2kBnBOgR4Y/p20pskXI74UEz7de8ZGVo58asOtvSVG5YAbJeELPZxOmt+Bnz3rX753YKhfIn4X4l1PPRQ==
-
 agent-base@6:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
@@ -5895,17 +5890,16 @@ casper-js-sdk@^2.9.1:
     typedjson "^1.6.0-rc2"
     webpack "^5.24.3"
 
-casper-storage@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/casper-storage/-/casper-storage-0.2.5.tgz#9cd988a5b946ff80402b8b94556db31b1b4dd8d2"
-  integrity sha512-96C74Pu0tzoz1g3/PGWVEx83O6kOsv/cs8nrlMOCgRsUYNJiPUBQ8iEhXiiVIloLsG+F2GpUNPFhZTwC7qHuSw==
+casper-storage@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/casper-storage/-/casper-storage-1.0.0.tgz#57d67386b450ffa0352400cea4e3c5478ebb4f82"
+  integrity sha512-tCRzh5PvBSim4/rxLPdwonGJAEHxy8xMlkGl6jatG3BIlMoJE8Vz65KCvtuTIGzhtmq9v0Nq0aX2gfJxEGo3qw==
   dependencies:
     "@noble/ed25519" "^1.7.0"
     "@noble/hashes" "^1.1.2"
     "@noble/secp256k1" "^1.6.3"
     "@scure/base" "^1.1.1"
     "@scure/bip39" "^1.1.0"
-    aes-js "^3.1.2"
     key-encoder "^2.0.3"
 
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.4.1, chalk@^2.4.2:

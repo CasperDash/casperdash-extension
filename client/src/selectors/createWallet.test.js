@@ -4,15 +4,11 @@ import {
 	makeSelectCWKeyphraseAsMap,
 	makeSelectCWKeyCurrentStep,
 	makeSelectCWAnswerSheet,
-	makeSelectCWTotalKeywords,
-	makeSelectCWTotalWordsForChecking,
 } from './createWallet';
 
 describe('Create Wallet selectors', () => {
 	const state = {
 		currentStep: 0,
-		totalKeywords: 3,
-		totalWordCheck: 2,
 		keyPhrase: 'one two three',
 		keyPhraseAsMap: [],
 		answerSheet: { 1: true, 3: false },
@@ -36,13 +32,5 @@ describe('Create Wallet selectors', () => {
 
 	it('Should return answer sheet', () => {
 		expect(makeSelectCWAnswerSheet(state)).toEqual({ 1: true, 3: false });
-	});
-
-	it('Should return total words from keyphrase', () => {
-		expect(makeSelectCWTotalKeywords(state)).toEqual(3);
-	});
-
-	it('Should return how many words need to be checked', () => {
-		expect(makeSelectCWTotalWordsForChecking(state)).toEqual(2);
 	});
 });

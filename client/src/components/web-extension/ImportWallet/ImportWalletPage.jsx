@@ -1,76 +1,97 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form as FormBS } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form } from 'formik';
+import { useDispatch } from 'react-redux';
 import { KeyFactory } from 'casper-storage';
-import { selectCreateWalletTotalKeywords } from '@cd/selectors/createWallet';
 import { setNextStep, updateKeyphrase } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
+import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
+import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import FieldKeyphrase from './FieldKeyphrase';
 
 const ImportWallet = () => {
 	const dispatch = useDispatch();
-	const TOTAL_KEYWORDS = useSelector(selectCreateWalletTotalKeywords);
+
+	const [numberOfWords, setNumberOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
+	const [recoveryPhrase, setRecoveryPhrase] = useState([]);
+	const [errorMessage, setErrorMessage] = useState('');
 
 	const onValidate = useCallback((values) => {
-		const { keyphrase } = values;
-		const errors = {};
-
+		let error = '';
 		/**
 		 * Make sure keyphrase has 12 words
 		 */
-		if (keyphrase.some((key) => key === '')) {
-			errors.keyphrase = 'Keyphrase required.';
-
-			return errors;
+		if (values.some((key) => key.trim() === '')) {
+			error = 'Keyphrase required.';
+			return error;
 		}
 
 		/**
 		 * Make sure keyphrase is valid with `KeyFactory.getInstance().validate(keyphrase)`
 		 */
-		if (!KeyFactory.getInstance().validate(keyphrase.join(' '))) {
-			errors.keyphrase = 'Keyphrase is invalid. Please recheck your keyphrase.';
-
-			return errors;
+		if (!KeyFactory.getInstance().validate(values.map((value) => value.trim()).join(' '))) {
+			error = 'Keyphrase is invalid. Please recheck your keyphrase.';
+			return error;
 		}
 
-		return errors;
+		return error;
 	}, []);
 
-	const onSubmit = (values) => {
-		const { keyphrase } = values;
+	const onSubmit = () => {
+		const error = onValidate(recoveryPhrase);
+		setErrorMessage(error);
+		if (!error) {
+			dispatch(updateKeyphrase(recoveryPhrase.map((value) => value.trim()).join(' ')));
+			dispatch(setNextStep());
+		}
+	};
 
-		dispatch(updateKeyphrase(keyphrase.join(' ')));
-		dispatch(setNextStep());
+	const pasteEventHandler = useCallback(
+		(event) => {
+			event.preventDefault();
+
+			const pasteData = event.clipboardData.getData('text');
+			const words = pasteData.split(' ');
+			if (numberOfWords - words.length <= 0) {
+				setRecoveryPhrase(words.slice(0, numberOfWords));
+				return;
+			}
+
+			const filledWords = words.concat(new Array(numberOfWords - words.length).fill(''));
+			setRecoveryPhrase(filledWords);
+		},
+		[numberOfWords],
+	);
+
+	useEffect(() => {
+		window.addEventListener('paste', pasteEventHandler);
+
+		return () => window.removeEventListener('paste', pasteEventHandler);
+	}, [pasteEventHandler]);
+
+	const onPhraseChange = (index, value) => {
+		const newPhrase = [...recoveryPhrase];
+		newPhrase[index] = value;
+		setRecoveryPhrase(newPhrase);
 	};
 
 	return (
-		<Formik
-			initialValues={{
-				keyphrase: new Array(TOTAL_KEYWORDS).fill(''),
-			}}
-			validate={onValidate}
-			onSubmit={onSubmit}
-		>
-			{({ errors, touched, handleSubmit }) => {
-				return (
-					<Form noValidate onSubmit={handleSubmit} className="cd_we_create-wallet-layout--root">
-						<SelectEncryptionType />
-						<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
-							<FieldKeyphrase totalWords={TOTAL_KEYWORDS} />
-						</div>
-						{errors.keyphrase && touched.keyphrase && (
-							<FormBS.Text className="invalid-feedback">{errors.keyphrase}</FormBS.Text>
-						)}
-						<div className="cd_we_page--bottom">
-							<Button className="cd_we_btn-next" type="submit">
-								Next
-							</Button>
-						</div>
-					</Form>
-				);
-			}}
-		</Formik>
+		<div className="cd_we_create-wallet-layout--root">
+			<SelectEncryptionType />
+			<NumberRecoveryWordsSelect onChange={(number) => setNumberOfWords(number)} selectedValue={numberOfWords} />
+			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
+				<FieldKeyphrase
+					totalWords={numberOfWords}
+					onPhraseChange={onPhraseChange}
+					recoveryPhrase={recoveryPhrase}
+				/>
+			</div>
+			{errorMessage && <FormBS.Text className="invalid-feedback">{errorMessage}</FormBS.Text>}
+			<div className="cd_we_page--bottom">
+				<Button className="cd_we_btn-next" onClick={onSubmit}>
+					Next
+				</Button>
+			</div>
+		</div>
 	);
 };
 

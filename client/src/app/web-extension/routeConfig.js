@@ -24,6 +24,8 @@ import { Undelegate } from '@cd/web-extension/Staking/Undelegate';
 import ImportWallet from '@cd/web-extension/ImportWallet';
 import RecoveryPhrase from '@cd/components/web-extension/RecoveryPhrase';
 import Advanced from '@cd/components/web-extension/Advanced';
+import ImportAccount from '@cd/components/web-extension/Common/Account/ImportAccount';
+import PrivateKey from '@cd/components/web-extension/Common/Account/PrivateKey';
 
 let features;
 
@@ -49,6 +51,8 @@ const routes = {
 		{ name: 'Undelegate', route: '/undelegate', component: Undelegate },
 		{ name: 'Recovery Phrase', route: '/recoveryPhrase', component: RecoveryPhrase },
 		{ name: 'Advanced', route: '/advanced', component: Advanced },
+		{ name: 'Import Account', route: '/importAccount', component: ImportAccount },
+		{ name: 'View Private Key', route: '/viewPrivateKey', component: PrivateKey },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [

@@ -22,7 +22,7 @@
 		"bootstrap-icons": "^1.5.0",
 		"browserslist": "^4.13.0",
 		"casper-js-sdk": "^2.9.1",
-		"casper-storage": "^0.2.5",
+		"casper-storage": "1.0.0",
 		"clsx": "^1.2.1",
 		"cookie": "^0.4.1",
 		"create-react-class": "^15.7.0",
@@ -117,7 +117,8 @@
 			"^@cd/hocs(.*)$": "<rootDir>/src/components/hocs$1",
 			"^@cd/web/(.*)$": "<rootDir>/src/components/web$1",
 			"^@cd/web-extension(.*)$": "<rootDir>/src/components/web-extension$1",
-			"^@cd/components(.*)$": "<rootDir>/src/components$1"
+			"^@cd/components(.*)$": "<rootDir>/src/components$1",
+			"^@cd/app(.*)$": "<rootDir>/src/app$1"
 		},
 		"transformIgnorePatterns": [
 			"<rootDir>/node_modules/(?!lodash-es)"
