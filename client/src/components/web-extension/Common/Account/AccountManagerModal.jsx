@@ -52,10 +52,14 @@ export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps
 
 	const onViewPrivateKey = useCallback(
 		async (password) => {
-			const privateKey = await getPrivateKey(password);
-			navigate('/viewPrivateKey', {
-				state: { name: 'Private Key', privateKey: privateKey, accountName: selectedWallet.descriptor.name },
-			});
+			try {
+				const privateKey = await getPrivateKey(password);
+				navigate('/viewPrivateKey', {
+					state: { name: 'Private Key', privateKey: privateKey, accountName: selectedWallet.descriptor.name },
+				});
+			} catch (error) {
+				throw Error('Wrong password provided. Please try again');
+			}
 		},
 		[navigate, selectedWallet],
 	);

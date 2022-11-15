@@ -21,7 +21,11 @@ const PasswordForm = ({ header = null, passwordLabel = 'Enter password', onSubmi
 	const handleFormSubmit = useCallback(
 		async (values) => {
 			if (values.password && onSubmitPassword) {
-				onSubmitPassword(values.password);
+				try {
+					await onSubmitPassword(values.password);
+				} catch (error) {
+					setServerErrors({ message: error.message });
+				}
 			}
 		},
 		[onSubmitPassword],
