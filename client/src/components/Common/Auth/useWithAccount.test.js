@@ -23,9 +23,10 @@ const wrapper =
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
 	useNavigate: jest.fn(),
+	useLocation: jest.fn(),
 }));
 
-const { useNavigate } = reactRouterDom;
+const { useNavigate, useLocation } = reactRouterDom;
 
 jest.mock('react', () => ({
 	...jest.requireActual('react'),
@@ -49,9 +50,15 @@ describe('useWithAccount', () => {
 		console.log('Mock navigating to:: ', to);
 	});
 
+	const mockLocation = jest.fn().mockImplementation(() => {
+		// eslint-disable-next-line
+		return { pathName: 'test' };
+	});
+
 	beforeEach(() => {
 		mockNavigate.mockClear();
 		useNavigate.mockImplementation(() => mockNavigate);
+		useLocation.mockImplementation(() => mockLocation);
 	});
 	afterEach(cleanup);
 

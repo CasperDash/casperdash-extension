@@ -116,7 +116,8 @@
 			"^@cd/hocs(.*)$": "<rootDir>/src/components/hocs$1",
 			"^@cd/web/(.*)$": "<rootDir>/src/components/web$1",
 			"^@cd/web-extension(.*)$": "<rootDir>/src/components/web-extension$1",
-			"^@cd/components(.*)$": "<rootDir>/src/components$1"
+			"^@cd/components(.*)$": "<rootDir>/src/components$1",
+			"^@cd/app(.*)$": "<rootDir>/src/app$1"
 		},
 		"transformIgnorePatterns": [
 			"<rootDir>/node_modules/(?!lodash-es)"
