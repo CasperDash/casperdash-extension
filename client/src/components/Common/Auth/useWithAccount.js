@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import isEmpty from 'lodash-es/isEmpty';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
-import routes from '../../../app/web-extension/routeConfig';
+import routes from '@cd/app/web-extension/routeConfig';
 
 const asyncAccountValidator = (navigate, location) => {
 	return async (_, getState) => {
@@ -23,7 +23,6 @@ const asyncAccountValidator = (navigate, location) => {
 
 		// do nothing if in outer routes
 		const pathname = location.pathname;
-		console.info(pathname);
 		if (routes.outerRoutes.find((route) => route.route === pathname)) {
 			return;
 		}
