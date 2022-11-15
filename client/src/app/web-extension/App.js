@@ -43,7 +43,15 @@ const App = () => {
 								{getRoutes(mainRoutes)}
 								{getRoutes(innerRoutes)}
 							</Route>
-							<Route element={<OuterLayout />}>{getRoutes(outerRoutes)}</Route>
+							<Route
+								element={
+									<WithAccount>
+										<OuterLayout />
+									</WithAccount>
+								}
+							>
+								{getRoutes(outerRoutes)}
+							</Route>
 						</Routes>
 						<ToastContainer
 							position="top-center"
