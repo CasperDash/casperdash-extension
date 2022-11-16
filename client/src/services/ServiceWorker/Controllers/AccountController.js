@@ -73,7 +73,7 @@ class AccountController {
 	};
 
 	signPrivateKeyProcess = async ({ deployJSON }) => {
-		const asymKey = await this.generateKeypair();
+		const asymKey = await this.userService.generateKeypair();
 		const deployResult = DeployUtil.deployFromJson(deployJSON);
 
 		if (deployResult.err) {

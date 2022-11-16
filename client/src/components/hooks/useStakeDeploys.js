@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { moteToCspr } from '../../helpers/balance';
-import { getPendingStakes } from '../../selectors/stake';
+import { getPendingStakes, getStakesHistory } from '../../selectors/stake';
 import { getValidators } from '../../selectors/validator';
 import { getTransferDeploysStatus } from '../../actions/deployActions';
 import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
@@ -78,7 +78,7 @@ export const useStakeFromValidators = (publicKey) => {
 		(async () => {
 			if (!publicKey) return;
 			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
-			if (data && data.some((item) => 'pending' !== item.status)) {
+			if (data && data.some((item) => 'pending' !== item.status && item.status !== 'undelegating')) {
 				dispatch(fetchValidators(publicKey));
 				dispatch(updateStakeDeployStatus(publicKey, 'deploys.stakes', data));
 			}
@@ -87,4 +87,18 @@ export const useStakeFromValidators = (publicKey) => {
 
 	const stakedValidators = getStakedValidators(validators, pendingStakes, publicKey);
 	return stakedValidators;
+};
+
+export const useStakedHistory = () => {
+	const stakesHistory = useSelector(getStakesHistory());
+	return stakesHistory.map((item) => {
+		return {
+			validator: item.validator,
+			stakedAmount: item.entryPoint === ENTRY_POINT_UNDELEGATE ? -item.amount : item.amount,
+			icon: item.entryPoint === ENTRY_POINT_UNDELEGATE ? SEND_ICON_SMALL : RECEIVE_ICON_SMALL,
+			status: item.status,
+			type: item.entryPoint,
+			...item,
+		};
+	});
 };
