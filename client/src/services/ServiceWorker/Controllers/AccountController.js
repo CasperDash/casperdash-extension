@@ -84,8 +84,18 @@ class AccountController {
 		return DeployUtil.deployToJson(signedDeploy);
 	};
 
-	getKeyphrase = () => {
-		return this.userService.getKeyphrase();
+	getKeyphrase = async ({ password }) => {
+		try {
+			const { userDetails } = await this.validateReturningUser({ password });
+			if (userDetails) {
+				return this.userService.getKeyphrase();
+			} else {
+				throw Error('Invalid password');
+			}
+		} catch (error) {
+			console.error(error);
+			throw Error('Invalid password');
+		}
 	};
 
 	getWallets = async () => {

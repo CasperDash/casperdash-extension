@@ -42,7 +42,6 @@ const SETTINGS = [
 	},
 	{
 		name: 'Recovery Phrase',
-		isRequiredPassword: true,
 		icon: {
 			className: 'cd_we_setting_recovery_phrase',
 			img: <img src={BackupIcon} />,
