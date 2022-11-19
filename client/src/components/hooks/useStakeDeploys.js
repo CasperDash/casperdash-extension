@@ -81,7 +81,7 @@ export const useStakeFromValidators = (publicKey) => {
 			if (
 				data &&
 				data.some(
-					(item) => STAKING_STATUS.pending !== item.status && item.status !== STAKING_STATUS.undelegating,
+					(item) => item.status !== STAKING_STATUS.pending && item.status !== STAKING_STATUS.undelegating,
 				)
 			) {
 				dispatch(fetchValidators(publicKey));

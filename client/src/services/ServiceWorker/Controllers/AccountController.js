@@ -87,11 +87,10 @@ class AccountController {
 	getKeyphrase = async ({ password }) => {
 		try {
 			const { userDetails } = await this.validateReturningUser({ password });
-			if (userDetails) {
-				return this.userService.getKeyphrase();
-			} else {
+			if (!userDetails) {
 				throw Error('Invalid password');
 			}
+			return this.userService.getKeyphrase();
 		} catch (error) {
 			console.error(error);
 			throw Error('Invalid password');
