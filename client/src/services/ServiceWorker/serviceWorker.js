@@ -8,6 +8,7 @@ const appStore = new ObservableStore({});
 const accountController = new AccountController(appStore);
 
 let lifeline;
+let isPopupOpen = false;
 
 keepAlive();
 
@@ -47,7 +48,7 @@ function registerAlarmActions() {
 		chrome.alarms.getAll(async (alarms) => {
 			const hasAlarm = alarms.find((alarm) => alarm.name === AUTO_LOCK_TIMEOUT_ALARM);
 
-			if (hasAlarm) {
+			if (hasAlarm && !isPopupOpen) {
 				const connectedAccount = await getConnectedAccountChromeLocalStorage();
 				const { loginOptions: loginOptionsCache } = connectedAccount;
 				const emptyPublicKey = '';
@@ -95,4 +96,7 @@ async function setupPopupServices() {
 	rpc.register('accountManager.isUserExist', accountController.isUserExist);
 	rpc.register('accountManager.addLegacyAccount', accountController.addLegacyAccount);
 	rpc.register('accountManager.getPrivateKey', accountController.getPrivateKey);
+	rpc.register('setPopupOpenState', ({ state }) => {
+		isPopupOpen = state;
+	});
 }

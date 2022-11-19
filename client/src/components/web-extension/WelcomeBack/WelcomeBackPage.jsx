@@ -2,13 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthLogin from '@cd/components/web-extension/Common/AuthLogin';
 import './WelcomeBack.scss';
+import { useCallback } from 'react';
 
 const WelcomeBackPage = () => {
 	const navigate = useNavigate();
 
-	const handleOnLoginSuccess = () => {
+	const handleOnLoginSuccess = useCallback(() => {
 		navigate('/');
-	};
+	}, [navigate]);
 
 	return (
 		<section className="cd_we_page--root">

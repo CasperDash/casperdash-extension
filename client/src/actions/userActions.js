@@ -58,8 +58,10 @@ export const setPublicKeyToStore = (publicKey, loginOptions = {}) => {
  */
 export const setPublicKey = (publicKey, loginOptions = {}) => {
 	return async (dispatch) => {
+		// need to get from storage here to prevent missing user info
+		const { loginOptions: cachedLoginOptions } = await getConnectedAccountChromeLocalStorage();
 		//Cache public key and login options
-		await cacheLoginInfoToLocalStorage(publicKey, loginOptions);
+		await cacheLoginInfoToLocalStorage(publicKey, { ...loginOptions, ...cachedLoginOptions });
 		dispatch(setPublicKeyToStore(publicKey, loginOptions));
 	};
 };
@@ -108,15 +110,12 @@ export const deleteAllUserData = () => {
  * - Keep loginOptions data
  */
 export const lockAccount = () => {
-	return async (dispatch, getState) => {
-		const {
-			user: { loginOptions: loginOptionsState },
-		} = getState();
+	return async (dispatch) => {
 		const connectedAccount = await getConnectedAccountChromeLocalStorage();
 		const { loginOptions: loginOptionsCache } = connectedAccount;
 		const emptyPublicKey = '';
-		await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
-		dispatch(setPublicKeyToStore(emptyPublicKey, loginOptionsState));
+
+		dispatch(setPublicKey(emptyPublicKey, loginOptionsCache));
 	};
 };
 
@@ -124,7 +123,7 @@ export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
 		dispatch(
-			setPublicKeyToStore(publicKey, {
+			setPublicKey(publicKey, {
 				selectedWallet: user.selectedWallet,
 				connectionType: user.connectionType,
 			}),

@@ -20,7 +20,8 @@ const options = {
 };
 
 const sentMessage = async (payload) => {
-	const result = await browser.runtime.sendMessage({ ...options, payload });
+	const br = browser || chrome;
+	const result = await br.runtime.sendMessage({ ...options, payload });
 	return resultHandler(result);
 };
 
@@ -73,6 +74,10 @@ const getPrivateKey = async (password) => {
 	return sentMessage({ methodName: 'accountManager.getPrivateKey', params: { password } });
 };
 
+const setPopupOpenState = async (state) => {
+	return sentMessage({ methodName: 'setPopupOpenState', params: { state } });
+};
+
 /**
  *
  * Signing Deploy actions
@@ -96,4 +101,5 @@ export {
 	browser,
 	addLegacyAccount,
 	getPrivateKey,
+	setPopupOpenState,
 };
