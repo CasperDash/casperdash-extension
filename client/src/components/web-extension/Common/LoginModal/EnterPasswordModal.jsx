@@ -10,7 +10,7 @@ const EnterPasswordModal = ({
 	title = '',
 	onCloseModal,
 	closeButton = true,
-	description = 'Please login again to continue using Casper Wallet.',
+	description = 'Please login again to continue using the Wallet.',
 }) => {
 	return (
 		<Modal

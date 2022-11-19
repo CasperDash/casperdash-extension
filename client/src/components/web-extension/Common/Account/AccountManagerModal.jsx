@@ -20,7 +20,7 @@ import Key from '@cd/assets/image/ic-key.svg';
 import { useNavigate } from 'react-router-dom';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
 
-export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps }) => {
+export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restProps }) => {
 	const dispatch = useDispatch();
 	const selectedWallet = useSelector(getSelectedWallet);
 	const navigate = useNavigate();
@@ -33,7 +33,7 @@ export const AccountManagerModal = ({ isOpen, onClose, isExistUser, ...restProps
 			loadWallets();
 		}
 		// isExistUser here because we should reload list wallets if lose session and login again
-	}, [isOpen, loadWallets, isExistUser]);
+	}, [isOpen, loadWallets, isUserExisting]);
 
 	const handleAddNewWallet = () => {
 		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length))).then(() => {
