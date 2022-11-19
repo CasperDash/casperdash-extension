@@ -23,3 +23,7 @@ export const CASPER_KEY_PATH = `m/44'/506'/0'/0/`;
 export const NUMBER_OF_RECOVERY_WORDS = [12, 24];
 // default lock time is 5 mins
 export const DEFAULT_AUTO_LOCK_TIME = 5;
+export const STAKING_STATUS = {
+	pending: 'pending',
+	undelegating: 'undelegating',
+};

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { moteToCspr } from '../../helpers/balance';
-import { getPendingStakes, getStakesHistory } from '../../selectors/stake';
-import { getValidators } from '../../selectors/validator';
-import { getTransferDeploysStatus } from '../../actions/deployActions';
-import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
-import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
-import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL } from '../../constants/icon';
+import { moteToCspr } from '@cd/helpers/balance';
+import { getPendingStakes, getStakesHistory } from '@cd/selectors/stake';
+import { getValidators } from '@cd/selectors/validator';
+import { getTransferDeploysStatus } from '@cd/actions/deployActions';
+import { ENTRY_POINT_UNDELEGATE, STAKING_STATUS } from '@cd/constants/key';
+import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '@cd/actions/stakeActions';
+import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL } from '@cd/constants/icon';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 /**
@@ -78,7 +78,12 @@ export const useStakeFromValidators = (publicKey) => {
 		(async () => {
 			if (!publicKey) return;
 			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
-			if (data && data.some((item) => 'pending' !== item.status && item.status !== 'undelegating')) {
+			if (
+				data &&
+				data.some(
+					(item) => STAKING_STATUS.pending !== item.status && item.status !== STAKING_STATUS.undelegating,
+				)
+			) {
 				dispatch(fetchValidators(publicKey));
 				dispatch(updateStakeDeployStatus(publicKey, 'deploys.stakes', data));
 			}
