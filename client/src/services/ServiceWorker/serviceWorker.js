@@ -46,6 +46,7 @@ function registerAlarmActions() {
 	chrome.alarms.onAlarm.addListener(() => {
 		chrome.alarms.getAll(async (alarms) => {
 			const hasAlarm = alarms.find((alarm) => alarm.name === AUTO_LOCK_TIMEOUT_ALARM);
+
 			if (hasAlarm) {
 				const connectedAccount = await getConnectedAccountChromeLocalStorage();
 				const { loginOptions: loginOptionsCache } = connectedAccount;

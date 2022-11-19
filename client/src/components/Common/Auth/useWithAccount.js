@@ -15,9 +15,8 @@ const asyncAccountValidator = (navigate, location) => {
 		 * Make sure user must be valid before navigating to other route
 		 */
 		const isValidUserShape = Boolean(user && !isEmpty(user?.loginOptions));
-
-		if (isValidUserShape && !user.publicKey) {
-			navigate('/welcomeBack');
+		if (isValidUserShape) {
+			navigate(!user.publicKey ? '/welcomeBack' : '/');
 			return;
 		}
 

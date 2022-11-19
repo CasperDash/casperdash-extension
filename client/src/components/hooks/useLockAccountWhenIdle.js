@@ -30,12 +30,13 @@ const useLockAccountWhenIdle = () => {
 
 				console.info('lock: ', new Date());
 
-				if (event.type === 'LOCK_WALLET')
+				if (event.type === 'LOCK_WALLET') {
 					if (isLoginModalOpen) {
 						dispatch(setLoginModalOpen(false));
 					}
 
-				navigate('/welcomeBack');
+					navigate('/welcomeBack');
+				}
 			});
 		} catch (_err) {
 			//TODO: Handle error
@@ -44,7 +45,6 @@ const useLockAccountWhenIdle = () => {
 	}, []);
 
 	const resetTimer = () => {
-		console.info('resetTimer: ', new Date());
 		chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
 		chrome.alarms.create(AUTO_LOCK_TIMEOUT_ALARM, {
 			delayInMinutes: autoLockTime,
