@@ -61,8 +61,8 @@ const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
 };
 
-const getKeyphrase = async () => {
-	return sentMessage({ methodName: 'accountManager.getKeyphrase' });
+const getKeyphrase = async (password) => {
+	return sentMessage({ methodName: 'accountManager.getKeyphrase', params: { password } });
 };
 
 const addLegacyAccount = async (name, secretKey) => {

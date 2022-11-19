@@ -73,7 +73,7 @@ class AccountController {
 	};
 
 	signPrivateKeyProcess = async ({ deployJSON }) => {
-		const asymKey = await this.generateKeypair();
+		const asymKey = await this.userService.generateKeypair();
 		const deployResult = DeployUtil.deployFromJson(deployJSON);
 
 		if (deployResult.err) {
@@ -84,8 +84,17 @@ class AccountController {
 		return DeployUtil.deployToJson(signedDeploy);
 	};
 
-	getKeyphrase = () => {
-		return this.userService.getKeyphrase();
+	getKeyphrase = async ({ password }) => {
+		try {
+			const { userDetails } = await this.validateReturningUser({ password });
+			if (!userDetails) {
+				throw Error('Invalid password');
+			}
+			return this.userService.getKeyphrase();
+		} catch (error) {
+			console.error(error);
+			throw Error('Invalid password');
+		}
 	};
 
 	getWallets = async () => {

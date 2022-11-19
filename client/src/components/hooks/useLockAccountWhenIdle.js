@@ -16,7 +16,7 @@ const useLockAccountWhenIdle = () => {
 
 	useEffect(() => {
 		resetTimer();
-		
+
 		try {
 			if (!browser) {
 				return;
@@ -28,24 +28,23 @@ const useLockAccountWhenIdle = () => {
 					return;
 				}
 
-				console.log('lock: ', new Date());
+				console.info('lock: ', new Date());
 
 				if (event.type === 'LOCK_WALLET')
+					if (isLoginModalOpen) {
+						dispatch(setLoginModalOpen(false));
+					}
 
-				if (isLoginModalOpen) {
-					dispatch(setLoginModalOpen(false));
-				}
-	
 				navigate('/welcomeBack');
 			});
-		} catch(_err) {
+		} catch (_err) {
 			//TODO: Handle error
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const resetTimer = () => {
-		console.log('resetTimer: ', new Date());
+		console.info('resetTimer: ', new Date());
 		chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
 		chrome.alarms.create(AUTO_LOCK_TIMEOUT_ALARM, {
 			delayInMinutes: autoLockTime,

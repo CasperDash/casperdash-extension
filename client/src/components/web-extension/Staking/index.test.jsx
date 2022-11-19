@@ -12,7 +12,7 @@ jest.mock('../../../helpers/validator', () => ({
 
 test('Should show stake form and no staked info', async () => {
 	useLocation.mockReturnValue({});
-	useSelector.mockReturnValue({});
+	useSelector.mockReturnValue([]);
 	const { getByText, container } = render(<Staking />);
 	expect(getByText('Validator').textContent).toBe('Validator');
 	expect(getByText('Amount').textContent).toBe('Amount');
@@ -25,7 +25,7 @@ test('Should show stake form and no staked info', async () => {
 
 test('Should show stake form and no staked info', async () => {
 	useLocation.mockReturnValue({});
-	useSelector.mockReturnValue({});
+	useSelector.mockReturnValue([]);
 	const { getByText } = render(<Staking />);
 	expect(getByText('Validator').textContent).toBe('Validator');
 	expect(getByText('Amount').textContent).toBe('Amount');
@@ -36,7 +36,7 @@ test('Should show stake form and no staked info', async () => {
 
 test('Should navigate to stake confirm', async () => {
 	useLocation.mockReturnValue({ state: { validator: { public_key: 'validatorkey' } } });
-	useSelector.mockReturnValue({});
+	useSelector.mockReturnValue([]);
 	const { getByText, container } = render(<Staking />);
 
 	expect(getByText('validat').textContent).toBe('validat');
