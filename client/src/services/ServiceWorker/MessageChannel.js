@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill';
+import { CONSTANTS } from '@cd/shared/constants';
 const MESSAGE_TYPE = 'casperdash-extension';
 
 export default class MessageChannel {
@@ -7,7 +8,6 @@ export default class MessageChannel {
 		this.destination = options.destination;
 		this.messageHandler = options.messageHandler;
 		this.sendMessage = options.sendMessage;
-		this.logMessages = true;
 
 		browser.runtime.onMessage.addListener(this.onMessage.bind(this));
 	}
@@ -16,7 +16,7 @@ export default class MessageChannel {
 		if (request.destination === this.source && request.source === this.destination) {
 			let promise;
 			try {
-				if (this.logMessages) {
+				if (CONSTANTS.DEBUG_ENV) {
 					console.warn(
 						`MessageChannel: (${this.source}): Receiving`,
 						JSON.stringify(request.payload, null, '  '),

@@ -17,7 +17,7 @@ const ServiceWorkerRequired = ({ children }) => {
 				if (!result && !isOpen) {
 					dispatch(setLoginModalOpen(true));
 				}
-				setUserExistingState(result);
+				setUserExistingState(!!result);
 			});
 		}, 300);
 

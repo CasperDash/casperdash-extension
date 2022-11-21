@@ -128,7 +128,9 @@ describe('lockAccount', () => {
 			await lockAccount()(mockDispatch, mockGetState);
 		});
 
-		expect(cacheLoginInfoToLocalStorage).toHaveBeenCalledWith('', { name: 'Test' });
+		expect(cacheLoginInfoToLocalStorage).toHaveBeenCalledWith('test', {
+			connectionType: 'caspersigner',
+		});
 		expect(mockDispatch).toHaveBeenCalled();
 	});
 });
