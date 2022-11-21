@@ -1,47 +1,32 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, useFormikContext } from 'formik';
 
-const FieldKeyphrase = ({ totalWords }) => {
+const FieldKeyphrase = ({ totalWords, onPhraseChange, recoveryPhrase }) => {
 	const keys = Object.keys(new Array(totalWords).fill(''));
-	const { setFieldValue } = useFormikContext();
-
-	const pasteEventHandler = useCallback(
-		(event) => {
-			event.preventDefault();
-
-			const pasteData = event.clipboardData.getData('text');
-			const words = pasteData.split(' ');
-			if (totalWords - words.length <= 0) {
-				setFieldValue('keyphrase', words.slice(0, totalWords));
-
-				return;
-			}
-
-			const filledWords = words.concat(new Array(totalWords - words.length).fill(''));
-			setFieldValue('keyphrase', filledWords);
-		},
-		[setFieldValue, totalWords],
-	);
-
-	useEffect(() => {
-		window.addEventListener('paste', pasteEventHandler);
-
-		return () => window.removeEventListener('paste', pasteEventHandler);
-	}, [pasteEventHandler]);
-
-	return (
-		<ul className="cd_we_import-keyphrase--column">
-			{keys?.map((word, index) => (
-				<li className="cd_we_keyphrase--word" key={`left-${word}`}>
-					<span className="counter">{index + 1}</span>
-					<span className="value">
-						<Field name={`keyphrase[${index}]`}/>
-					</span>
-				</li>
-			))}
-		</ul>
-	);
+	const numberPerCol = keys.length / 2;
+	return new Array(2).fill().map((_, i) => {
+		return (
+			<ul className="cd_we_import-keyphrase--column" key={i}>
+				{keys?.map((word, index) => {
+					const itemIndex = i * numberPerCol + index;
+					return (
+						index < numberPerCol && (
+							<li className="cd_we_keyphrase--word" key={`left-${word}`}>
+								<span className="counter">{itemIndex + 1}</span>
+								<span className="value">
+									<input
+										value={recoveryPhrase[itemIndex]}
+										name={`keyphrase[${index}]`}
+										onChange={(e) => onPhraseChange(itemIndex, e.target.value)}
+									/>
+								</span>
+							</li>
+						)
+					);
+				})}
+			</ul>
+		);
+	});
 };
 
 FieldKeyphrase.propTypes = {

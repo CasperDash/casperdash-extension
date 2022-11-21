@@ -15,7 +15,11 @@ const TokenSelectField = ({ options, field, form, handleTokenChange }) => {
 			options={options}
 			inputId={field.name}
 			name={field.name}
-			value={!isEmpty(options) ? options.find((option) => option.address === field.value) : null}
+			value={
+				!isEmpty(options) && Array.isArray(options)
+					? options.find((option) => option.address === field.value)
+					: null
+			}
 			onChange={(option) => {
 				form.setFieldValue(field.name, option.address);
 				handleTokenChange(option.address);

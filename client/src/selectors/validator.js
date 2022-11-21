@@ -2,9 +2,9 @@ import { getQuerySelector } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import Fuse from 'fuse.js';
 import memoizeOne from 'memoize-one';
-import { getBase64IdentIcon } from '../helpers/identicon';
-import { VALIDATORS } from '../store/actionTypes';
-import priorityIcon from '../assets/image/red-casper.png';
+import { getBase64IdentIcon } from '@cd/helpers/identicon';
+import { VALIDATORS } from '@cd/store/actionTypes';
+import priorityIcon from '@cd/assets/image/red-casper.png';
 
 export const validatorSelector = getQuerySelector({ type: VALIDATORS.FETCH_ACTIVE_VALIDATORS });
 

@@ -3,13 +3,14 @@ import { KeyFactory } from 'casper-storage';
 import { convertKeyphraseToAnswerObject, generateKeyphraseMap } from './createWalletActions.utils';
 
 /**
- * Generating a keyphrase of 12 words
- * Then convert result into Map object for re-use in word validating
- * @returns
+ * Generates a keyphrase and dispatches an action to update the keyphrase
+ * @param [numOfKey=12] - The number of words in the keyphrase.
+ * @returns A function that takes dispatch as an argument and returns
+ * dispatch(updateKeyphrase(keyphrase))
  */
-const generateKeyphrase = () => {
+const generateKeyphrase = (numOfKey = 12) => {
 	const keyManager = KeyFactory.getInstance();
-	const keyphrase = keyManager.generate();
+	const keyphrase = keyManager.generate(numOfKey);
 
 	return (dispatch) => dispatch(updateKeyphrase(keyphrase));
 };
@@ -82,5 +83,5 @@ export {
 	setNextStep,
 	setPrevStep,
 	updateKeyphrase,
-	updateEncryptionType
+	updateEncryptionType,
 };

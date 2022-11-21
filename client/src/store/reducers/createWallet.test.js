@@ -6,12 +6,10 @@ describe('Create Wallet reducer', () => {
 	let initState = undefined;
 	const reset = () => ({
 		currentStep: 2,
-		totalKeywords: 12,
-		totalWordCheck: 4,
 		keyPhrase: null,
 		keyPhraseAsMap: [],
 		answerSheet: undefined,
-		encryptionType: EncryptionType.Ed25519
+		encryptionType: EncryptionType.Ed25519,
 	});
 	beforeEach(() => {
 		initState = reset();
@@ -96,8 +94,6 @@ describe('Create Wallet reducer', () => {
 			reducer(
 				{
 					currentStep: 2,
-					totalKeywords: 12,
-					totalWordCheck: 4,
 					keyPhrase: null,
 					keyPhraseAsMap: [],
 					answerSheet: {
@@ -115,8 +111,6 @@ describe('Create Wallet reducer', () => {
 			),
 		).toEqual({
 			currentStep: 2,
-			totalKeywords: 12,
-			totalWordCheck: 4,
 			keyPhrase: null,
 			keyPhraseAsMap: [],
 			answerSheet: {

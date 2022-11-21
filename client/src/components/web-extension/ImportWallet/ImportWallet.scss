@@ -1,7 +1,7 @@
 .cd_we {
 	&_page {
 		&--root {
-			padding: 20px 15px;
+			padding: 8px 14px;
 			display: flex;
 			flex-direction: column;
 			height: 100%;
@@ -21,15 +21,14 @@
 		&--column {
 			display: flex;
 			flex-direction: column;
-			flex-wrap: wrap;
 			flex: 0 0 auto;
-			height: 280px;
+			height: 270px;
 			justify-content: space-between;
 			list-style: none;
-			width: 50%;
+			width: 45%;
 			padding: 0;
 		}
-		
+
 		&--box {
 			padding: 0 16px;
 		}
@@ -60,7 +59,10 @@
 		}
 
 		&--body {
+			display: flex;
+			justify-content: space-between;
 			margin-bottom: auto;
+			overflow: auto;
 		}
 	}
 }

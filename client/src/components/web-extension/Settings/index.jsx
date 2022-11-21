@@ -1,8 +1,11 @@
 import React from 'react';
-import ContactIcon from '@cd/assets/image/contact-icon.svg';
-import LockIcon from '@cd/assets/image/lock-icon.svg';
+import Logo from '@cd/assets/image/Logo-only.svg';
+import LockIcon from '@cd/assets/image/ic-lock.svg';
+import VersionIcon from '@cd/assets/image/ic-version.png';
+import BackupIcon from '@cd/assets/image/ic-backup.png';
 import { lockAccount } from '@cd/actions/userActions';
 import DeleteAllDataButton from '@cd/components/web-extension/Common/DeleteAllDataButton';
+import { getVersion } from '@cd/helpers/key';
 import SettingRow from './SettingRow';
 import './index.scss';
 
@@ -12,7 +15,7 @@ const SETTINGS = [
 		hasMenu: true,
 		icon: {
 			className: 'cd_we_setting_about',
-			img: <ContactIcon />,
+			img: <Logo />,
 		},
 		action: () => {
 			chrome.tabs.create({ url: 'https://casperdash.io' });
@@ -39,14 +42,31 @@ const SETTINGS = [
 	},
 	{
 		name: 'Recovery Phrase',
-		isRequiredPassword: true,
+		icon: {
+			className: 'cd_we_setting_recovery_phrase',
+			img: <img src={BackupIcon} />,
+		},
+		action: ({ navigate }) => {
+			navigate('/recoveryPhrase', { state: { name: 'Recovery Phrase' } });
+		},
+	},
+	{
+		name: 'Advanced',
 		icon: {
 			className: 'cd_we_setting_recovery_phrase',
 			img: <LockIcon />,
 		},
 		action: ({ navigate }) => {
-			navigate('/recoveryPhrase', { state: { name: 'Recovery Phrase' } } );
+			navigate('/advanced', { state: { name: 'Advanced' } });
 		},
+	},
+	{
+		name: 'Version',
+		icon: {
+			className: 'cd_we_setting_recovery_phrase',
+			img: <img src={VersionIcon} />,
+		},
+		value: getVersion(),
 	},
 ];
 

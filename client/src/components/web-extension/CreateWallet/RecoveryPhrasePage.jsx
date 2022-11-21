@@ -1,21 +1,23 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import drop from 'lodash-es/drop';
 import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
-import { selectCreateWalletTotalKeywords, selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
+import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
+import { selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import CopyButton from '@cd/components/web-extension/Common/CopyButton';
+import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import './RecoveryPhrasePage.scss';
-
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
-	const keyPhrase= useSelector(selectCreateWalletKeyphrase);
+	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
+	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
 	const keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
-	const TOTAL_KEYWORDS = useSelector(selectCreateWalletTotalKeywords);
 	const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
+	const TOTAL_KEYWORDS = keyPhraseAsArray.length;
 	const leftKeys = dropRight(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
 	const rightKeys = drop(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
 
@@ -24,13 +26,18 @@ const RecoveryPhrasePage = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		dispatch(generateKeyphrase());
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		dispatch(generateKeyphrase(numOfWords));
+	}, [numOfWords, dispatch]);
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
 			<SelectEncryptionType />
+			<NumberRecoveryWordsSelect
+				selectedValue={numOfWords}
+				onChange={(number) => {
+					setNumOfWords(number);
+				}}
+			/>
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 				<ul className="cd_we_create-keyphrase--column">
 					{leftKeys?.map((word, index) => (

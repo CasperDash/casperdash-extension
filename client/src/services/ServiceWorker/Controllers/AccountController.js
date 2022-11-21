@@ -17,27 +17,16 @@ class AccountController {
 		return this.userService;
 	};
 
-	generateKeypair = async () => {
-		try {
-			if (!this.userService) {
-				throw new Error('Missing UserService instance');
-			}
-
-			return await this.userService.generateKeypair();
-		} catch (error) {
-			return undefined;
-		}
-	};
-
 	validateReturningUser = async ({ password }) => {
 		const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
-		const userCache = UserService.makeUserFromCache(password, cacheConnectedAccount);
+
+		const { userCache, selectedWallet } = await UserService.makeUserFromCache(password, cacheConnectedAccount);
 
 		if (!userCache) {
 			throw Error('Missing User');
 		}
-		const user = new UserService(userCache);
-		const result = await user.prepareStorageData();
+		const user = new UserService(userCache, { selectedWalletUID: selectedWallet.uid });
+		const result = await user.prepareStorageData(true);
 
 		this.userService = user;
 		return result;
@@ -56,16 +45,15 @@ class AccountController {
 		try {
 			const opts = {
 				encryptionType,
-				currentWalletIndex: 0,
 			};
 			const user = new UserService(new User(password), opts);
 
-			user.initialize(keyphrase);
+			await user.initialize(keyphrase);
 
 			this.userService = user;
 			this.appStore.putState({ user });
 
-			return await user.prepareStorageData();
+			return await this.userService.prepareStorageData();
 		} catch (error) {
 			console.error(error);
 			throw Error('Error on create new User');
@@ -85,7 +73,7 @@ class AccountController {
 	};
 
 	signPrivateKeyProcess = async ({ deployJSON }) => {
-		const asymKey = await this.generateKeypair();
+		const asymKey = await this.userService.generateKeypair();
 		const deployResult = DeployUtil.deployFromJson(deployJSON);
 
 		if (deployResult.err) {
@@ -96,33 +84,51 @@ class AccountController {
 		return DeployUtil.deployToJson(signedDeploy);
 	};
 
-
-	getKeyphrase = () => {
-		return this.userService.getKeyphrase();
-	}
-
-	getHDWallets = async () => {
-		const hdWallets = (await this.userService.getHDWallets()) || [];
-
-		return hdWallets;
+	getKeyphrase = async ({ password }) => {
+		try {
+			const { userDetails } = await this.validateReturningUser({ password });
+			if (!userDetails) {
+				throw Error('Invalid password');
+			}
+			return this.userService.getKeyphrase();
+		} catch (error) {
+			console.error(error);
+			throw Error('Invalid password');
+		}
 	};
 
-	getCurrentIndexByPublicKey = async ({ publicKey }) => {
-		return this.userService.getCurrentIndexByPublicKey(publicKey);
-	}
+	getWallets = async () => {
+		const wallets = (await this.userService.getWallets()) || [];
+
+		return wallets;
+	};
 
 	addWalletAccount = async ({ index, description }) => {
 		return this.userService.addWalletAccount(index, description);
 	};
 
-	setDefaultWallet = async ({ index }) => {
-		await this.userService.setDefaultWallet(index);
+	setSelectedWallet = async ({ uid }) => {
+		await this.userService.setSelectedWallet(uid);
 
 		return this.userService.prepareStorageData();
 	};
 
 	isUserExist = () => {
 		return !!this.userService;
+	};
+
+	addLegacyAccount = async ({ name, secretKey }) => {
+		return await this.userService.addLegacyAccount(name, secretKey);
+	};
+
+	getPrivateKey = async ({ password }) => {
+		try {
+			const { userDetails } = await this.validateReturningUser({ password });
+			return await this.userService.getPrivateKeyPEM(userDetails.selectedWallet.uid);
+		} catch (error) {
+			console.error(error);
+			throw Error('Invalid password');
+		}
 	};
 }
 

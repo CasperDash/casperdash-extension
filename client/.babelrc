@@ -1,49 +1,46 @@
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "browsers": "> 1%"
-        }
-      }
-    ],
-    [
-      "@babel/preset-react",
-      {
-        "runtime": "automatic"
-      }
-    ]
-  ],
-  "plugins": [
-    "@babel/plugin-transform-runtime",
-    [
-      "module-resolver",
-      {
-        "root": [
-          "./src"
-        ],
-        "alias": {
-          "@cd/assets": "./src/assets",
-          "@cd/actions": "./src/actions",
-          "@cd/helpers": "./src/helpers",
-          "@cd/selectors": "./src/selectors",
-          "@cd/services": "./src/services",
-          "@cd/shared": "./src/shared",
-          "@cd/store": "./src/store",
-          "@cd/config": "./src/config",
-          "@cd/constants": "./src/constants",
-          "@cd/common": "./src/components/Common",
-          "@cd/hooks": "./src/components/hooks",
-          "@cd/hocs": "./src/components/hocs",
-          "@cd/web": "./src/components/web",
-          "@cd/web-extension": "./src/components/web-extension",
-          "@cd/components": "./src/components"
-        }
-      }
-    ]
-  ],
-  "ignore": [
-    "**/__tests__"
-  ]
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"targets": {
+					"browsers": "> 1%"
+				}
+			}
+		],
+		[
+			"@babel/preset-react",
+			{
+				"runtime": "automatic"
+			}
+		]
+	],
+	"plugins": [
+		"@babel/plugin-transform-runtime",
+		[
+			"module-resolver",
+			{
+				"root": ["./src"],
+				"alias": {
+					"@cd/assets": "./src/assets",
+					"@cd/actions": "./src/actions",
+					"@cd/helpers": "./src/helpers",
+					"@cd/selectors": "./src/selectors",
+					"@cd/services": "./src/services",
+					"@cd/shared": "./src/shared",
+					"@cd/store": "./src/store",
+					"@cd/config": "./src/config",
+					"@cd/constants": "./src/constants",
+					"@cd/common": "./src/components/Common",
+					"@cd/hooks": "./src/components/hooks",
+					"@cd/hocs": "./src/components/hocs",
+					"@cd/web": "./src/components/web",
+					"@cd/web-extension": "./src/components/web-extension",
+					"@cd/components": "./src/components",
+					"@cd/app": "./src/app"
+				}
+			}
+		]
+	],
+	"ignore": ["**/__tests__"]
 }

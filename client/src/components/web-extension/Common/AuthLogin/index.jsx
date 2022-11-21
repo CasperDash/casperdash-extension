@@ -4,9 +4,6 @@ import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
 import useAuthLogin from '@cd/components/hooks/useAuthLogin';
-import { deleteAllUserData } from '@cd/actions/userActions';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 const onValidatePassword = (values) => {
 	const errors = {};
@@ -18,14 +15,7 @@ const onValidatePassword = (values) => {
 	return errors;
 };
 
-const AuthLogin = ({
-	onLoginSuccess = () => {},
-	isShowReset = false,
-	header = null,
-	passwordLabel = 'Enter password',
-}) => {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
+const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = 'Enter password' }) => {
 	const { onAuthCredentialSuccess, validateUserCredential } = useAuthLogin({
 		onAuthCompleted: onLoginSuccess,
 	});
@@ -58,11 +48,6 @@ const AuthLogin = ({
 		[serverErrors],
 	);
 
-	const handleOnReset = useCallback(async () => {
-		dispatch(deleteAllUserData());
-		navigate('/connectAccount');
-	}, [dispatch, navigate]);
-
 	return (
 		<Formik
 			initialValues={{
@@ -94,18 +79,11 @@ const AuthLogin = ({
 							<Form.Text className="invalid-feedback" id="passwordHelpBlock">
 								{serverErrors.message}
 							</Form.Text>
-						)}  
+						)}
 						<div className="cd_we_page--bottom">
 							<Button type="submit" className="cd_we_btn-next" disabled={false}>
 								Unlock
 							</Button>
-							{isShowReset && (
-								<div className="cd_we_welcomeBack--bottom">
-									<Button onClick={handleOnReset} variant="link">
-										Log in as another user?
-									</Button>
-								</div>
-							)}
 						</div>
 					</Form>
 				);
@@ -118,7 +96,7 @@ AuthLogin.propTypes = {
 	header: PropTypes.node,
 	isShowReset: PropTypes.bool,
 	onLoginSuccess: PropTypes.func,
-	passwordLabel: PropTypes.string
-}
+	passwordLabel: PropTypes.string,
+};
 
 export default AuthLogin;

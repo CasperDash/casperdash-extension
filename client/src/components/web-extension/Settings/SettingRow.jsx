@@ -6,7 +6,7 @@ import ArrowIcon from '@cd/assets/image/bold-arrow-icon.svg';
 import './index.scss';
 
 const SettingRow = ({ setting }) => {
-	const [isOpenModal, setIsOpenModal] = useState()
+	const [isOpenModal, setIsOpenModal] = useState();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ const SettingRow = ({ setting }) => {
 	const handleOnClick = () => {
 		if (setting.isRequiredPassword) {
 			setIsOpenModal(true);
-			return;	
+			return;
 		}
 
 		onProcess();
@@ -23,11 +23,11 @@ const SettingRow = ({ setting }) => {
 
 	const handleOnLoginSuccess = () => {
 		onProcess();
-	}
+	};
 
 	const handleOnCloseLoginModal = () => {
 		setIsOpenModal(false);
-	}
+	};
 
 	return (
 		<div className="cd_setting--wrapper">
@@ -36,13 +36,20 @@ const SettingRow = ({ setting }) => {
 					<div className={`cd_setting_icon ${setting.icon.className}`}>{setting.icon.img}</div>
 					<div className="cd_setting_name">{setting.name}</div>
 				</div>
+				{setting.value && <div>{setting.value}</div>}
 				{setting.hasMenu && (
 					<div>
 						<ArrowIcon />
 					</div>
 				)}
 			</div>
-			<LoginModalConfirm isOpen={isOpenModal} onLoginSuccess={handleOnLoginSuccess} onCloseModal={handleOnCloseLoginModal}/>
+			<LoginModalConfirm
+				isOpen={isOpenModal}
+				onLoginSuccess={handleOnLoginSuccess}
+				onCloseModal={handleOnCloseLoginModal}
+				title="Recovery Phrase"
+				description="Please enter password to continue"
+			/>
 		</div>
 	);
 };

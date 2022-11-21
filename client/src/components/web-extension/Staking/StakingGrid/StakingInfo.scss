@@ -1,7 +1,18 @@
 .cd_we_staking_info {
 	padding: 10px 15px;
-	.cd_we_staking_info_title {
-		color: var(--secondary-text-color);
+	.cd_we_staking_info_header {
+		display: flex;
+		gap: 8px;
+		.cd_we_staking_info_title {
+			color: var(--secondary-text-color);
+			cursor: pointer;
+		}
+		.cd_we_btn_history {
+			cursor: pointer;
+			&.active {
+				fill: #dc3545;
+			}
+		}
 	}
 	.cd_we_grid {
 		height: calc(100vh - 390px);

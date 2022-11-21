@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import isEmpty from 'lodash-es/isEmpty';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
+import routes from '@cd/app/web-extension/routeConfig';
 
-const asyncAccountValidator = (navigate) => {
+const asyncAccountValidator = (navigate, location) => {
 	return async (_, getState) => {
 		const {
 			user: { publicKey },
@@ -14,9 +15,14 @@ const asyncAccountValidator = (navigate) => {
 		 * Make sure user must be valid before navigating to other route
 		 */
 		const isValidUserShape = Boolean(user && !isEmpty(user?.loginOptions));
+		if (isValidUserShape) {
+			navigate(!user.publicKey ? '/welcomeBack' : '/');
+			return;
+		}
 
-		if (!publicKey && isValidUserShape) {
-			navigate('/welcomeBack');
+		// do nothing if in outer routes
+		const pathname = location.pathname;
+		if (routes.outerRoutes.find((route) => route.route === pathname)) {
 			return;
 		}
 
@@ -29,9 +35,11 @@ const asyncAccountValidator = (navigate) => {
 const useWithAccount = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
-		dispatch(asyncAccountValidator(navigate));
+		dispatch(asyncAccountValidator(navigate, location));
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
