@@ -103,10 +103,10 @@ describe('initConnectedAccountFromLocalStorage', () => {
 });
 
 describe('Delete all data', () => {
-	test('deleteAllUserData', () => {
+	test('deleteAllUserData', async () => {
 		const mockDispatch = jest.fn();
 
-		deleteAllUserData()(mockDispatch);
+		await deleteAllUserData()(mockDispatch);
 		expect(mockDispatch).toHaveBeenCalled();
 	});
 });
