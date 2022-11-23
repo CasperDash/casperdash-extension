@@ -96,10 +96,10 @@ export const initConnectedAccountFromLocalStorage = () => {
  */
 export const deleteAllUserData = () => {
 	return async (dispatch) => {
-		onClearUserSW();
+		await onClearUserSW();
+		await clearChromeStorageLocal();
 		dispatch(setPublicKey());
 		dispatch(resetAccount());
-		clearChromeStorageLocal();
 	};
 };
 
