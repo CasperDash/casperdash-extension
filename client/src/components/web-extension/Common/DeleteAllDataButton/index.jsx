@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ConfirmModal from '@cd/components/Common/ConfirmModal';
 import { deleteAllUserData } from '@cd/actions/userActions';
-import LoginModalConfirm from '@cd/components/web-extension/Common/LoginModal/LoginModalConfirm';
+import EnterPasswordModal from '@cd/components/web-extension/Common/LoginModal/EnterPasswordModal';
+import useAuthLogin from '@cd/components/hooks/useAuthLogin';
 
 const DeleteAllDataButton = () => {
 	const dispatch = useDispatch();
+	const { validateUserCredential } = useAuthLogin({});
 	const navigate = useNavigate();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [isOpenLoginModal, setIsOpenLoginModal] = useState(false);
@@ -25,13 +27,17 @@ const DeleteAllDataButton = () => {
 		setIsOpenLoginModal(true);
 	};
 
-	const handleOnLoginSuccess = () => {
+	const onSubmitPassword = async (password) => {
+		const result = await validateUserCredential(password);
+		if (!result) {
+			throw Error('Invalid password');
+		}
 		setIsOpenLoginModal(false);
 		dispatch(deleteAllUserData());
 		navigate('/connectAccount');
 	};
 
-	const handleOnCloseLoginModal = () => {
+	const handleOnClosePasswordModal = () => {
 		setIsOpenLoginModal(false);
 	};
 
@@ -61,10 +67,10 @@ const DeleteAllDataButton = () => {
 					</div>
 				}
 			/>
-			<LoginModalConfirm
+			<EnterPasswordModal
 				isOpen={isOpenLoginModal}
-				onLoginSuccess={handleOnLoginSuccess}
-				onCloseModal={handleOnCloseLoginModal}
+				onSubmitPassword={onSubmitPassword}
+				onCloseModal={handleOnClosePasswordModal}
 				title="Confirm delete"
 				description="Enter password to delete all data"
 			/>
