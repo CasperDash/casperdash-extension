@@ -19,6 +19,8 @@ const defaultRoutes = {
 	staking: '/staking',
 	nfts: '/NFTs',
 	createnft: '/create-nft',
+	dappConnect: '/dappConnect',
+	dappSignDeployRequest: '/dappSignDeployRequest'
 };
 
 export const routes = features

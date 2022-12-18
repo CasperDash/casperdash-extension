@@ -1,0 +1,33 @@
+.cd_we_connected_sites {
+
+    padding: 0 20px;
+    .title {
+        font-weight: 700;
+    }
+    .description {
+        margin-top: 1rem;
+    }
+
+    .public_keys {
+        margin-top: 2rem;
+
+        .public_key_item {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .text {
+                width: 180px;
+            }
+
+            .user_icon {
+                margin-bottom: 4px;
+                margin-right: 8px;
+            }
+            .disconnect_icon {
+                cursor: pointer;
+            }
+        }
+    }
+}

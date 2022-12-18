@@ -26,6 +26,10 @@ import RecoveryPhrase from '@cd/components/web-extension/RecoveryPhrase';
 import Advanced from '@cd/components/web-extension/Advanced';
 import ImportAccount from '@cd/components/web-extension/Common/Account/ImportAccount';
 import PrivateKey from '@cd/components/web-extension/Common/Account/PrivateKey';
+import DappConnection from '@cd/components/web-extension/DappConnection';
+import ConnectedSites from '@cd/components/web-extension/ConnectedSites';
+import DappSignDeployRequest from '@cd/components/web-extension/DappSignDeployRequest';
+import DappSignMessageRequest from '@cd/components/web-extension/DappSignMessageRequest';
 
 let features;
 
@@ -53,6 +57,7 @@ const routes = {
 		{ name: 'Advanced', route: '/advanced', component: Advanced },
 		{ name: 'Import Account', route: '/importAccount', component: ImportAccount },
 		{ name: 'View Private Key', route: '/viewPrivateKey', component: PrivateKey },
+		{ name: 'Connected Sites', route: '/connectedSites', component: ConnectedSites },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [
@@ -62,6 +67,9 @@ const routes = {
 		{ name: 'Manage Wallet', route: '/createWallet', component: CreateWallet },
 		{ name: 'Welcome Back', route: '/welcomeBack', component: WelcomeBack },
 		{ name: 'Import Wallet', route: '/importWallet', component: ImportWallet },
+		{ name: 'Connect With CasperDash', route: '/dappConnect', component: DappConnection },
+		{ name: 'Sign Deploy With CasperDash', route: '/dappSignDeployRequest', component: DappSignDeployRequest },
+		{ name: 'Sign Message With CasperDash', route: '/dappSignMessageRequest', component: DappSignMessageRequest },
 	],
 };
 export default Object.keys(routes).reduce((out, key) => {

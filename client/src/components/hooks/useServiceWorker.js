@@ -78,6 +78,41 @@ const setPopupOpenState = async (state) => {
 	return sentMessage({ methodName: 'setPopupOpenState', params: { state } });
 };
 
+const getCurrentConnectedUrl = async () => {
+	return sentMessage({ methodName: 'popupManager.getCurrentSite' });
+};
+
+const addConnectedSite = async (site, publicKey) => {
+	return sentMessage({ methodName: 'popupManager.addConnectedSite', params: { site, publicKey } });
+};
+
+const getConnectedSites = async () => {
+	return sentMessage({ methodName: 'popupManager.getConnectedSites' });
+};
+
+const disconnectFromSite = async (origin, publicKey) => {
+	return sentMessage({ methodName: 'popupManager.disconnectFromSite', params: { origin, publicKey } });
+};
+
+const closePopup = async () => {
+	return sentMessage({ methodName: 'popupManager.closePopup' });
+}
+
+const approveSignDeployRequest = async () => {
+	return sentMessage({ methodName: 'signingManager.approveSignDeployRequest' });
+}
+
+const parseSignDeployData = async () => {
+	return sentMessage({ methodName: 'signingManager.parseDeployData' });
+}
+
+const parseMessageData = async () => {
+	return sentMessage({ methodName: 'signingManager.parseMessageData' });
+}
+
+const approveSignMessageRequest = async () => {
+	return sentMessage({ methodName: 'signingManager.approveSignMessageRequest' });
+}
 /**
  *
  * Signing Deploy actions
@@ -102,4 +137,13 @@ export {
 	addLegacyAccount,
 	getPrivateKey,
 	setPopupOpenState,
+	getCurrentConnectedUrl,
+	addConnectedSite,
+	getConnectedSites,
+	disconnectFromSite,
+	approveSignDeployRequest,
+	parseSignDeployData,
+	closePopup,
+	approveSignMessageRequest,
+	parseMessageData
 };

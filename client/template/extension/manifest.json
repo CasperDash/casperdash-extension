@@ -11,7 +11,25 @@
 		"default_icon": "512.png",
 		"default_popup": "popup.html"
 	},
-	"permissions": ["storage", "scripting", "alarms"],
+	"content_scripts": [
+		{
+		  "matches": [
+			"<all_urls>"
+		  ],
+		  "js": [
+			"/static/js/scripts/content/content.js"
+		  ],
+		  "run_at": "document_start",
+		  "all_frames": true
+		}
+	],
+	"web_accessible_resources": [
+		{
+			"resources": ["/static/js/scripts/content/inpage.js"],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"permissions": ["storage", "scripting", "alarms", "tabs", "notifications"],
 	"host_permissions": ["<all_urls>"],
 	"background": {
 		"service_worker": "/static/js/sw/service-worker.js"

@@ -3,9 +3,13 @@ import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } f
 import { AUTO_LOCK_TIMEOUT_ALARM } from '@cd/constants/alarm';
 import RPC from './RPC';
 import AccountController from './Controllers/AccountController';
+import PopupController from './Controllers/PopupController';
+import SigningController from './Controllers/SigningController';
 
 const appStore = new ObservableStore({});
 const accountController = new AccountController(appStore);
+const popupController = new PopupController(accountController, appStore);
+const signController = new SigningController(popupController, accountController);
 
 let lifeline;
 let isPopupOpen = false;
@@ -73,7 +77,28 @@ initialize().catch(console.error);
 
 async function initialize() {
 	await setupPopupServices();
+	await setInjectApiPageServer();
 	registerAlarmActions();
+}
+
+async function setInjectApiPageServer() {
+	const rpc = new RPC({
+		destination: 'injectpage',
+		source: 'serviceWorker',
+	});
+
+	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
+	rpc.register('accountManager.validateReturningUser', accountController.validateReturningUser);
+	rpc.register('accountManager.isUserExist', accountController.isUserExist);
+
+	rpc.register('popupManager.isConnected', popupController.isConnected);
+	rpc.register('popupManager.openRequestConnect', popupController.openRequestConnect);
+	rpc.register('popupManager.disconnectFromSite', popupController.disconnectFromSite);
+	rpc.register('popupManager.getConnectedSites', popupController.getConnectedSites);
+
+	rpc.register('signingManager.signDeploy', signController.signDeploy);
+	rpc.register('signingManager.getCurrentPublicKey', signController.getActivePublicKey);
+	rpc.register('signingManager.signMessage', signController.signMessage);
 }
 
 async function setupPopupServices() {
@@ -84,10 +109,8 @@ async function setupPopupServices() {
 
 	rpc.register('accountManager.createUser', accountController.createNewUser);
 	rpc.register('accountManager.validateReturningUser', accountController.validateReturningUser);
-
 	rpc.register('accountManager.signPrivateKeyProcess', accountController.signPrivateKeyProcess);
 	rpc.register('accountManager.getKeyphrase', accountController.getKeyphrase);
-
 	rpc.register('accountManager.getPublicKey', accountController.getPublicKey);
 	rpc.register('accountManager.getWallets', accountController.getWallets);
 	rpc.register('accountManager.addWalletAccount', accountController.addWalletAccount);
@@ -99,4 +122,15 @@ async function setupPopupServices() {
 	rpc.register('setPopupOpenState', ({ state }) => {
 		isPopupOpen = state;
 	});
+
+	rpc.register('popupManager.getCurrentSite', popupController.getCurrentSite);
+	rpc.register('popupManager.addConnectedSite', popupController.addConnectedSite);
+	rpc.register('popupManager.getConnectedSites', popupController.getConnectedSites);
+	rpc.register('popupManager.disconnectFromSite', popupController.disconnectFromSite);
+	rpc.register('popupManager.closePopup', popupController.closePopup);
+
+	rpc.register('signingManager.parseDeployData', signController.parseDeployData);
+	rpc.register('signingManager.parseMessageData', signController.parseMessageData);
+	rpc.register('signingManager.approveSignDeployRequest', signController.approveSignDeployRequest);
+	rpc.register('signingManager.approveSignMessageRequest', signController.approveSignMessageRequest);
 }

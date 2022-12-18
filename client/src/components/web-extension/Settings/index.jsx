@@ -1,6 +1,7 @@
 import React from 'react';
 import Logo from '@cd/assets/image/Logo-only.svg';
 import LockIcon from '@cd/assets/image/ic-lock.svg';
+import SiteIcon from '@cd/assets/image/ic-lock.svg';
 import VersionIcon from '@cd/assets/image/ic-version.png';
 import BackupIcon from '@cd/assets/image/ic-backup.png';
 import { lockAccount } from '@cd/actions/userActions';
@@ -21,14 +22,16 @@ const SETTINGS = [
 			chrome.tabs.create({ url: 'https://casperdash.io' });
 		},
 	},
-	// {
-	// 	name: 'Connected Sites',
-	// 	hasMenu: true,
-	// 	icon: {
-	// 		className: 'cd_we_setting_sites',
-	// 		img: <SiteIcon />,
-	// 	},
-	// },
+	{
+		name: 'Connected Sites',
+		icon: {
+			className: 'cd_we_setting_sites',
+			img: <SiteIcon />,
+		},
+		action: ({ navigate }) => {
+			navigate('/connectedSites', { state: { name: 'Connected Sites' } });
+		},
+	},
 	{
 		name: 'Lock',
 		icon: {
