@@ -58,8 +58,14 @@ export const setPublicKeyToStore = (publicKey, loginOptions = {}) => {
  */
 export const setPublicKey = (publicKey, loginOptions = {}) => {
 	return async (dispatch) => {
-		// need to get from storage here to prevent missing user info
-		const { loginOptions: cachedLoginOptions } = await getConnectedAccountChromeLocalStorage();
+		let cachedLoginOptions = {};
+		if (isUsingExtension()) {
+			// need to get from storage here to prevent missing user info
+			const { loginOptions } = await getConnectedAccountChromeLocalStorage();
+			cachedLoginOptions = {
+				...loginOptions
+			}
+		}
 		//Cache public key and login options
 		await cacheLoginInfoToLocalStorage(publicKey, { ...loginOptions, ...cachedLoginOptions });
 		dispatch(setPublicKeyToStore(publicKey, loginOptions));
