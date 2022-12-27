@@ -62,9 +62,6 @@ class PopupController {
                     id: tabId
                 };
 
-                await this.onActiveKeyChanged({
-                    activeKey: await this.accountController.getCurrentPublicKey()
-                }); 
             }
         });
 
@@ -78,9 +75,11 @@ class PopupController {
     }
 
     onActiveKeyChanged = async ({activeKey}) => {
+        const isConnected = await this.isConnected();
+
         return updateStatusEvent(this.currentTab.id, 'activeKeyChanged', {
             isUnlocked: true,
-            isConnected: await this.isConnected(),
+            isConnected: isConnected,
             activeKey: activeKey
         }); 
     }
