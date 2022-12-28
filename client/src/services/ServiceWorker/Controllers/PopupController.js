@@ -126,8 +126,8 @@ class PopupController {
         const createdWindow = await browser.windows.create({
             url: `/popup.html#/${type}`,
             type: 'popup',
-            height: 480,
-            width: 300,
+            height: 720,
+            width: 367,
             left: xOffset,
             top: yOffset
         });

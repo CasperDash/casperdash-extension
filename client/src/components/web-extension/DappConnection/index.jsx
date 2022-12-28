@@ -6,13 +6,23 @@ import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequ
 import { addConnectedSite, closePopup, getCurrentConnectedUrl } from '@cd/components/hooks/useServiceWorker';
 import { useSelector } from 'react-redux';
 import './index.scss';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const DappConnection = () => {
+	const [connectedUrl, setConnectedUrl] = useState('');
 	const publicKey = useSelector(getPublicKey);
 
-	const onOk = async () => {
-		const connectedUrl = await getCurrentConnectedUrl();
+	useEffect(() => {
+		const loadConnectedUrl = async () => {
+			const connectedUrl = await getCurrentConnectedUrl();
+			setConnectedUrl(connectedUrl);
+		}
 
+		loadConnectedUrl();
+	}, []);
+
+	const onOk = async () => {
 		try {
 			await addConnectedSite(connectedUrl, publicKey);
 		} catch(err) {
@@ -29,6 +39,7 @@ const DappConnection = () => {
 		<div className="cd_we_connect_account">
 			<div>
 				<h1>Connect With CasperDash</h1>
+				<p className="cd_we_connect_account_site">{connectedUrl}</p>
 			</div>
 			<div className="cd_we_connect_account_logo">
 				<CasperDashLogo />
