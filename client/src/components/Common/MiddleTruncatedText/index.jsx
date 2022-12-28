@@ -4,9 +4,6 @@ import { getEndString } from '../../../helpers/format';
 import './MiddleTruncatedText.scss';
 
 export const MiddleTruncatedText = ({ children, end, placement = 'top' }) => {
-	if (!children) {
-		return null;
-	}
 	const endString = getEndString(children, end);
 	const beginString = !endString ? children : children.slice(0, children.length - endString.length);
 	return (

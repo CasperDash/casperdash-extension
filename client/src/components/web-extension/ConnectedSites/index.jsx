@@ -27,19 +27,19 @@ const ConnectedSites = () => {
             }
             const [currentTab] = tabs;
             const currentTabUrl = _get(currentTab, 'url', false);
-            if (!_get(currentTab, 'url', false)) {
+            if (!currentTabUrl) {
                 return;
             }
             const url = new URL(currentTabUrl);
 
-            const publicKeys = Object.keys(sites).reduce((curry, publicKey) => {
+            const publicKeys = Object.keys(sites).reduce((publicKeys, publicKey) => {
                 const foundSite = _get(sites, publicKey, []).find(site => site === url.origin);
                 if (!foundSite) {
-                    return curry;
+                    return publicKeys;
                 }
 
                 return [
-                    ...curry,
+                    ...publicKeys,
                     publicKey
                 ]
             }, []);
@@ -54,7 +54,7 @@ const ConnectedSites = () => {
     const handleOnDisconnect = async (publicKey) => {
         await disconnectFromSite(currentSite, publicKey);
 
-        setPublicKeys((publicKeys) => publicKeys.filter(key => key !== publicKey));
+        setPublicKeys((prevPublicKeys) => prevPublicKeys.filter(key => key !== publicKey));
     }
 
     return (

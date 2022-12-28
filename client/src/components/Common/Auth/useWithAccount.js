@@ -22,28 +22,14 @@ const asyncAccountValidator = (navigate, location) => {
 		if (isValidUserShape) {
 			switch(true) {
 				case pathname === '/dappConnect':
-					if (!user.publicKey) {
-						navigate('/welcomeBack', { state: { redirectUrl: '/dappConnect' } });
-						return;
-					}
-
-					navigate('/dappConnect');
-					return;
 				case pathname === '/dappSignDeployRequest':
-					if (!user.publicKey) {
-						navigate('/welcomeBack', { state: { redirectUrl: '/dappSignDeployRequest' } });
-						return;
-					}
-
-					navigate('/dappSignDeployRequest');
-					return;
 				case pathname === '/dappSignMessageRequest':
 					if (!user.publicKey) {
-						navigate('/welcomeBack', { state: { redirectUrl: '/dappSignMessageRequest' } });
+						navigate('/welcomeBack', { state: { redirectUrl: pathname } });
 						return;
 					}
 
-					navigate('/dappSignMessageRequest');
+					navigate(pathname);
 					return;
 				case !user.publicKey:
 					navigate('/welcomeBack');

@@ -3,7 +3,7 @@ import browser from 'webextension-polyfill';
 import _uniq from 'lodash-es/uniq';
 import _isEmpty from 'lodash-es/isEmpty'
 import _get from 'lodash-es/get';
-import { updateStatusEvent } from '../utils';
+import { updateStatusEvent } from '@cd/services/ServiceWorker/utils';
 
 const CONNECTED_SITES = 'connectedSites';
 
@@ -184,9 +184,9 @@ class PopupController {
 
     addConnectedSite = async ({ site, publicKey }) => {
         let connectedSites = await this.getConnectedSites();
-        const sites = _get(connectedSites, publicKey, false);
+        const sites = _get(connectedSites, publicKey, []);
 
-        if (!sites) {
+        if (sites.length === 0) {
             connectedSites = {
                 ...connectedSites,
                 [publicKey]: [site]
