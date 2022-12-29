@@ -89,6 +89,19 @@ class PopupController {
     }
 
     openRequestConnect = async ({ origin }) => {
+        const isConnected = await this.isConnected({ origin });
+        if (isConnected) {
+            const activeKey = await this.accountController.getCurrentPublicKey()
+
+            await updateStatusEvent(this.currentTab.id, 'connected', {
+                isUnlocked: true,
+                isConnected: true,
+                activeKey
+            });
+
+            return;
+        }
+
         this.openPopup({ url: origin, type: POPUP_TYPE.CONNECT_ACCOUNT });
     }
 
