@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { approveSignMessageRequest, closePopup, parseMessageData } from '@cd/components/hooks/useServiceWorker';
+import { approveSignMessageRequest, parseMessageData, rejectSignMessageRequest } from '@cd/components/hooks/useServiceWorker';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 
@@ -29,13 +29,13 @@ const DappSignMessageRequest = () => {
 	};
 
 	const onCancel = () => {
-		closePopup();
+		rejectSignMessageRequest();
 	};
 
 	return (
 		<div className="cd_we_sign_message_container">
-			<div>
-				<h1>Sign Message With CasperDash</h1>
+			<div className="cd_we_sign_message_title">
+				<h1>Signature Request</h1>
 			</div>
 			<div className="cd_we_sign_message">
 				<div className="field">

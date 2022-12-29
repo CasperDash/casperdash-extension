@@ -113,6 +113,14 @@ const parseMessageData = async () => {
 const approveSignMessageRequest = async () => {
 	return sentMessage({ methodName: 'signingManager.approveSignMessageRequest' });
 }
+
+const rejectSignMessageRequest = async () => {
+	return sentMessage({ methodName: 'signingManager.rejectSignMessageRequest' });
+}
+
+const rejectSignDeployRequest = async () => {
+	return sentMessage({ methodName: 'signingManager.rejectSignDeployRequest' });
+}
 /**
  *
  * Signing Deploy actions
@@ -145,5 +153,7 @@ export {
 	parseSignDeployData,
 	closePopup,
 	approveSignMessageRequest,
-	parseMessageData
+	parseMessageData,
+	rejectSignMessageRequest,
+	rejectSignDeployRequest
 };

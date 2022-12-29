@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { approveSignDeployRequest, closePopup, parseSignDeployData } from '@cd/components/hooks/useServiceWorker';
+import { approveSignDeployRequest, parseSignDeployData, rejectSignDeployRequest } from '@cd/components/hooks/useServiceWorker';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import Divider from '@cd/components/Common/Divider/index';
@@ -30,13 +30,13 @@ const DappSignDeployRequest = () => {
 	};
 
 	const onCancel = () => {
-		closePopup();
+		rejectSignDeployRequest();
 	};
 
 	return (
 		<div className="cd_we_connect_account">
 			<div>
-				<h1>Sign Deploy With CasperDash</h1>
+				<h1>Signature Deploy Request</h1>
 			</div>
 			<div className="cd_we_sign_deploy">
 				<div className="field">

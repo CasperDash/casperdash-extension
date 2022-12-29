@@ -1,6 +1,6 @@
 class CasperDashPluginHelpers {
     postMessage(msg) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const params = msg && msg.params ? msg.params : {};
             window.postMessage(
             { type: 'casperdash-extension', source: 'injectpage', destination: 'serviceWorker', payload: {
@@ -21,6 +21,11 @@ class CasperDashPluginHelpers {
                     // eslint-disable-next-line no-console
                     console.log('troubleshoot: ', e);
                     window.removeEventListener('message', transact, false);
+                    if (e.data.value.error) {
+                        reject(new Error(e.data.value.error));
+
+                        return;
+                    }
                     resolve(e.data.value.payload);
                 }
             };

@@ -133,4 +133,6 @@ async function setupPopupServices() {
 	rpc.register('signingManager.parseMessageData', signController.parseMessageData);
 	rpc.register('signingManager.approveSignDeployRequest', signController.approveSignDeployRequest);
 	rpc.register('signingManager.approveSignMessageRequest', signController.approveSignMessageRequest);
+	rpc.register('signingManager.rejectSignDeployRequest', signController.rejectSignDeployRequest);
+	rpc.register('signingManager.rejectSignMessageRequest', signController.rejectSignMessageRequest);
 }

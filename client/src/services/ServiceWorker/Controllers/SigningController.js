@@ -74,6 +74,14 @@ class SigningController extends EventEmitter{
         
                         return resolve(result);
                     }
+                    case SIGNING_STATUS.failed: {
+                        const message = this.unsignedDeploy.error || 'User Cancelled Signing';
+                        return reject(
+                            new Error(
+                                message
+                            )
+                        );
+                    }
                     default: 
                         reject(new Error(`Unknown error occurred`));
                 }
@@ -111,7 +119,16 @@ class SigningController extends EventEmitter{
 
         await this.popupController.closePopup();
 
-        this.emit(`casperdash:signDeploy:${encodeBase16(this.unsignedDeploy.deploy.hash)}`);
+        this.emitSignDeployEvent();
+    }
+
+    rejectSignDeployRequest = async () => {
+        this.unsignedDeploy.status = SIGNING_STATUS.failed;
+        this.unsignedDeploy.error = 'User Cancelled Signing';
+
+        await this.popupController.closePopup();
+
+        this.emitSignDeployEvent();
     }
 
     signMessage = async ({ message, signingPublicKey, origin }) => {
@@ -147,6 +164,14 @@ class SigningController extends EventEmitter{
             
                         return resolve(encodeBase16(result));  
                     }
+                    case SIGNING_STATUS.failed: {
+                        const message = this.unsignedDeploy.error || 'User Cancelled Signing';
+                        return reject(
+                            new Error(
+                                message
+                            )
+                        );
+                    }
                     default:
                         reject(new Error('Can not sign message'));
                 }
@@ -166,6 +191,24 @@ class SigningController extends EventEmitter{
 
         this.emit('casperdash:signMessage');
     }
+
+    rejectSignMessageRequest = async () => {
+        this.unsignedMessage.status = SIGNING_STATUS.failed;
+        this.unsignedMessage.error = 'User Cancelled Signing';
+
+        await this.popupController.closePopup();
+
+        this.emitSignMessageEvent();
+    }
+
+    emitSignDeployEvent = () => {
+        this.emit(`casperdash:signDeploy:${encodeBase16(this.unsignedDeploy.deploy.hash)}`);
+    }
+
+    emitSignMessageEvent = () => {
+        this.emit('casperdash:signMessage');
+    }
+
 }
 
 export default SigningController;
