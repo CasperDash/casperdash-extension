@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { disconnectFromSite, getConnectedSites } from '@cd/components/hooks/useServiceWorker';
 import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
-import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText/index';
+import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
+import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import UserIcon from '@cd/assets/image/user-icon.svg';
 import DisconnectIcon from '@cd/assets/image/disconnect-icon.svg';
-
 import './index.scss';
 
 const ConnectedSites = () => {
@@ -87,4 +87,4 @@ const ConnectedSites = () => {
 }
 
 
-export default ConnectedSites;
+export default withServiceWorkerRequired(ConnectedSites);

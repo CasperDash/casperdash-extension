@@ -116,16 +116,22 @@ class PopupController {
     openPopup = async ({ url, type }) => {
         if (this.popupWindow) {
             try {
-                let window = await browser.windows.get(this.popupWindow.windowId);
-                if (window.id) {
-                    browser.windows.update(window.id, {
-                        focused: true,
-                        drawAttention: true
-                    });
-
-                    return false;
+                if (this.popupWindow.type === type) {
+                    let window = await browser.windows.get(this.popupWindow.windowId);
+                    if (window.id) {
+                        browser.windows.update(window.id, {
+                            focused: true,
+                            drawAttention: true
+                        });
+    
+                        return false;
+                    }
+                    return;
                 }
-                return this.popupWindow.windowId;
+                
+                await this.closePopup({windowId: this.popupWindow.windowId});
+
+                return;
             } catch(e) {
                 // eslint-disable-next-line no-console
                 console.log(e);
@@ -148,12 +154,11 @@ class PopupController {
         this.currentSite = url;
         this.popupWindow = {
             windowId: createdWindow.id,
+            type,
         };
-
-        return url;
     }
 
-    closePopup = async ({windowId} = {}) => {
+    closePopup = async ({ windowId } = {}) => {
         if (windowId) {
             await browser.windows.remove(windowId);
         } else {
@@ -218,7 +223,7 @@ class PopupController {
             isConnected: true,
             activeKey: publicKey
         });
-        await this.closePopup();
+        await this.closePopup({ windowId: this.popupWindow.windowId });
 
         return connectedSites;
     }
