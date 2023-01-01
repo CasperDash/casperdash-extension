@@ -9,16 +9,6 @@ import './index.scss';
 const DappSignMessageRequest = () => {
 	const [messageData, setMessageData] = useState({});
 
-	useEffect(() => {
-		const loadMessageData = async () => {
-			const messageData = await parseMessageData();
-
-			setMessageData(messageData);
-		};
-
-		loadMessageData();
-	}, []);
-
 	const onOk = async () => {
 		try {
 			await approveSignMessageRequest();
@@ -31,6 +21,16 @@ const DappSignMessageRequest = () => {
 	const onCancel = () => {
 		rejectSignMessageRequest();
 	};
+
+	useEffect(() => {
+		const loadMessageData = async () => {
+			const messageData = await parseMessageData();
+
+			setMessageData(messageData);
+		};
+
+		loadMessageData();
+	}, []);
 
 	return (
 		<div className="cd_we_sign_message_container">
