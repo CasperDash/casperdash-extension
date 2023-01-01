@@ -128,6 +128,7 @@ async function setupPopupServices() {
 	rpc.register('popupManager.getConnectedSites', popupController.getConnectedSites);
 	rpc.register('popupManager.disconnectFromSite', popupController.disconnectFromSite);
 	rpc.register('popupManager.closePopup', popupController.closePopup);
+	rpc.register('popupManager.cancelConnectingSite', popupController.cancelConnectingSite);
 
 	rpc.register('signingManager.parseDeployData', signController.parseDeployData);
 	rpc.register('signingManager.parseMessageData', signController.parseMessageData);

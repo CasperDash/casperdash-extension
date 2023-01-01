@@ -201,31 +201,46 @@ class PopupController {
     }
 
     addConnectedSite = async ({ site, publicKey }) => {
+        // Get the current connected sites
         let connectedSites = await this.getConnectedSites();
+      
+        // Get the array of sites for the given public key
         const sites = _get(connectedSites, publicKey, []);
-
+      
+        // Check if the public key has any connected sites
         if (sites.length === 0) {
-            connectedSites = {
-                ...connectedSites,
-                [publicKey]: [site]
-            };
+          // If no connected sites, add the new site to the connectedSites object
+          connectedSites = {
+            ...connectedSites,
+            [publicKey]: [site]
+          };
         } else {
-            connectedSites = {
-                ...connectedSites,
-                [publicKey]: _uniq([...sites, site])
-            };
+          // If there are already connected sites, add the new site to the array, deduplicating the sites
+          connectedSites = {
+            ...connectedSites,
+            [publicKey]: _uniq([...sites, site])
+          };
         }
-
+      
+        // Save the updated connectedSites object to Chrome storage
         await setChromeStorageLocal({ key: CONNECTED_SITES, value: connectedSites });
-
+      
+        // Update the status event for the current tab
         await updateStatusEvent(this.currentTab.id, 'connected', {
-            isUnlocked: true,
-            isConnected: true,
-            activeKey: publicKey
+          isUnlocked: true,
+          isConnected: true,
+          activeKey: publicKey
         });
+      
+        // Close the popup window
         await this.closePopup({ windowId: this.popupWindow.windowId });
-
+      
+        // Return the updated connectedSites object
         return connectedSites;
+    };          
+
+    cancelConnectingSite = async () => {
+        await this.closePopup();
     }
 
     disconnectFromSite = async ({ origin, publicKey }) => {

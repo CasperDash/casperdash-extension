@@ -96,31 +96,37 @@ const disconnectFromSite = async (origin, publicKey) => {
 
 const closePopup = async () => {
 	return sentMessage({ methodName: 'popupManager.closePopup' });
-}
+};
+
+const cancelConnectingSite = async () => {
+	return sentMessage({ methodName: 'popupManager.cancelConnectingSite' });
+};
 
 const approveSignDeployRequest = async () => {
 	return sentMessage({ methodName: 'signingManager.approveSignDeployRequest' });
-}
+};
 
 const parseSignDeployData = async () => {
 	return sentMessage({ methodName: 'signingManager.parseDeployData' });
-}
+};
 
 const parseMessageData = async () => {
 	return sentMessage({ methodName: 'signingManager.parseMessageData' });
-}
+};
 
 const approveSignMessageRequest = async () => {
 	return sentMessage({ methodName: 'signingManager.approveSignMessageRequest' });
-}
+};
 
 const rejectSignMessageRequest = async () => {
 	return sentMessage({ methodName: 'signingManager.rejectSignMessageRequest' });
-}
+};
 
 const rejectSignDeployRequest = async () => {
 	return sentMessage({ methodName: 'signingManager.rejectSignDeployRequest' });
-}
+};
+
+
 /**
  *
  * Signing Deploy actions
@@ -155,5 +161,6 @@ export {
 	approveSignMessageRequest,
 	parseMessageData,
 	rejectSignMessageRequest,
-	rejectSignDeployRequest
+	rejectSignDeployRequest,
+	cancelConnectingSite
 };

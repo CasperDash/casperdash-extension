@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import CasperDashLogo from '@cd/assets/image/Logo-only.svg';
 import { getPublicKey } from '@cd/selectors/user';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
-import { addConnectedSite, closePopup, getCurrentConnectedUrl } from '@cd/components/hooks/useServiceWorker';
+import { addConnectedSite, cancelConnectingSite, getCurrentConnectedUrl } from '@cd/components/hooks/useServiceWorker';
 import { useSelector } from 'react-redux';
 import './index.scss';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ const DappConnection = () => {
 	}
 
 	const onCancel = () => {
-		closePopup();
+		cancelConnectingSite();
 	}
 
 	return (
