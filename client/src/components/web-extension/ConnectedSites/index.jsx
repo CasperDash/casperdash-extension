@@ -32,17 +32,9 @@ const ConnectedSites = () => {
             }
             const url = new URL(currentTabUrl);
 
-            const publicKeys = Object.keys(sites).reduce((publicKeys, publicKey) => {
-                const foundSite = _get(sites, publicKey, []).find(site => site === url.origin);
-                if (!foundSite) {
-                    return publicKeys;
-                }
-
-                return [
-                    ...publicKeys,
-                    publicKey
-                ]
-            }, []);
+            const publicKeys = Object.keys(sites).filter(publicKey => {
+                return _get(sites, publicKey, []).includes(url.origin);
+            });
 
             setCurrentSite(url.origin);
             setPublicKeys(publicKeys);
