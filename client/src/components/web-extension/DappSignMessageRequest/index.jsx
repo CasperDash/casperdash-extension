@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { approveSignMessageRequest, parseMessageData, rejectSignMessageRequest } from '@cd/components/hooks/useServiceWorker';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
-import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 
-import './index.scss';
+import './style.scss';
 
 const DappSignMessageRequest = () => {
 	const [messageData, setMessageData] = useState({});
@@ -37,21 +36,24 @@ const DappSignMessageRequest = () => {
 			<div className="cd_we_sign_message_title">
 				<h1>Signature Request</h1>
 			</div>
-			<div className="cd_we_sign_message">
-				<div className="field">
-					<span>Message</span>
-					<div className="long_text">
-						<MiddleTruncatedText end={4}>{messageData.messageString}</MiddleTruncatedText>
+			<div className="cd_we_sign_message_fields">
+				<div className="cd_we_sign_message_field">
+					<span className="cd_we_sign_message_field__label">Signing Key</span>
+					<div className="cd_we_sign_message_field__value">
+						<p>
+							{messageData.signingKey}
+						</p>
 					</div>
 				</div>
-				<div className="field">
-					<span>Signing Key</span>
-					<div className="long_text">
-						<MiddleTruncatedText end={4}>{messageData.signingKey}</MiddleTruncatedText>
+				<div className="cd_we_sign_message_field">
+					<span className="cd_we_sign_message_field__label">Message</span>
+					<div className="cd_we_sign_message_field__value">
+						{/* <MultilineTruncatedText>{messageData.messageString}</MultilineTruncatedText> */}
+						<textarea readOnly rows="8" value={messageData.messageString} />
 					</div>
 				</div>
 			</div>
-			<div className="cd_we_sign_message_buttons">
+			<div className="cd_we_sign_message_actions">
 				<Button variant="primary" onClick={onOk}>
 					Approve
 				</Button>

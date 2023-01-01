@@ -12,8 +12,8 @@ const POPUP_TYPE = {
     CONNECT_ACCOUNT: 'dappConnect',
     SIGN_MESSAGE: 'dappSignMessageRequest',
 }
-const NOTIFICATION_WIDTH = 367;
-const NOTIFICATION_HEIGHT = 720;
+const NOTIFICATION_WIDTH = 357;
+const NOTIFICATION_HEIGHT = 600;
 
 const parseTabURL = (url) => {
     if (url) {
