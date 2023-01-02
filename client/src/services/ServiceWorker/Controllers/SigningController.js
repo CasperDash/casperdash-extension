@@ -35,18 +35,18 @@ class SigningController extends EventEmitter{
         return this.accountController.getCurrentPublicKey();
     }
 
-    signDeploy = async (
-        deployJson,
+    signDeploy = async ({
+        deploy,
         signingPublicKeyHex,
         targetPublicKeyHex,
         origin,
-    ) => {
-        // const isConnected = await this.popupController.isConnected({ origin });
-        // if (!isConnected) {
-        //     throw new Error('This site is not connected');
-        // }
+    }) => {
+        const isConnected = await this.popupController.isConnected({ origin });
+        if (!isConnected) {
+            throw new Error('This site is not connected');
+        }
 
-        let innerDeploy = DeployUtil.deployFromJson(deployJson.deploy);
+        let innerDeploy = DeployUtil.deployFromJson(deploy);
         if (!innerDeploy.ok) {
             innerDeploy.mapErr(err => {
                 throw new Error(err.message);
@@ -56,7 +56,7 @@ class SigningController extends EventEmitter{
         this.unsignedDeploy = {
             status: SIGNING_STATUS.unsigned,
             deploy: innerDeploy.unwrap(),
-            deployJSON: deployJson.deploy,
+            deployJSON: deploy,
             signingKey: signingPublicKeyHex,
             targetKey: targetPublicKeyHex
         };
@@ -132,10 +132,10 @@ class SigningController extends EventEmitter{
     }
 
     signMessage = async ({ message, signingPublicKey, origin }) => {
-        // const isConnected = await this.popupController.isConnected({ origin });
-        // if (!isConnected) {
-        //     throw new Error('This site is not connected');
-        // }
+        const isConnected = await this.popupController.isConnected({ origin });
+        if (!isConnected) {
+            throw new Error('This site is not connected');
+        }
 
         let messageBytes;
         try {
