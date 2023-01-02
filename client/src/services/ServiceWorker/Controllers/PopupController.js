@@ -13,7 +13,7 @@ const POPUP_TYPE = {
     SIGN_MESSAGE: 'dappSignMessageRequest',
 }
 const NOTIFICATION_WIDTH = 357;
-const NOTIFICATION_HEIGHT = 600;
+const NOTIFICATION_HEIGHT = 600 + 28;
 
 const parseTabURL = (url) => {
     if (url) {
