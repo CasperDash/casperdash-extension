@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { approveSignMessageRequest, parseMessageData, rejectSignMessageRequest } from '@cd/components/hooks/useServiceWorker';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
+import { withDappConnectorRequired } from '@cd/components/hocs/DappConnectorRequired';
 
 import './style.scss';
 
@@ -66,4 +67,6 @@ const DappSignMessageRequest = () => {
 	);
 };
 
-export default withServiceWorkerRequired(DappSignMessageRequest);
+export default withDappConnectorRequired(
+	withServiceWorkerRequired(DappSignMessageRequest)
+);

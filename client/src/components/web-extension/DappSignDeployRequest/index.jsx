@@ -3,7 +3,8 @@ import { Button } from 'react-bootstrap';
 import { approveSignDeployRequest, parseSignDeployData, rejectSignDeployRequest } from '@cd/components/hooks/useServiceWorker';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
-import Divider from '@cd/components/Common/Divider/index';
+import { withDappConnectorRequired } from '@cd/components/hocs/DappConnectorRequired/index';
+import Divider from '@cd/components/Common/Divider';
 
 import './index.scss';
 
@@ -94,4 +95,6 @@ const DappSignDeployRequest = () => {
 	);
 };
 
-export default withServiceWorkerRequired(DappSignDeployRequest);
+export default withDappConnectorRequired(
+	withServiceWorkerRequired(DappSignDeployRequest)
+);
