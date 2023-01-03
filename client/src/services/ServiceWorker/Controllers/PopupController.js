@@ -3,17 +3,17 @@ import browser from 'webextension-polyfill';
 import _uniq from 'lodash-es/uniq';
 import _isEmpty from 'lodash-es/isEmpty'
 import _get from 'lodash-es/get';
-import { updateStatusEvent } from '@cd/services/ServiceWorker/utils';
+import { getLastError, updateStatusEvent } from '@cd/services/ServiceWorker/utils';
 
 const CONNECTED_SITES = 'connectedSites';
-
 const BLACKLIST_PROTOCOLS = ['chrome-extension:', 'chrome:'];
-
 const POPUP_TYPE = {
     SIGN_DEPLOY :  'dappSignDeployRequest',
     CONNECT_ACCOUNT: 'dappConnect',
     SIGN_MESSAGE: 'dappSignMessageRequest',
 }
+const NOTIFICATION_WIDTH = 357;
+const NOTIFICATION_HEIGHT = 600 + 28;
 
 const parseTabURL = (url) => {
     if (url) {
@@ -138,17 +138,28 @@ class PopupController {
             }
         }
 
+        let left = 0;
+        let top = 0;
+        try {
+            const lastFocused = await this.getLastFocusedWindow();
+
+            top = lastFocused.top;
+            left = lastFocused.left + (lastFocused.width - NOTIFICATION_WIDTH);
+          } catch (_) {
+            const { screenX, screenY, outerWidth } = window;
+            top = Math.max(screenY, 0);
+            left = Math.max(screenX + (outerWidth - NOTIFICATION_WIDTH), 0);
+          }
+
         const window = await browser.windows.getCurrent();
-        const xOffset = window.left ?? 0;
-        const yOffset = window.top ?? 0;
 
         const createdWindow = await browser.windows.create({
             url: `/popup.html#/${type}`,
             type: 'popup',
-            height: 720,
-            width: 367,
-            left: xOffset,
-            top: yOffset
+            height: NOTIFICATION_HEIGHT,
+            width: NOTIFICATION_WIDTH,
+            left,
+            top
         });
 
         this.currentSite = url;
@@ -284,6 +295,18 @@ class PopupController {
           });
         });
     }
+
+    getLastFocusedWindow() {
+        return new Promise((resolve, reject) => {
+          browser.windows.getLastFocused().then((windowObject) => {
+            const error = getLastError();
+            if (error) {
+              return reject(error);
+            }
+            return resolve(windowObject);
+          });
+        });
+      }
 }
 
 export default PopupController;

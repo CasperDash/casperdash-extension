@@ -1,6 +1,7 @@
 .cd_we_connect_account {
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	align-items: center;
 	height: 100vh;
 	background: var(--component-background);

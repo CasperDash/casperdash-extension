@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { disconnectFromSite, getConnectedSites } from '@cd/components/hooks/useServiceWorker';
 import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
+import ConfirmModal from '@cd/components/Common/ConfirmModal';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import UserIcon from '@cd/assets/image/user-icon.svg';
@@ -9,8 +10,28 @@ import DisconnectIcon from '@cd/assets/image/disconnect-icon.svg';
 import './index.scss';
 
 const ConnectedSites = () => {
+    const [isOpenModal, setIsOpenModal] = useState(false);
     const [currentPublicKeys, setPublicKeys] = useState([]);
     const [currentSite, setCurrentSite] = useState('');
+    const publicKeyRef = useRef(null);
+
+    const handleOnOpenModal = (publicKey) => {
+        publicKeyRef.current = publicKey;
+        setIsOpenModal(true);
+    };
+
+    const handleOnCloseModal = () => {
+        setIsOpenModal(false);
+    }
+
+    const handleOnConfirm = async () => {
+        const publicKey = publicKeyRef.current;
+        await disconnectFromSite(currentSite, publicKey);
+
+        setPublicKeys((prevPublicKeys) => prevPublicKeys.filter(key => key !== publicKey));
+
+        setIsOpenModal(false);
+    }
 
     useEffect(() => {
         const getPublicKeys = async () => {
@@ -43,12 +64,6 @@ const ConnectedSites = () => {
         getPublicKeys();
     }, []);
 
-    const handleOnDisconnect = async (publicKey) => {
-        await disconnectFromSite(currentSite, publicKey);
-
-        setPublicKeys((prevPublicKeys) => prevPublicKeys.filter(key => key !== publicKey));
-    }
-
     return (
         <div className="cd_we_connected_sites">
             <div className="title">
@@ -67,13 +82,24 @@ const ConnectedSites = () => {
                             <div className="text">
                                 <MiddleTruncatedText end={4}>{publicKey}</MiddleTruncatedText>
                             </div>
-                            <div className="disconnect_icon" onClick={() => handleOnDisconnect(publicKey)}>
+                            <div className="disconnect_icon" onClick={() => handleOnOpenModal(publicKey)}>
                                 <DisconnectIcon />
                             </div>
                         </div>
                     )
                 })}
             </div>
+            <ConfirmModal
+	isOpen={isOpenModal}
+	onConfirm={handleOnConfirm}
+	onClose={handleOnCloseModal}
+	title="Disconnect your site"
+	description={
+                    <div className="cd_setting_modal">
+                        Are you sure to disconnect your site?
+                    </div>
+                }
+            />
         </div>
     );
 }

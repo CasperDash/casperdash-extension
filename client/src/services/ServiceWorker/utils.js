@@ -4,6 +4,7 @@ import {
     CLValue,
     CLAccountHash
 } from 'casper-js-sdk';
+import browser from 'webextension-polyfill';
 
 export async function updateStatusEvent(tabId, msg, {
     isUnlocked,
@@ -20,6 +21,18 @@ export async function updateStatusEvent(tabId, msg, {
     });
 }
 
+export function getLastError() {
+  const { lastError } = browser.runtime;
+  if (!lastError) {
+    return undefined;
+  }
+
+  if (lastError.stack && lastError.message) {
+    return lastError;
+  }
+
+  return new Error(lastError.message);
+}
 
 export function getDeployPayment(deploy) {
     return deploy.payment.moduleBytes.getArgByName('amount')

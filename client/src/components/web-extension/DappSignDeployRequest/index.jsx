@@ -34,32 +34,32 @@ const DappSignDeployRequest = () => {
 	};
 
 	return (
-		<div className="cd_we_connect_account">
+		<div className="cd_we_sign_deploy_container">
 			<div>
 				<h1>Signature Deploy Request</h1>
 			</div>
-			<div className="cd_we_sign_deploy">
-				<div className="field">
+			<div className="cd_we_sign_deploy_list_fields">
+				<div className="cd_we_sign_deploy_field">
 					<span>Deploy Hash</span>
 					<div className="long_text">
 						<MiddleTruncatedText end={4}>{deployData.deployHash}</MiddleTruncatedText>
 					</div>
 				</div>
-				<div className="field">
+				<div className="cd_we_sign_deploy_field">
 					<span>Account</span>
 					<div className="long_text">
 						<MiddleTruncatedText end={4}>{deployData.account}</MiddleTruncatedText>
 					</div>
 				</div>
-				<div className="field">
+				<div className="cd_we_sign_deploy_field">
 					<span>Timestamp</span>
 					<span>{deployData.timestamp}</span>
 				</div>
-				<div className="field">
+				<div className="cd_we_sign_deploy_field">
 					<span>Payment</span>
 					<span>{deployData.payment}</span>
 				</div>
-				<div className="field">
+				<div className="cd_we_sign_deploy_field">
 					<span>Deploy Type</span>
 					<span>{deployData.deployType}</span>
 				</div>
@@ -68,7 +68,7 @@ const DappSignDeployRequest = () => {
 						<Divider className="divider" />
 						{Object.keys(deployData.deployArgs).map((argKey) => {
 							return (
-								<div key={argKey} className="field">
+								<div key={argKey} className="cd_we_sign_deploy_field">
 									<span>{argKey}</span>
 									<div className="long_text">
 										<MiddleTruncatedText end={8}>
@@ -81,7 +81,7 @@ const DappSignDeployRequest = () => {
 					</>
 				)}
 			</div>
-			<div className="cd_we_connect_account_buttons">
+			<div className="cd_we_sign_deploy_actions">
 				<Button variant="primary" onClick={onOk}>
 					Approve
 				</Button>
