@@ -102,7 +102,7 @@ const cancelConnectingSite = async () => {
 	return sentMessage({ methodName: 'popupManager.cancelConnectingSite' });
 };
 
-const isPopupWindow = async () => {
+const isSigningPopupWindow = async () => {
 	return sentMessage({ methodName: 'popupManager.isPopupWindow' });
 };
 
@@ -167,5 +167,5 @@ export {
 	rejectSignMessageRequest,
 	rejectSignDeployRequest,
 	cancelConnectingSite,
-	isPopupWindow
+	isSigningPopupWindow
 };

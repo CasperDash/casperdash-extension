@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import createReactClass from 'create-react-class';
-import { isPopupWindow } from '@cd/components/hooks/useServiceWorker';
+import { isSigningPopupWindow } from '@cd/components/hooks/useServiceWorker';
 import { useNavigate } from 'react-router-dom';
 
 const DappConnectorRequired = ({ children }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const checkIsPopupWindow = async () => {
-			const result = await isPopupWindow();
+		const checkIsSigningPopupWindow = async () => {
+			const result = await isSigningPopupWindow();
 			if (!result) {
 				navigate('/')
 			}
 		}
 
-		checkIsPopupWindow();
+		checkIsSigningPopupWindow();
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
