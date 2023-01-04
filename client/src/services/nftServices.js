@@ -76,7 +76,7 @@ export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }
 			? getConfigKey('OLD_NFT_SMART_CONTRACT_ADDRESSES')
 			: [];
 
-		let entryPoint = 'transfer_from';
+		let entryPoint = 'transfer';
 		if (oldNFTAddresses.indexOf(nftContract) > 0) {
 			entryPoint = 'transfer_token';
 			mapping['token_id'] = CLValueBuilder.string(tokenId);
