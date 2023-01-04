@@ -12,7 +12,7 @@ function injectCustomJs() {
         // Remove after run the script, because our script loaded and we don't need to show it on DOM.
         container.removeChild(scriptTag);
         chrome.runtime.onMessage.addListener((data) => {
-          const event = new CustomEvent(`signer:${data.name}`, {
+          const event = new CustomEvent(`casperdash:${data.name}`, {
             detail: data.detail
           });
           window.dispatchEvent(event);
