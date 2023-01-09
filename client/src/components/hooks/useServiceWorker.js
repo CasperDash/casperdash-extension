@@ -102,6 +102,10 @@ const cancelConnectingSite = async () => {
 	return sentMessage({ methodName: 'popupManager.cancelConnectingSite' });
 };
 
+const isSigningPopupWindow = async () => {
+	return sentMessage({ methodName: 'popupManager.isPopupWindow' });
+};
+
 const approveSignDeployRequest = async () => {
 	return sentMessage({ methodName: 'signingManager.approveSignDeployRequest' });
 };
@@ -162,5 +166,6 @@ export {
 	parseMessageData,
 	rejectSignMessageRequest,
 	rejectSignDeployRequest,
-	cancelConnectingSite
+	cancelConnectingSite,
+	isSigningPopupWindow
 };

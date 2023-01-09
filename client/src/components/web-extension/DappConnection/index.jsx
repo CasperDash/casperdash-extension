@@ -1,10 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import CasperDashLogo from '@cd/assets/image/Logo-only.svg';
 import { getPublicKey } from '@cd/selectors/user';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import { addConnectedSite, cancelConnectingSite, getCurrentConnectedUrl } from '@cd/components/hooks/useServiceWorker';
-import { useSelector } from 'react-redux';
+import { withDappConnectorRequired } from '@cd/components/hocs/DappConnectorRequired';
 import './index.scss';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -58,4 +59,6 @@ const DappConnection = () => {
 	);
 };
 
-export default withServiceWorkerRequired(DappConnection);
+export default withDappConnectorRequired(
+	withServiceWorkerRequired(DappConnection)
+);

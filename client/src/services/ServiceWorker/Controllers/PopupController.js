@@ -182,6 +182,10 @@ class PopupController {
         this.popupWindow = null;
     }
 
+    isPopupWindow = () => {
+        return !!this.popupWindow;
+    }
+
     isConnected = async ({ origin } = {}) => {
         const currentPublicKey = await this.accountController.getCurrentPublicKey();
         if (!currentPublicKey) {
