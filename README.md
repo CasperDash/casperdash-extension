@@ -10,7 +10,7 @@
 
 
 
-### 🏠 [casperdash.io ](casperdash.io) ( beta )
+### 🏠 [casperdash.io](https://www.casperdash.io)
 
 ### <i class="fa fa-book fa-fw"></i> Document https://hackmd.io/@casperdash/r1wtIVYVt
 
@@ -36,15 +36,15 @@
 -   [x] Staking
     -   [x] Staking CSPR
 -   [ ] Account management
-    -   [ ] Create/update/manage public/private keys
-    -   [ ] Import/backup account from private key file or mnemonic words
-    -   [ ] Provide method to sign contract from external site
+    -   [x] Create/update/manage public/private keys
+    -   [x] Import/backup account from private key file or mnemonic words
+    -   [x] Provide method to sign contract from external site
 -   [x] Web extension wallet
 
 #### Will be on separated repository
 
--   [ ] IOS app
--   [ ] Android app
+-   [x] IOS app ( https://github.com/CasperDash/casperdash-mobile-wallet )
+-   [x] Android app ( https://github.com/CasperDash/casperdash-mobile-wallet )
 
 ## Development
 
