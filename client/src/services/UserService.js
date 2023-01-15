@@ -2,6 +2,7 @@ import { WalletDescriptor, User, EncryptionType, CasperLegacyWallet, KeyParser }
 import { Keys } from 'casper-js-sdk';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
 import { setChromeStorageLocal, getChromeStorageLocal } from '@cd/services/localStorage';
+
 /**
  * This class serves every tasks related to User
  * From extension to service worker and vice versa

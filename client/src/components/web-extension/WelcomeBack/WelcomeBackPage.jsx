@@ -1,15 +1,17 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import _get from 'lodash-es/get';
 import AuthLogin from '@cd/components/web-extension/Common/AuthLogin';
 import './WelcomeBack.scss';
-import { useCallback } from 'react';
 
 const WelcomeBackPage = () => {
 	const navigate = useNavigate();
+	const { state } = useLocation();
+	const redirectUrl = _get(state, 'redirectUrl', '/');
 
 	const handleOnLoginSuccess = useCallback(() => {
-		navigate('/');
-	}, [navigate]);
+		navigate(redirectUrl);
+	}, [navigate, redirectUrl]);
 
 	return (
 		<section className="cd_we_page--root">

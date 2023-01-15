@@ -1,0 +1,36 @@
+.cd_we_sign_deploy_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	height: 100vh;
+	background: var(--component-background);
+	.cd_we_sign_deploy_list_fields {
+		padding: 10px 30px;
+		width: 100%;
+		.cd_we_sign_deploy_field {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+
+			.long_text {
+				width: 150px;
+			}
+		}
+
+		.divider {
+			padding: 10px 0;
+		}
+	}
+
+	.cd_we_sign_deploy_actions {
+		margin-top: 20px;
+		width: 70%;
+		button {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			margin-bottom: 15px;
+		}
+	}
+}

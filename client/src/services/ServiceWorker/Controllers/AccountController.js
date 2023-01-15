@@ -1,8 +1,8 @@
 import { User, EncryptionType } from 'casper-storage';
-import { DeployUtil } from 'casper-js-sdk';
+import { DeployUtil, signFormattedMessage } from 'casper-js-sdk';
 import UserService from '@cd/services/UserService';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
-
+import _get from 'lodash-es/get';
 class AccountController {
 	/**
 	 * Only available after creating new User or successfully
@@ -18,18 +18,23 @@ class AccountController {
 	};
 
 	validateReturningUser = async ({ password }) => {
-		const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
+		try {
+			const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
 
-		const { userCache, selectedWallet } = await UserService.makeUserFromCache(password, cacheConnectedAccount);
+			const { userCache, selectedWallet } = await UserService.makeUserFromCache(password, cacheConnectedAccount);
 
-		if (!userCache) {
-			throw Error('Missing User');
+			if (!userCache) {
+				throw Error('Missing User');
+			}
+			const user = new UserService(userCache, { selectedWalletUID: selectedWallet.uid });
+			const result = await user.prepareStorageData(true);
+
+			this.userService = user;
+			return result;
+		} catch(err) {
+			// eslint-disable-next-line no-console
+			console.log(err);
 		}
-		const user = new UserService(userCache, { selectedWalletUID: selectedWallet.uid });
-		const result = await user.prepareStorageData(true);
-
-		this.userService = user;
-		return result;
 	};
 
 	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519 }) => {
@@ -84,6 +89,15 @@ class AccountController {
 		return DeployUtil.deployToJson(signedDeploy);
 	};
 
+	signMessagePrivateKeyProcess = async ({ messageBytes }) => {
+		const asymKey = await this.userService.generateKeypair();
+		
+		return signFormattedMessage(
+			asymKey,
+			messageBytes
+		)
+	};
+
 	getKeyphrase = async ({ password }) => {
 		try {
 			const { userDetails } = await this.validateReturningUser({ password });
@@ -109,6 +123,7 @@ class AccountController {
 
 	setSelectedWallet = async ({ uid }) => {
 		await this.userService.setSelectedWallet(uid);
+		this.appStore.updateState({ activePublicKey: await this.userService.getPublicKey(uid) });
 
 		return this.userService.prepareStorageData();
 	};
@@ -130,6 +145,12 @@ class AccountController {
 			throw Error('Invalid password');
 		}
 	};
+
+	getCurrentPublicKey = async () => {
+		const user = await getConnectedAccountChromeLocalStorage();
+
+		return _get(user, 'publicKey', null);
+	}
 }
 
 export default AccountController;

@@ -1,0 +1,35 @@
+.cd_we_connect_account {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	height: 100vh;
+	background: var(--component-background);
+
+	.cd_we_connect_account_site {
+		text-align: center;
+	}
+
+	.cd_we_connect_account_logo {
+		margin: 12vh 0;
+		display: flex;
+		flex-direction: column;
+		svg {
+			margin-bottom: 20px;
+		}
+		div {
+			font-weight: 400;
+			font-size: 18px;
+		}
+	}
+	.cd_we_connect_account_buttons {
+		width: 300px;
+		button {
+			display: flex;
+			justify-content: center;
+			height: 64px;
+			width: 100%;
+			margin-bottom: 15px;
+		}
+	}
+}
