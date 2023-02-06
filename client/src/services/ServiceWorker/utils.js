@@ -55,7 +55,7 @@ export function getDeployArgs(deploy, targetKey) {
     let deployArgs = {};
     
     if (deploy.session.transfer) {
-      deployArgs = this.parseTransferData(
+      deployArgs = parseTransferData(
         deploy.session.transfer,
         targetKey
       );
@@ -84,6 +84,39 @@ export function getDeployArgs(deploy, targetKey) {
     return deployArgs;
 }
 
+export const parseTransferData = (transferDeploy, providedTarget) => {
+  const transferArgs = {};
+  let targetFromDeployHex;
+
+  const targetFromDeploy = transferDeploy.getArgByName('target');
+  switch (targetFromDeploy.clType().tag) {
+    case CLTypeTag.ByteArray:
+      targetFromDeployHex = encodeBase16(targetFromDeploy.value());
+      if (providedTarget) {
+        this.verifyTargetAccountMatch(
+          providedTarget.toLowerCase(),
+          targetFromDeployHex
+        );
+      }
+      transferArgs['Recipient (Hash)'] = targetFromDeployHex;
+      break;
+    case CLTypeTag.PublicKey:
+      targetFromDeployHex = targetFromDeploy.toHex();
+      if (providedTarget && targetFromDeployHex !== providedTarget) {
+        throw new Error("The provided target public key does not match the one specified in the deploy.");
+      }
+      transferArgs['Recipient (Key)'] = targetFromDeployHex;
+      break;
+    default:
+      throw new Error('The target specified in the deploy is not in the correct format, it must be either an AccountHash or a PublicKey.');
+  }
+
+  transferArgs['Amount'] = transferDeploy.getArgByName('amount').value().toString();
+  transferArgs['Transfer ID'] = transferDeploy.getArgByName('id').value().unwrap().value().toString();
+
+  return transferArgs;
+};
+
 // eslint-disable-next-line complexity
 export function parseDeployArg(arg) {
     if (!(arg instanceof CLValue)) {
@@ -94,19 +127,14 @@ export function parseDeployArg(arg) {
       case CLTypeTag.Unit:
         return String('CLValue Unit');
 
-      case CLTypeTag.Key: {
-        const key = arg;
-        if (key.isAccount()) {
-          return parseDeployArg(key.value());
+        case CLTypeTag.Key: {
+          const key = arg;
+          const value = key.value();
+          if (key.isAccount() || key.isURef() || key.isHash()) {
+            return parseDeployArg(value);
+          }
+          throw new Error('Failed to parse key argument');
         }
-        if (key.isURef()) {
-          return parseDeployArg(key.value());
-        }
-        if (key.isHash()) {
-          return parseDeployArg(key.value());
-        }
-        throw new Error('Failed to parse key argument');
-      }
 
       case CLTypeTag.URef:
         return (arg).toFormattedStr();
@@ -142,32 +170,16 @@ export function parseDeployArg(arg) {
         return `${status} ${parsed}`;
       }
 
-      case CLTypeTag.Map: {
-        const map = arg;
-        return map.value().toString();
-      }
+      case CLTypeTag.Map:
+        return arg.value().toString();
 
-      case CLTypeTag.Tuple1: {
-        const tupleOne = arg;
-        return parseDeployArg(tupleOne.value()[0]);
-      }
+      case CLTypeTag.Tuple1:
+        return parseDeployArg(arg.value()[0]);
 
-      case CLTypeTag.Tuple2: {
-        const tupleTwo = arg;
-        const parsedTupleTwo = tupleTwo.value().map(member => {
-          return this.sanitiseNestedLists(member);
-        });
-        return parsedTupleTwo;
-      }
-
-      case CLTypeTag.Tuple3: {
-        const tupleThree = arg;
-        const parsedTupleThree = tupleThree.value().map(member => {
-          return this.sanitiseNestedLists(member);
-        });
-        return parsedTupleThree;
-      }
-
+      case CLTypeTag.Tuple2:
+      case CLTypeTag.Tuple3:
+        return arg.value().map(member => parseDeployArg(member));
+      
       case CLTypeTag.PublicKey:
         return arg.toHex();
 
@@ -178,7 +190,7 @@ export function parseDeployArg(arg) {
           
         return arg.value().toString();
     }
-  }
+}
 
 
 export function getStoredContracts(deploy) {
