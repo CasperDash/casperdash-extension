@@ -65,7 +65,7 @@ export const getMintDeploy = (nftInfo) => {
 export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }) => {
 	try {
 		const recipientPK = CLPublicKey.fromHex(recipient);
-		const contractHashByteArray = contractHashToByteArray(nftContract);
+		const contractHashByteArray = contractHashToByteArray(nftContract.replace('hash-', ''));
 		const pbKey = CLPublicKey.fromHex(publicKey);
 		let mapping = {
 			sender: createRecipientAddress(pbKey),
@@ -81,7 +81,7 @@ export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }
 			entryPoint = 'transfer_token';
 			mapping['token_id'] = CLValueBuilder.string(tokenId);
 		} else {
-			mapping['token_ids'] = CLValueBuilder.list([CLValueBuilder.string(tokenId)]);
+			mapping['token_ids'] = CLValueBuilder.list([CLValueBuilder.u256(tokenId)]);
 		}
 
 		const runtimeArgs = RuntimeArgs.fromMap(mapping);
