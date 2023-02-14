@@ -1,4 +1,4 @@
-class CasperDashPluginHelpers {
+class CasperDashPluginHelper {
     postMessage(msg) {
         return new Promise((resolve, reject) => {
             const params = msg && msg.params ? msg.params : {};
@@ -84,4 +84,4 @@ class CasperDashPluginHelpers {
     }
 }
 
-window.casperDashPluginHelpers = new CasperDashPluginHelpers();
+window.casperDashHelper = new CasperDashPluginHelper();
