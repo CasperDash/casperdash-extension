@@ -81,12 +81,12 @@ export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }
 			entryPoint = 'transfer_token';
 			mapping['token_id'] = CLValueBuilder.string(tokenId);
 		} else {
-			mapping['token_ids'] = CLValueBuilder.list([CLValueBuilder.u256(tokenId)]);
+			mapping['token_ids'] = CLValueBuilder.list([CLValueBuilder.string(tokenId)]);
 		}
 
 		const runtimeArgs = RuntimeArgs.fromMap(mapping);
 
-		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, entryPoint, toMotes(2.5));
+		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, entryPoint, toMotes(10));
 	} catch (error) {
 		console.error(error);
 		throw new Error(`Failed to get transfer NFT deploy due to ${error}`);
