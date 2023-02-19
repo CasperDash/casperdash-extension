@@ -86,7 +86,7 @@ export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }
 
 		const runtimeArgs = RuntimeArgs.fromMap(mapping);
 
-		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, entryPoint, toMotes(10));
+		return getTransferNFTDeploy(pbKey, runtimeArgs, contractHashByteArray, entryPoint, toMotes(2.5));
 	} catch (error) {
 		console.error(error);
 		throw new Error(`Failed to get transfer NFT deploy due to ${error}`);
