@@ -3,6 +3,7 @@ import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import receiveHeadingIcon from '@cd/assets/image/receive-heading-icon.svg';
+import { getExplorer } from '@cd/selectors/settings';
 import { getStakeDeploy } from '../../../../services/stakeServices';
 import { getConfigKey } from '../../../../services/configurationServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
@@ -12,7 +13,6 @@ import { toFormattedCurrency } from '../../../../helpers/format';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import ConfirmationModal from './Modal';
 import SelectField from './SelectField';
-import { getExplorer } from '@cd/selectors/settings';
 
 const DelegateForm = ({
 	fromAddress,

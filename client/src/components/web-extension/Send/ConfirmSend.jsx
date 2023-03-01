@@ -47,7 +47,7 @@ const ConfirmSend = ({ token }) => {
 			amount,
 			fee,
 		};
-		const buildDeployFn = (network) => buildTransferDeploy(transferDetails);
+		const buildDeployFn = (network) => buildTransferDeploy(transferDetails, network);
 
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,

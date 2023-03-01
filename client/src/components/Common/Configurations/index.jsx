@@ -22,7 +22,7 @@ const WithConfigurations = ({ children }) => {
 		}
 
 		getConfig();
-	}, [dispatch]);
+	}, [dispatch, network]);
 
 	return children;
 };

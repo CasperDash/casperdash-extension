@@ -18,7 +18,6 @@ import { AddTokenModal } from '../../Common/Layout/Modal/AddTokenModal';
 import { NFTModal } from './NFTModal';
 import { NFTTab } from './NFTTab';
 import { NFTCard } from './NFTCard';
-import { getNetwork } from '@cd/selectors/settings';
 
 const NFTs = () => {
 	const dispatch = useDispatch();

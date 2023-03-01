@@ -4,12 +4,12 @@ import { Modal, Button, FormControl, Form } from 'react-bootstrap';
 import nftEmpty from '@cd/assets/image/nft-empty.png';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { getExplorer } from '@cd/selectors/settings';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
 import { getTransferDeploy } from '../../../services/nftServices';
 import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { updateNFTLocalStorage } from '../../../actions/NFTActions';
 import { validateNftTransferForm } from '../../../helpers/validator';
-import { getExplorer } from '@cd/selectors/settings';
 
 export const NFTModal = ({
 	show,
