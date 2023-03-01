@@ -26,15 +26,17 @@ const ConfirmSend = ({ token }) => {
 		navigate('/token', { replace: true, state: { name: symbol, token } });
 	};
 
-	const buildTransferDeploy = (transferDetails) => {
+	const buildTransferDeploy = (transferDetails, network) => {
 		return token.address === 'CSPR'
 			? getTransferDeploy({
 					...transferDetails,
 					transferId,
+					network,
 			  })
 			: getTransferTokenDeploy({
 					...transferDetails,
 					contractInfo: { address, decimals },
+					network,
 			  });
 	};
 
@@ -45,7 +47,7 @@ const ConfirmSend = ({ token }) => {
 			amount,
 			fee,
 		};
-		const buildDeployFn = () => buildTransferDeploy(transferDetails);
+		const buildDeployFn = (network) => buildTransferDeploy(transferDetails);
 
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,

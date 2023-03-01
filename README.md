@@ -8,8 +8,6 @@
 
 ![](https://i.imgur.com/N0DGupc.png)
 
-
-
 ### 🏠 [casperdash.io](https://www.casperdash.io)
 
 ### <i class="fa fa-book fa-fw"></i> Document https://hackmd.io/@casperdash/r1wtIVYVt
@@ -96,7 +94,7 @@ The configuration can be configurated by editing .env.\*.local
 REACT_APP_API_ROOT=https://localhost:3001  //api endpoint
 REACT_APP_NETWORK_NAME=casper-test // casper network
 REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2  // contract hash for delegation
-REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","keyManager","staking"] //Features can be enabled/disabled
+REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","staking"] //Features can be enabled/disabled
 ```
 
 ##### 4. Usage
@@ -145,21 +143,21 @@ yarn dev-extension-testnet      // watch extension with testnet config
 
 ##### 5. Load into Chrome
 
-- To load the built files into Chrome, open
+-   To load the built files into Chrome, open
 
 ![](https://i.imgur.com/kxZk0EW.png)
 
-- Enable "Developer mode" if it's not enabled yet:
+-   Enable "Developer mode" if it's not enabled yet:
 
 ![](https://i.imgur.com/zdPemcj.png)
 
-- Click on "Load unpacked":
+-   Click on "Load unpacked":
 
 ![](https://i.imgur.com/HRDH6p8.png)
 
-- Find the `YOUR_WORKING_DIRECTORY/casperdash-client/build_extension/` directory on your system and open it.
+-   Find the `YOUR_WORKING_DIRECTORY/casperdash-client/build_extension/` directory on your system and open it.
 
-- The extension should be now at the top of the page:
+-   The extension should be now at the top of the page:
 
 ## Workflow and contributions
 

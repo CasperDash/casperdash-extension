@@ -46,7 +46,7 @@ const UndelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const buildDeployFn = (network) => getStakeDeploy(stakeDetails, network);
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,
 			stakeDetails.fromAddress,

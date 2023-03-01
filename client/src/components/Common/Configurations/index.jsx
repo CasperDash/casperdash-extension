@@ -1,10 +1,12 @@
+import { getNetwork } from '@cd/selectors/settings';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getConfigurations } from '../../../actions/configurationActions';
 import { saveConfigurationToLocalStorage } from '../../../services/configurationServices';
 
 const WithConfigurations = ({ children }) => {
 	const dispatch = useDispatch();
+	const network = useSelector(getNetwork);
 
 	useEffect(() => {
 		async function getConfig() {
@@ -12,7 +14,7 @@ const WithConfigurations = ({ children }) => {
 				const { data, error } = await dispatch(getConfigurations());
 
 				if (!error) {
-					saveConfigurationToLocalStorage(data);
+					saveConfigurationToLocalStorage(data, network);
 				}
 			} catch (error) {
 				console.error(error);

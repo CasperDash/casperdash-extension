@@ -13,12 +13,7 @@ jest.mock('./History', () => {
 		default: '',
 	};
 });
-jest.mock('./KeyManager', () => {
-	return {
-		__esModules: true,
-		default: '',
-	};
-});
+
 jest.mock('./Tokens', () => {
 	return {
 		__esModules: true,

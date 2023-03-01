@@ -13,6 +13,7 @@ import ConfirmingTransactionsInfo from '../../Common/Layout/Stake/ConfirmingTran
 import UnlockSingerWarning from '../../Common/Layout/Stake/UnlockSingerWarning';
 import StakeForm from '../../Common/Layout/Stake/Form';
 import StakeButton from './Button';
+import { getExplorer } from '@cd/selectors/settings';
 
 const Stake = () => {
 	const dispatch = useDispatch();

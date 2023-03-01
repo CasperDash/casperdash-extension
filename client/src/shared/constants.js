@@ -15,12 +15,11 @@ const defaultRoutes = {
 	dashboard: '/dashboard',
 	tokens: '/tokens',
 	history: '/history',
-	keyManager: '/keyManager',
 	staking: '/staking',
 	nfts: '/NFTs',
 	createnft: '/create-nft',
 	dappConnect: '/dappConnect',
-	dappSignDeployRequest: '/dappSignDeployRequest'
+	dappSignDeployRequest: '/dappSignDeployRequest',
 };
 
 export const routes = features

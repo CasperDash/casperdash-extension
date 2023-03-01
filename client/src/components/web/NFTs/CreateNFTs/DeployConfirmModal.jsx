@@ -40,8 +40,8 @@ export const DeployConfirmModal = ({ show, handleClose, publicKey }) => {
 	};
 
 	const handleConfirmDeployContract = async () => {
-		const buildDeployFn = async () =>
-			await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol);
+		const buildDeployFn = async (network) =>
+			await nftContractDeploy(publicKey, inputValues.collectionName, inputValues.collectionSymbol, network);
 		const { deployHash } = await executeDeploy(buildDeployFn, publicKey, publicKey);
 
 		if (deployHash) {

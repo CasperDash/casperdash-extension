@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, FormControl, Form } from 'react-bootstrap';
 import nftEmpty from '@cd/assets/image/nft-empty.png';
 import { Formik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ImagePreview } from '../../Common/Image/ImagePreview';
 import { getTransferDeploy } from '../../../services/nftServices';
 import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { updateNFTLocalStorage } from '../../../actions/NFTActions';
 import { validateNftTransferForm } from '../../../helpers/validator';
-import { EXPLORER_URL } from '../../../constants/key';
+import { getExplorer } from '@cd/selectors/settings';
 
 export const NFTModal = ({
 	show,
@@ -24,6 +24,9 @@ export const NFTModal = ({
 	const { metadata, image: imageValue, nftName: name, tokenId, contractAddress, symbol } = nftDetails;
 	const { executeDeploy, isDeploying: isTransferring } = useConfirmDeploy();
 	const dispatch = useDispatch();
+
+	// Selector
+	const explorerUrl = useSelector(getExplorer);
 
 	const [pendingTransfer, setPendingTransfer] = useState(false);
 
@@ -151,7 +154,7 @@ export const NFTModal = ({
 								<a
 									target="_blank"
 									rel="noreferrer"
-									href={`${EXPLORER_URL}/deploy/${pendingTransfer.hash}`}
+									href={`${explorerUrl}/deploy/${pendingTransfer.hash}`}
 								>
 									See more details.
 								</a>

@@ -7,7 +7,7 @@ import webLocalStorage from 'redux-persist/lib/storage';
 import { localStorage as extensionLocalStorage } from 'redux-persist-webextension-storage';
 import thunk from 'redux-thunk';
 import { isUsingExtension } from '@cd/services/localStorage';
-import { DEFAULT_AUTO_LOCK_TIME } from '@cd/constants/key';
+import { DEFAULT_AUTO_LOCK_TIME, NETWORK_NAME } from '@cd/constants/key';
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
@@ -54,6 +54,7 @@ export const initialState = {
 	settings: {
 		theme: '',
 		autoLockTime: DEFAULT_AUTO_LOCK_TIME,
+		network: NETWORK_NAME,
 	},
 	nfts: {
 		address: [],
@@ -72,14 +73,18 @@ const removeLoadingStatus = (actionType) => {
 };
 
 const { requestsReducer, requestsMiddleware } = handleRequests({
-	driver: createDriver(
-		axios.create({
-			baseURL: APP_CONFIGS.API_ROOT,
-		}),
-	),
+	driver: createDriver(axios.create()),
 	onRequest: (request, action, store) => {
 		store.dispatch(setLoadingStatus(action.type));
-		return request;
+		const state = store.getState();
+		const baseURL =
+			APP_CONFIGS.APP_ENVIRONMENT === 'local'
+				? APP_CONFIGS.API_ROOT
+				: state.settings.network === 'casper'
+				? 'https://api.casperdash.io'
+				: 'https://testnet-api.casperdash.io';
+		console.info(baseURL);
+		return { ...request, baseURL: request.baseURL || baseURL };
 	},
 	onSuccess: (response, action, store) => {
 		store.dispatch(removeLoadingStatus(action.type));

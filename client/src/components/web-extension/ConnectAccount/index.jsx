@@ -27,7 +27,7 @@ const ConnectAccount = () => {
 		<div className="cd_we_connect_account">
 			<div className="cd_we_connect_account_logo">
 				<CasperDashLogo />
-				<div>Casper Dash</div>
+				<div>CasperDash</div>
 			</div>
 			<Button variant="normal" onClick={handleManageWallet}>
 				<AddIcon />

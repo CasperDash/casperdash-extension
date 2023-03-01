@@ -18,7 +18,7 @@ const DappConnection = () => {
 		const loadConnectedUrl = async () => {
 			const connectedUrl = await getCurrentConnectedUrl();
 			setConnectedUrl(connectedUrl);
-		}
+		};
 
 		loadConnectedUrl();
 	}, []);
@@ -26,25 +26,25 @@ const DappConnection = () => {
 	const onOk = async () => {
 		try {
 			await addConnectedSite(connectedUrl, publicKey);
-		} catch(err) {
+		} catch (err) {
 			// eslint-disable-next-line no-console
 			console.log(err);
 		}
-	}
+	};
 
 	const onCancel = () => {
 		cancelConnectingSite();
-	}
+	};
 
 	return (
-		<div className="cd_we_connect_account">
+		<div className="cd_we_dapp_connect_account">
 			<div>
 				<h1>Connect With CasperDash</h1>
 				<p className="cd_we_connect_account_site">{connectedUrl}</p>
 			</div>
 			<div className="cd_we_connect_account_logo">
 				<CasperDashLogo />
-				<div>Casper Dash</div>
+				<div>CasperDash</div>
 			</div>
 			<div className="cd_we_connect_account_buttons">
 				<Button variant="primary" onClick={onOk}>
@@ -59,6 +59,4 @@ const DappConnection = () => {
 	);
 };
 
-export default withDappConnectorRequired(
-	withServiceWorkerRequired(DappConnection)
-);
+export default withDappConnectorRequired(withServiceWorkerRequired(DappConnection));

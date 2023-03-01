@@ -1,3 +1,4 @@
+import { getNetwork } from '@cd/selectors/settings';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getLatestBlockHash } from '../../selectors/deploy';
@@ -9,6 +10,7 @@ import { getLatestBlockHash } from '../../selectors/deploy';
  */
 export const useAutoRefreshEffect = (callback, dependencies) => {
 	const latestBlockHash = useSelector(getLatestBlockHash);
+	const network = useSelector(getNetwork);
 
 	useEffect(() => {
 		//only refresh if tab is active
@@ -16,5 +18,5 @@ export const useAutoRefreshEffect = (callback, dependencies) => {
 			callback();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [...dependencies, latestBlockHash]);
+	}, [...dependencies, latestBlockHash, network]);
 };
