@@ -78,7 +78,6 @@ export class UserService {
 			return wallet?.getPublicKey() ?? undefined;
 		} catch (err) {
 			// eslint-disable-next-line no-console
-			console.log(`🚀 ~ UserService::getPublicKey: `, err);
 			return undefined;
 		}
 	};
