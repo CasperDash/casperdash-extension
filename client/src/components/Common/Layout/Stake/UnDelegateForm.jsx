@@ -5,7 +5,7 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import receiveHeading from 'assets/image/receive-heading-icon.svg';
 import { getStakeDeploy } from '../../../../services/stakeServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
-import { CSPR_AUCTION_UNDELEGATE_FEE, ENTRY_POINT_UNDELEGATE } from '../../../../constants/key';
+import { ENTRY_POINT_UNDELEGATE } from '../../../../constants/key';
 import { validateUndelegateForm } from '../../../../helpers/validator';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
@@ -19,7 +19,7 @@ const UndelegateForm = ({
 	fromAddress,
 	csprPrice,
 	tokenSymbol,
-	fee = CSPR_AUCTION_UNDELEGATE_FEE,
+	fee = getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE'),
 	stakedValidator,
 }) => {
 	// State
