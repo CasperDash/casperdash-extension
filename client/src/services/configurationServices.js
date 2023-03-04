@@ -4,8 +4,8 @@ import * as DEFAULT_CONFIG from '../constants/key';
 import { getLocalStorageValue, getNetworkStorageKey, setLocalStorageValue } from './localStorage';
 
 // eslint-disable-next-line no-unused-vars
-export const getConfigurations = memoizeOne((reload) => {
-	return getLocalStorageValue('casperdash', 'configurations') || {};
+export const getConfigurations = memoizeOne((reload, network) => {
+	return getLocalStorageValue('casperdash', getNetworkStorageKey('configurations', network)) || {};
 });
 
 /**
@@ -13,8 +13,8 @@ export const getConfigurations = memoizeOne((reload) => {
  * @param key - The key of the configuration you want to get.
  * @returns The value of the key in the configuration object.
  */
-export const getConfigKey = (key) => {
-	const configs = getConfigurations(false);
+export const getConfigKey = (key, network) => {
+	const configs = getConfigurations(false, network);
 	return configs[key] || DEFAULT_CONFIG[key];
 };
 
@@ -29,6 +29,6 @@ export const saveConfigurationToLocalStorage = (config = {}, network) => {
 		console.info('Update configuration');
 		setLocalStorageValue('casperdash', getNetworkStorageKey('configurations', network), config, 'set');
 		// reload memoizeOne
-		getConfigurations(true);
+		getConfigurations(true, network);
 	}
 };

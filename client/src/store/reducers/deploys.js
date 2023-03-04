@@ -12,6 +12,7 @@ export default function deployReducer(state = { transfers: [] }, action) {
 				action.payload.publicKey,
 				getNetworkStorageKey('deploys.transfers', action.payload.network),
 			);
+
 			return { ...state, transfers: items };
 		}
 		case DEPLOY.UPDATE_TRANSFER_LOCAL_STORAGE:

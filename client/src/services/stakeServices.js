@@ -1,6 +1,6 @@
 import { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } from 'casper-js-sdk';
 import { NETWORK_NAME, ENTRY_POINT_DELEGATE } from '../constants/key';
-import { contractHashes } from '../constants/stack';
+import { getStakeAuctionHash } from '../constants/stack';
 import { toMotes } from '../helpers/currency';
 
 /**
@@ -15,7 +15,7 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount, network)
 	const deployParams = new DeployUtil.DeployParams(baseAccount, network);
 	const runTimeArgs = RuntimeArgs.fromMap(args);
 	const session = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
-		contractHashes.auction,
+		getStakeAuctionHash(network).auction,
 		entryPoint,
 		runTimeArgs,
 	);
