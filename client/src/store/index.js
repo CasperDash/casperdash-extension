@@ -77,13 +77,14 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	onRequest: (request, action, store) => {
 		store.dispatch(setLoadingStatus(action.type));
 		const state = store.getState();
+
 		const baseURL =
 			APP_CONFIGS.APP_ENVIRONMENT === 'local'
 				? APP_CONFIGS.API_ROOT
 				: state.settings.network === 'casper'
 				? 'https://api.casperdash.io'
 				: 'https://testnet-api.casperdash.io';
-		console.info(baseURL);
+
 		return { ...request, baseURL: request.baseURL || baseURL };
 	},
 	onSuccess: (response, action, store) => {

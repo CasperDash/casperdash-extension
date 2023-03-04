@@ -2,7 +2,6 @@ import { NETWORK_NAME } from '@cd/constants/key';
 import { CLPublicKey } from 'casper-js-sdk';
 import { toMotes } from '../helpers/currency';
 import { buildTransferDeploy } from './casperServices';
-import { request } from './request';
 
 /**
  * It builds a transfer deploy.
@@ -19,21 +18,4 @@ export const getTransferDeploy = (transactionDetail = {}) => {
 		console.error(error);
 		throw new Error(`Failed to build transfer deploy.`);
 	}
-};
-
-/**
- * Fetch key manager deploy
- * @param {Number} weight
- * @param {String} mainAccount main account public key hex
- * @returns {Object} signed deploy Json
- */
-export const getAccounts = async (publicKeys) => {
-	const data = await request('/users', {
-		method: 'post',
-		data: {
-			publicKeys,
-		},
-	});
-
-	return data;
 };
