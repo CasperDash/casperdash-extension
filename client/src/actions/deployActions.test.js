@@ -5,7 +5,6 @@ import {
 	pushTransferToLocalStorage,
 	putDeploy,
 	getLatestBlockHash,
-	getTransfersFromLocalStorage,
 	getTransferDeploysStatus,
 } from './deployActions';
 
@@ -13,9 +12,12 @@ jest.mock('../services/localStorage', () => {
 	return {
 		setLocalStorageValue: jest.fn(),
 		getLocalStorageValue: jest.fn(),
+		getNetworkStorageKey: jest.fn().mockReturnValue('casper-test'),
 	};
 });
 
+const mockDispatch = jest.fn().mockImplementation((value) => value);
+const mockGetState = jest.fn().mockReturnValue({ settings: { network: 'casper-test' } });
 test('getTransferDeploysStatus', () => {
 	expect(getTransferDeploysStatus()).toEqual({
 		type: 'DEPLOY.GET_DEPLOYS_STATUS',
@@ -25,13 +27,6 @@ test('getTransferDeploysStatus', () => {
 				deployHash: undefined,
 			},
 		},
-	});
-});
-
-test('getTransfersFromLocalStorage', () => {
-	expect(getTransfersFromLocalStorage()).toEqual({
-		type: 'DEPLOY.GET_TRANSFERS_FROM_LOCAL_STORAGE',
-		payload: undefined,
 	});
 });
 
@@ -57,16 +52,24 @@ test('getLatestBlockHash', () => {
 
 describe('updateTransferDeploysLocalStorage', () => {
 	test('Should call setLocalStorageValue and dispatch', () => {
-		const mockDispatch = jest.fn();
 		setLocalStorageValue.mockReturnValue({});
-		updateTransferDeploysLocalStorage('pbkeytest', 'local.path', { test: 'test' }, 'push')(mockDispatch);
+		updateTransferDeploysLocalStorage(
+			'pbkeytest',
+			'local.path',
+			{ test: 'test' },
+			'push',
+		)(mockDispatch, mockGetState);
 		expect(setLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 	});
 	test('Should call setLocalStorageValue and dispatch deploy value', () => {
-		const mockDispatch = jest.fn();
 		setLocalStorageValue.mockReturnValue({ deploys: { transfers: [] } });
-		updateTransferDeploysLocalStorage('pbkeytest', 'local.path', { test: 'test' }, 'push')(mockDispatch);
+		updateTransferDeploysLocalStorage(
+			'pbkeytest',
+			'local.path',
+			{ test: 'test' },
+			'push',
+		)(mockDispatch, mockGetState);
 		expect(setLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 	});
@@ -74,27 +77,24 @@ describe('updateTransferDeploysLocalStorage', () => {
 
 describe('updateTransferDeployStatus', () => {
 	test('Should get local storage value', () => {
-		const mockDispatch = jest.fn();
 		getLocalStorageValue.mockReturnValue([{ deployHash: 'test', status: 'success' }]);
-		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch);
+		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch, mockGetState);
 		expect(getLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 
-		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch);
+		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch, mockGetState);
 		expect(getLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 	});
 	test('Should get local storage value and dispatch', () => {
-		const mockDispatch = jest.fn();
 		getLocalStorageValue.mockReturnValue();
-		updateTransferDeployStatus('pbkeytest', 'local.path')(mockDispatch);
+		updateTransferDeployStatus('pbkeytest', 'local.path')(mockDispatch, mockGetState);
 		expect(getLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 	});
 	test('Should ignore the deploy do not have deployHash', () => {
-		const mockDispatch = jest.fn();
 		getLocalStorageValue.mockReturnValue([{ deployHash: 'test', status: 'pending' }, { status: 'pending' }]);
-		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch);
+		updateTransferDeployStatus('pbkeytest', 'local.path', [{ hash: 'test' }])(mockDispatch, mockGetState);
 		expect(getLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 	});
@@ -102,8 +102,7 @@ describe('updateTransferDeployStatus', () => {
 
 describe('pushTransferToLocalStorage', () => {
 	test('Should set value to local storage', () => {
-		const mockDispatch = jest.fn();
-		pushTransferToLocalStorage('pbkeytest', { test: 'test' })(mockDispatch);
+		pushTransferToLocalStorage('pbkeytest', { test: 'test' })(mockDispatch, mockGetState);
 		expect(setLocalStorageValue).toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalled();
 	});

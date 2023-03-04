@@ -1,6 +1,6 @@
+import { NETWORK_NAME } from '@cd/constants/key';
 import { NFTS } from '../store/actionTypes';
 import { setLocalStorageValue, getLocalStorageValue, getNetworkStorageKey } from '../services/localStorage';
-import { NETWORK_NAME } from '@cd/constants/key';
 
 /**
  * @param {string} publicKey

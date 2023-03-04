@@ -7,6 +7,7 @@ describe('SettingReducers', () => {
 			expect(settingsReducer(undefined, { type: 'SETTINGS.SWITCH_THEME', payload: { theme: 'dark' } })).toEqual({
 				theme: 'dark',
 				autoLockTime: DEFAULT_AUTO_LOCK_TIME,
+				network: 'casper-test',
 			});
 		});
 
@@ -22,6 +23,7 @@ describe('SettingReducers', () => {
 			).toEqual({
 				theme: '',
 				autoLockTime: 10,
+				network: 'casper-test',
 			});
 		});
 
@@ -29,6 +31,7 @@ describe('SettingReducers', () => {
 			expect(settingsReducer(undefined, { type: 'SETTINGS.TEST', payload: {} })).toEqual({
 				theme: '',
 				autoLockTime: DEFAULT_AUTO_LOCK_TIME,
+				network: 'casper-test',
 			});
 		});
 	});
