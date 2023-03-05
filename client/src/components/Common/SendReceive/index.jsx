@@ -4,6 +4,7 @@ import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import receiveHeading from '@cd/assets/image/receive-heading-icon.svg';
+import { getNetwork } from '@cd/selectors/settings';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getTransferDeploy } from '../../../services/userServices';
 import { pushTransferToLocalStorage } from '../.././../actions/deployActions';
@@ -12,7 +13,6 @@ import { toFormattedNumber, toFormattedCurrency } from '../../../helpers/format'
 import { getTransferTokenDeploy } from '../../../services/tokenServices';
 import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { ConfirmModal } from './ConfirmModal';
-import { getNetwork } from '@cd/selectors/settings';
 
 export const SendReceiveSection = ({
 	handleToggle,
