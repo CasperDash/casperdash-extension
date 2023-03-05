@@ -237,7 +237,7 @@ export class UserService {
 	updateAccountName = async (uid, newName) => {
 		try {
 			this.instance.setWalletInfo(uid, newName);
-			const userInfo = this.getUserInfoHash();
+			const userInfo = await this.getUserInfoHash();
 			await this.storeData(undefined, { userInfo });
 			return true;
 		} catch (error) {

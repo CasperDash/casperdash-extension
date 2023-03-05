@@ -150,7 +150,7 @@ class AccountController {
 	};
 
 	updateAccountName = async ({ uid, newName }) => {
-		await this.userService.updateAccountName(uid, newName);
+		return await this.userService.updateAccountName(uid, newName);
 	};
 }
 

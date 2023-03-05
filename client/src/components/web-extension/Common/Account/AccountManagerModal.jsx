@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import isNil from 'lodash-es/isNil';
 import clsx from 'clsx';
+import { toast } from 'react-toastify';
 import useGetWallets from '@cd/hooks/useGetWallets';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { addWalletAccount, setSelectedWallet, getPrivateKey } from '@cd/hooks/useServiceWorker';
@@ -47,7 +48,11 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 
 	const onSaveAccountName = async () => {
 		if (newAccountName && editingAccount) {
-			await updateAccountName(editingAccount.uid, newAccountName);
+			const updateStatus = await updateAccountName(editingAccount.uid, newAccountName);
+
+			if (!updateStatus) {
+				toast.error('Error on updating account name');
+			}
 			loadWallets(false);
 		}
 
