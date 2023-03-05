@@ -65,7 +65,7 @@ const ConnectDevice = () => {
 		<div className="cd_we_connect_device">
 			<div className="cd_we_connect_account_logo">
 				<CasperDashLogo />
-				<div>Casper Dash</div>
+				<div>CasperDash</div>
 			</div>
 			{!listDetails || !listDetails.length ? (
 				<>

@@ -14,6 +14,7 @@ jest.mock('../services/localStorage', () => {
 	return {
 		setLocalStorageValue: jest.fn(),
 		getLocalStorageValue: jest.fn(),
+		getNetworkStorageKey: jest.fn(),
 	};
 });
 
@@ -47,34 +48,34 @@ test('fetchNFTContractInfo', () => {
 	});
 });
 
+const mockDispatch = jest.fn();
+const mockGetState = jest.fn().mockReturnValue({ settings: { network: 'casper-test' } });
 test('addCustomNFTAddressToLocalStorage', () => {
-	const mockDispatch = jest.fn();
 	setLocalStorageValue.mockReturnValue({ nfts: {} });
-	addCustomNFTAddressToLocalStorage()(mockDispatch);
+	addCustomNFTAddressToLocalStorage()(mockDispatch, mockGetState);
 	expect(setLocalStorageValue).toHaveBeenCalled();
 	expect(mockDispatch).toHaveBeenCalledWith({ type: 'NFTS.SET_ADDRESS_LOCAL_STORAGE', payload: [] });
 });
 
 test('getNFTAddressesFromLocalStorage', () => {
-	const mockDispatch = jest.fn();
 	getLocalStorageValue.mockReturnValue({ nfts: {} });
-	getNFTAddressesFromLocalStorage()(mockDispatch);
+	getNFTAddressesFromLocalStorage()(mockDispatch, mockGetState);
 	expect(getLocalStorageValue).toHaveBeenCalled();
 	expect(mockDispatch).toHaveBeenCalledWith({ type: 'NFTS.GET_FROM_LOCAL_STORAGE', payload: { nfts: {} } });
 });
 
 test('updateNFTLocalStorage', () => {
 	const mockDispatch = jest.fn();
+
 	setLocalStorageValue.mockReturnValue({ nfts: {} });
-	updateNFTLocalStorage()(mockDispatch);
+	updateNFTLocalStorage()(mockDispatch, mockGetState);
 	expect(setLocalStorageValue).toHaveBeenCalled();
 	expect(mockDispatch).toHaveBeenCalledWith({ type: 'NFTS.UPDATE_LOCAL_STORAGE', payload: {} });
 });
 
 test('getNFTDeploysFromLocalStorage', () => {
-	const mockDispatch = jest.fn();
 	getLocalStorageValue.mockReturnValue({ nfts: {} });
-	getNFTDeploysFromLocalStorage()(mockDispatch);
+	getNFTDeploysFromLocalStorage()(mockDispatch, mockGetState);
 	expect(getLocalStorageValue).toHaveBeenCalled();
 	expect(mockDispatch).toHaveBeenCalledWith({ type: 'NFTS.GET_DEPLOY_FROM_LOCAL_STORAGE', payload: { nfts: {} } });
 });

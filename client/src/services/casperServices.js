@@ -8,10 +8,11 @@ import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '@cd/cons
  * @param {Number} amount transfer amount
  * @param {Number} transferId transfer id. This parameter is optional
  * @param {Number} fee transfer fee
+ * @param {String} network network name
  * @returns {Deploy} transfer deploy
  */
-export const buildTransferDeploy = (fromAccount, toAccount, amount, transferId, fee) => {
-	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME);
+export const buildTransferDeploy = (fromAccount, toAccount, amount, transferId, fee, network) => {
+	const deployParams = new DeployUtil.DeployParams(fromAccount, network);
 	const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toAccount, null, transferId);
 	const payment = DeployUtil.standardPayment(fee * MOTE_RATE);
 	const deploy = DeployUtil.makeDeploy(deployParams, transferParams, payment);
@@ -24,8 +25,8 @@ export const buildTransferDeploy = (fromAccount, toAccount, amount, transferId, 
  * @param {Object} session hash contract content
  * @returns {Deploy} deploy of the contract
  */
-export const buildContractInstallDeploy = (baseAccount, session) => {
-	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
+export const buildContractInstallDeploy = (baseAccount, session, network) => {
+	const deployParams = new DeployUtil.DeployParams(baseAccount, network);
 	const payment = DeployUtil.standardPayment(PAYMENT_AMOUNT);
 	return DeployUtil.makeDeploy(deployParams, session, payment);
 };
@@ -60,9 +61,9 @@ export const createRecipientAddress = (recipient) => {
  * @param {String} contractHash token contract hash
  * @returns {Deploy} transfer deploy
  */
-export const buildTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee) => {
+export const buildTransferTokenDeploy = (fromAccount, toAccount, amount, contractHash, fee, network = NETWORK_NAME) => {
 	const contractHashAsByteArray = [...Buffer.from(contractHash, 'hex')];
-	const deployParams = new DeployUtil.DeployParams(fromAccount, NETWORK_NAME, 1, DEPLOY_TTL_MS);
+	const deployParams = new DeployUtil.DeployParams(fromAccount, network, 1, DEPLOY_TTL_MS);
 	const transferParams = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
 		contractHashAsByteArray,
 		'transfer',

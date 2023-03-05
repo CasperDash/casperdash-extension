@@ -1,4 +1,4 @@
-import { getLocalStorageValue } from '../../services/localStorage';
+import { getLocalStorageValue, getNetworkStorageKey } from '../../services/localStorage';
 import { DEPLOY } from '../actionTypes';
 
 export default function deployReducer(state = { transfers: [] }, action) {
@@ -8,7 +8,11 @@ export default function deployReducer(state = { transfers: [] }, action) {
 			return { ...state, transfers: [...transfers, action.payload] };
 		}
 		case DEPLOY.GET_TRANSFERS_FROM_LOCAL_STORAGE: {
-			const items = getLocalStorageValue(action.payload, 'deploys.transfers');
+			const items = getLocalStorageValue(
+				action.payload.publicKey,
+				getNetworkStorageKey('deploys.transfers', action.payload.network),
+			);
+
 			return { ...state, transfers: items };
 		}
 		case DEPLOY.UPDATE_TRANSFER_LOCAL_STORAGE:

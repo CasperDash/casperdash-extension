@@ -1,8 +1,11 @@
+import { getExplorer } from '@cd/selectors/settings';
 import React from 'react';
 import { Alert } from 'react-bootstrap';
-import { EXPLORER_URL } from '../../../../constants/key';
+import { useSelector } from 'react-redux';
 
 const ConfirmingTransactionsInfo = (transactions) => {
+	const explorerUrl = useSelector(getExplorer);
+
 	if (!transactions || !transactions.length) {
 		return;
 	}
@@ -14,7 +17,7 @@ const ConfirmingTransactionsInfo = (transactions) => {
 				<Alert.Link
 					rel="noopner noreferrer"
 					target="_blank"
-					href={`${EXPLORER_URL}/deploy/${transactions[0].deployHash}`}
+					href={`${explorerUrl}/deploy/${transactions[0].deployHash}`}
 				>
 					View on explorer
 				</Alert.Link>

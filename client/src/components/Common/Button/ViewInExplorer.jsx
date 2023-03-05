@@ -1,9 +1,12 @@
+import { getExplorer } from '@cd/selectors/settings';
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { viewInExplorer } from '../../../helpers/redirect';
 import './ViewInExplorer.scss';
 
 const ViewInExplorer = ({ type, value, text }) => {
+	const explorerUrl = useSelector(getExplorer);
 	return (
 		<OverlayTrigger placement="top" overlay={<Tooltip>View in explorer</Tooltip>}>
 			<>
@@ -15,7 +18,7 @@ const ViewInExplorer = ({ type, value, text }) => {
 					fill="currentColor"
 					className="bi bi-box-arrow-up-right cd_btn_explorer"
 					viewBox="0 0 16 16"
-					onClick={() => viewInExplorer({ type, value })}
+					onClick={() => viewInExplorer({ type, value, explorerUrl })}
 				>
 					<path
 						fill="#989a9b"

@@ -1,6 +1,6 @@
 import { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } from 'casper-js-sdk';
 import { NETWORK_NAME, ENTRY_POINT_DELEGATE } from '../constants/key';
-import { contractHashes } from '../constants/stack';
+import { getStakeAuctionHash } from '../constants/stack';
 import { toMotes } from '../helpers/currency';
 
 /**
@@ -11,11 +11,11 @@ import { toMotes } from '../helpers/currency';
  * @param paymentAmount - The amount of tokens to send to the contract.
  * @returns The deploy object.
  */
-const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
-	const deployParams = new DeployUtil.DeployParams(baseAccount, NETWORK_NAME);
+const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount, network) => {
+	const deployParams = new DeployUtil.DeployParams(baseAccount, network);
 	const runTimeArgs = RuntimeArgs.fromMap(args);
 	const session = DeployUtil.ExecutableDeployItem.newStoredContractByHash(
-		contractHashes.auction,
+		getStakeAuctionHash(network).auction,
 		entryPoint,
 		runTimeArgs,
 	);
@@ -27,7 +27,14 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount) => {
  * It builds a StakeDeploy transaction with the given parameters
  * @returns The `StakeDeploy` transaction.
  */
-export const getStakeDeploy = ({ fromAddress, validator, fee, amount, entryPoint = ENTRY_POINT_DELEGATE }) => {
+export const getStakeDeploy = ({
+	fromAddress,
+	validator,
+	fee,
+	amount,
+	entryPoint = ENTRY_POINT_DELEGATE,
+	network = NETWORK_NAME,
+}) => {
 	try {
 		const fromAccPk = CLPublicKey.fromHex(fromAddress);
 		const validatorPk = CLPublicKey.fromHex(validator);
@@ -36,6 +43,7 @@ export const getStakeDeploy = ({ fromAddress, validator, fee, amount, entryPoint
 			entryPoint,
 			{ delegator: fromAccPk, validator: validatorPk, amount: CLValueBuilder.u512(toMotes(amount)) },
 			toMotes(fee),
+			network,
 		);
 	} catch (error) {
 		console.error(error);

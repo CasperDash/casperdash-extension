@@ -1,5 +1,6 @@
+import { getNetwork } from '@cd/selectors/settings';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { putDeploy } from '../../actions/deployActions';
 import useSigner from './useSigner';
@@ -11,6 +12,8 @@ export const useConfirmDeploy = () => {
 
 	const dispatch = useDispatch();
 	const signer = useSigner();
+
+	const network = useSelector(getNetwork);
 
 	const putSignedDeploy = async (signedDeploy) => {
 		const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
@@ -24,7 +27,7 @@ export const useConfirmDeploy = () => {
 		setIsDeploying(true);
 		const toastId = toast.loading('Preparing deploy');
 		try {
-			const deploy = await buildDeployFn();
+			const deploy = await buildDeployFn(network);
 			// Sign with signer
 			toast.update(toastId, { render: 'Please review the deploy' });
 			const signedDeploy = await signer.sign(deploy, fromPublicKey, toPublicKey);

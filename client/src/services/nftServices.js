@@ -103,9 +103,10 @@ const getNFTContractDeploy = async () => {
 /**
  * Get deploy for keys manager contract
  * @param {String} mainAccount main account public key hex
+ * @param {String} network network name
  * @returns {Object} signed deploy Json
  */
-export const nftContractDeploy = async (mainAccount, name, symbol) => {
+export const nftContractDeploy = async (mainAccount, name, symbol, network = NETWORK_NAME) => {
 	try {
 		const massagedName = name.includes('nft') ? name : `${name}_nft`;
 		const mainAccountPK = CLPublicKey.fromHex(mainAccount);
@@ -122,7 +123,7 @@ export const nftContractDeploy = async (mainAccount, name, symbol) => {
 		);
 
 		return DeployUtil.makeDeploy(
-			new DeployUtil.DeployParams(mainAccountPK, NETWORK_NAME, 1, DEPLOY_TTL_MS),
+			new DeployUtil.DeployParams(mainAccountPK, network, 1, DEPLOY_TTL_MS),
 			modulesBytes,
 			DeployUtil.standardPayment(toMotes(100)),
 		);

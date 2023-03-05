@@ -19,6 +19,7 @@ export const getUserDetails = (publicKey) => ({
  * @param {string} publicKey
  * @returns
  */
+// TODO: should replace by getBathUsersDetail
 export const getBatchUserDetails = (publicKey) => ({
 	type: USERS.FETCH_BATCH_USER_DETAILS,
 	request: { url: `/user/${publicKey}` },
@@ -26,6 +27,11 @@ export const getBatchUserDetails = (publicKey) => ({
 		requestKey: publicKey,
 		requestsCapacity: 20,
 	},
+});
+
+export const getBathUsersDetail = (publicKeys) => ({
+	type: USERS.FETCH_BATH_USERS_DETAIL,
+	request: { url: `/users`, method: 'POST', data: { publicKeys } },
 });
 
 /**
@@ -63,8 +69,8 @@ export const setPublicKey = (publicKey, loginOptions = {}) => {
 			// need to get from storage here to prevent missing user info
 			const { loginOptions } = await getConnectedAccountChromeLocalStorage();
 			cachedLoginOptions = {
-				...loginOptions
-			}
+				...loginOptions,
+			};
 		}
 		//Cache public key and login options
 		await cacheLoginInfoToLocalStorage(publicKey, { ...loginOptions, ...cachedLoginOptions });

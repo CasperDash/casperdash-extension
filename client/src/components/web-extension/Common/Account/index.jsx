@@ -17,7 +17,6 @@ export const AccountInfo = () => {
 	const totalFiatBalance = useSelector(getAccountTotalBalanceInFiat);
 	const selectedWallet = useSelector(getSelectedWallet);
 	const loginOptions = useSelector(getLoginOptions);
-	console.info(loginOptions);
 
 	const handleOnCloseAccountModal = () => {
 		setIsOpenAccountModal(false);

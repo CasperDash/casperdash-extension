@@ -32,7 +32,7 @@ function keepAliveForced() {
 
 async function keepAlive() {
 	if (lifeline) return;
-	for (const tab of await chrome.tabs.query({})) {
+	for (const tab of await chrome.tabs.query({ url: '*://*/*' })) {
 		try {
 			await chrome.scripting.executeScript({
 				target: { tabId: tab.id },

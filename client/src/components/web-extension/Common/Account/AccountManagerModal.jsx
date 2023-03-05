@@ -29,7 +29,7 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 	const [wallets, loadWallets, isLoading] = useGetWallets();
 
 	useEffect(() => {
-		if (isOpen) {
+		if (isOpen && isUserExisting) {
 			loadWallets();
 		}
 		// isExistUser here because we should reload list wallets if lose session and login again

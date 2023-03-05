@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import receiveHeadingIcon from '@cd/assets/image/receive-heading-icon.svg';
+import { getExplorer } from '@cd/selectors/settings';
 import { getStakeDeploy } from '../../../../services/stakeServices';
 import { getConfigKey } from '../../../../services/configurationServices';
 import { pushStakeToLocalStorage } from '../../../../actions/stakeActions';
 import { validateStakeForm } from '../../../../helpers/validator';
 import { CSPR_AUCTION_DELEGATE_FEE } from '../../../../constants/key';
-import { EXPLORER_URL } from '../../../../constants/key';
 import { toFormattedCurrency } from '../../../../helpers/format';
 import { useConfirmDeploy } from '../../../hooks/useConfirmDeploy';
 import ConfirmationModal from './Modal';
@@ -27,6 +27,9 @@ const DelegateForm = ({
 	// State
 	const [stakeDetails, setStakeDetails] = useState({});
 	const [showModal, setShowModal] = useState(false);
+
+	// Selector
+	const explorerUrl = useSelector(getExplorer);
 
 	// Hook
 	const dispatch = useDispatch();
@@ -75,7 +78,7 @@ const DelegateForm = ({
 	};
 
 	const onConfirm = async () => {
-		const buildDeployFn = () => getStakeDeploy(stakeDetails);
+		const buildDeployFn = (network) => getStakeDeploy(stakeDetails, network);
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,
 			stakeDetails.fromAddress,
@@ -137,7 +140,7 @@ const DelegateForm = ({
 												className="cd-form-text-link"
 												target="_blank"
 												rel="noopener noreferrer"
-												href={`${EXPLORER_URL}/validators`}
+												href={`${explorerUrl}/validators`}
 											>
 												Help me choose
 											</a>

@@ -113,6 +113,10 @@ const isUsingExtension = () => {
 	}
 };
 
+const getNetworkStorageKey = (path, network) => {
+	return `${path}${network === 'casper' ? '' : '_testnet'}`;
+};
+
 export {
 	isUsingExtension,
 	setLocalStorageValue,
@@ -120,4 +124,5 @@ export {
 	setChromeStorageLocal,
 	getChromeStorageLocal,
 	clearChromeStorageLocal,
+	getNetworkStorageKey,
 };

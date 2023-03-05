@@ -26,13 +26,14 @@ export const Confirm = () => {
 	const onConfirm = async () => {
 		const entryPoint = stake.action === 'undelegate' ? ENTRY_POINT_UNDELEGATE : ENTRY_POINT_DELEGATE;
 
-		const buildDeployFn = () =>
+		const buildDeployFn = (network) =>
 			getStakeDeploy({
 				fromAddress: publicKey,
 				validator: stake.validator,
 				fee: stake.fee,
 				amount: stake.amount,
 				entryPoint,
+				network,
 			});
 		const { deployHash, signedDeploy } = await executeDeploy(buildDeployFn, publicKey, stake.validator);
 		if (deployHash) {

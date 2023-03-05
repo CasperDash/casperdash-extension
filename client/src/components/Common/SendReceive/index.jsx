@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControl, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import QRCode from 'qrcode.react';
 import receiveHeading from '@cd/assets/image/receive-heading-icon.svg';
+import { getNetwork } from '@cd/selectors/settings';
 import { validateTransferForm } from '../../../helpers/validator';
 import { getTransferDeploy } from '../../../services/userServices';
 import { pushTransferToLocalStorage } from '../.././../actions/deployActions';
@@ -27,6 +28,7 @@ export const SendReceiveSection = ({
 }) => {
 	const dispatch = useDispatch();
 	const { executeDeploy, isDeploying } = useConfirmDeploy();
+	const network = useSelector(getNetwork);
 
 	// State
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -40,10 +42,10 @@ export const SendReceiveSection = ({
 		setFieldValue('sendAmount', amount);
 	};
 
-	const buildDeploy = (transferId) => {
+	const buildDeploy = (transferId, network) => {
 		return !isTokenTransfer
-			? getTransferDeploy({ ...transactionDetails, transferId })
-			: getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo });
+			? getTransferDeploy({ ...transactionDetails, transferId, network })
+			: getTransferTokenDeploy({ ...transactionDetails, contractInfo: tokenInfo, network });
 	};
 
 	const updateLocalStorage = ({ deployHash, signedDeploy, transferId }) => {
@@ -56,12 +58,13 @@ export const SendReceiveSection = ({
 				transferId: transferId,
 				...tokenInfo,
 				symbol: tokenSymbol,
+				network,
 			}),
 		);
 	};
 
 	const onConfirmTransaction = async (transferId) => {
-		const buildDeployFn = () => buildDeploy(transferId);
+		const buildDeployFn = (network) => buildDeploy(transferId, network);
 
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,

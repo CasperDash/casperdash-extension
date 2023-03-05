@@ -4,6 +4,7 @@ import deployReducer from './deploys';
 jest.mock('../../services/localStorage', () => {
 	return {
 		getLocalStorageValue: jest.fn(),
+		getNetworkStorageKey: jest.fn().mockReturnValue('casper-test'),
 	};
 });
 
