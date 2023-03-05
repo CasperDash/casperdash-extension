@@ -130,6 +130,9 @@ const rejectSignDeployRequest = async () => {
 	return sentMessage({ methodName: 'signingManager.rejectSignDeployRequest' });
 };
 
+const updateAccountName = async (uid, newName) => {
+	return sentMessage({ methodName: 'accountManager.updateAccountName', params: { newName, uid } });
+};
 
 /**
  *
@@ -167,5 +170,6 @@ export {
 	rejectSignMessageRequest,
 	rejectSignDeployRequest,
 	cancelConnectingSite,
-	isSigningPopupWindow
+	isSigningPopupWindow,
+	updateAccountName,
 };

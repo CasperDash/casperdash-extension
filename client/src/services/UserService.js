@@ -233,6 +233,18 @@ export class UserService {
 			throw Error(error.message);
 		}
 	};
+
+	updateAccountName = async (uid, newName) => {
+		try {
+			this.instance.setWalletInfo(uid, newName);
+			const userInfo = this.getUserInfoHash();
+			await this.storeData(undefined, { userInfo });
+			return true;
+		} catch (error) {
+			console.error(error);
+			throw Error(error.message);
+		}
+	};
 }
 
 export default UserService;

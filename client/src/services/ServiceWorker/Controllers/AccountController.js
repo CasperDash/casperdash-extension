@@ -31,7 +31,7 @@ class AccountController {
 
 			this.userService = user;
 			return result;
-		} catch(err) {
+		} catch (err) {
 			// eslint-disable-next-line no-console
 			console.log(err);
 		}
@@ -91,11 +91,8 @@ class AccountController {
 
 	signMessagePrivateKeyProcess = async ({ messageBytes }) => {
 		const asymKey = await this.userService.generateKeypair();
-		
-		return signFormattedMessage(
-			asymKey,
-			messageBytes
-		)
+
+		return signFormattedMessage(asymKey, messageBytes);
 	};
 
 	getKeyphrase = async ({ password }) => {
@@ -150,7 +147,11 @@ class AccountController {
 		const user = await getConnectedAccountChromeLocalStorage();
 
 		return _get(user, 'publicKey', null);
-	}
+	};
+
+	updateAccountName = async ({ uid, newName }) => {
+		await this.userService.updateAccountName(uid, newName);
+	};
 }
 
 export default AccountController;

@@ -48,28 +48,32 @@ const useGetWallets = () => {
 		[dispatch],
 	);
 
-	const loadWallets = useCallback(async () => {
-		setIsLoading(true);
-		const hdWallets = await loadWalletsFromStorage();
-		setWallets((oldWallets) => {
-			return hdWallets.map((wallet) => {
-				const foundOldWallet = oldWallets.find((oldWallet) => oldWallet.publicKey === wallet.publicKey);
+	const loadWallets = useCallback(
+		async (reloadBalance = true) => {
+			setIsLoading(true);
+			const hdWallets = await loadWalletsFromStorage();
+			setWallets((oldWallets) => {
+				return hdWallets.map((wallet) => {
+					const foundOldWallet = oldWallets.find((oldWallet) => oldWallet.publicKey === wallet.publicKey);
 
-				if (!foundOldWallet) {
-					return wallet;
-				}
+					if (!foundOldWallet) {
+						return wallet;
+					}
 
-				return {
-					...foundOldWallet,
-					...wallet,
-				};
+					return {
+						...foundOldWallet,
+						...wallet,
+					};
+				});
 			});
-		});
-
-		const hdBalanceWallets = await loadBalanceWallets(hdWallets);
-		setWallets(hdBalanceWallets);
-		setIsLoading(false);
-	}, [loadWalletsFromStorage, loadBalanceWallets]);
+			if (reloadBalance) {
+				const hdBalanceWallets = await loadBalanceWallets(hdWallets);
+				setWallets(hdBalanceWallets);
+			}
+			setIsLoading(false);
+		},
+		[loadWalletsFromStorage, loadBalanceWallets],
+	);
 
 	return [wallets, loadWallets, isLoading];
 };
