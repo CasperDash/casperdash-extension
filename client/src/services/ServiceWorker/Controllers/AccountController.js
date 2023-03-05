@@ -33,7 +33,7 @@ class AccountController {
 			return result;
 		} catch(err) {
 			// eslint-disable-next-line no-console
-			console.log(err);
+			console.error(err);
 		}
 	};
 

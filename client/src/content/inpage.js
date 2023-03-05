@@ -18,8 +18,6 @@ class CasperDashPluginHelper {
                     e.type === 'message'
                     && e.data.type === 'reply'
                 ) {
-                    // eslint-disable-next-line no-console
-                    console.log('troubleshoot: ', e);
                     window.removeEventListener('message', transact, false);
                     if (e.data.value.error) {
                         reject(new Error(e.data.value.error));
