@@ -122,6 +122,7 @@ async function setupPopupServices() {
 	rpc.register('setPopupOpenState', ({ state }) => {
 		isPopupOpen = state;
 	});
+	rpc.register('accountManager.updateAccountName', accountController.updateAccountName);
 
 	rpc.register('popupManager.getCurrentSite', popupController.getCurrentSite);
 	rpc.register('popupManager.addConnectedSite', popupController.addConnectedSite);

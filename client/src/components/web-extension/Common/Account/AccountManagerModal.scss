@@ -5,6 +5,20 @@ $padding: 24px;
 	&--backdrop {
 		background-color: var(--component-background);
 	}
+	.cd_we_accounts-name {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		.cd_we_account-edit {
+			display: flex;
+			flex-direction: column;
+			.check_icon {
+				path {
+					stroke: var(--bs-success);
+				}
+			}
+		}
+	}
 
 	.modal-content {
 		max-width: 336px;

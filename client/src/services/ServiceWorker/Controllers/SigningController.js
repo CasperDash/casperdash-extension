@@ -1,214 +1,195 @@
 import EventEmitter from 'events';
-import {
-    DeployUtil,
-    encodeBase16,
-    formatMessageWithHeaders,
-} from 'casper-js-sdk';
+import { DeployUtil, encodeBase16, formatMessageWithHeaders } from 'casper-js-sdk';
 import _pick from 'lodash-es/pick';
 import { getDeployArgs, getDeployPayment, getDeployType } from '../utils';
 
 const SIGNING_STATUS = {
-    unsigned : 'Unsigned',
-    signed : 'Signed',
-    failed : 'Failed'
-}
+	unsigned: 'Unsigned',
+	signed: 'Signed',
+	failed: 'Failed',
+};
 
+class SigningController extends EventEmitter {
+	unsignedDeploy = {};
+	unsignedMessage = {};
+	popupController;
+	accountController;
 
-class SigningController extends EventEmitter{
-    unsignedDeploy = {};
-    unsignedMessage = {};
-    popupController;
-    accountController;
+	constructor(popupController, accountController) {
+		super();
+		this.popupController = popupController;
+		this.accountController = accountController;
+	}
 
-    constructor(popupController, accountController) {
-        super()
-        this.popupController = popupController;
-        this.accountController = accountController;
-    }
+	getActivePublicKey = async ({ origin }) => {
+		const isConnected = await this.popupController.isConnected({ origin });
+		if (!isConnected) {
+			throw new Error('This site is not connected');
+		}
 
-    getActivePublicKey = async ({ origin }) => {
-        const isConnected = await this.popupController.isConnected({ origin });
-        if (!isConnected) {
-            throw new Error('This site is not connected');
-        } 
+		return this.accountController.getCurrentPublicKey();
+	};
 
-        return this.accountController.getCurrentPublicKey();
-    }
+	signDeploy = async ({ deploy, signingPublicKeyHex, targetPublicKeyHex, origin }) => {
+		const isConnected = await this.popupController.isConnected({ origin });
+		if (!isConnected) {
+			throw new Error('This site is not connected');
+		}
 
-    signDeploy = async ({
-        deploy,
-        signingPublicKeyHex,
-        targetPublicKeyHex,
-        origin,
-    }) => {
-        const isConnected = await this.popupController.isConnected({ origin });
-        if (!isConnected) {
-            throw new Error('This site is not connected');
-        }
+		let innerDeploy = DeployUtil.deployFromJson(deploy);
+		if (!innerDeploy.ok) {
+			innerDeploy.mapErr((err) => {
+				throw new Error(err.message);
+			});
+		}
 
-        let innerDeploy = DeployUtil.deployFromJson(deploy);
-        if (!innerDeploy.ok) {
-            innerDeploy.mapErr(err => {
-                throw new Error(err.message);
-            });
-        }
+		this.unsignedDeploy = {
+			status: SIGNING_STATUS.unsigned,
+			deploy: innerDeploy.unwrap(),
+			deployJSON: deploy,
+			signingKey: signingPublicKeyHex,
+			targetKey: targetPublicKeyHex,
+		};
 
-        this.unsignedDeploy = {
-            status: SIGNING_STATUS.unsigned,
-            deploy: innerDeploy.unwrap(),
-            deployJSON: deploy,
-            signingKey: signingPublicKeyHex,
-            targetKey: targetPublicKeyHex
-        };
+		await this.popupController.openSignRequest({ origin });
 
-        await this.popupController.openSignRequest({ origin });
+		return new Promise((resolve, reject) => {
+			this.once(`casperdash:signDeploy:${encodeBase16(this.unsignedDeploy.deploy.hash)}`, async () => {
+				switch (this.unsignedDeploy.status) {
+					case SIGNING_STATUS.signed: {
+						const result = await this.accountController.signPrivateKeyProcess({
+							deployJSON: this.unsignedDeploy.deployJSON,
+						});
+						this.unsignedDeploy = {};
 
-        return new Promise((resolve, reject) => {
-            this.once(`casperdash:signDeploy:${encodeBase16(this.unsignedDeploy.deploy.hash)}`, async () => {
-                switch(this.unsignedDeploy.status) {
-                    case SIGNING_STATUS.signed: {
-                        const result = await this.accountController.signPrivateKeyProcess({
-                            deployJSON: this.unsignedDeploy.deployJSON
-                        })
-                        this.unsignedDeploy = {};
-        
-                        return resolve(result);
-                    }
-                    case SIGNING_STATUS.failed: {
-                        const message = this.unsignedDeploy.error || 'User Cancelled Signing';
-                        return reject(
-                            new Error(
-                                message
-                            )
-                        );
-                    }
-                    default: 
-                        reject(new Error(`Unknown error occurred`));
-                }
-            });
-        });
-    }
+						return resolve(result);
+					}
+					case SIGNING_STATUS.failed: {
+						const message = this.unsignedDeploy.error || 'User Cancelled Signing';
+						return reject(new Error(message));
+					}
+					default:
+						reject(new Error(`Unknown error occurred`));
+				}
+			});
+		});
+	};
 
-    parseDeployData = async () => {
-        const { deploy, targetKey, signingKey } = this.unsignedDeploy;
-        const type = getDeployType(deploy);
-        const deployPayment = getDeployPayment(deploy);
-        const deployArgs = getDeployArgs(deploy, targetKey);
-        const deployAccount = deploy.header.account.toHex();
+	parseDeployData = async () => {
+		const { deploy, targetKey, signingKey } = this.unsignedDeploy;
+		const type = getDeployType(deploy);
+		const deployPayment = getDeployPayment(deploy);
+		const deployArgs = getDeployArgs(deploy, targetKey);
+		const deployAccount = deploy.header.account.toHex();
 
-        return {
-            deployHash: encodeBase16(this.unsignedDeploy.deploy.hash),
-            signingKey: signingKey,
-            account: deployAccount,
-            bodyHash: encodeBase16(deploy.header.bodyHash),
-            chainName: deploy.header.chainName,
-            timestamp: new Date(deploy.header.timestamp).toLocaleString(),
-            gasPrice: deploy.header.gasPrice.toString(),
-            payment: deployPayment,
-            deployType: type,
-            deployArgs: deployArgs
-          };
-    }
+		return {
+			deployHash: encodeBase16(this.unsignedDeploy.deploy.hash),
+			signingKey: signingKey,
+			account: deployAccount,
+			bodyHash: encodeBase16(deploy.header.bodyHash),
+			chainName: deploy.header.chainName,
+			timestamp: new Date(deploy.header.timestamp).toLocaleString(),
+			gasPrice: deploy.header.gasPrice.toString(),
+			payment: deployPayment,
+			deployType: type,
+			deployArgs: deployArgs,
+		};
+	};
 
-    approveSignDeployRequest = async () => {
-        await this.accountController.signPrivateKeyProcess({
-            deployJSON: this.unsignedDeploy.deployJSON
-        })
+	approveSignDeployRequest = async () => {
+		await this.accountController.signPrivateKeyProcess({
+			deployJSON: this.unsignedDeploy.deployJSON,
+		});
 
-        this.unsignedDeploy.status = SIGNING_STATUS.signed;
+		this.unsignedDeploy.status = SIGNING_STATUS.signed;
 
-        await this.popupController.closePopup();
+		await this.popupController.closePopup();
 
-        this.emitSignDeployEvent();
-    }
+		this.emitSignDeployEvent();
+	};
 
-    rejectSignDeployRequest = async () => {
-        this.unsignedDeploy.status = SIGNING_STATUS.failed;
-        this.unsignedDeploy.error = 'User Cancelled Signing';
+	rejectSignDeployRequest = async () => {
+		this.unsignedDeploy.status = SIGNING_STATUS.failed;
+		this.unsignedDeploy.error = 'User Cancelled Signing';
 
-        await this.popupController.closePopup();
+		await this.popupController.closePopup();
 
-        this.emitSignDeployEvent();
-    }
+		this.emitSignDeployEvent();
+	};
 
-    signMessage = async ({ message, signingPublicKey, origin }) => {
-        const isConnected = await this.popupController.isConnected({ origin });
-        if (!isConnected) {
-            throw new Error('This site is not connected');
-        }
+	signMessage = async ({ message, signingPublicKey, origin }) => {
+		const isConnected = await this.popupController.isConnected({ origin });
+		if (!isConnected) {
+			throw new Error('This site is not connected');
+		}
 
-        let messageBytes;
-        try {
-          messageBytes = formatMessageWithHeaders(message);
-        } catch (err) {
-          throw new Error('Could not format message: ' + err);
-        }
+		let messageBytes;
+		try {
+			messageBytes = formatMessageWithHeaders(message);
+		} catch (err) {
+			throw new Error('Could not format message: ' + err);
+		}
 
-        this.unsignedMessage = {
-            messageBytes,
-            messageString: message,
-            signingKey: signingPublicKey,
-            status: SIGNING_STATUS.unsigned
-        }
+		this.unsignedMessage = {
+			messageBytes,
+			messageString: message,
+			signingKey: signingPublicKey,
+			status: SIGNING_STATUS.unsigned,
+		};
 
-        await this.popupController.openSignMessageRequest({ origin });
+		await this.popupController.openSignMessageRequest({ origin });
 
-        return new Promise((resolve, reject) => {
-            this.once('casperdash:signMessage', async () => {
-                switch(this.unsignedMessage.status) {
-                    case SIGNING_STATUS.signed: {
-                        const result = await this.accountController.signMessagePrivateKeyProcess({
-                            messageBytes: this.unsignedMessage.messageBytes
-                        })
-                        this.unsignedMessage = {};
-            
-                        return resolve(encodeBase16(result));  
-                    }
-                    case SIGNING_STATUS.failed: {
-                        const message = this.unsignedDeploy.error || 'User Cancelled Signing';
-                        return reject(
-                            new Error(
-                                message
-                            )
-                        );
-                    }
-                    default:
-                        reject(new Error('Can not sign message'));
-                }
-            });
-        });
-    }
+		return new Promise((resolve, reject) => {
+			this.once('casperdash:signMessage', async () => {
+				switch (this.unsignedMessage.status) {
+					case SIGNING_STATUS.signed: {
+						const result = await this.accountController.signMessagePrivateKeyProcess({
+							messageBytes: this.unsignedMessage.messageBytes,
+						});
+						this.unsignedMessage = {};
 
-    parseMessageData = () => {
-        return {
-            ..._pick(this.unsignedMessage, ['messageString', 'signingKey']),
-        }
-    }
+						return resolve(encodeBase16(result));
+					}
+					case SIGNING_STATUS.failed: {
+						const message = this.unsignedDeploy.error || 'User Cancelled Signing';
+						return reject(new Error(message));
+					}
+					default:
+						reject(new Error('Can not sign message'));
+				}
+			});
+		});
+	};
 
-    approveSignMessageRequest = async () => {
-        this.unsignedMessage.status = SIGNING_STATUS.signed;
-        await this.popupController.closePopup();
+	parseMessageData = () => {
+		return {
+			..._pick(this.unsignedMessage, ['messageString', 'signingKey']),
+		};
+	};
 
-        this.emit('casperdash:signMessage');
-    }
+	approveSignMessageRequest = async () => {
+		this.unsignedMessage.status = SIGNING_STATUS.signed;
+		await this.popupController.closePopup();
 
-    rejectSignMessageRequest = async () => {
-        this.unsignedMessage.status = SIGNING_STATUS.failed;
-        this.unsignedMessage.error = 'User Cancelled Signing';
+		this.emit('casperdash:signMessage');
+	};
 
-        await this.popupController.closePopup();
+	rejectSignMessageRequest = async () => {
+		this.unsignedMessage.status = SIGNING_STATUS.failed;
+		this.unsignedMessage.error = 'User Cancelled Signing';
 
-        this.emitSignMessageEvent();
-    }
+		await this.popupController.closePopup();
 
-    emitSignDeployEvent = () => {
-        this.emit(`casperdash:signDeploy:${encodeBase16(this.unsignedDeploy.deploy.hash)}`);
-    }
+		this.emitSignMessageEvent();
+	};
 
-    emitSignMessageEvent = () => {
-        this.emit('casperdash:signMessage');
-    }
+	emitSignDeployEvent = () => {
+		this.emit(`casperdash:signDeploy:${encodeBase16(this.unsignedDeploy.deploy.hash)}`);
+	};
 
+	emitSignMessageEvent = () => {
+		this.emit('casperdash:signMessage');
+	};
 }
 
 export default SigningController;
