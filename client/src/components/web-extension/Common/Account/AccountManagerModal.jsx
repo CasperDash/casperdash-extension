@@ -30,8 +30,8 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 	const selectedWallet = useSelector(getSelectedWallet);
 	const navigate = useNavigate();
 	const [showEnterPassword, setShowEnterPassword] = useState(false);
-	const [editingAccount, setEditingAccount] = useState();
-	const [newAccountName, setNewAccountName] = useState();
+	const [editingAccount, setEditingAccount] = useState(false);
+	const [newAccountName, setNewAccountName] = useState('');
 
 	const [wallets, loadWallets, isLoading] = useGetWallets();
 
