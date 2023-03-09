@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import { toast } from 'react-toastify';
 import useGetWallets from '@cd/hooks/useGetWallets';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
-import { addWalletAccount, setSelectedWallet, getPrivateKey } from '@cd/hooks/useServiceWorker';
+import { addWalletAccount, setSelectedWallet, getPrivateKey,updateAccountName } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 import { formatAccountName } from '@cd/helpers/format';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
@@ -23,7 +23,7 @@ import ImportAccount from '@cd/assets/image/ic-import-account.svg';
 import Key from '@cd/assets/image/ic-key.svg';
 import { useNavigate } from 'react-router-dom';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
-import { updateAccountName } from '@cd/hooks/useServiceWorker';
+
 
 export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restProps }) => {
 	const dispatch = useDispatch();
