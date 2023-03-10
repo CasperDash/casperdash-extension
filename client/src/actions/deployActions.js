@@ -1,3 +1,4 @@
+import { getNetworkState } from '@cd/selectors/settings';
 import { DEPLOY } from '../store/actionTypes';
 import { setLocalStorageValue, getLocalStorageValue, getNetworkStorageKey } from '../services/localStorage';
 
@@ -36,7 +37,7 @@ export const getLatestBlockHash = () => ({
  */
 export const pushTransferToLocalStorage = (publicKey, value) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 
 		setLocalStorageValue(publicKey, getNetworkStorageKey(LOCAL_STORAGE_TRANSFERS_PATH, network), value, 'push');
 		dispatch({ type: DEPLOY.PUSH_TRANSFER_TO_LOCAL_STORAGE, payload: value });
@@ -50,7 +51,7 @@ export const pushTransferToLocalStorage = (publicKey, value) => {
  */
 export const getTransfersFromLocalStorage = (publicKey) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		dispatch({
 			type: DEPLOY.GET_TRANSFERS_FROM_LOCAL_STORAGE,
 			payload: { publicKey, network },
@@ -82,7 +83,7 @@ export const getTransferDeploysStatus = (deployHash) => ({
  */
 export const updateTransferDeploysLocalStorage = (publicKey, patch, value, action) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		const { deploys = {} } = setLocalStorageValue(publicKey, getNetworkStorageKey(patch, network), value, action);
 		dispatch({
 			type: DEPLOY.UPDATE_TRANSFER_LOCAL_STORAGE,
@@ -99,7 +100,7 @@ export const updateTransferDeploysLocalStorage = (publicKey, patch, value, actio
  */
 export const updateTransferDeployStatus = (publicKey, path, listHash = []) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		const deployStorageValue = getLocalStorageValue(publicKey, getNetworkStorageKey(path, network)) || [];
 		const updatedValue = deployStorageValue.map((deploy) => {
 			if (!deploy.deployHash) {

@@ -7,9 +7,11 @@ export const getAutoLockTime = ({ settings }) => {
 };
 
 export const getNetwork = ({ settings }) => {
-	return settings.network;
+	return settings.network || 'casper';
 };
 
 export const getExplorer = ({ settings }) => {
-	return settings.network === 'casper' ? 'https://cspr.live' : 'https://testnet.cspr.live';
+	return settings.network === 'casper-test' ? 'https://testnet.cspr.live' : 'https://cspr.live';
 };
+
+export const getNetworkState = (fn) => fn?.().settings?.network || 'casper';

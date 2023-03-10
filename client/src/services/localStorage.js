@@ -114,7 +114,7 @@ const isUsingExtension = () => {
 };
 
 const getNetworkStorageKey = (path, network) => {
-	return `${path}${network === 'casper' ? '' : '_testnet'}`;
+	return `${path}${network === 'casper-test' ? '_testnet' : ''}`;
 };
 
 export {

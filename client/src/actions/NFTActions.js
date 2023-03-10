@@ -1,6 +1,7 @@
 import { NETWORK_NAME } from '@cd/constants/key';
 import { NFTS } from '../store/actionTypes';
 import { setLocalStorageValue, getLocalStorageValue, getNetworkStorageKey } from '../services/localStorage';
+import { getNetworkState } from '@cd/selectors/settings';
 
 /**
  * @param {string} publicKey
@@ -37,8 +38,7 @@ export const fetchNFTContractInfo = (contractAddress) => ({
 
 export const addCustomNFTAddressToLocalStorage = (tokenAddress, publicKey) => {
 	return (dispatch, getState) => {
-		const state = getState();
-		const network = state.settings.network || NETWORK_NAME;
+		const network = getNetworkState(getState);
 		const { nfts } = setLocalStorageValue(
 			publicKey,
 			getNetworkStorageKey('nfts.address', network),
@@ -58,7 +58,7 @@ export const addCustomNFTAddressToLocalStorage = (tokenAddress, publicKey) => {
  */
 export const getNFTAddressesFromLocalStorage = (publicKey) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		const localStorageValue = getLocalStorageValue(publicKey, getNetworkStorageKey('nfts.address', network));
 		dispatch({
 			type: NFTS.GET_FROM_LOCAL_STORAGE,
@@ -76,7 +76,7 @@ export const getNFTAddressesFromLocalStorage = (publicKey) => {
  */
 export const updateNFTLocalStorage = (publicKey, patch, value, action) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		const { nfts } = setLocalStorageValue(publicKey, getNetworkStorageKey(patch, network), value, action);
 		dispatch({
 			type: NFTS.UPDATE_LOCAL_STORAGE,
@@ -91,7 +91,7 @@ export const updateNFTLocalStorage = (publicKey, patch, value, action) => {
  */
 export const getNFTDeploysFromLocalStorage = (publicKey) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		const item = getLocalStorageValue(publicKey, getNetworkStorageKey('nfts', network));
 		dispatch({
 			type: NFTS.GET_DEPLOY_FROM_LOCAL_STORAGE,

@@ -81,9 +81,9 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 		const baseURL =
 			APP_CONFIGS.APP_ENVIRONMENT === 'local'
 				? APP_CONFIGS.API_ROOT
-				: state.settings.network === 'casper'
-				? 'https://api.casperdash.io'
-				: 'https://testnet-api.casperdash.io';
+				: state.settings.network === 'casper-test'
+				? 'https://testnet-api.casperdash.io'
+				: 'https://api.casperdash.io';
 
 		return { ...request, baseURL: request.baseURL || baseURL };
 	},

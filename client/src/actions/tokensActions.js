@@ -1,3 +1,4 @@
+import { getNetworkState } from '@cd/selectors/settings';
 import { setLocalStorageValue, getLocalStorageValue, getNetworkStorageKey } from '../services/localStorage';
 import { TOKENS } from '../store/actionTypes';
 
@@ -35,7 +36,7 @@ export const getTokenInfo = (tokenAddress) => ({
  */
 export const addCustomTokenAddressToLocalStorage = (tokenAddress, publicKey) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		const { tokens } = setLocalStorageValue(
 			publicKey,
 			getNetworkStorageKey('tokens.address', network),
@@ -55,7 +56,7 @@ export const addCustomTokenAddressToLocalStorage = (tokenAddress, publicKey) => 
  */
 export const getTokenAddressFromLocalStorage = (publicKey) => {
 	return (dispatch, getState) => {
-		const network = getState().settings.network;
+		const network = getNetworkState(getState);
 		const localStorageValue = getLocalStorageValue(publicKey, getNetworkStorageKey('tokens.address', network));
 		dispatch({
 			type: TOKENS.GET_FROM_LOCAL_STORAGE,
