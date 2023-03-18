@@ -6,6 +6,9 @@
 		.cd_we_staking_info_title {
 			color: var(--secondary-text-color);
 			cursor: pointer;
+			&.active {
+				color: #dc3545;
+			}
 		}
 		.cd_we_btn_history {
 			cursor: pointer;

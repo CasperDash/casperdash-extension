@@ -152,3 +152,8 @@ export const resetAccount = () => {
 		dispatch({ type: USERS.RESET });
 	};
 };
+
+export const getStakingRewards = (publicKey) => ({
+	type: USERS.FETCH_STAKING_REWARDS,
+	request: { url: `/user/${publicKey}/stakingRewards` },
+});

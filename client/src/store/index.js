@@ -21,6 +21,7 @@ import loginModalReducer from './reducers/loginModal';
 import settingsReducer from './reducers/settings';
 import createWalletReducer, { initialState as createWalletInitialState } from './reducers/createWallet';
 import { REQUEST } from './actionTypes';
+import { getNetworkState } from '@cd/selectors/settings';
 
 const isChromeExtension = isUsingExtension();
 const persistConfig = {
@@ -76,12 +77,12 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	driver: createDriver(axios.create()),
 	onRequest: (request, action, store) => {
 		store.dispatch(setLoadingStatus(action.type));
-		const state = store.getState();
+		const network = getNetworkState(store.getState);
 
 		const baseURL =
 			APP_CONFIGS.APP_ENVIRONMENT === 'local'
 				? APP_CONFIGS.API_ROOT
-				: state.settings.network === 'casper-test'
+				: network === 'casper-test'
 				? 'https://testnet-api.casperdash.io'
 				: 'https://api.casperdash.io';
 
