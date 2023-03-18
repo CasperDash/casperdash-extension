@@ -153,7 +153,7 @@ export const resetAccount = () => {
 	};
 };
 
-export const getStakingRewards = (publicKey) => ({
+export const getStakingRewards = (publicKey, page) => ({
 	type: USERS.FETCH_STAKING_REWARDS,
-	request: { url: `/user/${publicKey}/stakingRewards` },
+	request: { url: `/user/${publicKey}/stakingRewards?page=${page}` },
 });

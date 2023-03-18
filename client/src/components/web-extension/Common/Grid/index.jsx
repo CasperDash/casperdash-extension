@@ -5,9 +5,18 @@ import isFunction from 'lodash-es/isFunction';
 import { getValueByFormat } from '@cd/helpers/format';
 import { Bar } from '@cd/common/Spinner';
 import NoData from '@cd/common/NoData';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import './index.scss';
 
-const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) => {
+const Grid = ({
+	data = [],
+	metadata = {},
+	onRowClick,
+	className,
+	isLoading,
+	isInfiniteScroll,
+	infiniteScrollProps,
+}) => {
 	const getFormattedValue = useCallback((item, token) => {
 		return getValueByFormat(item.value || get(token, item.key), {
 			format: item.format,
@@ -49,8 +58,8 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 		[getFormattedValue, renderValue],
 	);
 
-	return (
-		<div className={`cd_we_grid ${className || ''}`}>
+	const renderContent = () => (
+		<>
 			{!isLoading && !data.length && <NoData />}
 			{data.map((value, i) => {
 				const canClick = typeof onRowClick === 'function';
@@ -93,7 +102,15 @@ const Grid = ({ data = [], metadata = {}, onRowClick, className, isLoading }) =>
 				);
 			})}
 			{isLoading && <Bar />}
-		</div>
+		</>
+	);
+
+	return isInfiniteScroll ? (
+		<InfiniteScroll className={`cd_we_grid ${className || ''}`} {...infiniteScrollProps}>
+			{renderContent()}
+		</InfiniteScroll>
+	) : (
+		<div className={`cd_we_grid ${className || ''}`}>{renderContent()}</div>
 	);
 };
 
