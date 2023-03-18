@@ -17,4 +17,5 @@ module.exports = (isWeb) =>
 					chunkFilename: 'static/js/[name].js',
 				},
 				devtool: 'inline-source-map',
+				mode: 'development',
 		  };

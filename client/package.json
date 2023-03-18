@@ -63,9 +63,9 @@
 		]
 	},
 	"scripts": {
-		"dev": "webpack-dev-server --mode development",
+		"dev": "webpack-dev-server --mode development --env=network=testnet",
 		"dev-extension": "webpack --mode development --env=type=extension --watch",
-		"dev-extension-mainnet": "webpack --mode development --env=type=extension --env=network=mainnet --watch",
+		"dev-extension-mainnet": "node webpack/webserver.js --mode development --env=type=extension --env=network=mainnet --watch",
 		"dev-extension-testnet": "webpack --mode development --env=type=extension --env=network=testnet --watch",
 		"start-mainnet": "webpack-dev-server --mode development --env=network=mainnet",
 		"start-testnet": "webpack-dev-server --mode development --env=network=testnet",
@@ -126,6 +126,7 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-syntax-top-level-await": "^7.14.5",
+		"@hot-loader/react-dom": "^17.0.2",
 		"@svgr/webpack": "^6.1.2",
 		"@testing-library/react-hooks": "^8.0.1",
 		"@types/jest": "^28.1.8",

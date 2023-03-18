@@ -5,9 +5,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./commonConfig');
 
 module.exports = (dir) =>
-	merge(common(dir), {	  
+	merge(common(dir), {
 		entry: {
-			main: path.resolve(dir, 'src/app/web-extension/index.js'),
+			popup: path.resolve(dir, 'src/app/web-extension/index.js'),
 			'sw/service-worker': path.resolve(dir, 'src/services/ServiceWorker/serviceWorker.js'),
 			'scripts/content/content': path.resolve(dir, 'src/content/content.js'),
 			'scripts/content/inpage': path.resolve(dir, 'src/content/inpage.js'),
@@ -31,10 +31,14 @@ module.exports = (dir) =>
 			new HtmlWebpackPlugin({
 				template: path.resolve(dir, 'template/extension/popup.html'),
 				filename: 'popup.html',
+				chunks: ['popup'],
+				cache: false,
 			}),
 			new HtmlWebpackPlugin({
 				template: path.resolve(dir, 'template/extension/popup.html'),
 				filename: 'home.html',
+				chunks: ['popup'],
+				cache: false,
 			}),
 			new CopyWebpackPlugin({
 				patterns: [
