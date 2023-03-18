@@ -1,7 +1,6 @@
-import { NETWORK_NAME } from '@cd/constants/key';
+import { getNetworkState } from '@cd/selectors/settings';
 import { NFTS } from '../store/actionTypes';
 import { setLocalStorageValue, getLocalStorageValue, getNetworkStorageKey } from '../services/localStorage';
-import { getNetworkState } from '@cd/selectors/settings';
 
 /**
  * @param {string} publicKey
