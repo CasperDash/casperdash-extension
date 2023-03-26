@@ -65,7 +65,6 @@
 	},
 	"scripts": {
 		"dev": "webpack-dev-server --mode development --env=network=testnet",
-		"dev-extension": "webpack --mode development --env=type=extension --watch",
 		"dev-extension-mainnet": "node webpack/webserver.js --mode development --env=type=extension --env=network=mainnet --watch",
 		"start-mainnet": "webpack-dev-server --mode development --env=network=mainnet",
 		"start-testnet": "webpack-dev-server --mode development --env=network=testnet",
