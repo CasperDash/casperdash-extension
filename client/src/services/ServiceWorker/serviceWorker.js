@@ -11,40 +11,33 @@ const accountController = new AccountController(appStore);
 const popupController = new PopupController(accountController, appStore);
 const signController = new SigningController(popupController, accountController);
 
-let lifeline;
 let isPopupOpen = false;
 
-keepAlive();
-
+const onUpdate = (tabId, info, tab) => /^https?:/.test(info.url) && findTab([tab]);
+findTab();
 chrome.runtime.onConnect.addListener((port) => {
 	if (port.name === 'keepAlive') {
-		lifeline = port;
-		setTimeout(keepAliveForced, 295e3); // 5 minutes minus 5 seconds
-		port.onDisconnect.addListener(keepAliveForced);
+		setTimeout(() => port.disconnect(), 250e3);
+		port.onDisconnect.addListener(() => findTab());
 	}
 });
-
-function keepAliveForced() {
-	lifeline?.disconnect();
-	lifeline = null;
-	keepAlive();
-}
-
-async function keepAlive() {
-	if (lifeline) return;
-	for (const tab of await chrome.tabs.query({ url: '*://*/*' })) {
+async function findTab(tabs) {
+	if (chrome.runtime.lastError) {
+		/* tab was closed before setTimeout ran */
+	}
+	for (const { id: tabId } of tabs || (await chrome.tabs.query({ url: '*://*/*' }))) {
 		try {
-			await chrome.scripting.executeScript({
-				target: { tabId: tab.id },
-				func: () => chrome.runtime.connect({ name: 'keepAlive' }),
-			});
-			chrome.tabs.onUpdated.removeListener(retryOnTabUpdate);
+			await chrome.scripting.executeScript({ target: { tabId }, func: connect });
+			chrome.tabs.onUpdated.removeListener(onUpdate);
 			return;
 		} catch (e) {
 			console.error(e);
 		}
 	}
-	chrome.tabs.onUpdated.addListener(retryOnTabUpdate);
+	chrome.tabs.onUpdated.addListener(onUpdate);
+}
+function connect() {
+	chrome.runtime.connect({ name: 'keepAlive' }).onDisconnect.addListener(connect);
 }
 
 function registerAlarmActions() {
@@ -65,12 +58,6 @@ function registerAlarmActions() {
 			}
 		});
 	});
-}
-
-async function retryOnTabUpdate(_tabId, info) {
-	if (info.url && /^(file|https?):/.test(info.url)) {
-		keepAlive();
-	}
 }
 
 initialize().catch(console.error);

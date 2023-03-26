@@ -15,6 +15,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
+(function connect() {
+	chrome.runtime.connect({ name: 'keepAlive' }).onDisconnect.addListener(connect);
+})();
+
 const getRoutes = (routes) => {
 	return (
 		routes &&
