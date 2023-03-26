@@ -153,7 +153,7 @@ export const resetAccount = () => {
 	};
 };
 
-export const getStakingRewards = (publicKey, page) => ({
+export const getStakingRewards = (publicKey, page, limit = 20) => ({
 	type: USERS.FETCH_STAKING_REWARDS,
-	request: { url: `/user/${publicKey}/stakingRewards?page=${page}` },
+	request: { url: `https://api.cspr.live/delegators/${publicKey}/rewards?page=${page}&limit=${limit}` },
 });
