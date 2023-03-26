@@ -4,9 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (dir) => ({
 	output: {
-		filename: 'static/js/[name].[contenthash:8].js',
+		filename: 'static/js/[name].js',
 		assetModuleFilename: 'assets/images/[hash][ext][query]',
-		chunkFilename: 'static/js/[name].[contenthash:8].js',
+		chunkFilename: 'static/js/[name].js',
 	},
 	module: {
 		rules: [

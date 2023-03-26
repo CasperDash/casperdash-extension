@@ -11,7 +11,7 @@ import './StakingInfo.scss';
 
 const STAKING_INFO_METADATA = {
 	left: [
-		{ key: 'validator', type: 'primary', wrapperComponent: MiddleTruncatedText },
+		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
 		{ component: UndelegateButton, value: 'Undelegate', props: { text: 'Undelegate' } },
 	],
 	right: [
@@ -28,7 +28,7 @@ const STAKING_INFO_METADATA = {
 
 const STAKING_HISTORY_METADATA = {
 	left: [
-		{ key: 'validator', type: 'primary', wrapperComponent: MiddleTruncatedText },
+		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
 		{ key: 'entryPoint', type: 'secondary' },
 	],
 	right: [

@@ -1,6 +1,6 @@
 import { Signer } from 'casper-js-sdk';
 import isFunction from 'lodash-es/isFunction';
-import { USERS, SIGNER } from '@cd/store/actionTypes';
+import { USERS, SIGNER, VALIDATORS } from '@cd/store/actionTypes';
 import { CONNECTED_ACCOUNT_STORAGE_PATH, CONNECTION_TYPES } from '@cd/constants/settings';
 import { isUsingExtension, getLocalStorageValue, clearChromeStorageLocal } from '@cd/services/localStorage';
 import { onClearUserSW } from '@cd/hooks/useServiceWorker';
@@ -156,4 +156,12 @@ export const resetAccount = () => {
 export const getStakingRewards = (publicKey, page, limit = 20) => ({
 	type: USERS.FETCH_STAKING_REWARDS,
 	request: { url: `https://api.cspr.live/delegators/${publicKey}/rewards?page=${page}&limit=${limit}` },
+});
+
+export const getValidatorsDetails = () => ({
+	type: VALIDATORS.FETCH_VALIDATORS_DETAIL,
+	request: { url: `/validatorsDetail` },
+	meta: {
+		cache: true,
+	},
 });

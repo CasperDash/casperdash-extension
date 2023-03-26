@@ -99,6 +99,7 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	onAbort: (action, store) => {
 		store.dispatch(removeLoadingStatus(action.type));
 	},
+	cache: true,
 });
 
 const rootReducers = combineReducers({
