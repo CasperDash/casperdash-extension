@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 import HistoryIcon from '@cd/assets/image/ic-history.svg';
 import { validatorSelector } from '../../../../selectors/validator';
 import { useStakedHistory, useStakeFromValidators } from '../../../hooks/useStakeDeploys';
@@ -57,19 +58,19 @@ export const StakingInfo = ({ publicKey }) => {
 		<div className="cd_we_staking_info">
 			<div className="cd_we_staking_info_header">
 				<div
-					className={`cd_we_staking_info_title ${view === VIEWS.info ? 'active' : ''}`}
+					className={cn('cd_we_staking_info_title', { active: view === VIEWS.info })}
 					onClick={() => setView(VIEWS.info)}
 				>
 					Staked Info
 				</div>
 				<div
-					className={`cd_we_staking_info_title ${view === VIEWS.rewards ? 'active' : ''}`}
+					className={cn('cd_we_staking_info_title', { active: view === VIEWS.rewards })}
 					onClick={() => setView(VIEWS.rewards)}
 				>
 					Rewards
 				</div>
 				<HistoryIcon
-					className={`cd_we_btn_history ${view === VIEWS.history ? 'active' : ''}`}
+					className={cn('cd_we_btn_history', { active: view === VIEWS.history })}
 					onClick={() => setView(VIEWS.history)}
 				/>
 			</div>

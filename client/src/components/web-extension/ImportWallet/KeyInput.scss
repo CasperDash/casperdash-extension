@@ -1,14 +1,16 @@
-.value {
-	display: flex;
-	color: var(--primary-text-color-dark);
-	background: var(--secondary-text-color-light);
-	padding: 0px 4px;
-	border-radius: 12px;
-	align-items: center;
-	justify-content: space-between;
-	svg {
-		path {
-			fill: var(--secondary-text-color) !important;
+.cd_we_import-keyphrase--column {
+	.value {
+		display: flex;
+		color: var(--primary-text-color-dark);
+		background: var(--secondary-text-color-light);
+		padding: 0px 4px;
+		border-radius: 12px;
+		align-items: center;
+		justify-content: space-between;
+		svg {
+			path {
+				fill: var(--secondary-text-color) !important;
+			}
 		}
 	}
 }

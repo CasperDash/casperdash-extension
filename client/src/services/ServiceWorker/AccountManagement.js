@@ -21,7 +21,7 @@ const onCreateNewUser = async ({ password, keyphrase }) => {
 	}
 
 	// Set HDWallet info
-	user.setHDWallet(keyphrase, encryptionType);
+	await user.setHDWallet(keyphrase, encryptionType);
 
 	const wallet = await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
 	const publicKey = await wallet.getPublicKey();

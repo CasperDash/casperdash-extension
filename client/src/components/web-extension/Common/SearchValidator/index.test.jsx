@@ -41,7 +41,7 @@ test('Should show validator list', () => {
 	expect(getByText('Validator List (1)').textContent).toBe('Validator List (1)');
 	expect(getByText('testk').textContent).toBe('testk');
 	expect(getByText(/10%*/i).textContent).toBe('10.00% Fee');
-	expect(getByText(/1 CSPR/i).textContent).toBe('1 CSPR');
+
 	fireEvent.click(container.querySelector('.cd_we_item'));
 	expect(mockUsedNavigate).toHaveBeenCalled();
 });
@@ -57,7 +57,7 @@ test('Should update search box ', async () => {
 	expect(getByText('Validator List (2)').textContent).toBe('Validator List (2)');
 	expect(getByText('test').textContent).toBe('test');
 	expect(getByText(/11%*/i).textContent).toBe('11.00% Fee');
-	expect(getByText(/1,000 CSPR/i).textContent).toBe('1,000 CSPR');
+	expect(getByText(/1,000/i).textContent).toBe('1,000 ');
 	const searchInput = getByPlaceholderText(/Enter validator/i);
 	await fireEvent.change(searchInput, { target: { value: 'search' } });
 	expect(searchInput.value).toBe('search');

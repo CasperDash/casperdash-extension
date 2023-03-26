@@ -34,6 +34,7 @@ export const RewardInfo = ({ publicKey }) => {
 	useEffect(() => {
 		const loadReward = async () => {
 			const { data } = await dispatch(getStakingRewards(publicKey, 1));
+
 			setRewardData(data.data);
 			setHasNext(() => data?.pages.find((page) => page.number > 1));
 		};

@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
+// keep sw alive
 (function connect() {
 	chrome.runtime.connect({ name: 'keepAlive' }).onDisconnect.addListener(connect);
 })();

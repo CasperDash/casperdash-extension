@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash-es/get';
+import cn from 'classnames';
 import isFunction from 'lodash-es/isFunction';
 import { getValueByFormat } from '@cd/helpers/format';
 import { Bar } from '@cd/common/Spinner';
@@ -105,12 +106,14 @@ const Grid = ({
 		</>
 	);
 
+	const combinedClassName = cn('cd_we_grid', className);
+
 	return isInfiniteScroll ? (
-		<InfiniteScroll className={`cd_we_grid ${className || ''}`} {...infiniteScrollProps}>
+		<InfiniteScroll className={combinedClassName} {...infiniteScrollProps}>
 			{renderContent()}
 		</InfiniteScroll>
 	) : (
-		<div className={`cd_we_grid ${className || ''}`}>{renderContent()}</div>
+		<div className={combinedClassName}>{renderContent()}</div>
 	);
 };
 

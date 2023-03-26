@@ -40,13 +40,13 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 		let stakedValidator = {
 			validator: validatorPublicKey,
 			stakedAmount: moteToCspr(foundDelegator.staked_amount),
-			icon: validator.icon[1],
+			icon: validator?.icon?.[1],
 			name: validator?.name || validator.validatorPublicKey,
 		};
 		if (pendingStake) {
 			stakedValidator.pendingAmount =
 				pendingStake.entryPoint === ENTRY_POINT_UNDELEGATE ? -pendingStake.amount : pendingStake.amount;
-			stakedValidator.icon = validator.icon[1];
+			stakedValidator.icon = validator?.icon?.[1];
 		}
 
 		stakedValidators.push(stakedValidator);

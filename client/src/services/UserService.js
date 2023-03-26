@@ -48,7 +48,7 @@ export class UserService {
 	initialize = async (keyphrase) => {
 		const user = this.instance;
 		// Set HDWallet info
-		user.setHDWallet(keyphrase, this.encryptionType);
+		await user.setHDWallet(keyphrase, this.encryptionType);
 		await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
 		const wallets = user.getHDWallet().derivedWallets || [];
 		const selectedWallet = wallets[0];
@@ -200,7 +200,7 @@ export class UserService {
 	getKeyphrase = async () => {
 		const user = this.instance;
 
-		return user.getHDWallet().keyPhrase;
+		return await user.getHDWalletKeyPhrase();
 	};
 
 	setSelectedWallet = (uid) => {
