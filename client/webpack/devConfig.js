@@ -1,5 +1,3 @@
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-
 module.exports = (isWeb) =>
 	isWeb
 		? {
@@ -19,6 +17,4 @@ module.exports = (isWeb) =>
 					chunkFilename: 'static/js/[name].js',
 				},
 				devtool: 'inline-source-map',
-				mode: 'development',
-				plugins: [new ReactRefreshWebpackPlugin()],
 		  };

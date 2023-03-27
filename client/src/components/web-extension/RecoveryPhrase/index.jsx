@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import CopyButton from '@cd/components/web-extension/Common/CopyButton';
+import { DownloadButton } from '@cd/components/web-extension/Common/DownloadButton';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
 import { getKeyphrase } from '@cd/components/hooks/useServiceWorker';
 import { useNavigate } from 'react-router-dom';
@@ -37,9 +37,14 @@ const RecoveryPhrase = () => {
 					))}
 				</ul>
 				<div className="cd_we_recovery-keyphrase__footer">
-					<CopyButton className="cd_we_recovery-keyphrase__copy-btn" text={keyphrase} />
+					<DownloadButton
+						className="cd_we_recovery-keyphrase__copy-btn"
+						text={keyphrase}
+						fileName="key_phrase.txt"
+					/>
 				</div>
 			</div>
+
 			{showEnterPassword && (
 				<EnterPasswordModal
 					isOpen={showEnterPassword}

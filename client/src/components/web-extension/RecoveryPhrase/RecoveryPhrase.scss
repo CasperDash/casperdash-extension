@@ -45,7 +45,7 @@
 	&__word {
 		margin-top: 20px;
 		width: 45%;
-
+		user-select: none;
 		& .counter {
 			color: #777e91;
 		}

@@ -4,9 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (dir) => ({
 	output: {
-		filename: 'static/js/[name].js',
+		filename: 'static/js/[name].[contenthash:8].js',
 		assetModuleFilename: 'assets/images/[hash][ext][query]',
-		chunkFilename: 'static/js/[name].js',
+		chunkFilename: 'static/js/[name].[contenthash:8].js',
 	},
 	module: {
 		rules: [
@@ -65,7 +65,6 @@ module.exports = (dir) => ({
 			'@cd/web': path.resolve(dir, 'src/components/web'),
 			'@cd/web-extension': path.resolve(dir, 'src/components/web-extension'),
 			'@cd/components': path.resolve(dir, 'src/components'),
-			'react-dom': '@hot-loader/react-dom',
 		},
 		fallback: {
 			stream: require.resolve('stream-browserify'),
