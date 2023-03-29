@@ -10,7 +10,7 @@ const SettingRow = ({ setting }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const onProcess = () => setting.action({ dispatch, navigate });
+	const onProcess = () => setting.action?.({ dispatch, navigate });
 
 	const handleOnClick = () => {
 		if (setting.isRequiredPassword) {

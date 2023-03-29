@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { KeyInput } from './KeyInput';
 
 const FieldKeyphrase = ({ totalWords, onPhraseChange, recoveryPhrase }) => {
 	const keys = Object.keys(new Array(totalWords).fill(''));
@@ -13,13 +14,20 @@ const FieldKeyphrase = ({ totalWords, onPhraseChange, recoveryPhrase }) => {
 						index < numberPerCol && (
 							<li className="cd_we_keyphrase--word" key={`left-${word}`}>
 								<span className="counter">{itemIndex + 1}</span>
-								<span className="value">
+								<KeyInput
+									value={recoveryPhrase[itemIndex]}
+									index={index}
+									itemIndex={itemIndex}
+									onPhraseChange={onPhraseChange}
+								/>
+								{/* <span className="value">
 									<input
+										type="password"
 										value={recoveryPhrase[itemIndex]}
 										name={`keyphrase[${index}]`}
 										onChange={(e) => onPhraseChange(itemIndex, e.target.value)}
 									/>
-								</span>
+								</span> */}
 							</li>
 						)
 					);

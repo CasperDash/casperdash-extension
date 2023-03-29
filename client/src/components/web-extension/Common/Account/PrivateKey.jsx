@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import { DownloadButton } from '../DownloadButton';
 
 import './PrivateKey.scss';
 
@@ -18,7 +18,7 @@ const PrivateKey = () => {
 			<div className="cd_we_private_key">{privateKey}</div>
 
 			<div className="actions">
-				<Button onClick={() => navigator.clipboard.writeText(privateKey)}>Copy</Button>
+				<DownloadButton text={privateKey} fileName={`${accountName?.replace(' ', '_')}_private_key.pem`} />
 			</div>
 		</section>
 	);

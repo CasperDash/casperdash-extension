@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 import HistoryIcon from '@cd/assets/image/ic-history.svg';
 import { validatorSelector } from '../../../../selectors/validator';
 import { useStakedHistory, useStakeFromValidators } from '../../../hooks/useStakeDeploys';
 import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
 import Grid from '../../Common/Grid';
 import { UndelegateButton } from './UndelegateButton';
+import { RewardInfo } from './RewardInfo';
 import './StakingInfo.scss';
 
 const STAKING_INFO_METADATA = {
 	left: [
-		{ key: 'validator', type: 'primary', wrapperComponent: MiddleTruncatedText },
+		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
 		{ component: UndelegateButton, value: 'Undelegate', props: { text: 'Undelegate' } },
 	],
 	right: [
@@ -27,7 +29,7 @@ const STAKING_INFO_METADATA = {
 
 const STAKING_HISTORY_METADATA = {
 	left: [
-		{ key: 'validator', type: 'primary', wrapperComponent: MiddleTruncatedText },
+		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
 		{ key: 'entryPoint', type: 'secondary' },
 	],
 	right: [
@@ -40,8 +42,9 @@ const STAKING_HISTORY_METADATA = {
 };
 
 const VIEWS = {
-	history: 'history',
-	info: 'info',
+	history: { key: 'history', metadata: STAKING_HISTORY_METADATA },
+	rewards: { key: 'rewards' },
+	info: { key: 'info', metadata: STAKING_INFO_METADATA },
 };
 
 export const StakingInfo = ({ publicKey }) => {
@@ -54,20 +57,33 @@ export const StakingInfo = ({ publicKey }) => {
 	return (
 		<div className="cd_we_staking_info">
 			<div className="cd_we_staking_info_header">
-				<div className="cd_we_staking_info_title" onClick={() => setView(VIEWS.info)}>
-					Staked Information
+				<div
+					className={cn('cd_we_staking_info_title', { active: view === VIEWS.info })}
+					onClick={() => setView(VIEWS.info)}
+				>
+					Staked Info
+				</div>
+				<div
+					className={cn('cd_we_staking_info_title', { active: view === VIEWS.rewards })}
+					onClick={() => setView(VIEWS.rewards)}
+				>
+					Rewards
 				</div>
 				<HistoryIcon
-					className={`cd_we_btn_history ${view === VIEWS.history ? 'active' : ''}`}
+					className={cn('cd_we_btn_history', { active: view === VIEWS.history })}
 					onClick={() => setView(VIEWS.history)}
 				/>
 			</div>
-			<Grid
-				data={view === VIEWS.info ? stackingList : historyList}
-				metadata={view === VIEWS.info ? STAKING_INFO_METADATA : STAKING_HISTORY_METADATA}
-				className="overflow_auto hide_scroll_bar"
-				isLoading={isLoadingValidators}
-			/>
+			{view.key === VIEWS.rewards.key ? (
+				<RewardInfo publicKey={publicKey} />
+			) : (
+				<Grid
+					data={view.key === VIEWS.info.key ? stackingList : historyList}
+					metadata={view.metadata}
+					className="overflow_auto hide_scroll_bar"
+					isLoading={isLoadingValidators}
+				/>
+			)}
 		</div>
 	);
 };

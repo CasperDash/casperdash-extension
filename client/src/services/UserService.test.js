@@ -1,4 +1,4 @@
-import { KeyFactory, User, EncryptionType } from 'casper-storage';
+import { User, EncryptionType } from 'casper-storage';
 import { cleanup } from '@testing-library/react';
 import { Keys } from 'casper-js-sdk';
 import UserInstance, { UserService } from './UserService';
@@ -52,9 +52,6 @@ describe('UserInstance', () => {
 				currentWalletIndex: 0,
 			};
 			user = new UserService(new User('6U71C@Wp7r5XtFtQzYrW5iKFT6!'), opts);
-
-			const keyphrase = KeyFactory.getInstance().generate();
-			user.initialize(keyphrase);
 		});
 
 		afterEach(cleanup);

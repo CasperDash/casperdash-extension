@@ -117,3 +117,5 @@ export const getTokenInfoByAddress = (token) =>
 			? allTokenInfo.find((info) => info.address === token.address)
 			: {};
 	});
+
+export const userStakingRewardSelector = getQuerySelector({ type: USERS.FETCH_STAKING_REWARDS });

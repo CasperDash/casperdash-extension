@@ -6,6 +6,8 @@ import { getAutoLockTime } from '@cd/selectors/settings';
 import { AUTO_LOCK_TIMEOUT_ALARM } from '@cd/constants/alarm';
 import { setLoginModalOpen } from '@cd/actions/loginModalAction';
 import { getLoginModalOpen } from '@cd/selectors/loginModal';
+import { getLoginOptions } from '@cd/selectors/user';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
 import { browser } from './useServiceWorker';
 
 const useLockAccountWhenIdle = () => {
@@ -13,12 +15,13 @@ const useLockAccountWhenIdle = () => {
 	const navigate = useNavigate();
 	const autoLockTime = useSelector(getAutoLockTime);
 	const isLoginModalOpen = useSelector(getLoginModalOpen);
+	const loginOptions = useSelector(getLoginOptions);
 
 	useEffect(() => {
 		resetTimer();
 
 		try {
-			if (!browser) {
+			if (!browser || loginOptions?.connectionType === CONNECTION_TYPES.ledger) {
 				return;
 			}
 

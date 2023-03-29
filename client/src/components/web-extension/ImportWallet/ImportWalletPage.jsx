@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { KeyFactory } from 'casper-storage';
 import { setNextStep, updateKeyphrase } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
+import { CONSTANTS } from '@cd/shared/constants';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import FieldKeyphrase from './FieldKeyphrase';
@@ -63,9 +64,12 @@ const ImportWallet = () => {
 	);
 
 	useEffect(() => {
-		window.addEventListener('paste', pasteEventHandler);
+		// Only allow paste on debug
+		if (CONSTANTS.DEBUG_ENV) {
+			window.addEventListener('paste', pasteEventHandler);
 
-		return () => window.removeEventListener('paste', pasteEventHandler);
+			return () => window.removeEventListener('paste', pasteEventHandler);
+		}
 	}, [pasteEventHandler]);
 
 	const onPhraseChange = (index, value) => {

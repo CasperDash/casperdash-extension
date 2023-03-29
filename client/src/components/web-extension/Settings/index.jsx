@@ -7,6 +7,9 @@ import ConnectedIcon from '@cd/assets/image/connected-icon.svg';
 import { lockAccount } from '@cd/actions/userActions';
 import DeleteAllDataButton from '@cd/components/web-extension/Common/DeleteAllDataButton';
 import { getVersion } from '@cd/helpers/key';
+import { useSelector } from 'react-redux';
+import { getLoginOptions } from '@cd/selectors/user';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
 import SettingRow from './SettingRow';
 import './index.scss';
 
@@ -42,6 +45,7 @@ const SETTINGS = [
 			dispatch(lockAccount());
 			navigate('/welcomeBack');
 		},
+		connectionType: CONNECTION_TYPES.privateKey,
 	},
 	{
 		name: 'Recovery Phrase',
@@ -52,6 +56,7 @@ const SETTINGS = [
 		action: ({ navigate }) => {
 			navigate('/recoveryPhrase', { state: { name: 'Recovery Phrase' } });
 		},
+		connectionType: CONNECTION_TYPES.privateKey,
 	},
 	{
 		name: 'Advanced',
@@ -74,11 +79,14 @@ const SETTINGS = [
 ];
 
 const Settings = () => {
+	const loginOptions = useSelector(getLoginOptions);
 	return (
 		<>
 			<section className="cd_we_single_section no_bottom_bar">
 				<div>
-					{SETTINGS.map((setting) => {
+					{SETTINGS.filter(
+						(st) => !st.connectionType || st.connectionType === loginOptions?.connectionType,
+					).map((setting) => {
 						return <SettingRow key={setting.name} setting={setting} />;
 					})}
 				</div>

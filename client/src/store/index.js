@@ -8,6 +8,7 @@ import { localStorage as extensionLocalStorage } from 'redux-persist-webextensio
 import thunk from 'redux-thunk';
 import { isUsingExtension } from '@cd/services/localStorage';
 import { DEFAULT_AUTO_LOCK_TIME, NETWORK_NAME } from '@cd/constants/key';
+import { getNetworkState } from '@cd/selectors/settings';
 import APP_CONFIGS from '../config';
 import userReducer from './reducers/userReducer';
 import signerReducer from './reducers/signerReducer';
@@ -76,12 +77,12 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	driver: createDriver(axios.create()),
 	onRequest: (request, action, store) => {
 		store.dispatch(setLoadingStatus(action.type));
-		const state = store.getState();
+		const network = getNetworkState(store.getState);
 
 		const baseURL =
 			APP_CONFIGS.APP_ENVIRONMENT === 'local'
 				? APP_CONFIGS.API_ROOT
-				: state.settings.network === 'casper-test'
+				: network === 'casper-test'
 				? 'https://testnet-api.casperdash.io'
 				: 'https://api.casperdash.io';
 
@@ -98,6 +99,7 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	onAbort: (action, store) => {
 		store.dispatch(removeLoadingStatus(action.type));
 	},
+	cache: true,
 });
 
 const rootReducers = combineReducers({

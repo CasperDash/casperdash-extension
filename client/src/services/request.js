@@ -6,7 +6,6 @@ const DEFAULT_OPTIONS = {
 	cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
 	headers: {
 		'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin': '*',
 	},
 };
 const requester = axios.create({

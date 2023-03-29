@@ -16,3 +16,11 @@ global.console = {
 
 global.navigator.clipboard = { writeText: jest.fn() };
 Object.assign(global, require('jest-chrome'));
+
+// global.crypto = {
+// 	getRandomValues: function (array = 8) {
+// 		for (let i = 0; i < array.length; i++) {
+// 			array[i] = Math.floor(Math.random() * Math.floor(256));
+// 		}
+// 	},
+// };

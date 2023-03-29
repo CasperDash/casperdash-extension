@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ConfirmModal from '@cd/components/Common/ConfirmModal';
 import { deleteAllUserData } from '@cd/actions/userActions';
 import EnterPasswordModal from '@cd/components/web-extension/Common/LoginModal/EnterPasswordModal';
 import useAuthLogin from '@cd/components/hooks/useAuthLogin';
+import { getLoginOptions } from '@cd/selectors/user';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
 
 const DeleteAllDataButton = () => {
 	const dispatch = useDispatch();
@@ -13,6 +15,7 @@ const DeleteAllDataButton = () => {
 	const navigate = useNavigate();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [isOpenLoginModal, setIsOpenLoginModal] = useState(false);
+	const loginOptions = useSelector(getLoginOptions);
 
 	const handleOnClick = () => {
 		setIsOpenModal(true);
@@ -23,6 +26,11 @@ const DeleteAllDataButton = () => {
 	};
 
 	const onConfirmHandler = () => {
+		if (loginOptions?.connectionType === CONNECTION_TYPES.ledger) {
+			dispatch(deleteAllUserData());
+			navigate('/connectAccount');
+			return;
+		}
 		setIsOpenModal(false);
 		setIsOpenLoginModal(true);
 	};
