@@ -11,5 +11,9 @@ export const getPriceHistory = createSelector(priceSelector, ({ data }) => {
 });
 
 export const getCurrentPrice = createSelector(CSPRMarketInfoSelector, ({ data }) => {
-	return data && data.length ? data[0].current_price : 0;
+	return data?.price || 0;
+});
+
+export const getLatestMarketInfo = createSelector(CSPRMarketInfoSelector, ({ data }) => {
+	return data || {};
 });
