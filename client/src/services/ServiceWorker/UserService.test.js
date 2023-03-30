@@ -1,7 +1,7 @@
 import { User, EncryptionType } from 'casper-storage';
 import { cleanup } from '@testing-library/react';
 import { Keys } from 'casper-js-sdk';
-import UserInstance, { UserService } from './ServiceWorker/UserService';
+import UserInstance, { UserService } from './UserService';
 
 jest.mock('casper-storage', () => ({
 	...jest.requireActual('casper-storage'),
