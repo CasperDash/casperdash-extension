@@ -6,15 +6,13 @@
 
 <img width="354" alt="image" src="https://user-images.githubusercontent.com/6711653/163332067-359844e1-c468-4be9-917e-c86b4b2403a9.png">
 
-![](https://i.imgur.com/N0DGupc.png)
+
 
 ### 🏠 [casperdash.io](https://www.casperdash.io)
 
-### <i class="fa fa-book fa-fw"></i> Document https://hackmd.io/@casperdash/r1wtIVYVt
 
-## Features/Road map
+## Features
 
--   [x] Integrate with Casper Singer
 -   [x] Dashboard
     -   [x] View CSPR balance
     -   [x] Send/Receive CSPR
@@ -25,19 +23,12 @@
     -   [x] Add custom token by contract hash
 -   [x] History
     -   [x] View transfer transactions history
--   [ ] Keys Manager
-    -   [x] Deploy keys manager contract
-    -   [x] Edit account weight
-    -   [x] Edit Deployment/ Key management threshold
-    -   [x] Add new associated key
-    -   [ ] Edit associated account weight
 -   [x] Staking
     -   [x] Staking CSPR
--   [ ] Account management
+-   [x] Account management
     -   [x] Create/update/manage public/private keys
     -   [x] Import/backup account from private key file or mnemonic words
     -   [x] Provide method to sign contract from external site
--   [x] Web extension wallet
 
 #### Will be on separated repository
 
@@ -69,44 +60,8 @@ There are 2 parts, web and browser extension which are sharing similar logic and
 
 [Webpack](https://webpack.js.org/) is using for building each platform.
 
-#### I. Web
 
-##### 1. Install
-
-```sh
-cd YOUR_WORKING_DIRECTORY/casperdash-client/client
-yarn install
-```
-
-##### 2. UI components
-
-The main UI components of web are placed under
-
-```
-YOUR_WORKING_DIRECTORY/casperdash-client/client/src/components/web
-```
-
-##### 3. Configurations
-
-The configuration can be configurated by editing .env.\*.local
-
-```
-REACT_APP_API_ROOT=https://localhost:3001  //api endpoint
-REACT_APP_NETWORK_NAME=casper-test // casper network
-REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2  // contract hash for delegation
-REACT_APP_AVAILABLE_FEATURES=["home","dashboard","history","nfts","tokens","staking"] //Features can be enabled/disabled
-```
-
-##### 4. Usage
-
-```shell
-yarn dev             // start web with dev config
-yarn start-mainnet  // start web with mainnet config
-yarn start-testnet // start web with testnet config
-yarn test         // run test with coverage
-```
-
-#### II. Browser Extension
+#### Browser Extension
 
 ##### 1. Install
 
@@ -136,9 +91,9 @@ REACT_APP_AUCTION_HASH=93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb32
 ##### 4. Usage
 
 ```shell
-yarn dev-extension              // watch extension with dev config
-yarn dev-extension-mainnet      // watch extension with mainnet config
-yarn dev-extension-testnet      // watch extension with testnet config
+yarn dev-extension-mainnet // start browser extension with dev config
+yarn build-extension-mainnet  // build browser with production config
+yarn test         // run test with coverage
 ```
 
 ##### 5. Load into Chrome
