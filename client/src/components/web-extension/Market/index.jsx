@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ChartLine } from '../../Common/Layout/Chart';
-import { getPriceHistory, getCurrentPrice, CSPRMarketInfoSelector } from '../../../selectors/price';
+import { getPriceHistory, getCurrentPrice, getLatestMarketInfo } from '../../../selectors/price';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
 import { TransactionHistory } from '../Common/TransactionHistory';
 import './Market.scss';
@@ -28,8 +28,7 @@ const Market = () => {
 	// Hook
 	const priceHistory = useSelector(getPriceHistory);
 	const currentPrice = useSelector(getCurrentPrice);
-	const { data = [] } = useSelector(CSPRMarketInfoSelector);
-	const csprMarketInfo = data && data.length ? data[0] : {};
+	const csprMarketInfo = useSelector(getLatestMarketInfo);
 
 	return (
 		<section className="cd_we_market with_bottom_bar hide_scroll_bar">
@@ -41,7 +40,7 @@ const Market = () => {
 					</div>
 					<div
 						className={`cd_we_market_casper_price-change ${
-							csprMarketInfo.price_change_percentage_24h < 0 ? 'down' : 'up'
+							csprMarketInfo.percent_change_24h < 0 ? 'down' : 'up'
 						}`}
 					>
 						<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,8 +52,7 @@ const Market = () => {
 								strokeLinejoin="round"
 							/>
 						</svg>
-						{toFormattedNumber(csprMarketInfo.price_change_percentage_24h, { maximumSignificantDigits: 3 })}
-						%
+						{toFormattedNumber(csprMarketInfo.percent_change_24h, { maximumSignificantDigits: 3 })}%
 					</div>
 				</div>
 			</div>
@@ -68,7 +66,7 @@ const Market = () => {
 				</div>
 				<div className="cd_we_market_info_item">
 					<div className="cd_we_market_info_title">24h Volume</div>
-					<div className="cd_we_market_info_value">{toFormattedCurrency(csprMarketInfo.total_volume)}</div>
+					<div className="cd_we_market_info_value">{toFormattedCurrency(csprMarketInfo.volume_24h)}</div>
 				</div>
 				<div className="cd_we_market_info_item">
 					<div className="cd_we_market_info_title">Total Supply</div>

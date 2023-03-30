@@ -14,7 +14,6 @@ export const fetchPriceHistory = () => ({
 export const fetchCSPRMarketInfo = () => ({
 	type: PRICE.FETCH_CSPR_MARKET_INFO,
 	request: {
-		baseURL: 'https://api.coingecko.com/',
-		url: 'api/v3/coins/markets?vs_currency=usd&ids=casper-network',
+		url: 'price/latest',
 	},
 });

@@ -1,6 +1,6 @@
 import { User, EncryptionType } from 'casper-storage';
 import { DeployUtil, signFormattedMessage } from 'casper-js-sdk';
-import UserService from '@cd/services/UserService';
+import UserService from '@cd/services/ServiceWorker/UserService';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import _get from 'lodash-es/get';
 class AccountController {
