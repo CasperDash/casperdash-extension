@@ -64,18 +64,11 @@
 		]
 	},
 	"scripts": {
-		"dev": "webpack-dev-server --mode development --env=network=testnet",
 		"dev-extension-mainnet": "node webpack/webserver.js --mode development --env=type=extension --env=network=mainnet --watch",
-		"start-mainnet": "webpack-dev-server --mode development --env=network=mainnet",
-		"start-testnet": "webpack-dev-server --mode development --env=network=testnet",
-		"snapshot": "react-snapshot",
-		"build-mainnet": "webpack --mode production --env=network=mainnet && react-snapshot",
-		"build-testnet": "webpack --mode production  --env=network=testnet",
 		"build-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=mainnet",
 		"test": "react-scripts test --coverage --watchAll ",
 		"test:w": "react-scripts test --watchAll ",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true react-scripts test --coverage",
-		"build-all": "yarn build-mainnet & yarn build-testnet & yarn build-extension-testnet & yarn build-extension-mainnet",
 		"lint": "eslint src/ --ext .js,.jsx,.ts,.tsx"
 	},
 	"browserslist": {

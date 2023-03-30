@@ -1,12 +1,9 @@
 import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
 import {
 	fetchNFTInfo,
-	fetchAllNTFContractInfoByPublicKey,
-	fetchNFTContractInfo,
 	addCustomNFTAddressToLocalStorage,
 	getNFTAddressesFromLocalStorage,
 	updateNFTLocalStorage,
-	getNFTDeploysFromLocalStorage,
 	getNFTPendingDeploysStatus,
 	updateNFTDeploysStatus,
 } from './NFTActions';
@@ -26,24 +23,6 @@ test('fetchNFTInfo', () => {
 			params: {
 				publicKey: undefined,
 			},
-		},
-	});
-});
-
-test('fetchAllNTFContractInfoByPublicKey', () => {
-	expect(fetchAllNTFContractInfoByPublicKey('test')).toEqual({
-		type: 'NFTS.FETCH_NFTS_CONTRACT_INFO',
-		request: {
-			url: `/nfts/test/NFTContracts`,
-		},
-	});
-});
-
-test('fetchNFTContractInfo', () => {
-	expect(fetchNFTContractInfo('test')).toEqual({
-		type: 'NFTS.FETCH_NFTS_CONTRACT_INFO',
-		request: {
-			url: `/nfts/contract/test`,
 		},
 	});
 });
@@ -71,13 +50,6 @@ test('updateNFTLocalStorage', () => {
 	updateNFTLocalStorage()(mockDispatch, mockGetState);
 	expect(setLocalStorageValue).toHaveBeenCalled();
 	expect(mockDispatch).toHaveBeenCalledWith({ type: 'NFTS.UPDATE_LOCAL_STORAGE', payload: {} });
-});
-
-test('getNFTDeploysFromLocalStorage', () => {
-	getLocalStorageValue.mockReturnValue({ nfts: {} });
-	getNFTDeploysFromLocalStorage()(mockDispatch, mockGetState);
-	expect(getLocalStorageValue).toHaveBeenCalled();
-	expect(mockDispatch).toHaveBeenCalledWith({ type: 'NFTS.GET_DEPLOY_FROM_LOCAL_STORAGE', payload: { nfts: {} } });
 });
 
 test('getNFTPendingDeploysStatus', () => {
