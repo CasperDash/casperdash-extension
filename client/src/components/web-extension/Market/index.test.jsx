@@ -10,21 +10,13 @@ jest.mock('../Common/TransactionHistory', () => ({ TransactionHistory: () => <di
 jest.mock('../../Common/Layout/Chart', () => ({ ChartLine: () => <div /> }));
 
 test('Should display market info', async () => {
-	useSelector
-		.mockReturnValue()
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce(10)
-		.mockReturnValueOnce({
-			data: [
-				{
-					price_change_percentage_24h: 10,
-					market_cap: 10000,
-					total_volume: 200,
-					total_supply: 3000000,
-					circulating_supply: 150000,
-				},
-			],
-		});
+	useSelector.mockReturnValue().mockReturnValueOnce([]).mockReturnValueOnce(10).mockReturnValueOnce({
+		percent_change_24h: 10,
+		market_cap: 10000,
+		volume_24h: 200,
+		total_supply: 3000000,
+		circulating_supply: 150000,
+	});
 	const { getByText } = render(<Market />);
 	expect(getByText('Casper (CSPR)').textContent).toBe('Casper (CSPR)');
 	expect(getByText('$10').textContent).toBe('$10');
@@ -35,17 +27,9 @@ test('Should display market info', async () => {
 });
 
 test('Should display percentage down', () => {
-	useSelector
-		.mockReturnValue()
-		.mockReturnValueOnce([])
-		.mockReturnValueOnce(10)
-		.mockReturnValueOnce({
-			data: [
-				{
-					price_change_percentage_24h: -10,
-				},
-			],
-		});
+	useSelector.mockReturnValue().mockReturnValueOnce([]).mockReturnValueOnce(10).mockReturnValueOnce({
+		percent_change_24h: -10,
+	});
 	const { getByText, container } = render(<Market />);
 
 	expect(getByText(/-10/).textContent).toBe('-10%');

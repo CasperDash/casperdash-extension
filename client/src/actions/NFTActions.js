@@ -17,24 +17,6 @@ export const fetchNFTInfo = (publicKey, nftContracts) => ({
 	},
 });
 
-/**
- * @param {string} publicKey
- * @returns {object}
- */
-export const fetchAllNTFContractInfoByPublicKey = (publicKey) => ({
-	type: NFTS.FETCH_NFTS_CONTRACT_INFO,
-	request: {
-		url: `/nfts/${publicKey}/NFTContracts`,
-	},
-});
-
-export const fetchNFTContractInfo = (contractAddress) => ({
-	type: NFTS.FETCH_NFTS_CONTRACT_INFO,
-	request: {
-		url: `/nfts/contract/${contractAddress}`,
-	},
-});
-
 export const addCustomNFTAddressToLocalStorage = (tokenAddress, publicKey) => {
 	return (dispatch, getState) => {
 		const network = getNetworkState(getState);
@@ -80,21 +62,6 @@ export const updateNFTLocalStorage = (publicKey, patch, value, action) => {
 		dispatch({
 			type: NFTS.UPDATE_LOCAL_STORAGE,
 			payload: nfts,
-		});
-	};
-};
-
-/**
- *	get nft deploys from local storage
- * @param {string} publicKey
- */
-export const getNFTDeploysFromLocalStorage = (publicKey) => {
-	return (dispatch, getState) => {
-		const network = getNetworkState(getState);
-		const item = getLocalStorageValue(publicKey, getNetworkStorageKey('nfts', network));
-		dispatch({
-			type: NFTS.GET_DEPLOY_FROM_LOCAL_STORAGE,
-			payload: item ? item : { deploys: {} },
 		});
 	};
 };
