@@ -24,28 +24,27 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Install eslint
-              run : |
-                  yarn 
+              run: |
+                  yarn
 
             - name: Run UT and build all
               working-directory: ./client
-              run : |
+              run: |
                   yarn
                   yarn lint
                   yarn run test-ci
-                  yarn build-all
 
             - name: Send build result to slack channel
               uses: rtCamp/action-slack-notify@v2
               if: always()
               with:
-                status: ${{ job.status }}
-                notification_title: "*{repo}*"
-                message_format: "{emoji} *{workflow}* *{status_message}* in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>"
-                footer: "<{run_url}|View Run>"
+                  status: ${{ job.status }}
+                  notification_title: '*{repo}*'
+                  message_format: '{emoji} *{workflow}* *{status_message}* in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
+                  footer: '<{run_url}|View Run>'
               env:
                   SLACK_WEBHOOK: ${{ secrets.ORG_SLACK_URL }}
                   SLACK_COLOR: ${{ job.status }}
                   SLACK_TITLE: Hello Builders
                   SLACK_FOOTER: Powered by CasperDash
-                  SLACK_MESSAGE: ${{ job.status }} 
+                  SLACK_MESSAGE: ${{ job.status }}
