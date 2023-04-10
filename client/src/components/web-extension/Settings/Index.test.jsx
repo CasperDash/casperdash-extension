@@ -10,5 +10,5 @@ test('Should setting options', async () => {
 	const { getByText } = render(<Settings />);
 
 	expect(getByText('About Us').textContent).toBe('About Us');
-	expect(getByText('Connected Sites').textContent).toBe('Connected Sites');
+	expect(getByText('Version').textContent).toBe('Version');
 });

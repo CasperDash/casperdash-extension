@@ -56,9 +56,7 @@ beforeEach(() => {
 });
 
 test('Is using ledger', async () => {
-	spyOnUseSelector.mockReturnValue({
-		connectionType: 'ledger',
-	});
+	spyOnUseSelector.mockReturnValue(true);
 	const { isUsingLedger } = useLedger();
 	expect(isUsingLedger).toBe(true);
 });
