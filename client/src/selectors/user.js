@@ -1,6 +1,7 @@
 import { getQuerySelector, getQuery } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { formatAccountName } from '@cd/helpers/format';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
 import { getConfigKey } from '../services/configurationServices';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { getBase64IdentIcon } from '../helpers/identicon';
@@ -36,6 +37,10 @@ export const getAccountIndex = ({ user }) => {
 export const getLoginOptions = ({ user }) => {
 	return user.loginOptions || {};
 };
+
+export const isUsingLedgerSelector = createSelector(getLoginOptions, (loginOptions) => {
+	return loginOptions.connectionType === CONNECTION_TYPES.ledger;
+});
 
 export const getSelectedWallet = ({ user }) => {
 	return (user.loginOptions && user.loginOptions.selectedWallet) || {};

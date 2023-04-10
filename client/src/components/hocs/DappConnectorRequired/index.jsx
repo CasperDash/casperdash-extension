@@ -10,13 +10,13 @@ const DappConnectorRequired = ({ children }) => {
 		const checkIsSigningPopupWindow = async () => {
 			const result = await isSigningPopupWindow();
 			if (!result) {
-				navigate('/')
+				navigate('/');
 			}
-		}
+		};
 
 		checkIsSigningPopupWindow();
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return React.cloneElement(children);

@@ -30,6 +30,7 @@ import DappConnection from '@cd/components/web-extension/DappConnection';
 import ConnectedSites from '@cd/components/web-extension/ConnectedSites';
 import DappSignDeployRequest from '@cd/components/web-extension/DappSignDeployRequest';
 import DappSignMessageRequest from '@cd/components/web-extension/DappSignMessageRequest';
+import WarningLedger from '@cd/components/web-extension/Ledger/Warning';
 
 let features;
 
@@ -70,6 +71,7 @@ const routes = {
 		{ name: 'Connect With CasperDash', route: '/dappConnect', component: DappConnection },
 		{ name: 'Sign Deploy With CasperDash', route: '/dappSignDeployRequest', component: DappSignDeployRequest },
 		{ name: 'Sign Message With CasperDash', route: '/dappSignMessageRequest', component: DappSignMessageRequest },
+		{ name: 'Ledger Warning', route: '/warningLedger', component: WarningLedger },
 	],
 };
 export default Object.keys(routes).reduce((out, key) => {

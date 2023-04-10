@@ -6,8 +6,7 @@ import ConfirmModal from '@cd/components/Common/ConfirmModal';
 import { deleteAllUserData } from '@cd/actions/userActions';
 import EnterPasswordModal from '@cd/components/web-extension/Common/LoginModal/EnterPasswordModal';
 import useAuthLogin from '@cd/components/hooks/useAuthLogin';
-import { getLoginOptions } from '@cd/selectors/user';
-import { CONNECTION_TYPES } from '@cd/constants/settings';
+import { isUsingLedgerSelector } from '@cd/selectors/user';
 
 const DeleteAllDataButton = () => {
 	const dispatch = useDispatch();
@@ -15,7 +14,7 @@ const DeleteAllDataButton = () => {
 	const navigate = useNavigate();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [isOpenLoginModal, setIsOpenLoginModal] = useState(false);
-	const loginOptions = useSelector(getLoginOptions);
+	const isUsingLedger = useSelector(isUsingLedgerSelector);
 
 	const handleOnClick = () => {
 		setIsOpenModal(true);
@@ -26,7 +25,7 @@ const DeleteAllDataButton = () => {
 	};
 
 	const onConfirmHandler = () => {
-		if (loginOptions?.connectionType === CONNECTION_TYPES.ledger) {
+		if (isUsingLedger) {
 			dispatch(deleteAllUserData());
 			navigate('/connectAccount');
 			return;

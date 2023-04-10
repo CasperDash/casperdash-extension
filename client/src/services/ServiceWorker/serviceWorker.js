@@ -1,6 +1,7 @@
 import { ObservableStore } from '@metamask/obs-store';
 import { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import { AUTO_LOCK_TIMEOUT_ALARM } from '@cd/constants/alarm';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
 import RPC from './RPC';
 import AccountController from './Controllers/AccountController';
 import PopupController from './Controllers/PopupController';
@@ -48,13 +49,16 @@ function registerAlarmActions() {
 			if (hasAlarm && !isPopupOpen) {
 				const connectedAccount = await getConnectedAccountChromeLocalStorage();
 				const { loginOptions: loginOptionsCache } = connectedAccount;
-				const emptyPublicKey = '';
-				await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
-				chrome.runtime.sendMessage({
-					type: 'LOCK_WALLET',
-				});
+				// only lock if not using ledger
+				if (loginOptionsCache.connectionType !== CONNECTION_TYPES.ledger) {
+					const emptyPublicKey = '';
+					await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
+					chrome.runtime.sendMessage({
+						type: 'LOCK_WALLET',
+					});
 
-				chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
+					chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
+				}
 			}
 		});
 	});
