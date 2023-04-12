@@ -3,7 +3,7 @@ import browser from 'webextension-polyfill';
 import _uniq from 'lodash-es/uniq';
 import _isEmpty from 'lodash-es/isEmpty'
 import _get from 'lodash-es/get';
-import { getLastError, updateStatusEvent } from '@cd/services/ServiceWorker/utils';
+import { getLastError, updateStatusEvent } from '@cd/helpers/extension/signing';
 
 const CONNECTED_SITES = 'connectedSites';
 const BLACKLIST_PROTOCOLS = ['chrome-extension:', 'chrome:'];
