@@ -34,6 +34,7 @@ const SETTINGS = [
 		action: ({ navigate }) => {
 			navigate('/connectedSites', { state: { name: 'Connected Sites' } });
 		},
+		connectionType: CONNECTION_TYPES.privateKey,
 	},
 	{
 		name: 'Lock',

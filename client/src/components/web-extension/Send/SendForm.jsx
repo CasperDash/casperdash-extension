@@ -110,7 +110,6 @@ const SendForm = ({ token }) => {
 						<FormControl
 							value={values.transferId}
 							name="transferId"
-							required
 							className="cd_we_send_input"
 							onChange={handleChange}
 							isInvalid={errors.transferId}
@@ -118,7 +117,7 @@ const SendForm = ({ token }) => {
 							type="number"
 						/>
 
-						<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
+						<Form.Control.Feedback type="invalid">{errors.transferId}</Form.Control.Feedback>
 					</div>
 					<div className="cd_we_send_fee">
 						<div className="cd_we_input_label">Network Fee</div>
@@ -129,7 +128,7 @@ const SendForm = ({ token }) => {
 						<Button
 							className="cd_we_send_confirm_btn"
 							type="submit"
-							disabled={(errors && Object.keys(errors).length)}
+							disabled={errors && Object.keys(errors).length}
 						>
 							Confirm
 						</Button>

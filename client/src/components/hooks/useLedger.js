@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { setPublicKey } from '../../actions/userActions';
 import { getLedgerPublicKey, getLedgerError, initLedgerApp, getListKeys } from '../../services/ledgerServices';
 import { setLocalStorageValue, getLocalStorageValue } from '../../services/localStorage';
-import { getLoginOptions } from '../../selectors/user';
+import { isUsingLedgerSelector } from '../../selectors/user';
 import { CONNECTION_TYPES } from '../../constants/settings';
 import { MAX_KEY_PATH } from '../../constants/ledger';
 
@@ -15,8 +15,7 @@ const useLedger = () => {
 	const dispatch = useDispatch();
 
 	// Selector
-	const loginOptions = useSelector(getLoginOptions);
-	const isUsingLedger = loginOptions.connectionType === CONNECTION_TYPES.ledger;
+	const isUsingLedger = useSelector(isUsingLedgerSelector);
 
 	// Function
 	const handleConnectLedger = async () => {

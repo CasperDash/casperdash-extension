@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import CasperDashLogo from '@cd/assets/image/Logo-only.svg';
-import { getPublicKey } from '@cd/selectors/user';
+import { getPublicKey, isUsingLedgerSelector } from '@cd/selectors/user';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import { addConnectedSite, cancelConnectingSite, getCurrentConnectedUrl } from '@cd/components/hooks/useServiceWorker';
 import { withDappConnectorRequired } from '@cd/components/hocs/DappConnectorRequired';
+import { useNavigate } from 'react-router-dom';
 import './index.scss';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 const DappConnection = () => {
+	const navigate = useNavigate();
 	const [connectedUrl, setConnectedUrl] = useState('');
 	const publicKey = useSelector(getPublicKey);
+	const isUsingLedger = useSelector(isUsingLedgerSelector);
+
+	if (isUsingLedger) {
+		navigate('/warningLedger');
+	}
 
 	useEffect(() => {
 		const loadConnectedUrl = async () => {
