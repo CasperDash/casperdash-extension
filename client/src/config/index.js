@@ -27,6 +27,26 @@ const CONFIG_OPTIONS = {
 		env: 'REACT_APP_EXPLORER_ROOT_LINK',
 		default: 'https://testnet.cspr.live',
 	},
+	SWAP_FM_API_ROOT: {
+		env: 'REACT_APP_SWAP_FM_API_ROOT',
+		default: 'https://api.friendly.market/api/v1',
+	},
+	SWAP_FM_TOKEN_API: {
+		env: 'REACT_APP_SWAP_FM_TOKEN_API',
+		default: 'https://raw.githubusercontent.com/FriendlyMarket/token-list/main/tokenlist.json', 
+	},
+	SWAP_FM_MODULE_BYTES_API: {
+		env: 'REACT_APP_SWAP_FM_MODULE_BYTES_API',
+		default: 'https://assets.casperdash.io/sc-resources/gistfile1.txt',
+	},
+	SWAP_FM_CONTRACT_HASH: {
+		env: 'REACT_APP_SWAP_FM_CONTRACT_HASH',
+		default: 'fa64806972777d6263dea1f0e5a908620ffd19113df57ebd9ea4aa4e23de6090',
+	},
+	SWAP_FM_SPENDER_PACKAGE_HASH: {
+		env: 'REACT_APP_SWAP_FM_SPENDER_PACKAGE_HASH',
+		default: 'hash-460018b5a6a6fa6046d1021a7f4414fd45e5e506e6604b4656fe66c90b661e6b',
+	}
 };
 
 const getConfigOption = (option) => {

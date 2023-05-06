@@ -1,4 +1,4 @@
-import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder } from 'casper-js-sdk';
+import { DeployUtil, Signer, RuntimeArgs, CLValueBuilder, CLAccountHash, CLKey, CLTypeBuilder, CLByteArray } from 'casper-js-sdk';
 import { NETWORK_NAME, PAYMENT_AMOUNT, MOTE_RATE, DEPLOY_TTL_MS } from '@cd/constants/key';
 
 /**
@@ -106,3 +106,8 @@ export const toCLMap = (map) => {
  * @param contractHash - The contract hash of the contract you want to get the bytecode of.
  */
 export const contractHashToByteArray = (contractHash) => Uint8Array.from(Buffer.from(contractHash, 'hex'));
+
+export const stringToCLKey = (param) => {
+	return CLValueBuilder.key(
+        new CLByteArray(Uint8Array.from(Buffer.from(param.replace('hash-', ''), "hex"))));
+}

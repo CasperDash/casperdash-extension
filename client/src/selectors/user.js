@@ -88,6 +88,7 @@ export const getAllTokenInfo = createSelector(
 			totalPrice: CSPRPrice * CSPRBalance,
 			transferFee: getConfigKey('CSPR_TRANSFER_FEE'),
 			minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
+			name: 'Casper',
 		};
 
 		//TODO: should get price for each token, currently no token issue on Casper blockchain and no source as well

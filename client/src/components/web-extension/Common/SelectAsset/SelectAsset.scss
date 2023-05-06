@@ -1,0 +1,84 @@
+.cd_we_select_asset_wrapper {
+    .cd_we_select_asset_header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .cd_we_select_asset {
+        margin-top: 16px;
+        background: #F6F7FA;
+        border-radius: 16px;
+        height: 76px;
+        padding: 4px 16px;
+        &_main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .cd_we_select_asset_content {
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+    
+                .cd_we_select_asset_icon {
+                    width: 34px;
+                    height: 34px;
+                    padding: 8px;
+                    border-radius: 50%;
+                    background-color: var(--primary-light-color);
+    
+                    & img {
+                        margin-left: 1px;
+                        margin-bottom: 2px;
+                    }
+                }
+    
+                .cd_we_select_asset_name {
+                    margin-left: 12px;
+                }
+                
+                .cd_we_select_asset_arrow { 
+                    margin-left: 12px;
+                }
+            }
+    
+            .cd_we_select_asset_balance {
+                flex-basis: 0;
+                flex-grow: 99999;
+                width: 100%;
+                margin-top: 8px;
+
+                input {
+                    text-align: right;
+                    appearance: none !important;
+                }
+            }
+        }
+
+        &_footer {
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            color: rgb(115 109 116);
+            margin-right: 24px;
+            gap: 5px;
+
+            .cd_we_select_asset_balance2 {
+                flex-grow: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .cd_we_select_asset_amount_usd {
+                flex-basis: 0;
+                flex-grow: 99999;
+                text-align: right;
+                width: 90%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}

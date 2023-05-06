@@ -11,6 +11,9 @@
 		"@metamask/obs-store": "^7.0.0",
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
+		"@tanstack/query-sync-storage-persister": "^4.29.5",
+		"@tanstack/react-query": "^4.29.5",
+		"@tanstack/react-query-persist-client": "^4.29.5",
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
@@ -109,7 +112,8 @@
 			"^@cd/web/(.*)$": "<rootDir>/src/components/web$1",
 			"^@cd/web-extension(.*)$": "<rootDir>/src/components/web-extension$1",
 			"^@cd/components(.*)$": "<rootDir>/src/components$1",
-			"^@cd/app(.*)$": "<rootDir>/src/app$1"
+			"^@cd/app(.*)$": "<rootDir>/src/app$1",
+			"^@cd/apiServices(.*)$": "<rootDir>/src/apiServices$1"
 		},
 		"transformIgnorePatterns": [
 			"<rootDir>/node_modules/(?!lodash-es)"

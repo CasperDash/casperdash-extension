@@ -3,13 +3,14 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { getEndString } from '../../../helpers/format';
 import './MiddleTruncatedText.scss';
 
-export const MiddleTruncatedText = ({ children, end, placement = 'top' }) => {
+export const MiddleTruncatedText = ({ children, end, start, placement = 'top' }) => {
 	const endString = getEndString(children, end);
-	const beginString = !endString ? children : children.slice(0, children.length - endString.length);
+	const beginString = !endString ? children : children.slice(0, start || children.length - endString.length);
 	return (
 		<OverlayTrigger placement={placement} overlay={<Tooltip>{children}</Tooltip>}>
 			<div className="cd_middle_truncated_text">
 				<div className="cd_middle_truncated_text-begin">{beginString}</div>
+				{start && '...'}
 				<div className="cd_middle_truncated_text-end">{endString}</div>
 			</div>
 		</OverlayTrigger>

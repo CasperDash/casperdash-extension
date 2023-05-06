@@ -1,0 +1,25 @@
+.cd_we_swap_paths {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    &--item {
+        display: flex;
+        align-items: center;
+    }
+
+    &--icon {
+        margin-top: -2px
+    }
+
+    &--name {
+        margin-left: 6px;
+    }
+
+    &--arrow {
+        margin-left: 6px;
+        rotate: -90deg;
+    }
+}

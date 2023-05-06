@@ -1,0 +1,67 @@
+.cd_we_search_token_wrapper {
+    .cd_we_search_token {
+        display: flex;
+        align-items: center;
+        background: #FFFFFF;
+        border-radius: 30px;
+        height: 55px;
+
+        &_icon {
+            margin-left: 16px;
+        }
+
+        &_input {
+            background-color: #FFFFFF !important;
+        }
+    }
+
+    .cd_we_search_token_list {
+        border-radius: 40px 40px 0px 0px;
+        height: calc(100vh - 73px - 55px);
+
+        .cd_we_search_token_item {
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 16px;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--primary-color);
+            }
+
+           &--icon {
+                width: 34px;
+                height: 34px;
+                padding: 8px;
+                border-radius: 50%;
+                background-color: var(--primary-light-color);
+    
+                & img {
+                    margin-left: 1.3px;
+                    margin-bottom: 2.4px;
+                }
+            }
+    
+            &--content {
+                display: flex;
+                align-items: center;
+            }
+
+            &--name {
+                margin-left: 12px;
+            }
+    
+            &-balance {
+                margin-left: 12px;
+            }
+    
+            &--loading {
+                margin-right: 4px;
+                margin-bottom: -1px;
+            }
+        }
+    }
+}
