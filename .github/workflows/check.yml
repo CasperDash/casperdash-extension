@@ -33,6 +33,7 @@ jobs:
                   yarn
                   yarn lint
                   yarn run test-ci
+                  yarn build-extension-mainnet
 
             - name: Send build result to slack channel
               uses: rtCamp/action-slack-notify@v2
