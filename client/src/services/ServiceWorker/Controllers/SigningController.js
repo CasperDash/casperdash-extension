@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 import { DeployUtil, encodeBase16, formatMessageWithHeaders } from 'casper-js-sdk';
 import _pick from 'lodash-es/pick';
-import { getDeployArgs, getDeployPayment, getDeployType } from '../utils';
+import { getDeployArgs, getDeployPayment, getDeployType } from '@cd/helpers/extension/signing';
 
 const SIGNING_STATUS = {
 	unsigned: 'Unsigned',

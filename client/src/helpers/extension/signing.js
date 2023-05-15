@@ -2,7 +2,8 @@ import {
     encodeBase16,
     CLTypeTag,
     CLValue,
-    CLAccountHash
+    CLAccountHash,
+    CLPublicKey
 } from 'casper-js-sdk';
 import browser from 'webextension-polyfill';
 
@@ -32,6 +33,22 @@ export function getLastError() {
   }
 
   return new Error(lastError.message);
+}
+
+
+export function verifyTargetAccountMatch(
+  publicKeyHex,
+  targetAccountHash
+) {
+  const providedTargetKeyHash = encodeBase16(
+    CLPublicKey.fromHex(publicKeyHex).toAccountHash()
+  );
+
+  if (providedTargetKeyHash !== targetAccountHash) {
+    throw new Error(
+      "Provided target public key doesn't match the one in deploy"
+    );
+  }
 }
 
 export function getDeployPayment(deploy) {
@@ -93,7 +110,7 @@ export const parseTransferData = (transferDeploy, providedTarget) => {
     case CLTypeTag.ByteArray:
       targetFromDeployHex = encodeBase16(targetFromDeploy.value());
       if (providedTarget) {
-        this.verifyTargetAccountMatch(
+        verifyTargetAccountMatch(
           providedTarget.toLowerCase(),
           targetFromDeployHex
         );
@@ -116,6 +133,16 @@ export const parseTransferData = (transferDeploy, providedTarget) => {
 
   return transferArgs;
 };
+
+export function sanitiseNestedLists(value) {
+  const parsedValue = parseDeployArg(value);
+  if (Array.isArray(parsedValue)) {
+    const parsedType = value.vectorType;
+    return `<${parsedType}>[...]`;
+  }
+  return parsedValue;
+}
+
 
 // eslint-disable-next-line complexity
 export function parseDeployArg(arg) {
@@ -153,7 +180,7 @@ export function parseDeployArg(arg) {
       case CLTypeTag.List: {
         const list = (arg).value();
         const parsedList = list.map(member => {
-          return this.sanitiseNestedLists(member);
+          return sanitiseNestedLists(member);
         });
         return parsedList;
       }
