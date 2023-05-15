@@ -9,6 +9,8 @@ import { getLoginModalOpen } from '@cd/selectors/loginModal';
 import { isUsingLedgerSelector } from '@cd/selectors/user';
 import { browser } from './useServiceWorker';
 
+const MAX_RETRY_TIME = 10;
+
 const useLockAccountWhenIdle = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -19,30 +21,37 @@ const useLockAccountWhenIdle = () => {
 	useEffect(() => {
 		resetTimer();
 
-		try {
-			if (!browser || isUsingLedger) {
-				return;
-			}
-
-			browser.runtime.onMessage.addListener((event) => {
-				// Make sure login modal does not open.
-				if (typeof event !== 'object') {
+		let retryTime = 0;
+		const interval = setInterval(() => {
+			try {
+				retryTime += 1;
+				if (retryTime >= MAX_RETRY_TIME) {
+					clearInterval(interval);
+				}
+				if (!browser || isUsingLedger) {
 					return;
 				}
-
-				console.info('lock: ', new Date());
-
-				if (event.type === 'LOCK_WALLET') {
-					if (isLoginModalOpen) {
-						dispatch(setLoginModalOpen(false));
+	
+				browser.runtime.onMessage.addListener((event) => {
+					// Make sure login modal does not open.
+					if (typeof event !== 'object') {
+						return;
 					}
+		
+					if (event.type === 'LOCK_WALLET') {
+						if (isLoginModalOpen) {
+							dispatch(setLoginModalOpen(false));
+						}
+	
+						navigate('/welcomeBack');
+					}
+				});
 
-					navigate('/welcomeBack');
-				}
-			});
-		} catch (_err) {
-			//TODO: Handle error
-		}
+				clearInterval(interval);
+			} catch (_err) {
+				//TODO: Handle error
+			}
+		}, 1000);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
