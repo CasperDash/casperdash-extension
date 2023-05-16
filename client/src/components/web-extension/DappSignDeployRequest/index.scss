@@ -16,6 +16,14 @@
 			.long_text {
 				width: 150px;
 			}
+
+			.field_text {
+				text-align: right;
+				width: 150px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 		}
 
 		.divider {

@@ -1,20 +1,28 @@
 import React from 'react';
-import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import _isArray from 'lodash-es/isArray';
 
 const DeployField = ({ value, name }) => {
+    const valueDisplay = _isArray(value) ? value.join(',') : value;
     return (
         <div key={name} className="cd_we_sign_deploy_field">
             <span>{name}</span>
-            <div className="long_text">
-                {
-                    _isArray(value) ? (
-                        <MiddleTruncatedText end={4}>{value.join(',')}</MiddleTruncatedText>
-                    ) : (
-                        <MiddleTruncatedText end={4}>{value}</MiddleTruncatedText>
-                    )
-                }
-            </div>
+            <OverlayTrigger
+	placement="auto"
+	overlay={
+                        <Tooltip>
+                            <span>
+                            {valueDisplay}
+                            </span>
+                        </Tooltip>
+                    }
+            >
+                    <div className="field_text">
+                        {
+                            valueDisplay
+                        }
+                    </div>
+            </OverlayTrigger>
         </div>                
     );
 };
