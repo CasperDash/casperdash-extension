@@ -2,6 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	height: 100vh;
 	align-items: center;
 	background: var(--component-background);
 	.cd_we_sign_deploy_list_fields {
@@ -23,13 +24,13 @@
 	}
 
 	.cd_we_sign_deploy_actions {
-		margin-top: 20px;
 		width: 70%;
 		button {
 			width: 100%;
 			display: flex;
 			justify-content: center;
-			margin-bottom: 15px;
+			margin-top: 20px;
 		}
+		margin-bottom: 30px;
 	}
 }
