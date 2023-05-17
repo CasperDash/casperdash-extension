@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { approveSignDeployRequest, parseSignDeployData, rejectSignDeployRequest } from '@cd/components/hooks/useServiceWorker';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import { withDappConnectorRequired } from '@cd/components/hocs/DappConnectorRequired/index';
 import Divider from '@cd/components/Common/Divider';
+import { moteToCspr } from '@cd/helpers/balance';
+import DeployField from './DeployField';
 
 import './index.scss';
 
@@ -58,7 +60,22 @@ const DappSignDeployRequest = () => {
 				</div>
 				<div className="cd_we_sign_deploy_field">
 					<span>Payment</span>
-					<span>{deployData.payment}</span>
+					<span>
+					<OverlayTrigger
+						placement="auto"
+						overlay={
+							<Tooltip>
+								<span>
+								{moteToCspr(deployData.payment)} CSPR
+								</span>
+							</Tooltip>
+						}
+					>
+						<span>
+							{deployData.payment}
+						</span>
+					</OverlayTrigger>
+					</span>
 				</div>
 				<div className="cd_we_sign_deploy_field">
 					<span>Deploy Type</span>
@@ -68,16 +85,7 @@ const DappSignDeployRequest = () => {
 					<>
 						<Divider className="divider" />
 						{Object.keys(deployData.deployArgs).map((argKey) => {
-							return (
-								<div key={argKey} className="cd_we_sign_deploy_field">
-									<span>{argKey}</span>
-									<div className="long_text">
-										<MiddleTruncatedText end={8}>
-											{deployData.deployArgs[argKey]}
-										</MiddleTruncatedText>
-									</div>
-								</div>
-							);
+							return <DeployField key={argKey} name={argKey} value={deployData.deployArgs[argKey]} />;
 						})}
 					</>
 				)}
