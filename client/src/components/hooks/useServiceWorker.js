@@ -74,9 +74,6 @@ const getPrivateKey = async (password) => {
 	return sentMessage({ methodName: 'accountManager.getPrivateKey', params: { password } });
 };
 
-const setPopupOpenState = async (state) => {
-	return sentMessage({ methodName: 'setPopupOpenState', params: { state } });
-};
 
 const getCurrentConnectedUrl = async () => {
 	return sentMessage({ methodName: 'popupManager.getCurrentSite' });
@@ -157,7 +154,6 @@ export {
 	browser,
 	addLegacyAccount,
 	getPrivateKey,
-	setPopupOpenState,
 	getCurrentConnectedUrl,
 	addConnectedSite,
 	getConnectedSites,

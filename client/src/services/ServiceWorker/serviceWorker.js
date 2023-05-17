@@ -12,8 +12,6 @@ const accountController = new AccountController(appStore);
 const popupController = new PopupController(accountController, appStore);
 const signController = new SigningController(popupController, accountController);
 
-let isPopupOpen = false;
-
 const onUpdate = (tabId, info, tab) => /^https?:/.test(info.url) && findTab([tab]);
 findTab();
 chrome.runtime.onConnect.addListener((port) => {
@@ -46,7 +44,7 @@ function registerAlarmActions() {
 		chrome.alarms.getAll(async (alarms) => {
 			const hasAlarm = alarms.find((alarm) => alarm.name === AUTO_LOCK_TIMEOUT_ALARM);
 
-			if (hasAlarm && !isPopupOpen) {
+			if (hasAlarm) {
 				const connectedAccount = await getConnectedAccountChromeLocalStorage();
 				const { loginOptions: loginOptionsCache } = connectedAccount;
 				// only lock if not using ledger
@@ -110,9 +108,6 @@ async function setupPopupServices() {
 	rpc.register('accountManager.isUserExist', accountController.isUserExist);
 	rpc.register('accountManager.addLegacyAccount', accountController.addLegacyAccount);
 	rpc.register('accountManager.getPrivateKey', accountController.getPrivateKey);
-	rpc.register('setPopupOpenState', ({ state }) => {
-		isPopupOpen = state;
-	});
 	rpc.register('accountManager.updateAccountName', accountController.updateAccountName);
 
 	rpc.register('popupManager.getCurrentSite', popupController.getCurrentSite);

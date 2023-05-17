@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes, HashRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
@@ -9,7 +9,6 @@ import OuterLayout from '@cd/web-extension/Common/Layout/OuterLayout';
 import WithAccount from '@cd/common/Auth/WithAccount';
 import WithConfigurations from '@cd/common/Configurations';
 import { LoginModal } from '@cd/components/web-extension/Common/LoginModal/index';
-import { setPopupOpenState } from '@cd/components/hooks/useServiceWorker';
 import routeConfig from './routeConfig';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -32,13 +31,6 @@ const getRoutes = (routes) => {
 
 const App = () => {
 	const { mainRoutes, innerRoutes, outerRoutes } = routeConfig;
-
-	useEffect(() => {
-		setPopupOpenState(true);
-		return () => {
-			setPopupOpenState(false);
-		};
-	}, []);
 
 	return (
 		<Provider store={store}>
