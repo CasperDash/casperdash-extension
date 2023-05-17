@@ -193,7 +193,7 @@ export class UserService {
 
 	addWalletAccount = async (index, description) => {
 		const user = this.instance;
-		user.addWalletAccount(index, description);
+		await user.addWalletAccount(index, description);
 		return await this.prepareStorageData();
 	};
 
