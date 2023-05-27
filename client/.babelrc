@@ -37,7 +37,8 @@
 					"@cd/web": "./src/components/web",
 					"@cd/web-extension": "./src/components/web-extension",
 					"@cd/components": "./src/components",
-					"@cd/app": "./src/app"
+					"@cd/app": "./src/app",
+					"@cd/apiServices": "./src/apiServices"
 				}
 			}
 		]

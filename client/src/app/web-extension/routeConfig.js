@@ -31,6 +31,10 @@ import ConnectedSites from '@cd/components/web-extension/ConnectedSites';
 import DappSignDeployRequest from '@cd/components/web-extension/DappSignDeployRequest';
 import DappSignMessageRequest from '@cd/components/web-extension/DappSignMessageRequest';
 import WarningLedger from '@cd/components/web-extension/Ledger/Warning';
+import SearchToken from '@cd/components/web-extension/SearchToken';
+import Swap from '@cd/components/web-extension/Swap';
+import SwapSettings from '@cd/web-extension/Swap/SwapSettings';
+import SwapConfirmation from '@cd/components/web-extension/Swap/SwapConfirmation';
 
 let features;
 
@@ -50,6 +54,8 @@ const routes = {
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
 		{ name: 'Settings', route: '/settings', component: Settings },
+		{ name: 'Swap Settings', route: '/swapSettings', component: SwapSettings },
+		{ name: 'Swap Confirmation', route: '/swapConfirmation', component: SwapConfirmation },
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
@@ -59,9 +65,11 @@ const routes = {
 		{ name: 'Import Account', route: '/importAccount', component: ImportAccount },
 		{ name: 'View Private Key', route: '/viewPrivateKey', component: PrivateKey },
 		{ name: 'Connected Sites', route: '/connectedSites', component: ConnectedSites },
+		{ name: 'Search Token', route: '/searchToken', component: SearchToken },
 	],
 	// Routes which do not relate to main routes
 	outerRoutes: [
+		{ name: 'Swap', route: '/swap', component: Swap },
 		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },

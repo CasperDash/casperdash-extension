@@ -20,6 +20,7 @@ import stakeReducer from './reducers/stakes';
 import requestReducer from './reducers/request';
 import loginModalReducer from './reducers/loginModal';
 import settingsReducer from './reducers/settings';
+import swapReducer from './reducers/swap';
 import createWalletReducer, { initialState as createWalletInitialState } from './reducers/createWallet';
 import { REQUEST } from './actionTypes';
 
@@ -63,6 +64,14 @@ export const initialState = {
 	createWallet: {
 		...createWalletInitialState,
 	},
+	swap: {
+		swapFrom: {
+		},
+		swapTo: {
+		},
+		settings: {},
+		isReceiveExact: false,
+	}
 };
 
 const setLoadingStatus = (actionType) => {
@@ -115,6 +124,7 @@ const rootReducers = combineReducers({
 	nfts: nftsReducer,
 	createWallet: createWalletReducer,
 	loginModal: loginModalReducer,
+	swap: swapReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

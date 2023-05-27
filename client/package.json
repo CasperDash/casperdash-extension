@@ -1,7 +1,7 @@
 {
 	"name": "casperdash_client",
 	"description": "CasperDash Client",
-	"version": "1.4.3",
+	"version": "1.4.5",
 	"private": false,
 	"author": "CasperDash",
 	"license": "MIT",
@@ -13,6 +13,7 @@
 		"@popperjs/core": "2.11.6",
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
+		"@tanstack/react-query": "^4.29.5",
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
@@ -111,7 +112,8 @@
 			"^@cd/web-extension(.*)$": "<rootDir>/src/components/web-extension$1",
 			"^@cd/components(.*)$": "<rootDir>/src/components$1",
 			"^@cd/app(.*)$": "<rootDir>/src/app$1",
-			"@ledgerhq/devices/hid-framing": "@ledgerhq/devices/lib/hid-framing"
+			"@ledgerhq/devices/hid-framing": "@ledgerhq/devices/lib/hid-framing",
+			"^@cd/apiServices(.*)$": "<rootDir>/src/apiServices$1"
 		},
 		"transformIgnorePatterns": [
 			"<rootDir>/node_modules/(?!lodash-es)"
