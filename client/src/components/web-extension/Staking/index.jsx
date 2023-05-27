@@ -3,6 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getValidatorsDetails } from '@cd/actions/userActions';
 import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
@@ -30,8 +31,9 @@ const Staking = () => {
 
 	// Effect
 	useEffect(() => {
-		dispatch(fetchValidators());
-	}, [dispatch]);
+		dispatch(fetchValidators(publicKey));
+		dispatch(getValidatorsDetails());
+	}, [dispatch, publicKey]);
 
 	useEffect(() => {
 		validator.public_key && setFirstLoad(false);

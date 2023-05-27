@@ -1,0 +1,44 @@
+.cd_we_sign_deploy_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+	align-items: center;
+	background: var(--component-background);
+	.cd_we_sign_deploy_list_fields {
+		padding: 10px 30px;
+		width: 100%;
+		.cd_we_sign_deploy_field {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+
+			.long_text {
+				width: 150px;
+			}
+
+			.field_text {
+				text-align: right;
+				width: 150px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+
+		.divider {
+			padding: 10px 0;
+		}
+	}
+
+	.cd_we_sign_deploy_actions {
+		width: 70%;
+		button {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+		margin-bottom: 30px;
+	}
+}

@@ -6,7 +6,12 @@ const common = require('./commonConfig');
 
 module.exports = (dir) =>
 	merge(common(dir), {
-		entry: path.resolve(dir, 'src/app/web-extension/index.js'),
+		entry: {
+			popup: path.resolve(dir, 'src/app/web-extension/index.js'),
+			'sw/service-worker': path.resolve(dir, 'src/services/ServiceWorker/serviceWorker.js'),
+			'scripts/content/content': path.resolve(dir, 'src/content/content.js'),
+			'scripts/content/inpage': path.resolve(dir, 'src/content/inpage.js'),
+		},
 		output: {
 			path: path.resolve(dir, 'build_extension'),
 		},
@@ -26,10 +31,14 @@ module.exports = (dir) =>
 			new HtmlWebpackPlugin({
 				template: path.resolve(dir, 'template/extension/popup.html'),
 				filename: 'popup.html',
+				chunks: ['popup'],
+				cache: false,
 			}),
 			new HtmlWebpackPlugin({
 				template: path.resolve(dir, 'template/extension/popup.html'),
 				filename: 'home.html',
+				chunks: ['popup'],
+				cache: false,
 			}),
 			new CopyWebpackPlugin({
 				patterns: [
@@ -59,4 +68,15 @@ module.exports = (dir) =>
 				],
 			}),
 		],
+		// optimization: {
+		// 	splitChunks: {
+		// 		cacheGroups: {
+		// 			vendors: {
+		// 				test: /[\\/]node_modules[\\/]/,
+		// 				name: 'vendors',
+		// 				chunks: 'all',
+		// 			},
+		// 		},
+		// 	},
+		// },
 	});

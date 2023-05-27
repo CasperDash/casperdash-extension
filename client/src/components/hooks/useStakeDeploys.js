@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { moteToCspr } from '../../helpers/balance';
-import { getPendingStakes } from '../../selectors/stake';
-import { getValidators } from '../../selectors/validator';
-import { getTransferDeploysStatus } from '../../actions/deployActions';
-import { ENTRY_POINT_UNDELEGATE } from '../../constants/key';
-import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '../../actions/stakeActions';
-import { SEND_ICON_SMALL, RECEIVE_ICON_SMALL } from '../../constants/icon';
+import { moteToCspr } from '@cd/helpers/balance';
+import { getPendingStakes, getStakesHistory } from '@cd/selectors/stake';
+import { getValidators, validatorsDetail } from '@cd/selectors/validator';
+import { getTransferDeploysStatus } from '@cd/actions/deployActions';
+import { getBase64IdentIcon } from '@cd/helpers/identicon';
+import { ENTRY_POINT_UNDELEGATE, STAKING_STATUS } from '@cd/constants/key';
+import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '@cd/actions/stakeActions';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
 /**
@@ -19,6 +19,7 @@ import { useAutoRefreshEffect } from './useAutoRefreshEffect';
  */
 const getStakedValidators = (validators, pendingStakes, publicKey) => {
 	let stakedValidators = [];
+	//const validatorDetail = details?.[]
 	if (!publicKey || !validators.length) {
 		return stakedValidators;
 	}
@@ -39,12 +40,13 @@ const getStakedValidators = (validators, pendingStakes, publicKey) => {
 		let stakedValidator = {
 			validator: validatorPublicKey,
 			stakedAmount: moteToCspr(foundDelegator.staked_amount),
-			icon: RECEIVE_ICON_SMALL,
+			icon: validator?.icon?.[1],
+			name: validator?.name || validator.validatorPublicKey,
 		};
 		if (pendingStake) {
 			stakedValidator.pendingAmount =
 				pendingStake.entryPoint === ENTRY_POINT_UNDELEGATE ? -pendingStake.amount : pendingStake.amount;
-			stakedValidator.icon = stakedValidator.pendingAmount > 0 ? RECEIVE_ICON_SMALL : SEND_ICON_SMALL;
+			stakedValidator.icon = validator?.icon?.[1];
 		}
 
 		stakedValidators.push(stakedValidator);
@@ -67,6 +69,7 @@ export const useStakeFromValidators = (publicKey) => {
 
 	const validators = useSelector(getValidators());
 	const pendingStakes = useSelector(getPendingStakes());
+
 	useEffect(() => {
 		dispatch(getStakeFromLocalStorage(publicKey));
 	}, [dispatch, publicKey]);
@@ -78,8 +81,13 @@ export const useStakeFromValidators = (publicKey) => {
 		(async () => {
 			if (!publicKey) return;
 			const { data } = await dispatch(getTransferDeploysStatus(pendingStakes.map((stake) => stake.deployHash)));
-			if (data && data.some((item) => 'pending' !== item.status)) {
-				dispatch(fetchValidators());
+			if (
+				data &&
+				data.some(
+					(item) => item.status !== STAKING_STATUS.pending && item.status !== STAKING_STATUS.undelegating,
+				)
+			) {
+				dispatch(fetchValidators(publicKey));
 				dispatch(updateStakeDeployStatus(publicKey, 'deploys.stakes', data));
 			}
 		})();
@@ -87,4 +95,21 @@ export const useStakeFromValidators = (publicKey) => {
 
 	const stakedValidators = getStakedValidators(validators, pendingStakes, publicKey);
 	return stakedValidators;
+};
+
+export const useStakedHistory = () => {
+	const stakesHistory = useSelector(getStakesHistory());
+	const { data: details } = useSelector(validatorsDetail);
+	return stakesHistory.map((item) => {
+		const validatorDetail = details?.[item.validator];
+		return {
+			validator: item.validator,
+			stakedAmount: item.entryPoint === ENTRY_POINT_UNDELEGATE ? -item.amount : item.amount,
+			icon: validatorDetail?.logo || getBase64IdentIcon(item.validator),
+			status: item.status,
+			type: item.entryPoint,
+			name: validatorDetail?.name || item.validator,
+			...item,
+		};
+	});
 };

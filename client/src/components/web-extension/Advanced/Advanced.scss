@@ -1,0 +1,10 @@
+.cd_we_advanced {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	&__content-title {
+		font-weight: 600;
+		font-size: 16px;
+	}
+}

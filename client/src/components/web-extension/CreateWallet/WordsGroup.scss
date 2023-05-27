@@ -1,0 +1,45 @@
+.cd_we {
+	&_wordsgroup {
+		padding-top: 8px;
+		margin-bottom: 18px;
+
+		&:first-child {
+			margin-top: 16px;
+		}
+
+		&-container {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+		}
+
+		&-intro {
+			font-size: 16px;
+			margin-bottom: 16px;
+			color: var(--secondary-text-color);
+		}
+
+		&-word {
+			&.btn {
+				background-color: var(--component-background);
+				border-radius: 20px;
+				border: 1px solid var(--secondary-text-color-light);
+				color: var(--primary-text-color-dark);
+				min-width: 104px;
+				min-height: 40px;
+				text-align: center;
+
+				&:focus,
+				&:visited {
+					outline: none;
+					box-shadow: none;
+				}
+
+				&.is-active {
+					border-color: var(--primary-color);
+					background-color: var(--primary-light-color);
+				}
+			}
+		}
+	}
+}

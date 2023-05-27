@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
 import { getPublicKey } from '../../../selectors/user';
 import { pushTransferToLocalStorage } from '../../../actions/deployActions';
@@ -25,15 +26,17 @@ const ConfirmSend = ({ token }) => {
 		navigate('/token', { replace: true, state: { name: symbol, token } });
 	};
 
-	const buildTransferDeploy = (transferDetails) => {
+	const buildTransferDeploy = (transferDetails, network) => {
 		return token.address === 'CSPR'
 			? getTransferDeploy({
 					...transferDetails,
 					transferId,
+					network,
 			  })
 			: getTransferTokenDeploy({
 					...transferDetails,
 					contractInfo: { address, decimals },
+					network,
 			  });
 	};
 
@@ -44,7 +47,7 @@ const ConfirmSend = ({ token }) => {
 			amount,
 			fee,
 		};
-		const buildDeployFn = () => buildTransferDeploy(transferDetails);
+		const buildDeployFn = (network) => buildTransferDeploy(transferDetails, network);
 
 		const { deployHash, signedDeploy } = await executeDeploy(
 			buildDeployFn,
@@ -86,7 +89,9 @@ const ConfirmSend = ({ token }) => {
 			</div>
 			<div className="cd_we_confirm_row">
 				<div>Receiving Address</div>
-				<div className="cd_we_confirm_address">{toAddress}</div>
+				<div className="cd_we_confirm_address">
+					<MiddleTruncatedText>{toAddress}</MiddleTruncatedText>
+				</div>
 			</div>
 			<div className="cd_we_confirm_row">
 				<div className="cd_we_input_label">Transfer ID</div>
@@ -95,7 +100,7 @@ const ConfirmSend = ({ token }) => {
 
 			<div className="cd_we_confirm_buttons">
 				<Button onClick={onSendTransaction} disabled={isDeploying}>
-					{isDeploying ? 'Sending' : 'Send'}
+					{isDeploying ? 'Sending' : 'Sign'}
 				</Button>
 			</div>
 		</div>

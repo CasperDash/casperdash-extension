@@ -15,10 +15,11 @@ const defaultRoutes = {
 	dashboard: '/dashboard',
 	tokens: '/tokens',
 	history: '/history',
-	keyManager: '/keyManager',
 	staking: '/staking',
 	nfts: '/NFTs',
 	createnft: '/create-nft',
+	dappConnect: '/dappConnect',
+	dappSignDeployRequest: '/dappSignDeployRequest',
 };
 
 export const routes = features
@@ -26,3 +27,10 @@ export const routes = features
 			return features.includes(route) ? { ...out, [route]: defaultRoutes[route] } : out;
 	  }, {})
 	: defaultRoutes;
+
+/**
+ * This variable should hold any env variables passing from .env files
+ */
+export const CONSTANTS = {
+	DEBUG_ENV: Boolean(process.env.REACT_APP_DEBUG_ENV === 'true'),
+};

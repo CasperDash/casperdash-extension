@@ -1,0 +1,68 @@
+.cd_we {
+	&_page {
+		&--root {
+			padding: 8px 14px;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+
+			* {
+				margin: 3px 0;
+			}
+		}
+
+		&--bottom {
+			margin-top: auto;
+			margin-bottom: 0;
+		}
+	}
+
+	&_import-keyphrase {
+		&--column {
+			display: flex;
+			flex-direction: column;
+			flex: 0 0 auto;
+			height: 270px;
+			justify-content: space-between;
+			list-style: none;
+			width: 45%;
+			padding: 0;
+		}
+
+		&--box {
+			padding: 0 16px;
+		}
+	}
+
+	&_keyphrase {
+		&--word {
+			margin-right: 20px;
+			width: 100%;
+
+			input {
+				height: 28px;
+				font-size: 12px !important;
+			}
+		}
+	}
+
+	&_btn-next {
+		margin-top: 10px;
+	}
+
+	&_create-wallet-layout {
+		&--root {
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: space-between;
+			height: 100%;
+		}
+
+		&--body {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: auto;
+			overflow: auto;
+		}
+	}
+}

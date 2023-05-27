@@ -18,7 +18,35 @@
 	.cd_we_page_name {
 		font-size: 22px;
 		font-weight: 600;
+		.cd_we_network {
+			position: fixed;
+			font-size: 16px;
+			font-weight: 500;
+			top: 13px;
+			right: 112px;
+			background: white;
+			padding: 4px 12px;
+			border-radius: 26px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+
+			&::before {
+				content: '';
+				display: block;
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background-color: var(--bs-success);
+			}
+			&.testnet {
+				&::before {
+					background-color: var(--bs-warning);
+				}
+			}
+		}
 	}
+
 	.cd_we_settings {
 		margin-left: auto;
 		margin-right: 20px;

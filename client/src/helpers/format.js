@@ -8,7 +8,7 @@ import { MOTE_RATE } from '../constants/key';
  * @return {String} Formatted number.
  */
 export const toFormattedNumber = (num = 0, options, locales) => {
-	const number = new Intl.NumberFormat(locales, { maximumFractionDigits: 5, ...options });
+	const number = new Intl.NumberFormat(locales, { maximumFractionDigits: 4, ...options });
 	return number.format(num) || '0';
 };
 
@@ -114,4 +114,8 @@ export const getValueByFormat = (value, options) => {
 		default:
 			return value;
 	}
+};
+
+export const formatAccountName = (index = 0) => {
+	return `Account ${index + 1}`;
 };

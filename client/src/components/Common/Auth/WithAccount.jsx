@@ -1,20 +1,9 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getConnectedAccountFromLocalStorage } from '../../../actions/userActions';
-import { getPublicKey } from '../../../selectors/user';
+import useLockAccountWhenIdle from '@cd/components/hooks/useLockAccountWhenIdle';
+import useWithAccount from './useWithAccount';
 
 const WithAccount = ({ children }) => {
-	// Hook
-	const publicKey = useSelector(getPublicKey);
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (!publicKey && !dispatch(getConnectedAccountFromLocalStorage())) {
-			navigate('/connectAccount');
-		}
-	}, [publicKey, navigate, dispatch]);
+	useWithAccount();
+	useLockAccountWhenIdle();
 
 	return children;
 };

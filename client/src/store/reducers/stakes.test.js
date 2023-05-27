@@ -4,6 +4,7 @@ jest.mock('../../services/localStorage', () => {
 	return {
 		__esModule: true,
 		getLocalStorageValue: jest.fn(),
+		getNetworkStorageKey: jest.fn().mockReturnValue('casper-test'),
 	};
 });
 
@@ -28,7 +29,10 @@ test('Should return new GET_STAKES_FROM_LOCAL_STORAGE stake state', () => {
 		},
 	]);
 	expect(
-		stakesReducer({ delegations: [] }, { type: 'STAKE.GET_STAKE_FROM_LOCAL_STORAGE', payload: ['test'] }),
+		stakesReducer(
+			{ delegations: [] },
+			{ type: 'STAKE.GET_STAKE_FROM_LOCAL_STORAGE', payload: { publicKey: 'test', network: 'casper-test' } },
+		),
 	).toEqual({
 		delegations: [
 			{
@@ -37,7 +41,7 @@ test('Should return new GET_STAKES_FROM_LOCAL_STORAGE stake state', () => {
 		],
 	});
 
-	expect(getLocalStorageValue).toHaveBeenCalledWith(['test'], 'deploys.stakes');
+	expect(getLocalStorageValue).toHaveBeenCalledWith('test', 'casper-test');
 });
 
 test('Should update stakes local storage', () => {

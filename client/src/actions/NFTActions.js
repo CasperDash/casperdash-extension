@@ -1,5 +1,6 @@
+import { getNetworkState } from '@cd/selectors/settings';
 import { NFTS } from '../store/actionTypes';
-import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
+import { setLocalStorageValue, getLocalStorageValue, getNetworkStorageKey } from '../services/localStorage';
 
 /**
  * @param {string} publicKey
@@ -16,27 +17,15 @@ export const fetchNFTInfo = (publicKey, nftContracts) => ({
 	},
 });
 
-/**
- * @param {string} publicKey
- * @returns {object}
- */
-export const fetchAllNTFContractInfoByPublicKey = (publicKey) => ({
-	type: NFTS.FETCH_NFTS_CONTRACT_INFO,
-	request: {
-		url: `/nfts/${publicKey}/NFTContracts`,
-	},
-});
-
-export const fetchNFTContractInfo = (contractAddress) => ({
-	type: NFTS.FETCH_NFTS_CONTRACT_INFO,
-	request: {
-		url: `/nfts/contract/${contractAddress}`,
-	},
-});
-
 export const addCustomNFTAddressToLocalStorage = (tokenAddress, publicKey) => {
-	return (dispatch) => {
-		const { nfts } = setLocalStorageValue(publicKey, 'nfts.address', tokenAddress, 'push');
+	return (dispatch, getState) => {
+		const network = getNetworkState(getState);
+		const { nfts } = setLocalStorageValue(
+			publicKey,
+			getNetworkStorageKey('nfts.address', network),
+			tokenAddress,
+			'push',
+		);
 		dispatch({
 			type: NFTS.SET_ADDRESS_LOCAL_STORAGE,
 			payload: nfts.address || [],
@@ -49,8 +38,9 @@ export const addCustomNFTAddressToLocalStorage = (tokenAddress, publicKey) => {
  * @returns
  */
 export const getNFTAddressesFromLocalStorage = (publicKey) => {
-	return (dispatch) => {
-		const localStorageValue = getLocalStorageValue(publicKey, 'nfts.address');
+	return (dispatch, getState) => {
+		const network = getNetworkState(getState);
+		const localStorageValue = getLocalStorageValue(publicKey, getNetworkStorageKey('nfts.address', network));
 		dispatch({
 			type: NFTS.GET_FROM_LOCAL_STORAGE,
 			payload: localStorageValue || [],
@@ -66,25 +56,12 @@ export const getNFTAddressesFromLocalStorage = (publicKey) => {
  * @param {string} action
  */
 export const updateNFTLocalStorage = (publicKey, patch, value, action) => {
-	return (dispatch) => {
-		const { nfts } = setLocalStorageValue(publicKey, patch, value, action);
+	return (dispatch, getState) => {
+		const network = getNetworkState(getState);
+		const { nfts } = setLocalStorageValue(publicKey, getNetworkStorageKey(patch, network), value, action);
 		dispatch({
 			type: NFTS.UPDATE_LOCAL_STORAGE,
 			payload: nfts,
-		});
-	};
-};
-
-/**
- *	get nft deploys from local storage
- * @param {string} publicKey
- */
-export const getNFTDeploysFromLocalStorage = (publicKey) => {
-	return (dispatch) => {
-		const item = getLocalStorageValue(publicKey, 'nfts');
-		dispatch({
-			type: NFTS.GET_DEPLOY_FROM_LOCAL_STORAGE,
-			payload: item ? item : { deploys: {} },
 		});
 	};
 };
