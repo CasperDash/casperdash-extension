@@ -46,6 +46,10 @@ const CONFIG_OPTIONS = {
 	SWAP_FM_SPENDER_PACKAGE_HASH: {
 		env: 'REACT_APP_SWAP_FM_SPENDER_PACKAGE_HASH',
 		default: 'hash-460018b5a6a6fa6046d1021a7f4414fd45e5e506e6604b4656fe66c90b661e6b',
+	},
+	COINGECKO_API: {
+		env: 'REACT_APP_SWAP_COINGECKO_API',
+		default: 'https://api.coingecko.com/api/v3',
 	}
 };
 

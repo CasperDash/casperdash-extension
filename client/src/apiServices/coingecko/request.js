@@ -1,7 +1,8 @@
 import axios from 'axios';
+import APP_CONFIGS from '@cd/config';
 
 const request = axios.create({
-  baseURL: 'https://api.coingecko.com/api/v3',
+  baseURL: APP_CONFIGS.COINGECKO_API,
   timeout: 30 * 1000,
   withCredentials: true,
 });
@@ -9,16 +10,6 @@ const request = axios.create({
 request.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    const { status } = error.response;
-
-    if (status === 400) {
-      const {
-        data: { message },
-      } = error.response;
-
-      alert(message);
-    }
-
     return Promise.reject(error);
   }
 );

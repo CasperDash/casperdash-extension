@@ -43,7 +43,7 @@ const SwapSettings = () => {
                       </RadioButtonGroup>
                   </div>
                   <div className="cd_we_swap_settings_slippage_input">
-                    <input type="number" onChange={(e) => handleSlippageChange(e.target.value)} value={swapSettings.slippage}/>
+                    <input type="number" min="0" onChange={(e) => handleSlippageChange(e.target.value)} value={swapSettings.slippage}/>
                   </div>
               </div>
               <div className="cd_we_swap_settings_transaction_deadline">
