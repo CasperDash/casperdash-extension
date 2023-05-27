@@ -41,7 +41,13 @@ module.exports = (dir) => ({
 		}),
 		new webpack.ProgressPlugin(),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(process.env),
+			'process.env': JSON.stringify({
+				REACT_APP_API_ROOT: process.env.REACT_APP_API_ROOT,
+				REACT_APP_NETWORK_NAME: process.env.REACT_APP_NETWORK_NAME,
+				REACT_APP_AUCTION_HASH: process.env.REACT_APP_AUCTION_HASH,
+				REACT_APP_VERSION: process.env.REACT_APP_VERSION,
+				APP_ENVIRONMENT: process.env.APP_ENVIRONMENT,
+			}),
 		}),
 	],
 	experiments: {
