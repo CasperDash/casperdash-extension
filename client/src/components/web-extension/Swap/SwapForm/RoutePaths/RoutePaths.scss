@@ -1,0 +1,10 @@
+.cd-we-route {
+    margin-top: 10px;
+
+    &__title {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin-bottom: 10px;
+    }
+}

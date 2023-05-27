@@ -6,8 +6,9 @@ import SettingIcon from '@cd/assets/image/setting.svg';
 import { getUserDetails } from '@cd/actions/userActions';
 import { getPublicKey } from '@cd/selectors/user';
 import { useAutoRefreshEffect } from '@cd/hooks/useAutoRefreshEffect';
-import './Header.scss';
 import { getNetwork } from '@cd/selectors/settings';
+
+import './Header.scss';
 
 export const Header = ({ currentModule = {} }) => {
 	// Hook
@@ -19,6 +20,7 @@ export const Header = ({ currentModule = {} }) => {
 	const network = useSelector(getNetwork);
 	const displayNetwork = network === 'casper' ? 'mainnet' : 'testnet';
 	const shouldRenderSettings = Boolean(publicKey && currentModule.route === '/');
+
 	useAutoRefreshEffect(() => {
 		if (publicKey) {
 			dispatch(getUserDetails(publicKey));
