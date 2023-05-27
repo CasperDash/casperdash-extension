@@ -44,7 +44,7 @@ const App = () => {
 							<HashRouter>
 								<Routes>
 									<Route
-			element={
+   element={
 											<WithAccount>
 												<Layout modules={mainRoutes} />
 											</WithAccount>
@@ -54,7 +54,7 @@ const App = () => {
 										{getRoutes(innerRoutes)}
 									</Route>
 									<Route
-			element={
+   element={
 											<WithAccount>
 												<OuterLayout />
 											</WithAccount>
@@ -64,15 +64,15 @@ const App = () => {
 									</Route>
 								</Routes>
 								<ToastContainer
-			position="top-center"
-			autoClose={5000}
-			hideProgressBar={false}
-			newestOnTop={false}
-			closeOnClick
-			rtl={false}
-			pauseOnFocusLoss
-			draggable
-			pauseOnHover
+   position="top-center"
+   autoClose={5000}
+   hideProgressBar={false}
+   newestOnTop={false}
+   closeOnClick
+   rtl={false}
+   pauseOnFocusLoss
+   draggable
+   pauseOnHover
 								/>
 								<LoginModal />
 							</HashRouter>
