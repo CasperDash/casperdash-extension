@@ -354,14 +354,14 @@ export const useValidateSwap = () => {
     const swapTo = useSwapTo();
     const { isLoading, data: pairData } = useGetCurrentPair();
 
-    if (isLoading) {
-        return {
-            isValid: false,
-            error: 'Loading...',
-        };
-    }
+    // if (isLoading) {
+    //     return {
+    //         isValid: false,
+    //         error: 'Loading...',
+    //     };
+    // }
 
-    if (!pairData) {
+    if (!isLoading && !pairData) {
         return {
             isValid: false,
             error: 'Cannot get pair data',
