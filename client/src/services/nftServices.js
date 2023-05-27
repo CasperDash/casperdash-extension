@@ -40,7 +40,7 @@ export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }
 			entryPoint = 'transfer_token';
 			mapping['token_id'] = CLValueBuilder.string(tokenId);
 		} else {
-			mapping['token_ids'] = CLValueBuilder.list([CLValueBuilder.u256(tokenId)]);
+			mapping['token_ids'] = CLValueBuilder.list([CLValueBuilder.string(tokenId)]);
 		}
 
 		const runtimeArgs = RuntimeArgs.fromMap(mapping);
