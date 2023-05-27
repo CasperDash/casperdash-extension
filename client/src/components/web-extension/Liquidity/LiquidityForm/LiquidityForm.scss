@@ -1,0 +1,35 @@
+.cd_we_liquidity {
+	background: var(--component-background);
+	padding: 16px;
+	overflow-y: hidden;
+	border-radius: 26px 26px 0 0;
+	&_to {
+		margin-top: 8px;
+	}
+
+	&_reverse_wrapper {
+		margin-top: 12px;
+		display: flex;
+		justify-content: center;
+		.cd_we_liquidity_reverse {
+			cursor: pointer;
+			width: 34px;
+			height: 34px;
+			padding: 7px;
+			border-radius: 50%;
+			background-color: var(--primary-light-color);
+		}
+	}
+
+	&_convert_rate {
+		margin-top: 10px;
+	}
+
+	&_confirm_button_wrapper {
+		margin-top: 16px;
+
+		button {
+			width: 100%;
+		}
+	}
+}

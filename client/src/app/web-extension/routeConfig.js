@@ -35,6 +35,8 @@ import SearchToken from '@cd/components/web-extension/SearchToken';
 import Swap from '@cd/components/web-extension/Swap';
 import SwapSettings from '@cd/web-extension/Swap/SwapSettings';
 import SwapConfirmation from '@cd/components/web-extension/Swap/SwapConfirmation';
+import Liquidity from '@cd/components/web-extension/Liquidity';
+
 
 let features;
 
@@ -70,6 +72,7 @@ const routes = {
 	// Routes which do not relate to main routes
 	outerRoutes: [
 		{ name: 'Swap', route: '/swap', component: Swap },
+		{ name: 'Liquidity', route: '/liquidity', component: Liquidity },
 		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },

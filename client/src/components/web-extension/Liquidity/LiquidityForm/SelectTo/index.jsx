@@ -1,15 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getSwapTo } from '@cd/selectors/swap';
+import Big from 'big.js';
 import SelectAsset from '@cd/web-extension/Common/SelectAsset';
 import { useGetTokenBalance } from '@cd/components/hooks/queries/useGetTokenBalance';
 import { getPublicKey } from '@cd/selectors/user';
 import { useGetCoinMarketData } from '@cd/components/hooks/queries/useGetCoinMarketData';
-import Big from 'big.js';
 import { useChangeToToken } from '@cd/web-extension/Swap/hooks';
+import { getLiquidityY } from '@cd/selectors/liquidity';
 
-const SelectSwapTo = () => {
-    const swapTo = useSelector(getSwapTo);
+const SelectTo = () => {
+    const swapTo = useSelector(getLiquidityY);
     const { handleOnChangeInput, handleOnChangeToken } = useChangeToToken();
     const publicKey = useSelector(getPublicKey);
     const { data: { balance = 0 } = { balance: 0 }} = useGetTokenBalance({
@@ -30,9 +30,9 @@ const SelectSwapTo = () => {
         balance={balance}
         onSelect={handleOnChangeToken}
         onChangeAmount={handleOnChangeInput}
-        callback={'/swap'}
+        callback={'/liquidity'}
       />
     )
 }
 
-export default SelectSwapTo;
+export default SelectTo;

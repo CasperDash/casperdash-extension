@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getSwapFrom } from '@cd/selectors/swap';
+import { getLiquidityX } from '@cd/selectors/liquidity';
 import SelectAsset from '@cd/web-extension/Common/SelectAsset/index';
 import { getPublicKey } from '@cd/selectors/user';
 import { useGetTokenBalance } from '@cd/components/hooks/queries/useGetTokenBalance';
@@ -8,8 +8,8 @@ import { useGetCoinMarketData } from '@cd/components/hooks/queries/useGetCoinMar
 import Big from 'big.js';
 import { useChangeFromToken } from '../../hooks';
 
-const SelectSwapFrom = () => {
-    const swapFrom = useSelector(getSwapFrom);
+const SelectFrom = () => {
+    const swapFrom = useSelector(getLiquidityX);
     const { handleOnChangeInput, handleOnChangeToken } = useChangeFromToken();
     const publicKey = useSelector(getPublicKey);
     const { data: { balance = 0 } = { balance: 0 }} = useGetTokenBalance({
@@ -31,10 +31,9 @@ const SelectSwapFrom = () => {
         onSelect={handleOnChangeToken}
         onChangeAmount={handleOnChangeInput}
         balance={Big(balance).toNumber()}
-        callback={'/swap'}
-
+        callback={'/liquidity'}
       />
     )
 }
 
-export default SelectSwapFrom;
+export default SelectFrom;

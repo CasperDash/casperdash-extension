@@ -21,6 +21,7 @@ import requestReducer from './reducers/request';
 import loginModalReducer from './reducers/loginModal';
 import settingsReducer from './reducers/settings';
 import swapReducer from './reducers/swap';
+import liquidityReducer from './reducers/liquidity';
 import createWalletReducer, { initialState as createWalletInitialState } from './reducers/createWallet';
 import { REQUEST } from './actionTypes';
 
@@ -71,6 +72,10 @@ export const initialState = {
 		},
 		settings: {},
 		isReceiveExact: false,
+	},
+	liquidity: {
+		liquidityX: {},
+		liquidityY: {},
 	}
 };
 
@@ -125,6 +130,7 @@ const rootReducers = combineReducers({
 	createWallet: createWalletReducer,
 	loginModal: loginModalReducer,
 	swap: swapReducer,
+	liquidity: liquidityReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
