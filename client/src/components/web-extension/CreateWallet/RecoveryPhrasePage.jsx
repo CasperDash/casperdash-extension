@@ -6,9 +6,11 @@ import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
+import CopyButton from '@cd/web-extension/Common/CopyButton';
 import { selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
-import { DownloadButton } from '@cd/components/web-extension/Common/DownloadButton';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
+import { ONE_MINUTE } from '@cd/constants/time';
+
 import './RecoveryPhrasePage.scss';
 
 const RecoveryPhrasePage = () => {
@@ -57,11 +59,10 @@ const RecoveryPhrasePage = () => {
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
-				<DownloadButton
+				<CopyButton
 					className="cd_we_create-keyphrase__btn"
-					variant="normal"
 					text={keyPhrase}
-					fileName="key_phrase.txt"
+					delay={ONE_MINUTE}
 				/>
 				<Button onClick={onClickNextHandler} className="cd_we_create-keyphrase__btn">
 					Next
