@@ -3,56 +3,52 @@ import { useSelector } from 'react-redux';
 import Big from 'big.js';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import { useCalculateAmountOutMin, useGetCurrentPair, useGetSwapInformations, useSwapSettings, useSwapTokens } from '@cd/web-extension/Swap/hooks';
+import { useGetLiquidityInformations, useSwapSettings, useAddLiquidity } from '@cd/web-extension/Liquidity/hooks';
 import APP_CONFIGS from '@cd/config';
-import { getMatchedEntryPoint } from '@cd/web-extension/Swap/utils';
-import SwapPaths from '@cd/web-extension/Swap/Common/SwapPaths';
+import { getMatchedEntryPoint } from '@cd/web-extension/Liquidity/utils';
 import Divider from '@cd/components/Common/Divider';
 import { getPublicKey } from '@cd/selectors/user';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import { getGasFee } from '@cd/services/tokenServices';
 import { TruncatedText } from '@cd/web-extension/Common/TruncatedText';
-import { getLiquidityX, getLiquidityY } from '@cd/selectors/liquidity';
+import { getTokenX, getTokenY } from '@cd/selectors/liquidity';
 
 import './SwapConfirmation.scss';
 
-const SwapConfirmation = () => {
+const LiquidityConfirmation = () => {
     const navigate = useNavigate();
-    const swapFrom = useSelector(getLiquidityX);
-    const swapTo = useSelector(getLiquidityY);
+    const tokenX = useSelector(getTokenX);
+    const tokenY = useSelector(getTokenY);
     const [swapSettings] = useSwapSettings();
-    const amountOutMin = useCalculateAmountOutMin();
-    const { data: pair } = useGetCurrentPair();
-    const { mutate, isLoading } = useSwapTokens({
+    const { mutate, isLoading } = useAddLiquidity({
         // eslint-disable-next-line no-console
         onError: (error) => console.log(error),
         onSuccess: () => {
-            navigate('/swap', { state: { name: 'Swap' } });
+            navigate('/liquidity', { state: { name: 'Liquidity' } });
         }
     });
-    const swapInformations = useGetSwapInformations();
+    const params = useGetLiquidityInformations();
     const publicKey = useSelector(getPublicKey);
-    const entryPoint = getMatchedEntryPoint(swapFrom.type, swapTo.type);
+    const { entryPoint, cspr, token } = getMatchedEntryPoint(tokenX, tokenY);
 
     const gasFee = getGasFee(entryPoint);
 
     const handleConfirmSwap = () => {
-        const amountInValue = Big(swapFrom.value).round(swapFrom.decimals, 0).toNumber();
+        const amountInValue = Big(tokenX.value).round(tokenX.decimals, 0).toNumber();
+        const amountOutValue = Big(tokenY.value).round(tokenY.decimals, 0).toNumber();
 
-        let path = [swapFrom.contractHash, swapTo.contractHash].map((hash) => `hash-${hash}`);
-        if (pair.isUsingRouting) {
-            path = pair.path;
-        }
-
-        const amountIn = parseInt(Big(amountInValue * 10 ** swapFrom.decimals).toNumber());
-        const amountOut = parseInt(Big(amountOutMin * 10 ** swapTo.decimals).toNumber());
+        const amountIn = parseInt(Big(amountInValue * 10 ** tokenX.decimals).toNumber());
+        const amountOut = parseInt(Big(amountOutValue * 10 ** tokenY.decimals).toNumber());
 
         return mutate({ 
+            fromContractHash: tokenX.contractHash,
+            toContractHash: tokenY.contractHash,
             entryPoint,
             amountIn,
             amountOut,
             deadlineInMinutes: swapSettings.deadline,
-            path,
+            cspr,
+            token,
          });
     };
 
@@ -74,12 +70,12 @@ const SwapConfirmation = () => {
         },
         {
             title: 'Amount In',
-            value: `${swapFrom.value} ${swapFrom.symbol}`,
+            value: `${tokenX.value} ${tokenX.symbol}`,
             id: 'amountIn'
         },
         {
             title: 'Amount Out',
-            value: `${swapTo.value} ${swapTo.symbol}`,
+            value: `${tokenY.value} ${tokenY.symbol}`,
             id: 'amountOut'
         },
         {
@@ -93,10 +89,6 @@ const SwapConfirmation = () => {
         <section className="cd_we_single_section no_bottom_bar">
             <div className="cd_we_swap_confirmation">
                 <div className="cd_we_swap_confirmation__content">
-                    <div className="cd_we_swap_confirmation__content--route">
-                        <SwapPaths/>
-                    </div>
-                    <Divider className="cd_we_swap_confirmation__content--divider"/>
                     {
                         additionalItems.map((swapInformation) => {
                             const { title, value, id } = swapInformation;
@@ -110,7 +102,7 @@ const SwapConfirmation = () => {
                     }
                     <Divider className="cd_we_swap_confirmation__content--divider"/>
                     {
-                        swapInformations.map((swapInformation) => {
+                        params.map((swapInformation) => {
                             const { title, value, id } = swapInformation;
                             return (
                                 <div key={`swap-info-${id}`} className="cd_we_swap_confirmation__content--item">
@@ -136,4 +128,4 @@ const SwapConfirmation = () => {
     )
 }
 
-export default SwapConfirmation;
+export default LiquidityConfirmation;

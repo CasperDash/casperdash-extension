@@ -10,21 +10,16 @@ import { signDeployByPrivateKey } from '@cd/services/privateKeyServices';
 import { usePersistentContext } from '@cd/components/hooks/usePersistentContext';
 import { 
     FUNCTIONS, 
-    buildExactSwapCSPRForTokensDeploy, 
-    buildSwapTokensForExactTokensDeploy, 
-    buildSwapExactTokensForCSPRDeploy, 
-    buildSwapExactTokensForTokensDeploy,
-    buildSwapCSPRForExactTokensDeploy,
-    buildSwapTokensForExactCSPRDeploy
+    buildAddLiquidityForCSPRAndTokenDeploy, 
+    buildAddLiquidityForTokensDeploy
 } from '@cd/services/tokenServices';
 import { useMemo, useRef } from 'react';
 import { useGetTokenBalance } from '@cd/components/hooks/queries/useGetTokenBalance';
 import { useGetCoinMarketData } from '@cd/components/hooks/queries/useGetCoinMarketData';
 import APP_CONFIGS from '@cd/config';
-import { getLiquidityX, getLiquidityY } from '@cd/selectors/liquidity';
-import { updateLiquidityX, updateLiquidityY } from '@cd/actions/liquidityActions';
-import { calculateAmountIn, calculateAmountOut } from './utils';
-import { getSwapInfo } from './utils';
+import { getTokenX, getTokenY } from '@cd/selectors/liquidity';
+import { updateTokenX, updateTokenY } from '@cd/actions/liquidityActions';
+import { calculateAmountIn, calculateAmountOut, getLiquidityInfo } from './utils';
 
 const DEFAULT_SETTINGS = {
     slippage: 0.5,
@@ -32,53 +27,53 @@ const DEFAULT_SETTINGS = {
 }
 
 export const useGetCurrentPair = () => {
-    const { contractHash: fromContractHash } = useSelector(getLiquidityX);
-    const { contractHash: toContractHash } = useSelector(getLiquidityY);
+    const { contractHash: fromContractHash } = useSelector(getTokenX);
+    const { contractHash: toContractHash } = useSelector(getTokenY);
     
     return useGetAMMPair(fromContractHash, toContractHash);
 }
 
 export const useChangeFromToken = () => {
     const dispatch = useDispatch();
-    const swapFrom = useSelector(getLiquidityX);
-    const swapTo = useSelector(getLiquidityY);
+    const tokenX = useSelector(getTokenX);
+    const tokenY = useSelector(getTokenY);
     const { data: pair = { isUsingRouting: false } } = useGetCurrentPair();
 
     const handleOnChangeInput = (value) => {
-        dispatch(updateLiquidityX({
+        dispatch(updateTokenX({
             value,
         }));
 
         const amountOut = calculateAmountOut({
             amountIn: value,
-            swapFrom,
-            swapTo,
+            tokenX,
+            tokenY,
             pair,
         })
 
-        dispatch(updateLiquidityY({
+        dispatch(updateTokenY({
             value: amountOut,
         }));
     };
 
-    const handleOnChangeToken = (selectedSwapFrom) => {
-        if (selectedSwapFrom.contractHash === swapFrom.contractHash && swapFrom.type === selectedSwapFrom.type) {
+    const handleOnChangeToken = (selectedTokenX) => {
+        if (selectedTokenX.contractHash === tokenX.contractHash && tokenX.type === selectedTokenX.type) {
             return;
         }
 
-        if (swapTo.contractHash === selectedSwapFrom.contractHash) {
-            if (!swapFrom.contractHash) { 
+        if (tokenY.contractHash === selectedTokenX.contractHash) {
+            if (!tokenX.contractHash) { 
                 return;
             }
 
-            dispatch(updateLiquidityY(swapFrom));
+            dispatch(updateTokenY(tokenX));
         }
   
-        dispatch(updateLiquidityX({
-            ...selectedSwapFrom,
+        dispatch(updateTokenX({
+            ...selectedTokenX,
             value: ''
         }));
-        dispatch(updateLiquidityY({
+        dispatch(updateTokenY({
             value: '',
         }));
     }
@@ -91,46 +86,46 @@ export const useChangeFromToken = () => {
 
 export const useChangeToToken = () => {
     const dispatch = useDispatch();
-    const swapTo = useSelector(getLiquidityY);
-    const swapFrom = useSelector(getLiquidityX);
+    const tokenY = useSelector(getTokenY);
+    const tokenX = useSelector(getTokenX);
 
     const { data: pair = { isUsingRouting: false } } = useGetCurrentPair();
 
     const handleOnChangeInput = (value = 0) => {
-        dispatch(updateLiquidityY({
+        dispatch(updateTokenY({
             value,
         }));
 
         const amountIn = calculateAmountIn({
             amountOut: value,
-            swapFrom,
-            swapTo,
+            tokenX,
+            tokenY,
             pair,
         });
 
-        dispatch(updateLiquidityX({
+        dispatch(updateTokenX({
             value: amountIn,
         }));
     };
 
-    const handleOnChangeToken = (selectedSwapTo) => {
-        if (selectedSwapTo.contractHash === swapTo.contractHash && swapTo.type === selectedSwapTo.type) {
+    const handleOnChangeToken = (selectedTokenY) => {
+        if (selectedTokenY.contractHash === tokenY.contractHash && tokenY.type === selectedTokenY.type) {
             return;
         }
         
-        if (swapFrom.contractHash === selectedSwapTo.contractHash) {
-            if (!swapTo.contractHash) { 
+        if (tokenX.contractHash === selectedTokenY.contractHash) {
+            if (!tokenY.contractHash) { 
                 return;
             }
 
-            dispatch(updateLiquidityX(swapTo));
+            dispatch(updateTokenX(tokenY));
         }
   
-        dispatch(updateLiquidityY({
-            ...selectedSwapTo,
+        dispatch(updateTokenY({
+            ...selectedTokenY,
             value: 0
         }));
-        dispatch(updateLiquidityX({
+        dispatch(updateTokenX({
             value: 0,
         }));
     }
@@ -149,19 +144,23 @@ export const useGetBalance = (contractHash) => {
 }
 
 export const useCalculateAmountOutMin = () => {
-    const swapTo = useSelector(getLiquidityY);
+    const tokenY = useSelector(getTokenY);
     const [swapSettings] = useSwapSettings();
 
-    const amountOutMin = Big(swapTo.value || 0).times(1 - swapSettings.slippage / 100).round(swapTo.decimals, 0).toNumber();
+    const amountOutMin = Big(tokenY.value || 0).times(1 - swapSettings.slippage / 100).round(tokenY.decimals, 0).toNumber();
 
     return amountOutMin;
 }
 
-export const useSwapTokens = (options) => {
+export const useAddLiquidity = (options) => {
 	const publicKey = useSelector(getPublicKey);
 	const dispatch = useDispatch();
     const toastIdRef = useRef(null);
+    const [swapSettings] = useSwapSettings();
 
+    const calculateAmountWithSlippage = (amount) => {
+        return Big(amount).times(1 - swapSettings.slippage / 100).round().toNumber();
+    }
 
     const putSignedDeploy = async (signedDeploy) => {
 		const { data: hash, error } = await dispatch(putDeploy(signedDeploy));
@@ -173,97 +172,55 @@ export const useSwapTokens = (options) => {
 	};
 
     return useMutation({
-        mutationFn: async ({entryPoint ,fromContractHash, toContractHash, amountIn, amountOut, deadlineInMinutes, path}) => {
+        mutationFn: async ({
+            entryPoint,
+            fromContractHash, 
+            toContractHash, 
+            amountIn, 
+            amountOut, 
+            deadlineInMinutes,
+            cspr,
+            token
+        }) => {
             toastIdRef.current = toast.loading('Preparing deploy');
             let builtDeploy = null;
             const deadline = dayjs().add(deadlineInMinutes, 'minutes').valueOf();
 
             switch (entryPoint) {
-                case FUNCTIONS.SWAP_EXACT_CSPR_FOR_TOKENS:
-                    builtDeploy = await buildExactSwapCSPRForTokensDeploy(
-                        APP_CONFIGS.SWAP_FM_CONTRACT_HASH, 
+                case FUNCTIONS.ADD_LIQUIDITY:
+                    builtDeploy = await buildAddLiquidityForTokensDeploy(
+                        APP_CONFIGS.LIQUIDITY_FM_CONTRACT_HASH, 
                         {
-                            toPublicKey: publicKey,
-                            fromPublicKey: publicKey,
-                            fromContractHash,
-                            toContractHash,
-                            amountIn,
-                            amountOutMin: amountOut,
+                            contractHashX: fromContractHash,
+                            contractHashY: toContractHash,
+                            amountXDesired: amountIn,
+                            amountYDesired: amountOut,
+                            amountXMin: calculateAmountWithSlippage(amountIn),
+                            amountYMin: calculateAmountWithSlippage(amountOut),
+                            publicKey,
                             deadline,
-                            path,
                         }
                     );
 
                     break;
-                case FUNCTIONS.SWAP_CSPR_FOR_EXACT_TOKENS:
-                    builtDeploy = await buildSwapCSPRForExactTokensDeploy(
-                        APP_CONFIGS.SWAP_FM_CONTRACT_HASH,
+                case FUNCTIONS.ADD_LIQUIDITY_CSPR: {
+                    const amountTokenDesired = token.contractHash === fromContractHash ? amountIn : amountOut;
+                    const amountCSPRDesired = cspr.contractHash === fromContractHash ? amountIn : amountOut;
+                    builtDeploy = await buildAddLiquidityForCSPRAndTokenDeploy(
+                        APP_CONFIGS.LIQUIDITY_FM_CONTRACT_HASH,
                         {
-                            toPublicKey: publicKey,
-                            fromPublicKey: publicKey,
-                            amountInMax: amountIn,
-                            amountOut: amountOut,
+                            tokenContractHash: token.contractHash,
+                            amountTokenDesired: amountTokenDesired,
+                            amountTokenMin: calculateAmountWithSlippage(amountTokenDesired),
+                            amountCSPRDesired: amountCSPRDesired,
+                            amountCSPRMin: calculateAmountWithSlippage(amountCSPRDesired),
+                            publicKey,
                             deadline,
-                            path,
-                        });
-
-                    break;
-                case FUNCTIONS.SWAP_TOKENS_FOR_EXACT_TOKENS:
-                    builtDeploy = await buildSwapTokensForExactTokensDeploy(
-                        APP_CONFIGS.SWAP_FM_CONTRACT_HASH,
-                        {
-                            toPublicKey: publicKey,
-                            fromPublicKey: publicKey,
-                            amountInMax: amountIn,
-                            amountOut: amountOut,
-                            deadline,
-                            path,
-                            spenderPackageHash: APP_CONFIGS.SWAP_FM_SPENDER_PACKAGE_HASH
                         }
                     );
 
                     break;
-                case FUNCTIONS.SWAP_EXACT_TOKENS_FOR_TOKENS:
-                        builtDeploy = await buildSwapExactTokensForTokensDeploy(
-                            APP_CONFIGS.SWAP_FM_CONTRACT_HASH,
-                            {
-                                toPublicKey: publicKey,
-                                fromPublicKey: publicKey,
-                                amountIn,
-                                amountOutMin: amountOut,
-                                deadline,
-                                path,
-                            }
-                        );
-    
-                    break;
-                case FUNCTIONS.SWAP_EXACT_TOKENS_FOR_CSPR:
-                    builtDeploy = await buildSwapExactTokensForCSPRDeploy(
-                        APP_CONFIGS.SWAP_FM_CONTRACT_HASH,
-                        {
-                            toPublicKey: publicKey,
-                            fromPublicKey: publicKey,
-                            amountIn,
-                            amountOutMin: amountOut,
-                            deadline,
-                            path,
-                        }
-                    );
-
-                    break;
-                case FUNCTIONS.SWAP_TOKENS_FOR_EXACT_CSPR:
-                    builtDeploy = await buildSwapTokensForExactCSPRDeploy(
-                        APP_CONFIGS.SWAP_FM_CONTRACT_HASH,
-                        {
-                            toPublicKey: publicKey,
-                            fromPublicKey: publicKey,
-                            amountInMax: amountIn,
-                            amountOut: amountOut,
-                            deadline,
-                            path,
-                        });
-                    
-                    break;
+                }
                 default:
                     throw new Error('Invalid function type');
             }
@@ -304,40 +261,40 @@ export const useSwapTokens = (options) => {
     );
 }
 
-export const useSwapFrom = () => {
-    const swapFrom = useSelector(getLiquidityX);
+export const useTokenX = () => {
+    const tokenX = useSelector(getTokenX);
     const publicKey = useSelector(getPublicKey);
     const { data: { balance = 0 } = { balance: 0 }} = useGetTokenBalance({
-        type: swapFrom.type,
+        type: tokenX.type,
         publicKey, 
-        contractHash: swapFrom.contractHash,
-        decimals: swapFrom.decimals,
+        contractHash: tokenX.contractHash,
+        decimals: tokenX.decimals,
     });
-    const { data: {price = 0 } = { price: 0} } = useGetCoinMarketData(swapFrom.coingeckoId);
-    const amountUsd = Big(swapFrom.value || 0).times(price).round(8).toNumber();
+    const { data: {price = 0 } = { price: 0} } = useGetCoinMarketData(tokenX.coingeckoId);
+    const amountUsd = Big(tokenX.value || 0).times(price).round(8).toNumber();
 
     return {
-        ...swapFrom,
+        ...tokenX,
         balance,
         amountUsd
     }
 }
 
 export const useSwapTo = () => {
-    const swapTo = useSelector(getLiquidityY);
+    const tokenY = useSelector(getTokenY);
     const publicKey = useSelector(getPublicKey);
     const { data: { balance = 0 } = { balance: 0 }}
         = useGetTokenBalance({
-            type: swapTo.type,
+            type: tokenY.type,
             publicKey,
-            contractHash: swapTo.contractHash,
-            decimals: swapTo.decimals,
+            contractHash: tokenY.contractHash,
+            decimals: tokenY.decimals,
         });
-    const { data: {price = 0 } = { price: 0} } = useGetCoinMarketData(swapTo.coingeckoId);
-    const amountUsd = Big(swapTo.value || 0).times(price).round(8).toNumber();
+    const { data: {price = 0 } = { price: 0} } = useGetCoinMarketData(tokenY.coingeckoId);
+    const amountUsd = Big(tokenY.value || 0).times(price).round(8).toNumber();
     
     return {
-        ...swapTo,
+        ...tokenY,
         balance,
         amountUsd
     }
@@ -345,16 +302,9 @@ export const useSwapTo = () => {
 
 // eslint-disable-next-line complexity
 export const useValidateSwap = () => {
-    const swapFrom = useSwapFrom();
-    const swapTo = useSwapTo();
+    const tokenX = useTokenX();
+    const tokenY = useSwapTo();
     const { isLoading, data: pairData } = useGetCurrentPair();
-
-    // if (isLoading) {
-    //     return {
-    //         isValid: false,
-    //         error: 'Loading...',
-    //     };
-    // }
 
     if (!isLoading && !pairData) {
         return {
@@ -363,35 +313,35 @@ export const useValidateSwap = () => {
         };
     }
 
-    if (!swapFrom.contractHash || !swapTo.contractHash) {
+    if (!tokenX.contractHash || !tokenY.contractHash) {
         return {
             isValid: false,
             error: 'Please select token',
         };
     }
 
-    if (swapFrom.contractHash === swapTo.contractHash) {
+    if (tokenX.contractHash === tokenY.contractHash) {
         return {
             isValid: false,
             error: 'Tokens must be different',
         };
     }
 
-    if (swapFrom.value <= 0) {
+    if (tokenX.value <= 0) {
         return {
             isValid: false,
             error: 'Please enter amount',
         };
     }
 
-    if (swapFrom.value > swapFrom.balance) {
+    if (tokenX.value > tokenX.balance) {
         return {
             isValid: false,
             error: 'Insufficient balance',
         };
     }
 
-    if ((swapFrom.value <= 0 && swapTo.value > 0) || (swapFrom.value > 0 && swapTo.value === 0)) {
+    if ((tokenX.value <= 0 && tokenY.value > 0) || (tokenX.value > 0 && tokenY.value === 0)) {
         return {
             isValid: false,
             error: 'Insufficient liquidity for this trade.',
@@ -417,15 +367,14 @@ export const useSwapSettings = () => {
     ]
 }
 
-export const useGetSwapInformations = () => {
-    const [swapSettings] = useSwapSettings();
-    const swapFrom = useSwapFrom();
-    const swapTo = useSwapTo();
+export const useGetLiquidityInformations = () => {
+    const tokenX = useTokenX();
+    const tokenY = useSwapTo();
     const { data: pairData, isLoading } = useGetCurrentPair();
 
-    const { fee, priceImpact, rate } = useMemo(() => {
-      return getSwapInfo(swapFrom, swapTo, pairData);
-    }, [swapFrom, swapTo, pairData]);
+    const { yPerX, xPerY } = useMemo(() => {
+      return getLiquidityInfo(tokenX, tokenY, pairData);
+    }, [tokenX, tokenY, pairData]);
 
     if (!pairData || isLoading) {
       return [];
@@ -433,24 +382,14 @@ export const useGetSwapInformations = () => {
     
     return [
         {
-            id: 'rate',
-            title: 'Rate',
-            value: `1 ${swapFrom.symbol} ~ ${Big(rate || 0).toFixed(8)} ${swapTo.symbol}`,
+            id: 'yPerX',
+            title: `${tokenY.symbol} per ${tokenX.symbol}`,
+            value: yPerX
         },
         {
-            id: 'fee',
-            title: 'Fee',
-            value: `${fee} ${swapFrom.symbol}`,
+            id: 'xPerY',
+            title: `${tokenX.symbol} per ${tokenY.symbol}`,
+            value: xPerY
         },
-        {
-            id: 'priceImpact',
-            title: 'Price Impact',
-            value: `${Math.min(Math.abs(priceImpact), 99.7)} %`,
-        },
-        {
-            id: 'slippage',
-            title: 'Slippage',
-            value: `${swapSettings.slippage}%`,
-        }
     ]
 }

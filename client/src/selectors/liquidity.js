@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
 
-export const getLiquidityX = createSelector(state => state.liquidity.liquidityX, liquidityX => liquidityX);
+export const getTokenX = createSelector(state => state.liquidity.tokenX, tokenX => tokenX);
 
-export const getLiquidityY = createSelector(state => state.liquidity.liquidityY, liquidityY => liquidityY);
+export const getTokenY = createSelector(state => state.liquidity.tokenY, tokenY => tokenY);

@@ -1,10 +1,10 @@
 import React from 'react';
-import { useGetSwapInformations } from '../../hooks';
+import { useGetLiquidityInformations } from '../../hooks';
 
 import './LiquidityInformation.scss';
 
 const LiquidityInformation = () => {
-    const swapInformations = useGetSwapInformations();
+    const swapInformations = useGetLiquidityInformations();
     if (swapInformations.length === 0) {
       return null;
     }

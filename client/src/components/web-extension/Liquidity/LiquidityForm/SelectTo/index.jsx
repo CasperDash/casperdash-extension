@@ -5,11 +5,11 @@ import SelectAsset from '@cd/web-extension/Common/SelectAsset';
 import { useGetTokenBalance } from '@cd/components/hooks/queries/useGetTokenBalance';
 import { getPublicKey } from '@cd/selectors/user';
 import { useGetCoinMarketData } from '@cd/components/hooks/queries/useGetCoinMarketData';
-import { useChangeToToken } from '@cd/web-extension/Swap/hooks';
-import { getLiquidityY } from '@cd/selectors/liquidity';
+import { useChangeToToken } from '@cd/web-extension/Liquidity/hooks';
+import { getTokenY } from '@cd/selectors/liquidity';
 
 const SelectTo = () => {
-    const swapTo = useSelector(getLiquidityY);
+    const swapTo = useSelector(getTokenY);
     const { handleOnChangeInput, handleOnChangeToken } = useChangeToToken();
     const publicKey = useSelector(getPublicKey);
     const { data: { balance = 0 } = { balance: 0 }} = useGetTokenBalance({
@@ -24,7 +24,7 @@ const SelectTo = () => {
     return (
       <SelectAsset 
         name="swapTo" 
-        label="Swap To" 
+        label="" 
         value={swapTo} 
         amountUsd={amountUsd}
         balance={balance}

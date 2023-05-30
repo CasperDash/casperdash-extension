@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import { useValidateSwap } from '@cd/web-extension/Swap/hooks';
+import { useValidateSwap } from '@cd/web-extension/Liquidity/hooks';
 
 const ConfirmButton = () => {
     const { isValid, error } = useValidateSwap();
@@ -23,7 +23,7 @@ const ConfirmButton = () => {
             onClick={handleOnSwap}
             disabled={!isValid}
         >
-            {isValid ? 'Add': error }
+            {isValid ? 'Add Liquidity': error }
         </Button>
     );
 }

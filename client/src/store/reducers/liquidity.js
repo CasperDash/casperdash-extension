@@ -1,21 +1,23 @@
 import { initialState } from '../';
+import { LIQUIDITY } from '../actionTypes';
 
 export default function liquidityReducer(
 	state = initialState.liquidity,
 	action
 ) {
+
 	switch (action.type) {
-		case 'UPDATE_LIQUIDITY_X':
+		case LIQUIDITY.UPDATE_TOKEN_X:
 			return {
 				...state,
-				liquidityX: {...state.liquidityX, ...action.payload.liquidityX},
+				tokenX: {...state.tokenX, ...action.payload.tokenX},
 			};
-		case 'UPDATE_LIQUIDITY_Y':
+		case LIQUIDITY.UPDATE_TOKEN_Y:
 			return {
 				...state,
-				liquidityY: {...state.liquidityY, ...action.payload.liquidityY}
+				tokenY: {...state.tokenY, ...action.payload.tokenY}
 			};
-		case 'RESET':
+		case LIQUIDITY.RESET:
 			return initialState.liquidity;
 		default:
 			return state;

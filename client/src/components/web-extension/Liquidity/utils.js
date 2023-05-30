@@ -64,50 +64,51 @@ export const findReverseRouteToken0IntPairByContractHash = (
   return [0, 0];
 };
 
-export const getMatchedEntryPoint = (swapFromType, swapToType, {isReceiveExact}) => {
-  if (swapFromType === TYPES.NATIVE && swapToType === TYPES.ERC20) {
-    if (isReceiveExact) {
-        return FUNCTIONS.SWAP_CSPR_FOR_EXACT_TOKENS;
+export const getMatchedEntryPoint = (tokenX, tokenY) => {
+  if (tokenX.type === TYPES.NATIVE && tokenY.type === TYPES.ERC20) {
+    return {
+      entryPoint: FUNCTIONS.ADD_LIQUIDITY_CSPR,
+      token: tokenY,
+      cspr: tokenX,
     }
-
-    return FUNCTIONS.SWAP_EXACT_CSPR_FOR_TOKENS;
   }
 
-  if (swapFromType === TYPES.ERC20 && swapToType === TYPES.NATIVE) {
-    if (isReceiveExact) {
-        return FUNCTIONS.SWAP_TOKENS_FOR_EXACT_CSPR;
-    }
-
-    return FUNCTIONS.SWAP_EXACT_TOKENS_FOR_CSPR;
+  if (tokenX.type === TYPES.ERC20 && tokenY.type === TYPES.NATIVE) {
+    return {
+      entryPoint: FUNCTIONS.ADD_LIQUIDITY_CSPR,
+      token: tokenX,
+      cspr: tokenY,
+    };
   }
 
-  if (swapFromType === TYPES.ERC20 && swapToType === TYPES.ERC20) {
-    if (isReceiveExact) {
-      return FUNCTIONS.SWAP_TOKENS_FOR_EXACT_TOKENS;
-    }
-
-    return FUNCTIONS.SWAP_EXACT_TOKENS_FOR_TOKENS;
+  if (tokenX.type === TYPES.ERC20 && tokenY.type === TYPES.ERC20) {
+    return {
+      entryPoint: FUNCTIONS.ADD_LIQUIDITY,
+      token: tokenX,
+      cspr: null,
+    };
   }
 }
 
-export const getSwapInfo = (swapFrom, swapTo, pairData) => {
-  const fee = Big(swapFrom.value || 0).times(0.3).div(100).round(swapFrom.decimals, 0).toNumber();
-  const priceImpact = swapTo.amountUsd ? Big(100).minus(Big(swapFrom.amountUsd || 0).div(swapTo.amountUsd || 1).times(100)).toFixed(4, 0): 0;
-  const rate = swapTo.value > 0 ? Big(swapTo.value).div(swapFrom.value || 1).toFixed(8, 0): 0;
+export const getLiquidityInfo = (tokenX, tokenY, pairData) => {
+  let rate = 0;
+
+  if (tokenX && tokenY && tokenX.contractHash && tokenY.contractHash) {
+    rate = calculateAmountOut({
+      amountIn: 1,
+      tokenX,
+      tokenY,
+      pair: pairData,
+    });
+  }
 
   return {
-    fee,
-    priceImpact,
-    rate: rate > 0 ? rate : calculateAmountOut({
-      amountIn: 1,
-      swapFrom,
-      swapTo,
-      pair: pairData,
-    }),
+    xPerY: rate,
+    yPerX: rate ? 1 / rate : 0,
   }
 }
 
-export const calculateAmountOut = ({amountIn, swapFrom, swapTo, pair}) => {
+export const calculateAmountOut = ({amountIn, tokenX, tokenY, pair}) => {
   if (!pair) {
     return 0;
   }
@@ -118,12 +119,12 @@ export const calculateAmountOut = ({amountIn, swapFrom, swapTo, pair}) => {
 
   if (pair.isUsingRouting) {
     const [reserve0, reserve1] = findReverseRouteToken0IntPairByContractHash(
-        swapFrom.contractHash,
+      tokenX.contractHash,
         pair
     );
     const bridgeAmount = getAmountOut(reserve0, reserve1, amountIn);
     const [reserve0IntPair, reserve1IntPair] = findReverseRouteIntToken1PairByContractHash(
-        swapTo.contractHash,
+      tokenY.contractHash,
         pair
     );
 
@@ -131,18 +132,18 @@ export const calculateAmountOut = ({amountIn, swapFrom, swapTo, pair}) => {
       amountIn: bridgeAmount,
       reverseIn: reserve0IntPair,
       reverseOut: reserve1IntPair,
-      decimals: swapTo.decimals,
+      decimals: tokenY.decimals,
     });
-  } else if (pair && pair.token1Price && swapTo.contractHash && swapFrom.contractHash) {
+  } else if (pair && pair.token1Price && tokenY.contractHash && tokenX.contractHash) {
     return calculatePrice(
-      {amountIn, reverseIn: pair.reserve0, reverseOut: pair.reserve1, decimals: swapTo.decimals}
+      {amountIn, reverseIn: pair.reserve0, reverseOut: pair.reserve1, decimals: tokenY.decimals}
     );
   }
 
   return 0;
 }
 
-export const calculateAmountIn = ({amountOut, swapFrom, swapTo, pair}) => {
+export const calculateAmountIn = ({amountOut, tokenX, tokenY, pair}) => {
   if (!pair) {
     return 0;
   }
@@ -154,14 +155,14 @@ export const calculateAmountIn = ({amountOut, swapFrom, swapTo, pair}) => {
   if (pair.isUsingRouting) {
     const [reserve0, reserve1] =
     findReverseRouteIntToken1PairByContractHash(
-      swapTo.contractHash,
+      tokenY.contractHash,
       pair
     );
     const bridgeAmount = getAmountIn(reserve0, reserve1, amountOut);
 
     const [reserve0IntPair, reserve1IntPair] =
       findReverseRouteToken0IntPairByContractHash(
-        swapFrom.contractHash,
+        tokenX.contractHash,
         pair
       );
 
@@ -169,10 +170,10 @@ export const calculateAmountIn = ({amountOut, swapFrom, swapTo, pair}) => {
       amountOut: bridgeAmount,
       reverseIn: reserve0IntPair,
       reverseOut: reserve1IntPair,
-      decimals: swapFrom.decimals,
+      decimals: tokenX.decimals,
     });
-  } else if (pair && swapFrom.contractHash && swapTo.contractHash) {
+  } else if (pair && tokenX.contractHash && tokenY.contractHash) {
 
-    return calculatePrice({amountOut, reverseIn: pair.reserve0, reverseOut: pair.reserve1, decimals: swapFrom.decimals});
+    return calculatePrice({amountOut, reverseIn: pair.reserve0, reverseOut: pair.reserve1, decimals: tokenX.decimals});
   }
 }

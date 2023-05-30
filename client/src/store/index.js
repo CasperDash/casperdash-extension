@@ -74,8 +74,8 @@ export const initialState = {
 		isReceiveExact: false,
 	},
 	liquidity: {
-		liquidityX: {},
-		liquidityY: {},
+		tokenX: {},
+		tokenY: {},
 	}
 };
 

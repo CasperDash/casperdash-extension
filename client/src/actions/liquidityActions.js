@@ -1,16 +1,16 @@
 import { LIQUIDITY } from "@cd/store/actionTypes";
 
-export const updateLiquidityX = (liquidityX) => {
+export const updateTokenX = (tokenX) => {
     return {
-        type: LIQUIDITY.UPDATE_LIQUIDITY_X,
-        payload: { liquidityX },
+        type: LIQUIDITY.UPDATE_TOKEN_X,
+        payload: { tokenX },
     };
 }
 
-export const updateLiquidityY = (liquidityY) => {
+export const updateTokenY = (tokenY) => {
     return {
-        type: LIQUIDITY.UPDATE_LIQUIDITY_Y,
-        payload: { liquidityY },
+        type: LIQUIDITY.UPDATE_TOKEN_Y,
+        payload: { tokenY },
     };
 }
 

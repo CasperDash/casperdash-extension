@@ -36,7 +36,7 @@ import Swap from '@cd/components/web-extension/Swap';
 import SwapSettings from '@cd/web-extension/Swap/SwapSettings';
 import SwapConfirmation from '@cd/components/web-extension/Swap/SwapConfirmation';
 import Liquidity from '@cd/components/web-extension/Liquidity';
-
+import LiquidityConfirmation from '@cd/components/web-extension/Liquidity/LiquidityConfirmation';
 
 let features;
 
@@ -58,6 +58,7 @@ const routes = {
 		{ name: 'Settings', route: '/settings', component: Settings },
 		{ name: 'Swap Settings', route: '/swapSettings', component: SwapSettings },
 		{ name: 'Swap Confirmation', route: '/swapConfirmation', component: SwapConfirmation },
+		{ name: 'Liquidity Confirmation', route: '/liquidityConfirmation', component: LiquidityConfirmation },
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
