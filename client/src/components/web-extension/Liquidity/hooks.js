@@ -199,6 +199,7 @@ export const useAddLiquidity = (options) => {
                             amountYMin: calculateAmountWithSlippage(amountOut),
                             publicKey,
                             deadline,
+                            spenderPackageHash: APP_CONFIGS.SWAP_FM_SPENDER_PACKAGE_HASH
                         }
                     );
 
@@ -216,6 +217,7 @@ export const useAddLiquidity = (options) => {
                             amountCSPRMin: calculateAmountWithSlippage(amountCSPRDesired),
                             publicKey,
                             deadline,
+                            spenderPackageHash: APP_CONFIGS.SWAP_FM_SPENDER_PACKAGE_HASH
                         }
                     );
 
@@ -301,7 +303,7 @@ export const useSwapTo = () => {
 }
 
 // eslint-disable-next-line complexity
-export const useValidateSwap = () => {
+export const useValidate = () => {
     const tokenX = useTokenX();
     const tokenY = useSwapTo();
     const { isLoading, data: pairData } = useGetCurrentPair();
@@ -335,6 +337,13 @@ export const useValidateSwap = () => {
     }
 
     if (tokenX.value > tokenX.balance) {
+        return {
+            isValid: false,
+            error: 'Insufficient balance',
+        };
+    }
+
+    if (tokenY.value > tokenY.balance) {
         return {
             isValid: false,
             error: 'Insufficient balance',

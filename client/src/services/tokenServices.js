@@ -223,9 +223,12 @@ export const buildAddLiquidityForTokensDeploy = async(contractAddress, transacti
 		to: createRecipientAddress(pbKey),
 		deadline: CLValueBuilder.u64(transactionDetail.deadline),
 		deposit_entry_point_name: CLValueBuilder.string(FUNCTIONS.ADD_LIQUIDITY),
-		with_approve: CLValueBuilder.bool(false),
+		with_approve: CLValueBuilder.bool(true),
 		amount: CLValueBuilder.u512(0),
 		contract_hash_key: new CLKey(CLValueBuilder.byteArray(contractHashByteArray)),
+		token0: stringToCLKey(transactionDetail.contractHashX),
+		spender: stringToCLKey(transactionDetail.spenderPackageHash),
+		token1: stringToCLKey(transactionDetail.contractHashY),
 	}
 
 	const runtimeArgs = RuntimeArgs.fromMap(mapping);
@@ -249,7 +252,9 @@ export const buildAddLiquidityForCSPRAndTokenDeploy = async(contractAddress, tra
 		contract_hash_key: new CLKey(CLValueBuilder.byteArray(contractHashByteArray)),
 		deposit_entry_point_name: CLValueBuilder.string(FUNCTIONS.ADD_LIQUIDITY_CSPR),
 		amount: CLValueBuilder.u512(1000000000),
-		with_approve: CLValueBuilder.bool(false),
+		with_approve: CLValueBuilder.bool(true),
+		spender: stringToCLKey(transactionDetail.spenderPackageHash),
+		token0: stringToCLKey(transactionDetail.tokenContractHash),
 	}
 
 	const runtimeArgs = RuntimeArgs.fromMap(mapping);
