@@ -32,4 +32,9 @@
 			width: 100%;
 		}
 	}
+
+	&_my_positions {
+		display: flex;
+		justify-content: flex-end;
+	}
 }
