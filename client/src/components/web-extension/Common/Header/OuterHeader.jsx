@@ -62,7 +62,7 @@ export const OuterHeader = ({ setHeader, header }) => {
 			)}
 			<div className="cd_we_title">{finalLayoutName}</div>
 			{(isSwapPage || isLiquidityPage) && (
-				<div className="cd_we_swap_settings" onClick={() => navigate('/swapSettings', { state: { name: 'Swap Settings' } })}>
+				<div className="cd_we_swap_settings" onClick={() => navigate('/swapSettings', { state: { name: 'Transaction Settings' } })}>
 					<SettingIcon />
 				</div>
 			)}
