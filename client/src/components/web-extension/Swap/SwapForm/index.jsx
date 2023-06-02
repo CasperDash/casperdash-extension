@@ -20,8 +20,8 @@ const SwapForm = () => {
     return (
         <section className="cd_we_single_section no_bottom_bar">
            <div className="cd_we_swap">
-              <div onClick={handleAddLiquidity} className="cd_we_swap_liquidity">
-                  <span>Add Liquidity</span>
+              <div className="cd_we_swap_header">
+                  <span onClick={handleAddLiquidity} className="cd_we_swap_liquidity">Add Your Liquidity</span>
               </div>
               <form>
                   <div className="cd_we_swap_from">

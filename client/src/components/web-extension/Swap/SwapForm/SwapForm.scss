@@ -7,11 +7,13 @@
 		margin-top: 8px;
 	}
 
-	&_liquidity {
-		cursor: pointer;
+	&_header {
 		display: flex;
 		justify-content: flex-end;
-
+	}
+	
+	&_liquidity {
+		cursor: pointer;
 		&:hover {
 			color: var(--primary-light-color);
 		}
