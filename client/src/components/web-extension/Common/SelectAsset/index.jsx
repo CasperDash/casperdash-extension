@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import './SelectAsset.scss';
 
-const SelectAsset = ({ name, value = {}, onSelect, onChangeAmount, amountUsd = 0, balance = 0 }) => {
+const SelectAsset = ({ name, value = {}, onSelect, onChangeAmount, amountUsd = 0, balance = 0, callback }) => {
 	const navigate = useNavigate();
     const location = useLocation();
     const {
@@ -13,7 +13,7 @@ const SelectAsset = ({ name, value = {}, onSelect, onChangeAmount, amountUsd = 0
 
     const handleOnClick = (e) => {
         e.preventDefault();
-        navigate('/searchToken', { state: { name: 'Search Token', nameKey: name } });
+        navigate('/searchToken', { state: { name: 'Search Token', nameKey: name, callback } });
     }
 
     useEffect(() => {

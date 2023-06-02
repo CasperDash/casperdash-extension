@@ -35,6 +35,8 @@ import SearchToken from '@cd/components/web-extension/SearchToken';
 import Swap from '@cd/components/web-extension/Swap';
 import SwapSettings from '@cd/web-extension/Swap/SwapSettings';
 import SwapConfirmation from '@cd/components/web-extension/Swap/SwapConfirmation';
+import Liquidity from '@cd/components/web-extension/Liquidity';
+import LiquidityConfirmation from '@cd/components/web-extension/Liquidity/LiquidityConfirmation';
 
 let features;
 
@@ -56,6 +58,7 @@ const routes = {
 		{ name: 'Settings', route: '/settings', component: Settings },
 		{ name: 'Swap Settings', route: '/swapSettings', component: SwapSettings },
 		{ name: 'Swap Confirmation', route: '/swapConfirmation', component: SwapConfirmation },
+		{ name: 'Liquidity Confirmation', route: '/liquidityConfirmation', component: LiquidityConfirmation },
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
@@ -70,6 +73,7 @@ const routes = {
 	// Routes which do not relate to main routes
 	outerRoutes: [
 		{ name: 'Swap', route: '/swap', component: Swap },
+		{ name: 'Liquidity', route: '/liquidity', component: Liquidity },
 		{ name: 'Connect Account', route: '/connectAccount', component: ConnectAccount },
 		{ name: 'Add public key', route: '/addPublicKey', component: AddPublicKey },
 		{ name: 'Connect Device', route: '/connectDevice', component: ConnectDevice },

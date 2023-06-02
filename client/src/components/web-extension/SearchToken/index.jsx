@@ -10,6 +10,11 @@ import TokenItem from './TokenItem';
 
 import './SearchToken.scss';
 
+const MAP_NAMES = {
+    '/swap': 'Swap',
+    '/liquidity': 'Liquidity',
+}
+
 const SearchToken = () => {
     const publicKey = useSelector(getPublicKey);
     const { data: listTokens = [] } = useGetTokens();
@@ -21,11 +26,11 @@ const SearchToken = () => {
     const location = useLocation();
     const navigate = useNavigate();
 	const {
-		state: { nameKey },
+		state: { nameKey, callback },
 	} = location;
 
     const handleOnClick = (tokenInfo) => {
-        navigate('/swap', { state: { [nameKey]: tokenInfo, name: 'Swap' } });
+        navigate(callback, { state: { [nameKey]: tokenInfo, name: MAP_NAMES[callback] } });
     }
 
     const tokens = query ? map(hits, 'item') : listTokens;

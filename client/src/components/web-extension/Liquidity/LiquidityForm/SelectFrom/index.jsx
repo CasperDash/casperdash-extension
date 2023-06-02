@@ -1,40 +1,39 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getSwapFrom } from '@cd/selectors/swap';
-import SelectAsset from '@cd/web-extension/Common/SelectAsset/index';
+import Big from 'big.js';
+import { getTokenX } from '@cd/selectors/liquidity';
+import SelectAsset from '@cd/web-extension/Common/SelectAsset';
 import { getPublicKey } from '@cd/selectors/user';
 import { useGetTokenBalance } from '@cd/components/hooks/queries/useGetTokenBalance';
 import { useGetCoinMarketData } from '@cd/components/hooks/queries/useGetCoinMarketData';
-import Big from 'big.js';
-import { useChangeFromToken } from '../../hooks';
+import { useChangeFromToken } from '@cd/web-extension/Liquidity/hooks';
 
-const SelectSwapFrom = () => {
-    const swapFrom = useSelector(getSwapFrom);
+const SelectFrom = () => {
+    const tokenX = useSelector(getTokenX);
     const { handleOnChangeInput, handleOnChangeToken } = useChangeFromToken();
     const publicKey = useSelector(getPublicKey);
     const { data: { balance = 0 } = { balance: 0 }} = useGetTokenBalance({
-      type: swapFrom.type,
+      type: tokenX.type,
       publicKey, 
-      contractHash: swapFrom.contractHash,
-      decimals: swapFrom.decimals,
+      contractHash: tokenX.contractHash,
+      decimals: tokenX.decimals,
     });
-    const { data: {price = 0 } = { price: 0} } = useGetCoinMarketData(swapFrom.coingeckoId);
-    const amountUsd = Big(swapFrom.value || 0).times(price).round(8).toNumber();
+    const { data: {price = 0 } = { price: 0} } = useGetCoinMarketData(tokenX.coingeckoId);
+    const amountUsd = Big(tokenX.value || 0).times(price).round(8).toNumber();
 
 
     return (
       <SelectAsset 
         name="swapFrom" 
-        label="Swap From" 
-        value={swapFrom} 
+        label="" 
+        value={tokenX} 
         amountUsd={amountUsd}
         onSelect={handleOnChangeToken}
         onChangeAmount={handleOnChangeInput}
         balance={Big(balance).toNumber()}
-        callback={'/swap'}
-
+        callback={'/liquidity'}
       />
     )
 }
 
-export default SelectSwapFrom;
+export default SelectFrom;

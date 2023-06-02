@@ -6,3 +6,9 @@ export const getSwapModuleBytes = async () => {
 
     return data;
 }
+
+export const getLiquidityModuleBytes = async () => {
+    const { data } = await axios.get(APP_CONFIGS.LIQUIDITY_FM_MODULE_BYTES_API);
+
+    return data;
+}

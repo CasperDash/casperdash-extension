@@ -1,29 +1,17 @@
-.cd_we_swap {
+.cd_we_liquidity {
 	background: var(--component-background);
 	padding: 16px;
 	overflow-y: hidden;
 	border-radius: 26px 26px 0 0;
-	.cd_we_swap_to {
+	&_to {
 		margin-top: 8px;
 	}
 
-	&_header {
-		display: flex;
-		justify-content: flex-end;
-	}
-	
-	&_liquidity {
-		cursor: pointer;
-		&:hover {
-			color: var(--primary-light-color);
-		}
-	}
-
-	.cd_we_swap_reverse_wrapper {
+	&_reverse_wrapper {
 		margin-top: 12px;
 		display: flex;
 		justify-content: center;
-		.cd_we_swap_reverse {
+		.cd_we_liquidity_reverse {
 			cursor: pointer;
 			width: 34px;
 			height: 34px;
@@ -33,15 +21,20 @@
 		}
 	}
 
-	.cd_we_swap_convert_rate {
+	&_convert_rate {
 		margin-top: 10px;
 	}
 
-	.cd_we_swap_confirm_button_wrapper {
+	&_confirm_button_wrapper {
 		margin-top: 16px;
 
 		button {
 			width: 100%;
 		}
+	}
+
+	&_my_positions {
+		display: flex;
+		justify-content: flex-end;
 	}
 }

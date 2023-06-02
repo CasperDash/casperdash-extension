@@ -15,7 +15,8 @@ export const OuterHeader = ({ setHeader, header }) => {
 	const currentStep = useSelector(selectCreateWalletCurrentStep);
 	const { pathname, state } = useLocation();
 	const shouldShowBackArrow = pathname !== '/welcomeBack' && (pathname !== '/createWallet' || pathname === '/createWallet' && currentStep !== 0);
-	const isSwapPage = Boolean(pathname === '/swap');
+	const isSwapPage = pathname === '/swap';
+	const isLiquidityPage = pathname === '/liquidity';
 
 	const finalLayoutName = useMemo(() => {
 		if (header && header !== '') {
@@ -33,12 +34,16 @@ export const OuterHeader = ({ setHeader, header }) => {
 		dispatch(resetWalletCreation());
 		setHeader(undefined);
 
+		if (isLiquidityPage) {
+			return navigate('/swap', { state: { name: 'Swap' } });
+		}
+
 		if (isSwapPage) {
 			return navigate('/');
 		}
 		
 		navigate(-1);
-	}, [navigate, dispatch, setHeader, isSwapPage]);
+	}, [navigate, dispatch, setHeader, isSwapPage, isLiquidityPage]);
 
 	if (!finalLayoutName) {
 		return null;
@@ -56,8 +61,8 @@ export const OuterHeader = ({ setHeader, header }) => {
 				</div>
 			)}
 			<div className="cd_we_title">{finalLayoutName}</div>
-			{isSwapPage && (
-				<div className="cd_we_swap_settings" onClick={() => navigate('/swapSettings', { state: { name: 'Swap Settings' } })}>
+			{(isSwapPage || isLiquidityPage) && (
+				<div className="cd_we_swap_settings" onClick={() => navigate('/swapSettings', { state: { name: 'Transaction Settings' } })}>
 					<SettingIcon />
 				</div>
 			)}
