@@ -6,10 +6,11 @@ import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
+import CopyButton from '@cd/web-extension/Common/CopyButton';
 import { selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
+
 import './RecoveryPhrasePage.scss';
-import CopyButton from '../Common/CopyButton/index';
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();

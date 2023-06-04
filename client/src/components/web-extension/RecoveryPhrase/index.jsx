@@ -33,7 +33,7 @@ const RecoveryPhrase = () => {
 					<div className={clsx({
 						'cd_we_recovery-keyphrase__blur': isBlurred,
 					})}
-			onClick={() => setIsBlurred(false)}
+          onClick={() => setIsBlurred(false)}
 					>
 						<ul className={
 							clsx('cd_we_recovery-keyphrase__column', {
@@ -58,12 +58,11 @@ const RecoveryPhrase = () => {
 					</div>
 					<div className="cd_we_recovery-keyphrase__footer">
 						{
-							!isBlurred && (
+						
 								<CopyButton
-		className="cd_we_recovery-keyphrase__copy-btn"
-		text={keyphrase}
+  className="cd_we_recovery-keyphrase__copy-btn"
+  text={keyphrase}
 								/>
-							)
 						}
 					</div>
 				</div>
