@@ -9,11 +9,11 @@ import './SearchValidator.scss';
 const VALIDATOR_METADATA = {
 	left: [
 		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
-		{ key: 'public_key', type: 'primary', wrapperComponent: MiddleTruncatedText },
+		{ key: 'validatorPublicKey', type: 'primary', wrapperComponent: MiddleTruncatedText },
 	],
 	right: [
-		{ key: 'bidInfo.bid.delegation_rate', format: 'percentage', suffix: 'Fee' },
-		{ key: 'bidInfo.bid.staked_amount', format: 'mote' },
+		{ key: 'delegationRate', format: 'percentage', suffix: 'Fee' },
+		{ key: 'totalStaked', format: 'mote' },
 	],
 };
 

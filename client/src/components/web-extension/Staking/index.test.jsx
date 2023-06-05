@@ -37,7 +37,7 @@ test('Should show stake form and no staked info', async () => {
 });
 
 test('Should navigate to stake confirm', async () => {
-	useLocation.mockReturnValue({ state: { validator: { public_key: 'validatorkey' } } });
+	useLocation.mockReturnValue({ state: { validator: { validatorPublicKey: 'validatorkey' } } });
 	useSelector.mockReturnValue([]);
 	const { getByText, container } = render(<Staking />);
 

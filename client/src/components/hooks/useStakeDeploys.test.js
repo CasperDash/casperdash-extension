@@ -42,21 +42,25 @@ beforeEach(() => {
 });
 
 test('Have a new pending delegation', () => {
-	spyOnUseSelector.mockReturnValue([{ validator: '0x123', amount: 1000 }]).mockReturnValueOnce([
+	spyOnUseSelector.mockReturnValueOnce([
+		{ validatorPublicKey: '0x123', amount: 1, name: 'test' }, 
+		{ validatorPublicKey: '0x333', amount: 1, name: 'test' },
+		{ validatorPublicKey: '0x345', amount: 1000, name: 'test' }
+	]).mockReturnValueOnce([
 		{
-			public_key: '0x345',
-			bidInfo: {
-				bid: {
-					delegators: [
-						{
-							public_key: '0x00',
-							staked_amount: 1000000000,
-						},
-					],
-				},
-			},
+			validator: '0x333',
+			amount: 1000,
+			entryPoint: 'delegate',
+			name: 'test'
+		},
+	]).mockReturnValueOnce([
+		{
+			validatorPublicKey: '0x123',
+			stakedAmount: 1000000000,
+			name: 'test'
 		},
 	]);
+	
 	const stakedValidators = useStakeFromValidators('0x00');
 	expect(stakedValidators.length).toBe(2);
 	expect(stakedValidators[0].stakedAmount).toBe(1);
@@ -64,19 +68,22 @@ test('Have a new pending delegation', () => {
 });
 
 test('Have an existing pending delegation', () => {
-	spyOnUseSelector.mockReturnValue([{ validator: '0x345', amount: 1000 }]).mockReturnValueOnce([
+	spyOnUseSelector.mockReturnValueOnce([
+		{ validatorPublicKey: '0x123', amount: 1, name: 'test' }, 
+	])
+	.mockReturnValueOnce([
 		{
-			public_key: '0x345',
-			bidInfo: {
-				bid: {
-					delegators: [
-						{
-							public_key: '0x00',
-							staked_amount: 1000000000,
-						},
-					],
-				},
-			},
+			validator: '0x123',
+			amount: 1000,
+			entryPoint: 'delegate',
+			name: 'test'
+		},
+	])
+	.mockReturnValueOnce([
+		{
+			validatorPublicKey: '0x123',
+			stakedAmount: 1000000000,
+			name: 'test'
 		},
 	]);
 	const stakedValidators = useStakeFromValidators('0x00');
@@ -86,23 +93,24 @@ test('Have an existing pending delegation', () => {
 });
 
 test('Have an existing pending undelegation', () => {
-	spyOnUseSelector
-		.mockReturnValue([{ validator: '0x345', amount: 1000, entryPoint: 'undelegate' }])
-		.mockReturnValueOnce([
-			{
-				public_key: '0x345',
-				bidInfo: {
-					bid: {
-						delegators: [
-							{
-								public_key: '0x00',
-								staked_amount: 1000000000000,
-							},
-						],
-					},
-				},
-			},
-		]);
+	spyOnUseSelector.mockReturnValueOnce([
+		{ validatorPublicKey: '0x123', amount: 1, name: 'test' }, 
+	])
+	.mockReturnValueOnce([
+		{
+			validator: '0x123',
+			amount: 1000,
+			entryPoint: 'undelegate',
+			name: 'test'
+		},
+	])
+	.mockReturnValueOnce([
+		{
+			validatorPublicKey: '0x123',
+			stakedAmount: 1000000000000,
+			name: 'test'
+		},
+	]);
 	const stakedValidators = useStakeFromValidators('0x00');
 	expect(stakedValidators.length).toBe(1);
 	expect(stakedValidators[0].stakedAmount).toBe(1000);

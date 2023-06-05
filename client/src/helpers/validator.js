@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
 import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
-import { getConfigKey } from '../services/configurationServices';
 
 /**
  * Check value is public key.
@@ -162,7 +161,7 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 	if (
 		selectedValidator &&
 		!selectedValidator.hasDelegated &&
-		selectedValidator.numOfDelegator >= getConfigKey('MAX_DELEGATOR_PER_VALIDATOR')
+		selectedValidator.isFullDelegator
 	) {
 		errors.validator = 'Max delegators';
 	}
