@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = (dir) => ({
 	output: {
@@ -43,6 +44,7 @@ module.exports = (dir) => ({
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(process.env),
 		}),
+		new NodePolyfillPlugin()
 	],
 	experiments: {
 		topLevelAwait: true,
