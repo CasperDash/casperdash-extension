@@ -17,6 +17,7 @@ const useCreateUser = () => {
 			const { publicKey, userDetails } = result;
 			const onCompleted = () => navigate('/');
 			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }, onCompleted));
+			// Reset the wallet creation state.
 			dispatch(resetWalletCreation());
 
 			return result;

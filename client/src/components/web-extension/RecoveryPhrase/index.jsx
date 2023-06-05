@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
@@ -23,6 +23,13 @@ const RecoveryPhrase = () => {
 			setShowEnterPassword(false);
 		} catch (error) {
 			throw Error('Wrong password provided. Please try again');
+		}
+	}, []);
+
+	useEffect(() => {
+		// Clear keyphrase on unmount to speed up GC
+		return () => {
+			setKeyphrase('');
 		}
 	}, []);
 
