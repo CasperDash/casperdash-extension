@@ -10,9 +10,8 @@ import { convertKeyphraseToAnswerObject, generateKeyphraseMap } from './createWa
  */
 const generateKeyphrase = (numOfKey = 12) => {
 	const keyManager = KeyFactory.getInstance();
-	const keyphrase = keyManager.generate(numOfKey);
 
-	return (dispatch) => dispatch(updateKeyphrase(keyphrase));
+	return (dispatch) => dispatch(updateKeyphrase(keyManager.generate(numOfKey)));
 };
 
 const updateKeyphrase = (keyphrase) => {

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
@@ -9,8 +9,14 @@ import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
 const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const keyphrase = useSelector(selectCreateWalletKeyphrase);
+	const keyphraseRef = useRef(useSelector(selectCreateWalletKeyphrase));
 	const encryptionType = useSelector(selectCreateWalletEncryptionType);
+
+	useEffect(() => {
+		return () => {
+			keyphraseRef.current = '';
+		};
+	}, []);
 
 	const onCreateSuccess = useCallback(
 		(result) => {
@@ -28,11 +34,11 @@ const useCreateUser = () => {
 	const onCreateNewUser = useCallback(
 		async (password) => {
 			try {
-				if (!keyphrase) {
+				if (!keyphraseRef?.current) {
 					throw new Error('Missing keyphrase');
 				}
 
-				const result = await createUserServiceSW(password, keyphrase, encryptionType);
+				const result = await createUserServiceSW(password, keyphraseRef.current, encryptionType);
 				onCreateSuccess(result);
 				return result;
 			} catch (err) {
@@ -40,7 +46,7 @@ const useCreateUser = () => {
 				return undefined;
 			}
 		},
-		[keyphrase, onCreateSuccess, encryptionType],
+		[keyphraseRef, onCreateSuccess, encryptionType],
 	);
 
 	return { onCreateNewUser };
