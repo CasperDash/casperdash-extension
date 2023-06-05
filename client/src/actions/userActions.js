@@ -165,3 +165,8 @@ export const getValidatorsDetails = () => ({
 		cache: true,
 	},
 });
+
+export const fetchAccountDelegation = (publicKey) => ({
+	type: USERS.FETCH_ACCOUNT_DELEGATION,
+	request: { url: `/user/delegation/${publicKey}` },
+});

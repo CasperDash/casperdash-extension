@@ -4,8 +4,9 @@ import { moteToCspr } from '@cd/helpers/balance';
 import { getPendingStakes, getStakesHistory } from '@cd/selectors/stake';
 import { getValidators, validatorsDetail } from '@cd/selectors/validator';
 import { getTransferDeploysStatus } from '@cd/actions/deployActions';
+import { getAccountDelegation } from '@cd/selectors/user';
 import { getBase64IdentIcon } from '@cd/helpers/identicon';
-import { ENTRY_POINT_UNDELEGATE, STAKING_STATUS } from '@cd/constants/key';
+import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE, STAKING_STATUS } from '@cd/constants/key';
 import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '@cd/actions/stakeActions';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
@@ -17,48 +18,60 @@ import { useAutoRefreshEffect } from './useAutoRefreshEffect';
  * @param {String} publicKey
  * @returns
  */
-const getStakedValidators = (validators, pendingStakes, publicKey) => {
+const getStakedValidators = (validators, pendingStakes, publicKey, accountDelegation) => {
 	let stakedValidators = [];
 	//const validatorDetail = details?.[]
 	if (!publicKey || !validators.length) {
 		return stakedValidators;
 	}
-	validators.forEach((validator) => {
-		if (!validator.bidInfo) {
-			return;
-		}
-		const foundDelegator = validator.bidInfo.bid.delegators.find(
-			(delegator) => delegator.public_key && delegator.public_key.toLowerCase() === publicKey.toLowerCase(),
-		);
+	if (accountDelegation && accountDelegation.length > 0) {
+		validators.forEach((validator) => {
+			const foundDelegator = accountDelegation.find((delegator) => delegator.validatorPublicKey === validator.validatorPublicKey);
+	
+			if (!foundDelegator) {
+				return;
+			}
+	
+			const { validatorPublicKey } = validator;	
+			const pendingDelegated = pendingStakes.filter(
+				(stake) => stake.validator === validatorPublicKey && stake.entryPoint === ENTRY_POINT_DELEGATE,
+			  );
+			const pendingUndelegated = pendingStakes.filter(
+				(stake) => stake.validator === validatorPublicKey && stake.entryPoint === ENTRY_POINT_UNDELEGATE,
+			);
+			const pendingDelegatedAmount = pendingDelegated.reduce((acc, cur) => acc + cur.amount, 0);
+			const pendingUndelegatedAmount = pendingUndelegated.reduce((acc, cur) => acc + cur.amount, 0);
+			let pendingAmount = 0;
+			if (pendingDelegatedAmount > 0 || pendingUndelegatedAmount > 0) {
+				pendingAmount = pendingDelegatedAmount > 0 ? pendingDelegatedAmount : -pendingUndelegatedAmount;
+			}
 
-		if (!foundDelegator) {
-			return;
-		}
-
-		const { public_key: validatorPublicKey } = validator;
-		const pendingStake = pendingStakes.find((pendingStake) => pendingStake.validator === validatorPublicKey);
-		let stakedValidator = {
-			validator: validatorPublicKey,
-			stakedAmount: moteToCspr(foundDelegator.staked_amount),
-			icon: validator?.icon?.[1],
-			name: validator?.name || validator.validatorPublicKey,
-		};
-		if (pendingStake) {
-			stakedValidator.pendingAmount =
-				pendingStake.entryPoint === ENTRY_POINT_UNDELEGATE ? -pendingStake.amount : pendingStake.amount;
-			stakedValidator.icon = validator?.icon?.[1];
-		}
-
-		stakedValidators.push(stakedValidator);
-	});
+			let stakedValidator = {
+				validator: validatorPublicKey,
+				icon: validator?.icon?.[1],
+				name: validator?.name || validator.validatorPublicKey,
+				stakedAmount: moteToCspr(foundDelegator.stakedAmount),
+				pendingAmount,
+			};
+	
+			stakedValidators.push(stakedValidator);
+		});
+	}
 
 	pendingStakes
-		.filter((stake) => stakedValidators.findIndex((item) => item.validator === stake.validator) < 0)
-		.forEach((newStakedValidator) =>
+		.filter((stake) => stake.entryPoint === ENTRY_POINT_DELEGATE && stakedValidators.findIndex((item) => item.validator === stake.validator) < 0)
+		.forEach((newStakedValidator) => {
+			const foundValidator = validators.find(
+				(validator) => validator.validatorPublicKey === newStakedValidator.validator,
+			);
+
 			stakedValidators.push({
+				icon: foundValidator?.icon?.[1],
+				name: foundValidator?.name || foundValidator?.validatorPublicKey,
 				validator: newStakedValidator.validator,
 				pendingAmount: newStakedValidator.amount,
-			}),
+			})
+		}
 		);
 
 	return stakedValidators;
@@ -69,6 +82,7 @@ export const useStakeFromValidators = (publicKey) => {
 
 	const validators = useSelector(getValidators());
 	const pendingStakes = useSelector(getPendingStakes());
+	const accountDelegation = useSelector(getAccountDelegation());
 
 	useEffect(() => {
 		dispatch(getStakeFromLocalStorage(publicKey));
@@ -93,7 +107,8 @@ export const useStakeFromValidators = (publicKey) => {
 		})();
 	}, [JSON.stringify(pendingStakes), dispatch]);
 
-	const stakedValidators = getStakedValidators(validators, pendingStakes, publicKey);
+	const stakedValidators = getStakedValidators(validators, pendingStakes, publicKey, accountDelegation);
+
 	return stakedValidators;
 };
 
