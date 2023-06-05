@@ -16,9 +16,10 @@ import './RecoveryPhrasePage.scss';
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
 	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
-	const keyPhraseRef = useRef(useSelector(selectCreateWalletKeyphrase));
-	const keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
-	const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
+	let keyPhrase = useSelector(selectCreateWalletKeyphrase);
+	let keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
+	let keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
+
 	const TOTAL_KEYWORDS = keyPhraseAsArray.length;
 	const leftKeys = dropRight(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
 	const rightKeys = drop(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
@@ -32,8 +33,14 @@ const RecoveryPhrasePage = () => {
 	}, [numOfWords, dispatch]);
 
 	useEffect(() => {
+		// clean up keyphrase
 		return () => {
-			keyPhraseRef.current = '';
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			keyPhrase = '';
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			keyPhraseAsMap = new Map();
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			keyPhraseAsArray = [];
 		};
 	}, []);
 
@@ -65,7 +72,7 @@ const RecoveryPhrasePage = () => {
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
-				<CopyButton className="cd_we_create-keyphrase__btn" text={keyPhraseRef.current} delay={ONE_MINUTE} />
+				<CopyButton className="cd_we_create-keyphrase__btn" text={keyPhrase} delay={ONE_MINUTE} />
 				<Button onClick={onClickNextHandler} className="cd_we_create-keyphrase__btn">
 					Next
 				</Button>
