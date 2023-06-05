@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
-import CopyButton from '../CopyButton';
 import { ONE_MINUTE } from '@cd/constants/time';
+import CopyButton from '../CopyButton';
 
 import './PrivateKey.scss';
 
