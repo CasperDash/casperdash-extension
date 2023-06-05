@@ -14,7 +14,6 @@ const asyncAccountValidator = (navigate, location) => {
 		const user = await getConnectedAccountChromeLocalStorage();
 		// do nothing if in outer routes
 		const pathname = location.pathname;
-
 		/**
 		 * Make sure user must be valid before navigating to other route
 		 */
