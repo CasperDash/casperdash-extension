@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import drop from 'lodash-es/drop';
@@ -16,7 +16,7 @@ import './RecoveryPhrasePage.scss';
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
 	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
-	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
+	const keyPhraseRef = useRef(useSelector(selectCreateWalletKeyphrase));
 	const keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
 	const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
 	const TOTAL_KEYWORDS = keyPhraseAsArray.length;
@@ -30,6 +30,12 @@ const RecoveryPhrasePage = () => {
 	useEffect(() => {
 		dispatch(generateKeyphrase(numOfWords));
 	}, [numOfWords, dispatch]);
+
+	useEffect(() => {
+		return () => {
+			keyPhraseRef.current = '';
+		};
+	}, []);
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
@@ -59,11 +65,7 @@ const RecoveryPhrasePage = () => {
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
-				<CopyButton
-					className="cd_we_create-keyphrase__btn"
-					text={keyPhrase}
-					delay={ONE_MINUTE}
-				/>
+				<CopyButton className="cd_we_create-keyphrase__btn" text={keyPhraseRef.current} delay={ONE_MINUTE} />
 				<Button onClick={onClickNextHandler} className="cd_we_create-keyphrase__btn">
 					Next
 				</Button>

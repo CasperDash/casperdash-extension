@@ -30,70 +30,61 @@ const RecoveryPhrase = () => {
 		// Clear keyphrase on unmount to speed up GC
 		return () => {
 			setKeyphrase('');
-		}
+		};
 	}, []);
 
 	const words = keyphrase ? keyphrase.split(' ') : [];
 
 	return (
-			<div className="cd_we_recovery-keyphrase">
-				<div className="cd_we_recovery-keyphrase__wrapper">
-					<div className={clsx({
+		<div className="cd_we_recovery-keyphrase">
+			<div className="cd_we_recovery-keyphrase__wrapper">
+				<div
+					className={clsx({
 						'cd_we_recovery-keyphrase__blur': isBlurred,
 					})}
-          onClick={() => setIsBlurred(false)}
+					onClick={() => setIsBlurred(false)}
+				>
+					<ul
+						className={clsx('cd_we_recovery-keyphrase__column', {
+							'cd_we_recovery-keyphrase__column--blurred': isBlurred,
+						})}
 					>
-						<ul className={
-							clsx('cd_we_recovery-keyphrase__column', {
-								'cd_we_recovery-keyphrase__column--blurred': isBlurred,
-							})
-						}
-						>
-							{words?.map((word, index) => (
-								<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
-									<span className="counter">{index + 1}</span>
-									<span className="value">{word}</span>
-								</li>
-							))}
-						</ul>
-						{
-							isBlurred && (
-								<div className="cd_we_recovery-keyphrase__blur-overlay">
-									Click to reveal secret recovery phrase
-								</div>
-							)
-						}
-					</div>
-					<div className="cd_we_recovery-keyphrase__footer">
-						{
-						
-								<CopyButton
-  className="cd_we_recovery-keyphrase__copy-btn"
-  text={keyphrase}
-  delay={ONE_MINUTE}
-								/>
-						}
-					</div>
+						{words?.map((word, index) => (
+							<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
+								<span className="counter">{index + 1}</span>
+								<span className="value">{word}</span>
+							</li>
+						))}
+					</ul>
+					{isBlurred && (
+						<div className="cd_we_recovery-keyphrase__blur-overlay">
+							Click to reveal secret recovery phrase
+						</div>
+					)}
 				</div>
-				<div className="cd_we_recovery-keyphrase__warning">
-					<div className="cd_we_recovery-keyphrase__warning-text">
-						Please copy your secret recovery phrase and keep it in a safe place. If you lose your device or uninstall the extension, you will need this phrase to recover your wallet.
-					</div>
+				<div className="cd_we_recovery-keyphrase__footer">
+					{<CopyButton className="cd_we_recovery-keyphrase__copy-btn" text={keyphrase} delay={ONE_MINUTE} />}
 				</div>
-				{showEnterPassword && (
-					<EnterPasswordModal
-  isOpen={showEnterPassword}
-  onCloseModal={() => {
-							setShowEnterPassword(false);
-							navigate('/');
-						}}
-  title="View Recovery Phrase"
-  description="Enter password to continue"
-  onSubmitPassword={onViewRecoveryPhrase}
-					/>
-				)}
 			</div>
-	
+			<div className="cd_we_recovery-keyphrase__warning">
+				<div className="cd_we_recovery-keyphrase__warning-text">
+					Please copy your secret recovery phrase and keep it in a safe place. If you lose your device or
+					uninstall the extension, you will need this phrase to recover your wallet.
+				</div>
+			</div>
+			{showEnterPassword && (
+				<EnterPasswordModal
+					isOpen={showEnterPassword}
+					onCloseModal={() => {
+						setShowEnterPassword(false);
+						navigate('/');
+					}}
+					title="View Recovery Phrase"
+					description="Enter password to continue"
+					onSubmitPassword={onViewRecoveryPhrase}
+				/>
+			)}
+		</div>
 	);
 };
 
