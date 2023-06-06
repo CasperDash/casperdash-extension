@@ -14,10 +14,10 @@ const WelcomeBackPage = () => {
 	}, [navigate, redirectUrl]);
 
 	return (
-		<section className="cd_we_page--root">
-			<div className="cd_we_create-wallet-layout--root">
+		<section className="cd_we_welcome_back">
+			<div className="">
 				<h2>Welcome Back!</h2>
-				<div className="cd_we_create-wallet-layout--body cd_we_welcomeBack--body">
+				<div className="">
 					<AuthLogin isShowReset onLoginSuccess={handleOnLoginSuccess} />
 				</div>
 			</div>
