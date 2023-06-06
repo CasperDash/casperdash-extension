@@ -10,3 +10,8 @@
 .cd_we_welcomeBack--body {
 	flex-direction: column;
 }
+
+.cd_welcome {
+	height: 100vh !important;
+	background-color: var(--component-background) !important;
+}
