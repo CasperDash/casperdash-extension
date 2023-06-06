@@ -125,3 +125,10 @@ export const getTokenInfoByAddress = (token) =>
 	});
 
 export const userStakingRewardSelector = getQuerySelector({ type: USERS.FETCH_STAKING_REWARDS });
+
+export const userAccountDelegationSelector = getQuerySelector({ type: USERS.FETCH_ACCOUNT_DELEGATION });
+
+export const getAccountDelegation = () =>
+	createSelector(userAccountDelegationSelector, ({ data }) => {
+		return data;
+	});

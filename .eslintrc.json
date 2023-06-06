@@ -58,7 +58,7 @@
 		"react/forbid-prop-types": [2, { "forbid": ["any"] }],
 		"react/jsx-closing-bracket-location": [2, "tag-aligned"],
 		"react/jsx-curly-spacing": [2, "never"],
-		"react/jsx-indent-props": [1, "first"],
+		"react/jsx-indent-props": [1, "tab"],
 		"react/jsx-key": 2,
 		"react/jsx-no-duplicate-props": [2, { "ignoreCase": true }],
 		"react/jsx-no-undef": 2,
