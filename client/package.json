@@ -25,6 +25,7 @@
 		"casper-storage": "1.2.0",
 		"clsx": "^1.2.1",
 		"cookie": "^0.4.1",
+		"copy-to-clipboard": "^3.3.3",
 		"create-react-class": "^15.7.0",
 		"cross-env": "^7.0.3",
 		"dayjs": "^1.8.29",
