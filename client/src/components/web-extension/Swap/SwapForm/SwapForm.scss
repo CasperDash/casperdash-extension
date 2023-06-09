@@ -7,6 +7,18 @@
 		margin-top: 8px;
 	}
 
+	&_header {
+		display: flex;
+		justify-content: flex-end;
+	}
+	
+	&_liquidity {
+		cursor: pointer;
+		&:hover {
+			color: var(--primary-light-color);
+		}
+	}
+
 	.cd_we_swap_reverse_wrapper {
 		margin-top: 12px;
 		display: flex;

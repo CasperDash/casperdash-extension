@@ -1,0 +1,14 @@
+.cd_we_swap_explain {
+    margin-top: 16px;
+    border: 1px solid #F6F7FA;
+    border-radius: 16px;
+    padding: 16px;
+    &_item {
+        display: flex;
+        justify-content: space-between;
+
+        &:not(:last-child) {
+            margin-bottom: 4px;
+        }
+    }
+}

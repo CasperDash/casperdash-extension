@@ -4,6 +4,7 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
 import DashBoard from './';
 
+
 jest.mock('@cd/web-extension/Common/Account', () => ({
 	AccountInfo: () => <div>Account 1</div>,
 }));

@@ -30,6 +30,7 @@ const SelectSwapTo = () => {
         balance={balance}
         onSelect={handleOnChangeToken}
         onChangeAmount={handleOnChangeInput}
+        callback={'/swap'}
       />
     )
 }

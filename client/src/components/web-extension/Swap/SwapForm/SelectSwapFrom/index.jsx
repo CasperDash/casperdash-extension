@@ -31,6 +31,8 @@ const SelectSwapFrom = () => {
         onSelect={handleOnChangeToken}
         onChangeAmount={handleOnChangeInput}
         balance={Big(balance).toNumber()}
+        callback={'/swap'}
+
       />
     )
 }

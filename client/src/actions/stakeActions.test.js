@@ -22,7 +22,7 @@ test('fetchValidators', () => {
 	expect(fetchValidators()).toEqual({
 		type: 'VALIDATORS.FETCH_ACTIVE_VALIDATORS',
 		request: {
-			url: 'v2/validators',
+			url: 'v3/validators',
 		},
 	});
 });
@@ -31,7 +31,7 @@ test('fetchValidators with public key', () => {
 	expect(fetchValidators('0x00')).toEqual({
 		type: 'VALIDATORS.FETCH_ACTIVE_VALIDATORS',
 		request: {
-			url: 'v2/validators?delegator=0x00&cachedBy=block',
+			url: 'v3/validators?delegator=0x00&cachedBy=block',
 		},
 	});
 });

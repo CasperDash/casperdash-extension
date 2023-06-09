@@ -47,6 +47,14 @@ const CONFIG_OPTIONS = {
 		env: 'REACT_APP_SWAP_FM_SPENDER_PACKAGE_HASH',
 		default: 'hash-460018b5a6a6fa6046d1021a7f4414fd45e5e506e6604b4656fe66c90b661e6b',
 	},
+	LIQUIDITY_FM_CONTRACT_HASH: {
+		env: 'REACT_APP_LIQUIDITY_FM_CONTRACT_HASH',
+		default: 'fa64806972777d6263dea1f0e5a908620ffd19113df57ebd9ea4aa4e23de6090',
+	},
+	LIQUIDITY_FM_MODULE_BYTES_API: {
+		env: 'REACT_APP_LIQUIDITY_FM_POOL_MODULE_BYTES_API',
+		default: 'https://assets.casperdash.io/sc-resources/liquidity_module_bytes.txt',
+	},
 	COINGECKO_API: {
 		env: 'REACT_APP_SWAP_COINGECKO_API',
 		default: 'https://api.coingecko.com/api/v3',

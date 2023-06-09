@@ -1,8 +1,8 @@
 import { CLPublicKey, DeployUtil, CLValueBuilder, RuntimeArgs, CLKey } from 'casper-js-sdk';
-import { getSwapModuleBytes } from '@cd/apiServices/friendlyMarket/moduleBytes/index';
+import { getSwapModuleBytes, getLiquidityModuleBytes } from '@cd/apiServices/friendlyMarket/moduleBytes';
 import { NETWORK_NAME, DEPLOY_TTL_MS } from '@cd/constants/key';
-import { toMotes } from '@cd/helpers/currency';
 import { buildTransferTokenDeploy, contractHashToByteArray, createRecipientAddress } from './casperServices';
+import { stringToCLKey } from './casperServices';
 
 
 export const FUNCTIONS = {
@@ -18,6 +18,10 @@ export const FUNCTIONS = {
 	SWAP_EXACT_TOKENS_FOR_CSPR: 'swap_exact_tokens_for_cspr',
 	// TOKENS -> CSPR
 	SWAP_TOKENS_FOR_EXACT_CSPR: 'swap_tokens_for_exact_cspr',
+	// Add Liquidity for CSPR
+	ADD_LIQUIDITY_CSPR: 'add_liquidity_cspr',
+	// Add Liquidity for Tokens
+	ADD_LIQUIDITY: 'add_liquidity',
 }
 
 export const getGasFee = (entryPoint) => {
@@ -30,8 +34,12 @@ export const getGasFee = (entryPoint) => {
 		case FUNCTIONS.SWAP_TOKENS_FOR_EXACT_TOKENS:
 		case FUNCTIONS.SWAP_EXACT_TOKENS_FOR_TOKENS:
 			return 13015790080;
+		case FUNCTIONS.ADD_LIQUIDITY:
+			return 12205790080;
+		case FUNCTIONS.ADD_LIQUIDITY_CSPR:
+			return 20000000000;
 		default:
-			return toMotes(20);
+			return 20000000000;
 	}
 }
 
@@ -73,7 +81,7 @@ export const buildExactSwapCSPRForTokensDeploy = async (contractHash, transactio
 
 	const runtimeArgs = RuntimeArgs.fromMap(mapping);
 
-	return buildEntryPointModulBytesDeploy(fromPbKey, runtimeArgs, getGasFee(FUNCTIONS.SWAP_EXACT_CSPR_FOR_TOKENS));
+	return buildSwapEntryPointModulBytesDeploy(fromPbKey, runtimeArgs, getGasFee(FUNCTIONS.SWAP_EXACT_CSPR_FOR_TOKENS));
 }
 
 export const buildSwapCSPRForExactTokensDeploy = async (contractHash, transactionDetail = {}) => {
@@ -95,7 +103,7 @@ export const buildSwapCSPRForExactTokensDeploy = async (contractHash, transactio
 
 	const runtimeArgs = RuntimeArgs.fromMap(mapping);
 
-	return buildEntryPointModulBytesDeploy(fromPbKey, runtimeArgs, getGasFee(FUNCTIONS.SWAP_CSPR_FOR_EXACT_TOKENS));
+	return buildSwapEntryPointModulBytesDeploy(fromPbKey, runtimeArgs, getGasFee(FUNCTIONS.SWAP_CSPR_FOR_EXACT_TOKENS));
 }
 
 export const buildSwapTokensForExactTokensDeploy = async (contractHash, transactionDetail = {}) => {
@@ -143,7 +151,7 @@ export const buildSwapTokensForExactTokensDeploy = async (contractHash, transact
 
 // 	const runtimeArgs = RuntimeArgs.fromMap(mapping);
 
-// 	return buildEntryPointModulBytesDeploy(fromPbKey, runtimeArgs, getGasFee(FUNCTIONS.SWAP_TOKENS_FOR_EXACT_TOKENS));
+// 	return buildSwapEntryPointModulBytesDeploy(fromPbKey, runtimeArgs, getGasFee(FUNCTIONS.SWAP_TOKENS_FOR_EXACT_TOKENS));
 // 	// return buildEntryPointDeploy(fromPbKey, contractHash, FUNCTIONS.SWAP_TOKENS_FOR_EXACT_TOKENS, runtimeArgs, getGasFee(FUNCTIONS.SWAP_TOKENS_FOR_EXACT_TOKENS));
 // }
 
@@ -201,14 +209,87 @@ export const buildSwapTokensForExactCSPRDeploy = async (contractHash, transactio
 	return buildEntryPointDeploy(fromPbKey, contractHash, FUNCTIONS.SWAP_TOKENS_FOR_EXACT_CSPR, runtimeArgs, getGasFee(FUNCTIONS.SWAP_TOKENS_FOR_EXACT_CSPR));
 }
 
+export const buildAddLiquidityForTokensDeploy = async(contractAddress, transactionDetail = {}) => {
+	const contractHashByteArray = contractHashToByteArray(contractAddress);
+	const pbKey = CLPublicKey.fromHex(transactionDetail.publicKey);
+
+	const mapping = {
+		token_a: stringToCLKey(transactionDetail.contractHashX),
+		token_b: stringToCLKey(transactionDetail.contractHashY),
+		amount_a_desired: CLValueBuilder.u256(transactionDetail.amountXDesired),
+		amount_b_desired: CLValueBuilder.u256(transactionDetail.amountYDesired),
+		amount_a_min: CLValueBuilder.u256(transactionDetail.amountXMin),
+		amount_b_min: CLValueBuilder.u256(transactionDetail.amountYMin),
+		to: createRecipientAddress(pbKey),
+		deadline: CLValueBuilder.u64(transactionDetail.deadline),
+		deposit_entry_point_name: CLValueBuilder.string(FUNCTIONS.ADD_LIQUIDITY),
+		with_approve: CLValueBuilder.bool(true),
+		amount: CLValueBuilder.u512(0),
+		contract_hash_key: new CLKey(CLValueBuilder.byteArray(contractHashByteArray)),
+		token0: stringToCLKey(transactionDetail.contractHashX),
+		spender: stringToCLKey(transactionDetail.spenderPackageHash),
+		token1: stringToCLKey(transactionDetail.contractHashY),
+	}
+
+	const runtimeArgs = RuntimeArgs.fromMap(mapping);
+
+	return buildLiquidityEntryPointModulBytesDeploy(pbKey, runtimeArgs, getGasFee(FUNCTIONS.ADD_LIQUIDITY));
+}
+
+export const buildAddLiquidityForCSPRAndTokenDeploy = async(contractAddress, transactionDetail = {}) => {
+	const contractHashByteArray = contractHashToByteArray(contractAddress);
+	const pbKey = CLPublicKey.fromHex(transactionDetail.publicKey);
+
+	const mapping = {
+		token: stringToCLKey(transactionDetail.tokenContractHash),
+		amount_token_desired: CLValueBuilder.u256(transactionDetail.amountTokenDesired),
+		amount_cspr_desired: CLValueBuilder.u256(transactionDetail.amountCSPRDesired),
+		amount_token_min: CLValueBuilder.u256(transactionDetail.amountTokenMin),
+		amount_cspr_min: CLValueBuilder.u256(transactionDetail.amountCSPRMin),
+		to: createRecipientAddress(pbKey),
+		deadline: CLValueBuilder.u64(transactionDetail.deadline),
+		target_account: CLValueBuilder.byteArray(pbKey.toAccountHash()),
+		contract_hash_key: new CLKey(CLValueBuilder.byteArray(contractHashByteArray)),
+		deposit_entry_point_name: CLValueBuilder.string(FUNCTIONS.ADD_LIQUIDITY_CSPR),
+		amount: CLValueBuilder.u512(1000000000),
+		with_approve: CLValueBuilder.bool(true),
+		spender: stringToCLKey(transactionDetail.spenderPackageHash),
+		token0: stringToCLKey(transactionDetail.tokenContractHash),
+	}
+
+	const runtimeArgs = RuntimeArgs.fromMap(mapping);
+
+	return buildLiquidityEntryPointModulBytesDeploy(pbKey, runtimeArgs, getGasFee(FUNCTIONS.ADD_LIQUIDITY_CSPR));
+}
+
 /**
  * @param publicKey - The public key of the account that will be used to deploy the contract.
  * @param runtimeArgs - The arguments to pass to the contract.
  * @param paymentAmount - The amount of tokens to pay for the deploy.
  * @returns The deploy is being returned.
  */
-export const buildEntryPointModulBytesDeploy = async (publicKey, runtimeArgs, paymentAmount) => {
+export const buildSwapEntryPointModulBytesDeploy = async (publicKey, runtimeArgs, paymentAmount) => {
 	const hex = await getSwapModuleBytes();
+	
+	return DeployUtil.makeDeploy(
+		new DeployUtil.DeployParams(publicKey, NETWORK_NAME, 1, DEPLOY_TTL_MS),
+		DeployUtil.ExecutableDeployItem.newModuleBytes(
+			Uint8Array.from(Buffer.from(hex, 'hex'))
+			, runtimeArgs),
+
+		DeployUtil.standardPayment(paymentAmount),
+	);
+};
+
+
+/**
+ * @param publicKey - The public key of the account that will be used to deploy the contract.
+ * @param runtimeArgs - The arguments to pass to the contract.
+ * @param paymentAmount - The amount of tokens to pay for the deploy.
+ * @returns The deploy is being returned.
+ */
+export const buildLiquidityEntryPointModulBytesDeploy = async (publicKey, runtimeArgs, paymentAmount) => {
+	const hex = await getLiquidityModuleBytes();
 	
 	return DeployUtil.makeDeploy(
 		new DeployUtil.DeployParams(publicKey, NETWORK_NAME, 1, DEPLOY_TTL_MS),

@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect'
+import { createSelector } from 'reselect';
 
 export const getSwapFrom = createSelector(state => state.swap.swapFrom, swapFrom => swapFrom);
 

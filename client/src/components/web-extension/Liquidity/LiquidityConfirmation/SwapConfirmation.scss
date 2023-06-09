@@ -1,0 +1,40 @@
+.cd_we_swap_confirmation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    &__content {
+        margin-top: 8px;
+
+        &--route {
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+            background: #F4F5F6;
+            border-radius: 8px;;
+        }
+        &--divider {
+            margin-bottom: 34px;
+        }
+        &--item {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+    
+            &-value {
+                max-width: 200px;
+                white-space: nowrap; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    &__footer {
+        margin-bottom: 20px;
+        &--confirm {
+            width: 100%;
+        }
+    }
+
+}
