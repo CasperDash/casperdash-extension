@@ -43,7 +43,9 @@ export const AccountInfo = () => {
 					<div className="cd_we_account_address">
 						<MiddleTruncatedText end={4}>{publicKey}</MiddleTruncatedText>
 					</div>
-					<Copy value={publicKey} />
+					<div className="cd_we_account_address_copy">
+						<Copy value={publicKey} />
+					</div>
 				</div>
 			</div>
 			<div className="cd_we_account_balance">{toFormattedCurrency(totalFiatBalance)}</div>
