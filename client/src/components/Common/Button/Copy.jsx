@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
+import CopyIcon from '@cd/assets/image/copy-icon.svg';
+import CheckIcon from '@cd/assets/image/check-alt.svg';
+
 import './Copy.scss';
 
 const Copy = ({ value }) => {
-	const [copyText, setCopyText] = useState('Copy');
+	const [isCoppied, setIsCoppied] = useState(false);
 
 	const onClickCopy = () => {
 		navigator.clipboard.writeText(value);
-		setCopyText('Copied');
+		setIsCoppied(true);
 		setTimeout(() => {
-			setCopyText('Copy');
+			setIsCoppied(false);
 		}, 1000);
 	};
 
 	return (
-		<OverlayTrigger placement="top" overlay={<Tooltip>{copyText}</Tooltip>}>
-			<svg
-				width="11"
-				height="11"
-				viewBox="0 0 11 11"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-				onClick={onClickCopy}
-				className="cd_btn_copy"
-			>
-				<path
-					fillRule="evenodd"
-					clipRule="evenodd"
-					d="M0 0H1H9V1H1V9H0V0ZM2 2H11V11H2V2ZM3 3H10V10H3V3Z"
-					fill="#989a9b"
-				/>
-			</svg>
+		<OverlayTrigger placement="top" overlay={<Popover className="cd_btn_copy_popover">Copy</Popover>}>
+			<div className="cd_btn_copy" onClick={onClickCopy}>
+			{
+				isCoppied ? (
+					<CheckIcon className="cd_btn_copy--checked"/>
+				): (
+					<CopyIcon />
+				)
+			}
+		</div>
 		</OverlayTrigger>
 	);
 };
