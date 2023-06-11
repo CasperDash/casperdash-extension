@@ -7,7 +7,7 @@ export const priceSelector = getQuerySelector({ type: PRICE.FETCH_PRICE_HISTORY 
 export const CSPRMarketInfoSelector = getQuerySelector({ type: PRICE.FETCH_CSPR_MARKET_INFO });
 
 export const getPriceHistory = createSelector(priceSelector, ({ data }) => {
-	return data ? data.prices.map((price) => [price[0], parseFloat(price[1]).toFixed(4)]) : [];
+	return data ? data.map((price) => [price[0], parseFloat(price[1]).toFixed(4)]) : [];
 });
 
 export const getCurrentPrice = createSelector(CSPRMarketInfoSelector, ({ data }) => {
