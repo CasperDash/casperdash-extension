@@ -45,7 +45,7 @@ const PrivateKey = () => {
 			</div>
 
 			<div className="actions">
-				<CopyButton text={privateKey} delay={ONE_MINUTE}/>
+				{/* <CopyButton text={privateKey} delay={ONE_MINUTE}/> */}
 			</div>
 		</section>
 	);

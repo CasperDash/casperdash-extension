@@ -72,7 +72,7 @@ const RecoveryPhrasePage = () => {
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
-				<CopyButton className="cd_we_create-keyphrase__btn" text={keyPhrase} delay={ONE_MINUTE} />
+				{/* <CopyButton className="cd_we_create-keyphrase__btn" text={keyPhrase} delay={ONE_MINUTE} /> */}
 				<Button onClick={onClickNextHandler} className="cd_we_create-keyphrase__btn">
 					Next
 				</Button>
