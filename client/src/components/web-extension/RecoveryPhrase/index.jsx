@@ -63,7 +63,7 @@ const RecoveryPhrase = () => {
 					)}
 				</div>
 				<div className="cd_we_recovery-keyphrase__footer">
-					{<CopyButton className="cd_we_recovery-keyphrase__copy-btn" text={keyphrase} delay={ONE_MINUTE} />}
+					{/* <CopyButton className="cd_we_recovery-keyphrase__copy-btn" text={keyphrase} delay={ONE_MINUTE} /> */}
 				</div>
 			</div>
 			<div className="cd_we_recovery-keyphrase__warning">
