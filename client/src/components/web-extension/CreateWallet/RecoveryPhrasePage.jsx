@@ -10,6 +10,7 @@ import CopyButton from '@cd/web-extension/Common/CopyButton';
 import { selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import { ONE_MINUTE } from '@cd/constants/time';
+import CanvasText from '@cd/web-extension/Common/CanvasText/index';
 
 import './RecoveryPhrasePage.scss';
 
@@ -57,16 +58,14 @@ const RecoveryPhrasePage = () => {
 				<ul className="cd_we_create-keyphrase--column">
 					{leftKeys?.map((word, index) => (
 						<li className="cd_we_keyphrase--word" key={`left-${word}`}>
-							<span className="counter">{index + 1}</span>
-							<span className="value">{word}</span>
+							<CanvasText text={`${index + 1}. ${word}`} width="80" height="22" />
 						</li>
 					))}
 				</ul>
 				<ul className="cd_we_create-keyphrase--column">
 					{rightKeys?.map((word, index) => (
 						<li className="cd_we_keyphrase--word" key={`right-${word}`}>
-							<span className="counter">{index + (1 + TOTAL_KEYWORDS / 2)}</span>
-							<span className="value">{word}</span>
+							<CanvasText text={`${index + (1 + TOTAL_KEYWORDS / 2)}. ${word}`} width="80" height="22" />
 						</li>
 					))}
 				</ul>

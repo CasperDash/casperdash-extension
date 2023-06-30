@@ -6,6 +6,7 @@ import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswor
 import { getKeyphrase } from '@cd/components/hooks/useServiceWorker';
 import CopyButton from '@cd/web-extension/Common/CopyButton';
 import { ONE_MINUTE } from '@cd/constants/time';
+import CanvasText from '@cd/web-extension/Common/CanvasText/index';
 
 import './RecoveryPhrase.scss';
 
@@ -51,8 +52,7 @@ const RecoveryPhrase = () => {
 					>
 						{words?.map((word, index) => (
 							<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
-								<span className="counter">{index + 1}</span>
-								<span className="value">{word}</span>
+								<CanvasText text={`${index + 1}. ${word}`} width="80" height="22" />
 							</li>
 						))}
 					</ul>
