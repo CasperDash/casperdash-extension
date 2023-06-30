@@ -52,7 +52,6 @@ const RecoveryPhrase = () => {
 					>
 						{words?.map((word, index) => (
 							<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
-								{/* <span className="value">{word}</span> */}
 								<CanvasText text={`${index + 1}. ${word}`} width="80" height="22" />
 							</li>
 						))}
