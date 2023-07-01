@@ -42,6 +42,7 @@ const ImportWallet = () => {
 		setErrorMessage(error);
 		if (!error) {
 			dispatch(updateKeyphrase(recoveryPhrase.map((value) => value.trim()).join(' ')));
+			setRecoveryPhrase([]);
 			dispatch(setNextStep());
 		}
 	};

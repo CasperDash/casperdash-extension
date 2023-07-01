@@ -8,9 +8,6 @@ const selectCreateWalletState = createSelector(createWalletSelector, makeSelectC
 const makeSelectCWKeyphrase = (state) => state.keyPhrase;
 const selectCreateWalletKeyphrase = createSelector(createWalletSelector, makeSelectCWKeyphrase);
 
-const makeSelectCWKeyphraseAsMap = (state) => state.keyPhraseAsMap;
-const selectCreateWalletKeyphraseAsMap = createSelector(createWalletSelector, makeSelectCWKeyphraseAsMap);
-
 const makeSelectCWKeyCurrentStep = (state) => state.currentStep;
 const selectCreateWalletCurrentStep = createSelector(createWalletSelector, makeSelectCWKeyCurrentStep);
 
@@ -23,13 +20,11 @@ const selectCreateWalletEncryptionType = createSelector(createWalletSelector, ma
 export {
 	makeSelectCreateWallet,
 	makeSelectCWKeyphrase,
-	makeSelectCWKeyphraseAsMap,
 	makeSelectCWKeyCurrentStep,
 	makeSelectCWAnswerSheet,
 	makeSelectCWEncryptionType,
 	selectCreateWalletState,
 	selectCreateWalletKeyphrase,
-	selectCreateWalletKeyphraseAsMap,
 	selectCreateWalletCurrentStep,
 	selectCreateWalletAnswerSheet,
 	selectCreateWalletEncryptionType,

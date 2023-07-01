@@ -55,6 +55,7 @@
 		"redux-thunk": "^2.3.0",
 		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
+		"shareable-seed": "^2.0.4",
 		"ts-results": "^3.3.0",
 		"webextension-polyfill": "^0.10.0"
 	},
@@ -106,7 +107,7 @@
 		"css-loader": "^6.5.1",
 		"css-minimizer-webpack-plugin": "^3.2.0",
 		"esbuild-loader": "^2.17.0",
-		"eslint": "^8.42.0",
+		"eslint": "^8.43.0",
 		"expect": "^28.0.0",
 		"full-icu": "^1.5.0",
 		"html-loader": "^3.0.1",
@@ -136,5 +137,8 @@
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.15.0",
 		"webpack-merge": "^5.8.0"
+	},
+	"resolutions": {
+		"secrets.js-grempe": "https://github.com/34r7h/secrets.js"
 	}
 }
