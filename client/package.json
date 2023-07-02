@@ -55,7 +55,7 @@
 		"redux-thunk": "^2.3.0",
 		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
-		"shareable-seed": "^2.0.4",
+		"casper-shareable-seed": "2.0.4",
 		"ts-results": "^3.3.0",
 		"webextension-polyfill": "^0.10.0"
 	},
@@ -137,8 +137,5 @@
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.15.0",
 		"webpack-merge": "^5.8.0"
-	},
-	"resolutions": {
-		"secrets.js-grempe": "https://github.com/34r7h/secrets.js"
 	}
 }

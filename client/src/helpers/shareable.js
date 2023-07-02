@@ -1,4 +1,4 @@
-import * as shareableSeed from 'shareable-seed';
+import * as shareableSeed from 'casper-shareable-seed';
 import _values from 'lodash-es/values';
 
 export const mnemonicToShares = (mnemonic) => {

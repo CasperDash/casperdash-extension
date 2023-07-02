@@ -6,9 +6,7 @@ name: Node.js CI
 on:
     pull_request:
         branches: [develop, master]
-    push:
-        branches:
-            - refactor/secure-keyphrase
+        
 jobs:
     build:
         runs-on: ubuntu-latest

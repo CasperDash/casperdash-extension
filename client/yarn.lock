@@ -4050,6 +4050,17 @@ casper-js-sdk@^2.9.1:
     ts-results "npm:@casperlabs/ts-results@^3.3.4"
     typedjson "^1.6.0-rc2"
 
+casper-shareable-seed@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/casper-shareable-seed/-/casper-shareable-seed-2.0.4.tgz#3f1d7140ebd9b24bfcbfc29f2d1e9d354849dd20"
+  integrity sha512-+PWrHzg8KlMbOpqUPmadTURdhpnOyza2F/+krIuDmVJW0Oha308rrTxSV/2pxzGtzl0w8cvtKCaI3eDoysqRAw==
+  dependencies:
+    bip39 "^2.5.0"
+    lodash "^4.17.21"
+    secrets.js-34r7h "^2.0.2"
+    sha.js "^2.4.10"
+    zero-fill "^2.2.3"
+
 casper-storage@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/casper-storage/-/casper-storage-1.2.0.tgz#4c60789b651f717be77d760fac04757e928a166c"
@@ -8685,9 +8696,10 @@ schema-utils@^4.0.0:
     ajv-formats "^2.1.1"
     ajv-keywords "^5.1.0"
 
-secrets.js-grempe@^2.0.0, "secrets.js-grempe@https://github.com/34r7h/secrets.js":
+secrets.js-34r7h@^2.0.2:
   version "2.0.2"
-  resolved "https://github.com/34r7h/secrets.js#914d4847040545ad9c24b83f9a783b0c92cea16d"
+  resolved "https://registry.yarnpkg.com/secrets.js-34r7h/-/secrets.js-34r7h-2.0.2.tgz#2c29207d117edea5c89d23d17937333c35e8cc30"
+  integrity sha512-NwB4tLBs7soL6lYgGslTVllvMVEnSOjw79xI/yy4DAg86FXkVe1cLLMfhqreLgwY/zmGryqn5njYOGRjKuZzUg==
 
 select-hose@^2.0.0:
   version "2.0.0"
@@ -8796,17 +8808,6 @@ shallow-clone@^3.0.0:
   integrity sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA==
   dependencies:
     kind-of "^6.0.2"
-
-shareable-seed@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/shareable-seed/-/shareable-seed-2.0.4.tgz#183a9d169b43a5d97b3eec51651dff93f69b7cd8"
-  integrity sha512-npnTAntr/vCFwLg+y9mPIeHXXFknMUlbj0a+GEM9+LPPwk77vV50k77+RHFaokogbV08RPhQNKCDC3jR2Alnwg==
-  dependencies:
-    bip39 "^2.5.0"
-    lodash "^4.17.21"
-    secrets.js-grempe "^2.0.0"
-    sha.js "^2.4.10"
-    zero-fill "^2.2.3"
 
 shebang-command@^2.0.0:
   version "2.0.0"
