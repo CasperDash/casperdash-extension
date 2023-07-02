@@ -91,7 +91,7 @@ class PopupController {
     openRequestConnect = async ({ origin }) => {
         const isUserExist = await this.accountController.isUserExist();
         if (!isUserExist) {
-            throw new Error('The account is not created');
+            throw new Error('Your account has not been created.');
         }
 
         const isConnected = await this.isConnected({ origin });
