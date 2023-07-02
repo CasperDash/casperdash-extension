@@ -1,6 +1,7 @@
 import { CREATE_WALLET } from '@cd/store/actionTypes';
 import { KeyFactory } from 'casper-storage';
-import { convertKeyphraseToAnswerObject, generateKeyphraseMap } from './createWalletActions.utils';
+import { mnemonicToShares } from '@cd/helpers/shareable';
+import { convertKeyphraseToAnswerObject } from './createWalletActions.utils';
 
 /**
  * Generates a keyphrase and dispatches an action to update the keyphrase
@@ -17,7 +18,7 @@ const generateKeyphrase = (numOfKey = 12) => {
 const updateKeyphrase = (keyphrase) => {
 	return {
 		type: CREATE_WALLET.CREATE_KEYPHRASE,
-		payload: { keyphrase, map: generateKeyphraseMap(keyphrase) },
+		payload: { keyphrase: mnemonicToShares(keyphrase) },
 	};
 };
 

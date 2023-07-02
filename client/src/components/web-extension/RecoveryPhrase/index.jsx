@@ -1,12 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
 import { getKeyphrase } from '@cd/components/hooks/useServiceWorker';
-import CopyButton from '@cd/web-extension/Common/CopyButton';
-import { ONE_MINUTE } from '@cd/constants/time';
 import CanvasText from '@cd/web-extension/Common/CanvasText/index';
+import { mnemonicToShares, sharesToMnemonic } from '@cd/helpers/shareable';
 
 import './RecoveryPhrase.scss';
 
@@ -15,26 +14,19 @@ const RecoveryPhrase = () => {
 
 	const [isBlurred, setIsBlurred] = useState(true);
 	const [showEnterPassword, setShowEnterPassword] = useState(true);
-	const [keyphrase, setKeyphrase] = useState('');
+	const [shares, setShares] = useState(null);
 
 	const onViewRecoveryPhrase = useCallback(async (password) => {
 		try {
-			const keyPhrase = await getKeyphrase(password);
-			setKeyphrase(keyPhrase);
+			const gotShares = mnemonicToShares(await getKeyphrase(password));
+
+			setShares(gotShares);
 			setShowEnterPassword(false);
 		} catch (error) {
 			throw Error('Wrong password provided. Please try again');
 		}
 	}, []);
 
-	useEffect(() => {
-		// Clear keyphrase on unmount to speed up GC
-		return () => {
-			setKeyphrase('');
-		};
-	}, []);
-
-	const words = keyphrase ? keyphrase.split(' ') : [];
 
 	return (
 		<div className="cd_we_recovery-keyphrase">
@@ -50,7 +42,7 @@ const RecoveryPhrase = () => {
 							'cd_we_recovery-keyphrase__column--blurred': isBlurred,
 						})}
 					>
-						{words?.map((word, index) => (
+						{shares && sharesToMnemonic(shares).split(' ')?.map((word, index) => (
 							<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
 								<CanvasText text={`${index + 1}. ${word}`} width="80" height="22" />
 							</li>
@@ -61,9 +53,6 @@ const RecoveryPhrase = () => {
 							Click to reveal secret recovery phrase
 						</div>
 					)}
-				</div>
-				<div className="cd_we_recovery-keyphrase__footer">
-					{/* <CopyButton className="cd_we_recovery-keyphrase__copy-btn" text={keyphrase} delay={ONE_MINUTE} /> */}
 				</div>
 			</div>
 			<div className="cd_we_recovery-keyphrase__warning">

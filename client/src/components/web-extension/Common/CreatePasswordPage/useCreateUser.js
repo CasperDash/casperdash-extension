@@ -1,22 +1,18 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
 import { selectCreateWalletEncryptionType, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
+import { sharesToMnemonic } from '@cd/helpers/shareable';
 
 const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const keyphraseRef = useRef(useSelector(selectCreateWalletKeyphrase));
+	const keyPhraseShares = useSelector(selectCreateWalletKeyphrase);
 	const encryptionType = useSelector(selectCreateWalletEncryptionType);
 
-	useEffect(() => {
-		return () => {
-			keyphraseRef.current = '';
-		};
-	}, []);
 
 	const onCreateSuccess = useCallback(
 		(result) => {
@@ -34,11 +30,11 @@ const useCreateUser = () => {
 	const onCreateNewUser = useCallback(
 		async (password) => {
 			try {
-				if (!keyphraseRef?.current) {
+				if (!keyPhraseShares) {
 					throw new Error('Missing keyphrase');
 				}
 
-				const result = await createUserServiceSW(password, keyphraseRef.current, encryptionType);
+				const result = await createUserServiceSW(password, sharesToMnemonic(keyPhraseShares), encryptionType);
 				onCreateSuccess(result);
 				return result;
 			} catch (err) {
@@ -46,7 +42,7 @@ const useCreateUser = () => {
 				return undefined;
 			}
 		},
-		[keyphraseRef, onCreateSuccess, encryptionType],
+		[keyPhraseShares, onCreateSuccess, encryptionType],
 	);
 
 	return { onCreateNewUser };
