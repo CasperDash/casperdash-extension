@@ -41,6 +41,11 @@ const SendForm = ({ token }) => {
 	// Functions
 	const setBalance = (percent, setFieldValue) => {
 		const balance = (selectedToken && selectedToken.balance && selectedToken.balance.displayValue) || 0;
+		if (balance === 0) {
+			setFieldValue('sendAmount', 0);
+			return;
+		}
+
 		const amount = balance / percent - (selectedToken.address === 'CSPR' ? selectedToken.transferFee : 0);
 		setFieldValue('sendAmount', amount);
 	};
