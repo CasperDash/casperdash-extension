@@ -4,7 +4,6 @@ import { CREATE_WALLET } from '../actionTypes';
 const initialState = {
 	currentStep: 0,
 	keyPhrase: null,
-	keyPhraseAsMap: [],
 	answerSheet: undefined,
 	encryptionType: EncryptionType.Ed25519,
 };
@@ -30,7 +29,6 @@ function reducer(state = initialState, { payload, type } = {}) {
 			return {
 				...state,
 				keyPhrase: payload.keyphrase,
-				keyPhraseAsMap: payload.map ?? {},
 			};
 		case CREATE_WALLET.RESET:
 			return initialState;
