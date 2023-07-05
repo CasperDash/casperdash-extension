@@ -9,7 +9,7 @@ import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWo
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import CanvasText from '@cd/web-extension/Common/CanvasText/index';
-import { sharesToMnemonicArrays } from '@cd/helpers/shareable';
+import { sharesToMnemonic } from '@cd/helpers/shareable';
 
 import './RecoveryPhrasePage.scss';
 
@@ -18,7 +18,7 @@ const RecoveryPhrasePage = () => {
 	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
 	const keyPhraseShares = useSelector(selectCreateWalletKeyphrase);
 
-	const TOTAL_KEYWORDS = sharesToMnemonicArrays(keyPhraseShares).length;
+	const TOTAL_KEYWORDS = sharesToMnemonic(keyPhraseShares).split(' ').length;
 
 	const onClickNextHandler = useCallback(() => {
 		dispatch(setNextStep());
@@ -39,18 +39,26 @@ const RecoveryPhrasePage = () => {
 			/>
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 				<ul className="cd_we_create-keyphrase--column">
-					{dropRight(sharesToMnemonicArrays(keyPhraseShares), TOTAL_KEYWORDS / 2)?.map((word, index) => (
-						<li className="cd_we_keyphrase--word" key={`left-${word}`}>
-							<CanvasText text={`${index + 1}. ${word}`} width="80" height="22" />
-						</li>
-					))}
+					{dropRight(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
+						const eleIndex = index + 1;
+
+						return (
+							<li className="cd_we_keyphrase--word" key={`left-${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}}`}>
+								<CanvasText text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[index]}`} width="100" height="22" />
+							</li>
+						)
+					})}
 				</ul>
 				<ul className="cd_we_create-keyphrase--column">
-					{drop(sharesToMnemonicArrays(keyPhraseShares), TOTAL_KEYWORDS / 2)?.map((word, index) => (
-						<li className="cd_we_keyphrase--word" key={`right-${word}`}>
-							<CanvasText text={`${index + (1 + TOTAL_KEYWORDS / 2)}. ${word}`} width="80" height="22" />
-						</li>
-					))}
+					{drop(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
+						const eleIndex = index + (1 + TOTAL_KEYWORDS / 2);
+
+						return (
+							<li className="cd_we_keyphrase--word" key={`right-${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}}`}>
+								<CanvasText text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}`} width="80" height="22" />
+							</li>
+						)
+					})}
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
