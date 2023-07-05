@@ -26,8 +26,16 @@
 			}
 		}
 
-		.divider {
+		.cd_we_sign_divider {
+			height: 2px;
 			padding: 10px 0;
+		}
+
+		.cd_we_sign_deploy_args {
+			margin-top: 8px;
+			max-height: 160px;
+			overflow-y: auto;
+			padding: 0 10px;
 		}
 	}
 
