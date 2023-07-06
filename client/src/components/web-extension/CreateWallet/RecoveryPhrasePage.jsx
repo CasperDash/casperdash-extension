@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { nanoid } from 'nanoid';
 import drop from 'lodash-es/drop';
 import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
@@ -43,7 +44,7 @@ const RecoveryPhrasePage = () => {
 						const eleIndex = index + 1;
 
 						return (
-							<li className="cd_we_keyphrase--word" key={`left-${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}}`}>
+							<li className="cd_we_keyphrase--word" key={`left-${index}-${nanoid()}`}>
 								<CanvasText text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[index]}`} width="100" height="22" />
 							</li>
 						)
@@ -54,7 +55,7 @@ const RecoveryPhrasePage = () => {
 						const eleIndex = index + (1 + TOTAL_KEYWORDS / 2);
 
 						return (
-							<li className="cd_we_keyphrase--word" key={`right-${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}}`}>
+							<li className="cd_we_keyphrase--word" key={`right-${index}-${nanoid()}`}>
 								<CanvasText text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}`} width="80" height="22" />
 							</li>
 						)
