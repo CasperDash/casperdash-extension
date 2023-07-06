@@ -1,5 +1,5 @@
 .cd_we_staking_info {
-	padding: 10px 15px;
+	padding: 20px 15px 10px;
 	.cd_we_staking_info_header {
 		display: flex;
 		gap: 8px;
@@ -17,6 +17,11 @@
 			}
 		}
 	}
+
+	&_content {
+		margin-top: 12px;
+	}
+
 	.cd_we_grid {
 		height: calc(100vh - 390px) !important;
 		padding: 0 !important;

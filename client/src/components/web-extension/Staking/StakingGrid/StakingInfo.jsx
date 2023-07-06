@@ -9,6 +9,7 @@ import Grid from '../../Common/Grid';
 import { UndelegateButton } from './UndelegateButton';
 import { RewardInfo } from './RewardInfo';
 import './StakingInfo.scss';
+import StakingForm from '../StakingForm';
 
 const STAKING_INFO_METADATA = {
 	left: [
@@ -42,6 +43,7 @@ const STAKING_HISTORY_METADATA = {
 };
 
 const VIEWS = {
+	form: { key: 'form' },
 	history: { key: 'history', metadata: STAKING_HISTORY_METADATA },
 	rewards: { key: 'rewards' },
 	info: { key: 'info', metadata: STAKING_INFO_METADATA },
@@ -52,16 +54,22 @@ export const StakingInfo = ({ publicKey }) => {
 	const historyList = useStakedHistory();
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
 
-	const [view, setView] = useState(VIEWS.info);
+	const [view, setView] = useState(VIEWS.form);
 
 	return (
 		<div className="cd_we_staking_info">
 			<div className="cd_we_staking_info_header">
+			<div
+					className={cn('cd_we_staking_info_title', { active: view === VIEWS.form })}
+					onClick={() => setView(VIEWS.form)}
+				>
+					New Staking
+				</div>
 				<div
 					className={cn('cd_we_staking_info_title', { active: view === VIEWS.info })}
 					onClick={() => setView(VIEWS.info)}
 				>
-					Staked Info
+					Staking List
 				</div>
 				<div
 					className={cn('cd_we_staking_info_title', { active: view === VIEWS.rewards })}
@@ -74,16 +82,33 @@ export const StakingInfo = ({ publicKey }) => {
 					onClick={() => setView(VIEWS.history)}
 				/>
 			</div>
-			{view.key === VIEWS.rewards.key ? (
-				<RewardInfo publicKey={publicKey} />
-			) : (
-				<Grid
-					data={view.key === VIEWS.info.key ? stackingList : historyList}
-					metadata={view.metadata}
-					className="overflow_auto hide_scroll_bar"
-					isLoading={isLoadingValidators}
-				/>
-			)}
+			<div className="cd_we_staking_info_content">
+				{
+					(
+						() => {
+							switch (view.key) {
+								case VIEWS.rewards.key:
+									return (
+										<RewardInfo publicKey={publicKey} />
+									)
+								case VIEWS.form.key:
+									return (
+										<StakingForm />
+									)
+								default:
+									return(
+										<Grid
+											data={view.key === VIEWS.info.key ? stackingList : historyList}
+											metadata={view.metadata}
+											className="overflow_auto hide_scroll_bar"
+											isLoading={isLoadingValidators}
+										/>
+									)
+							}
+						}
+					)()
+				}
+			</div>
 		</div>
 	);
 };

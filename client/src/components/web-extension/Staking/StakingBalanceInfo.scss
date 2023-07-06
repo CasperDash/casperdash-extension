@@ -1,0 +1,43 @@
+.cd_we_staking_balance_info {
+    padding: 24px 16px 12px;
+    border-bottom: 1px solid #F5F5F5;
+
+    &__total {
+        &--number {
+            font-size: 18px;
+            font-weight: 600;
+        }
+    }
+
+    &__section { 
+        margin-top: 12px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        color: #616161;
+    }
+
+    &__fiat {
+        color: var(--secondary-text-color);
+    }
+
+    &__amount {
+        font-weight: 600;
+    }
+
+    &__asset {
+        color: var(--secondary-text-color);
+    }
+
+    &__number {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        img {
+            margin-top: 2px;
+        }
+    }
+}
