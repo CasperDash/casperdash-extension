@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import _get from 'lodash-es/get';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
@@ -40,7 +41,7 @@ const SendForm = ({ token }) => {
 
 	// Functions
 	const setBalance = (percent, setFieldValue) => {
-		const balance = (selectedToken && selectedToken.balance && selectedToken.balance.displayValue) || 0;
+		const balance = _get(selectedToken, 'balance.displayValue', 0);
 		if (balance === 0) {
 			setFieldValue('sendAmount', 0);
 			return;
