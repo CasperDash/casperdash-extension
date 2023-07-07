@@ -33,13 +33,15 @@
 
 		.cd_we_sign_deploy_args {
 			margin-top: 8px;
-			max-height: 160px;
+			max-height: 180px;
 			overflow-y: auto;
 			padding: 0 10px;
 		}
 	}
 
 	.cd_we_sign_deploy_actions {
+		display: flex;
+		gap: 12px;
 		width: 70%;
 		button {
 			width: 100%;
