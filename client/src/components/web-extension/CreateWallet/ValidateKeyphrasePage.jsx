@@ -7,7 +7,7 @@ import { generateCWHeader, onGenerateWordcheck } from '@cd/actions/createWalletA
 import { setNextStep, updateAnswerSheet, createAnswerSheet } from '@cd/actions/createWalletActions';
 import { selectCreateWalletState } from '@cd/selectors/createWallet';
 import { CONSTANTS } from '@cd/shared/constants';
-import { sharesToMnemonicArrays } from '@cd/helpers/shareable';
+import { sharesToMnemonic } from '@cd/helpers/shareable';
 import WordsGroup from './WordsGroup';
 import './ValidateKeyphrase.scss';
 
@@ -22,7 +22,7 @@ const ValidateKeyphrasePage = () => {
 	);
 	const onCreateAnswerSheet = useCallback((checklist) => dispatch(createAnswerSheet(checklist)), [dispatch]);
 
-	const totalWords = sharesToMnemonicArrays(keyPhraseShares).length;
+	const totalWords = sharesToMnemonic(keyPhraseShares).split(' ').length;
 	const totalWordCheck = totalWords / 3;
 
 	const shouldDisableNextButton = useMemo(() => {
@@ -88,7 +88,7 @@ const ValidateKeyphrasePage = () => {
 		}
 
 		const getChecks = () => {
-			const mnemonics = sharesToMnemonicArrays(keyPhraseShares);
+			const mnemonics = sharesToMnemonic(keyPhraseShares).split(' ');
 			const { checklist, data } = onGenerateWordcheck(totalWords, totalWordCheck);
 			onCreateAnswerSheet(checklist);
 

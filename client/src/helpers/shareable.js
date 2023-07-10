@@ -8,13 +8,5 @@ export const mnemonicToShares = (mnemonic) => {
 export const sharesToMnemonic = (shares) => {
     const shareList = _values(shares).slice(0, 2);
 
-    const mnemonic = shareableSeed.shareListToMnemonic(shareList);
-
-    return mnemonic ? mnemonic : '';
-}
-
-export const sharesToMnemonicArrays = (shares) => {
-    const mnemonic = sharesToMnemonic(shares);
-
-    return mnemonic ? mnemonic.split(' ') : [];
-}
+    return shareableSeed.shareListToMnemonic(shareList) || '';
+};

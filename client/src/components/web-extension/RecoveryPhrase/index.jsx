@@ -14,7 +14,9 @@ const RecoveryPhrase = () => {
 
 	const [isBlurred, setIsBlurred] = useState(true);
 	const [showEnterPassword, setShowEnterPassword] = useState(true);
-	const [shares, setShares] = useState(null);
+	const [shares, setShares] = useState('');
+
+	const TOTAL_KEYWORDS = sharesToMnemonic(shares).split(' ').length;
 
 	const onViewRecoveryPhrase = useCallback(async (password) => {
 		try {
@@ -42,9 +44,9 @@ const RecoveryPhrase = () => {
 							'cd_we_recovery-keyphrase__column--blurred': isBlurred,
 						})}
 					>
-						{shares && sharesToMnemonic(shares).split(' ')?.map((word, index) => (
+						{shares && new Array(TOTAL_KEYWORDS).fill().map((_, index) => (
 							<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
-								<CanvasText text={`${index + 1}. ${word}`} width="80" height="22" />
+								<CanvasText text={`${index + 1}. ${sharesToMnemonic(shares).split(' ')[index]}`} width="80" height="22" />
 							</li>
 						))}
 					</ul>

@@ -22,6 +22,7 @@
 		"bootstrap-icons": "^1.5.0",
 		"browserslist": "^4.13.0",
 		"casper-js-sdk": "^2.9.1",
+		"casper-shareable-seed": "2.0.4",
 		"casper-storage": "1.2.0",
 		"clsx": "^1.2.1",
 		"cookie": "^0.4.1",
@@ -35,6 +36,7 @@
 		"identicon.js": "^2.3.3",
 		"lodash-es": "^4.17.21",
 		"memoize-one": "^6.0.0",
+		"nanoid": "^4.0.2",
 		"node-polyfill-webpack-plugin": "^2.0.1",
 		"qrcode.react": "^1.0.1",
 		"qs": "^6.9.4",
@@ -55,7 +57,6 @@
 		"redux-thunk": "^2.3.0",
 		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
-		"casper-shareable-seed": "2.0.4",
 		"ts-results": "^3.3.0",
 		"webextension-polyfill": "^0.10.0"
 	},
