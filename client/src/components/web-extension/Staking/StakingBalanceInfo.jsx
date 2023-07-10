@@ -40,12 +40,21 @@ export const StakingBalanceInfo = () => {
 
     return (
         <div className="cd_we_staking_balance_info">
-            <div className="cd_we_staking_balance_info__total">
-                <div className="cd_we_staking_balance_info__title">Total</div>
-                <div className="cd_we_staking_balance_info__total--number">
-                    <BalanceNumber value={formattedTotalBalance} />
+            <div className="cd_we_staking_balance_info__head">
+                <div className="cd_we_staking_balance_info__total">
+                    <div className="cd_we_staking_balance_info__title">Total</div>
+                    <div className="cd_we_staking_balance_info__total--number">
+                        <BalanceNumber value={formattedTotalBalance} />
+                    </div>
+                    <div className="cd_we_staking_balance_info__fiat">${formattedTotalBalanceInFiat}</div>
                 </div>
-                <div className="cd_we_staking_balance_info__fiat">${formattedTotalBalanceInFiat}</div>
+                <div className="cd_we_staking_balance_info__apy">
+                    <span className="cd_we_staking_balance_info__title">APY: </span>
+                    <span>
+                        {_get(csprMarketInfo, 'apy', 0).toFixed(3)}
+                    </span>
+                    <span className="cd_we_staking_balance_info__fiat">%</span>
+                </div>
             </div>
             <div className="cd_we_staking_balance_info__section">
                 <div className="cd_we_staking_balance_info__availiable">

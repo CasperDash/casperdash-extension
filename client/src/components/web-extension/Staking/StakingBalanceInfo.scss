@@ -9,6 +9,11 @@
         }
     }
 
+    &__head {
+        display: flex;
+        justify-content: space-between;
+    }
+
     &__section { 
         margin-top: 12px;
         display: flex;
