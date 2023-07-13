@@ -119,7 +119,7 @@ export const parseTransferData = (transferDeploy, providedTarget) => {
       break;
     case CLTypeTag.PublicKey:
       targetFromDeployHex = targetFromDeploy.toHex();
-      if (providedTarget && targetFromDeployHex !== providedTarget) {
+      if (providedTarget && targetFromDeployHex.toLowerCase() !== providedTarget.toLowerCase()) {
         throw new Error("The provided target public key does not match the one specified in the deploy.");
       }
       transferArgs['Recipient (Key)'] = targetFromDeployHex;
