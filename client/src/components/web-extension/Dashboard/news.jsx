@@ -19,7 +19,7 @@ export const News = () => {
 		if (url) window.open(url, '_blank');
 	};
 
-	return (
+	return news?.length ? (
 		<Carousel prevIcon={null} nextIcon={null} indicators={false}>
 			{news?.map(({ label, title, url }) => (
 				<Carousel.Item key={title}>
@@ -30,5 +30,5 @@ export const News = () => {
 				</Carousel.Item>
 			))}
 		</Carousel>
-	);
+	) : null;
 };
