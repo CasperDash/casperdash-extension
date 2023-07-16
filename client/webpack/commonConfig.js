@@ -28,6 +28,14 @@ module.exports = (dir) => ({
 				test: /\.html$/,
 				use: ['html-loader'],
 			},
+			{
+				test: /\.mjs$/,
+				include: /node_modules/,
+				type: 'javascript/auto',
+				resolve: {
+					fullySpecified: false,
+				},
+			},
 		],
 	},
 	plugins: [
@@ -44,7 +52,7 @@ module.exports = (dir) => ({
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(process.env),
 		}),
-		new NodePolyfillPlugin()
+		new NodePolyfillPlugin(),
 	],
 	experiments: {
 		topLevelAwait: true,
