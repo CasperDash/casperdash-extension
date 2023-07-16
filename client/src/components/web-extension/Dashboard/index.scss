@@ -7,7 +7,7 @@
 	backdrop-filter: blur(40px);
 }
 .cd_we_main_details {
-	height: calc(100% - 200px - 10px + 64px) !important;
+	height: calc(100% - 240px - 10px + 64px) !important;
 	overflow: auto;
 	border-radius: 26px 26px 0 0;
 	padding-bottom: 60px;
@@ -29,4 +29,23 @@
 .cd_we_action {
 	margin: 15px;
 	cursor: pointer;
+}
+
+.cd_we_dashboard_page {
+	.cd_we_news {
+		display: flex;
+		padding: 4px 16px;
+		gap: 8px;
+		cursor: pointer;
+		.badge {
+			background: var(--primary-color);
+			border-radius: 2px;
+			display: flex;
+			align-items: center;
+		}
+		.content {
+			font-weight: 600;
+			font-size: 12px;
+		}
+	}
 }

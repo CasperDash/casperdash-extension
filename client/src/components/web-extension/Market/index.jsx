@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { ChartLine } from '../../Common/Layout/Chart';
 import { getPriceHistory, getCurrentPrice, getLatestMarketInfo } from '../../../selectors/price';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
-import { TransactionHistory } from '../Common/TransactionHistory';
 import './Market.scss';
+import { News } from './News';
 
 const chartOptions = {
 	xaxis: {
@@ -79,9 +79,9 @@ const Market = () => {
 					</div>
 				</div>
 			</div>
-			<div className="cd_we_transaction_history">
-				<div className="cd_we_input_label">Transaction</div>
-				<TransactionHistory symbol="CSPR" />
+			<div className="cd_we_news_section">
+				<div className="cd_we_input_label">News</div>
+				<News />
 			</div>
 		</section>
 	);

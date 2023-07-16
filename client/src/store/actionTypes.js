@@ -102,3 +102,7 @@ export const CREATE_WALLET = {
 export const LOGIN_MODAL = {
 	SET_IS_OPEN: 'SET_IS_OPEN',
 };
+
+export const NEWS = {
+	FETCH_NEWS: 'NEWS.FETCH_NEWS',
+};
