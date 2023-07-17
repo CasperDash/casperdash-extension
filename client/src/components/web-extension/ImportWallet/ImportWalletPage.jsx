@@ -8,6 +8,7 @@ import { CONSTANTS } from '@cd/shared/constants';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import FieldKeyphrase from './FieldKeyphrase';
+import SelectDerivationPath from '@cd/web-extension/Common/SelectDerivationPath';
 
 const ImportWallet = () => {
 	const dispatch = useDispatch();
@@ -88,6 +89,7 @@ const ImportWallet = () => {
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
+			<SelectDerivationPath />
 			<SelectEncryptionType />
 			<NumberRecoveryWordsSelect onChange={(number) => setNumberOfWords(number)} selectedValue={numberOfWords} />
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">

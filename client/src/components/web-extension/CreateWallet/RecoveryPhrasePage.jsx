@@ -7,6 +7,7 @@ import drop from 'lodash-es/drop';
 import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
+import SelectDerivationPath from '@cd/web-extension/Common/SelectDerivationPath';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
@@ -32,6 +33,7 @@ const RecoveryPhrasePage = () => {
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
+			<SelectDerivationPath />
 			<SelectEncryptionType />
 			<NumberRecoveryWordsSelect
 				selectedValue={numOfWords}
