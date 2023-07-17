@@ -125,8 +125,10 @@ class AccountController {
 		return this.userService.prepareStorageData();
 	};
 
-	isUserExist = () => {
-		return !!this.userService;
+	isUserExist = async () => {
+		const publicKey = await this.getCurrentPublicKey();
+
+		return !!publicKey;
 	};
 
 	addLegacyAccount = async ({ name, secretKey }) => {
