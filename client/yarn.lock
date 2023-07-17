@@ -1806,12 +1806,12 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@noble/curves@^0.9.0":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@noble/curves/-/curves-0.9.1.tgz#0ad33ebee0fdc870e1afcd74daa06f188e89b8fe"
-  integrity sha512-SpO5TViHvyBV8RrvGejzzl0+wbSm21q+hC6ZmK5NtqOjigR+WW9OohvKL0M3EHKvWzqaZ5Z7F46ejxAVDTBnvQ==
+"@noble/curves@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@noble/curves/-/curves-1.1.0.tgz#f13fc667c89184bc04cccb9b11e8e7bae27d8c3d"
+  integrity sha512-091oBExgENk/kGj3AZmtBDMpxQPDtxQABR2B9lb1JbVTs6ytdzZNwvhxQ4MWasRNEzlbEH8jCWFCwhF/Obj5AA==
   dependencies:
-    "@noble/hashes" "1.3.0"
+    "@noble/hashes" "1.3.1"
 
 "@noble/curves@~1.0.0":
   version "1.0.0"
@@ -1830,7 +1830,7 @@
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.0.tgz#085fd70f6d7d9d109671090ccae1d3bec62554a1"
   integrity sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==
 
-"@noble/hashes@^1.2.0", "@noble/hashes@^1.3.0", "@noble/hashes@~1.3.0":
+"@noble/hashes@1.3.1", "@noble/hashes@^1.2.0", "@noble/hashes@^1.3.0", "@noble/hashes@~1.3.0":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.1.tgz#8831ef002114670c603c458ab8b11328406953a9"
   integrity sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA==
@@ -4046,12 +4046,12 @@ casper-shareable-seed@2.0.4:
     sha.js "^2.4.10"
     zero-fill "^2.2.3"
 
-casper-storage@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/casper-storage/-/casper-storage-1.2.0.tgz#4c60789b651f717be77d760fac04757e928a166c"
-  integrity sha512-mBQatuJwI4Sx0sfhZbOz0fjpZx+Z1Z3cV6muA8uxZLKNXQAj/SqTJZ6eNL+fkkXLD5/8BZgf+o6gOpMN6foEQw==
+casper-storage@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/casper-storage/-/casper-storage-1.3.1.tgz#0af20a7703c7d05cb8bb8d792ae2fac9a286b2b5"
+  integrity sha512-YFU4dWlUMqUa6+XA9MWlGMWjJGuZAOV9jeYnKq6Go7X6h9T035tuJHGkRo4dlf3jYsWjihjrn2fmL7UMTPSD3A==
   dependencies:
-    "@noble/curves" "^0.9.0"
+    "@noble/curves" "^1.0.0"
     "@noble/hashes" "^1.3.0"
     "@scure/base" "^1.1.1"
     "@scure/bip39" "^1.2.0"
