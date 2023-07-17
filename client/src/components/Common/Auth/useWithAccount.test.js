@@ -8,6 +8,12 @@ import * as reactRouterDom from 'react-router-dom';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import useWithAccount from './useWithAccount';
 
+jest.mock("nanoid", () => { 
+	return {
+		nanoid : ()=>{}
+  	} 
+});
+
 const setupStore = (data) => {
 	return configureStore([thunkMiddleware])({
 		...data,
