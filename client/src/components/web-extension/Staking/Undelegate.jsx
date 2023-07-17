@@ -94,6 +94,9 @@ export const Undelegate = () => {
 			<Button onClick={onUndelegate} disabled={Object.keys(formErrors).length || firstLoad}>
 				Confirm
 			</Button>
+			<div className="cd_we_staking_note">
+				Please note that the waiting time for the undelegate process is approximately 7-8 eras, which translates to around 14-16 hours. 
+			</div>
 		</section>
 	);
 };
