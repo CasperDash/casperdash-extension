@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Layer, Stage } from 'react-konva';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
 import { getKeyphrase } from '@cd/components/hooks/useServiceWorker';
-import CanvasText from '@cd/web-extension/Common/CanvasText/index';
+import CanvasText from '@cd/web-extension/Common/CanvasText';
 import { mnemonicToShares, sharesToMnemonic } from '@cd/helpers/shareable';
 
 import './RecoveryPhrase.scss';
@@ -29,6 +30,7 @@ const RecoveryPhrase = () => {
 		}
 	}, []);
 
+	const height = TOTAL_KEYWORDS <= 12 ? 200 : 270;
 
 	return (
 		<div className="cd_we_recovery-keyphrase">
@@ -39,17 +41,45 @@ const RecoveryPhrase = () => {
 					})}
 					onClick={() => setIsBlurred(false)}
 				>
-					<ul
-						className={clsx('cd_we_recovery-keyphrase__column', {
-							'cd_we_recovery-keyphrase__column--blurred': isBlurred,
-						})}
-					>
-						{shares && new Array(TOTAL_KEYWORDS).fill().map((_, index) => (
-							<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
-								<CanvasText text={`${index + 1}. ${sharesToMnemonic(shares).split(' ')[index]}`} width="80" height="22" />
-							</li>
-						))}
-					</ul>
+					
+						{
+							shares && (
+									<ul
+										className={clsx('cd_we_recovery-keyphrase__column', {
+											'cd_we_recovery-keyphrase__column--blurred': isBlurred,
+										})}
+									>								
+										<Stage width={100} height={height}>
+											<Layer>
+												{new Array(TOTAL_KEYWORDS / 2).fill().map((_, index) => (
+													<CanvasText 
+														key={`left-${index}`} 
+														text={`${index + 1}. ${sharesToMnemonic(shares).split(' ')[index]}`} 
+														x={10}
+														y={22 * index}
+													/>
+												))}
+											</Layer>
+										</Stage>
+										<Stage width={100} height={height}>
+											<Layer>
+												{new Array(TOTAL_KEYWORDS / 2).fill().map((_, index) => {
+													const eleIndex = index + (TOTAL_KEYWORDS / 2);
+
+													return (
+														<CanvasText 
+															key={`right-${index}`} 
+															text={`${eleIndex + 1}. ${sharesToMnemonic(shares).split(' ')[eleIndex]}`} 
+															x={10}
+															y={22 * index}
+														/>
+													)
+												})}
+											</Layer>
+										</Stage>
+									</ul>
+							)
+						}
 					{isBlurred && (
 						<div className="cd_we_recovery-keyphrase__blur-overlay">
 							Click to reveal secret recovery phrase

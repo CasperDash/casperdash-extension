@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Layer, Stage } from 'react-konva';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
@@ -40,26 +41,39 @@ const RecoveryPhrasePage = () => {
 			/>
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 				<ul className="cd_we_create-keyphrase--column">
-					{dropRight(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
-						const eleIndex = index + 1;
+					<Stage width={100} height={300}>
+						<Layer>
+							{dropRight(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
+								const eleIndex = index + 1;
 
-						return (
-							<li className="cd_we_keyphrase--word" key={`left-${index}-${nanoid()}`}>
-								<CanvasText text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[index]}`} width="100" height="22" />
-							</li>
-						)
-					})}
+								return (
+									<CanvasText 
+										key={`left-${index}-${nanoid()}`} 
+										text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[index]}`} 
+										x={10}
+										y={22 * index}
+									/>
+								)
+							})}
+						</Layer>
+					</Stage>
 				</ul>
 				<ul className="cd_we_create-keyphrase--column">
-					{drop(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
-						const eleIndex = index + (1 + TOTAL_KEYWORDS / 2);
+					<Stage width={100} height={300}>
+						<Layer>
+							{drop(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
+								const eleIndex = index + (1 + TOTAL_KEYWORDS / 2);
 
-						return (
-							<li className="cd_we_keyphrase--word" key={`right-${index}-${nanoid()}`}>
-								<CanvasText text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}`} width="80" height="22" />
-							</li>
-						)
-					})}
+								return (
+									<CanvasText 
+										key={`right-${index}-${nanoid()}`} text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}`} 
+										x={10}
+										y={22 * index}
+									/>
+								)
+							})}
+						</Layer>
+					</Stage>
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
