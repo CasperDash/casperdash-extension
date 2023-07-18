@@ -89,8 +89,8 @@ const ImportWallet = () => {
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
-			<SelectDerivationPath />
 			<SelectEncryptionType />
+			<SelectDerivationPath />
 			<NumberRecoveryWordsSelect onChange={(number) => setNumberOfWords(number)} selectedValue={numberOfWords} />
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 				<FieldKeyphrase
