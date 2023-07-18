@@ -41,9 +41,8 @@ const SelectDerivationPath = () => {
 						placement="auto"
 						overlay={
 							<Tooltip>
-								We recommend to choose ed25519 over secp256k1 for stronger security and better
-								performance, unless you explicitly want to use secp256k1 in order to compatible with
-								Bitcoin, Ethereum chains
+								A derivation path is a piece of data which tells a Hierarchical Deterministic (HD) 
+								wallet how to derive a specific key within a tree of keys
 							</Tooltip>
 						}
 					>

@@ -32,8 +32,8 @@ const RecoveryPhrasePage = () => {
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
-			<SelectDerivationPath />
 			<SelectEncryptionType />
+			<SelectDerivationPath />
 			<NumberRecoveryWordsSelect
 				selectedValue={numOfWords}
 				onChange={(number) => {
