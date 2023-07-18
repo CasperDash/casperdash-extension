@@ -6,38 +6,12 @@ import RPC from './RPC';
 import AccountController from './Controllers/AccountController';
 import PopupController from './Controllers/PopupController';
 import SigningController from './Controllers/SigningController';
+import './keepAlive';
 
 const appStore = new ObservableStore({});
 const accountController = new AccountController(appStore);
 const popupController = new PopupController(accountController, appStore);
 const signController = new SigningController(popupController, accountController);
-
-const onUpdate = (tabId, info, tab) => /^https?:/.test(info.url) && findTab([tab]);
-findTab();
-chrome.runtime.onConnect.addListener((port) => {
-	if (port.name === 'keepAlive') {
-		setTimeout(() => port.disconnect(), 250e3);
-		port.onDisconnect.addListener(() => findTab());
-	}
-});
-async function findTab(tabs) {
-	if (chrome.runtime.lastError) {
-		/* tab was closed before setTimeout ran */
-	}
-	for (const { id: tabId } of tabs || (await chrome.tabs.query({ url: '*://*/*' }))) {
-		try {
-			await chrome.scripting.executeScript({ target: { tabId }, func: connect });
-			chrome.tabs.onUpdated.removeListener(onUpdate);
-			return;
-		} catch (e) {
-			console.error(e);
-		}
-	}
-	chrome.tabs.onUpdated.addListener(onUpdate);
-}
-function connect() {
-	chrome.runtime.connect({ name: 'keepAlive' }).onDisconnect.addListener(connect);
-}
 
 function registerAlarmActions() {
 	chrome.alarms.onAlarm.addListener(() => {
