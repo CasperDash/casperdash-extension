@@ -28,7 +28,7 @@
 			"matches": ["<all_urls>"]
 		}
 	],
-	"permissions": ["storage", "scripting", "alarms", "tabs"],
+	"permissions": ["storage", "alarms", "tabs"],
 	"host_permissions": ["<all_urls>"],
 	"background": {
 		"service_worker": "/static/js/sw/service-worker.js"
