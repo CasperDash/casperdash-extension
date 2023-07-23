@@ -70,12 +70,37 @@
 			}
 		}
 	}
-	.cd_we_transaction_history {
+	.cd_we_news_section {
 		.cd_we_input_label {
 			margin: 0 15px;
 		}
-		.cd_we_token_history {
-			padding-bottom: 64px;
+		.cd_we_news {
+			padding-bottom: 40px;
+			cursor: pointer;
+		}
+		.cd_we_news_content {
+			display: flex;
+			padding: 4px 16px;
+			gap: 8px;
+			margin-top: 24px;
+			cursor: pointer;
+			.badge {
+				background: var(--primary-color);
+				border-radius: 2px;
+				display: flex;
+				align-items: center;
+			}
+			.content {
+				font-weight: 600;
+				font-size: 12px;
+			}
+		}
+		.carousel-control-next,
+		.carousel-control-prev {
+			bottom: 94px;
+		}
+		.carousel-indicators {
+			bottom: 94px;
 		}
 	}
 }

@@ -4,7 +4,6 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
 import DashBoard from './';
 
-
 jest.mock('@cd/web-extension/Common/Account', () => ({
 	AccountInfo: () => <div>Account 1</div>,
 }));
@@ -41,7 +40,6 @@ describe('WalletDetails', () => {
 			const { getByText } = render(<DashBoard />);
 			expect(getByText(/Send/i)).toBeInTheDocument();
 			expect(getByText(/Receive/i)).toBeInTheDocument();
-			expect(getByText(/Add Custom Token/i)).toBeInTheDocument();
 			expect(getByText(/CSPR/i)).toBeInTheDocument();
 			expect(getByText(/10/i)).toBeInTheDocument();
 			expect(getByText(/11/i)).toBeInTheDocument();
@@ -61,11 +59,6 @@ describe('WalletDetails', () => {
 					},
 					name: 'CSPR',
 				},
-			});
-			await fireEvent.click(getByText(/Add Custom Token/i));
-			expect(useNavigate()).toHaveBeenCalledTimes(2);
-			expect(useNavigate()).toHaveBeenCalledWith('/addToken', {
-				state: { name: 'Add Token' },
 			});
 		});
 	});

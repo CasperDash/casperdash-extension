@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { Tooltip } from 'react-tooltip';
 import CopyIcon from '@cd/assets/image/copy-icon.svg';
 import CheckIcon from '@cd/assets/image/check-alt.svg';
 
@@ -17,17 +17,12 @@ const Copy = ({ value }) => {
 	};
 
 	return (
-		<OverlayTrigger placement="top" overlay={<Popover className="cd_btn_copy_popover">Copy</Popover>}>
-			<div className="cd_btn_copy" onClick={onClickCopy}>
-			{
-				isCoppied ? (
-					<CheckIcon className="cd_btn_copy--checked"/>
-				): (
-					<CopyIcon />
-				)
-			}
-		</div>
-		</OverlayTrigger>
+		<>
+			<div className="cd_btn_copy" onClick={onClickCopy} data-tooltip-id="copy-tooltip">
+				{isCoppied ? <CheckIcon className="cd_btn_copy--checked" /> : <CopyIcon />}
+			</div>
+			<Tooltip id="copy-tooltip">Copy</Tooltip>
+		</>
 	);
 };
 

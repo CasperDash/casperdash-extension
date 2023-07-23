@@ -73,11 +73,11 @@ const ImportWallet = () => {
 
 	useEffect(() => {
 		// Only allow paste on debug
-		if (CONSTANTS.DEBUG_ENV) {
+		// if (CONSTANTS.DEBUG_ENV) {
 			window.addEventListener('paste', pasteEventHandler);
 
 			return () => window.removeEventListener('paste', pasteEventHandler);
-		}
+		// }
 	}, [pasteEventHandler]);
 
 	const onPhraseChange = (index, value) => {
