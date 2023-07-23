@@ -126,9 +126,7 @@ class AccountController {
 	};
 
 	isUserExist = async () => {
-		const publicKey = await this.getCurrentPublicKey();
-
-		return !!publicKey;
+		return !!this.userService;
 	};
 
 	addLegacyAccount = async ({ name, secretKey }) => {
@@ -163,7 +161,7 @@ class AccountController {
 		await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
 
 		this.userService = undefined;
-	}
+	};
 }
 
 export default AccountController;

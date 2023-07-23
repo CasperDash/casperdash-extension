@@ -1,7 +1,7 @@
 {
 	"name": "casperdash_client",
 	"description": "CasperDash Client",
-	"version": "1.5.0",
+	"version": "1.5.3",
 	"private": false,
 	"author": "CasperDash",
 	"license": "MIT",
@@ -71,7 +71,7 @@
 	"scripts": {
 		"dev-extension-mainnet": "node webpack/webserver.js --mode development --env=type=extension --env=network=mainnet --watch",
 		"watch-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=mainnet --watch",
-		"build-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=mainnet",
+		"build-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode production --env=network=mainnet",
 		"test": "jest --coverage --watchAll ",
 		"test:w": "jest test --watchAll ",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true jest test --coverage",

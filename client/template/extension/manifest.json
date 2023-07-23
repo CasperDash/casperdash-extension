@@ -2,7 +2,7 @@
 	"short_name": "CasperDash",
 	"name": "CasperDash",
 	"description": "A Casper Wallet",
-	"version": "1.5.0",
+	"version": "1.5.3",
 	"manifest_version": 3,
 	"icons": {
 		"512": "512.png"
@@ -28,7 +28,7 @@
 			"matches": ["<all_urls>"]
 		}
 	],
-	"permissions": ["storage", "scripting", "alarms", "tabs"],
+	"permissions": ["storage", "alarms", "tabs"],
 	"host_permissions": ["<all_urls>"],
 	"background": {
 		"service_worker": "/static/js/sw/service-worker.js"

@@ -20,7 +20,7 @@ export const News = () => {
 	};
 
 	return news?.length ? (
-		<Carousel className="cd_we_news" variant="dark" prevIcon={null} nextIcon={null}>
+		<Carousel className="cd_we_news" variant="dark" controls={false}>
 			{news?.map(({ label, title, url, bannerUrl }) => (
 				<Carousel.Item key={title}>
 					<div className="cd_we_news" onClick={() => onClick(url)}>

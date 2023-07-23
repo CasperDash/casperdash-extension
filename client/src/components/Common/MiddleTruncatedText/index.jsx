@@ -10,13 +10,13 @@ export const MiddleTruncatedText = ({ children, end, placement = 'top' }) => {
 		<>
 			<div
 				className="cd_middle_truncated_text"
-				data-tooltip-id="tooltip-middle-truncated-text"
+				data-tooltip-id={`tooltip-middle-truncated-text-${children}`}
 				data-tooltip-place={placement}
 			>
 				<div className="cd_middle_truncated_text-begin">{beginString}</div>
 				<div className="cd_middle_truncated_text-end">{endString}</div>
 			</div>
-			<Tooltip id="tooltip-middle-truncated-text">
+			<Tooltip id={`tooltip-middle-truncated-text-${children}`}>
 				<div className="cd_middle_truncated_tooltip_content">{children}</div>
 			</Tooltip>
 		</>
