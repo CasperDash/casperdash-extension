@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getValidators, validatorSelector } from '../../../../selectors/validator';
-import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
-import Grid from '../../Common/Grid';
+import { getValidators, validatorSelector } from '@cd/selectors/validator';
+import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
+import Grid from '@cd/web-extension/Common/Grid';
+import { FeeTooltip } from './FeeTooltip';
+
 import './SearchValidator.scss';
 
 const VALIDATOR_METADATA = {
@@ -12,7 +14,7 @@ const VALIDATOR_METADATA = {
 		{ key: 'validatorPublicKey', type: 'primary', wrapperComponent: MiddleTruncatedText },
 	],
 	right: [
-		{ key: 'delegationRate', format: 'percentage', suffix: 'Fee' },
+		{ key: 'delegationRate', format: 'percentage', suffix: 'Fee', wrapperComponent: FeeTooltip },
 		{ key: 'totalStaked', format: 'mote' },
 	],
 };

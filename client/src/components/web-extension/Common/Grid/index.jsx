@@ -52,6 +52,7 @@ const Grid = ({
 					className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`}
 					key={`${token.symbol}-${item.key}`}
 				>
+				
 					{renderValue({ item, token }, formattedValue)} {item.suffix}
 				</div>
 			);
