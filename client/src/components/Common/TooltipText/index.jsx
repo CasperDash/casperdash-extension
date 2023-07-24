@@ -1,15 +1,16 @@
 import React from 'react';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './index.scss';
 
-export const TooltipText = ({ tooltip, children, placement = 'auto' }) => {
+export const TooltipText = ({ tooltip, children }) => {
 	return (
-		<OverlayTrigger placement={placement} overlay={<Tooltip>{tooltip}</Tooltip>}>
-			<span className="cd_we_tooltip">
+		<div>
+			<span className="cd_we_tooltip" data-tooltip-id="cd-tooltip-text" data-tooltip-content={tooltip}>
 				{children}
 			</span>
-		</OverlayTrigger>
+			<Tooltip id="cd-tooltip-text" />
+		</div>
 	);
 };
 

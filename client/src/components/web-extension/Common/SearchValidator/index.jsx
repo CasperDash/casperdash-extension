@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getValidators, validatorSelector } from '@cd/selectors/validator';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import Grid from '@cd/web-extension/Common/Grid';
-import { FeeTooltip } from './FeeTooltip';
 
 import './SearchValidator.scss';
 
@@ -14,7 +13,13 @@ const VALIDATOR_METADATA = {
 		{ key: 'validatorPublicKey', type: 'primary', wrapperComponent: MiddleTruncatedText },
 	],
 	right: [
-		{ key: 'delegationRate', format: 'percentage', suffix: 'Fee', wrapperComponent: FeeTooltip },
+		{
+			key: 'delegationRate',
+			format: 'percentage',
+			suffix: 'Fee',
+			tooltip:
+				'This commission rate represents the percentage of the reward that the node operator retains for their services. For instance, a rate of 100% means the validator keeps all of the rewards, leaving zero to the delegators',
+		},
 		{ key: 'totalStaked', format: 'mote' },
 	],
 };

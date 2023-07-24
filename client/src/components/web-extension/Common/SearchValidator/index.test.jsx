@@ -31,9 +31,7 @@ jest.mock('react-router-dom', () => ({
 // }));
 
 test('Should show validator list', () => {
-	spyOnUseSelector.mockReturnValue([
-		{ validatorPublicKey: 'testkhaskd', delegationRate: 10, },
-	]);
+	spyOnUseSelector.mockReturnValue([{ validatorPublicKey: 'testkhaskd', delegationRate: 10 }]);
 	useLocation.mockReturnValue({ state: {} });
 	const { getByText, container } = render(<SearchValidator />);
 
@@ -50,7 +48,6 @@ test('Should update search box ', async () => {
 	spyOnUseSelector.mockReturnValue([
 		{ validatorPublicKey: 'testkhaskd', delegationRate: 10, totalStaked: 1000000000 },
 		{ validatorPublicKey: 'test', delegationRate: 11, totalStaked: 1000000000000 },
-
 	]);
 	useLocation.mockReturnValue({ state: {} });
 	const { getByText, getByPlaceholderText } = render(<SearchValidator />);
