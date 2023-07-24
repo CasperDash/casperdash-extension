@@ -1,4 +1,4 @@
-import { User, EncryptionType } from 'casper-storage';
+import { User, EncryptionType, ValidationResult } from 'casper-storage';
 import { DeployUtil, signFormattedMessage } from 'casper-js-sdk';
 import _get from 'lodash-es/get';
 import UserService from '@cd/services/ServiceWorker/UserService';
@@ -37,7 +37,7 @@ class AccountController {
 		}
 	};
 
-	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519 }) => {
+	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519, derivationPath }) => {
 		if (!password) {
 			throw Error('Missing password');
 		}
@@ -51,7 +51,18 @@ class AccountController {
 			const opts = {
 				encryptionType,
 			};
-			const user = new UserService(new User(password), opts);
+			const user = new UserService(
+				new User(
+					password,
+					{
+						passwordValidator: {
+							validatorFunc: () => new ValidationResult(true),
+						},
+					},
+					derivationPath,
+				),
+				opts,
+			);
 
 			await user.initialize(keyphrase);
 

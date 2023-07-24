@@ -29,6 +29,13 @@ const updateEncryptionType = (encryptionType) => {
 	};
 };
 
+const updateDerivationPath = (derivationPath) => {
+	return {
+		type: CREATE_WALLET.UPDATE_DERIVATION_PATH,
+		payload: { derivationPath },
+	};
+};
+
 /**
  * Ids of selected words for checking
  * @param {Array[Number]} idKeys
@@ -84,4 +91,5 @@ export {
 	setPrevStep,
 	updateKeyphrase,
 	updateEncryptionType,
+	updateDerivationPath
 };
