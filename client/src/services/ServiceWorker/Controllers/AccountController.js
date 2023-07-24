@@ -51,16 +51,18 @@ class AccountController {
 			const opts = {
 				encryptionType,
 			};
-			console.log(`🚀 ~ createNewUser ~ derivationPath`, derivationPath)
-			const user = new UserService(new User(
-				password,    
-				{
-					passwordValidator: {
-						validatorFunc: () => new ValidationResult(true),
+			const user = new UserService(
+				new User(
+					password,
+					{
+						passwordValidator: {
+							validatorFunc: () => new ValidationResult(true),
+						},
 					},
-				},
-			  	derivationPath
-			), opts);
+					derivationPath,
+				),
+				opts,
+			);
 
 			await user.initialize(keyphrase);
 
