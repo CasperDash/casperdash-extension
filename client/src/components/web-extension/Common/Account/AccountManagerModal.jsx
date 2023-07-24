@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import isNil from 'lodash-es/isNil';
+import _sortBy from 'lodash-es/sortBy';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
@@ -69,7 +70,12 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 	};
 
 	const handleAddNewWallet = () => {
-		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length))).then(() => {
+		const hdWallets = _sortBy(
+			wallets.filter((wallet) => wallet.isHDWallet),
+			'hdWalletIndex',
+		);
+		const nextIndex = hdWallets[hdWallets.length - 1]?.hdWalletIndex + 1;
+		addWalletAccount(nextIndex, new WalletDescriptor(formatAccountName(nextIndex))).then(() => {
 			return loadWallets();
 		});
 	};

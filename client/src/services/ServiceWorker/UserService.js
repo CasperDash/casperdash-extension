@@ -183,6 +183,8 @@ export class UserService {
 		return await Promise.all(
 			wallets.concat(legacyWallets).map(async (wallet) => ({
 				//should not spread wallet here, wallet have some sensitive info
+				hdWalletIndex: wallet.isHDWallet ? wallet.index : undefined,
+				isHDWallet: wallet.isHDWallet,
 				descriptor: wallet.descriptor,
 				uid: wallet.uid,
 				encryptionType: wallet.encryptionType,
