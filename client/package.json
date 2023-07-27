@@ -1,7 +1,7 @@
 {
 	"name": "casperdash_client",
 	"description": "CasperDash Client",
-	"version": "1.5.3",
+	"version": "1.5.4",
 	"private": false,
 	"author": "CasperDash",
 	"license": "MIT",
