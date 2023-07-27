@@ -9,12 +9,11 @@ import {
 	selectCreateWalletDerivationPath,
 } from '@cd/selectors/createWallet';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
-import { sharesToMnemonic } from '@cd/helpers/shareable';
 
 const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const keyPhraseShares = useSelector(selectCreateWalletKeyphrase);
+	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
 	const encryptionType = useSelector(selectCreateWalletEncryptionType);
 	const derivationPath = useSelector(selectCreateWalletDerivationPath);
 
@@ -34,16 +33,11 @@ const useCreateUser = () => {
 	const onCreateNewUser = useCallback(
 		async (password) => {
 			try {
-				if (!keyPhraseShares) {
+				if (!keyPhrase) {
 					throw new Error('Missing keyphrase');
 				}
 
-				const result = await createUserServiceSW(
-					password,
-					sharesToMnemonic(keyPhraseShares),
-					encryptionType,
-					derivationPath,
-				);
+				const result = await createUserServiceSW(password, keyPhrase, encryptionType, derivationPath);
 				onCreateSuccess(result);
 				return result;
 			} catch (err) {
@@ -51,7 +45,7 @@ const useCreateUser = () => {
 				return undefined;
 			}
 		},
-		[keyPhraseShares, onCreateSuccess, encryptionType, derivationPath],
+		[keyPhrase, onCreateSuccess, encryptionType, derivationPath],
 	);
 
 	return { onCreateNewUser };

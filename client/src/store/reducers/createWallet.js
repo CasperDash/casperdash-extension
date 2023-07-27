@@ -1,13 +1,13 @@
 import { EncryptionType } from 'casper-storage';
-import { CREATE_WALLET } from '../actionTypes';
 import { DERIVATION_PATHS } from '@cd/constants/derivationPaths';
+import { CREATE_WALLET } from '../actionTypes';
 
 const initialState = {
 	currentStep: 0,
 	keyPhrase: null,
 	answerSheet: undefined,
 	encryptionType: EncryptionType.Ed25519,
-	derivationPath: DERIVATION_PATHS.CASPERWALLET,
+	derivationPath: DERIVATION_PATHS.CASPERDASH,
 };
 
 function reducer(state = initialState, { payload, type } = {}) {
