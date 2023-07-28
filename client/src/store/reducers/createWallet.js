@@ -7,7 +7,7 @@ const initialState = {
 	keyPhrase: null,
 	answerSheet: undefined,
 	encryptionType: EncryptionType.Ed25519,
-	derivationPath: DERIVATION_PATHS.CASPERWALLET,
+	derivationPath: DERIVATION_PATHS.CASPERDASH,
 };
 
 function reducer(state = initialState, { payload, type } = {}) {
