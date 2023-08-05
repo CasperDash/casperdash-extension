@@ -7,8 +7,8 @@ import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType'
 import { CONSTANTS } from '@cd/shared/constants';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
-import FieldKeyphrase from './FieldKeyphrase';
 import SelectDerivationPath from '@cd/web-extension/Common/SelectDerivationPath';
+import FieldKeyphrase from './FieldKeyphrase';
 
 const ImportWallet = () => {
 	const dispatch = useDispatch();
@@ -42,7 +42,8 @@ const ImportWallet = () => {
 		const error = onValidate(recoveryPhrase);
 		setErrorMessage(error);
 		if (!error) {
-			dispatch(updateKeyphrase(recoveryPhrase.map((value) => value.trim()).join(' ')));
+			const keyFactory = KeyFactory.getInstance();
+			dispatch(updateKeyphrase(keyFactory.toEntropy(recoveryPhrase.map((value) => value.trim()))));
 			setRecoveryPhrase([]);
 			dispatch(setNextStep());
 		}

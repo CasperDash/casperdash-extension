@@ -7,14 +7,14 @@ import { generateCWHeader, onGenerateWordcheck } from '@cd/actions/createWalletA
 import { setNextStep, updateAnswerSheet, createAnswerSheet } from '@cd/actions/createWalletActions';
 import { selectCreateWalletState } from '@cd/selectors/createWallet';
 import { CONSTANTS } from '@cd/shared/constants';
-import { sharesToMnemonic } from '@cd/helpers/shareable';
+import { toEncodedPhrase } from '@cd/helpers/shareable';
 import WordsGroup from './WordsGroup';
 import './ValidateKeyphrase.scss';
 
 const ValidateKeyphrasePage = () => {
 	const [, setHeader] = useOutletContext();
 	const dispatch = useDispatch();
-	const { currentStep, answerSheet, keyPhrase: keyPhraseShares } = useSelector(selectCreateWalletState);
+	const { currentStep, answerSheet, keyPhrase } = useSelector(selectCreateWalletState);
 	const [wordsTemplate, setTemplate] = useState(undefined);
 	const onUpdateAnswerSheet = useCallback(
 		(groupIndex, value) => dispatch(updateAnswerSheet(groupIndex, value)),
@@ -22,7 +22,8 @@ const ValidateKeyphrasePage = () => {
 	);
 	const onCreateAnswerSheet = useCallback((checklist) => dispatch(createAnswerSheet(checklist)), [dispatch]);
 
-	const totalWords = sharesToMnemonic(keyPhraseShares).split(' ').length;
+	const encodedPhrase = toEncodedPhrase(keyPhrase);
+	const totalWords = encodedPhrase.length;
 	const totalWordCheck = totalWords / 3;
 
 	const shouldDisableNextButton = useMemo(() => {
@@ -88,19 +89,18 @@ const ValidateKeyphrasePage = () => {
 		}
 
 		const getChecks = () => {
-			const mnemonics = sharesToMnemonic(keyPhraseShares).split(' ');
 			const { checklist, data } = onGenerateWordcheck(totalWords, totalWordCheck);
 			onCreateAnswerSheet(checklist);
 
 			return checklist.map((id) => {
-				const arr = data[id].options.map((wordId) => mnemonics[wordId]);
+				const arr = data[id].options.map((wordId) => encodedPhrase[wordId]);
 				return {
-					answer: { id, text: mnemonics[id] },
+					answer: { id, text: encodedPhrase[id] },
 					value: null,
 					options: arr,
 				};
 			});
-		}
+		};
 
 		setTemplate(getChecks());
 		// eslint-disable-next-line react-hooks/exhaustive-deps

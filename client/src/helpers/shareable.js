@@ -1,12 +1,6 @@
-import * as shareableSeed from 'casper-shareable-seed';
-import _values from 'lodash-es/values';
+import { KeyFactory } from 'casper-storage';
 
-export const mnemonicToShares = (mnemonic) => {
-    return shareableSeed.mnemonicToShares(mnemonic, 3, 2, 'v1', 'english');
-};
-
-export const sharesToMnemonic = (shares) => {
-    const shareList = _values(shares).slice(0, 2);
-
-    return shareableSeed.shareListToMnemonic(shareList) || '';
+export const toEncodedPhrase = (keyPhrase) => {
+	const keyManager = KeyFactory.getInstance();
+	return keyManager.toKey(keyPhrase, true);
 };

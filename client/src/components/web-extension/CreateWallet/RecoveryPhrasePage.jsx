@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Layer, Stage } from 'react-konva';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,16 +12,22 @@ import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWo
 import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import CanvasText from '@cd/web-extension/Common/CanvasText/index';
-import { sharesToMnemonic } from '@cd/helpers/shareable';
+import { EncoderUtils } from 'casper-storage';
+import { toEncodedPhrase } from '@cd/helpers/shareable';
 
 import './RecoveryPhrasePage.scss';
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
 	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
-	const keyPhraseShares = useSelector(selectCreateWalletKeyphrase);
+	const [encodedPhrase, setEncodedPhrase] = useState([]);
+	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
 
-	const TOTAL_KEYWORDS = sharesToMnemonic(keyPhraseShares).split(' ').length;
+	useEffect(() => {
+		if (keyPhrase) {
+			setEncodedPhrase(toEncodedPhrase(keyPhrase));
+		}
+	}, [keyPhrase]);
 
 	const onClickNextHandler = useCallback(() => {
 		dispatch(setNextStep());
@@ -31,7 +37,7 @@ const RecoveryPhrasePage = () => {
 		dispatch(generateKeyphrase(numOfWords));
 	}, [numOfWords, dispatch]);
 
-	return (
+	return encodedPhrase.length ? (
 		<div className="cd_we_create-wallet-layout--root">
 			<SelectEncryptionType />
 			<SelectDerivationPath />
@@ -45,17 +51,19 @@ const RecoveryPhrasePage = () => {
 				<ul className="cd_we_create-keyphrase--column">
 					<Stage width={100} height={300}>
 						<Layer>
-							{dropRight(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
+							{dropRight(new Array(numOfWords).fill(), numOfWords / 2)?.map((_, index) => {
 								const eleIndex = index + 1;
 
 								return (
-									<CanvasText 
-										key={`left-${index}-${nanoid()}`} 
-										text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[index]}`} 
+									<CanvasText
+										key={`left-${index}-${nanoid()}`}
+										text={`${eleIndex}. ${
+											encodedPhrase[index] && EncoderUtils.decodeBase64(encodedPhrase[index])
+										}`}
 										x={10}
 										y={22 * index}
 									/>
-								)
+								);
 							})}
 						</Layer>
 					</Stage>
@@ -63,16 +71,20 @@ const RecoveryPhrasePage = () => {
 				<ul className="cd_we_create-keyphrase--column">
 					<Stage width={100} height={300}>
 						<Layer>
-							{drop(new Array(TOTAL_KEYWORDS).fill(), TOTAL_KEYWORDS / 2)?.map((_, index) => {
-								const eleIndex = index + (1 + TOTAL_KEYWORDS / 2);
+							{drop(new Array(numOfWords).fill(), numOfWords / 2)?.map((_, index) => {
+								const eleIndex = index + (1 + numOfWords / 2);
 
 								return (
-									<CanvasText 
-										key={`right-${index}-${nanoid()}`} text={`${eleIndex}. ${sharesToMnemonic(keyPhraseShares).split(' ')[eleIndex - 1]}`} 
+									<CanvasText
+										key={`right-${index}-${nanoid()}`}
+										text={`${eleIndex}. ${
+											encodedPhrase[eleIndex - 1] &&
+											EncoderUtils.decodeBase64(encodedPhrase[eleIndex - 1])
+										}`}
 										x={10}
 										y={22 * index}
 									/>
-								)
+								);
 							})}
 						</Layer>
 					</Stage>
@@ -85,7 +97,7 @@ const RecoveryPhrasePage = () => {
 				</Button>
 			</div>
 		</div>
-	);
+	) : null;
 };
 
 export default RecoveryPhrasePage;

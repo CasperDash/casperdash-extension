@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
 import { getKeyphrase } from '@cd/components/hooks/useServiceWorker';
 import CanvasText from '@cd/web-extension/Common/CanvasText';
-import { mnemonicToShares, sharesToMnemonic } from '@cd/helpers/shareable';
+import { EncoderUtils } from 'casper-storage';
 
 import './RecoveryPhrase.scss';
 
@@ -15,15 +15,15 @@ const RecoveryPhrase = () => {
 
 	const [isBlurred, setIsBlurred] = useState(true);
 	const [showEnterPassword, setShowEnterPassword] = useState(true);
-	const [shares, setShares] = useState('');
+	const [encodedKeyPhrase, setEncodedKeyPhrase] = useState([]);
 
-	const TOTAL_KEYWORDS = sharesToMnemonic(shares).split(' ').length;
+	const TOTAL_KEYWORDS = encodedKeyPhrase.length;
 
 	const onViewRecoveryPhrase = useCallback(async (password) => {
 		try {
-			const gotShares = mnemonicToShares(await getKeyphrase(password));
+			const keyPhrase = await getKeyphrase(password);
 
-			setShares(gotShares);
+			setEncodedKeyPhrase(keyPhrase);
 			setShowEnterPassword(false);
 		} catch (error) {
 			throw Error('Wrong password provided. Please try again');
@@ -41,45 +41,48 @@ const RecoveryPhrase = () => {
 					})}
 					onClick={() => setIsBlurred(false)}
 				>
-					
-						{
-							shares && (
-									<ul
-										className={clsx('cd_we_recovery-keyphrase__column', {
-											'cd_we_recovery-keyphrase__column--blurred': isBlurred,
-										})}
-									>								
-										<Stage width={100} height={height}>
-											<Layer>
-												{new Array(TOTAL_KEYWORDS / 2).fill().map((_, index) => (
-													<CanvasText 
-														key={`left-${index}`} 
-														text={`${index + 1}. ${sharesToMnemonic(shares).split(' ')[index]}`} 
-														x={10}
-														y={22 * index}
-													/>
-												))}
-											</Layer>
-										</Stage>
-										<Stage width={100} height={height}>
-											<Layer>
-												{new Array(TOTAL_KEYWORDS / 2).fill().map((_, index) => {
-													const eleIndex = index + (TOTAL_KEYWORDS / 2);
+					{encodedKeyPhrase.length && (
+						<ul
+							className={clsx('cd_we_recovery-keyphrase__column', {
+								'cd_we_recovery-keyphrase__column--blurred': isBlurred,
+							})}
+						>
+							<Stage width={100} height={height}>
+								<Layer>
+									{new Array(TOTAL_KEYWORDS / 2).fill().map((_, index) => (
+										<CanvasText
+											key={`left-${index}`}
+											text={`${index + 1}. ${
+												encodedKeyPhrase[index] &&
+												EncoderUtils.decodeBase64(encodedKeyPhrase[index])
+											}`}
+											x={10}
+											y={22 * index}
+										/>
+									))}
+								</Layer>
+							</Stage>
+							<Stage width={100} height={height}>
+								<Layer>
+									{new Array(TOTAL_KEYWORDS / 2).fill().map((_, index) => {
+										const eleIndex = index + TOTAL_KEYWORDS / 2;
 
-													return (
-														<CanvasText 
-															key={`right-${index}`} 
-															text={`${eleIndex + 1}. ${sharesToMnemonic(shares).split(' ')[eleIndex]}`} 
-															x={10}
-															y={22 * index}
-														/>
-													)
-												})}
-											</Layer>
-										</Stage>
-									</ul>
-							)
-						}
+										return (
+											<CanvasText
+												key={`right-${index}`}
+												text={`${eleIndex + 1}. ${
+													encodedKeyPhrase[eleIndex] &&
+													EncoderUtils.decodeBase64(encodedKeyPhrase[eleIndex])
+												}`}
+												x={10}
+												y={22 * index}
+											/>
+										);
+									})}
+								</Layer>
+							</Stage>
+						</ul>
+					)}
 					{isBlurred && (
 						<div className="cd_we_recovery-keyphrase__blur-overlay">
 							Click to reveal secret recovery phrase

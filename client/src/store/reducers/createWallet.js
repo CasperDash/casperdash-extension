@@ -1,6 +1,6 @@
 import { EncryptionType } from 'casper-storage';
-import { CREATE_WALLET } from '../actionTypes';
 import { DERIVATION_PATHS } from '@cd/constants/derivationPaths';
+import { CREATE_WALLET } from '../actionTypes';
 
 const initialState = {
 	currentStep: 0,
