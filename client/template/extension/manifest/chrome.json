@@ -1,0 +1,5 @@
+{
+    "background": {
+		"service_worker": "/static/js/sw/service-worker.js"
+	}
+}

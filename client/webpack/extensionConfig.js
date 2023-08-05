@@ -3,6 +3,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./commonConfig');
+const WebpackExtensionPlugin = require('./plugins/webpackExtension');
 
 module.exports = (dir) =>
 	merge(common(dir), {
@@ -40,15 +41,16 @@ module.exports = (dir) =>
 				chunks: ['popup'],
 				cache: false,
 			}),
-			new CopyWebpackPlugin({
-				patterns: [
-					{
-						from: 'template/extension/manifest.json',
-						to: path.join(dir, 'build_extension'),
-						force: true,
-					},
-				],
-			}),
+			new WebpackExtensionPlugin(),
+			// new CopyWebpackPlugin({
+			// 	patterns: [
+			// 		{
+			// 			from: 'template/extension/manifest.json',
+			// 			to: path.join(dir, 'build_extension'),
+			// 			force: true,
+			// 		},
+			// 	],
+			// }),
 			new CopyWebpackPlugin({
 				patterns: [
 					{
