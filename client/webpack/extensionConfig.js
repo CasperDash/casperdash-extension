@@ -41,7 +41,12 @@ module.exports = (dir) =>
 				chunks: ['popup'],
 				cache: false,
 			}),
-			new WebpackExtensionPlugin(),
+			new WebpackExtensionPlugin({
+				basePath: './template/extension/manifest/base.json',
+				chromePath: './template/extension/manifest/chrome.json',
+				firefoxPath: './template/extension/manifest/firefox.json',
+				destPath: './build_extension/manifest.json',
+			}),
 			// new CopyWebpackPlugin({
 			// 	patterns: [
 			// 		{

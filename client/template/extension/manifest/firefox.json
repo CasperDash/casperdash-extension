@@ -1,1 +1,6 @@
-{}
+{
+    "background": {
+        "scripts": ["/static/js/sw/service-worker.js"],
+        "persistent": true
+	}
+}
