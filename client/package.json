@@ -68,6 +68,7 @@
 		]
 	},
 	"scripts": {
+		"start:firefox": "web-ext run --source-dir ./build_extension/",
 		"dev-extension-mainnet": "node webpack/webserver.js --mode development --env=type=extension --env=network=mainnet --watch",
 		"watch-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=mainnet --watch",
 		"build-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode production --env=network=mainnet",
@@ -136,6 +137,7 @@
 		"stream-browserify": "^3.0.0",
 		"style-loader": "^3.3.1",
 		"util": "^0.12.5",
+		"web-ext": "^7.6.2",
 		"webpack": "^5.85.0",
 		"webpack-bundle-analyzer": "^4.5.0",
 		"webpack-cli": "^4.9.1",

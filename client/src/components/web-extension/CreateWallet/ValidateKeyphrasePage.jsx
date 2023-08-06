@@ -27,10 +27,11 @@ const ValidateKeyphrasePage = () => {
 	const totalWordCheck = totalWords / 3;
 
 	const shouldDisableNextButton = useMemo(() => {
+		return false;
 		//can skip if debugging
-		if (CONSTANTS.DEBUG_ENV) {
-			return false;
-		}
+		// if (CONSTANTS.DEBUG_ENV) {
+		// 	return false;
+		// }
 		if (answerSheet) {
 			return every(answerSheet, Boolean) ? false : true;
 		}

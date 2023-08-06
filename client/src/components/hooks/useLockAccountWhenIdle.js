@@ -56,8 +56,8 @@ const useLockAccountWhenIdle = () => {
 	}, []);
 
 	const resetTimer = () => {
-		chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
-		chrome.alarms.create(AUTO_LOCK_TIMEOUT_ALARM, {
+		browser.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
+		browser.alarms.create(AUTO_LOCK_TIMEOUT_ALARM, {
 			delayInMinutes: autoLockTime,
 			periodInMinutes: autoLockTime,
 		});

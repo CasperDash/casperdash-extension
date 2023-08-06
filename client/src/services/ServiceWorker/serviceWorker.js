@@ -1,4 +1,5 @@
 import { ObservableStore } from '@metamask/obs-store';
+import browser from 'webextension-polyfill';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
 import { AUTO_LOCK_TIMEOUT_ALARM } from '@cd/constants/alarm';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
@@ -14,8 +15,8 @@ const popupController = new PopupController(accountController, appStore);
 const signController = new SigningController(popupController, accountController);
 
 function registerAlarmActions() {
-	chrome.alarms.onAlarm.addListener(() => {
-		chrome.alarms.getAll(async (alarms) => {
+	browser.alarms.onAlarm.addListener(() => {
+		browser.alarms.getAll(async (alarms) => {
 			const hasAlarm = alarms.find((alarm) => alarm.name === AUTO_LOCK_TIMEOUT_ALARM);
 
 			if (hasAlarm) {
@@ -25,11 +26,11 @@ function registerAlarmActions() {
 				if (loginOptionsCache.connectionType !== CONNECTION_TYPES.ledger) {
 					await accountController.lockWallet();
 
-					chrome.runtime.sendMessage({
+					browser.runtime.sendMessage({
 						type: 'LOCK_WALLET',
 					});
 
-					chrome.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
+					browser.alarms.clear(AUTO_LOCK_TIMEOUT_ALARM);
 				}
 			}
 		});

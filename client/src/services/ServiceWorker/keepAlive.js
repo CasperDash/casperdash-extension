@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------------------
 // SERVICEWORKER.JS
 // ---------------------------------------------------------------------------
+import browser from 'webextension-polyfill';
 
 const CASPERDASH_KEEPALIVE_PORT = 'CASPERDASH_KEEPALIVE';
 
@@ -40,7 +41,7 @@ function letsStart() {
 	}
 }
 
-chrome.runtime.onInstalled.addListener(async () => await initialize());
+browser.runtime.onInstalled.addListener(async () => await initialize());
 
 // Clears the Highlander interval when browser closes.
 // This allows the process associated with the extension to be removed.
@@ -48,7 +49,7 @@ chrome.runtime.onInstalled.addListener(async () => await initialize());
 // will be removed after about 30 seconds at maximum (from Chromium 110 up, before was 5 minutes).
 // If the browser is reopened before the system has removed the (pending) process,
 // Highlander will be restarted in the same process which will be not removed anymore.
-chrome.windows.onRemoved.addListener(() => {
+browser.windows.onRemoved.addListener(() => {
 	wCounter--;
 	if (wCounter > 0) {
 		return;
@@ -65,8 +66,8 @@ chrome.windows.onRemoved.addListener(() => {
 	}
 });
 
-chrome.windows.onCreated.addListener(async () => {
-	let w = await chrome.windows.getAll();
+browser.windows.onCreated.addListener(async () => {
+	let w = await browser.windows.getAll();
 	wCounter = w.length;
 	if (wCounter == 1) {
 		updateJobs();
@@ -84,10 +85,10 @@ async function updateJobs() {
 // ---------------------------
 async function Highlander() {
 	if (alivePort == null) {
-		alivePort = chrome.runtime.connect({ name: CASPERDASH_KEEPALIVE_PORT });
+		alivePort = browser.runtime.connect({ name: CASPERDASH_KEEPALIVE_PORT });
 
 		alivePort.onDisconnect.addListener(() => {
-			if (chrome.runtime.lastError) {
+			if (browser.runtime.lastError) {
 				if (DEBUG)
 					console.info(
 						`(DEBUG Highlander) Expected disconnect error. ServiceWorker status should be still RUNNING.`,
@@ -103,8 +104,8 @@ async function Highlander() {
 	if (alivePort) {
 		alivePort.postMessage({ content: 'ping' });
 
-		if (chrome.runtime.lastError) {
-			if (DEBUG) console.info(`(DEBUG Highlander): postMessage error: ${chrome.runtime.lastError.message}`);
+		if (browser.runtime.lastError) {
+			if (DEBUG) console.info(`(DEBUG Highlander): postMessage error: ${browser.runtime.lastError.message}`);
 		} else {
 			if (DEBUG) console.info(`(DEBUG Highlander): "ping" sent through ${alivePort.name} port`);
 		}

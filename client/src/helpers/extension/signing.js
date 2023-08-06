@@ -12,7 +12,7 @@ export async function updateStatusEvent(tabId, msg, {
     isConnected,
     activeKey,
 }) {
-    chrome.tabs.sendMessage(tabId, {
+  browser.tabs.sendMessage(tabId, {
         name: msg,
         detail: {
           isUnlocked,

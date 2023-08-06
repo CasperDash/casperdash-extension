@@ -1,10 +1,13 @@
 let browser;
 (async () => {
-	if (window?.chrome?.runtime && chrome.runtime.id) {
-		// Code running in a Chrome extension (content script, background page, etc.)
-		browser = await import('webextension-polyfill');
-	}
+	browser = await import('webextension-polyfill');
+
+	// if (window?.chrome?.runtime && chrome.runtime.id) {
+	// 	// Code running in a Chrome extension (content script, background page, etc.)
+	// 	browser = await import('webextension-polyfill');
+	// }
 })();
+
 
 const resultHandler = (response = {}) => {
 	if (response.error) {

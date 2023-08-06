@@ -18,6 +18,7 @@ class AccountController {
 	};
 
 	validateReturningUser = async ({ password }) => {
+		console.log('password: ', password);
 		try {
 			const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
 			const { userCache, selectedWallet } = await UserService.makeUserFromCache(password, cacheConnectedAccount);

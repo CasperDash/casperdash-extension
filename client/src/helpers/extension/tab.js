@@ -1,3 +1,5 @@
+import browser from 'webextension-polyfill';
+
 const EXTENSION_HOME_URL = 'home.html';
 
 /**
@@ -6,11 +8,11 @@ const EXTENSION_HOME_URL = 'home.html';
  */
 export const newTab = (options) => {
 	const { route, url = EXTENSION_HOME_URL } = options;
-	let extensionURL = chrome.runtime.getURL(url);
+	let extensionURL = browser.runtime.getURL(url);
 	if (route) {
 		extensionURL += `#${route}`;
 	}
-	chrome.tabs.create({
+	browser.tabs.create({
 		url: extensionURL,
 	});
 };
