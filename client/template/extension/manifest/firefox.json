@@ -1,4 +1,11 @@
 {
+    "web_accessible_resources": [
+        {
+            "resources": [ "/static/js/scripts/content/inpage.js" ],
+            "extension_ids": ["*"],
+            "matches": [ "*://*/*" ]
+        }
+    ],
     "background": {
         "scripts": ["/static/js/sw/service-worker.js"],
         "persistent": true

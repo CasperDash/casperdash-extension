@@ -1,6 +1,6 @@
+import browser from 'webextension-polyfill';
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
-import isEmpty from 'lodash-es/isEmpty';
 
 /**
  * Set value to local storage by path
@@ -49,7 +49,7 @@ const getLocalStorageValue = (key, path) => {
 	}
 };
 
-const setChromeStorageLocal = ({ key, value } = undefined) => {
+const setChromeStorageLocal = async ({ key, value } = undefined) => {
 	try {
 		if (!key) {
 			return undefined;
@@ -59,12 +59,7 @@ const setChromeStorageLocal = ({ key, value } = undefined) => {
 			throw new Error('Must be running in Chrome Extension environment');
 		}
 
-		return new Promise((resolve, reject) => {
-			chrome.storage.local.set({ [key]: value }, () => {
-				const error = chrome.runtime.lastError;
-				error ? reject(error) : resolve();
-			});
-		});
+		await browser.storage.local.set({ [key]: value });
 	} catch (error) {
 		console.error(`🚀 ~ setChromeStorageLocal::error `, error);
 		return undefined;
@@ -87,27 +82,17 @@ const getChromeStorageLocal = async (key) => {
 		 */
 		const finalkey = typeof key === 'string' ? [key] : [...key];
 
-		return new Promise((resolve) => {
-			chrome.storage.local.get(finalkey, (items) => {
-				// Pass any observed errors down the promise chain.
-				if (chrome.runtime.lastError) {
-					throw new Error(chrome.runtime.lastError);
-				}
-
-				// Pass the data retrieved from storage down the promise chain.
-				return resolve(items);
-			});
-		});
+		return browser.storage.local.get(finalkey);
 	} catch (error) {
 		console.error(`🚀 ~ getChromeStorageLocal::error `, error);
 		return undefined;
 	}
 };
 
-const clearChromeStorageLocal = async () => await chrome.storage.local.clear();
+const clearChromeStorageLocal = async () => await browser.storage.local.clear();
 const isUsingExtension = () => {
 	try {
-		return Boolean(typeof chrome !== 'undefined' && !isEmpty(chrome) && 'storage' in chrome);
+		return browser && 'storage' in browser;
 	} catch (err) {
 		return false;
 	}

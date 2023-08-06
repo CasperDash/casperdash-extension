@@ -75,6 +75,7 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 			'hdWalletIndex',
 		);
 		const nextIndex = hdWallets[hdWallets.length - 1]?.hdWalletIndex + 1;
+		console.log('new WalletDescriptor(formatAccountName(nextIndex)): ', new WalletDescriptor(formatAccountName(nextIndex)));
 		addWalletAccount(nextIndex, new WalletDescriptor(formatAccountName(nextIndex))).then(() => {
 			return loadWallets();
 		});
@@ -106,6 +107,8 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 	const onViewBlockExplorer = () => {
 		window.open(`${explorerUrl}/account/${publicKey}`);
 	};
+
+	console.log('wallets: ', wallets);
 
 	return (
 		<Modal
@@ -144,11 +147,11 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 										<EditIcon
 											onClick={() => {
 												setEditingAccount(wallet);
-												setNewAccountName(wallet.descriptor.name);
+												setNewAccountName(wallet.descriptor.name || wallet.descriptor._name);
 											}}
 										/>
 										<div onClick={() => handleOnSelectWallet(wallet.uid)}>
-											{wallet.descriptor.name}
+											{wallet.descriptor.name || wallet.descriptor._name}
 										</div>
 									</>
 								)}

@@ -39,7 +39,7 @@ class WebpackExtensionPlugin {
 
                     const manifest = {
                         ...baseManifest,
-                        ...fireFoxManifest,
+                        ...chromeManifest,
                     };
 
                     fs.writeFileSync(

@@ -1,4 +1,5 @@
 import React from 'react';
+import browser from 'webextension-polyfill';
 import Logo from '@cd/assets/image/Logo-only.svg';
 import LockIcon from '@cd/assets/image/ic-lock.svg';
 import VersionIcon from '@cd/assets/image/ic-version.png';
@@ -24,7 +25,7 @@ const SETTINGS = [
 			img: <Logo />,
 		},
 		action: () => {
-			chrome.tabs.create({ url: 'https://casperdash.io' });
+			browser.tabs.create({ url: 'https://casperdash.io' });
 		},
 	},
 	{
@@ -78,7 +79,7 @@ const SETTINGS = [
 			img: <DocumentIcon/>,
 		},
 		action: () => {
-			chrome.tabs.create({ url: 'https://docs.casperdash.io' });
+			browser.tabs.create({ url: 'https://docs.casperdash.io' });
 		},
 	},
 	{
@@ -88,7 +89,7 @@ const SETTINGS = [
 			img: <SupportIcon />,
 		},
 		action: () => {
-			chrome.tabs.create({ url: 'https://t.me/CasperDash_Official' });
+			browser.tabs.create({ url: 'https://t.me/CasperDash_Official' });
 		},
 	},
 	{

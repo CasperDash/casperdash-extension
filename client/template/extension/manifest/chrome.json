@@ -1,4 +1,10 @@
 {
+	"web_accessible_resources": [
+		{
+			"resources": ["/static/js/scripts/content/inpage.js"],
+			"matches": ["<all_urls>"]
+		}
+	],
     "background": {
 		"service_worker": "/static/js/sw/service-worker.js"
 	}

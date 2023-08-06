@@ -36,7 +36,7 @@ class PopupController {
 
 		this.currentTab = {};
 
-		chrome.tabs.onActivated.addListener(async (activeInfo) => {
+		browser.tabs.onActivated.addListener(async (activeInfo) => {
 			const currentUrl = await this.getActiveTab();
 			if (!currentUrl) {
 				return;
@@ -52,7 +52,7 @@ class PopupController {
 			});
 		});
 
-		chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+		browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 			if (changeInfo.status !== 'complete') {
 				return;
 			}
@@ -299,7 +299,7 @@ class PopupController {
 
 	getActiveTab() {
 		return new Promise((resolve) => {
-			chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+			browser.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
 				if (tabs.length && tabs[0].url) {
 					const url = parseTabURL(tabs[0].url);
 					const properActiveTab = url && !BLACKLIST_PROTOCOLS.includes(url.protocol);

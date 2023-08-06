@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import browser from 'webextension-polyfill';
 import { disconnectFromSite, getConnectedSites } from '@cd/components/hooks/useServiceWorker';
 import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
@@ -39,7 +40,7 @@ const ConnectedSites = () => {
             if (_isEmpty(sites)) {
                 return;
             }
-            const tabs = await chrome.tabs.query({
+            const tabs = await browser.tabs.query({
                 active: true,
                 lastFocusedWindow: true
             });

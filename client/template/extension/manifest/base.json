@@ -22,12 +22,6 @@
 			"all_frames": true
 		}
 	],
-	"web_accessible_resources": [
-		{
-			"resources": ["/static/js/scripts/content/inpage.js"],
-			"matches": ["<all_urls>"]
-		}
-	],
 	"permissions": ["storage", "alarms", "tabs"],
 	"host_permissions": ["<all_urls>"]
 }
