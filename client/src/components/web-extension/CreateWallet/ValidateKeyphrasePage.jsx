@@ -7,7 +7,7 @@ import { generateCWHeader, onGenerateWordcheck } from '@cd/actions/createWalletA
 import { setNextStep, updateAnswerSheet, createAnswerSheet } from '@cd/actions/createWalletActions';
 import { selectCreateWalletState } from '@cd/selectors/createWallet';
 import { CONSTANTS } from '@cd/shared/constants';
-import { toEncodedPhrase } from '@cd/helpers/shareable';
+import { getPhraseLength, getWord } from '@cd/helpers/shareable';
 import WordsGroup from './WordsGroup';
 import './ValidateKeyphrase.scss';
 
@@ -22,8 +22,7 @@ const ValidateKeyphrasePage = () => {
 	);
 	const onCreateAnswerSheet = useCallback((checklist) => dispatch(createAnswerSheet(checklist)), [dispatch]);
 
-	const encodedPhrase = toEncodedPhrase(keyPhrase);
-	const totalWords = encodedPhrase.length;
+	const totalWords = getPhraseLength(keyPhrase);
 	const totalWordCheck = totalWords / 3;
 
 	const shouldDisableNextButton = useMemo(() => {
@@ -90,12 +89,13 @@ const ValidateKeyphrasePage = () => {
 
 		const getChecks = () => {
 			const { checklist, data } = onGenerateWordcheck(totalWords, totalWordCheck);
+
 			onCreateAnswerSheet(checklist);
 
 			return checklist.map((id) => {
-				const arr = data[id].options.map((wordId) => encodedPhrase[wordId]);
+				const arr = data[id].options.map((wordId) => getWord(keyPhrase, wordId));
 				return {
-					answer: { id, text: encodedPhrase[id] },
+					answer: { id, text: getWord(keyPhrase, id) },
 					value: null,
 					options: arr,
 				};

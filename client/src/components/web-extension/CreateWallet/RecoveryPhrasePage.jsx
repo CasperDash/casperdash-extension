@@ -13,21 +13,14 @@ import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
 import CanvasText from '@cd/web-extension/Common/CanvasText/index';
 import { EncoderUtils } from 'casper-storage';
-import { toEncodedPhrase } from '@cd/helpers/shareable';
+import { getWord } from '@cd/helpers/shareable';
 
 import './RecoveryPhrasePage.scss';
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
 	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
-	const [encodedPhrase, setEncodedPhrase] = useState([]);
-	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
-
-	useEffect(() => {
-		if (keyPhrase) {
-			setEncodedPhrase(toEncodedPhrase(keyPhrase));
-		}
-	}, [keyPhrase]);
+	const entropy = useSelector(selectCreateWalletKeyphrase);
 
 	const onClickNextHandler = useCallback(() => {
 		dispatch(setNextStep());
@@ -37,7 +30,7 @@ const RecoveryPhrasePage = () => {
 		dispatch(generateKeyphrase(numOfWords));
 	}, [numOfWords, dispatch]);
 
-	return encodedPhrase.length ? (
+	return entropy ? (
 		<div className="cd_we_create-wallet-layout--root">
 			<SelectEncryptionType />
 			<SelectDerivationPath />
@@ -57,9 +50,7 @@ const RecoveryPhrasePage = () => {
 								return (
 									<CanvasText
 										key={`left-${index}-${nanoid()}`}
-										text={`${eleIndex}. ${
-											encodedPhrase[index] && EncoderUtils.decodeBase64(encodedPhrase[index])
-										}`}
+										text={`${eleIndex}. ${EncoderUtils.decodeBase64(getWord(entropy, index))}`}
 										x={10}
 										y={22 * index}
 									/>
@@ -77,10 +68,9 @@ const RecoveryPhrasePage = () => {
 								return (
 									<CanvasText
 										key={`right-${index}-${nanoid()}`}
-										text={`${eleIndex}. ${
-											encodedPhrase[eleIndex - 1] &&
-											EncoderUtils.decodeBase64(encodedPhrase[eleIndex - 1])
-										}`}
+										text={`${eleIndex}. ${EncoderUtils.decodeBase64(
+											getWord(entropy, [eleIndex - 1]),
+										)}`}
 										x={10}
 										y={22 * index}
 									/>

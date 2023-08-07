@@ -200,10 +200,10 @@ export class UserService {
 		return await this.prepareStorageData();
 	};
 
-	getKeyphrase = async () => {
+	getEntropy = async () => {
 		const user = this.instance;
 
-		return await user.getHDWalletKeyPhrase(true);
+		return await user.getHDWallet().keyEntropy;
 	};
 
 	setSelectedWallet = (uid) => {

@@ -9,7 +9,7 @@ describe('Create Wallet reducer', () => {
 		keyPhrase: null,
 		answerSheet: undefined,
 		encryptionType: EncryptionType.Ed25519,
-		derivationPath: "m/PURPOSE'/COINT_TYPE'/0'/0/INDEX",
+		derivationPath: "m/PURPOSE'/COINT_TYPE'/INDEX'",
 	});
 	beforeEach(() => {
 		initState = reset();

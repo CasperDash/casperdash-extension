@@ -105,13 +105,13 @@ class AccountController {
 		return signFormattedMessage(asymKey, messageBytes);
 	};
 
-	getKeyphrase = async ({ password }) => {
+	getEntropy = async ({ password }) => {
 		try {
 			const { userDetails } = await this.validateReturningUser({ password });
 			if (!userDetails) {
 				throw Error('Invalid password');
 			}
-			return this.userService.getKeyphrase();
+			return this.userService.getEntropy();
 		} catch (error) {
 			console.error(error);
 			throw Error('Invalid password');

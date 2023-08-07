@@ -4,9 +4,10 @@ import { Layer, Stage } from 'react-konva';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
-import { getKeyphrase } from '@cd/components/hooks/useServiceWorker';
+import { getEntropy } from '@cd/components/hooks/useServiceWorker';
 import CanvasText from '@cd/web-extension/Common/CanvasText';
 import { EncoderUtils } from 'casper-storage';
+import { getWord, getPhraseLength } from '@cd/helpers/shareable';
 
 import './RecoveryPhrase.scss';
 
@@ -15,15 +16,15 @@ const RecoveryPhrase = () => {
 
 	const [isBlurred, setIsBlurred] = useState(true);
 	const [showEnterPassword, setShowEnterPassword] = useState(true);
-	const [encodedKeyPhrase, setEncodedKeyPhrase] = useState([]);
+	const [entropy, setEntropy] = useState();
 
-	const TOTAL_KEYWORDS = encodedKeyPhrase.length;
+	const TOTAL_KEYWORDS = getPhraseLength(entropy);
 
 	const onViewRecoveryPhrase = useCallback(async (password) => {
 		try {
-			const keyPhrase = await getKeyphrase(password);
+			const entropy = await getEntropy(password);
 
-			setEncodedKeyPhrase(keyPhrase);
+			setEntropy(entropy);
 			setShowEnterPassword(false);
 		} catch (error) {
 			throw Error('Wrong password provided. Please try again');
@@ -41,7 +42,7 @@ const RecoveryPhrase = () => {
 					})}
 					onClick={() => setIsBlurred(false)}
 				>
-					{encodedKeyPhrase.length && (
+					{entropy && (
 						<ul
 							className={clsx('cd_we_recovery-keyphrase__column', {
 								'cd_we_recovery-keyphrase__column--blurred': isBlurred,
@@ -52,10 +53,7 @@ const RecoveryPhrase = () => {
 									{new Array(TOTAL_KEYWORDS / 2).fill().map((_, index) => (
 										<CanvasText
 											key={`left-${index}`}
-											text={`${index + 1}. ${
-												encodedKeyPhrase[index] &&
-												EncoderUtils.decodeBase64(encodedKeyPhrase[index])
-											}`}
+											text={`${index + 1}. ${EncoderUtils.decodeBase64(getWord(entropy, index))}`}
 											x={10}
 											y={22 * index}
 										/>
@@ -70,10 +68,9 @@ const RecoveryPhrase = () => {
 										return (
 											<CanvasText
 												key={`right-${index}`}
-												text={`${eleIndex + 1}. ${
-													encodedKeyPhrase[eleIndex] &&
-													EncoderUtils.decodeBase64(encodedKeyPhrase[eleIndex])
-												}`}
+												text={`${eleIndex + 1}. ${EncoderUtils.decodeBase64(
+													getWord(entropy, eleIndex),
+												)}`}
 												x={10}
 												y={22 * index}
 											/>

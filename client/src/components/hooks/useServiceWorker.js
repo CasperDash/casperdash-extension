@@ -31,7 +31,10 @@ const sentMessage = async (payload) => {
  */
 
 const createUserServiceSW = async (password, keyphrase, encryptionType, derivationPath) => {
-	return sentMessage({ methodName: 'accountManager.createUser', params: { password, keyphrase, encryptionType, derivationPath } });
+	return sentMessage({
+		methodName: 'accountManager.createUser',
+		params: { password, keyphrase, encryptionType, derivationPath },
+	});
 };
 
 const validateReturningUserSW = async (password) => {
@@ -62,8 +65,9 @@ const isUserExist = async () => {
 	return sentMessage({ methodName: 'accountManager.isUserExist' });
 };
 
-const getKeyphrase = async (password) => {
-	return sentMessage({ methodName: 'accountManager.getKeyphrase', params: { password } });
+const getEntropy = async (password) => {
+	const entropy = await sentMessage({ methodName: 'accountManager.getEntropy', params: { password } });
+	return new Uint8Array(Object.values(entropy));
 };
 
 const addLegacyAccount = async (name, secretKey) => {
@@ -73,7 +77,6 @@ const addLegacyAccount = async (name, secretKey) => {
 const getPrivateKey = async (password) => {
 	return sentMessage({ methodName: 'accountManager.getPrivateKey', params: { password } });
 };
-
 
 const getCurrentConnectedUrl = async () => {
 	return sentMessage({ methodName: 'popupManager.getCurrentSite' });
@@ -150,7 +153,7 @@ export {
 	addWalletAccount,
 	setSelectedWallet,
 	isUserExist,
-	getKeyphrase,
+	getEntropy,
 	browser,
 	addLegacyAccount,
 	getPrivateKey,

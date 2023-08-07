@@ -30,7 +30,7 @@ const ImportWallet = () => {
 		/**
 		 * Make sure keyphrase is valid with `KeyFactory.getInstance().validate(keyphrase)`
 		 */
-		if (!KeyFactory.getInstance().validate(values.map((value) => value.trim()).join(' '))) {
+		if (!KeyFactory.getInstance().validate(values.map((value) => value.trim()))) {
 			error = 'Keyphrase is invalid. Please recheck your keyphrase.';
 			return error;
 		}
