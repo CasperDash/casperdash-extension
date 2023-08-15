@@ -1,0 +1,22 @@
+.cd_we_validator_item {
+  display: flex;
+  align-items: center;
+
+  &__info {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary-text-color);
+  }
+
+  &__address {
+    font-size: 12px;
+    color: var(--secondary-text-color);
+  }
+}

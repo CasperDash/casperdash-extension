@@ -31,7 +31,13 @@ export const SearchValidator = () => {
 
 	// Function
 	const onValidatorClick = (validator) => {
-		navigate('/staking', { state: { ...state, validator } });
+		const { callback = '/staking' } = state || {};
+		navigate(callback, {
+			state: {
+				...state,
+				validator
+			}
+		});
 	};
 
 	return (

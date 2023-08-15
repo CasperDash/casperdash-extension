@@ -8,6 +8,7 @@ import { Bar } from '@cd/common/Spinner';
 import NoData from '@cd/common/NoData';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './index.scss';
+import clsx from 'clsx';
 
 const Grid = ({
 	data = [],
@@ -49,7 +50,7 @@ const Grid = ({
 			return (
 				<div
 					data-testid={`${token.symbol}-${item.key}`}
-					className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`}
+					className={clsx('cd_we_item_value', item.type, item.valueAsClass ? formattedValue: undefined)}
 					key={`${token.symbol}-${item.key}`}
 				>
 					{renderValue({ item, token }, formattedValue)} {item.suffix}

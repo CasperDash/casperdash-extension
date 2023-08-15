@@ -1,9 +1,17 @@
 import React from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { getEndString } from '../../../helpers/format';
+import { getEndString } from '@cd/helpers/format';
 import './MiddleTruncatedText.scss';
 
 export const MiddleTruncatedText = ({ children, end, start, placement = 'top' }) => {
+	if (typeof children !== 'string') {
+		return children;
+	}
+
+	if (children.length <= start + end) {
+		return children;
+	}
+
 	const endString = getEndString(children, end);
 	const beginString = !endString ? children : children.slice(0, start || children.length - endString.length);
 	return (

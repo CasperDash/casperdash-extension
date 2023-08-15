@@ -6,7 +6,12 @@ import { getValidators, validatorsDetail } from '@cd/selectors/validator';
 import { getTransferDeploysStatus } from '@cd/actions/deployActions';
 import { getAccountDelegation } from '@cd/selectors/user';
 import { getBase64IdentIcon } from '@cd/helpers/identicon';
-import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE, STAKING_STATUS } from '@cd/constants/key';
+import {
+	ENTRY_POINT_DELEGATE,
+	ENTRY_POINT_REDELEGATE,
+	ENTRY_POINT_UNDELEGATE,
+	STAKING_STATUS,
+} from '@cd/constants/key';
 import { fetchValidators, getStakeFromLocalStorage, updateStakeDeployStatus } from '@cd/actions/stakeActions';
 import { useAutoRefreshEffect } from './useAutoRefreshEffect';
 
@@ -34,7 +39,9 @@ const getStakedValidators = (validators, pendingStakes, publicKey, accountDelega
 	
 			const { validatorPublicKey } = validator;	
 			const pendingDelegated = pendingStakes.filter(
-				(stake) => stake.validator === validatorPublicKey && stake.entryPoint === ENTRY_POINT_DELEGATE,
+				(stake) => stake.validator === validatorPublicKey && (
+					stake.entryPoint === ENTRY_POINT_DELEGATE || stake.entryPoint === ENTRY_POINT_REDELEGATE
+				),
 			  );
 			const pendingUndelegated = pendingStakes.filter(
 				(stake) => stake.validator === validatorPublicKey && stake.entryPoint === ENTRY_POINT_UNDELEGATE,

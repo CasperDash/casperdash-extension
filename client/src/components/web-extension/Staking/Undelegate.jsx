@@ -1,33 +1,47 @@
 import React, { useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
+import _get from 'lodash-es/get';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getMassagedUserDetails } from '../../../selectors/user';
-import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
-import { toFormattedNumber } from '../../../helpers/format';
-import { getConfigKey } from '../../../services/configurationServices';
-import { validateUndelegateForm } from '../../../helpers/validator';
+import { getMassagedUserDetails } from '@cd/selectors/user';
+import { toFormattedNumber } from '@cd/helpers/format';
+import { getConfigKey } from '@cd/services/configurationServices';
+import { validateUndelegateForm } from '@cd/helpers/validator';
+import SwitchBox from '@cd/common/SwitchBox';
+import SelectValidator from '@cd/common/SelectValidator';
+import { ENTRY_POINT_REDELEGATE, ENTRY_POINT_UNDELEGATE } from '@cd/constants/key';
+
 import './Undelegate.scss';
 
 export const Undelegate = () => {
 	// Hook
 	const navigate = useNavigate();
 	const { state } = useLocation();
-	const { validator, stakedAmount = 0 } = state || {};
+
+	const {
+		validator: newValidator,
+		validatorPublicKey,
+		stakedAmount = 0,
+		validatorName,
+		validatorIcon,
+		defaultAmount = 0,
+		defaultIsUsingRedelegate = false,
+	} = state || {};
 
 	// Selector
 	const userDetails = useSelector(getMassagedUserDetails);
 	const balance = userDetails && userDetails.balance && userDetails.balance.displayBalance;
 
 	// State
-	const [amount, setAmount] = useState(0);
+	const [amount, setAmount] = useState(defaultAmount);
 	const [firstLoad, setFirstLoad] = useState(true);
+	const [isUsingRedelegate, setIsUsingRedelegate] = useState(defaultIsUsingRedelegate);
 
 	const formErrors = useMemo(() => {
 		if (firstLoad) {
 			return {};
 		}
-		const validatorError = validator ? {} : { validator: 'Required.' };
+		const validatorError = validatorPublicKey ? {} : { validator: 'Required.' };
 		return {
 			...validateUndelegateForm({
 				amount: amount,
@@ -38,7 +52,7 @@ export const Undelegate = () => {
 			}),
 			...validatorError,
 		};
-	}, [amount, balance, validator, firstLoad]);
+	}, [amount, balance, validatorPublicKey, firstLoad]);
 
 	const onAmountChange = (newAmount) => {
 		setFirstLoad(false);
@@ -49,16 +63,39 @@ export const Undelegate = () => {
 		if (Object.keys(formErrors).length) {
 			return;
 		}
+
 		navigate('/stakeConfirm', {
 			state: {
-				name: 'Undelegate',
+				name: isUsingRedelegate ? 'Redelegate' : 'Undelegate',
+				isUsingRedelegate,
 				stake: {
-					validator: validator,
+					validator: {
+						publicKey: validatorPublicKey,
+						name: validatorName,
+						icon: validatorIcon,
+					},
 					amount,
 					fee: getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE'),
-					action: 'undelegate',
+					action: isUsingRedelegate ? ENTRY_POINT_REDELEGATE : ENTRY_POINT_UNDELEGATE,
+					newValidator: {
+						publicKey: _get(newValidator, 'validatorPublicKey'),
+						name: _get(newValidator,  'name'),
+						icon: _get(newValidator, 'icon[1]'),
+					}
 				},
 			},
+		});
+	};
+
+	const onSearchValidator = () => {
+		navigate('/searchValidator', {
+			state: {
+				...state,
+				defaultAmount: amount,
+				defaultIsUsingRedelegate: isUsingRedelegate,
+				name: 'Select Validator',
+				callback: '/undelegate',
+			}
 		});
 	};
 
@@ -72,11 +109,37 @@ export const Undelegate = () => {
 					</div>
 				</div>
 				<div className="cd_we_staking_validator_box">
-					<div className="cd_we_staking_validator_value">
-						<MiddleTruncatedText>{validator}</MiddleTruncatedText>
-					</div>
+					<SelectValidator
+						publicKey={validatorPublicKey}
+						name={validatorName}
+						icon={validatorIcon}
+						className={'cd_we_staking_validator_box__select'}
+						isShowArrow={false}
+					/>
 				</div>
 				<div className="cd_error_text">{formErrors.validator}</div>
+			</div>
+			<div className="cd_we_staking_redelegate">
+				<label className={'cd_we_staking_redelegate__switch-box'}>
+					<SwitchBox
+						checked={isUsingRedelegate}
+						onClick={() => setIsUsingRedelegate(!isUsingRedelegate)}
+					/>
+					<span className="cd_we_staking_redelegate__switch-box-text">Using redelegate</span>
+				</label>
+				{
+					isUsingRedelegate && (
+						<div className="cd_we_staking_redelegate__select-validator">
+							<SelectValidator
+								publicKey={_get(newValidator, 'validatorPublicKey')}
+								name={_get(newValidator, 'name')}
+								icon={_get(newValidator, 'icon[1]')}
+								onClick={onSearchValidator}
+							/>
+							<div className="cd_error_text">{formErrors.newValidator}</div>
+						</div>
+					)
+				}
 			</div>
 			<div className="cd_we_staking_amount">
 				<div className="cd_we_staking_amount_header">

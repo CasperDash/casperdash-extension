@@ -16,6 +16,9 @@ export const BASE_API_URL = 'http://localhost:3001';
 export const DEPLOY_TTL_MS = 1800000;
 export const ENTRY_POINT_DELEGATE = 'delegate';
 export const ENTRY_POINT_UNDELEGATE = 'undelegate';
+
+export const ENTRY_POINT_REDELEGATE = 'redelegate';
+
 export const EXPLORER_URL = NETWORK_NAME === 'casper' ? 'https://cspr.live' : 'https://testnet.cspr.live';
 export const CASPER_SYMBOL = 'CSPR';
 export const NFT_GATEWAY = 'ipfs.dweb.link';
