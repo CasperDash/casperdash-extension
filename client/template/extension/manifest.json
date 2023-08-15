@@ -2,7 +2,7 @@
 	"short_name": "CasperDash",
 	"name": "CasperDash",
 	"description": "A Casper Wallet",
-	"version": "1.4.5",
+	"version": "1.5.5",
 	"manifest_version": 3,
 	"icons": {
 		"512": "512.png"
@@ -10,6 +10,9 @@
 	"action": {
 		"default_icon": "512.png",
 		"default_popup": "popup.html"
+	},
+	"content_security_policy": {
+		"extension_pages": "default-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; script-src 'self'; img-src http: https: data:; connect-src https://testnet-api.casperdash.io https://api.casperdash.io https://cdn.jsdelivr.net https://api.cspr.live; style-src 'unsafe-inline'"
 	},
 	"content_scripts": [
 		{
@@ -25,7 +28,7 @@
 			"matches": ["<all_urls>"]
 		}
 	],
-	"permissions": ["storage", "scripting", "alarms", "tabs"],
+	"permissions": ["storage", "alarms", "tabs"],
 	"host_permissions": ["<all_urls>"],
 	"background": {
 		"service_worker": "/static/js/sw/service-worker.js"

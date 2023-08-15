@@ -7,6 +7,7 @@ import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType'
 import { CONSTANTS } from '@cd/shared/constants';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
+import SelectDerivationPath from '@cd/web-extension/Common/SelectDerivationPath';
 import FieldKeyphrase from './FieldKeyphrase';
 
 const ImportWallet = () => {
@@ -29,7 +30,7 @@ const ImportWallet = () => {
 		/**
 		 * Make sure keyphrase is valid with `KeyFactory.getInstance().validate(keyphrase)`
 		 */
-		if (!KeyFactory.getInstance().validate(values.map((value) => value.trim()).join(' '))) {
+		if (!KeyFactory.getInstance().validate(values.map((value) => value.trim()))) {
 			error = 'Keyphrase is invalid. Please recheck your keyphrase.';
 			return error;
 		}
@@ -41,7 +42,9 @@ const ImportWallet = () => {
 		const error = onValidate(recoveryPhrase);
 		setErrorMessage(error);
 		if (!error) {
-			dispatch(updateKeyphrase(recoveryPhrase.map((value) => value.trim()).join(' ')));
+			const keyFactory = KeyFactory.getInstance();
+			dispatch(updateKeyphrase(keyFactory.toEntropy(recoveryPhrase.map((value) => value.trim()))));
+			setRecoveryPhrase([]);
 			dispatch(setNextStep());
 		}
 	};
@@ -64,6 +67,13 @@ const ImportWallet = () => {
 	);
 
 	useEffect(() => {
+		return () => {
+			// Clear keyphrase when unmount component to speed up memory release.
+			setRecoveryPhrase([]);
+		};
+	}, []);
+
+	useEffect(() => {
 		// Only allow paste on debug
 		if (CONSTANTS.DEBUG_ENV) {
 			window.addEventListener('paste', pasteEventHandler);
@@ -81,6 +91,7 @@ const ImportWallet = () => {
 	return (
 		<div className="cd_we_create-wallet-layout--root">
 			<SelectEncryptionType />
+			<SelectDerivationPath />
 			<NumberRecoveryWordsSelect onChange={(number) => setNumberOfWords(number)} selectedValue={numberOfWords} />
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 				<FieldKeyphrase

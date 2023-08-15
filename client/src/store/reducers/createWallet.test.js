@@ -7,9 +7,9 @@ describe('Create Wallet reducer', () => {
 	const reset = () => ({
 		currentStep: 2,
 		keyPhrase: null,
-		keyPhraseAsMap: [],
 		answerSheet: undefined,
 		encryptionType: EncryptionType.Ed25519,
+		derivationPath: "m/PURPOSE'/COINT_TYPE'/INDEX'",
 	});
 	beforeEach(() => {
 		initState = reset();
@@ -59,7 +59,6 @@ describe('Create Wallet reducer', () => {
 		).toEqual({
 			...initState,
 			keyPhrase: 'abc def',
-			keyPhraseAsMap: {},
 		});
 	});
 
@@ -95,7 +94,6 @@ describe('Create Wallet reducer', () => {
 				{
 					currentStep: 2,
 					keyPhrase: null,
-					keyPhraseAsMap: [],
 					answerSheet: {
 						1: true,
 						3: null,
@@ -112,7 +110,6 @@ describe('Create Wallet reducer', () => {
 		).toEqual({
 			currentStep: 2,
 			keyPhrase: null,
-			keyPhraseAsMap: [],
 			answerSheet: {
 				1: true,
 				3: true,

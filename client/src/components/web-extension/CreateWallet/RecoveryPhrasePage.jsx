@@ -1,25 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Layer, Stage } from 'react-konva';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { nanoid } from 'nanoid';
 import drop from 'lodash-es/drop';
 import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
+import SelectDerivationPath from '@cd/web-extension/Common/SelectDerivationPath';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
-import { selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
-import { DownloadButton } from '@cd/components/web-extension/Common/DownloadButton';
+import { selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
+import CanvasText from '@cd/web-extension/Common/CanvasText/index';
+import { EncoderUtils } from 'casper-storage';
+import { getWord } from '@cd/helpers/shareable';
+
 import './RecoveryPhrasePage.scss';
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
 	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
-	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
-	const keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
-	const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
-	const TOTAL_KEYWORDS = keyPhraseAsArray.length;
-	const leftKeys = dropRight(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
-	const rightKeys = drop(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
+	const entropy = useSelector(selectCreateWalletKeyphrase);
 
 	const onClickNextHandler = useCallback(() => {
 		dispatch(setNextStep());
@@ -29,9 +30,10 @@ const RecoveryPhrasePage = () => {
 		dispatch(generateKeyphrase(numOfWords));
 	}, [numOfWords, dispatch]);
 
-	return (
+	return entropy ? (
 		<div className="cd_we_create-wallet-layout--root">
 			<SelectEncryptionType />
+			<SelectDerivationPath />
 			<NumberRecoveryWordsSelect
 				selectedValue={numOfWords}
 				onChange={(number) => {
@@ -40,35 +42,52 @@ const RecoveryPhrasePage = () => {
 			/>
 			<div className="cd_we_create-wallet-layout--body cd_we_create-keyphrase--box">
 				<ul className="cd_we_create-keyphrase--column">
-					{leftKeys?.map((word, index) => (
-						<li className="cd_we_keyphrase--word" key={`left-${word}`}>
-							<span className="counter">{index + 1}</span>
-							<span className="value">{word}</span>
-						</li>
-					))}
+					<Stage width={100} height={300}>
+						<Layer>
+							{dropRight(new Array(numOfWords).fill(), numOfWords / 2)?.map((_, index) => {
+								const eleIndex = index + 1;
+
+								return (
+									<CanvasText
+										key={`left-${index}-${nanoid()}`}
+										text={`${eleIndex}. ${EncoderUtils.decodeBase64(getWord(entropy, index))}`}
+										x={10}
+										y={22 * index}
+									/>
+								);
+							})}
+						</Layer>
+					</Stage>
 				</ul>
 				<ul className="cd_we_create-keyphrase--column">
-					{rightKeys?.map((word, index) => (
-						<li className="cd_we_keyphrase--word" key={`right-${word}`}>
-							<span className="counter">{index + (1 + TOTAL_KEYWORDS / 2)}</span>
-							<span className="value">{word}</span>
-						</li>
-					))}
+					<Stage width={100} height={300}>
+						<Layer>
+							{drop(new Array(numOfWords).fill(), numOfWords / 2)?.map((_, index) => {
+								const eleIndex = index + (1 + numOfWords / 2);
+
+								return (
+									<CanvasText
+										key={`right-${index}-${nanoid()}`}
+										text={`${eleIndex}. ${EncoderUtils.decodeBase64(
+											getWord(entropy, [eleIndex - 1]),
+										)}`}
+										x={10}
+										y={22 * index}
+									/>
+								);
+							})}
+						</Layer>
+					</Stage>
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
-				<DownloadButton
-					className="cd_we_create-keyphrase__btn"
-					variant="normal"
-					text={keyPhrase}
-					fileName="key_phrase.txt"
-				/>
+				{/* <CopyButton className="cd_we_create-keyphrase__btn" text={keyPhrase} delay={ONE_MINUTE} /> */}
 				<Button onClick={onClickNextHandler} className="cd_we_create-keyphrase__btn">
 					Next
 				</Button>
 			</div>
 		</div>
-	);
+	) : null;
 };
 
 export default RecoveryPhrasePage;

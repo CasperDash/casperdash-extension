@@ -10,6 +10,26 @@
 		white-space: break-spaces;
 		overflow-wrap: anywhere;
 		user-select: none;
+
+		&--blurred {
+			filter: blur(4px);
+		}
+
+		&__blur {
+			cursor: pointer;
+			position: relative;
+	
+			&-overlay {
+				position: fixed;
+				// Center postion
+				top: 35%;
+				left: 55%;
+				transform: translate(-50%, -50%);
+				font-size: 14px;
+				width: 260px;
+				color: #777e91;
+			}
+		}
 	}
 	.actions {
 		margin-top: 20px;

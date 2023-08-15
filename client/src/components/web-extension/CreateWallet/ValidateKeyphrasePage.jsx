@@ -7,13 +7,14 @@ import { generateCWHeader, onGenerateWordcheck } from '@cd/actions/createWalletA
 import { setNextStep, updateAnswerSheet, createAnswerSheet } from '@cd/actions/createWalletActions';
 import { selectCreateWalletState } from '@cd/selectors/createWallet';
 import { CONSTANTS } from '@cd/shared/constants';
+import { getPhraseLength, getWord } from '@cd/helpers/shareable';
 import WordsGroup from './WordsGroup';
 import './ValidateKeyphrase.scss';
 
 const ValidateKeyphrasePage = () => {
 	const [, setHeader] = useOutletContext();
 	const dispatch = useDispatch();
-	const { currentStep, answerSheet, keyPhraseAsMap } = useSelector(selectCreateWalletState);
+	const { currentStep, answerSheet, keyPhrase } = useSelector(selectCreateWalletState);
 	const [wordsTemplate, setTemplate] = useState(undefined);
 	const onUpdateAnswerSheet = useCallback(
 		(groupIndex, value) => dispatch(updateAnswerSheet(groupIndex, value)),
@@ -21,7 +22,8 @@ const ValidateKeyphrasePage = () => {
 	);
 	const onCreateAnswerSheet = useCallback((checklist) => dispatch(createAnswerSheet(checklist)), [dispatch]);
 
-	const totalWordCheck = keyPhraseAsMap.size / 3;
+	const totalWords = getPhraseLength(keyPhrase);
+	const totalWordCheck = totalWords / 3;
 
 	const shouldDisableNextButton = useMemo(() => {
 		//can skip if debugging
@@ -85,19 +87,22 @@ const ValidateKeyphrasePage = () => {
 			return;
 		}
 
-		const { checklist, data } = onGenerateWordcheck(keyPhraseAsMap.size, totalWordCheck);
-		onCreateAnswerSheet(checklist);
+		const getChecks = () => {
+			const { checklist, data } = onGenerateWordcheck(totalWords, totalWordCheck);
 
-		const checks = checklist.map((id) => {
-			const arr = data[id].options.map((wordId) => keyPhraseAsMap.get(wordId));
-			return {
-				answer: { id, text: keyPhraseAsMap.get(id) },
-				value: null,
-				options: arr,
-			};
-		});
+			onCreateAnswerSheet(checklist);
 
-		setTemplate(checks);
+			return checklist.map((id) => {
+				const arr = data[id].options.map((wordId) => getWord(keyPhrase, wordId));
+				return {
+					answer: { id, text: getWord(keyPhrase, id) },
+					value: null,
+					options: arr,
+				};
+			});
+		};
+
+		setTemplate(getChecks());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

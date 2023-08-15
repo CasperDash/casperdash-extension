@@ -3,7 +3,7 @@ import { priceSelector, getPriceHistory, getCurrentPrice } from './price';
 
 jest.mock('@redux-requests/core', () => {
 	return {
-		getQuerySelector: jest.fn().mockReturnValue(() => ({ data: { prices: [[101010, 11]] } })),
+		getQuerySelector: jest.fn().mockReturnValue(() => ({ data: [[101010, 11]] })),
 	};
 });
 

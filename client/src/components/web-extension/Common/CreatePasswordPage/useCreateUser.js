@@ -3,20 +3,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onBindingAuthInfo } from '@cd/actions/userActions';
 import { resetWalletCreation } from '@cd/actions/createWalletActions';
-import { selectCreateWalletEncryptionType, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
+import {
+	selectCreateWalletEncryptionType,
+	selectCreateWalletKeyphrase,
+	selectCreateWalletDerivationPath,
+} from '@cd/selectors/createWallet';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
 
 const useCreateUser = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const keyphrase = useSelector(selectCreateWalletKeyphrase);
+	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
 	const encryptionType = useSelector(selectCreateWalletEncryptionType);
+	const derivationPath = useSelector(selectCreateWalletDerivationPath);
 
 	const onCreateSuccess = useCallback(
 		(result) => {
 			const { publicKey, userDetails } = result;
 			const onCompleted = () => navigate('/');
 			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }, onCompleted));
+			// Reset the wallet creation state.
 			dispatch(resetWalletCreation());
 
 			return result;
@@ -27,11 +33,11 @@ const useCreateUser = () => {
 	const onCreateNewUser = useCallback(
 		async (password) => {
 			try {
-				if (!keyphrase) {
+				if (!keyPhrase) {
 					throw new Error('Missing keyphrase');
 				}
 
-				const result = await createUserServiceSW(password, keyphrase, encryptionType);
+				const result = await createUserServiceSW(password, keyPhrase, encryptionType, derivationPath);
 				onCreateSuccess(result);
 				return result;
 			} catch (err) {
@@ -39,7 +45,7 @@ const useCreateUser = () => {
 				return undefined;
 			}
 		},
-		[keyphrase, onCreateSuccess, encryptionType],
+		[keyPhrase, onCreateSuccess, encryptionType, derivationPath],
 	);
 
 	return { onCreateNewUser };

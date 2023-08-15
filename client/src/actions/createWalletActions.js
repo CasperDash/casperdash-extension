@@ -1,6 +1,6 @@
 import { CREATE_WALLET } from '@cd/store/actionTypes';
 import { KeyFactory } from 'casper-storage';
-import { convertKeyphraseToAnswerObject, generateKeyphraseMap } from './createWalletActions.utils';
+import { convertKeyphraseToAnswerObject } from './createWalletActions.utils';
 
 /**
  * Generates a keyphrase and dispatches an action to update the keyphrase
@@ -10,15 +10,14 @@ import { convertKeyphraseToAnswerObject, generateKeyphraseMap } from './createWa
  */
 const generateKeyphrase = (numOfKey = 12) => {
 	const keyManager = KeyFactory.getInstance();
-	const keyphrase = keyManager.generate(numOfKey);
 
-	return (dispatch) => dispatch(updateKeyphrase(keyphrase));
+	return (dispatch) => dispatch(updateKeyphrase(keyManager.generate(numOfKey)));
 };
 
 const updateKeyphrase = (keyphrase) => {
 	return {
 		type: CREATE_WALLET.CREATE_KEYPHRASE,
-		payload: { keyphrase, map: generateKeyphraseMap(keyphrase) },
+		payload: { keyphrase },
 	};
 };
 
@@ -26,6 +25,13 @@ const updateEncryptionType = (encryptionType) => {
 	return {
 		type: CREATE_WALLET.UPDATE_ENCRYPTION_TYPE,
 		payload: { encryptionType },
+	};
+};
+
+const updateDerivationPath = (derivationPath) => {
+	return {
+		type: CREATE_WALLET.UPDATE_DERIVATION_PATH,
+		payload: { derivationPath },
 	};
 };
 
@@ -84,4 +90,5 @@ export {
 	setPrevStep,
 	updateKeyphrase,
 	updateEncryptionType,
+	updateDerivationPath,
 };

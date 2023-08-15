@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = (dir) => ({
 	output: {
@@ -27,6 +28,14 @@ module.exports = (dir) => ({
 				test: /\.html$/,
 				use: ['html-loader'],
 			},
+			{
+				test: /\.mjs$/,
+				include: /node_modules/,
+				type: 'javascript/auto',
+				resolve: {
+					fullySpecified: false,
+				},
+			},
 		],
 	},
 	plugins: [
@@ -43,6 +52,7 @@ module.exports = (dir) => ({
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(process.env),
 		}),
+		new NodePolyfillPlugin(),
 	],
 	experiments: {
 		topLevelAwait: true,

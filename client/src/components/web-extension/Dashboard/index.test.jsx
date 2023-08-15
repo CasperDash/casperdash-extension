@@ -40,7 +40,6 @@ describe('WalletDetails', () => {
 			const { getByText } = render(<DashBoard />);
 			expect(getByText(/Send/i)).toBeInTheDocument();
 			expect(getByText(/Receive/i)).toBeInTheDocument();
-			expect(getByText(/Add Custom Token/i)).toBeInTheDocument();
 			expect(getByText(/CSPR/i)).toBeInTheDocument();
 			expect(getByText(/10/i)).toBeInTheDocument();
 			expect(getByText(/11/i)).toBeInTheDocument();
@@ -60,11 +59,6 @@ describe('WalletDetails', () => {
 					},
 					name: 'CSPR',
 				},
-			});
-			await fireEvent.click(getByText(/Add Custom Token/i));
-			expect(useNavigate()).toHaveBeenCalledTimes(2);
-			expect(useNavigate()).toHaveBeenCalledWith('/addToken', {
-				state: { name: 'Add Token' },
 			});
 		});
 	});

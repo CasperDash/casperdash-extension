@@ -81,14 +81,16 @@ const DappSignDeployRequest = () => {
 					<span>Deploy Type</span>
 					<span>{deployData.deployType}</span>
 				</div>
-				{deployData.deployArgs && (
-					<>
-						<Divider className="divider" />
-						{Object.keys(deployData.deployArgs).map((argKey) => {
-							return <DeployField key={argKey} name={argKey} value={deployData.deployArgs[argKey]} />;
-						})}
-					</>
-				)}
+					{deployData.deployArgs && (
+						<>
+							<Divider className="cd_we_sign_divider" color="#000000" />
+							<div className="cd_we_sign_deploy_args">
+								{Object.keys(deployData.deployArgs).map((argKey) => {
+									return <DeployField key={argKey} name={argKey} value={deployData.deployArgs[argKey]} />;
+								})}
+							</div>
+						</>
+					)}
 			</div>
 			<div className="cd_we_sign_deploy_actions">
 				<Button variant="primary" onClick={onOk}>

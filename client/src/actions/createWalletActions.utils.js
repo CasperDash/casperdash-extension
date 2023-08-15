@@ -89,11 +89,9 @@ const onGenerateWordcheck = (totalKeywords, totalWordCheck) => {
 	 */
 	let final = {};
 	randomWordIds.forEach((id) => {
-		const newWordArr = generateKeyphraseArray(totalWordCheck);
-		const excludedWordIds = newWordArr.filter((k) => k !== id);
-		const newRandom = shuffle(excludedWordIds);
-		const remaining = dropRight(newRandom, newRandom.length - 2);
-		final[id] = { answer: id, options: [...shuffle([...remaining, id])] };
+		const excludedWordIds = initWordKeys.filter((k) => k !== id);
+		const newRandom = sampleSize(excludedWordIds, 2);
+		final[id] = { answer: id, options: [...shuffle([...newRandom, id])] };
 	});
 
 	return { checklist: randomWordIds, data: final };
