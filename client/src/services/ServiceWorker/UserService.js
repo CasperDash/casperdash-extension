@@ -47,8 +47,9 @@ export class UserService {
 	 */
 	initialize = async (keyphrase) => {
 		const user = this.instance;
+
 		// Set HDWallet info
-		await user.setHDWallet(keyphrase, this.encryptionType);
+		await user.setHDWallet(new Uint8Array(Object.values(keyphrase)), this.encryptionType);
 		await user.addWalletAccount(0, new WalletDescriptor('Account 1'));
 		const wallets = user.getHDWallet().derivedWallets || [];
 		const selectedWallet = wallets[0];
@@ -183,6 +184,8 @@ export class UserService {
 		return await Promise.all(
 			wallets.concat(legacyWallets).map(async (wallet) => ({
 				//should not spread wallet here, wallet have some sensitive info
+				hdWalletIndex: wallet.isHDWallet ? wallet.index : undefined,
+				isHDWallet: wallet.isHDWallet,
 				descriptor: wallet.descriptor,
 				uid: wallet.uid,
 				encryptionType: wallet.encryptionType,
@@ -197,10 +200,10 @@ export class UserService {
 		return await this.prepareStorageData();
 	};
 
-	getKeyphrase = async () => {
+	getEntropy = async () => {
 		const user = this.instance;
 
-		return await user.getHDWalletKeyPhrase();
+		return await user.getHDWallet().keyEntropy;
 	};
 
 	setSelectedWallet = (uid) => {

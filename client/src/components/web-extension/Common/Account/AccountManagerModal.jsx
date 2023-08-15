@@ -5,6 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import isNil from 'lodash-es/isNil';
+import _sortBy from 'lodash-es/sortBy';
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 import useGetWallets from '@cd/hooks/useGetWallets';
@@ -15,14 +17,16 @@ import { formatAccountName } from '@cd/helpers/format';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import EditIcon from '@cd/assets/image/edit-icon.svg';
+import BlockIcon from '@cd/assets/image/block-icon.svg';
 import CheckIcon from '@cd/assets/image/check-alt.svg';
 import CloseIconAlt from '@cd/assets/image/close-icon-alt.svg';
-import './AccountManagerModal.scss';
-import { getSelectedWallet } from '@cd/selectors/user';
+import { getPublicKey, getSelectedWallet } from '@cd/selectors/user';
 import ImportAccount from '@cd/assets/image/ic-import-account.svg';
 import Key from '@cd/assets/image/ic-key.svg';
-import { useNavigate } from 'react-router-dom';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
+import { getExplorer } from '@cd/selectors/settings';
+
+import './AccountManagerModal.scss';
 
 export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restProps }) => {
 	const dispatch = useDispatch();
@@ -31,6 +35,8 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 	const [showEnterPassword, setShowEnterPassword] = useState(false);
 	const [editingAccount, setEditingAccount] = useState(false);
 	const [newAccountName, setNewAccountName] = useState('');
+	const explorerUrl = useSelector(getExplorer);
+	const publicKey = useSelector(getPublicKey);
 
 	const [wallets, loadWallets, isLoading] = useGetWallets();
 
@@ -64,15 +70,20 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 	};
 
 	const handleAddNewWallet = () => {
-		addWalletAccount(wallets.length, new WalletDescriptor(formatAccountName(wallets.length))).then(() => {
+		const hdWallets = _sortBy(
+			wallets.filter((wallet) => wallet.isHDWallet),
+			'hdWalletIndex',
+		);
+		const nextIndex = hdWallets[hdWallets.length - 1]?.hdWalletIndex + 1;
+		addWalletAccount(nextIndex, new WalletDescriptor(formatAccountName(nextIndex))).then(() => {
 			return loadWallets();
 		});
 	};
 
 	const handleOnSelectWallet = (uid) => {
 		setSelectedWallet(uid).then((result) => {
-			const { publicKey, userDetails } = result;
-			dispatch(onBindingAuthInfo({ publicKey, user: userDetails }));
+			const { publicKey: selectedPublicKey, userDetails } = result;
+			dispatch(onBindingAuthInfo({ publicKey: selectedPublicKey, user: userDetails }));
 
 			onClose();
 		});
@@ -91,6 +102,10 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 		},
 		[navigate, selectedWallet],
 	);
+
+	const onViewBlockExplorer = () => {
+		window.open(`${explorerUrl}/account/${publicKey}`);
+	};
 
 	return (
 		<Modal
@@ -198,6 +213,16 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 						<Key />
 					</span>
 					<span className="btn-text">View Private Key</span>
+				</Button>
+				<Button
+					variant="link"
+					onClick={onViewBlockExplorer}
+					className="cd_we_accounts-modal__btn-action import-account"
+				>
+					<span className="btn-icon">
+						<BlockIcon />
+					</span>
+					<span className="btn-text">View Account On Explorer</span>
 				</Button>
 			</Modal.Footer>
 			{showEnterPassword && (

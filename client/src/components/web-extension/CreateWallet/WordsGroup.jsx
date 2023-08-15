@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { Button } from 'react-bootstrap';
+import { EncoderUtils } from 'casper-storage';
 import './WordsGroup.scss';
 
 const WordsGroup = (props) => {
@@ -27,7 +28,7 @@ const WordsGroup = (props) => {
 								onSelect(groupIndex, option);
 							}}
 						>
-							{option}
+							{EncoderUtils.decodeBase64(option)}
 						</Button>
 					);
 				})}

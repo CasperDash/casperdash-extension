@@ -7,6 +7,7 @@ import { getValueByFormat } from '@cd/helpers/format';
 import { Bar } from '@cd/common/Spinner';
 import NoData from '@cd/common/NoData';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Tooltip } from 'react-tooltip';
 import './index.scss';
 
 const Grid = ({
@@ -36,7 +37,7 @@ const Grid = ({
 		return value;
 	}, []);
 	const renderGridItem = useCallback(
-		(item, token) => {
+		(item, token, i) => {
 			const formattedValue = getFormattedValue(item, token);
 			const shouldNotRender =
 				(isFunction(item?.shouldDisplay) && !item.shouldDisplay(get(token, item.key))) ||
@@ -45,15 +46,22 @@ const Grid = ({
 			if (shouldNotRender) {
 				return null;
 			}
+			const tooltip = item.tooltip
+				? { 'data-tooltip-id': `grid-tooltip-${item.tooltip}-${i}`, 'data-tooltip-content': item.tooltip }
+				: {};
 
 			return (
-				<div
-					data-testid={`${token.symbol}-${item.key}`}
-					className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`}
-					key={`${token.symbol}-${item.key}`}
-				>
-					{renderValue({ item, token }, formattedValue)} {item.suffix}
-				</div>
+				<>
+					<div
+						data-testid={`${token.symbol}-${item.key}`}
+						className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`}
+						key={`${token.symbol}-${item.key}`}
+						{...tooltip}
+					>
+						{renderValue({ item, token }, formattedValue)} {item.suffix}
+					</div>
+					{item.tooltip && <Tooltip id={`grid-tooltip-${item.tooltip}-${i}`} style={{ width: '90%' }} />}
+				</>
 			);
 		},
 		[getFormattedValue, renderValue],
@@ -94,7 +102,7 @@ const Grid = ({
 											</div>
 										))}
 									<div className="cd_we_item_content">
-										{metadata[key].map((item) => renderGridItem(item, value))}
+										{metadata[key].map((item) => renderGridItem(item, value, i))}
 									</div>
 								</div>
 							);

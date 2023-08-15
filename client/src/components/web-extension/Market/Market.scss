@@ -84,6 +84,7 @@
 			gap: 8px;
 			margin-top: 24px;
 			cursor: pointer;
+			align-items: baseline;
 			.badge {
 				background: var(--primary-color);
 				border-radius: 2px;
@@ -95,12 +96,9 @@
 				font-size: 12px;
 			}
 		}
-		.carousel-control-next,
-		.carousel-control-prev {
-			bottom: 94px;
-		}
+
 		.carousel-indicators {
-			bottom: 94px;
+			bottom: 104px;
 		}
 	}
 }

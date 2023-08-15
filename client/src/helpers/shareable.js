@@ -1,12 +1,18 @@
-import * as shareableSeed from 'casper-shareable-seed';
-import _values from 'lodash-es/values';
+import { KeyFactory } from 'casper-storage';
 
-export const mnemonicToShares = (mnemonic) => {
-    return shareableSeed.mnemonicToShares(mnemonic, 3, 2, 'v1', 'english');
+const WORDS_LENGTH_MAP = new Map([
+	[128, 12],
+	[160, 15],
+	[192, 18],
+	[224, 21],
+	[256, 24],
+]);
+
+export const getWord = (entropy, index) => {
+	const keyManager = KeyFactory.getInstance();
+	return keyManager.getWordAt(entropy, index, true);
 };
 
-export const sharesToMnemonic = (shares) => {
-    const shareList = _values(shares).slice(0, 2);
-
-    return shareableSeed.shareListToMnemonic(shareList) || '';
+export const getPhraseLength = (entropy) => {
+	return entropy ? WORDS_LENGTH_MAP.get(entropy.length * 8) : 12;
 };

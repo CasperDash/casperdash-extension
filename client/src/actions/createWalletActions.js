@@ -1,6 +1,5 @@
 import { CREATE_WALLET } from '@cd/store/actionTypes';
 import { KeyFactory } from 'casper-storage';
-import { mnemonicToShares } from '@cd/helpers/shareable';
 import { convertKeyphraseToAnswerObject } from './createWalletActions.utils';
 
 /**
@@ -18,7 +17,7 @@ const generateKeyphrase = (numOfKey = 12) => {
 const updateKeyphrase = (keyphrase) => {
 	return {
 		type: CREATE_WALLET.CREATE_KEYPHRASE,
-		payload: { keyphrase: mnemonicToShares(keyphrase) },
+		payload: { keyphrase },
 	};
 };
 
@@ -26,6 +25,13 @@ const updateEncryptionType = (encryptionType) => {
 	return {
 		type: CREATE_WALLET.UPDATE_ENCRYPTION_TYPE,
 		payload: { encryptionType },
+	};
+};
+
+const updateDerivationPath = (derivationPath) => {
+	return {
+		type: CREATE_WALLET.UPDATE_DERIVATION_PATH,
+		payload: { derivationPath },
 	};
 };
 
@@ -84,4 +90,5 @@ export {
 	setPrevStep,
 	updateKeyphrase,
 	updateEncryptionType,
+	updateDerivationPath,
 };

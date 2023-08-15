@@ -17,6 +17,9 @@ const selectCreateWalletAnswerSheet = createSelector(createWalletSelector, makeS
 const makeSelectCWEncryptionType = (state) => state.encryptionType;
 const selectCreateWalletEncryptionType = createSelector(createWalletSelector, makeSelectCWEncryptionType);
 
+const makeSelectCWDerivationPath = (state) => state.derivationPath;
+const selectCreateWalletDerivationPath = createSelector(createWalletSelector, makeSelectCWDerivationPath);
+
 export {
 	makeSelectCreateWallet,
 	makeSelectCWKeyphrase,
@@ -28,4 +31,5 @@ export {
 	selectCreateWalletCurrentStep,
 	selectCreateWalletAnswerSheet,
 	selectCreateWalletEncryptionType,
+	selectCreateWalletDerivationPath,
 };
