@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip';
-import { getEndString } from '../../../helpers/format';
+import { getEndString } from '@cd/helpers/format';
 import './MiddleTruncatedText.scss';
 
 export const MiddleTruncatedText = ({ children, end, placement = 'top' }) => {

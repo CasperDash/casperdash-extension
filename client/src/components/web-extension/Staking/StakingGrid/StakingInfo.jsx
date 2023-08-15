@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import HistoryIcon from '@cd/assets/image/ic-history.svg';
-import { validatorSelector } from '../../../../selectors/validator';
-import { useStakedHistory, useStakeFromValidators } from '../../../hooks/useStakeDeploys';
-import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
+import { validatorSelector } from '@cd/selectors/validator';
+import { useStakedHistory, useStakeFromValidators } from '@cd/hooks/useStakeDeploys';
+import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import Grid from '../../Common/Grid';
 import { UndelegateButton } from './UndelegateButton';
 import { RewardInfo } from './RewardInfo';
 import './StakingInfo.scss';
+import { ENTRY_POINT_REDELEGATE } from '@cd/constants/key';
 
 const STAKING_INFO_METADATA = {
 	left: [
@@ -30,7 +31,7 @@ const STAKING_INFO_METADATA = {
 const STAKING_HISTORY_METADATA = {
 	left: [
 		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
-		{ key: 'entryPoint', type: 'secondary' },
+		{ key: 'entryPoint', type: 'secondary'},
 	],
 	right: [
 		{ key: 'amount', type: 'primary', format: 'number', suffix: 'CSPR' },
@@ -53,6 +54,19 @@ export const StakingInfo = ({ publicKey }) => {
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
 
 	const [view, setView] = useState(VIEWS.info);
+
+	const normalizedHistories = useMemo(
+		() => {
+			return historyList.map((history) => {
+
+				return {
+					...history,
+					entryPoint: history.entryPoint === ENTRY_POINT_REDELEGATE ? `redelegate to ${history.newValidatorName}` : history.entryPoint,
+				};
+			});
+		},
+		[historyList]
+	);
 
 	return (
 		<div className="cd_we_staking_info">
@@ -78,7 +92,7 @@ export const StakingInfo = ({ publicKey }) => {
 				<RewardInfo publicKey={publicKey} />
 			) : (
 				<Grid
-					data={view.key === VIEWS.info.key ? stackingList : historyList}
+					data={view.key === VIEWS.info.key ? stackingList : normalizedHistories}
 					metadata={view.metadata}
 					className="overflow_auto hide_scroll_bar"
 					isLoading={isLoadingValidators}
