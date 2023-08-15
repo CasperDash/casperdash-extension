@@ -11,7 +11,13 @@ export const UndelegateButton = (props) => {
 
 	const onUndelegate = () => {
 		navigate('/undelegate', {
-			state: { validator: props.validator, stakedAmount: props.stakedAmount, name: 'Undelegate' },
+			state: {
+				validatorPublicKey: props.validator,
+				stakedAmount: props.stakedAmount,
+				validatorName: props.name,
+				validatorIcon: props.icon,
+				name: 'Undelegate'
+			},
 		});
 	};
 	return (

@@ -18,13 +18,20 @@
 		}
 	}
 	.cd_we_grid {
-		height: calc(100vh - 390px) !important;
+		height: calc(100vh - 400px) !important;
 		padding: 0 !important;
 		.cd_we_item {
 			button {
 				height: 28px;
 				line-height: 14px;
 				font-size: 1em;
+			}
+
+			&_left {
+				max-width: 70%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 		.cd_we_grid_icon {

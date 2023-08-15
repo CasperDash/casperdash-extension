@@ -60,7 +60,8 @@
 		"reselect": "^4.0.0",
 		"sass": "^1.26.10",
 		"ts-results": "^3.3.0",
-		"webextension-polyfill": "^0.10.0"
+		"webextension-polyfill": "^0.10.0",
+		"yup": "^1.2.0"
 	},
 	"reactSnapshot": {
 		"exclude": [
