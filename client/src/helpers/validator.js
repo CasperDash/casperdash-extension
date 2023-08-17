@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
-import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
 import { VALIDATOR_REACHED_MAXIMUM } from '@cd/constants/staking';
+import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
 
 /**
  * Check value is public key.
@@ -151,7 +151,7 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
 	}
 
-	if (!errors.amount && amount <= minAmount) {
+	if (!errors.amount && amount < minAmount) {
 		errors.amount = COMMON_ERROR_MESSAGE.LESS_THAN_MIN_AMOUNT(minAmount, tokenSymbol);
 	}
 
