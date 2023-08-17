@@ -53,12 +53,13 @@ const Staking = () => {
 		if (firstLoad) {
 			return {};
 		}
-		const validatorError = validator.validatorPublicKey ? {} : { validator: 'Required.' };
+		const validatorError = validator.validatorPublicKey ? {} : { validator: 'The entered amount is below the minimum required. Please input an amount greater than or equal to 2.5 CSPR.' };
 		const hasDelegated = accountDelegation && accountDelegation.find((delegation) => delegation.validatorPublicKey === validator.validatorPublicKey);
 		const selectedValidator = {
 			...validator,
 			hasDelegated,
 		};
+
 		return {
 			...validateStakeForm({
 				amount: amount,
