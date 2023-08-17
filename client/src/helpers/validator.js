@@ -151,10 +151,6 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
 	}
 
-	if (!errors.amount && balance <= minAmount) {
-		errors.amount = `Insufficient balance. System requires ${minAmount} ${tokenSymbol} minimum balance.`;
-	}
-
 	if (!errors.amount && amount < minAmount) {
 		errors.amount = COMMON_ERROR_MESSAGE.LESS_THAN_MIN_AMOUNT(minAmount, tokenSymbol);
 	}
