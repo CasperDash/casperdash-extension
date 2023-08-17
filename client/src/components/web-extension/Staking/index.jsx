@@ -67,7 +67,7 @@ const Staking = () => {
 				balance,
 				fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE'),
 				minAmount:
-					selectedValidator && selectedValidator.hasDelegated
+					selectedValidator && (selectedValidator.hasDelegated && !getConfigKey('DISABLE_INCREASE_STAKE'))
 						? getConfigKey('MIN_CSPR_TRANSFER')
 						: getConfigKey('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR'),
 				selectedValidator,
