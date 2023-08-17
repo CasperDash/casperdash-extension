@@ -9,7 +9,10 @@ export const UndelegateButton = (props) => {
 	const navigate = useNavigate();
 	const pendingStakes = useSelector(getPendingStakes());
 
-	const onUndelegate = () => {
+	const onUndelegate = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
 		navigate('/undelegate', {
 			state: {
 				validatorPublicKey: props.validator,
