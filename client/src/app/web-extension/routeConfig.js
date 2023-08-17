@@ -31,6 +31,7 @@ import ConnectedSites from '@cd/components/web-extension/ConnectedSites';
 import DappSignDeployRequest from '@cd/components/web-extension/DappSignDeployRequest';
 import DappSignMessageRequest from '@cd/components/web-extension/DappSignMessageRequest';
 import WarningLedger from '@cd/components/web-extension/Ledger/Warning';
+import AboutCasperDash from '@cd/web-extension/Settings/AboutCasperDash';
 
 let features;
 
@@ -50,6 +51,7 @@ const routes = {
 		{ name: 'deployDetails', route: '/deployDetails', component: DeployDetails },
 		{ name: 'addToken', route: '/addToken', component: AddToken },
 		{ name: 'Settings', route: '/settings', component: Settings },
+		{ name: 'About CasperDash', route: '/aboutCasperDash', component: AboutCasperDash },
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
