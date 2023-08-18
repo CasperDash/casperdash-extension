@@ -55,7 +55,7 @@ const Grid = ({
 				<>
 					<div
 						data-testid={`${token.symbol}-${item.key}`}
-						className={clsx('cd_we_item_value', item.type, item.valueAsClass ? formattedValue: undefined)}
+						className={clsx('cd_we_item_value', item.type, item.valueAsClass ? formattedValue : undefined)}
 						key={`${token.symbol}-${item.key}`}
 						{...tooltip}
 					>
@@ -91,7 +91,7 @@ const Grid = ({
 														key={i}
 														className={`cd_we_grid_icon ${
 															metadata?.left?.iconClassName ?? ''
-														}`}
+														} icon-${i}`}
 													>
 														{ic && <img src={ic} alt="grid" />}
 													</div>

@@ -3,22 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import BackArrow from '@cd/assets/image/back-arrow.svg';
 import './InnerHeader.scss';
 
-export const InnerHeader = () => {
+export const InnerHeader = ({ prevRoute, setPrevRoute }) => {
 	const navigate = useNavigate();
-	const { state = {}, pathname } = useLocation();
+	const { state = {} } = useLocation();
 
 	const handleOnBack = () => {
-		switch (pathname) {
-			case '/undelegate':
-				navigate('/staking', {
-					replace: true,
-				});
-
-				return;
-			default:
-				navigate(-1);
-		}
-	}
+		navigate(prevRoute || -1, { replace: true });
+		setPrevRoute(undefined);
+	};
 
 	return (
 		<div className="cd_we_inner_header">
