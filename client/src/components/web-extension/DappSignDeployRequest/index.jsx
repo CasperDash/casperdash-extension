@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { approveSignDeployRequest, parseSignDeployData, rejectSignDeployRequest } from '@cd/components/hooks/useServiceWorker';
 import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import { withDappConnectorRequired } from '@cd/components/hocs/DappConnectorRequired/index';
 import Divider from '@cd/components/Common/Divider';
 import { moteToCspr } from '@cd/helpers/balance';
+import { getExplorer } from '@cd/selectors/settings';
 import DeployField from './DeployField';
 
 import './index.scss';
 
+
 const DappSignDeployRequest = () => {
+	const explorerUrl = useSelector(getExplorer);
 	const [deployData, setDeployData] = useState({});
 
 	useEffect(() => {
@@ -36,51 +40,78 @@ const DappSignDeployRequest = () => {
 		rejectSignDeployRequest();
 	};
 
+	const params = useMemo(() => {
+		return [
+			{
+				name: 'deployHash',
+				label: 'Deploy Hash',
+				value: deployData.deployHash,
+				link: `${explorerUrl}/deploy/${deployData.deployHash}`,
+			},
+			{
+				name: 'account',
+				label: 'Account',
+				value: deployData.account,
+				link: `${explorerUrl}/account/${deployData.account}`,
+			},
+			{
+				name: 'contractHash',
+				label: 'Contract Hash',
+				value: deployData.contractHash,
+				link: `${explorerUrl}/account/${deployData.contractHash}`,
+			},
+			{
+				name: 'timestamp',
+				label: 'Timestamp',
+				value: deployData.timestamp,
+			},
+			{
+				name: 'payment',
+				label: 'Payment',
+				value: deployData.payment,
+				tooltip: (
+					<span>
+						{moteToCspr(deployData.payment)} CSPR
+					</span>
+				)
+			},
+			{
+				name: 'deployType',
+				label: 'Deploy Type',
+				value: deployData.deployType,
+			}
+		]
+	}, [deployData.account, deployData.contractHash, deployData.deployHash, deployData.deployType, deployData.payment, deployData.timestamp, explorerUrl]);
+
 	return (
 		<div className="cd_we_sign_deploy_container">
 			<div>
 				<h1>Signature Deploy Request</h1>
 			</div>
 			<div className="cd_we_sign_deploy_list_fields">
-				<div className="cd_we_sign_deploy_field">
-					<span>Deploy Hash</span>
-					<div className="long_text">
-						<MiddleTruncatedText end={4}>{deployData.deployHash}</MiddleTruncatedText>
-					</div>
-				</div>
-				<div className="cd_we_sign_deploy_field">
-					<span>Account</span>
-					<div className="long_text">
-						<MiddleTruncatedText end={4}>{deployData.account}</MiddleTruncatedText>
-					</div>
-				</div>
-				<div className="cd_we_sign_deploy_field">
-					<span>Timestamp</span>
-					<span>{deployData.timestamp}</span>
-				</div>
-				<div className="cd_we_sign_deploy_field">
-					<span>Payment</span>
-					<span>
-					<OverlayTrigger
-						placement="auto"
-						overlay={
-							<Tooltip>
-								<span>
-								{moteToCspr(deployData.payment)} CSPR
-								</span>
-							</Tooltip>
+				{
+					params.map((param) => {
+						if (!param.value) {
+							return null;
 						}
-					>
-						<span>
-							{deployData.payment}
-						</span>
-					</OverlayTrigger>
-					</span>
-				</div>
-				<div className="cd_we_sign_deploy_field">
-					<span>Deploy Type</span>
-					<span>{deployData.deployType}</span>
-				</div>
+
+						return (
+							<div key={`deploy-field-${param.name}`} className="cd_we_sign_deploy_field">
+								<span>{param.label}</span>
+								<div className="long_text">
+									{
+										param.link ? (
+											<a href={param.link} target="_blank" rel="noopener noreferrer">
+												<MiddleTruncatedText end={4}>{param.value}</MiddleTruncatedText>
+											</a>
+										) : (
+											<MiddleTruncatedText end={4}>{param.value}</MiddleTruncatedText>											)
+									}
+								</div>
+							</div>
+						)
+					})
+				}
 					{deployData.deployArgs && (
 						<>
 							<Divider className="cd_we_sign_divider" color="#000000" />
