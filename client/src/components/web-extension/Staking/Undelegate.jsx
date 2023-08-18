@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import _get from 'lodash-es/get';
 import { useFormik } from 'formik';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import { toFormattedNumber } from '@cd/helpers/format';
 import { getConfigKey } from '@cd/services/configurationServices';
 import SwitchBox from '@cd/common/SwitchBox';
@@ -16,6 +16,11 @@ export const Undelegate = () => {
 	// Hook
 	const navigate = useNavigate();
 	const { state } = useLocation();
+	const [, setPrevRoute] = useOutletContext();
+
+	useEffect(() => {
+		setPrevRoute('/staking');
+	}, [setPrevRoute]);
 
 	const {
 		validator: newValidator,
@@ -31,17 +36,17 @@ export const Undelegate = () => {
 		validatorPublicKey,
 		selectedValidator: newValidator,
 		stakedAmount,
-	})
+	});
 
 	const formik = useFormik({
 		initialValues: {
 			validatorPublicKey: validatorPublicKey,
-			newValidatorPublicKey:  _get(newValidator, 'validatorPublicKey'),
+			newValidatorPublicKey: _get(newValidator, 'validatorPublicKey'),
 			isUsingRedelegate: defaultIsUsingRedelegate,
 			amount: defaultAmount,
 		},
 		validationSchema,
-		onSubmit: values => {
+		onSubmit: (values) => {
 			const { isUsingRedelegate } = values;
 
 			navigate('/stakeConfirm', {
@@ -59,9 +64,9 @@ export const Undelegate = () => {
 						action: isUsingRedelegate ? ENTRY_POINT_REDELEGATE : ENTRY_POINT_UNDELEGATE,
 						newValidator: {
 							publicKey: values.newValidatorPublicKey,
-							name: _get(newValidator,  'name'),
+							name: _get(newValidator, 'name'),
 							icon: _get(newValidator, 'icon[1]'),
-						}
+						},
 					},
 				},
 			});
@@ -81,7 +86,7 @@ export const Undelegate = () => {
 				name: 'Select Validator',
 				callback: '/undelegate',
 				excludedValidators: [formik.values.validatorPublicKey],
-			}
+			},
 		});
 	};
 
@@ -89,9 +94,8 @@ export const Undelegate = () => {
 		if (newValidator) {
 			formik.validateField('newValidatorPublicKey');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	console.log('formik', formik.errors);
 
 	return (
 		<section className="cd_we_undelegate cd_we_single_section no_bottom_bar">
@@ -122,19 +126,17 @@ export const Undelegate = () => {
 						/>
 						<span className="cd_we_staking_redelegate__switch-box-text">Using redelegate</span>
 					</label>
-					{
-						formik.values.isUsingRedelegate && (
-							<div className="cd_we_staking_redelegate__select-validator">
-								<SelectValidator
-									publicKey={formik.values.newValidatorPublicKey}
-									name={_get(newValidator, 'name')}
-									icon={_get(newValidator, 'icon[1]')}
-									onClick={onSearchValidator}
-								/>
-								<div className="cd_error_text">{formik.errors.newValidatorPublicKey}</div>
-							</div>
-						)
-					}
+					{formik.values.isUsingRedelegate && (
+						<div className="cd_we_staking_redelegate__select-validator">
+							<SelectValidator
+								publicKey={formik.values.newValidatorPublicKey}
+								name={_get(newValidator, 'name')}
+								icon={_get(newValidator, 'icon[1]')}
+								onClick={onSearchValidator}
+							/>
+							<div className="cd_error_text">{formik.errors.newValidatorPublicKey}</div>
+						</div>
+					)}
 				</div>
 				<div className="cd_we_staking_amount">
 					<div className="cd_we_staking_amount_header">
@@ -142,18 +144,24 @@ export const Undelegate = () => {
 						<div>My staked: {toFormattedNumber(stakedAmount)}</div>
 					</div>
 					<div className="cd_we_staking_amount_text_box">
-						<input name="amount" type="number" value={formik.values.amount} onChange={formik.handleChange} />
+						<input
+							name="amount"
+							type="number"
+							value={formik.values.amount}
+							onChange={formik.handleChange}
+						/>
 						<div className="cd_we_amount_max_btn" onClick={() => onAmountChange(stakedAmount)}>
 							Max
 						</div>
 					</div>
 					<div className="cd_error_text">{formik.errors.amount}</div>
 				</div>
-				<Button type="submit" disabled={formik.errors && Object.keys(formik.errors).length !== 0} >
+				<Button type="submit" disabled={formik.errors && Object.keys(formik.errors).length !== 0}>
 					Confirm
 				</Button>
 				<div className="cd_we_staking_note">
-					Please note that the waiting time for the process is approximately 7-8 eras, which translates to around 14-16 hours.
+					Please note that the waiting time for the process is approximately 7-8 eras, which translates to
+					around 14-16 hours.
 				</div>
 			</form>
 		</section>
