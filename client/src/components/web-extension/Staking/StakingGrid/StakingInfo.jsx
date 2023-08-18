@@ -5,11 +5,11 @@ import HistoryIcon from '@cd/assets/image/ic-history.svg';
 import { validatorSelector } from '@cd/selectors/validator';
 import { useStakedHistory, useStakeFromValidators } from '@cd/hooks/useStakeDeploys';
 import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
+import { ENTRY_POINT_REDELEGATE } from '@cd/constants/key';
 import Grid from '../../Common/Grid';
 import { UndelegateButton } from './UndelegateButton';
 import { RewardInfo } from './RewardInfo';
 import './StakingInfo.scss';
-import { ENTRY_POINT_REDELEGATE } from '@cd/constants/key';
 
 const STAKING_INFO_METADATA = {
 	left: [
@@ -31,7 +31,7 @@ const STAKING_INFO_METADATA = {
 const STAKING_HISTORY_METADATA = {
 	left: [
 		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
-		{ key: 'entryPoint', type: 'secondary'},
+		{ key: 'entryPoint', type: 'secondary' },
 	],
 	right: [
 		{ key: 'amount', type: 'primary', format: 'number', suffix: 'CSPR' },
@@ -55,18 +55,17 @@ export const StakingInfo = ({ publicKey }) => {
 
 	const [view, setView] = useState(VIEWS.info);
 
-	const normalizedHistories = useMemo(
-		() => {
-			return historyList.map((history) => {
-
-				return {
-					...history,
-					entryPoint: history.entryPoint === ENTRY_POINT_REDELEGATE ? `redelegate to ${history.newValidatorName}` : history.entryPoint,
-				};
-			});
-		},
-		[historyList]
-	);
+	const normalizedHistories = useMemo(() => {
+		return historyList.map((history) => {
+			return {
+				...history,
+				entryPoint:
+					history.entryPoint === ENTRY_POINT_REDELEGATE
+						? `redelegate to ${history.newValidatorName}`
+						: history.entryPoint,
+			};
+		});
+	}, [historyList]);
 
 	return (
 		<div className="cd_we_staking_info">
