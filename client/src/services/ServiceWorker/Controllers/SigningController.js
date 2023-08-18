@@ -82,9 +82,17 @@ class SigningController extends EventEmitter {
 		const deployArgs = getDeployArgs(deploy, targetKey);
 		const deployAccount = deploy.header.account.toHex();
 
+		let contractHash = '';
+		if (deploy.session.isStoredContractByHash()) {
+			contractHash = deploy.session.storedContractByHash ?
+				Buffer.from(deploy.session.storedContractByHash.hash).toString('hex')
+				: false;
+		}
+
 		return {
 			deployHash: encodeBase16(this.unsignedDeploy.deploy.hash),
 			signingKey: signingKey,
+			contractHash,
 			account: deployAccount,
 			bodyHash: encodeBase16(deploy.header.bodyHash),
 			chainName: deploy.header.chainName,
