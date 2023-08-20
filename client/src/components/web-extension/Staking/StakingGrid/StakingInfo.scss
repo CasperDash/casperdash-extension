@@ -21,6 +21,10 @@
 		height: calc(100vh - 400px) !important;
 		padding: 0 !important;
 		.cd_we_item {
+			&:hover {
+				cursor: pointer;
+				color: var(--primary-light-color);
+			}
 			button {
 				height: 28px;
 				line-height: 14px;
