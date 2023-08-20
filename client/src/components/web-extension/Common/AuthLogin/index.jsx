@@ -4,6 +4,9 @@ import { Formik } from 'formik';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import messages from '@cd/shared/formMessages';
 import useAuthLogin from '@cd/components/hooks/useAuthLogin';
+import DeleteAllDataLinkConfirm from '@cd/web-extension/Common/DeleteAllDataLinkConfirm';
+
+import './index.scss';
 
 const onValidatePassword = (values) => {
 	const errors = {};
@@ -15,7 +18,7 @@ const onValidatePassword = (values) => {
 	return errors;
 };
 
-const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = 'Enter password' }) => {
+const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = 'Enter password', isShowDeleteAllData }) => {
 	const { onAuthCredentialSuccess, validateUserCredential } = useAuthLogin({
 		onAuthCompleted: onLoginSuccess,
 	});
@@ -80,6 +83,13 @@ const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = '
 								{serverErrors.message}
 							</Form.Text>
 						)}
+						{
+							isShowDeleteAllData && (
+								<div className={'cd_we_auth_login--delete-all-data'}>
+									<DeleteAllDataLinkConfirm />
+								</div>
+							)
+						}
 						<div className="cd_we_page--bottom">
 							<Button type="submit" className="cd_we_btn-next" disabled={false}>
 								Unlock
@@ -94,9 +104,9 @@ const AuthLogin = ({ onLoginSuccess = () => {}, header = null, passwordLabel = '
 
 AuthLogin.propTypes = {
 	header: PropTypes.node,
-	isShowReset: PropTypes.bool,
 	onLoginSuccess: PropTypes.func,
 	passwordLabel: PropTypes.string,
+	isShowDeleteAllData: PropTypes.bool,
 };
 
 export default AuthLogin;

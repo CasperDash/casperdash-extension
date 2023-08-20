@@ -7,8 +7,15 @@
 	}
 }
 
-.cd_we_welcomeBack--body {
-	flex-direction: column;
+.cd_we_welcomeBack {
+	&--body {
+		flex-direction: column;
+	}
+
+	&--delete-all-data {
+		display: flex;
+		flex-direction: row-reverse;
+	}
 }
 
 .cd_welcome {
