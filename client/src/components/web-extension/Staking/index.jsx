@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchAccountDelegation, getValidatorsDetails } from '@cd/actions/userActions';
+import BalanceDisplay from '@cd/common/BalanceDisplay';
 import { getAccountDelegation, getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
@@ -11,6 +12,7 @@ import { toFormattedNumber } from '../../../helpers/format';
 import { validateStakeForm } from '../../../helpers/validator';
 import { getConfigKey } from '../../../services/configurationServices';
 import { StakingInfo } from './StakingGrid/StakingInfo';
+
 import './Staking.scss';
 
 const Staking = () => {
@@ -124,7 +126,7 @@ const Staking = () => {
 				<div className="cd_we_staking_amount">
 					<div className="cd_we_staking_amount_header">
 						<div className="cd_we_input_label">Amount</div>
-						<div>Balance: {toFormattedNumber(balance)}</div>
+						<div>Balance: <BalanceDisplay balance={toFormattedNumber(balance)} /></div>
 					</div>
 					<div className="cd_we_staking_amount_text_box">
 						<input type="number" value={amount} onChange={(e) => onAmountChange(e.target.value)} />
