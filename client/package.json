@@ -53,6 +53,8 @@
 		"react-toastify": "^8.1.0",
 		"react-tooltip": "^5.18.0",
 		"react-top-loading-bar": "^2.0.1",
+		"react-virtualized-auto-sizer": "^1.0.20",
+		"react-window": "^1.8.9",
 		"redux": "^4.0.5",
 		"redux-persist": "^6.0.0",
 		"redux-persist-webextension-storage": "^1.0.2",
