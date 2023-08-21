@@ -66,14 +66,15 @@ test('Should show confirm section', () => {
 	expect(getByText('Validator').textContent).toBe('Validator');
 	expect(getByText('Amount').textContent).toBe('Amount');
 	expect(getByText('Network Fee').textContent).toBe('Network Fee');
-	expect(getByText('Delegate').textContent).toBe('Delegate');
 });
 
 test('Should confirm delegate action', async () => {
 	useLocation.mockReturnValue({
 		state: {
 			stake: {
-				validator: '0x123',
+				validator: {
+					publicKey: '0x123'
+				},
 				amount: 1,
 				fee: 0.001,
 				action: 'delegate',
@@ -84,7 +85,7 @@ test('Should confirm delegate action', async () => {
 	spyOnUseSelector.mockReturnValue('0x00');
 	const { container, queryAllByText } = render(<Confirm />);
 	const confirmBtn = container.querySelector('.btn-primary');
-	expect(queryAllByText('Delegate').length).toBe(1);
+	expect(queryAllByText('delegate').length).toBe(2);
 	await fireEvent.click(confirmBtn);
 	expect(pushStakeToLocalStorage).toHaveBeenCalledWith('0x00', {
 		amount: 1,
@@ -95,6 +96,8 @@ test('Should confirm delegate action', async () => {
 		deployHash: '0x123',
 		status: 'pending',
 		timestamp: 1234,
+		newValidator: undefined,
+		newValidatorName: undefined,
 	});
 });
 
@@ -102,7 +105,9 @@ test('Should confirm undelegate action', async () => {
 	useLocation.mockReturnValue({
 		state: {
 			stake: {
-				validator: '0x123',
+				validator: {
+					publicKey: '0x123'
+				},
 				amount: 1,
 				fee: 0.001,
 				action: 'undelegate',
@@ -113,7 +118,7 @@ test('Should confirm undelegate action', async () => {
 	spyOnUseSelector.mockReturnValue('0x00');
 	const { container, queryAllByText } = render(<Confirm />);
 	const confirmBtn = container.querySelector('.btn-primary');
-	expect(queryAllByText('Undelegate').length).toBe(1);
+	expect(queryAllByText('undelegate').length).toBe(2);
 	await fireEvent.click(confirmBtn);
 	expect(pushStakeToLocalStorage).toHaveBeenCalledWith('0x00', {
 		amount: 1,
@@ -124,5 +129,7 @@ test('Should confirm undelegate action', async () => {
 		deployHash: '0x123',
 		status: 'pending',
 		timestamp: 1234,
+		newValidator: undefined,
+		newValidatorName: undefined,
 	});
 });

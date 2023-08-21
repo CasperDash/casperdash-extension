@@ -1,4 +1,6 @@
 
+const esModules = ['lodash-es', 'nanoid', 'konva'].join("|");
+
 const config = {
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
@@ -36,9 +38,12 @@ const config = {
         "^@cd/apiServices(.*)$": "<rootDir>/src/apiServices$1",
         "^lodash-es/(.*)$": "lodash/$1",
         "^lodash-es": "lodash",
+        "^nanoid(/(.*)|$)": "nanoid$1",
+        "^konva(/(.*)|$)": "konva$1",
+        canvas: 'jest-canvas-mock'
     },
     "transformIgnorePatterns": [
-        "<rootDir>/node_modules/(?!lodash-es)",
+        `<rootDir>/node_modules/(?!${esModules})`,
     ],
     "globals": {
         TextEncoder: require('util').TextEncoder,
