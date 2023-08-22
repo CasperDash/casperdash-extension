@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import ConfirmModal from '@cd/components/Common/ConfirmModal';
-import EnterPasswordModal from '@cd/components/web-extension/Common/LoginModal/EnterPasswordModal';
-import useAuthLogin from '@cd/components/hooks/useAuthLogin';
 import { isUsingLedgerSelector } from '@cd/selectors/user';
 import { useDeleteAllData } from '@cd/hooks/useDeleteAllData';
+import ConfirmDeleteAllDataModal from '@cd/web-extension/Common/DeleteAllDataLinkConfirm/ConfirmDeleteAllDataModal';
 import DeleteAllDataNotice from '@cd/web-extension/Common/DeleteAllDataNotice';
 
-const DeleteAllDataButton = () => {
+import './index.scss';
+
+const DeleteAllDataLinkConfirm = () => {
 	const { deleteAllData } = useDeleteAllData();
-	const { validateUserCredential } = useAuthLogin({});
 	const navigate = useNavigate();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [isOpenLoginModal, setIsOpenLoginModal] = useState(false);
-	const isUsingLedger = useSelector(isUsingLedgerSelector);
-
+	useSelector(isUsingLedgerSelector);
 	const handleOnClick = () => {
 		setIsOpenModal(true);
 	};
@@ -26,20 +24,11 @@ const DeleteAllDataButton = () => {
 	};
 
 	const onConfirmHandler = () => {
-		if (isUsingLedger) {
-			deleteAllData();
-			navigate('/connectAccount');
-			return;
-		}
 		setIsOpenModal(false);
 		setIsOpenLoginModal(true);
 	};
 
-	const onSubmitPassword = async (password) => {
-		const result = await validateUserCredential(password);
-		if (!result) {
-			throw Error('Invalid password');
-		}
+	const onSubmit = async () => {
 		setIsOpenLoginModal(false);
 		deleteAllData();
 		navigate('/connectAccount');
@@ -51,9 +40,9 @@ const DeleteAllDataButton = () => {
 
 	return (
 		<>
-			<Button variant="normal" className="btn--delete-all-data" onClick={handleOnClick}>
+			<a className="cd_we_delete_all_data_link" onClick={handleOnClick}>
 				Delete All Data
-			</Button>
+			</a>
 			<ConfirmModal
 				isOpen={isOpenModal}
 				onConfirm={onConfirmHandler}
@@ -64,15 +53,13 @@ const DeleteAllDataButton = () => {
 					<DeleteAllDataNotice />
 				}
 			/>
-			<EnterPasswordModal
+			<ConfirmDeleteAllDataModal
 				isOpen={isOpenLoginModal}
-				onSubmitPassword={onSubmitPassword}
+				onSubmit={onSubmit}
 				onCloseModal={handleOnClosePasswordModal}
-				title="Confirm delete"
-				description="Enter password to delete all data"
 			/>
 		</>
 	);
 };
 
-export default DeleteAllDataButton;
+export default DeleteAllDataLinkConfirm;

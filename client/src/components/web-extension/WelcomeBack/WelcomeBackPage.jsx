@@ -18,7 +18,7 @@ const WelcomeBackPage = () => {
 			<div className="cd_we_create-wallet-layout--root">
 				<h2>Welcome Back!</h2>
 				<div className="cd_we_create-wallet-layout--body cd_we_welcomeBack--body">
-					<AuthLogin isShowReset onLoginSuccess={handleOnLoginSuccess} />
+					<AuthLogin isShowDeleteAllData onLoginSuccess={handleOnLoginSuccess} />
 				</div>
 			</div>
 		</section>
