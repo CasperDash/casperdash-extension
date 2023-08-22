@@ -47,6 +47,7 @@
 		"react-idle-timer": "^5.4.2",
 		"react-infinite-scroll-component": "^6.1.0",
 		"react-konva": "17.0.2-6",
+		"react-popper": "^2.3.0",
 		"react-redux": "^7.2.0",
 		"react-router-dom": "^6.1.1",
 		"react-select": "^5.2.1",

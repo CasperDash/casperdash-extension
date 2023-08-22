@@ -1,0 +1,25 @@
+.cd_we_staking_info_dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--secondary-text-color-light);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.14);
+  background-color: var(--component-background);
+
+  &_divider {
+    border-bottom: 1px solid var(--secondary-text-color-light);
+  }
+
+  &_item {
+    border: none;
+    background-color: var(--component-background);
+    padding: 6px 10px;
+    border-radius: 6px;
+    &:hover {
+      background-color: var(--primary-light-color);
+      cursor: pointer;
+    }
+  }
+}

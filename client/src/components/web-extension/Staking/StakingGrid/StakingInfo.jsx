@@ -1,21 +1,20 @@
 import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import HistoryIcon from '@cd/assets/image/ic-history.svg';
-import { getValidators, validatorSelector } from '@cd/selectors/validator';
+import { validatorSelector } from '@cd/selectors/validator';
 import { useStakedHistory, useStakeFromValidators } from '@cd/hooks/useStakeDeploys';
 import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import { ENTRY_POINT_REDELEGATE } from '@cd/constants/key';
 import Grid from '../../Common/Grid';
-import { UndelegateButton } from './UndelegateButton';
+import { ActionsButton } from './ActionsButton';
 import { RewardInfo } from './RewardInfo';
 import './StakingInfo.scss';
 
 const STAKING_INFO_METADATA = {
 	left: [
 		{ key: 'name', type: 'primary', wrapperComponent: MiddleTruncatedText },
-		{ component: UndelegateButton, value: 'Undelegate', props: { text: 'Undelegate' } },
+		{ component: ActionsButton, value: 'Actions', props: { text: 'Actions' } },
 	],
 	right: [
 		{ key: 'stakedAmount', type: 'primary', format: 'number', suffix: 'CSPR' },
@@ -51,10 +50,8 @@ const VIEWS = {
 
 export const StakingInfo = ({ publicKey }) => {
 	const stackingList = useStakeFromValidators(publicKey);
-	const navigate = useNavigate();
 	const historyList = useStakedHistory();
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
-	const validators = useSelector(getValidators());
 
 	const [view, setView] = useState(VIEWS.info);
 
@@ -94,15 +91,6 @@ export const StakingInfo = ({ publicKey }) => {
 				<RewardInfo publicKey={publicKey} />
 			) : (
 				<Grid
-					onRowClick={(value) => {
-						const foundValidator = validators.find((validator) => validator.validatorPublicKey === value.validator);
-
-						navigate('/staking', {
-							state: {
-								validator: foundValidator
-							},
-						});
-					}}
 					data={view.key === VIEWS.info.key ? stackingList : normalizedHistories}
 					metadata={view.metadata}
 					className="overflow_auto hide_scroll_bar"

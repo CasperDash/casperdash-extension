@@ -5,7 +5,6 @@
 		gap: 8px;
 		.cd_we_staking_info_title {
 			color: var(--secondary-text-color);
-			cursor: pointer;
 			&.active {
 				color: #dc3545;
 			}
@@ -21,10 +20,6 @@
 		height: calc(100vh - 400px) !important;
 		padding: 0 !important;
 		.cd_we_item {
-			&:hover {
-				cursor: pointer;
-				color: var(--primary-light-color);
-			}
 			button {
 				height: 28px;
 				line-height: 14px;
