@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import HistoryIcon from '@cd/assets/image/ic-history.svg';
+import useBalanceVisible from '@cd/hooks/useBalanceVisible';
+import { toFormattedNumber } from '@cd/helpers/format';
 import { validatorSelector } from '../../../../selectors/validator';
 import { useStakedHistory, useStakeFromValidators } from '../../../hooks/useStakeDeploys';
 import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
@@ -16,7 +18,7 @@ const STAKING_INFO_METADATA = {
 		{ component: UndelegateButton, value: 'Undelegate', props: { text: 'Undelegate' } },
 	],
 	right: [
-		{ key: 'stakedAmount', type: 'primary', format: 'number', suffix: 'CSPR' },
+		{ key: 'stakedAmountDisplay', type: 'primary', suffix: 'CSPR' },
 		{
 			key: 'pendingAmount',
 			type: 'secondary',
@@ -49,10 +51,20 @@ const VIEWS = {
 
 export const StakingInfo = ({ publicKey }) => {
 	const stackingList = useStakeFromValidators(publicKey);
+	const { isBalanceVisible } = useBalanceVisible();
 	const historyList = useStakedHistory();
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
 
 	const [view, setView] = useState(VIEWS.info);
+
+	const normalizedStackingList = useMemo(() => {
+		return stackingList.map((item) => {
+			return {
+				...item,
+				stakedAmountDisplay: isBalanceVisible ? toFormattedNumber(item.stakedAmount) : '*****',
+			};
+		});
+	}, [isBalanceVisible, stackingList])
 
 	return (
 		<div className="cd_we_staking_info">
@@ -78,7 +90,7 @@ export const StakingInfo = ({ publicKey }) => {
 				<RewardInfo publicKey={publicKey} />
 			) : (
 				<Grid
-					data={view.key === VIEWS.info.key ? stackingList : historyList}
+					data={view.key === VIEWS.info.key ? normalizedStackingList : historyList}
 					metadata={view.metadata}
 					className="overflow_auto hide_scroll_bar"
 					isLoading={isLoadingValidators}

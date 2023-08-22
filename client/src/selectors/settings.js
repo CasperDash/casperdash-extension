@@ -14,4 +14,8 @@ export const getExplorer = ({ settings }) => {
 	return settings.network === 'casper-test' ? 'https://testnet.cspr.live' : 'https://cspr.live';
 };
 
+export const getIsHideBalance = ({ settings }) => {
+	return settings.isHideBalance;
+}
+
 export const getNetworkState = (fn) => fn?.().settings?.network || 'casper';
