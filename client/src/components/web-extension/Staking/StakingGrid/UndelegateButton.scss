@@ -1,0 +1,17 @@
+.dropdown {
+  position: unset !important;
+  & div {
+    inset: unset !important;
+    transform: translate3d(0px, -86px, -10px) !important;
+    background-color: var(--component-background);
+    border-radius: 12px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.14);
+    border: 1px solid var(--secondary-text-color-light) !important;
+  }
+
+  &-item {
+    &:hover {
+      background-color: var(--primary-light-color) !important;
+    }
+  }
+}
