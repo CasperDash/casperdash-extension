@@ -51,10 +51,8 @@ const VIEWS = {
 
 export const StakingInfo = ({ publicKey }) => {
 	const stackingList = useStakeFromValidators(publicKey);
-	const navigate = useNavigate();
 	const historyList = useStakedHistory();
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
-	const validators = useSelector(getValidators());
 
 	const [view, setView] = useState(VIEWS.info);
 
@@ -94,15 +92,6 @@ export const StakingInfo = ({ publicKey }) => {
 				<RewardInfo publicKey={publicKey} />
 			) : (
 				<Grid
-					onRowClick={(value) => {
-						const foundValidator = validators.find((validator) => validator.validatorPublicKey === value.validator);
-
-						navigate('/staking', {
-							state: {
-								validator: foundValidator
-							},
-						});
-					}}
 					data={view.key === VIEWS.info.key ? stackingList : normalizedHistories}
 					metadata={view.metadata}
 					className="overflow_auto hide_scroll_bar"

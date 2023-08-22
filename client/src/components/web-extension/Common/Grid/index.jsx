@@ -26,13 +26,13 @@ const Grid = ({
 			...item.formatOptions,
 		});
 	}, []);
-	const renderValue = useCallback(({ item, token }, value) => {
+	const renderValue = useCallback(({ item, token, index }, value) => {
 		if (item.wrapperComponent) {
 			return <item.wrapperComponent>{value}</item.wrapperComponent>;
 		}
 
 		if (item.component) {
-			return <item.component {...(item.props && { ...item.props })} {...token} value={value} />;
+			return <item.component key={`gird-item-${index}`} {...(item.props && { ...item.props })} {...token} value={value} />;
 		}
 
 		return value;
@@ -59,7 +59,7 @@ const Grid = ({
 						key={`${token.symbol}-${item.key}`}
 						{...tooltip}
 					>
-						{renderValue({ item, token }, formattedValue)} {item.suffix}
+						{renderValue({ item, token, index: i }, formattedValue)} {item.suffix}
 					</div>
 					{item.tooltip && <Tooltip id={`grid-tooltip-${item.tooltip}-${i}`} style={{ width: '90%' }} />}
 				</>
