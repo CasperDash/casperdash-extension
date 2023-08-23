@@ -119,24 +119,31 @@ export const Undelegate = () => {
 					<div className="cd_error_text">{formik.errors.validatorPublicKey}</div>
 				</div>
 				<div className="cd_we_staking_redelegate">
-					<label className={'cd_we_staking_redelegate__switch-box'}>
-						<SwitchBox
-							checked={formik.values.isUsingRedelegate}
-							onClick={() => formik.setFieldValue('isUsingRedelegate', !formik.values.isUsingRedelegate)}
-						/>
-						<span className="cd_we_staking_redelegate__switch-box-text">Using redelegate</span>
-					</label>
-					{formik.values.isUsingRedelegate && (
-						<div className="cd_we_staking_redelegate__select-validator">
-							<SelectValidator
-								publicKey={formik.values.newValidatorPublicKey}
-								name={_get(newValidator, 'name')}
-								icon={_get(newValidator, 'icon[1]')}
-								onClick={onSearchValidator}
-							/>
-							<div className="cd_error_text">{formik.errors.newValidatorPublicKey}</div>
-						</div>
-					)}
+					{
+						getConfigKey('ENABLE_REDELEGATE') &&
+						<>
+							<label className={'cd_we_staking_redelegate__switch-box'}>
+								<SwitchBox
+									checked={formik.values.isUsingRedelegate}
+									onClick={() => formik.setFieldValue('isUsingRedelegate', !formik.values.isUsingRedelegate)}
+								/>
+								<span className="cd_we_staking_redelegate__switch-box-text">Using redelegate</span>
+							</label>
+							{
+								formik.values.isUsingRedelegate && (
+									<div className="cd_we_staking_redelegate__select-validator">
+										<SelectValidator
+											publicKey={formik.values.newValidatorPublicKey}
+											name={_get(newValidator, 'name')}
+											icon={_get(newValidator, 'icon[1]')}
+											onClick={onSearchValidator}
+										/>
+										<div className="cd_error_text">{formik.errors.newValidatorPublicKey}</div>
+									</div>
+								)
+							}
+						</>
+					}
 				</div>
 				<div className="cd_we_staking_amount">
 					<div className="cd_we_staking_amount_header">
