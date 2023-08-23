@@ -2,13 +2,12 @@ import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import HistoryIcon from '@cd/assets/image/ic-history.svg';
-import { getValidators, validatorSelector } from '@cd/selectors/validator';
+import { validatorSelector } from '@cd/selectors/validator';
 import useBalanceVisible from '@cd/hooks/useBalanceVisible';
 import { toFormattedNumber } from '@cd/helpers/format';
 import { useStakedHistory, useStakeFromValidators } from '@cd/hooks/useStakeDeploys';
 import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import { ENTRY_POINT_REDELEGATE } from '@cd/constants/key';
-import { useNavigate } from 'react-router-dom';
 import Grid from '../../Common/Grid';
 import { UndelegateButton } from './UndelegateButton';
 import { RewardInfo } from './RewardInfo';
@@ -55,10 +54,8 @@ const VIEWS = {
 export const StakingInfo = ({ publicKey }) => {
 	const stackingList = useStakeFromValidators(publicKey);
 	const { isBalanceVisible } = useBalanceVisible();
-	const navigate = useNavigate();
 	const historyList = useStakedHistory();
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
-	const validators = useSelector(getValidators());
 
 	const [view, setView] = useState(VIEWS.info);
 
@@ -108,15 +105,6 @@ export const StakingInfo = ({ publicKey }) => {
 				<RewardInfo publicKey={publicKey} />
 			) : (
 				<Grid
-					onRowClick={(value) => {
-						const foundValidator = validators.find((validator) => validator.validatorPublicKey === value.validator);
-
-						navigate('/staking', {
-							state: {
-								validator: foundValidator
-							},
-						});
-					}}
 					data={view.key === VIEWS.info.key ? normalizedStackingList : normalizedHistories}
 					metadata={view.metadata}
 					className="overflow_auto hide_scroll_bar"
