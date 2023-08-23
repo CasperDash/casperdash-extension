@@ -12,14 +12,14 @@
 		.cd_we_item_left {
 			display: flex;
 			align-items: center;
-			max-width: 100px;
+			max-width: 60%;
 			.cd_we_grid_icon {
 				margin-right: 5px;
 				display: flex;
 				border-radius: 50%;
 			}
 			.cd_we_item_content {
-				max-width: 100%;
+				max-width: 70%;
 			}
 		}
 		.cd_we_item_right {
@@ -28,6 +28,9 @@
 				display: flex;
 				flex-direction: column;
 				align-items: flex-end;
+			}
+			.cd_we_item_value {
+				text-align: right;
 			}
 		}
 		.cd_we_item_value {

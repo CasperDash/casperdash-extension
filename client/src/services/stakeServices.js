@@ -1,5 +1,5 @@
 import { DeployUtil, RuntimeArgs, CLPublicKey, CLValueBuilder } from 'casper-js-sdk';
-import { NETWORK_NAME, ENTRY_POINT_DELEGATE } from '../constants/key';
+import { NETWORK_NAME, ENTRY_POINT_DELEGATE, ENTRY_POINT_REDELEGATE } from '../constants/key';
 import { getStakeAuctionHash } from '../constants/stack';
 import { toMotes } from '../helpers/currency';
 
@@ -30,6 +30,7 @@ const buildStakeDeploy = (baseAccount, entryPoint, args, paymentAmount, network)
 export const getStakeDeploy = ({
 	fromAddress,
 	validator,
+	newValidator,
 	fee,
 	amount,
 	entryPoint = ENTRY_POINT_DELEGATE,
@@ -38,10 +39,26 @@ export const getStakeDeploy = ({
 	try {
 		const fromAccPk = CLPublicKey.fromHex(fromAddress);
 		const validatorPk = CLPublicKey.fromHex(validator);
+
+		let args = {
+			delegator: fromAccPk,
+			validator: validatorPk,
+			amount: CLValueBuilder.u512(toMotes(amount))
+		};
+
+		if (entryPoint === ENTRY_POINT_REDELEGATE) {
+			const newValidatorPk = CLPublicKey.fromHex(newValidator);
+
+			args = {
+				...args,
+				new_validator: newValidatorPk,
+			};
+		}
+
 		return buildStakeDeploy(
 			fromAccPk,
 			entryPoint,
-			{ delegator: fromAccPk, validator: validatorPk, amount: CLValueBuilder.u512(toMotes(amount)) },
+			args,
 			toMotes(fee),
 			network,
 		);

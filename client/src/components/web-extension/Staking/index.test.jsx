@@ -20,7 +20,7 @@ test('Should show stake form and no staked info', async () => {
 	expect(getByText('Staked Info').textContent).toBe('Staked Info');
 	expect(getByText('Rewards').textContent).toBe('Rewards');
 
-	fireEvent.click(container.querySelector('.cd_we_staking_validator_box'));
+	fireEvent.click(container.querySelector('.cd_we_select_validator'));
 	expect(useNavigate()).toHaveBeenCalled();
 });
 
@@ -40,8 +40,6 @@ test('Should navigate to stake confirm', async () => {
 	useLocation.mockReturnValue({ state: { validator: { validatorPublicKey: 'validatorkey' } } });
 	useSelector.mockReturnValue([]);
 	const { getByText, container } = render(<Staking />);
-
-	expect(getByText('validat').textContent).toBe('validat');
 
 	const amountField = container.querySelector('.cd_we_staking_amount_text_box input');
 	await fireEvent.change(amountField, { target: { value: 100 } });

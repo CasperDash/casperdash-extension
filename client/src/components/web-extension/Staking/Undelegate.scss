@@ -7,19 +7,10 @@
 			align-items: center;
 		}
 		.cd_we_staking_validator_box {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			background: var(--secondary-text-color-light);
-			border-radius: 12px;
-			height: 35px;
-			cursor: pointer;
-			.cd_we_staking_validator_value {
-				padding-left: 10px;
-				width: 60%;
-			}
-			.cd_we_staking_validator_box_arrow {
-				margin-right: 10px;
+			margin-top: 4px;
+
+			&__select {
+				cursor: unset;
 			}
 		}
 	}
@@ -52,5 +43,22 @@
 
 	button {
 		width: 100%;
+	}
+
+	.cd_we_staking_redelegate {
+		margin-bottom: 20px;
+		&__switch-box {
+			display: flex;
+			align-items: center;
+
+			&-text {
+				font-size: 14px;
+				margin-left: 8px;
+			}
+		}
+
+		&__select-validator {
+			margin-top: 20px;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import { CLPublicKey } from 'casper-js-sdk';
+import { VALIDATOR_REACHED_MAXIMUM } from '@cd/constants/staking';
 import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
 
 /**
@@ -74,10 +75,10 @@ export const validateNftTransferForm = (values) => {
 
 const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
-	NOT_ENOUGH_BALANCE: 'Not enough balance.',
+	NOT_ENOUGH_BALANCE: 'Insufficient balance to complete the transaction. Please add funds to your account and try again.',
 	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
 	LESS_THAN_MIN_AMOUNT: (minAmount, tokenSymbol) =>
-		`Amount must be greater than or equal to ${minAmount} ${tokenSymbol}.`,
+		`Please note that the minimum amount for your staking is ${minAmount} ${tokenSymbol} or more. Please adjust your amount and try again.`,
 };
 
 /**
@@ -150,10 +151,6 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 		errors.amount = COMMON_ERROR_MESSAGE.NOT_ENOUGH_BALANCE;
 	}
 
-	if (!errors.amount && balance <= minAmount) {
-		errors.amount = `Insufficient balance. System requires ${minAmount} ${tokenSymbol} minimum balance.`;
-	}
-
 	if (!errors.amount && amount < minAmount) {
 		errors.amount = COMMON_ERROR_MESSAGE.LESS_THAN_MIN_AMOUNT(minAmount, tokenSymbol);
 	}
@@ -163,7 +160,7 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 		!selectedValidator.hasDelegated &&
 		selectedValidator.isFullDelegator
 	) {
-		errors.validator = 'Max delegators';
+		errors.validator = VALIDATOR_REACHED_MAXIMUM;
 	}
 
 	return errors;
