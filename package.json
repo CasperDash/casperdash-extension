@@ -6,6 +6,14 @@
 		"eslint-plugin-deprecate": "^0.7.0",
 		"eslint-plugin-import": "^2.25.3",
 		"eslint-plugin-react": "^7.27.1",
-		"eslint-plugin-react-hooks": "^4.3.0"
+		"eslint-plugin-react-hooks": "^4.3.0",
+		"husky": ">=6",
+		"lint-staged": ">=10"
+	},
+	"lint-staged": {
+		"*.js": "eslint --cache --fix"
+	},
+	"scripts": {
+		"prepare": "husky install"
 	}
 }

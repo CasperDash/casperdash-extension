@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, Outlet } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
@@ -15,6 +15,8 @@ const Layout = ({ modules = [] }) => {
 	const dispatch = useDispatch();
 	const ref = useRef(null);
 	const { pathname } = useLocation();
+
+	const [prevRoute, setPrevRoute] = useState();
 
 	const mainModule = useMemo(() => modules.find((module) => module.route === pathname), [modules, pathname]);
 
@@ -43,9 +45,13 @@ const Layout = ({ modules = [] }) => {
 	return (
 		<div className={`cd_all_pages_content`}>
 			<LoadingBar ref={ref} color="#53b9ea" height={5} className="loading_indicator" />
-			{mainModule ? <Header currentModule={mainModule} /> : <InnerHeader />}
+			{mainModule ? (
+				<Header currentModule={mainModule} />
+			) : (
+				<InnerHeader prevRoute={prevRoute} setPrevRoute={setPrevRoute} />
+			)}
 			<div className="cd_web_extension_content">
-				<Outlet />
+				<Outlet context={[prevRoute, setPrevRoute]} />
 			</div>
 			{mainModule && <BottomBar modules={modules} currentModule={mainModule} />}
 		</div>
