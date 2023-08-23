@@ -1,0 +1,10 @@
+.cd_we_select_validator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--secondary-text-color-light);
+  border-radius: 16px;
+  cursor: pointer;
+  padding: 12px;
+  min-height: 60px;
+}

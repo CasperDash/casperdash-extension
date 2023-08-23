@@ -33,20 +33,7 @@
 				align-items: center;
 			}
 			.cd_we_staking_validator_box {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				background: var(--secondary-text-color-light);
-				border-radius: 12px;
-				height: 35px;
-				cursor: pointer;
-				.cd_we_staking_validator_value {
-					padding-left: 10px;
-					width: 60%;
-				}
-				.cd_we_staking_validator_box_arrow {
-					margin-right: 10px;
-				}
+				margin-top: 2px;
 			}
 		}
 		button {
