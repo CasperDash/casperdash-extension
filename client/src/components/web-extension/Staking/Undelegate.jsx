@@ -119,31 +119,30 @@ export const Undelegate = () => {
 					<div className="cd_error_text">{formik.errors.validatorPublicKey}</div>
 				</div>
 				<div className="cd_we_staking_redelegate">
-					{
-						getConfigKey('ENABLE_REDELEGATE') &&
+					{getConfigKey('ENABLE_REDELEGATE') == true && (
 						<>
 							<label className={'cd_we_staking_redelegate__switch-box'}>
 								<SwitchBox
 									checked={formik.values.isUsingRedelegate}
-									onClick={() => formik.setFieldValue('isUsingRedelegate', !formik.values.isUsingRedelegate)}
+									onClick={() =>
+										formik.setFieldValue('isUsingRedelegate', !formik.values.isUsingRedelegate)
+									}
 								/>
 								<span className="cd_we_staking_redelegate__switch-box-text">Using redelegate</span>
 							</label>
-							{
-								formik.values.isUsingRedelegate && (
-									<div className="cd_we_staking_redelegate__select-validator">
-										<SelectValidator
-											publicKey={formik.values.newValidatorPublicKey}
-											name={_get(newValidator, 'name')}
-											icon={_get(newValidator, 'icon[1]')}
-											onClick={onSearchValidator}
-										/>
-										<div className="cd_error_text">{formik.errors.newValidatorPublicKey}</div>
-									</div>
-								)
-							}
+							{formik.values.isUsingRedelegate && (
+								<div className="cd_we_staking_redelegate__select-validator">
+									<SelectValidator
+										publicKey={formik.values.newValidatorPublicKey}
+										name={_get(newValidator, 'name')}
+										icon={_get(newValidator, 'icon[1]')}
+										onClick={onSearchValidator}
+									/>
+									<div className="cd_error_text">{formik.errors.newValidatorPublicKey}</div>
+								</div>
+							)}
 						</>
-					}
+					)}
 				</div>
 				<div className="cd_we_staking_amount">
 					<div className="cd_we_staking_amount_header">
@@ -166,10 +165,7 @@ export const Undelegate = () => {
 				<Button type="submit" disabled={formik.errors && Object.keys(formik.errors).length !== 0}>
 					Confirm
 				</Button>
-				<div className="cd_we_staking_note">
-					Please note that the waiting time for the process is approximately 7-8 eras, which translates to
-					around 14-16 hours.
-				</div>
+				<div className="cd_we_staking_note">{getConfigKey('UNDELEGATE_TIME_NOTICE')}</div>
 			</form>
 		</section>
 	);
