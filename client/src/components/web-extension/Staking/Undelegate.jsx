@@ -119,7 +119,7 @@ export const Undelegate = () => {
 					<div className="cd_error_text">{formik.errors.validatorPublicKey}</div>
 				</div>
 				<div className="cd_we_staking_redelegate">
-					{getConfigKey('ENABLE_REDELEGATE') == true && (
+					{getConfigKey('ENABLE_REDELEGATE') && (
 						<>
 							<label className={'cd_we_staking_redelegate__switch-box'}>
 								<SwitchBox
