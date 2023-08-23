@@ -54,9 +54,10 @@ export const SearchValidator = () => {
 			<div className="cd_we_validator_list">
 				<div className="cd_we_input_label">Validator List ({validators.length})</div>
 				<Grid
+					isVirtualList
 					data={validators}
 					metadata={VALIDATOR_METADATA}
-					className="overflow_auto hide_scroll_bar"
+					className="overflow_auto"
 					onRowClick={onValidatorClick}
 					isLoading={loading}
 				/>
