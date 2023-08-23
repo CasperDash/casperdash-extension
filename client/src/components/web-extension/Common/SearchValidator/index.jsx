@@ -57,7 +57,7 @@ export const SearchValidator = () => {
 					isVirtualList
 					data={validators}
 					metadata={VALIDATOR_METADATA}
-					className="overflow_auto hide_scroll_bar"
+					className="overflow_auto"
 					onRowClick={onValidatorClick}
 					isLoading={loading}
 				/>
