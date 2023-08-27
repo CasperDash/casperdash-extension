@@ -11,7 +11,7 @@ beforeEach(() => {
 });
 
 test('Should display account info', () => {
-	spyOnUseSelector.mockReturnValue([]).mockReturnValueOnce('test').mockReturnValueOnce(10);
+	spyOnUseSelector.mockReturnValueOnce(false).mockReturnValueOnce('test').mockReturnValueOnce(10).mockReturnValue(false);
 
 	const { getByText } = render(<AccountInfo />);
 	expect(getByText('test').textContent).toBe('test');

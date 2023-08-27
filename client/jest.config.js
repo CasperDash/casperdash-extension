@@ -40,7 +40,7 @@ const config = {
         "^lodash-es": "lodash",
         "^nanoid(/(.*)|$)": "nanoid$1",
         "^konva(/(.*)|$)": "konva$1",
-        canvas: 'jest-canvas-mock'
+        "canvas": 'jest-canvas-mock'
     },
     "transformIgnorePatterns": [
         `<rootDir>/node_modules/(?!${esModules})`,

@@ -5,9 +5,9 @@ import { UndelegateButton } from './UndelegateButton';
 
 afterEach(cleanup);
 
-test('Should show undelegate button', async () => {
+test('Should show actions button', async () => {
 	const { getByText } = render(<UndelegateButton text="Undelegate" />);
-	expect(getByText('Undelegate').textContent).toBe('Undelegate');
-	await fireEvent.click(getByText('Undelegate'));
+	expect(getByText('Actions').textContent).toBe('Actions');
+	await fireEvent.click(getByText('Actions'));
 	expect(useNavigate()).toHaveBeenCalled;
 });
