@@ -9,6 +9,6 @@ afterEach(cleanup);
 test('Should setting options', async () => {
 	const { getByText } = render(<Settings />);
 
-	expect(getByText('About Us').textContent).toBe('About Us');
 	expect(getByText('Version').textContent).toBe('Version');
+	expect(getByText('Advanced').textContent).toBe('Advanced');
 });

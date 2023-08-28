@@ -1,5 +1,4 @@
 import reduce from 'lodash-es/reduce';
-import dropRight from 'lodash-es/dropRight';
 import filter from 'lodash-es/filter';
 import sampleSize from 'lodash-es/sampleSize';
 import { CONSTANTS } from '@cd/shared/constants';

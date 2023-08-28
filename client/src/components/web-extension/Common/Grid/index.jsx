@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Tooltip } from 'react-tooltip';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
+import clsx from 'clsx';
 
 import './index.scss';
 
@@ -29,13 +30,20 @@ const Grid = ({
 			...item.formatOptions,
 		});
 	}, []);
-	const renderValue = useCallback(({ item, token }, value) => {
+	const renderValue = useCallback(({ item, token, index }, value) => {
 		if (item.wrapperComponent) {
 			return <item.wrapperComponent>{value}</item.wrapperComponent>;
 		}
 
 		if (item.component) {
-			return <item.component {...(item.props && { ...item.props })} {...token} value={value} />;
+			return (
+				<item.component
+					key={`gird-item-${index}`}
+					{...(item.props && { ...item.props })}
+					{...token}
+					value={value}
+				/>
+			);
 		}
 
 		return value;
@@ -58,11 +66,11 @@ const Grid = ({
 				<>
 					<div
 						data-testid={`${token.symbol}-${item.key}`}
-						className={`cd_we_item_value ${item.type} ${item.valueAsClass ? formattedValue : ''}`}
+						className={clsx('cd_we_item_value', item.type, item.valueAsClass ? formattedValue : undefined)}
 						key={`${token.symbol}-${item.key}`}
 						{...tooltip}
 					>
-						{renderValue({ item, token }, formattedValue)} {item.suffix}
+						{renderValue({ item, token, index: i }, formattedValue)} {item.suffix}
 					</div>
 					{item.tooltip && <Tooltip id={`grid-tooltip-${item.tooltip}-${i}`} style={{ width: '90%' }} />}
 				</>
@@ -71,7 +79,7 @@ const Grid = ({
 		[getFormattedValue, renderValue],
 	);
 
-	const rowRenderer = ({index, style = {}}) => {
+	const rowRenderer = ({ index, style = {} }) => {
 		const value = data[index];
 		const canClick = typeof onRowClick === 'function';
 
@@ -81,10 +89,12 @@ const Grid = ({
 				key={`grid-item-${index}`}
 				onClick={() => canClick && onRowClick(value)}
 				style={
-					isVirtualList ? {
-						...style,
-						paddingRight: '10px',
-					}: style
+					isVirtualList
+						? {
+								...style,
+								paddingRight: '10px',
+						  }
+						: style
 				}
 			>
 				{Object.keys(metadata).map((key) => {
@@ -99,7 +109,7 @@ const Grid = ({
 												key={i}
 												className={`cd_we_grid_icon ${
 													metadata?.left?.iconClassName ?? ''
-												}`}
+												} icon-${i}`}
 											>
 												{ic && <img src={ic} alt="grid" />}
 											</div>
@@ -118,31 +128,29 @@ const Grid = ({
 				})}
 			</div>
 		);
-	}
+	};
 
 	const renderContent = () => (
 		<>
 			{!isLoading && !data.length && <NoData />}
-			{
-				isVirtualList ? (
-					<AutoSizer>
-						{({ height, width }) => (
-							<List
-								width={width} // Width of the list
-								height={height}
-								itemCount={data.length}
-								itemSize={60}
-							>
-								{rowRenderer}
-							</List>
-						)}
-					</AutoSizer>
-				) : (
-					data.map((value, i) => {
-						return rowRenderer({index: i});
-					}))
-			}
-
+			{isVirtualList ? (
+				<AutoSizer>
+					{({ height, width }) => (
+						<List
+							width={width} // Width of the list
+							height={height}
+							itemCount={data.length}
+							itemSize={60}
+						>
+							{rowRenderer}
+						</List>
+					)}
+				</AutoSizer>
+			) : (
+				data.map((value, i) => {
+					return rowRenderer({ index: i });
+				})
+			)}
 			{isLoading && <Bar />}
 		</>
 	);
