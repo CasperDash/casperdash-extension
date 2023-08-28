@@ -8,6 +8,7 @@ describe('SettingReducers', () => {
 				theme: 'dark',
 				autoLockTime: DEFAULT_AUTO_LOCK_TIME,
 				network: 'casper-test',
+				isHideBalance: false,
 			});
 		});
 
@@ -24,6 +25,7 @@ describe('SettingReducers', () => {
 				theme: '',
 				autoLockTime: 10,
 				network: 'casper-test',
+				isHideBalance: false,
 			});
 		});
 
@@ -32,6 +34,7 @@ describe('SettingReducers', () => {
 				theme: '',
 				autoLockTime: DEFAULT_AUTO_LOCK_TIME,
 				network: 'casper-test',
+				isHideBalance: false,
 			});
 		});
 	});

@@ -36,7 +36,7 @@ describe('WalletDetails', () => {
 
 	describe('With publicKey found', () => {
 		it('Should render full WalletDetail page with token info', async () => {
-			spyOnUseSelector.mockReturnValue({ publicKey: 'test' });
+			spyOnUseSelector.mockReturnValueOnce({ publicKey: 'test' }).mockReturnValue(false);
 			const { getByText } = render(<DashBoard />);
 			expect(getByText(/Send/i)).toBeInTheDocument();
 			expect(getByText(/Receive/i)).toBeInTheDocument();
@@ -51,11 +51,11 @@ describe('WalletDetails', () => {
 				state: {
 					token: {
 						balance: {
-							displayValue: 11,
+							displayValue: "11",
 						},
 						price: 0.2,
 						symbol: 'CSPR',
-						totalPrice: 10,
+						totalPrice: "$10.00",
 					},
 					name: 'CSPR',
 				},
