@@ -77,8 +77,7 @@
 		"test": "jest --coverage --watchAll ",
 		"test:w": "jest test --watchAll ",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true jest test --coverage",
-		"lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-		"prepare": "husky install"
+		"lint": "eslint src/ --ext .js,.jsx,.ts,.tsx"
 	},
 	"browserslist": {
 		"production": [
@@ -120,7 +119,6 @@
 		"full-icu": "^1.5.0",
 		"html-loader": "^3.0.1",
 		"html-webpack-plugin": "^5.5.0",
-		"husky": ">=6",
 		"jest": "^29.5.0",
 		"jest-canvas-mock": "^2.5.2",
 		"jest-chrome": "^0.8.0",
