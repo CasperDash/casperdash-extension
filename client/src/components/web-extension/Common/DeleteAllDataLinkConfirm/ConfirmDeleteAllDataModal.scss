@@ -17,6 +17,10 @@
 		display: flex;
 	}
 
+	.modal-content {
+		background-color: var(--component-background);
+	}
+
 	&--word {
 		font-weight: bold;
 	}
