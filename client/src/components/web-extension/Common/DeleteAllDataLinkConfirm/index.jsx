@@ -41,13 +41,13 @@ const DeleteAllDataLinkConfirm = () => {
 	return (
 		<>
 			<a className="cd_we_delete_all_data_link" onClick={handleOnClick}>
-				Delete All Data
+				Forgot Password
 			</a>
 			<ConfirmModal
 				isOpen={isOpenModal}
 				onConfirm={onConfirmHandler}
 				onClose={onCloseModalHandler}
-				title="Delete all your Data?"
+				title="Are you sure?"
 				buttonOkText="Delete data"
 				description={
 					<DeleteAllDataNotice />
