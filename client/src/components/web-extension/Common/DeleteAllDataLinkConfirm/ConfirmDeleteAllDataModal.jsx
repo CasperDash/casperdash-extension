@@ -8,20 +8,15 @@ import Button from 'react-bootstrap/Button';
 
 import './ConfirmDeleteAllDataModal.scss';
 
-const ConfirmDeleteAllDataModal = ({
-	isOpen,
-	onSubmit,
-	onCloseModal,
-	closeButton = true,
-}) => {
+const ConfirmDeleteAllDataModal = ({ isOpen, onSubmit, onCloseModal, closeButton = true }) => {
 	const formik = useFormik({
 		initialValues: {
 			word: '',
 		},
 		validationSchema: Yup.object({
-			word: Yup.string().required('Input is required').equals(['DELETE'], 'Please type DELETE to confirm'),
+			word: Yup.string().required('Input is required').equals(['RESET'], 'Please type RESET to confirm'),
 		}),
-		onSubmit: values => {
+		onSubmit: (values) => {
 			onSubmit?.(values.word);
 		},
 	});
@@ -37,7 +32,7 @@ const ConfirmDeleteAllDataModal = ({
 			centered
 		>
 			<Modal.Header closeButton={closeButton}>
-				<Modal.Title>Confirm Delete All Data</Modal.Title>
+				<Modal.Title>Confirm Reset All Data</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<div className="cd_we_create-wallet-layout--root">
@@ -45,8 +40,7 @@ const ConfirmDeleteAllDataModal = ({
 						<form onSubmit={formik.handleSubmit}>
 							<Form.Group className="mb-3">
 								<Form.Label>
-									Type <span className={'cd_we_confirm-delete-modal--word'}>DELETE</span> to
-									confirm
+									Type <span className={'cd_we_confirm-delete-modal--word'}>RESET</span> to confirm
 								</Form.Label>
 								<FormControl
 									onBlur={formik.handleBlur}
@@ -54,12 +48,14 @@ const ConfirmDeleteAllDataModal = ({
 									name="word"
 									type="text"
 								/>
-								{errors.word && (
-									<Form.Text className="text-danger">{errors.word}</Form.Text>
-								)}
+								{errors.word && <Form.Text className="text-danger">{errors.word}</Form.Text>}
 							</Form.Group>
 
-							<Button className={'cd_we_confirm-delete-modal--confirm-btn'} variant="primary" type="submit">
+							<Button
+								className={'cd_we_confirm-delete-modal--confirm-btn'}
+								variant="primary"
+								type="submit"
+							>
 								Confirm
 							</Button>
 						</form>

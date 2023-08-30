@@ -5,7 +5,7 @@ import ConfirmModal from '@cd/components/Common/ConfirmModal';
 import { isUsingLedgerSelector } from '@cd/selectors/user';
 import { useDeleteAllData } from '@cd/hooks/useDeleteAllData';
 import ConfirmDeleteAllDataModal from '@cd/web-extension/Common/DeleteAllDataLinkConfirm/ConfirmDeleteAllDataModal';
-import DeleteAllDataNotice from '@cd/web-extension/Common/DeleteAllDataNotice';
+import ResetDataNotice from './ResetDataNotice';
 
 import './index.scss';
 
@@ -41,17 +41,15 @@ const DeleteAllDataLinkConfirm = () => {
 	return (
 		<>
 			<a className="cd_we_delete_all_data_link" onClick={handleOnClick}>
-				Delete All Data
+				Forgot Password?
 			</a>
 			<ConfirmModal
 				isOpen={isOpenModal}
 				onConfirm={onConfirmHandler}
 				onClose={onCloseModalHandler}
-				title="Delete all your Data?"
-				buttonOkText="Delete data"
-				description={
-					<DeleteAllDataNotice />
-				}
+				title="Reset wallet?"
+				buttonOkText="Reset"
+				description={<ResetDataNotice />}
 			/>
 			<ConfirmDeleteAllDataModal
 				isOpen={isOpenLoginModal}
