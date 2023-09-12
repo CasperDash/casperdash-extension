@@ -1,4 +1,19 @@
 .cd_btn_copy {
 	margin-left: 5px;
 	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	&_popover {
+		padding: 5px;
+		background: black !important;
+		color: #fff;
+
+		.popover-arrow::after {
+			border-top-color: black !important;
+		}
+	}
+
+	&--checked {
+		margin-left: -3px;
+	}
 }

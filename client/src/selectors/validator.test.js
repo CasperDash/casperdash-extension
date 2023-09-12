@@ -6,7 +6,7 @@ jest.mock('@redux-requests/core', () => {
 		getQuerySelector: jest.fn().mockReturnValue(() => ({
 			data: [
 				{
-					public_key: '0x00',
+					validatorPublicKey: '0x00',
 				},
 			],
 		})),
@@ -24,7 +24,7 @@ test('get validators', () => {
 	getQuerySelector.mockReturnValue(() => ({
 		data: [
 			{
-				public_key: '0x00',
+				validatorPublicKey: '0x00',
 			},
 		],
 	}));

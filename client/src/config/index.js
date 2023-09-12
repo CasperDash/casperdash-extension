@@ -1,12 +1,4 @@
 const CONFIG_OPTIONS = {
-	PORT: {
-		env: 'PORT',
-		default: '3000',
-	},
-	APP_ROOT: {
-		env: 'APP_ROOT',
-		default: 'http://localhost:3000/',
-	},
 	API_ROOT: {
 		env: 'REACT_APP_API_ROOT',
 		default: 'http://localhost:3001/',

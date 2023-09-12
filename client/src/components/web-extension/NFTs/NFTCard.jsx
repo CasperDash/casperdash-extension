@@ -1,5 +1,5 @@
 import React from 'react';
-import nftHeaderImage from 'assets/image/nft-header.png';
+import nftHeaderImage from '@cd/assets/image/nft-header.png';
 
 export const NFTCard = ({ nftDetails, onNFTClick }) => {
 	const { image, nftName, nftContractName } = nftDetails;

@@ -12,12 +12,13 @@ jest.mock('../../../helpers/validator', () => ({
 
 test('Should show stake form and no staked info', async () => {
 	useLocation.mockReturnValue({});
-	useSelector.mockReturnValue({});
+	useSelector.mockReturnValue([]);
 	const { getByText, container } = render(<Staking />);
 	expect(getByText('Validator').textContent).toBe('Validator');
 	expect(getByText('Amount').textContent).toBe('Amount');
 	expect(getByText('Stake Now').textContent).toBe('Stake Now');
-	expect(getByText('Staked Information').textContent).toBe('Staked Information');
+	expect(getByText('Staked Info').textContent).toBe('Staked Info');
+	expect(getByText('Rewards').textContent).toBe('Rewards');
 
 	fireEvent.click(container.querySelector('.cd_we_staking_validator_box'));
 	expect(useNavigate()).toHaveBeenCalled();
@@ -25,18 +26,19 @@ test('Should show stake form and no staked info', async () => {
 
 test('Should show stake form and no staked info', async () => {
 	useLocation.mockReturnValue({});
-	useSelector.mockReturnValue({});
+	useSelector.mockReturnValue([]);
 	const { getByText } = render(<Staking />);
 	expect(getByText('Validator').textContent).toBe('Validator');
 	expect(getByText('Amount').textContent).toBe('Amount');
 	expect(getByText('Stake Now').textContent).toBe('Stake Now');
-	expect(getByText('Staked Information').textContent).toBe('Staked Information');
+	expect(getByText('Staked Info').textContent).toBe('Staked Info');
 	expect(getByText('No Data').textContent).toBe('No Data');
+	expect(getByText('Rewards').textContent).toBe('Rewards');
 });
 
 test('Should navigate to stake confirm', async () => {
-	useLocation.mockReturnValue({ state: { validator: { public_key: 'validatorkey' } } });
-	useSelector.mockReturnValue({});
+	useLocation.mockReturnValue({ state: { validator: { validatorPublicKey: 'validatorkey' } } });
+	useSelector.mockReturnValue([]);
 	const { getByText, container } = render(<Staking />);
 
 	expect(getByText('validat').textContent).toBe('validat');

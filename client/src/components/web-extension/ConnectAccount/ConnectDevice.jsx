@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import CasperDashLogo from 'assets/image/Logo-only.svg';
-import HardwareIcon from 'assets/image/hardware-icon.svg';
+import CasperDashLogo from '@cd/assets/image/Logo-only.svg';
+import HardwareIcon from '@cd/assets/image/hardware-icon.svg';
 import { toast } from 'react-toastify';
 import { TailSpin } from '../../Common/Spinner';
 import { getBatchUserDetails, setPublicKey } from '../../../actions/userActions';
@@ -65,7 +65,7 @@ const ConnectDevice = () => {
 		<div className="cd_we_connect_device">
 			<div className="cd_we_connect_account_logo">
 				<CasperDashLogo />
-				<div>Casper Dash</div>
+				<div>CasperDash</div>
 			</div>
 			{!listDetails || !listDetails.length ? (
 				<>

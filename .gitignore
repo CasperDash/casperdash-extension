@@ -6,3 +6,4 @@ build
 coverage
 dist
 build_extension
+.note

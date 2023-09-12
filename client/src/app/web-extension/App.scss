@@ -139,9 +139,18 @@ input {
 
 .cd_we_confirm {
 	.cd_we_confirm_row {
+		display: flex;
+		flex-flow: row wrap;
 		padding-bottom: 15px;
+		justify-content: space-between;
+
 		:first-child {
 			color: #828cae;
+		}
+
+		.cd_we_input_label {
+			padding-bottom: 0;
+			max-width: 120px;
 		}
 	}
 	.cd_we_confirm_buttons {
@@ -175,10 +184,21 @@ input {
 	overflow: auto;
 }
 
+.react-tooltip {
+	max-width: 50%;
+	z-index: 99999;
+}
+
 @media (max-width: 400px) {
+	.cd_we_main_content {
+		margin: 10px;
+	}
 	.cd_all_pages_content {
 		width: 357px;
 		height: 600px;
 		color: var(--primary-text-color);
+	}
+	.react-tooltip {
+		max-width: 90%;
 	}
 }

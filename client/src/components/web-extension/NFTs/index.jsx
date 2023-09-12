@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import nftHeaderImage from 'assets/image/nft-header.png';
-import SearchIcon from 'assets/image/search-icon.svg';
+import nftHeaderImage from '@cd/assets/image/nft-header.png';
+import SearchIcon from '@cd/assets/image/search-icon.svg';
 import { getOwnNFTContractHash } from '../../../selectors/NFTs';
 import { getNFTInfo, NFTSelector } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';

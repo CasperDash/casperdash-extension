@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import BackArrow from 'assets/image/back-arrow.svg';
+import BackArrow from '@cd/assets/image/back-arrow.svg';
 import './InnerHeader.scss';
 
 export const InnerHeader = () => {

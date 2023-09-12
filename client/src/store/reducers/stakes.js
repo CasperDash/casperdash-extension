@@ -1,4 +1,4 @@
-import { getLocalStorageValue } from '../../services/localStorage';
+import { getLocalStorageValue, getNetworkStorageKey } from '../../services/localStorage';
 import { STAKE } from '../actionTypes';
 
 export default function userReducer(state = { delegations: [] }, action) {
@@ -8,7 +8,10 @@ export default function userReducer(state = { delegations: [] }, action) {
 			return { ...state, delegations: [...delegations, action.payload] };
 		}
 		case STAKE.GET_STAKES_FROM_LOCAL_STORAGE: {
-			const items = getLocalStorageValue(action.payload, 'deploys.stakes');
+			const items = getLocalStorageValue(
+				action.payload.publicKey,
+				getNetworkStorageKey('deploys.stakes', action.payload.network),
+			);
 			return { ...state, delegations: items };
 		}
 		case STAKE.UPDATE_STAKES_LOCAL_STORAGE: {

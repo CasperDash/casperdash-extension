@@ -2,13 +2,12 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	margin: 10px;
 	background: var(--component-background);
 	border-radius: 24px;
 	backdrop-filter: blur(40px);
 }
 .cd_we_main_details {
-	height: calc(100% - 200px - 10px + 64px) !important;
+	height: calc(100% - 240px - 10px + 64px) !important;
 	overflow: auto;
 	border-radius: 26px 26px 0 0;
 	padding-bottom: 60px;
@@ -30,4 +29,42 @@
 .cd_we_action {
 	margin: 15px;
 	cursor: pointer;
+}
+
+.cd_we_dashboard_page {
+	.cd_news_section {
+		display: flex;
+		position: relative;
+		.cd_more_button {
+			position: absolute;
+			right: 20px;
+			top: 4px;
+			cursor: pointer;
+		}
+		.cd_we_news_item {
+			display: flex;
+			padding: 4px 16px;
+			margin-right: 8px;
+			gap: 8px;
+			width: 330px;
+			cursor: pointer;
+			.badge {
+				background: var(--primary-color);
+				border-radius: 2px;
+				display: flex;
+				align-items: center;
+			}
+			.content {
+				font-weight: 600;
+				font-size: 12px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+		.cd_news_tooltip {
+			width: 330px;
+			z-index: 99999;
+		}
+	}
 }

@@ -1,5 +1,7 @@
 import { getQuerySelector, getQuery } from '@redux-requests/core';
 import { createSelector } from 'reselect';
+import { formatAccountName } from '@cd/helpers/format';
+import { CONNECTION_TYPES } from '@cd/constants/settings';
 import { getConfigKey } from '../services/configurationServices';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { getBase64IdentIcon } from '../helpers/identicon';
@@ -10,16 +12,38 @@ import { getMassagedTokenData } from './tokens';
 const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
+	icon: '/assets/images/token-icons/cspr.png',
+};
 
-	icon: 'assets/images/token-icons/cspr.png',
+export const getPublicKeyAndLoginOptions = ({ user }) => {
+	return {
+		publicKey: user?.publicKey ?? '',
+		loginOptions: user?.loginOptions || {},
+	};
 };
 
 export const getPublicKey = ({ user }) => {
-	return user.publicKey;
+	return user.publicKey ?? '';
+};
+
+export const getAccountName = ({ user }) => {
+	return formatAccountName(user.accountIndex);
+};
+
+export const getAccountIndex = ({ user }) => {
+	return user.accountIndex;
 };
 
 export const getLoginOptions = ({ user }) => {
 	return user.loginOptions || {};
+};
+
+export const isUsingLedgerSelector = createSelector(getLoginOptions, (loginOptions) => {
+	return loginOptions.connectionType === CONNECTION_TYPES.ledger;
+});
+
+export const getSelectedWallet = ({ user }) => {
+	return (user.loginOptions && user.loginOptions.selectedWallet) || {};
 };
 
 export const userDetailsSelector = getQuerySelector({ type: USERS.FETCH_USER_DETAILS });
@@ -97,4 +121,13 @@ export const getTokenInfoByAddress = (token) =>
 		return token && allTokenInfo && allTokenInfo.length
 			? allTokenInfo.find((info) => info.address === token.address)
 			: {};
+	});
+
+export const userStakingRewardSelector = getQuerySelector({ type: USERS.FETCH_STAKING_REWARDS });
+
+export const userAccountDelegationSelector = getQuerySelector({ type: USERS.FETCH_ACCOUNT_DELEGATION });
+
+export const getAccountDelegation = () =>
+	createSelector(userAccountDelegationSelector, ({ data }) => {
+		return data;
 	});

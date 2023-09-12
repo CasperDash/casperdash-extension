@@ -1,0 +1,59 @@
+.cd_we_sign_message_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 100vh;
+	background: var(--component-background);
+
+	.cd_we_sign_message_fields {
+		padding: 40px 30px;
+		width: 100%;
+		button {
+			display: flex;
+			justify-content: center;
+			height: 64px;
+			width: 100%;
+			margin-bottom: 15px;
+		}
+
+		.cd_we_sign_message_field {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			margin-top: 20px;
+
+			&__label {
+				font-weight: 600;
+				line-height: 1.8;
+			}
+
+			&__value {
+				p {
+					white-space: pre-wrap;
+					word-wrap: break-word;
+				}
+				textarea {
+					width: 100%;
+				}
+			}
+		}
+
+		.divider {
+			padding: 30px 0;
+		}
+	}
+
+	.cd_we_sign_message_actions {
+		display: flex;
+		gap: 12px;
+		margin-bottom: 20px;
+		width: 300px;
+		button {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			margin-bottom: 15px;
+		}
+	}
+}

@@ -1,10 +1,24 @@
 .cd_we_staking_info {
 	padding: 10px 15px;
-	.cd_we_staking_info_title {
-		color: var(--secondary-text-color);
+	.cd_we_staking_info_header {
+		display: flex;
+		gap: 8px;
+		.cd_we_staking_info_title {
+			color: var(--secondary-text-color);
+			cursor: pointer;
+			&.active {
+				color: #dc3545;
+			}
+		}
+		.cd_we_btn_history {
+			cursor: pointer;
+			&.active {
+				fill: #dc3545;
+			}
+		}
 	}
 	.cd_we_grid {
-		height: calc(100vh - 390px);
+		height: calc(100vh - 390px) !important;
 		padding: 0 !important;
 		.cd_we_item {
 			button {
@@ -14,8 +28,8 @@
 			}
 		}
 		.cd_we_grid_icon {
-			width: 20px;
-			height: 20px;
+			width: 30px;
+			height: 30px;
 			padding: 3px 5px;
 			background: var(--secondary-text-color-light);
 		}

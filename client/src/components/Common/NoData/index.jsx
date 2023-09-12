@@ -1,5 +1,5 @@
 import React from 'react';
-import CasperDashEmpty from 'assets/image/cd-nft-empty.png';
+import CasperDashEmpty from '@cd/assets/image/cd-nft-empty.png';
 import './NoData.scss';
 
 const NoData = ({ message }) => {

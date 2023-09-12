@@ -1,5 +1,6 @@
+import { getNetworkState } from '@cd/selectors/settings';
 import { DEPLOY } from '../store/actionTypes';
-import { setLocalStorageValue, getLocalStorageValue } from '../services/localStorage';
+import { setLocalStorageValue, getLocalStorageValue, getNetworkStorageKey } from '../services/localStorage';
 
 const LOCAL_STORAGE_TRANSFERS_PATH = 'deploys.transfers';
 
@@ -35,8 +36,10 @@ export const getLatestBlockHash = () => ({
  * @returns
  */
 export const pushTransferToLocalStorage = (publicKey, value) => {
-	return (dispatch) => {
-		setLocalStorageValue(publicKey, LOCAL_STORAGE_TRANSFERS_PATH, value, 'push');
+	return (dispatch, getState) => {
+		const network = getNetworkState(getState);
+
+		setLocalStorageValue(publicKey, getNetworkStorageKey(LOCAL_STORAGE_TRANSFERS_PATH, network), value, 'push');
 		dispatch({ type: DEPLOY.PUSH_TRANSFER_TO_LOCAL_STORAGE, payload: value });
 	};
 };
@@ -46,10 +49,15 @@ export const pushTransferToLocalStorage = (publicKey, value) => {
  * @param {string} publicKey public key
  * @returns {Object}
  */
-export const getTransfersFromLocalStorage = (publicKey) => ({
-	type: DEPLOY.GET_TRANSFERS_FROM_LOCAL_STORAGE,
-	payload: publicKey,
-});
+export const getTransfersFromLocalStorage = (publicKey) => {
+	return (dispatch, getState) => {
+		const network = getNetworkState(getState);
+		dispatch({
+			type: DEPLOY.GET_TRANSFERS_FROM_LOCAL_STORAGE,
+			payload: { publicKey, network },
+		});
+	};
+};
 
 /**
  * @param {string} deployHash
@@ -74,8 +82,9 @@ export const getTransferDeploysStatus = (deployHash) => ({
  *
  */
 export const updateTransferDeploysLocalStorage = (publicKey, patch, value, action) => {
-	return (dispatch) => {
-		const { deploys = {} } = setLocalStorageValue(publicKey, patch, value, action);
+	return (dispatch, getState) => {
+		const network = getNetworkState(getState);
+		const { deploys = {} } = setLocalStorageValue(publicKey, getNetworkStorageKey(patch, network), value, action);
 		dispatch({
 			type: DEPLOY.UPDATE_TRANSFER_LOCAL_STORAGE,
 			payload: deploys.transfers ? deploys.transfers : [],
@@ -90,8 +99,9 @@ export const updateTransferDeploysLocalStorage = (publicKey, patch, value, actio
  * @returns
  */
 export const updateTransferDeployStatus = (publicKey, path, listHash = []) => {
-	return (dispatch) => {
-		const deployStorageValue = getLocalStorageValue(publicKey, path) || [];
+	return (dispatch, getState) => {
+		const network = getNetworkState(getState);
+		const deployStorageValue = getLocalStorageValue(publicKey, getNetworkStorageKey(path, network)) || [];
 		const updatedValue = deployStorageValue.map((deploy) => {
 			if (!deploy.deployHash) {
 				return deploy;

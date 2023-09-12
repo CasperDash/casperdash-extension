@@ -10,8 +10,12 @@ jest.mock('../services/localStorage', () => {
 	return {
 		setLocalStorageValue: jest.fn(),
 		getLocalStorageValue: jest.fn(),
+		getNetworkStorageKey: jest.fn(),
 	};
 });
+
+const mockDispatch = jest.fn();
+const mockGetState = jest.fn().mockReturnValue({ settings: { network: 'casper-test' } });
 
 test('fetchTokensInfoWithBalance', () => {
 	expect(fetchTokensInfoWithBalance()).toEqual({
@@ -36,17 +40,15 @@ test('getTokenInfo', () => {
 });
 
 test('addCustomTokenAddressToLocalStorage', () => {
-	const mockDispatch = jest.fn();
 	setLocalStorageValue.mockReturnValue({ tokens: {} });
-	addCustomTokenAddressToLocalStorage('address', 'pbkeytest')(mockDispatch);
+	addCustomTokenAddressToLocalStorage('address', 'pbkeytest')(mockDispatch, mockGetState);
 	expect(setLocalStorageValue).toHaveBeenCalled();
 	expect(mockDispatch).toHaveBeenCalled();
 });
 
 test('getTokenAddressFromLocalStorage', () => {
-	const mockDispatch = jest.fn();
 	getLocalStorageValue.mockReturnValue();
-	getTokenAddressFromLocalStorage('pbkeytest')(mockDispatch);
+	getTokenAddressFromLocalStorage('pbkeytest')(mockDispatch, mockGetState);
 	expect(getLocalStorageValue).toHaveBeenCalled();
 	expect(mockDispatch).toHaveBeenCalled();
 });

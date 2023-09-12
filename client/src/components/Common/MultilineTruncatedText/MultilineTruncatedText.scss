@@ -1,0 +1,14 @@
+.cd_multiline_truncated {
+	overflow: hidden;
+	resize: horizontal;
+	width: fit-content;
+	height: fit-content;
+
+	&__text {
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		white-space: pre-wrap;
+	}
+}

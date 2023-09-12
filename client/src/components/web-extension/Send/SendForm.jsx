@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import _get from 'lodash-es/get';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Formik, Field } from 'formik';
-import { getAllTokenInfo, getTokenInfoByAddress } from '../../../selectors/user';
-import { validateTransferForm } from '../../../helpers/validator';
+import { validateTransferForm } from '@cd/helpers/validator';
+import { getAllTokenInfo, getTokenInfoByAddress } from '@cd/selectors/user';
+import { withServiceWorkerRequired } from '@cd/components/hocs/ServiceWorkerRequired/index';
 import TokenSelectField from './TokenSelectField';
 
 const SendForm = ({ token }) => {
@@ -25,7 +27,7 @@ const SendForm = ({ token }) => {
 	};
 
 	const handleSubmit = (values) => {
-		navigate(`${pathname}#confirm`, { state: { token: { ...selectedToken, ...values }, name: 'Confirm' } });
+		navigate(`${pathname}#confirm`, { state: { token: { ...selectedToken, ...values }, name: 'Review' } });
 	};
 
 	const onValidate = (values) => {
@@ -39,7 +41,12 @@ const SendForm = ({ token }) => {
 
 	// Functions
 	const setBalance = (percent, setFieldValue) => {
-		const balance = (selectedToken && selectedToken.balance && selectedToken.balance.displayValue) || 0;
+		const balance = _get(selectedToken, 'balance.displayValue', 0);
+		if (balance === 0) {
+			setFieldValue('sendAmount', 0);
+			return;
+		}
+
 		const amount = balance / percent - (selectedToken.address === 'CSPR' ? selectedToken.transferFee : 0);
 		setFieldValue('sendAmount', amount);
 	};
@@ -109,7 +116,6 @@ const SendForm = ({ token }) => {
 						<FormControl
 							value={values.transferId}
 							name="transferId"
-							required
 							className="cd_we_send_input"
 							onChange={handleChange}
 							isInvalid={errors.transferId}
@@ -117,7 +123,7 @@ const SendForm = ({ token }) => {
 							type="number"
 						/>
 
-						<Form.Control.Feedback type="invalid">{errors.toAddress}</Form.Control.Feedback>
+						<Form.Control.Feedback type="invalid">{errors.transferId}</Form.Control.Feedback>
 					</div>
 					<div className="cd_we_send_fee">
 						<div className="cd_we_input_label">Network Fee</div>
@@ -139,4 +145,4 @@ const SendForm = ({ token }) => {
 	);
 };
 
-export default SendForm;
+export default withServiceWorkerRequired(SendForm);

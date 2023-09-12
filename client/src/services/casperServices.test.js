@@ -18,6 +18,7 @@ test('getTransferDeploy', () => {
 		1000000000,
 		0,
 		10,
+		'casper-test',
 	);
 	expect(spyOnDeployParams).toHaveBeenCalled();
 	expect(spyOnNewTransfer).toHaveBeenCalled();

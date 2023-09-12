@@ -1,0 +1,37 @@
+.cd_we_dapp_connect_warning {
+	display: flex;
+	flex-direction: column;
+	gap: 50px;
+	align-items: center;
+	height: 100vh;
+	background: var(--component-background);
+
+	.cd_we_connect_account_warning_message {
+		text-align: center;
+		padding: 10px;
+	}
+
+	.cd_we_connect_account_logo {
+		display: flex;
+		flex-direction: column;
+		svg {
+			margin-bottom: 20px;
+		}
+		div {
+			font-weight: 400;
+			font-size: 18px;
+		}
+	}
+	.cd_we_connect_account_buttons {
+		width: 300px;
+		margin-top: 100px;
+		button {
+			display: flex;
+			justify-content: center;
+			height: 44px;
+			width: 100%;
+			margin-bottom: 15px;
+			align-items: center;
+		}
+	}
+}

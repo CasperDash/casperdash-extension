@@ -3,7 +3,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
+import { fetchAccountDelegation, getValidatorsDetails } from '@cd/actions/userActions';
+import { getAccountDelegation, getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
 import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
@@ -25,17 +26,20 @@ const Staking = () => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
+	const accountDelegation = useSelector(getAccountDelegation());
 	const userDetails = useSelector(getMassagedUserDetails);
 	const balance = userDetails && userDetails.balance && userDetails.balance.displayBalance;
 
 	// Effect
 	useEffect(() => {
-		dispatch(fetchValidators());
-	}, [dispatch]);
+		dispatch(fetchValidators(publicKey));
+		dispatch(fetchAccountDelegation(publicKey));
+		dispatch(getValidatorsDetails());
+	}, [dispatch, publicKey]);
 
 	useEffect(() => {
-		validator.public_key && setFirstLoad(false);
-	}, [validator.public_key]);
+		validator.validatorPublicKey && setFirstLoad(false);
+	}, [validator.validatorPublicKey]);
 
 	// Function
 	const onSearchValidator = () => {
@@ -46,21 +50,11 @@ const Staking = () => {
 		if (firstLoad) {
 			return {};
 		}
-		const validatorError = validator.public_key ? {} : { validator: 'Required.' };
-
+		const validatorError = validator.validatorPublicKey ? {} : { validator: 'Required.' };
+		const hasDelegated = accountDelegation && accountDelegation.find((delegation) => delegation.validatorPublicKey === validator.validatorPublicKey);
 		const selectedValidator = {
 			...validator,
-			numOfDelegator:
-				(validator.bidInfo &&
-					validator.bidInfo.bid &&
-					validator.bidInfo.bid.delegators &&
-					validator.bidInfo.bid.delegators.length) ||
-				0,
-			hasDelegated:
-				validator.bidInfo &&
-				validator.bidInfo.bid &&
-				validator.bidInfo.bid.delegators &&
-				validator.bidInfo.bid.delegators.find((delegator) => delegator.public_key === publicKey),
+			hasDelegated,
 		};
 		return {
 			...validateStakeForm({
@@ -76,7 +70,7 @@ const Staking = () => {
 			}),
 			...validatorError,
 		};
-	}, [amount, balance, firstLoad, publicKey, validator]);
+	}, [amount, balance, firstLoad, validator, accountDelegation]);
 
 	const onAmountChange = (newAmount) => {
 		setFirstLoad(false);
@@ -90,7 +84,7 @@ const Staking = () => {
 		navigate('/stakeConfirm', {
 			state: {
 				name: 'Delegate',
-				stake: { validator: validator.public_key, amount, fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE') },
+				stake: { validator: validator.validatorPublicKey, amount, fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE') },
 			},
 		});
 	};
@@ -107,7 +101,7 @@ const Staking = () => {
 					</div>
 					<div className="cd_we_staking_validator_box" onClick={onSearchValidator}>
 						<div className="cd_we_staking_validator_value">
-							<MiddleTruncatedText>{validator.public_key}</MiddleTruncatedText>
+							<MiddleTruncatedText>{validator.validatorPublicKey}</MiddleTruncatedText>
 						</div>
 						<svg
 							className="cd_we_staking_validator_box_arrow"

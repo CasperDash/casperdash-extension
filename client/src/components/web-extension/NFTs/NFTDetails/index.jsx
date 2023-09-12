@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import nftHeaderImage from 'assets/image/nft-header.png';
+import nftHeaderImage from '@cd/assets/image/nft-header.png';
 import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
 import Copy from '../../../Common/Button/Copy';
 import NoData from '../../../Common/NoData';

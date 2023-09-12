@@ -7,7 +7,8 @@ import { MOTE_RATE } from '../constants/key';
  */
 export const convertBalanceFromHex = (balanceHex) => {
 	const balance = parseInt(balanceHex);
-	return moteToCspr(balance);
+
+	return moteToCspr(balance) || 0;
 };
 
 /**
