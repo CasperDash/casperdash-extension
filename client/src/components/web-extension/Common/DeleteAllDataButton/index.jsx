@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ConfirmModal from '@cd/components/Common/ConfirmModal';
-import { deleteAllUserData } from '@cd/actions/userActions';
 import EnterPasswordModal from '@cd/components/web-extension/Common/LoginModal/EnterPasswordModal';
 import useAuthLogin from '@cd/components/hooks/useAuthLogin';
 import { isUsingLedgerSelector } from '@cd/selectors/user';
+import { useDeleteAllData } from '@cd/hooks/useDeleteAllData';
+import DeleteAllDataNotice from '@cd/web-extension/Common/DeleteAllDataNotice';
 
 const DeleteAllDataButton = () => {
-	const dispatch = useDispatch();
+	const { deleteAllData } = useDeleteAllData();
 	const { validateUserCredential } = useAuthLogin({});
 	const navigate = useNavigate();
 	const [isOpenModal, setIsOpenModal] = useState(false);
@@ -26,7 +27,7 @@ const DeleteAllDataButton = () => {
 
 	const onConfirmHandler = () => {
 		if (isUsingLedger) {
-			dispatch(deleteAllUserData());
+			deleteAllData();
 			navigate('/connectAccount');
 			return;
 		}
@@ -40,7 +41,7 @@ const DeleteAllDataButton = () => {
 			throw Error('Invalid password');
 		}
 		setIsOpenLoginModal(false);
-		dispatch(deleteAllUserData());
+		deleteAllData();
 		navigate('/connectAccount');
 	};
 
@@ -60,18 +61,7 @@ const DeleteAllDataButton = () => {
 				title="Delete all your Data?"
 				buttonOkText="Delete data"
 				description={
-					<div className="cd_setting_modal">
-						<p>
-							Your current wallet, including <strong>accounts</strong> and <strong>assets</strong>{' '}
-							<strong style={{ color: '#fa2852' }}>will be removed from this device permanently</strong>.
-							Please acknowledge this action <strong>cannot be undone.</strong>
-						</p>
-						<p>
-							You can <strong>ONLY</strong> recover with your Secret CasperDash Recovery Phrase which you
-							provided when setting up this wallet. Make sure you&lsquo;re having a copy of your correct
-							Secret Recovery Phrase.
-						</p>
-					</div>
+					<DeleteAllDataNotice />
 				}
 			/>
 			<EnterPasswordModal

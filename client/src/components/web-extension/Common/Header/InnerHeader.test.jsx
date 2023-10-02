@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
 
 test('Should show show back button', () => {
 	useLocation.mockReturnValueOnce({ state: { name: 'test' } });
-	const { container, getByText } = render(<InnerHeader />);
+	const { container, getByText } = render(<InnerHeader setPrevRoute={() => {}} />);
 	expect(Boolean(container.querySelector('.cd_we_back_btn'))).toBe(true);
 	expect(getByText('test').textContent).toBe('test');
 	fireEvent.click(container.querySelector('.cd_we_back_btn'));

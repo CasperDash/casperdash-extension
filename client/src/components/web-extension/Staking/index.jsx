@@ -3,14 +3,18 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+import _get from 'lodash/get';
 import { fetchAccountDelegation, getValidatorsDetails } from '@cd/actions/userActions';
+import BalanceDisplay from '@cd/common/BalanceDisplay';
+import SelectValidator from '@cd/common/SelectValidator';
+import { ENTRY_POINT_DELEGATE } from '@cd/constants/key';
 import { getAccountDelegation, getMassagedUserDetails, getPublicKey } from '../../../selectors/user';
-import { MiddleTruncatedText } from '../../Common/MiddleTruncatedText';
 import { fetchValidators } from '../../../actions/stakeActions';
 import { toFormattedNumber } from '../../../helpers/format';
 import { validateStakeForm } from '../../../helpers/validator';
 import { getConfigKey } from '../../../services/configurationServices';
 import { StakingInfo } from './StakingGrid/StakingInfo';
+
 import './Staking.scss';
 
 const Staking = () => {
@@ -50,12 +54,13 @@ const Staking = () => {
 		if (firstLoad) {
 			return {};
 		}
-		const validatorError = validator.validatorPublicKey ? {} : { validator: 'Required.' };
+		const validatorError = validator.validatorPublicKey ? {} : { validator: 'Please choose a validator' };
 		const hasDelegated = accountDelegation && accountDelegation.find((delegation) => delegation.validatorPublicKey === validator.validatorPublicKey);
 		const selectedValidator = {
 			...validator,
 			hasDelegated,
 		};
+
 		return {
 			...validateStakeForm({
 				amount: amount,
@@ -63,7 +68,7 @@ const Staking = () => {
 				balance,
 				fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE'),
 				minAmount:
-					selectedValidator && selectedValidator.hasDelegated
+					selectedValidator && (selectedValidator.hasDelegated && !getConfigKey('DISABLE_INCREASE_STAKE'))
 						? getConfigKey('MIN_CSPR_TRANSFER')
 						: getConfigKey('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR'),
 				selectedValidator,
@@ -84,7 +89,16 @@ const Staking = () => {
 		navigate('/stakeConfirm', {
 			state: {
 				name: 'Delegate',
-				stake: { validator: validator.validatorPublicKey, amount, fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE') },
+				stake: {
+					action: ENTRY_POINT_DELEGATE,
+					validator: {
+						publicKey: _get(validator, 'validatorPublicKey'),
+						name: _get(validator, 'name'),
+						icon: _get(validator, 'icon[1]'),
+					},
+					amount,
+					fee: getConfigKey('CSPR_AUCTION_DELEGATE_FEE')
+				},
 			},
 		});
 	};
@@ -99,32 +113,20 @@ const Staking = () => {
 							Network Fee: {getConfigKey('CSPR_AUCTION_DELEGATE_FEE')} CSPR
 						</div>
 					</div>
-					<div className="cd_we_staking_validator_box" onClick={onSearchValidator}>
-						<div className="cd_we_staking_validator_value">
-							<MiddleTruncatedText>{validator.validatorPublicKey}</MiddleTruncatedText>
-						</div>
-						<svg
-							className="cd_we_staking_validator_box_arrow"
-							width="10"
-							height="6"
-							viewBox="0 0 10 6"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								fillRule="evenodd"
-								clipRule="evenodd"
-								d="M9.20711 0.792893C8.81658 0.402369 8.18342 0.402369 7.79289 0.792893L5 3.58579L2.20711 0.792893C1.81658 0.402369 1.18342 0.402369 0.792894 0.792893C0.402369 1.18342 0.402369 1.81658 0.792894 2.20711L4.29289 5.70711C4.68342 6.09763 5.31658 6.09763 5.70711 5.70711L9.20711 2.20711C9.59763 1.81658 9.59763 1.18342 9.20711 0.792893Z"
-								fill="#23262F"
-							/>
-						</svg>
+					<div className="cd_we_staking_validator_box">
+						<SelectValidator
+							name={validator?.name}
+							publicKey={validator?.validatorPublicKey}
+							icon={_get(validator, 'icon[1]', '')}
+							onClick={onSearchValidator}
+						/>
 					</div>
 					<div className="cd_error_text">{formErrors.validator}</div>
 				</div>
 				<div className="cd_we_staking_amount">
 					<div className="cd_we_staking_amount_header">
 						<div className="cd_we_input_label">Amount</div>
-						<div>Balance: {toFormattedNumber(balance)}</div>
+						<div>Balance: <BalanceDisplay balance={toFormattedNumber(balance)} /></div>
 					</div>
 					<div className="cd_we_staking_amount_text_box">
 						<input type="number" value={amount} onChange={(e) => onAmountChange(e.target.value)} />

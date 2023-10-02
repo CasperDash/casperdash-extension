@@ -1,15 +1,19 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import _get from 'lodash-es/get';
 import { Button } from 'react-bootstrap';
 import ServiceWorkerRequired from '@cd/components/hocs/ServiceWorkerRequired';
-import { getStakeDeploy } from '../../../services/stakeServices';
-import { getPublicKey } from '../../../selectors/user';
-import { pushStakeToLocalStorage } from '../../../actions/stakeActions';
-import { toFormattedNumber } from '../../../helpers/format';
-import { useConfirmDeploy } from '../../hooks/useConfirmDeploy';
-import { ENTRY_POINT_DELEGATE, ENTRY_POINT_UNDELEGATE } from '../../../constants/key';
+import { getStakeDeploy } from '@cd/services/stakeServices';
+import { getPublicKey } from '@cd/selectors/user';
+import { pushStakeToLocalStorage } from '@cd/actions/stakeActions';
+import { toFormattedNumber } from '@cd/helpers/format';
+import { useConfirmDeploy } from '@cd/hooks/useConfirmDeploy';
+import { ENTRY_POINT_REDELEGATE, ENTRY_POINT_DELEGATE } from '@cd/constants/key';
+import ValidatorItem from '@cd/common/SelectValidator/ValidatorItem';
+import { getConfigKey } from '@cd/services/configurationServices';
 import Copy from '../../Common/Button/Copy';
+
 import './Confirm.scss';
 
 export const Confirm = () => {
@@ -25,12 +29,13 @@ export const Confirm = () => {
 
 	// Function
 	const onConfirm = async () => {
-		const entryPoint = stake.action === 'undelegate' ? ENTRY_POINT_UNDELEGATE : ENTRY_POINT_DELEGATE;
+		const entryPoint = stake.action;
 
 		const buildDeployFn = (network) =>
 			getStakeDeploy({
 				fromAddress: publicKey,
-				validator: stake.validator,
+				validator: _get(stake, 'validator.publicKey'),
+				newValidator: _get(stake, 'newValidator.publicKey'),
 				fee: stake.fee,
 				amount: stake.amount,
 				entryPoint,
@@ -44,12 +49,15 @@ export const Confirm = () => {
 					entryPoint,
 					fee: stake.fee,
 					fromAddress: publicKey,
-					validator: stake.validator,
+					validator: _get(stake, 'validator.publicKey'),
 					deployHash: deployHash,
 					status: 'pending',
 					timestamp: signedDeploy.deploy.header.timestamp,
+					newValidator: _get(stake, 'newValidator.publicKey'),
+					newValidatorName: _get(stake, 'newValidator.name'),
 				}),
 			);
+
 			navigate('/staking', { replace: true });
 		}
 	};
@@ -60,9 +68,27 @@ export const Confirm = () => {
 				<div className="cd_we_confirm_row">
 					<div className="cd_we_input_label">Validator</div>
 					<div className="cd_we_stake_validator_address">
-						{stake.validator} <Copy value={stake.validator} />
+						<ValidatorItem
+							name={_get(stake, 'validator.name')}
+							address={_get(stake, 'validator.publicKey')}
+							icon={_get(stake, 'validator.icon')}
+						/>
+						<Copy value={_get(stake, 'validator.publicKey')} />
 					</div>
 				</div>
+				{stake.action === ENTRY_POINT_REDELEGATE && (
+					<div className="cd_we_confirm_row">
+						<div className="cd_we_input_label">Validator</div>
+						<div className="cd_we_stake_validator_address">
+							<ValidatorItem
+								name={_get(stake, 'newValidator.name')}
+								address={_get(stake, 'newValidator.publicKey')}
+								icon={_get(stake, 'newValidator.icon')}
+							/>
+							<Copy value={_get(stake, 'newValidator.publicKey')} />
+						</div>
+					</div>
+				)}
 				<div className="cd_we_confirm_row">
 					<div className="cd_we_input_label">Amount</div>
 					<div>{toFormattedNumber(stake.amount)} CSPR</div>
@@ -71,9 +97,18 @@ export const Confirm = () => {
 					<div className="cd_we_input_label">Network Fee</div>
 					<div>{toFormattedNumber(stake.fee)} CSPR</div>
 				</div>
+				<div className="cd_we_confirm_row">
+					<div className="cd_we_input_label">Entry Point</div>
+					<div>{stake.action}</div>
+				</div>
+				<div className="cd_we_staking_note">
+					{stake.action === ENTRY_POINT_DELEGATE
+						? getConfigKey('DELEGATE_TIME_NOTICE')
+						: getConfigKey('UNDELEGATE_TIME_NOTICE')}
+				</div>
 
-				<Button onClick={onConfirm} disabled={isDeploying}>
-					{stake.action === 'undelegate' ? 'Undelegate' : 'Delegate'}
+				<Button onClick={onConfirm} disabled={isDeploying} className={'cd_we_deploy_button'}>
+					{stake.action}
 				</Button>
 			</section>
 		</ServiceWorkerRequired>

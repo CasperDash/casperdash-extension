@@ -125,7 +125,7 @@ describe('validateStakeForm', () => {
 				fee: 5,
 				minAmount: 0.0001,
 			}),
-		).toEqual({ amount: 'Not enough balance.' });
+		).toEqual({ amount: 'Insufficient balance to complete the transaction. Please add funds to your account and try again.' });
 	});
 
 	test('Not enough balance', () => {
@@ -137,7 +137,7 @@ describe('validateStakeForm', () => {
 				fee: 5,
 				minAmount: 7,
 			}),
-		).toEqual({ amount: 'Insufficient balance. System requires 7 CSPR minimum balance.' });
+		).toEqual({ amount: 'Please note that the minimum amount for your staking is 7 CSPR or more. Please adjust your amount and try again.' });
 	});
 });
 
@@ -177,7 +177,7 @@ describe('validateUndelegateForm', () => {
 				minAmount: 2.5,
 				stakedAmount: 2,
 			}),
-		).toEqual({ amount: 'Not enough balance.' });
+		).toEqual({ amount: 'Insufficient balance to complete the transaction. Please add funds to your account and try again.' });
 	});
 
 	test('Not enough minimum balance', () => {

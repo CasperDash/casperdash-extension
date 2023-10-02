@@ -7,11 +7,19 @@ import ServiceWorkerRequired from '@cd/hocs/ServiceWorkerRequired';
 import Copy from '@cd/components/Common/Button/Copy';
 import EditIcon from '@cd/assets/image/edit-icon.svg';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
+import BalanceDisplay from '@cd/common/BalanceDisplay';
+import useBalanceVisible from '@cd/hooks/useBalanceVisible';
+import Eye from '@cd/assets/image/ic-eye.svg';
+import EyeOff from '@cd/assets/image/ic-eye-off.svg';
 import { AccountManagerModal } from './AccountManagerModal';
+
+
 import './index.scss';
+
 
 export const AccountInfo = () => {
 	const [isOpenAccountModal, setIsOpenAccountModal] = useState(false);
+	const { setBalanceVisible, isBalanceVisible } = useBalanceVisible();
 	//Selectors
 	const publicKey = useSelector(getPublicKey);
 	const totalFiatBalance = useSelector(getAccountTotalBalanceInFiat);
@@ -48,7 +56,12 @@ export const AccountInfo = () => {
 					</div>
 				</div>
 			</div>
-			<div className="cd_we_account_balance">{toFormattedCurrency(totalFiatBalance)}</div>
+			<div className="cd_we_account_balance">
+				<BalanceDisplay balance={toFormattedCurrency(totalFiatBalance)} />
+				<div className="cd_we_account_balance_visibility" onClick={() => setBalanceVisible(!isBalanceVisible)}>
+					{isBalanceVisible ? <Eye /> : <EyeOff />}
+				</div>
+			</div>
 			{isOpenAccountModal && (
 				<ServiceWorkerRequired>
 					<AccountManagerModal isOpen={isOpenAccountModal} onClose={handleOnCloseAccountModal} />

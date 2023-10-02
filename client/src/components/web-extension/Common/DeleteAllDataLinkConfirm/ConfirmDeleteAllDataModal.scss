@@ -1,0 +1,32 @@
+.cd_we_confirm-delete-modal--backdrop {
+	background-color: var(--component-background);
+}
+.cd_we_confirm-delete-modal {
+	backdrop-filter: blur(3px);
+
+	.modal-title {
+		text-align: center;
+	}
+
+	.modal-header {
+		border: none;
+		padding-bottom: 0;
+	}
+	.layout--body {
+		flex-direction: column;
+		display: flex;
+	}
+
+	.modal-content {
+		background-color: var(--component-background);
+	}
+
+	&--word {
+		font-weight: bold;
+		color: var(--primary-color);
+	}
+
+	&--confirm-btn {
+		width: 100%;
+	}
+}

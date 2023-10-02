@@ -4,6 +4,10 @@ import 'jest-extended';
 import 'mockzilla-webextension';
 import { TextEncoder, TextDecoder } from 'util';
 
+jest.mock("nanoid", () => { return {
+	nanoid : ()=>{}
+} });
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
