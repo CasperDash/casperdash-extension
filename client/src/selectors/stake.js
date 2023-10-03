@@ -34,7 +34,7 @@ export const getPendingStakes =
 			return [];
 		}
 
-		return stakes.delegations.filter((stake) => stake.status === 'pending' || stake.status === 'undelegating');
+		return stakes.delegations.filter((stake) => stake.status === 'pending' || stake.status === 'undelegating' || stake.status === 'redelegating');
 	};
 
 export const getStakesHistory =
