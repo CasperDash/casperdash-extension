@@ -35,7 +35,7 @@
 				padding-bottom: 10px;
 			}
 			.cd_we_nft_attr_grid {
-				max-height: 210px;
+				max-height: 170px;
 				overflow: auto;
 				display: flex;
 				flex-wrap: wrap;
@@ -54,4 +54,32 @@
 			}
 		}
 	}
+
+	.cd_we_nft_details__buttons {
+		display: flex;
+		justify-content: center;
+		.cd_we_nft_details__send {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 0 15px;
+			&--icon {
+				cursor: pointer;
+				width: 42px;
+				height: 42px;
+				line-height: 42px;
+				background-color: var(--primary-light-color);
+				border-radius: 50%;
+				align-items: center;
+				justify-content: center;
+				display: flex;
+				svg {
+					path {
+						fill: var(--primary-color);
+					}
+				}
+				margin-bottom: 10px;
+			}
+		}
+	}	
 }

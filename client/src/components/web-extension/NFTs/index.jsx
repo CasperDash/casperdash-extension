@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import nftHeaderImage from '@cd/assets/image/nft-header.png';
 import SearchIcon from '@cd/assets/image/search-icon.svg';
+import { PATHS } from '@cd/constants/paths';
 import { getOwnNFTContractHash } from '../../../selectors/NFTs';
-import { getNFTInfo, NFTSelector } from '../../../selectors/NFTs';
+import { getNFTInfo } from '../../../selectors/NFTs';
 import { getPublicKey } from '../../../selectors/user';
 import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
 import { fetchNFTInfo, getNFTAddressesFromLocalStorage } from '../../../actions/NFTActions';
-import { Sort } from './Sort';
-import { NFTGrid } from './NFTGrid';
+import { Sort } from './components/Sort';
+import { NFTGrid } from './components/NFTGrid';
+
 import './index.scss';
 
 const NFTs = () => {
@@ -24,7 +26,6 @@ const NFTs = () => {
 	// Selector
 	const publicKey = useSelector(getPublicKey);
 	const NFTsInfo = useSelector(getNFTInfo(sortObj, search));
-	const { loading } = useSelector(NFTSelector);
 	const ownNFTContracts = useSelector(getOwnNFTContractHash);
 
 	// Effect
@@ -46,7 +47,7 @@ const NFTs = () => {
 	};
 
 	const onNFTClick = (nftDetails) => {
-		navigate('/nftDetails', { state: { name: nftDetails.nftName, nftDetails } });
+		navigate(PATHS.NFT_DETAILS, { state: { name: nftDetails.nftName, nftDetails } });
 	};
 
 	return (
@@ -60,7 +61,7 @@ const NFTs = () => {
 			</div>
 			<img className="cd_we_nft_header_image" src={nftHeaderImage} alt="nft-header" />
 			<div className="cd_we_nft_main hide_scroll_bar">
-				<NFTGrid NFTsInfo={NFTsInfo} onNFTClick={onNFTClick} isLoading={loading} />
+				<NFTGrid NFTsInfo={NFTsInfo} onNFTClick={onNFTClick} />
 			</div>
 		</section>
 	);

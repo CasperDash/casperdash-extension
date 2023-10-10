@@ -64,3 +64,14 @@ export const getTokenAddressFromLocalStorage = (publicKey) => {
 		});
 	};
 };
+
+/**
+ * @param {string} tokenAddress
+ * @returns {object}
+ */
+export const getContractPackageInfo = (contractPackageHash) => ({
+	type: TOKENS.GET_CONTRACT_PACKAGE_INFO,
+	request: {
+		url: `/contractPackages/${contractPackageHash}`,
+	},
+});
