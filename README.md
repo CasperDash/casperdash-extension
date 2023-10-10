@@ -118,6 +118,10 @@ yarn test         // run test with coverage
 
 https://github.com/CasperDash/casperdash-client/wiki/Development-Workflow
 
+## Breaking Change 
+
+- Oct 10th, 2023: change repo name from casperdash-client to casperdash-extension for separation concern.
+
 ### License
 
 [MIT](https://raw.githubusercontent.com/CasperDash/casperdash-api/master/LICENSE)
