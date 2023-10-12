@@ -27,13 +27,12 @@ jobs:
               run: |
                   yarn
 
-            - name: Run UT and build all
+            - name: Run UT
               working-directory: ./client
               run: |
                   yarn
                   yarn lint
                   yarn run test-ci
-                  yarn build-extension-mainnet
 
             - name: Send build result to slack channel
               uses: rtCamp/action-slack-notify@v2
