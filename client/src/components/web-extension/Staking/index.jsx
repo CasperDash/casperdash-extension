@@ -9,11 +9,11 @@ import BalanceDisplay from '@cd/common/BalanceDisplay';
 import SelectValidator from '@cd/common/SelectValidator';
 import { ENTRY_POINT_DELEGATE } from '@cd/constants/key';
 import { fetchValidators } from '@cd/actions/stakeActions';
+import { useConfiguration } from '@cd/hooks/useConfiguration';
 import { getAccountDelegation, getMassagedUserDetails, getPublicKey } from '@cd/selectors/user';
 import { toFormattedNumber } from '@cd/helpers/format';
 import { validateStakeForm } from '@cd/helpers/validator';
 import { StakingInfo } from './StakingGrid/StakingInfo';
-import { useConfiguration } from '@cd/hooks/useConfiguration';
 
 import './Staking.scss';
 
