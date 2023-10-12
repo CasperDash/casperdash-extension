@@ -11,8 +11,8 @@ import { toFormattedNumber } from '@cd/helpers/format';
 import { useConfirmDeploy } from '@cd/hooks/useConfirmDeploy';
 import { ENTRY_POINT_REDELEGATE, ENTRY_POINT_DELEGATE } from '@cd/constants/key';
 import ValidatorItem from '@cd/common/SelectValidator/ValidatorItem';
-import { getConfigKey } from '@cd/services/configurationServices';
-import Copy from '../../Common/Button/Copy';
+import { useConfiguration } from '@cd/hooks/useConfiguration';
+import Copy from '@cd/components/Common/Button/Copy';
 
 import './Confirm.scss';
 
@@ -23,6 +23,7 @@ export const Confirm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { executeDeploy, isDeploying } = useConfirmDeploy();
+	const { getConfig } = useConfiguration();
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
@@ -103,8 +104,8 @@ export const Confirm = () => {
 				</div>
 				<div className="cd_we_staking_note">
 					{stake.action === ENTRY_POINT_DELEGATE
-						? getConfigKey('DELEGATE_TIME_NOTICE')
-						: getConfigKey('UNDELEGATE_TIME_NOTICE')}
+						? getConfig('DELEGATE_TIME_NOTICE')
+						: getConfig('UNDELEGATE_TIME_NOTICE')}
 				</div>
 
 				<Button onClick={onConfirm} disabled={isDeploying} className={'cd_we_deploy_button'}>
