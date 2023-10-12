@@ -22,6 +22,7 @@ const config = {
         "^@cd/actions(.*)$": "<rootDir>/src/actions$1",
         "^@cd/helpers(.*)$": "<rootDir>/src/helpers$1",
         "^@cd/selectors(.*)$": "<rootDir>/src/selectors$1",
+        "^@cd/libs(.*)$": "<rootDir>/src/libs$1",
         "^@cd/services(.*)$": "<rootDir>/src/services$1",
         "^@cd/shared(.*)$": "<rootDir>/src/shared$1",
         "^@cd/store(.*)$": "<rootDir>/src/store$1",

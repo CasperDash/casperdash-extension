@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill';
+import * as Sentry from '@sentry/browser';
 import { CONSTANTS } from '@cd/shared/constants';
 const MESSAGE_TYPE = 'casperdash-extension';
 
@@ -43,6 +44,12 @@ export default class MessageChannel {
 					};
 				})
 				.catch((error) => {
+					Sentry.withScope(function (scope) {
+						scope.setTag('messageChannel', 'true');
+						Sentry.captureException(error);
+					});
+
+
 					return {
 						destination: request.source,
 						error: error.message,

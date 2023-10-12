@@ -28,6 +28,7 @@
 					"@cd/selectors": "./src/selectors",
 					"@cd/services": "./src/services",
 					"@cd/shared": "./src/shared",
+					"@cd/libs": "./src/libs",
 					"@cd/store": "./src/store",
 					"@cd/config": "./src/config",
 					"@cd/constants": "./src/constants",
