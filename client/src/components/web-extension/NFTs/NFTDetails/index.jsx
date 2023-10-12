@@ -40,7 +40,7 @@ export const NFTDetails = () => {
 			</div>
 			<div className="cd_we_nft_details__buttons">
 				{
-					displayType === TYPES.DETAIL && isTransfarable (
+					displayType === TYPES.DETAIL && isTransfarable && (
 						<div className="cd_we_nft_details__send">
 							<div className="cd_we_nft_details__send--icon" onClick={onSendClick}>
 								<SendIcon />
