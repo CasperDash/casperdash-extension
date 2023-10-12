@@ -16,7 +16,7 @@ export const NFTDetails = () => {
 	const {
 		state: { nftDetails },
 	} = useLocation();
-	const { image, nftName } = nftDetails || {};
+	const { image, nftName, isTransferable } = nftDetails || {};
 	const [displayType, setDisplayType] = useState(TYPES.DETAIL);
  
 	const onSendClick = () => {
@@ -40,7 +40,7 @@ export const NFTDetails = () => {
 			</div>
 			<div className="cd_we_nft_details__buttons">
 				{
-					displayType === TYPES.DETAIL && (
+					displayType === TYPES.DETAIL && isTransferable && (
 						<div className="cd_we_nft_details__send">
 							<div className="cd_we_nft_details__send--icon" onClick={onSendClick}>
 								<SendIcon />
