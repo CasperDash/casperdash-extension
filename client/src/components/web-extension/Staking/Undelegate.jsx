@@ -4,11 +4,11 @@ import _get from 'lodash-es/get';
 import { useFormik } from 'formik';
 import { useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import { toFormattedNumber } from '@cd/helpers/format';
-import { getConfigKey } from '@cd/services/configurationServices';
 import SwitchBox from '@cd/common/SwitchBox';
 import SelectValidator from '@cd/common/SelectValidator';
 import { ENTRY_POINT_REDELEGATE, ENTRY_POINT_UNDELEGATE } from '@cd/constants/key';
 import useYupUndelegateValidation from '@cd/hooks/useYupUndelegateValidation';
+import { useConfiguration } from '@cd/hooks/useConfiguration';
 
 import './Undelegate.scss';
 
@@ -16,6 +16,7 @@ export const Undelegate = () => {
 	// Hook
 	const navigate = useNavigate();
 	const { state } = useLocation();
+	const { getConfig } = useConfiguration();
 	const [, setPrevRoute] = useOutletContext();
 
 	useEffect(() => {
@@ -60,7 +61,7 @@ export const Undelegate = () => {
 							icon: validatorIcon,
 						},
 						amount: formik.values.amount,
-						fee: getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE'),
+						fee: getConfig('CSPR_AUCTION_UNDELEGATE_FEE'),
 						action: isUsingRedelegate ? ENTRY_POINT_REDELEGATE : ENTRY_POINT_UNDELEGATE,
 						newValidator: {
 							publicKey: values.newValidatorPublicKey,
@@ -104,7 +105,7 @@ export const Undelegate = () => {
 					<div className="cd_we_staking_validator_header">
 						<div className="cd_we_input_label">Validator</div>
 						<div className="cd_we_input_network_fee">
-							Network Fee: {getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE')} CSPR
+							Network Fee: {getConfig('CSPR_AUCTION_UNDELEGATE_FEE')} CSPR
 						</div>
 					</div>
 					<div className="cd_we_staking_validator_box">
@@ -119,7 +120,7 @@ export const Undelegate = () => {
 					<div className="cd_error_text">{formik.errors.validatorPublicKey}</div>
 				</div>
 				<div className="cd_we_staking_redelegate">
-					{getConfigKey('ENABLE_REDELEGATE') && (
+					{getConfig('ENABLE_REDELEGATE') && (
 						<>
 							<label className={'cd_we_staking_redelegate__switch-box'}>
 								<SwitchBox
@@ -165,7 +166,7 @@ export const Undelegate = () => {
 				<Button type="submit" disabled={formik.errors && Object.keys(formik.errors).length !== 0}>
 					Confirm
 				</Button>
-				<div className="cd_we_staking_note">{getConfigKey('UNDELEGATE_TIME_NOTICE')}</div>
+				<div className="cd_we_staking_note">{getConfig('UNDELEGATE_TIME_NOTICE')}</div>
 			</form>
 		</section>
 	);
