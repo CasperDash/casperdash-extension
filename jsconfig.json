@@ -8,6 +8,7 @@
 			"@cd/actions/*": ["client/src/actions/*"],
 			"@cd/helpers/*": ["client/src/helpers/*"],
 			"@cd/selectors/*": ["client/src/selectors/*"],
+			"@cd/libs/*": ["client/src/libs/*"],
 			"@cd/services/*": ["client/src/services/*"],
 			"@cd/shared/*": ["client/src/shared/*"],
 			"@cd/store/*": ["client/src/store/*"],

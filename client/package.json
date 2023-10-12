@@ -13,6 +13,8 @@
 		"@popperjs/core": "2.11.6",
 		"@redux-requests/axios": "^1.1.1",
 		"@redux-requests/core": "^1.6.2",
+		"@sentry/browser": "^7.59.3",
+		"@sentry/integrations": "^7.60.0",
 		"@tanstack/react-query": "^4.29.5",
 		"@zondax/ledger-casper": "^0.0.1",
 		"apexcharts": "^3.30.0",

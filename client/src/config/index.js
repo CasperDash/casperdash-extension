@@ -27,6 +27,10 @@ const CONFIG_OPTIONS = {
 		env: 'REACT_APP_EXPLORER_ROOT_LINK',
 		default: 'https://testnet.cspr.live',
 	},
+	SENTRY_DSN: {
+		env: 'REACT_APP_SENTRY_DSN',
+		default: '',
+	}
 };
 
 const getConfigOption = (option) => {
