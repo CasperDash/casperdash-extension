@@ -8,11 +8,13 @@ import { toFormattedNumber } from '@cd/helpers/format';
 import { useStakedHistory, useStakeFromValidators } from '@cd/hooks/useStakeDeploys';
 import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import { ENTRY_POINT_REDELEGATE } from '@cd/constants/key';
+import { getPublicKey } from '@cd/selectors/user';
 import Grid from '../../Common/Grid';
 import { UndelegateButton } from './UndelegateButton';
 import { RewardInfo } from './RewardInfo';
 
 import './StakingInfo.scss';
+import { NewStakingForm } from '@cd/web-extension/Staking/components/NewStakingForm';
 
 const STAKING_INFO_METADATA = {
 	left: [
@@ -46,18 +48,20 @@ const STAKING_HISTORY_METADATA = {
 };
 
 const VIEWS = {
+	form: { key: 'form' },
 	history: { key: 'history', metadata: STAKING_HISTORY_METADATA },
 	rewards: { key: 'rewards' },
 	info: { key: 'info', metadata: STAKING_INFO_METADATA },
 };
 
-export const StakingInfo = ({ publicKey }) => {
+export const StakingInfo = () => {
+	const publicKey = useSelector(getPublicKey);
 	const stackingList = useStakeFromValidators(publicKey);
 	const { isBalanceVisible } = useBalanceVisible();
 	const historyList = useStakedHistory();
 	const { loading: isLoadingValidators } = useSelector(validatorSelector);
 
-	const [view, setView] = useState(VIEWS.info);
+	const [view, setView] = useState(VIEWS.form);
 
 	const normalizedStackingList = useMemo(() => {
 		return stackingList.map((item) => {
@@ -85,6 +89,12 @@ export const StakingInfo = ({ publicKey }) => {
 		<div className="cd_we_staking_info">
 			<div className="cd_we_staking_info_header">
 				<div
+					className={cn('cd_we_staking_info_title', { active: view === VIEWS.form })}
+					onClick={() => setView(VIEWS.form)}
+				>
+					New Staking
+				</div>
+				<div
 					className={cn('cd_we_staking_info_title', { active: view === VIEWS.info })}
 					onClick={() => setView(VIEWS.info)}
 				>
@@ -101,16 +111,26 @@ export const StakingInfo = ({ publicKey }) => {
 					onClick={() => setView(VIEWS.history)}
 				/>
 			</div>
-			{view.key === VIEWS.rewards.key ? (
-				<RewardInfo publicKey={publicKey} />
-			) : (
-				<Grid
-					data={view.key === VIEWS.info.key ? normalizedStackingList : normalizedHistories}
-					metadata={view.metadata}
-					className="overflow_auto hide_scroll_bar"
-					isLoading={isLoadingValidators}
-				/>
-			)}
+			{
+				view.key === VIEWS.form.key && (
+					<NewStakingForm />
+				)
+			}
+			{
+				view.key === VIEWS.rewards.key && (
+					<RewardInfo publicKey={publicKey} />
+				)
+			}
+			{
+				([VIEWS.info.key, VIEWS.history.key].includes(view.key)) && (
+					<Grid
+						data={view.key === VIEWS.info.key ? normalizedStackingList : normalizedHistories}
+						metadata={view.metadata}
+						className="overflow_auto hide_scroll_bar"
+						isLoading={isLoadingValidators}
+					/>
+				)
+			}
 		</div>
 	);
 };
