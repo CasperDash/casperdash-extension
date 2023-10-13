@@ -9,12 +9,12 @@ import { useStakedHistory, useStakeFromValidators } from '@cd/hooks/useStakeDepl
 import { MiddleTruncatedText } from '@cd/common/MiddleTruncatedText';
 import { ENTRY_POINT_REDELEGATE } from '@cd/constants/key';
 import { getPublicKey } from '@cd/selectors/user';
+import { NewStakingForm } from '@cd/web-extension/Staking/components/NewStakingForm';
 import Grid from '../../Common/Grid';
 import { UndelegateButton } from './UndelegateButton';
 import { RewardInfo } from './RewardInfo';
 
 import './StakingInfo.scss';
-import { NewStakingForm } from '@cd/web-extension/Staking/components/NewStakingForm';
 
 const STAKING_INFO_METADATA = {
 	left: [

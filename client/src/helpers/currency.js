@@ -26,6 +26,7 @@ export const toMotes = (amount) => {
  * Convert motes to CSPR
  *
  * @param {Number|String} amount
+ * @param {String|Number} defaultValue
  * @returns {BigNumberis|String} Return "-" if it's the invalid big number input.
  */
 export const toCSPR = (amount) => {

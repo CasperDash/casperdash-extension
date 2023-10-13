@@ -15,6 +15,11 @@ export const getUserDetails = (publicKey) => ({
 	request: { url: `/user/${publicKey}` },
 });
 
+export const getUserUndelegating = (publicKey) => ({
+	type: USERS.GET_USER_UNDELEGATING,
+	request: { url: `/user/${publicKey}/undelegating` },
+});
+
 /**
  * @param {string} publicKey
  * @returns
