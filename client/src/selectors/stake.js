@@ -46,3 +46,13 @@ export const getStakesHistory =
 
 		return stakes.delegations;
 	};
+
+export const getUndelegatingStakes =
+	() =>
+		({ stakes = {} }) => {
+			if (!stakes.delegations) {
+				return [];
+			}
+
+			return stakes.delegations.filter((stake) => ['undelegating', 'pending'].includes(stake.status) && stake.entryPoint === 'undelegate');
+		};
