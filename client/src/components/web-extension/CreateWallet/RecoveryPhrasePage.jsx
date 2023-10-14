@@ -6,17 +6,20 @@ import dropRight from 'lodash-es/dropRight';
 import { generateKeyphrase, setNextStep } from '@cd/actions/createWalletActions';
 import SelectEncryptionType from '@cd/web-extension/Common/SelectEncryptionType';
 import NumberRecoveryWordsSelect from '@cd/web-extension/Common/NumberRecoveryWordsSelect';
+import CopyButton from '@cd/web-extension/Common/CopyButton';
 import { selectCreateWalletKeyphraseAsMap, selectCreateWalletKeyphrase } from '@cd/selectors/createWallet';
-import { DownloadButton } from '@cd/components/web-extension/Common/DownloadButton';
 import { NUMBER_OF_RECOVERY_WORDS } from '@cd/constants/key';
+import { ONE_MINUTE } from '@cd/constants/time';
+
 import './RecoveryPhrasePage.scss';
 
 const RecoveryPhrasePage = () => {
 	const dispatch = useDispatch();
 	const [numOfWords, setNumOfWords] = useState(NUMBER_OF_RECOVERY_WORDS[0]);
-	const keyPhrase = useSelector(selectCreateWalletKeyphrase);
-	const keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
-	const keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
+	let keyPhrase = useSelector(selectCreateWalletKeyphrase);
+	let keyPhraseAsMap = useSelector(selectCreateWalletKeyphraseAsMap);
+	let keyPhraseAsArray = Array.from(keyPhraseAsMap.values());
+
 	const TOTAL_KEYWORDS = keyPhraseAsArray.length;
 	const leftKeys = dropRight(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
 	const rightKeys = drop(keyPhraseAsArray, TOTAL_KEYWORDS / 2);
@@ -28,6 +31,18 @@ const RecoveryPhrasePage = () => {
 	useEffect(() => {
 		dispatch(generateKeyphrase(numOfWords));
 	}, [numOfWords, dispatch]);
+
+	useEffect(() => {
+		// clean up keyphrase
+		return () => {
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			keyPhrase = '';
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			keyPhraseAsMap = new Map();
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			keyPhraseAsArray = [];
+		};
+	}, []);
 
 	return (
 		<div className="cd_we_create-wallet-layout--root">
@@ -57,12 +72,7 @@ const RecoveryPhrasePage = () => {
 				</ul>
 			</div>
 			<div className="cd_we_create-keyphrase--actions">
-				<DownloadButton
-					className="cd_we_create-keyphrase__btn"
-					variant="normal"
-					text={keyPhrase}
-					fileName="key_phrase.txt"
-				/>
+				<CopyButton className="cd_we_create-keyphrase__btn" text={keyPhrase} delay={ONE_MINUTE} />
 				<Button onClick={onClickNextHandler} className="cd_we_create-keyphrase__btn">
 					Next
 				</Button>

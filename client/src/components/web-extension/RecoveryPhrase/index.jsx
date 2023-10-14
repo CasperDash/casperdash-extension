@@ -1,15 +1,18 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { DownloadButton } from '@cd/components/web-extension/Common/DownloadButton';
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
 import { getKeyphrase } from '@cd/components/hooks/useServiceWorker';
-import { useNavigate } from 'react-router-dom';
+import CopyButton from '@cd/web-extension/Common/CopyButton';
+import { ONE_MINUTE } from '@cd/constants/time';
 
 import './RecoveryPhrase.scss';
 
 const RecoveryPhrase = () => {
 	const navigate = useNavigate();
 
+	const [isBlurred, setIsBlurred] = useState(true);
 	const [showEnterPassword, setShowEnterPassword] = useState(true);
 	const [keyphrase, setKeyphrase] = useState('');
 
@@ -23,28 +26,52 @@ const RecoveryPhrase = () => {
 		}
 	}, []);
 
+	useEffect(() => {
+		// Clear keyphrase on unmount to speed up GC
+		return () => {
+			setKeyphrase('');
+		};
+	}, []);
+
 	const words = keyphrase ? keyphrase.split(' ') : [];
 
 	return (
 		<div className="cd_we_recovery-keyphrase">
 			<div className="cd_we_recovery-keyphrase__wrapper">
-				<ul className="cd_we_recovery-keyphrase__column">
-					{words?.map((word, index) => (
-						<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
-							<span className="counter">{index + 1}</span>
-							<span className="value">{word}</span>
-						</li>
-					))}
-				</ul>
+				<div
+					className={clsx({
+						'cd_we_recovery-keyphrase__blur': isBlurred,
+					})}
+					onClick={() => setIsBlurred(false)}
+				>
+					<ul
+						className={clsx('cd_we_recovery-keyphrase__column', {
+							'cd_we_recovery-keyphrase__column--blurred': isBlurred,
+						})}
+					>
+						{words?.map((word, index) => (
+							<li className="cd_we_recovery-keyphrase__word" key={`left-${index}`}>
+								<span className="counter">{index + 1}</span>
+								<span className="value">{word}</span>
+							</li>
+						))}
+					</ul>
+					{isBlurred && (
+						<div className="cd_we_recovery-keyphrase__blur-overlay">
+							Click to reveal secret recovery phrase
+						</div>
+					)}
+				</div>
 				<div className="cd_we_recovery-keyphrase__footer">
-					<DownloadButton
-						className="cd_we_recovery-keyphrase__copy-btn"
-						text={keyphrase}
-						fileName="key_phrase.txt"
-					/>
+					{<CopyButton className="cd_we_recovery-keyphrase__copy-btn" text={keyphrase} delay={ONE_MINUTE} />}
 				</div>
 			</div>
-
+			<div className="cd_we_recovery-keyphrase__warning">
+				<div className="cd_we_recovery-keyphrase__warning-text">
+					Please copy your secret recovery phrase and keep it in a safe place. If you lose your device or
+					uninstall the extension, you will need this phrase to recover your wallet.
+				</div>
+			</div>
 			{showEnterPassword && (
 				<EnterPasswordModal
 					isOpen={showEnterPassword}

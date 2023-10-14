@@ -64,6 +64,13 @@ const ImportWallet = () => {
 	);
 
 	useEffect(() => {
+		return () => {
+			// Clear keyphrase when unmount component to speed up memory release.
+			setRecoveryPhrase([]);
+		}
+	}, []);
+
+	useEffect(() => {
 		// Only allow paste on debug
 		if (CONSTANTS.DEBUG_ENV) {
 			window.addEventListener('paste', pasteEventHandler);

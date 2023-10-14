@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { getPendingStakes } from '../../../../selectors/stake';
+import { ENTRY_POINT_DELEGATE } from '@cd/constants/key';
+import { getPendingStakes } from '@cd/selectors/stake';
 
 export const UndelegateButton = (props) => {
 	const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const UndelegateButton = (props) => {
 		<Button
 			className="btn-primary-outline"
 			onClick={onUndelegate}
-			disabled={Array.isArray(pendingStakes) && pendingStakes.find((item) => props.validator === item.validator)}
+			disabled={Array.isArray(pendingStakes) && pendingStakes.find((item) => props.validator === item.validator && item.entryPoint === ENTRY_POINT_DELEGATE)}
 		>
 			{props.text}
 		</Button>

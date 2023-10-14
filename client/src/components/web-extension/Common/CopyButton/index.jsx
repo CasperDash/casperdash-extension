@@ -1,24 +1,29 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import copyToClipBoard from 'copy-to-clipboard';
+import useTimeout from '@cd/components/hooks/useTimeout';
 
-const CopyButton = ({text, className}) => {
+const CopyButton = ({text, className, delay}) => {
     const [btnText, setBtnText] = useState('Copy');
-    const timerRef = useRef(null);
 
-    useEffect(() => {
-        return () => clearTimeout(timerRef.current);
-      }, []);
+    const startTimeOut = useTimeout(() => {
+		copyToClipBoard(' ');
+    }, delay);
+
+    const backToCopy = useTimeout(() => {
+        setBtnText('Copy');
+    }, 1000);
       
 
 	const onCopy = () => {
-		navigator.clipboard.writeText(text);
-        setBtnText('Copied');
+		copyToClipBoard(text);
+        if (delay) {
+            startTimeOut();
+        }
 
-        timerRef.current = setTimeout(() => {
-            setBtnText('Copy');
-        }, 2000);
+        setBtnText('Copied');
+        backToCopy();
 	}
 
 	return (
