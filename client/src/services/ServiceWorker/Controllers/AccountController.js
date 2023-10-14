@@ -20,7 +20,6 @@ class AccountController {
 	validateReturningUser = async ({ password }) => {
 		try {
 			const cacheConnectedAccount = await getConnectedAccountChromeLocalStorage();
-
 			const { userCache, selectedWallet } = await UserService.makeUserFromCache(password, cacheConnectedAccount);
 
 			if (!userCache) {
@@ -37,7 +36,7 @@ class AccountController {
 		}
 	};
 
-	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519 }) => {
+	createNewUser = async ({ password, keyphrase, encryptionType = EncryptionType.Ed25519, derivationPath }) => {
 		if (!password) {
 			throw Error('Missing password');
 		}
@@ -51,7 +50,7 @@ class AccountController {
 			const opts = {
 				encryptionType,
 			};
-			const user = new UserService(new User(password), opts);
+			const user = new UserService(new User(password, {}, derivationPath), opts);
 
 			await user.initialize(keyphrase);
 
@@ -95,13 +94,13 @@ class AccountController {
 		return signFormattedMessage(asymKey, messageBytes);
 	};
 
-	getKeyphrase = async ({ password }) => {
+	getEntropy = async ({ password }) => {
 		try {
 			const { userDetails } = await this.validateReturningUser({ password });
 			if (!userDetails) {
 				throw Error('Invalid password');
 			}
-			return this.userService.getKeyphrase();
+			return this.userService.getEntropy();
 		} catch (error) {
 			console.error(error);
 			throw Error('Invalid password');
@@ -125,7 +124,7 @@ class AccountController {
 		return this.userService.prepareStorageData();
 	};
 
-	isUserExist = () => {
+	isUserExist = async () => {
 		return !!this.userService;
 	};
 
@@ -161,7 +160,7 @@ class AccountController {
 		await cacheLoginInfoToLocalStorage(emptyPublicKey, loginOptionsCache);
 
 		this.userService = undefined;
-	}
+	};
 }
 
 export default AccountController;
