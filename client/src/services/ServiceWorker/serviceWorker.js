@@ -8,8 +8,6 @@ import PopupController from './Controllers/PopupController';
 import SigningController from './Controllers/SigningController';
 import './keepAlive';
 
-import '@cd/libs/installSentry';
-
 const appStore = new ObservableStore({});
 const accountController = new AccountController(appStore);
 const popupController = new PopupController(accountController, appStore);
