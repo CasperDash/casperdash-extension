@@ -2,6 +2,7 @@ import { getQuerySelector, getQuery } from '@redux-requests/core';
 import { createSelector } from 'reselect';
 import { formatAccountName } from '@cd/helpers/format';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
+import { getNetwork } from '@cd/selectors/settings';
 import { getConfigKey } from '../services/configurationServices';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { getBase64IdentIcon } from '../helpers/identicon';
@@ -79,15 +80,16 @@ export const getAllTokenInfo = createSelector(
 	getMassagedUserDetails,
 	getCurrentPrice,
 	getMassagedTokenData,
-	(accountDetails, CSPRPrice, tokensData) => {
+	getNetwork,
+	(accountDetails, CSPRPrice, tokensData, network) => {
 		const CSPRBalance = (accountDetails && accountDetails.balance && accountDetails.balance.displayBalance) || 0;
 		const CSPRInfo = {
 			...CSPR_INFO,
 			balance: { displayValue: CSPRBalance },
 			price: CSPRPrice,
 			totalPrice: CSPRPrice * CSPRBalance,
-			transferFee: getConfigKey('CSPR_TRANSFER_FEE'),
-			minAmount: getConfigKey('MIN_CSPR_TRANSFER'),
+			transferFee: getConfigKey('CSPR_TRANSFER_FEE', network),
+			minAmount: getConfigKey('MIN_CSPR_TRANSFER', network),
 		};
 
 		//TODO: should get price for each token, currently no token issue on Casper blockchain and no source as well
@@ -98,7 +100,7 @@ export const getAllTokenInfo = createSelector(
 				? tokensData.map((datum) => ({
 						price: tokenPrice,
 						totalPrice: tokenPrice * datum.balance.displayValue,
-						transferFee: getConfigKey('TOKEN_TRANSFER_FEE'),
+						transferFee: getConfigKey('TOKEN_TRANSFER_FEE', network),
 						icon: getBase64IdentIcon(datum.address),
 						...datum,
 				  }))
