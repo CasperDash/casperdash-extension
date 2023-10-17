@@ -37,10 +37,6 @@ export const mapTransactionStatus = (status) => {
 				className: 'completed',
 			}
 		case 'failed':
-			return {
-				label: 'Failed',
-				className: 'failed',
-			}
 		case 'fail': // for backward compatibility
 			return {
 				label: 'Failed',

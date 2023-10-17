@@ -19,10 +19,7 @@ const validationSchema = yup.object().shape({
       .string()
       .required('Please enter receiving address')
       .test('isValidAddress', 'Invalid address', (value) => {
-        if (!value) {
-          return false;
-        }
-        if (!isValidPublicKey(value)) {
+        if (!value || !isValidPublicKey(value)) {
           return false;
         }
   

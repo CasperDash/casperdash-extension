@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import nftHeaderImage from '@cd/assets/image/nft-header.png';
 import SearchIcon from '@cd/assets/image/search-icon.svg';
 import { PATHS } from '@cd/constants/paths';
-import { getOwnNFTContractHash } from '../../../selectors/NFTs';
-import { getNFTInfo } from '../../../selectors/NFTs';
-import { getPublicKey } from '../../../selectors/user';
-import { useAutoRefreshEffect } from '../../hooks/useAutoRefreshEffect';
-import { fetchNFTInfo, getNFTAddressesFromLocalStorage } from '../../../actions/NFTActions';
+import { getOwnNFTContractHash, getNFTInfo } from '@cd/selectors/NFTs';
+import { getPublicKey } from '@cd/selectors/user';
+import { useAutoRefreshEffect } from '@cd/hooks/useAutoRefreshEffect';
+import { fetchNFTInfo, getNFTAddressesFromLocalStorage } from '@cd/actions/NFTActions';
 import { Sort } from './components/Sort';
 import { NFTGrid } from './components/NFTGrid';
 
