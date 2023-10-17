@@ -21,6 +21,9 @@ export const getTransferNFTDeploy = (publicKey, runtimeArgs, contractHash, entry
 	);
 };
 
+/**
+ * @deprecated
+ */
 export const getTransferDeploy = ({ publicKey, recipient, nftContract, tokenId }) => {
 	try {
 		const recipientPK = CLPublicKey.fromHex(recipient);
