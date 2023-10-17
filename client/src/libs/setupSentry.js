@@ -2,6 +2,11 @@ import config from '@cd/config';
 import { getVersion } from '@cd/helpers/key';
 import * as Sentry from '@sentry/browser';
 import { Dedupe as DedupeIntegration } from "@sentry/integrations";
+import { ERRORS } from '@cd/constants/errors';
+
+const IGNORE_ERRORS = [
+    ...Object.values(ERRORS),
+];
 
 export const setupSentry = () => {
     Sentry.init({
@@ -13,7 +18,7 @@ export const setupSentry = () => {
           if (
             error &&
             error.message &&
-            error.message.match(/Your account has not been created/i)
+            error.message.match(new RegExp(IGNORE_ERRORS.join('|'), 'i'))
           ) {
 
             return null;

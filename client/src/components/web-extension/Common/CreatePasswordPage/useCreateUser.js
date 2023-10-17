@@ -9,6 +9,7 @@ import {
 	selectCreateWalletDerivationPath,
 } from '@cd/selectors/createWallet';
 import { createUserServiceSW } from '@cd/components/hooks/useServiceWorker';
+import { ERRORS } from '@cd/constants/errors';
 
 const useCreateUser = () => {
 	const navigate = useNavigate();
@@ -34,7 +35,7 @@ const useCreateUser = () => {
 		async (password) => {
 			try {
 				if (!keyPhrase) {
-					throw new Error('Missing keyphrase');
+					throw new Error(ERRORS.MISSING_KEYPHRASE);
 				}
 
 				const result = await createUserServiceSW(password, keyPhrase, encryptionType, derivationPath);
