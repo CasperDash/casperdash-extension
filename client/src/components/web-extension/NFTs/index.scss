@@ -87,9 +87,25 @@
 				height: 45px;
 			}
 		}
-		.cd_we_nft_count {
-			font-weight: 600;
+		.cd_we_nft_header {
+			display: flex;
+			align-items: center;
 			margin: 10px 20px;
+		}
+		.cd_we_nft_count {
+			cursor: pointer;
+			&.active {
+				color: var(--primary-color);
+				font-weight: 600;
+			}
+		}
+		.cd_we_nft_histories_icon {
+			cursor: pointer;
+			margin-left: 12px;
+			&.active {
+				fill: var(--primary-color);
+				font-weight: 600;
+			}
 		}
 		.cd_we_nft_grid {
 			margin: 0 10px;

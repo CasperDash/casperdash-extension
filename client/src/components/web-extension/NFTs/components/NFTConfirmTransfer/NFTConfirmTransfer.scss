@@ -1,0 +1,17 @@
+.cd_we_nft_confirm {
+    padding: 20px 15px 0;
+    max-height: 300px;
+    overflow-y: auto;
+    &__attribute {
+        &--title {
+            // font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        &--value {
+            // font-size: 1.4rem;
+            font-weight: 400;
+        }
+        margin-bottom: 3px;
+    }
+}
