@@ -33,6 +33,7 @@ import DappSignMessageRequest from '@cd/components/web-extension/DappSignMessage
 import WarningLedger from '@cd/components/web-extension/Ledger/Warning';
 import AboutCasperDash from '@cd/web-extension/Settings/AboutCasperDash';
 import NFTTransferHistory from '@cd/components/web-extension/NFTs/NFTTransferHistory';
+import DappSwitchAccount from '@cd/web-extension/DappSwitchAccount';
 
 let features;
 
@@ -75,6 +76,7 @@ const routes = {
 		{ name: 'Connect With CasperDash', route: '/dappConnect', component: DappConnection },
 		{ name: 'Sign Deploy With CasperDash', route: '/dappSignDeployRequest', component: DappSignDeployRequest },
 		{ name: 'Sign Message With CasperDash', route: '/dappSignMessageRequest', component: DappSignMessageRequest },
+		{ name: 'Sign Message With CasperDash', route: '/dappSwitchAccount', component: DappSwitchAccount },
 		{ name: 'Ledger Warning', route: '/warningLedger', component: WarningLedger },
 	],
 };

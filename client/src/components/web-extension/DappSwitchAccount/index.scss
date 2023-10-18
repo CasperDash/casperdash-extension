@@ -1,4 +1,4 @@
-.cd_we_dapp_connect_account {
+.cd_we_dapp_switch_account {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -11,18 +11,28 @@
 		text-align: center;
 	}
 
+	&_body {
+		flex: 1;
+		margin-top: 20px;
+	}
+
 	&_list {
-		padding: 4px;
-		max-height: 320px;
+		padding: 4px 10px 4px 4px;
+		max-height: 400px;
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
-
 		overflow-y: hidden;
 		scrollbar-gutter: stable;
+
 		&:hover {
 			overflow-y: scroll;
 		}
+	}
+
+	&_button {
+		font-size: 12px !important;
+		margin-left: 20px;
 	}
 
 	&_site {
@@ -35,7 +45,7 @@
 	&_info {
 		display: flex;
 		&--public_key {
-			max-width: 200px;
+			max-width: 120px;
 		}
 	}
 
@@ -47,27 +57,20 @@
 
 		&--item {
 			margin-left: 8px;
+
+			.cd_we_account-item--public-key {
+				max-width: 120px;
+			}
 		}
 	}
 
-	.cd_we_connect_account_logo {
-		margin: 12vh 0;
-		display: flex;
-		flex-direction: column;
-		svg {
-			margin-bottom: 20px;
-		}
-		div {
-			font-weight: 400;
-			font-size: 18px;
-		}
-	}
-	.cd_we_connect_account_buttons {
+	&_buttons {
+		margin-top: 24px;
 		width: 300px;
 		button {
 			display: flex;
 			justify-content: center;
-			height: 44px;
+			height: 40px;
 			width: 100%;
 			margin-bottom: 15px;
 			align-items: center;

@@ -65,6 +65,12 @@ class CasperDashPluginHelper {
         });
     }
 
+    requestSwitchAccount() {
+        return this.postMessage({
+            methodName: 'popupManager.requestSwitchAccount',
+        });
+    }
+
     disconnectFromSite() {
         return this.postMessage({ 
             methodName: 'popupManager.disconnectFromSite',

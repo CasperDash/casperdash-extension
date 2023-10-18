@@ -82,8 +82,8 @@ const getCurrentConnectedUrl = async () => {
 	return sentMessage({ methodName: 'popupManager.getCurrentSite' });
 };
 
-const addConnectedSite = async (site, publicKey) => {
-	return sentMessage({ methodName: 'popupManager.addConnectedSite', params: { site, publicKey } });
+const addConnectedSite = async (site, publicKeys, activePublicKey) => {
+	return sentMessage({ methodName: 'popupManager.addConnectedSite', params: { site, publicKeys, activePublicKey } });
 };
 
 const getConnectedSites = async () => {
@@ -101,6 +101,7 @@ const closePopup = async () => {
 const cancelConnectingSite = async () => {
 	return sentMessage({ methodName: 'popupManager.cancelConnectingSite' });
 };
+
 
 const isSigningPopupWindow = async () => {
 	return sentMessage({ methodName: 'popupManager.isPopupWindow' });

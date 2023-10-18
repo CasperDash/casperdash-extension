@@ -75,6 +75,11 @@ const useGetWallets = () => {
 		[loadWalletsFromStorage, loadBalanceWallets],
 	);
 
+	// const queryData = useInfiniteQuery({
+	// 	queryKey: ['getWallets'],
+	// 	queryFn: loadWallets,
+	// })
+
 	return [wallets, loadWallets, isLoading];
 };
 

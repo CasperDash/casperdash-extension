@@ -23,6 +23,7 @@ const asyncAccountValidator = (navigate, location) => {
 				case pathname === '/dappConnect':
 				case pathname === '/dappSignDeployRequest':
 				case pathname === '/dappSignMessageRequest':
+				case pathname === '/dappSwitchAccount':
 					if (!user.publicKey) {
 						navigate('/welcomeBack', { state: { redirectUrl: pathname } });
 						return;

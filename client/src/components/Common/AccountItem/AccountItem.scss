@@ -1,0 +1,24 @@
+.cd_we_account-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &--info {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &--name {
+        &-selected {
+            font-weight: 700;
+        }
+        margin-bottom: 5px;
+    }
+
+    &--public-key {
+        max-width: 213px;
+    }
+
+}
