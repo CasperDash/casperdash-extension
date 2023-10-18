@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
+import { useSelector } from 'react-redux';
 import { SendReceive } from './';
 
 afterEach(cleanup);
@@ -12,6 +13,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 test('Should show send button', () => {
+	useSelector.mockReturnValue({});
 	const { getByText } = render(<SendReceive />);
 	expect(getByText('Send').textContent).toBe('Send');
 	fireEvent.click(getByText('Send'));
@@ -19,6 +21,7 @@ test('Should show send button', () => {
 });
 
 test('Should show receive button', () => {
+	useSelector.mockReturnValue({});
 	const { getByText } = render(<SendReceive />);
 
 	expect(getByText('Receive').textContent).toBe('Receive');
