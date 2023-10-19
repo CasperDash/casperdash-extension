@@ -52,3 +52,10 @@ export const getTokensAddressList = ({ tokens }) => {
 	const tokensAddress = (tokens && tokens.address) || [];
 	return [...new Set([...tokensAddress])];
 };
+
+export const contractPackageInfoSelector = getQuerySelector({ type: TOKENS.GET_CONTRACT_PACKAGE_INFO });
+
+export const getContractPackageInfoSelector =
+	createSelector(contractPackageInfoSelector, ({ data }) => {
+		return data;
+	});

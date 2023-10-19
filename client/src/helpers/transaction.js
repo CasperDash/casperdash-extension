@@ -23,3 +23,30 @@ export const enrichTransactionWithIcon = memoizeOne((transferList) => {
 		return { ...transfer, icon: getTransactionIcon(transfer.type) };
 	});
 });
+
+export const mapTransactionStatus = (status) => {
+	switch (status) {
+		case 'pending':
+			return {
+				label: 'Pending',
+				className: 'pending',
+			}
+		case 'completed':
+			return {
+				label: 'Completed',
+				className: 'completed',
+			}
+		case 'failed':
+		case 'fail': // for backward compatibility
+			return {
+				label: 'Failed',
+				className: 'failed',
+			}
+
+		default:
+			return {
+				label: 'Pending',
+				className: 'pending',
+			}
+	}
+}

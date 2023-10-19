@@ -1,3 +1,4 @@
+import { TOKEN_STANDARDS } from '@cd/constants/tokenStandards';
 import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
 
 /**
@@ -25,3 +26,15 @@ export const massageNFTMintFormValues = (values) => {
 		metadata: metadataAttributes,
 	};
 };
+
+
+export const getTokenStandardName = (tokenStandardId) => {
+	switch (tokenStandardId) {
+	  case TOKEN_STANDARDS.CEP47:
+		return 'CEP47';
+	  case TOKEN_STANDARDS.CEP78:
+		return 'CEP78';
+	  default:
+		return '';
+	}
+  };

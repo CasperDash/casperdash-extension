@@ -1,0 +1,20 @@
+.cd_we_transfer_nft {
+    padding: 10px;
+    background: var(--component-background);
+    height: 337px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 26px 26px 0 0;
+
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    &__button {
+        width: 48%;
+    }
+}

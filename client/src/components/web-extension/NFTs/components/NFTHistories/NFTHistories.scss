@@ -1,0 +1,39 @@
+.cd_we_nft_histories {
+    padding: 20px 15px 0;
+    overflow-y: auto;
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &--left {
+            display: flex;
+        }
+
+        &--right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &--info {
+            margin-left: 8px;
+        }
+
+        &--name {
+            font-weight: 600;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: var(--primary-light-color);
+        }
+    }
+}
