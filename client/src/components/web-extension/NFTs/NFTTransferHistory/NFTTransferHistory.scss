@@ -1,0 +1,25 @@
+.cd_we_transfer_history {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: calc(100vh - 75px);
+	&_header {
+		flex: 1;
+		overflow-y: auto;
+	}
+	.cd_we_transfer_history_item {
+		padding-bottom: 15px;
+		.cd_we_item_value {
+			word-break: break-all;
+		}
+	}
+	.cd_we_transfer_history_bottom {
+		display: flex;
+		justify-content: space-between;
+		.cd_we_view_in_explorer {
+			color: var(--primary-color);
+		}
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+}

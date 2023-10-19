@@ -1,12 +1,22 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import * as router from 'react-router-dom';
 import NFTs from './';
+
+afterEach(cleanup);
+let spyOnUseSearchParams
+
+
+beforeEach(() => {
+	// Mock useSelector hook
+	spyOnUseSearchParams = jest.spyOn(router, 'useSearchParams');
+});
 
 afterEach(cleanup);
 
 test('Should show list NFT', async () => {
+	spyOnUseSearchParams.mockReturnValue([{ get: () => undefined }]);
 	useSelector
 		.mockReturnValue({})
 		.mockReturnValueOnce('test')
@@ -21,12 +31,13 @@ test('Should show list NFT', async () => {
 	expect(nftName.textContent).toBe('testnftname');
 	expect(getByText(/testcontractname/i).textContent).toBe('testcontractname');
 	fireEvent.click(nftName);
-	expect(useNavigate()).toHaveBeenCalled();
+	expect(router.useNavigate()).toHaveBeenCalled();
 	await fireEvent.click(collectionSort);
 	expect(Boolean(container.querySelector('arrow-down'))).toBe(false);
 });
 
 test('Should show no nft message', async () => {
+	spyOnUseSearchParams.mockReturnValue([{ get: () => undefined }]);
 	useSelector.mockReturnValue({});
 	const { getByText } = render(<NFTs />);
 	expect(getByText(/You do not have any NFT collectables yet/i).textContent).toBe(

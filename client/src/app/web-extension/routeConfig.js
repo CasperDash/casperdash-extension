@@ -32,6 +32,7 @@ import DappSignDeployRequest from '@cd/components/web-extension/DappSignDeployRe
 import DappSignMessageRequest from '@cd/components/web-extension/DappSignMessageRequest';
 import WarningLedger from '@cd/components/web-extension/Ledger/Warning';
 import AboutCasperDash from '@cd/web-extension/Settings/AboutCasperDash';
+import NFTTransferHistory from '@cd/components/web-extension/NFTs/NFTTransferHistory';
 
 let features;
 
@@ -53,6 +54,7 @@ const routes = {
 		{ name: 'Settings', route: '/settings', component: Settings },
 		{ name: 'About CasperDash', route: '/aboutCasperDash', component: AboutCasperDash },
 		{ name: 'NFT Details', route: '/nftDetails', component: NFTDetails },
+		{ name: 'NFT Transfer History', route: '/nftTransferHistory', component: NFTTransferHistory },
 		{ name: 'Search Validator', route: '/searchValidator', component: SearchValidator },
 		{ name: 'Confirm', route: '/stakeConfirm', component: Confirm },
 		{ name: 'Undelegate', route: '/undelegate', component: Undelegate },

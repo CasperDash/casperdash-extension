@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import SendIcon from '@cd/assets/image/send-icon.svg';
 import nftHeaderImage from '@cd/assets/image/nft-header.png';
-import { MiddleTruncatedText } from '../../../Common/MiddleTruncatedText';
-import Copy from '../../../Common/Button/Copy';
-import NoData from '../../../Common/NoData';
+import { NFTAttributes } from '../components/NFTAttributes';
+import { NFTTransferForm } from '../components/NFTTransferForm';
+
 import './NFTDetails.scss';
+
+const TYPES = {
+	DETAIL: 'DETAIL',
+	TRANSFER_FORM: 'TRANSFER_FORM',
+}
 
 export const NFTDetails = () => {
 	const {
 		state: { nftDetails },
 	} = useLocation();
-	const { image, nftName, nftContractName, metadata, contractAddress, totalSupply } = nftDetails || {};
+	const { image, nftName, isTransfarable } = nftDetails || {};
+	const [displayType, setDisplayType] = useState(TYPES.DETAIL);
+
+	const onSendClick = () => {
+		setDisplayType(TYPES.TRANSFER_FORM);
+	}
+	const handleOnCancel = () => {
+		setDisplayType(TYPES.DETAIL);
+	}
 
 	return (
 		<section className="cd_we_nft_details">
@@ -24,37 +38,23 @@ export const NFTDetails = () => {
 					}}
 				/>
 			</div>
-			<div className="cd_we_nft_content">
-				<div className="cd_we_nft_content_header">
-					<div className="cd_we_input_label">Collection</div>
-					<div className="cd_we_nft_contract_name">{nftContractName}</div>
-					{totalSupply && <div>Total supply: {totalSupply}</div>}
-					<div className="cd_we_nft_contract">
-						<div className="cd_we_nft_contract_address">
-							<MiddleTruncatedText>{contractAddress}</MiddleTruncatedText>
+			<div className="cd_we_nft_details__buttons">
+				{
+					displayType === TYPES.DETAIL && isTransfarable && (
+						<div className="cd_we_nft_details__send">
+							<div className="cd_we_nft_details__send--icon" onClick={onSendClick}>
+								<SendIcon />
+							</div>
 						</div>
-						<Copy value={contractAddress} />
-					</div>
-				</div>
-
-				<div className="cd_we_nft_attr">
-					<div className="cd_we_nft_attr_header cd_we_input_label">Attributes</div>
-					{metadata && metadata.length ? (
-						<div className="cd_we_nft_attr_grid hide_scroll_bar">
-							{metadata.map(({ key, value }) => {
-								return (
-									<div key={key} className="cd_we_nft_attr_card">
-										<div className="cd_we_nft_attr_key">{key}</div>
-										<div className="cd_we_nft_attr_value">{value}</div>
-									</div>
-								);
-							})}
-						</div>
-					) : (
-						<NoData message="No Attributes" />
-					)}
-				</div>
+					)
+				}
 			</div>
+			{
+				displayType === TYPES.DETAIL && <NFTAttributes nftDetails={nftDetails} />
+			}
+			{
+				displayType === TYPES.TRANSFER_FORM && <NFTTransferForm nftDetails={nftDetails} onCancel={handleOnCancel} />
+			}
 		</section>
 	);
 };

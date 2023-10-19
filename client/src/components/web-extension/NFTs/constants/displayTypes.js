@@ -1,0 +1,4 @@
+export const DISPLAY_TYPES = {
+	GRID: 'GRID',
+	HISTORIES: 'HISTORIES',
+};
