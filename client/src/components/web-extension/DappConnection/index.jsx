@@ -19,7 +19,7 @@ import { useSelectWallet } from '@cd/hooks/useSelectWallet';
 
 import './index.scss';
 
-const DappConnection = ({isUserExisting}) => {
+const DappConnection = ({ isUserExisting }) => {
 	const navigate = useNavigate();
 	const [connectedUrl, setConnectedUrl] = useState('');
 	const publicKey = useSelector(getPublicKey);
@@ -109,13 +109,13 @@ const DappConnection = ({isUserExisting}) => {
 					}
 				</div>
 			</div>
-			<div className="cd_we_connect_account_buttons">
-				<Button variant="primary" type="submit" disabled={isDisabled}>
+			<div className="cd_we_dapp_connect_account_buttons">
+				<Button className="cd_we_dapp_connect_account_buttons--connect" variant="primary" type="submit" disabled={isDisabled}>
 					{isDisabled ? 'Select Account(s)' : 'Connect'}
 				</Button>
 
-				<Button variant="secondary" onClick={onCancel}>
-					No
+				<Button className="cd_we_dapp_connect_account_buttons--cancel" variant="secondary" onClick={onCancel}>
+					Cancel
 				</Button>
 			</div>
 		</form>

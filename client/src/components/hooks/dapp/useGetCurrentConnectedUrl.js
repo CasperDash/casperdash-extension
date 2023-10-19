@@ -4,8 +4,6 @@ import { getCurrentConnectedUrl } from '@cd/hooks/useServiceWorker';
 export const useGetCurrentConnectedUrl = () => {
 	return useQuery({
 		queryKey: ['dapp', 'currentConnectedUrl'],
-		queryFn: async () => {
-			return getCurrentConnectedUrl();
-		}
+		queryFn: getCurrentConnectedUrl
 	})
 }

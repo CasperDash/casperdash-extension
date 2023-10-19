@@ -62,15 +62,26 @@
 			font-size: 18px;
 		}
 	}
-	.cd_we_connect_account_buttons {
+
+	&_buttons {
 		width: 300px;
+		display: flex;
+		gap: 8px;
 		button {
 			display: flex;
 			justify-content: center;
-			height: 44px;
+			height: 34px;
 			width: 100%;
 			margin-bottom: 15px;
 			align-items: center;
+		}
+
+		&--connect {
+			flex: 1 46px;
+		}
+
+		&--cancel {
+			flex: 1;
 		}
 	}
 

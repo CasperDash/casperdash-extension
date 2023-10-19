@@ -8,9 +8,9 @@ export const useSelectWallet = ({onSuccess} = {}) => {
 	const selectWallet = useCallback(async (uid) => {
 		const result = await setSelectedWallet(uid);
 
-		const { publicKey: selectedPublicKey, userDetails } = result;
+		const { publicKey, userDetails } = result;
 		dispatch(onBindingAuthInfo({
-			publicKey: selectedPublicKey,
+			publicKey,
 			user: userDetails
 		}, onSuccess));
 	}, [dispatch, onSuccess]);
