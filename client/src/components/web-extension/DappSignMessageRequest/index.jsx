@@ -55,12 +55,12 @@ const DappSignMessageRequest = () => {
 				</div>
 			</div>
 			<div className="cd_we_sign_message_actions">
-				<Button variant="primary" onClick={onOk}>
-					Approve
-				</Button>
-
 				<Button variant="secondary" onClick={onCancel}>
 					Reject
+				</Button>
+
+				<Button variant="primary" onClick={onOk}>
+					Approve
 				</Button>
 			</div>
 		</div>

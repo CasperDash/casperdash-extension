@@ -110,12 +110,11 @@ const DappConnection = ({ isUserExisting }) => {
 				</div>
 			</div>
 			<div className="cd_we_dapp_connect_account_buttons">
-				<Button className="cd_we_dapp_connect_account_buttons--connect" variant="primary" type="submit" disabled={isDisabled}>
-					{isDisabled ? 'Select Account(s)' : 'Connect'}
-				</Button>
-
 				<Button className="cd_we_dapp_connect_account_buttons--cancel" variant="secondary" onClick={onCancel}>
 					Cancel
+				</Button>
+				<Button className="cd_we_dapp_connect_account_buttons--connect" variant="primary" type="submit" disabled={isDisabled}>
+					{isDisabled ? 'Select Account(s)' : 'Connect'}
 				</Button>
 			</div>
 		</form>
