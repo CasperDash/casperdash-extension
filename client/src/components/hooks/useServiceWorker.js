@@ -82,8 +82,8 @@ const getCurrentConnectedUrl = async () => {
 	return sentMessage({ methodName: 'popupManager.getCurrentSite' });
 };
 
-const addConnectedSite = async (site, publicKeys, activePublicKey) => {
-	return sentMessage({ methodName: 'popupManager.addConnectedSite', params: { site, publicKeys, activePublicKey } });
+const addConnectedSite = async (site, publicKeys, activePublicKey, excludedPublicKeys) => {
+	return sentMessage({ methodName: 'popupManager.addConnectedSite', params: { site, publicKeys, activePublicKey, excludedPublicKeys } });
 };
 
 const getConnectedSites = async () => {

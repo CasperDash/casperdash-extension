@@ -8,7 +8,7 @@ import {
 	cancelConnectingSite,
 	closePopup,
 	getCurrentConnectedUrl,
-	isUserExist
+	isUserExist,
 } from '@cd/components/hooks/useServiceWorker';
 import { withDappConnectorRequired } from '@cd/components/hocs/DappConnectorRequired';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import AccountItem from '@cd/common/AccountItem';
 import useGetWallets from '@cd/hooks/useGetWallets';
 import { useFormik } from 'formik';
 import { useSelectWallet } from '@cd/hooks/useSelectWallet';
+import { useGetConnectedPublicKeys } from '@cd/hooks/dapp/useGetConnectedPublicKeys';
 
 import './index.scss';
 
@@ -26,7 +27,8 @@ const DappConnection = ({ isUserExisting }) => {
 	const isUsingLedger = useSelector(isUsingLedgerSelector);
 	const [wallets, loadWallets] = useGetWallets();
 	const { selectWallet } = useSelectWallet();
-	const { values, handleSubmit, handleChange } = useFormik({
+
+	const { values, handleSubmit, handleChange, setFieldValue } = useFormik({
 		initialValues: {
 			selectedUIDs: [],
 		},
@@ -37,17 +39,31 @@ const DappConnection = ({ isUserExisting }) => {
 			}
 
 			const selectedPublicKeys = foundWallets.map((wallet) => wallet.publicKey);
+			const unSelectedPublicKeys = wallets.filter((wallet) => !selectedPublicKeys.includes(wallet.publicKey)).map((wallet) => wallet.publicKey);
 
 			const activeWallet = foundWallets[0];
 			await selectWallet(activeWallet.uid);
-			await addConnectedSite(connectedUrl, selectedPublicKeys, activeWallet.publicKey);
+			await addConnectedSite(connectedUrl, selectedPublicKeys, activeWallet.publicKey, unSelectedPublicKeys);
 			await closePopup();
 		}
 	})
 
+	const { data: connectedPublicKeys } = useGetConnectedPublicKeys(connectedUrl);
+
+
 	if (isUsingLedger) {
 		navigate('/warningLedger');
 	}
+
+	// TODO: Refactor this later with useQuery
+	useEffect(() => {
+		if (!connectedPublicKeys || !wallets) {
+			return;
+		}
+		const selectedUIDs = wallets.filter((wallet) => connectedPublicKeys.includes(wallet.publicKey)).map((wallet) => wallet.uid);
+
+		setFieldValue('selectedUIDs', selectedUIDs);
+	}, [connectedPublicKeys, wallets, setFieldValue]);
 
 	useEffect(() => {
 		const loadConnectedUrl = async () => {
@@ -96,7 +112,7 @@ const DappConnection = ({ isUserExisting }) => {
 						wallets.map((wallet) => {
 							return (
 								<label key={wallet.uid} className="cd_we_dapp_connect_account_select">
-									<input type="checkbox" name="selectedUIDs" onChange={handleChange} value={wallet.uid} />
+									<input checked={values.selectedUIDs.includes(wallet.uid)} type="checkbox" name="selectedUIDs" onChange={handleChange} value={wallet.uid} />
 									<AccountItem
 										className="cd_we_dapp_connect_account_select--item"
 										publicKey={wallet.publicKey}

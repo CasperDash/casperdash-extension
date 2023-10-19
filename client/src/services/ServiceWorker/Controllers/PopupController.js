@@ -226,7 +226,7 @@ class PopupController {
 		return _get(valueObj, CONNECTED_SITES, {});
 	};
 
-	addConnectedSite = async ({ site, publicKeys, activePublicKey }) => {
+	addConnectedSite = async ({ site, publicKeys, activePublicKey, excludedPublicKeys }) => {
 		// Get the current connected sites
 		let connectedSites = await this.getConnectedSites();
 
@@ -249,6 +249,14 @@ class PopupController {
 			}
 		});
 
+		if (excludedPublicKeys && excludedPublicKeys.length > 0 && connectedSites) {
+			excludedPublicKeys.forEach((publicKey) => {
+				if (connectedSites[publicKey]) {
+					connectedSites[publicKey] = connectedSites[publicKey].filter((connectedSite) => connectedSite !== site);
+				}
+			});
+		}
+
 		// Save the updated connectedSites object to Chrome storage
 		await setChromeStorageLocal({ key: CONNECTED_SITES, value: connectedSites });
 
@@ -266,7 +274,6 @@ class PopupController {
 	cancelConnectingSite = async () => {
 		await this.closePopup();
 	};
-
 
 	disconnectFromSite = async ({ origin, publicKey }) => {
 		let currentPublicKey = publicKey;
@@ -292,7 +299,7 @@ class PopupController {
 			},
 		});
 
-		updateStatusEvent(this.currentTab.id, 'disconnected', {
+		await updateStatusEvent(this.currentTab.id, 'disconnected', {
 			isUnlocked: true,
 			isConnected: false,
 			activeKey: publicKey,

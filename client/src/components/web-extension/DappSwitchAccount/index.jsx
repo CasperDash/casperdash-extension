@@ -100,14 +100,16 @@ const DappSwitchAccount = ({isUserExisting}) => {
 										selectedPublicKey={publicKey}
 									/>
 									{
-										isConnected ? (
-											<Button className="cd_we_dapp_switch_account_button" variant="normal" onClick={() => handleOnSwitchAccount(wallet)}>
-												{'Switch'}
-											</Button>
-										) : (
-											<Button className="cd_we_dapp_switch_account_button" variant="normal" onClick={() => handleOnConnectAccount(wallet)}>
-												{'Connect'}
-											</Button>
+										wallet.publicKey !== publicKey && (
+											isConnected ? (
+												<Button className="cd_we_dapp_switch_account_button" variant="normal" onClick={() => handleOnSwitchAccount(wallet)}>
+													{'Switch'}
+												</Button>
+											) : (
+												<Button className="cd_we_dapp_switch_account_button" variant="normal" onClick={() => handleOnConnectAccount(wallet)}>
+													{'Connect'}
+												</Button>
+											)
 										)
 									}
 								</label>
