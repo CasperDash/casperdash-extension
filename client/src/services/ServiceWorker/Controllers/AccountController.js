@@ -1,4 +1,4 @@
-import { User, EncryptionType, ValidationResult } from 'casper-storage';
+import { User, EncryptionType } from 'casper-storage';
 import { DeployUtil, signFormattedMessage } from 'casper-js-sdk';
 import _get from 'lodash-es/get';
 import UserService from '@cd/services/ServiceWorker/UserService';
@@ -50,18 +50,7 @@ class AccountController {
 			const opts = {
 				encryptionType,
 			};
-			const user = new UserService(
-				new User(
-					password,
-					{
-						passwordValidator: {
-							validatorFunc: () => new ValidationResult(true),
-						},
-					},
-					derivationPath,
-				),
-				opts,
-			);
+			const user = new UserService(new User(password, {}, derivationPath), opts);
 
 			await user.initialize(keyphrase);
 
