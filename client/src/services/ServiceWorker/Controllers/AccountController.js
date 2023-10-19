@@ -3,6 +3,7 @@ import { DeployUtil, signFormattedMessage } from 'casper-js-sdk';
 import _get from 'lodash-es/get';
 import UserService from '@cd/services/ServiceWorker/UserService';
 import { getConnectedAccountChromeLocalStorage, cacheLoginInfoToLocalStorage } from '@cd/actions/userActions.utils';
+import { ERRORS } from '@cd/constants/errors';
 class AccountController {
 	/**
 	 * Only available after creating new User or successfully
@@ -81,7 +82,7 @@ class AccountController {
 
 	getPublicKey = async () => {
 		if (!this.userService) {
-			throw new Error('Missing UserService instance');
+			throw new Error(ERRORS.MISSING_USER_SERVICE_INSTANCE);
 		}
 
 		return this.userService.getPublicKey();

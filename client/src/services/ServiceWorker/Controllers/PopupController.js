@@ -5,6 +5,7 @@ import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
 import { getLastError, updateStatusEvent } from '@cd/helpers/extension/signing';
 import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
+import { ERRORS } from '@cd/constants/errors';
 
 const CONNECTED_SITES = 'connectedSites';
 const BLACKLIST_PROTOCOLS = ['chrome-extension:', 'chrome:'];
@@ -92,7 +93,7 @@ class PopupController {
 		const account = await getConnectedAccountChromeLocalStorage();
 		const loginOptions = _get(account, 'loginOptions', null);
 		if (!loginOptions) {
-			throw new Error('Your account has not been created.');
+			throw new Error(ERRORS.YOUR_ACCOUNT_HAS_NOT_BEEN_CREATED);
 		}
 
 		const isConnected = await this.isConnected({ origin });

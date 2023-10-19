@@ -2,6 +2,7 @@ import EventEmitter from 'events';
 import { DeployUtil, encodeBase16, formatMessageWithHeaders } from 'casper-js-sdk';
 import _pick from 'lodash-es/pick';
 import { getDeployArgs, getDeployPayment, getDeployType } from '@cd/helpers/extension/signing';
+import { ERRORS } from '@cd/constants/errors';
 
 const SIGNING_STATUS = {
 	unsigned: 'Unsigned',
@@ -24,7 +25,7 @@ class SigningController extends EventEmitter {
 	getActivePublicKey = async ({ origin }) => {
 		const isConnected = await this.popupController.isConnected({ origin });
 		if (!isConnected) {
-			throw new Error('This site is not connected');
+			throw new Error(ERRORS.THIS_SITE_IS_NOT_CONNECTED);
 		}
 
 		return this.accountController.getCurrentPublicKey();
@@ -33,7 +34,7 @@ class SigningController extends EventEmitter {
 	signDeploy = async ({ deploy, signingPublicKeyHex, targetPublicKeyHex, origin }) => {
 		const isConnected = await this.popupController.isConnected({ origin });
 		if (!isConnected) {
-			throw new Error('This site is not connected');
+			throw new Error(ERRORS.THIS_SITE_IS_NOT_CONNECTED);
 		}
 
 		let innerDeploy = DeployUtil.deployFromJson(deploy);
@@ -128,7 +129,7 @@ class SigningController extends EventEmitter {
 	signMessage = async ({ message, signingPublicKey, origin }) => {
 		const isConnected = await this.popupController.isConnected({ origin });
 		if (!isConnected) {
-			throw new Error('This site is not connected');
+			throw new Error(ERRORS.THIS_SITE_IS_NOT_CONNECTED);
 		}
 
 		let messageBytes;
@@ -163,7 +164,7 @@ class SigningController extends EventEmitter {
 						return reject(new Error(message));
 					}
 					default:
-						reject(new Error('Can not sign message'));
+						reject(new Error(ERRORS.CAN_NOT_SIGN_MESSAGE));
 				}
 			});
 		});

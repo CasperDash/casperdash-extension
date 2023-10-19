@@ -63,7 +63,6 @@ export const getStakeDeploy = ({
 			network,
 		);
 	} catch (error) {
-		console.error(error);
 		throw new Error(`Failed to get stake deploy.`);
 	}
 };

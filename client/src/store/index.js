@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { handleRequests } from '@redux-requests/core';
 import { createDriver } from '@redux-requests/axios';
+import * as Sentry from '@sentry/browser';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import webLocalStorage from 'redux-persist/lib/storage';
@@ -94,6 +95,12 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 	},
 	onError: (error, action, store) => {
 		store.dispatch(removeLoadingStatus(action.type));
+
+		Sentry.withScope(function (scope) {
+			scope.setTag('api', 'true');
+			Sentry.captureException(error);
+		});
+		
 		throw error;
 	},
 	onAbort: (action, store) => {

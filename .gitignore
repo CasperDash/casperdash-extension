@@ -7,4 +7,5 @@ coverage
 dist
 build_extension
 .note
+.DS_Store
 .idea

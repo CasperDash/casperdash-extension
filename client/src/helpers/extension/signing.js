@@ -6,6 +6,7 @@ import {
     CLPublicKey
 } from 'casper-js-sdk';
 import browser from 'webextension-polyfill';
+import { ERRORS } from '@cd/constants/errors';
 
 export async function updateStatusEvent(tabId, msg, {
     isUnlocked,
@@ -46,7 +47,7 @@ export function verifyTargetAccountMatch(
 
   if (providedTargetKeyHash !== targetAccountHash) {
     throw new Error(
-      "Provided target public key doesn't match the one in deploy"
+      ERRORS.PROVIDED_TARGET_PUBLIC_KEY_DOESNT_MATCH
     );
   }
 }
@@ -120,12 +121,12 @@ export const parseTransferData = (transferDeploy, providedTarget) => {
     case CLTypeTag.PublicKey:
       targetFromDeployHex = targetFromDeploy.toHex();
       if (providedTarget && targetFromDeployHex.toLowerCase() !== providedTarget.toLowerCase()) {
-        throw new Error("The provided target public key does not match the one specified in the deploy.");
+        throw new Error(ERRORS.PROVIDED_TARGET_PUBLIC_KEY_DOESNT_MATCH_DEPLOY);
       }
       transferArgs['Recipient (Key)'] = targetFromDeployHex;
       break;
     default:
-      throw new Error('The target specified in the deploy is not in the correct format, it must be either an AccountHash or a PublicKey.');
+      throw new Error(ERRORS.TARGET_SPECIFIED_IN_DEPLOY_NOT_CORRECT_FORMAT);
   }
 
   transferArgs['Amount'] = transferDeploy.getArgByName('amount').value().toString();
@@ -160,7 +161,7 @@ export function parseDeployArg(arg) {
           if (key.isAccount() || key.isURef() || key.isHash()) {
             return parseDeployArg(value);
           }
-          throw new Error('Failed to parse key argument');
+          throw new Error(ERRORS.FAILED_TO_PARSE_KEY_ARGUMENT);
         }
 
       case CLTypeTag.URef:

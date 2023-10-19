@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
+import '@cd/libs/installSentry';
+
 const getRoutes = (routes) => {
 	return (
 		routes &&
