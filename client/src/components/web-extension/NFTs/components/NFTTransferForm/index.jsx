@@ -7,57 +7,59 @@ import { useNavigate } from 'react-router-dom';
 import { isValidPublicKey } from '@cd/helpers/validator';
 import * as yup from 'yup';
 import { PATHS } from '@cd/constants/paths';
+import useBalance from '@cd/hooks/useBalance';
 import { useSendNFT } from '../../hooks/useSendNFT';
 import { NFTConfirmTransfer } from '../NFTConfirmTransfer';
 import { DISPLAY_TYPES } from '../../constants/displayTypes';
 
-
 import './NFTTransferForm.scss';
 
-const validationSchema = yup.object().shape({
-    receivingAddress: yup
-      .string()
-      .required('Please enter receiving address')
-      .test('isValidAddress', 'Invalid address', (value) => {
-        if (!value || !isValidPublicKey(value)) {
-          return false;
-        }
-  
-        return true;
-      }),
-      fee: yup
-      .number()
-      .transform((_, value) => {
-        if (typeof value !== 'string') {
-          return value;
-        }
-  
-        if (value?.includes('.')) {
-          return parseFloat(value);
-        }
-  
-        return +value.replace(/,/, '.');
-      })
-      .required('The entered amount is required.')
-      .test('isValidFee', (value, context) => {
-        if (!value) {
-          return context.createError({
-            message: 'The entered amount is required.',
-          });
-        }
-  
-        if (context.parent.balance < value) {
-          return context.createError({
-            message: `Please make sure you have at least ${value} CSPR in your active balance before attempting to send.`,
-          });
-        }
-  
-        return true;
-      }),
-  });
 
 export const NFTTransferForm = ({onCancel, nftDetails}) => {
     const navigate = useNavigate();
+    const balance = useBalance();
+
+    const validationSchema = yup.object().shape({
+        receivingAddress: yup
+            .string()
+            .required('Please enter receiving address')
+            .test('isValidAddress', 'Invalid address', (value) => {
+                if (!value || !isValidPublicKey(value)) {
+                    return false;
+                }
+
+                return true;
+            }),
+        fee: yup
+            .number()
+            .transform((_, value) => {
+                if (typeof value !== 'string') {
+                    return value;
+                }
+
+                if (value?.includes('.')) {
+                    return parseFloat(value);
+                }
+
+                return +value.replace(/,/, '.');
+            })
+            .required('The entered amount is required.')
+            .test('isValidFee', (value, context) => {
+                if (!value) {
+                    return context.createError({
+                        message: 'The entered amount is required.',
+                    });
+                }
+
+                if (balance < value) {
+                    return context.createError({
+                        message: `Please make sure you have at least ${value} CSPR in your active balance before attempting to send.`,
+                    });
+                }
+
+                return true;
+            }),
+    });
 
     const { send, isLoading } = useSendNFT({
         onError: (err) => {
