@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { WalletDescriptor } from 'casper-storage';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -10,10 +10,12 @@ import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 import useGetWallets from '@cd/hooks/useGetWallets';
-import { onBindingAuthInfo } from '@cd/actions/userActions';
-import { addWalletAccount, setSelectedWallet, getPrivateKey, updateAccountName } from '@cd/hooks/useServiceWorker';
+import { addWalletAccount, getPrivateKey, updateAccountName } from '@cd/hooks/useServiceWorker';
 import Divider from '@cd/components/Common/Divider';
 import { formatAccountName } from '@cd/helpers/format';
+import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
+import { getExplorer } from '@cd/selectors/settings';
+import { useSelectWallet } from '@cd/hooks/useSelectWallet';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import PlusIcon from '@cd/assets/image/plus-icon.svg';
 import EditIcon from '@cd/assets/image/edit-icon.svg';
@@ -23,13 +25,10 @@ import CloseIconAlt from '@cd/assets/image/close-icon-alt.svg';
 import { getPublicKey, getSelectedWallet } from '@cd/selectors/user';
 import ImportAccount from '@cd/assets/image/ic-import-account.svg';
 import Key from '@cd/assets/image/ic-key.svg';
-import EnterPasswordModal from '@cd/web-extension/Common/LoginModal/EnterPasswordModal';
-import { getExplorer } from '@cd/selectors/settings';
 
 import './AccountManagerModal.scss';
 
 export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restProps }) => {
-	const dispatch = useDispatch();
 	const selectedWallet = useSelector(getSelectedWallet);
 	const navigate = useNavigate();
 	const [showEnterPassword, setShowEnterPassword] = useState(false);
@@ -37,6 +36,9 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 	const [newAccountName, setNewAccountName] = useState('');
 	const explorerUrl = useSelector(getExplorer);
 	const publicKey = useSelector(getPublicKey);
+	const { selectWallet } = useSelectWallet({
+		onSuccess: onClose,
+	})
 
 	const [wallets, loadWallets, isLoading] = useGetWallets();
 
@@ -80,13 +82,8 @@ export const AccountManagerModal = ({ isOpen, onClose, isUserExisting, ...restPr
 		});
 	};
 
-	const handleOnSelectWallet = (uid) => {
-		setSelectedWallet(uid).then((result) => {
-			const { publicKey: selectedPublicKey, userDetails } = result;
-			dispatch(onBindingAuthInfo({ publicKey: selectedPublicKey, user: userDetails }));
-
-			onClose();
-		});
+	const handleOnSelectWallet = async (uid) => {
+		await selectWallet(uid);
 	};
 
 	const onViewPrivateKey = useCallback(

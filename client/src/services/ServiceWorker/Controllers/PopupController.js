@@ -12,6 +12,7 @@ const POPUP_TYPE = {
 	SIGN_DEPLOY: 'dappSignDeployRequest',
 	CONNECT_ACCOUNT: 'dappConnect',
 	SIGN_MESSAGE: 'dappSignMessageRequest',
+	SWITCH_ACCOUNT: 'dappSwitchAccount',
 };
 const NOTIFICATION_WIDTH = 357;
 const NOTIFICATION_HEIGHT = 600 + 28;
@@ -113,6 +114,10 @@ class PopupController {
 
 	openSignRequest = async ({ origin }) => {
 		this.openPopup({ url: origin, type: POPUP_TYPE.SIGN_DEPLOY });
+	};
+
+	requestSwitchAccount = async ({ origin }) => {
+		this.openPopup({ url: origin, type: POPUP_TYPE.SWITCH_ACCOUNT });
 	};
 
 	openSignMessageRequest = async ({ origin }) => {
@@ -221,26 +226,35 @@ class PopupController {
 		return _get(valueObj, CONNECTED_SITES, {});
 	};
 
-	addConnectedSite = async ({ site, publicKey }) => {
+	addConnectedSite = async ({ site, publicKeys, activePublicKey, excludedPublicKeys }) => {
 		// Get the current connected sites
 		let connectedSites = await this.getConnectedSites();
 
-		// Get the array of sites for the given public key
-		const sites = _get(connectedSites, publicKey, []);
+		publicKeys.forEach((publicKey) => {
+			const sites = _get(connectedSites, publicKey, []);
 
-		// Check if the public key has any connected sites
-		if (sites.length === 0) {
-			// If no connected sites, add the new site to the connectedSites object
-			connectedSites = {
-				...connectedSites,
-				[publicKey]: [site],
-			};
-		} else {
-			// If there are already connected sites, add the new site to the array, deduplicating the sites
-			connectedSites = {
-				...connectedSites,
-				[publicKey]: _uniq([...sites, site]),
-			};
+			// Check if the public key has any connected sites
+			if (sites.length === 0) {
+				// If no connected sites, add the new site to the connectedSites object
+				connectedSites = {
+					...connectedSites,
+					[publicKey]: [site],
+				};
+			} else {
+				// If there are already connected sites, add the new site to the array, deduplicating the sites
+				connectedSites = {
+					...connectedSites,
+					[publicKey]: _uniq([...sites, site]),
+				};
+			}
+		});
+
+		if (excludedPublicKeys && excludedPublicKeys.length > 0 && connectedSites) {
+			excludedPublicKeys.forEach((publicKey) => {
+				if (connectedSites[publicKey]) {
+					connectedSites[publicKey] = connectedSites[publicKey].filter((connectedSite) => connectedSite !== site);
+				}
+			});
 		}
 
 		// Save the updated connectedSites object to Chrome storage
@@ -250,11 +264,8 @@ class PopupController {
 		await updateStatusEvent(this.currentTab.id, 'connected', {
 			isUnlocked: true,
 			isConnected: true,
-			activeKey: publicKey,
+			activeKey: activePublicKey,
 		});
-
-		// Close the popup window
-		await this.closePopup({ windowId: this.popupWindow.windowId });
 
 		// Return the updated connectedSites object
 		return connectedSites;
@@ -288,7 +299,7 @@ class PopupController {
 			},
 		});
 
-		updateStatusEvent(this.currentTab.id, 'disconnected', {
+		await updateStatusEvent(this.currentTab.id, 'disconnected', {
 			isUnlocked: true,
 			isConnected: false,
 			activeKey: publicKey,

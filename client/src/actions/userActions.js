@@ -134,7 +134,7 @@ export const lockAccount = () => {
 export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
-		dispatch(
+		await dispatch(
 			setPublicKey(publicKey, {
 				selectedWallet: user.selectedWallet,
 				connectionType: user.connectionType,
