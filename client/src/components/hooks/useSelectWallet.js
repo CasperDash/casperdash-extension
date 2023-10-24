@@ -9,7 +9,7 @@ export const useSelectWallet = ({onSuccess} = {}) => {
 		const result = await setSelectedWallet(uid);
 
 		const { publicKey, userDetails } = result;
-		dispatch(onBindingAuthInfo({
+		await dispatch(onBindingAuthInfo({
 			publicKey,
 			user: userDetails
 		}, onSuccess));
