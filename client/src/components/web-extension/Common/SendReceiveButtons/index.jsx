@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import SendIcon from '@cd/assets/image/send-icon.svg';
 import ReceiveIcon from '@cd/assets/image/receive-icon.svg';
 import BuyIcon from '@cd/assets/image/buy-icon.svg';
-import './index.scss';
 import { useSelector } from 'react-redux';
 import { getPublicKeyAndLoginOptions } from '@cd/selectors/user';
-import { getConfigKey } from '@cd/services/configurationServices';
+import { useConfiguration } from '@cd/hooks/useConfiguration';
+
+import './index.scss';
 
 export const SendReceive = ({ token }) => {
 	const navigate = useNavigate();
 	const { publicKey } = useSelector(getPublicKeyAndLoginOptions);
+	const { getConfig } = useConfiguration();
 
 	const onReceiveClick = () => {
 		navigate('/receive', { state: { name: 'Receive' } });
@@ -25,7 +27,7 @@ export const SendReceive = ({ token }) => {
 			`https://app.ramp.network?hostApiKey=6t8ty5y2jvbyam46v5d7g6pdx3hnkhhs5sg4gxd2&hostAppName=CasperDash&hostLogoUrl=https://github.com/CasperDash/casperdash-materials/blob/3b92dd04768a96946e054548c12d9281e56b17d4/media-kit/rw-lg.png?raw=true&userAddress=${publicKey}&swapAsset=CASPER_CSPR`,
 		);
 	};
-	console.info(getConfigKey('ENABLE_BUY'));
+
 	return (
 		<div className="cd_we_send_receive_buttons">
 			<div className="cd_we_send_receive_item" onClick={onSendClick}>
@@ -40,7 +42,7 @@ export const SendReceive = ({ token }) => {
 				</div>
 				<div className="cd_we_send_receiver_text">Receive</div>
 			</div>
-			{getConfigKey('ENABLE_BUY') && (
+			{getConfig('ENABLE_BUY') && (
 				<div className="cd_we_send_receive_item" onClick={onBuyClick}>
 					<div className="cd_we_send_receiver_icon">
 						<BuyIcon />
