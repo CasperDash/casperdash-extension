@@ -75,7 +75,7 @@
 		"watch-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode development --env=network=mainnet --watch",
 		"build-extension-mainnet": "rimraf -r build_extension && webpack --env=type=extension --mode production --env=network=mainnet",
 		"test": "jest --coverage --watchAll ",
-		"test:w": "jest test --watchAll ",
+		"test:w": "jest test",
 		"test-ci": "CODECOV_TOKEN=f53cf772-9742-494e-af36-d84321b726dc SKIP_PREFLIGHT_CHECK=true CI=true jest test --coverage",
 		"lint": "eslint src/ --ext .js,.jsx,.ts,.tsx"
 	},
