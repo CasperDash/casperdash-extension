@@ -5,6 +5,8 @@ import {
 	setChromeStorageLocal,
 	getChromeStorageLocal,
 } from '@cd/services/localStorage';
+import _get from 'lodash-es/get';
+import _isEmpty from 'lodash-es/isEmpty';
 
 const getConnectedAccountChromeLocalStorage = async () => {
 	try {
@@ -33,4 +35,11 @@ const cacheLoginInfoToLocalStorage = async (publicKey, loginOptions) => {
 	}
 };
 
-export { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage };
+const isAccountCreated = async () => {
+	const account = await getConnectedAccountChromeLocalStorage();
+	const loginOptions = _get(account, 'loginOptions', null);
+
+	return !_isEmpty(loginOptions);
+}
+
+export { cacheLoginInfoToLocalStorage, getConnectedAccountChromeLocalStorage, isAccountCreated };
