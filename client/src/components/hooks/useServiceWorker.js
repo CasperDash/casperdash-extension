@@ -90,8 +90,8 @@ const getConnectedSites = async () => {
 	return sentMessage({ methodName: 'popupManager.getConnectedSites' });
 };
 
-const disconnectFromSite = async (origin, publicKey) => {
-	return sentMessage({ methodName: 'popupManager.disconnectFromSite', params: { origin, publicKey } });
+const removePublicKeyOnConnectedSite = async (origin, publicKey) => {
+	return sentMessage({ methodName: 'popupManager.removePublicKeyOnConnectedSite', params: { origin, publicKey } });
 };
 
 const closePopup = async () => {
@@ -161,7 +161,7 @@ export {
 	getCurrentConnectedUrl,
 	addConnectedSite,
 	getConnectedSites,
-	disconnectFromSite,
+	removePublicKeyOnConnectedSite,
 	approveSignDeployRequest,
 	parseSignDeployData,
 	closePopup,

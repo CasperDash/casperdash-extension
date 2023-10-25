@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { disconnectFromSite, getConnectedSites } from '@cd/components/hooks/useServiceWorker';
+import { removePublicKeyOnConnectedSite, getConnectedSites } from '@cd/components/hooks/useServiceWorker';
 import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
 import ConfirmModal from '@cd/components/Common/ConfirmModal';
@@ -26,7 +26,7 @@ const ConnectedSites = () => {
 
     const handleOnConfirm = async () => {
         const publicKey = publicKeyRef.current;
-        await disconnectFromSite(currentSite, publicKey);
+        await removePublicKeyOnConnectedSite(currentSite, publicKey);
 
         setPublicKeys((prevPublicKeys) => prevPublicKeys.filter(key => key !== publicKey));
 
