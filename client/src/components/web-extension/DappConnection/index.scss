@@ -7,13 +7,30 @@
 	background: var(--component-background);
 	padding-top: 10px;
 
+	&_title {
+		margin-bottom: -8px;
+	}
+
 	&_header {
 		text-align: center;
 	}
 
+	&_description {
+		font-size: 14px;
+	}
+
+	&_site {
+		margin-top: 10px;
+		&--text {
+			text-align: center;
+			font-weight: 700;
+		}
+	}
+
 	&_list {
+		margin-top: 20px;
 		padding: 4px;
-		max-height: 320px;
+		max-height: 378px;
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
@@ -22,13 +39,6 @@
 		scrollbar-gutter: stable;
 		&:hover {
 			overflow-y: scroll;
-		}
-	}
-
-	&_site {
-		&--text {
-			text-align: center;
-			font-weight: 700;
 		}
 	}
 
@@ -75,15 +85,5 @@
 			margin-bottom: 15px;
 			align-items: center;
 		}
-
-		&--connect {
-			flex: 1 46px;
-		}
-
-		&--cancel {
-			flex: 1;
-		}
 	}
-
-
 }
