@@ -88,7 +88,7 @@ async function setupPopupServices() {
 	rpc.register('popupManager.getCurrentSite', popupController.getCurrentSite);
 	rpc.register('popupManager.addConnectedSite', popupController.addConnectedSite);
 	rpc.register('popupManager.getConnectedSites', popupController.getConnectedSites);
-	rpc.register('popupManager.disconnectFromSite', popupController.disconnectFromSite);
+	rpc.register('popupManager.removePublicKeyOnConnectedSite', popupController.removePublicKeyOnConnectedSite);
 	rpc.register('popupManager.closePopup', popupController.closePopup);
 	rpc.register('popupManager.cancelConnectingSite', popupController.cancelConnectingSite);
 	rpc.register('popupManager.isPopupWindow', popupController.isPopupWindow);
