@@ -4,7 +4,7 @@ import _uniq from 'lodash-es/uniq';
 import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
 import { getLastError, updateStatusEvent } from '@cd/helpers/extension/signing';
-import { getConnectedAccountChromeLocalStorage } from '@cd/actions/userActions.utils';
+import { isAccountCreated } from '@cd/actions/userActions.utils';
 
 const CONNECTED_SITES = 'connectedSites';
 const BLACKLIST_PROTOCOLS = ['chrome-extension:', 'chrome:'];
@@ -90,14 +90,13 @@ class PopupController {
 	}
 
 	openRequestConnect = async ({ origin }) => {
-		const account = await getConnectedAccountChromeLocalStorage();
-		const loginOptions = _get(account, 'loginOptions', null);
-		if (!loginOptions) {
-			throw new Error('Your account has not been created.');
-		}
-
 		const isConnected = await this.isConnected({ origin });
 		if (isConnected) {
+			const isCreated = await isAccountCreated();
+			if (!isCreated) {
+				throw new Error('Your account has not been created.');
+			}
+
 			const activeKey = await this.accountController.getCurrentPublicKey();
 
 			await updateStatusEvent(this.currentTab.id, 'connected', {
@@ -109,22 +108,27 @@ class PopupController {
 			return;
 		}
 
-		this.openPopup({ url: origin, type: POPUP_TYPE.CONNECT_ACCOUNT });
+		await this.openPopup({ url: origin, type: POPUP_TYPE.CONNECT_ACCOUNT });
 	};
 
 	openSignRequest = async ({ origin }) => {
-		this.openPopup({ url: origin, type: POPUP_TYPE.SIGN_DEPLOY });
+		await this.openPopup({ url: origin, type: POPUP_TYPE.SIGN_DEPLOY });
 	};
 
 	requestSwitchAccount = async ({ origin }) => {
-		this.openPopup({ url: origin, type: POPUP_TYPE.SWITCH_ACCOUNT });
+		await this.openPopup({ url: origin, type: POPUP_TYPE.SWITCH_ACCOUNT });
 	};
 
 	openSignMessageRequest = async ({ origin }) => {
-		this.openPopup({ url: origin, type: POPUP_TYPE.SIGN_MESSAGE });
+		await this.openPopup({ url: origin, type: POPUP_TYPE.SIGN_MESSAGE });
 	};
 
 	openPopup = async ({ url, type }) => {
+		const isCreated = await isAccountCreated();
+		if (!isCreated) {
+			throw new Error('Your account has not been created.');
+		}
+
 		if (this.popupWindow) {
 			try {
 				if (this.popupWindow.type === type) {
