@@ -25,9 +25,9 @@ const DeleteAllDataButton = () => {
 		setIsOpenModal(false);
 	};
 
-	const onConfirmHandler = () => {
+	const onConfirmHandler = async () => {
 		if (isUsingLedger) {
-			deleteAllData();
+			await deleteAllData();
 			navigate('/connectAccount');
 			return;
 		}
@@ -40,8 +40,8 @@ const DeleteAllDataButton = () => {
 		if (!result) {
 			throw Error('Invalid password');
 		}
+		await deleteAllData();
 		setIsOpenLoginModal(false);
-		deleteAllData();
 		navigate('/connectAccount');
 	};
 

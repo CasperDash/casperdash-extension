@@ -65,6 +65,7 @@ class AccountController {
 	};
 
 	clearUser = () => {
+		this.userService = undefined;
 		this.appStore.putState(undefined);
 	};
 

@@ -110,7 +110,7 @@ export const deleteAllUserData = () => {
 	return async (dispatch) => {
 		await onClearUserSW();
 		await clearChromeStorageLocal();
-		dispatch(setPublicKey());
+		await dispatch(setPublicKey());
 		dispatch(resetAccount());
 	};
 };
