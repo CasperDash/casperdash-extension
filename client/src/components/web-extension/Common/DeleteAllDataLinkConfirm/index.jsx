@@ -29,8 +29,8 @@ const DeleteAllDataLinkConfirm = () => {
 	};
 
 	const onSubmit = async () => {
+		await deleteAllData();
 		setIsOpenLoginModal(false);
-		deleteAllData();
 		navigate('/connectAccount');
 	};
 
