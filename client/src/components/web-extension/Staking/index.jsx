@@ -12,8 +12,8 @@ import { fetchValidators } from '@cd/actions/stakeActions';
 import { getAccountDelegation, getMassagedUserDetails, getPublicKey } from '@cd/selectors/user';
 import { toFormattedNumber } from '@cd/helpers/format';
 import { validateStakeForm } from '@cd/helpers/validator';
-import { StakingInfo } from './StakingGrid/StakingInfo';
 import { useConfiguration } from '@cd/hooks/useConfiguration';
+import { StakingInfo } from './StakingGrid/StakingInfo';
 
 import './Staking.scss';
 
