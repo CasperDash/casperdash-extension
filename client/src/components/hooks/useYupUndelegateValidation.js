@@ -1,15 +1,16 @@
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { getAccountDelegation } from '@cd/selectors/user';
-import { getConfigKey } from '@cd/services/configurationServices';
 import { useMemo } from 'react';
 import useBalance from '@cd/hooks/useBalance';
 import { VALIDATOR_REACHED_MAXIMUM } from '@cd/constants/staking';
+import { useConfiguration } from '@cd/hooks/useConfiguration';
 
 const useYupUndelegateValidation = ({ selectedValidator, stakedAmount }) => {
+	const { getConfig } = useConfiguration();
 	const accountDelegation = useSelector(getAccountDelegation());
 	const balance = useBalance();
-	const minCSPRDelegateToNewValidator = getConfigKey('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR');
+	const minCSPRDelegateToNewValidator = getConfig('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR');
 
 	const hasDelegated = useMemo(() => {
 		if (!accountDelegation|| !selectedValidator?.validatorPublicKey) {
@@ -24,9 +25,9 @@ const useYupUndelegateValidation = ({ selectedValidator, stakedAmount }) => {
 			.number()
 			.required('Amount must be more than 0 CSPR')
 			.test('max', `You don't have enough CSPR to pay the fee`, function(value, context) {
-				let fee = getConfigKey('CSPR_AUCTION_UNDELEGATE_FEE');
+				let fee = getConfig('CSPR_AUCTION_UNDELEGATE_FEE');
 				if (context.parent.isUsingRedelegate) {
-					fee = getConfigKey('CSPR_AUCTION_REDELEGATE_FEE');
+					fee = getConfig('CSPR_AUCTION_REDELEGATE_FEE');
 				}
 
 				if (balance < fee) {
@@ -49,7 +50,7 @@ const useYupUndelegateValidation = ({ selectedValidator, stakedAmount }) => {
 					if (!context.parent.isUsingRedelegate) {
 						return true;
 					}
-					return (!getConfigKey('DISABLE_INCREASE_STAKE') && hasDelegated) || value >= minCSPRDelegateToNewValidator;
+					return (!getConfig('DISABLE_INCREASE_STAKE') && hasDelegated) || value >= minCSPRDelegateToNewValidator;
 				},
 			).test(
 				'maximumStakedAmount',

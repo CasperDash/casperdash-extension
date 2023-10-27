@@ -56,6 +56,7 @@ async function setInjectApiPageServer() {
 
 	rpc.register('popupManager.isConnected', popupController.isConnected);
 	rpc.register('popupManager.openRequestConnect', popupController.openRequestConnect);
+	rpc.register('popupManager.requestSwitchAccount', popupController.requestSwitchAccount);
 	rpc.register('popupManager.disconnectFromSite', popupController.disconnectFromSite);
 	rpc.register('popupManager.getConnectedSites', popupController.getConnectedSites);
 

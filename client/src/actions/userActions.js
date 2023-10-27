@@ -110,7 +110,7 @@ export const deleteAllUserData = () => {
 	return async (dispatch) => {
 		await onClearUserSW();
 		await clearChromeStorageLocal();
-		dispatch(setPublicKey());
+		await dispatch(setPublicKey());
 		dispatch(resetAccount());
 	};
 };
@@ -134,7 +134,7 @@ export const lockAccount = () => {
 export const onBindingAuthInfo = ({ publicKey, user }, onCompleted) => {
 	// Store full User object into state
 	return async (dispatch) => {
-		dispatch(
+		await dispatch(
 			setPublicKey(publicKey, {
 				selectedWallet: user.selectedWallet,
 				connectionType: user.connectionType,

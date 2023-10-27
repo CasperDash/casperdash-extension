@@ -8,3 +8,4 @@ dist
 build_extension
 .note
 .idea
+.eslintcache
