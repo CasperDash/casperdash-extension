@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getPublicKey, getAccountTotalBalanceInFiat, getSelectedWallet, getLoginOptions } from '@cd/selectors/user';
+import {
+	getPublicKey,
+	getAccountTotalBalanceInFiat,
+	getSelectedWallet,
+	getTokenInfo,
+	getLoginOptions,
+} from '@cd/selectors/user';
 import { MiddleTruncatedText } from '@cd/components/Common/MiddleTruncatedText';
 import { toFormattedCurrency } from '@cd/helpers/format';
 import ServiceWorkerRequired from '@cd/hocs/ServiceWorkerRequired';
@@ -9,7 +15,6 @@ import EditIcon from '@cd/assets/image/edit-icon.svg';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
 import BalanceDisplay from '@cd/common/BalanceDisplay';
 import useBalanceVisible from '@cd/hooks/useBalanceVisible';
-import { getTokenInfo } from '@cd/selectors/user';
 import Eye from '@cd/assets/image/ic-eye.svg';
 import EyeOff from '@cd/assets/image/ic-eye-off.svg';
 import InfoIcon from '@cd/assets/image/about-us-icon.svg';
