@@ -58,9 +58,9 @@ const Staking = () => {
 			return {};
 		}
 		const validatorError = validator.validatorPublicKey ? {} : { validator: 'Please choose a validator' };
-		const hasDelegated =
-			accountDelegation &&
-			accountDelegation.find((delegation) => delegation.validatorPublicKey === validator.validatorPublicKey);
+		const hasDelegated = accountDelegation?.find(
+			(delegation) => delegation.validatorPublicKey === validator.validatorPublicKey,
+		);
 		const selectedValidator = {
 			...validator,
 			hasDelegated,
@@ -73,7 +73,7 @@ const Staking = () => {
 				balance,
 				fee: getConfig('CSPR_AUCTION_DELEGATE_FEE'),
 				minAmount:
-					selectedValidator && selectedValidator.hasDelegated && !getConfig('DISABLE_INCREASE_STAKE')
+					selectedValidator?.hasDelegated && !getConfig('DISABLE_INCREASE_STAKE')
 						? getConfig('MIN_CSPR_TRANSFER')
 						: getConfig('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR'),
 				selectedValidator,
