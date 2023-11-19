@@ -13,7 +13,7 @@ import { getMassagedTokenData } from './tokens';
 const CSPR_INFO = {
 	symbol: 'CSPR',
 	address: 'CSPR',
-	icon: '/assets/images/token-icons/cspr.png',
+	icon: 'https://assets.casperdash.io/casper-icon.png',
 };
 
 export const getPublicKeyAndLoginOptions = ({ user }) => {

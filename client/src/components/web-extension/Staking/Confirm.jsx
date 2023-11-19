@@ -12,7 +12,9 @@ import { useConfirmDeploy } from '@cd/hooks/useConfirmDeploy';
 import { ENTRY_POINT_REDELEGATE, ENTRY_POINT_DELEGATE } from '@cd/constants/key';
 import ValidatorItem from '@cd/common/SelectValidator/ValidatorItem';
 import { useConfiguration } from '@cd/hooks/useConfiguration';
+import { getCurrentAPY, getCurrentPrice } from '@cd/selectors/price';
 import Copy from '@cd/components/Common/Button/Copy';
+import { calculateRewards } from '@cd/helpers/validator';
 
 import './Confirm.scss';
 
@@ -27,6 +29,10 @@ export const Confirm = () => {
 
 	// Selector
 	const publicKey = useSelector(getPublicKey);
+	const apy = useSelector(getCurrentAPY);
+	const CSPRPrice = useSelector(getCurrentPrice);
+	const delegationRate = _get(stake, 'validator.delegationRate');
+	const rewardCalculationParam = { amount: Number(stake.amount), apy, delegationRate, CSPRPrice };
 
 	// Function
 	const onConfirm = async () => {
@@ -102,6 +108,17 @@ export const Confirm = () => {
 					<div className="cd_we_input_label">Entry Point</div>
 					<div>{stake.action}</div>
 				</div>
+				{stake.action === ENTRY_POINT_DELEGATE && (
+					<div>
+						<div className="cd_we_input_label">Reward Estimation</div>
+						<div>Per Era (~2 Hours): {calculateRewards({ ...rewardCalculationParam, period: 'era' })}</div>
+						<div>Per Day: {calculateRewards({ ...rewardCalculationParam, period: 'day' })}</div>
+						<div>Per Week: {calculateRewards({ ...rewardCalculationParam, period: 'week' })}</div>
+						<div>Per Month: {calculateRewards({ ...rewardCalculationParam, period: 'month' })}</div>
+						<div>Per Year: {calculateRewards({ ...rewardCalculationParam, period: 'year' })}</div>
+					</div>
+				)}
+
 				<div className="cd_we_staking_note">
 					{stake.action === ENTRY_POINT_DELEGATE
 						? getConfig('DELEGATE_TIME_NOTICE')

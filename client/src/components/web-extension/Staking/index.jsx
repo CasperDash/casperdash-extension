@@ -12,8 +12,9 @@ import { fetchValidators } from '@cd/actions/stakeActions';
 import { getAccountDelegation, getMassagedUserDetails, getPublicKey } from '@cd/selectors/user';
 import { toFormattedNumber } from '@cd/helpers/format';
 import { validateStakeForm } from '@cd/helpers/validator';
-import { StakingInfo } from './StakingGrid/StakingInfo';
 import { useConfiguration } from '@cd/hooks/useConfiguration';
+import { getCurrentAPY } from '@cd/selectors/price';
+import { StakingInfo } from './StakingGrid/StakingInfo';
 
 import './Staking.scss';
 
@@ -34,6 +35,7 @@ const Staking = () => {
 	const accountDelegation = useSelector(getAccountDelegation());
 	const userDetails = useSelector(getMassagedUserDetails);
 	const balance = userDetails && userDetails.balance && userDetails.balance.displayBalance;
+	const apy = useSelector(getCurrentAPY);
 
 	// Effect
 	useEffect(() => {
@@ -56,7 +58,9 @@ const Staking = () => {
 			return {};
 		}
 		const validatorError = validator.validatorPublicKey ? {} : { validator: 'Please choose a validator' };
-		const hasDelegated = accountDelegation && accountDelegation.find((delegation) => delegation.validatorPublicKey === validator.validatorPublicKey);
+		const hasDelegated =
+			accountDelegation &&
+			accountDelegation.find((delegation) => delegation.validatorPublicKey === validator.validatorPublicKey);
 		const selectedValidator = {
 			...validator,
 			hasDelegated,
@@ -69,7 +73,7 @@ const Staking = () => {
 				balance,
 				fee: getConfig('CSPR_AUCTION_DELEGATE_FEE'),
 				minAmount:
-					selectedValidator && (selectedValidator.hasDelegated && !getConfig('DISABLE_INCREASE_STAKE'))
+					selectedValidator && selectedValidator.hasDelegated && !getConfig('DISABLE_INCREASE_STAKE')
 						? getConfig('MIN_CSPR_TRANSFER')
 						: getConfig('MIN_CSPR_DELEGATE_TO_NEW_VALIDATOR'),
 				selectedValidator,
@@ -96,9 +100,10 @@ const Staking = () => {
 						publicKey: _get(validator, 'validatorPublicKey'),
 						name: _get(validator, 'name'),
 						icon: _get(validator, 'icon[1]'),
+						delegationRate: _get(validator, 'delegationRate'),
 					},
 					amount,
-					fee: getConfig('CSPR_AUCTION_DELEGATE_FEE')
+					fee: getConfig('CSPR_AUCTION_DELEGATE_FEE'),
 				},
 			},
 		});
@@ -111,7 +116,12 @@ const Staking = () => {
 					<div className="cd_we_staking_validator_header">
 						<div className="cd_we_input_label">Validator</div>
 						<div className="cd_we_input_network_fee">
-							Network Fee: {getConfig('CSPR_AUCTION_DELEGATE_FEE')} CSPR
+							APY:{' '}
+							{toFormattedNumber(apy, {
+								style: 'percent',
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})}
 						</div>
 					</div>
 					<div className="cd_we_staking_validator_box">
@@ -127,7 +137,9 @@ const Staking = () => {
 				<div className="cd_we_staking_amount">
 					<div className="cd_we_staking_amount_header">
 						<div className="cd_we_input_label">Amount</div>
-						<div>Balance: <BalanceDisplay balance={toFormattedNumber(balance)} /></div>
+						<div>
+							Balance: <BalanceDisplay balance={toFormattedNumber(balance)} />
+						</div>
 					</div>
 					<div className="cd_we_staking_amount_text_box">
 						<input type="number" value={amount} onChange={(e) => onAmountChange(e.target.value)} />

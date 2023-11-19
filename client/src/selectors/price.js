@@ -17,3 +17,7 @@ export const getCurrentPrice = createSelector(CSPRMarketInfoSelector, ({ data })
 export const getLatestMarketInfo = createSelector(CSPRMarketInfoSelector, ({ data }) => {
 	return data || {};
 });
+
+export const getCurrentAPY = createSelector(CSPRMarketInfoSelector, ({ data }) => {
+	return data?.apy || 0;
+});
