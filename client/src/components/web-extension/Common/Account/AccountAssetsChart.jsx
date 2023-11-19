@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import CloseIcon from '@cd/assets/image/close-icon.svg';
 import { toFormattedCurrency, toFormattedNumber } from '@cd/helpers/format';
 import './AccountAssetsChart.scss';
+import useBalanceVisible from '@cd/components/hooks/useBalanceVisible';
 
 const COLORS = ['blue', 'orange', 'gold', 'cyan'];
 
@@ -17,6 +18,10 @@ export const AccountAssetsChart = ({
 	isOpen,
 	onClose,
 }) => {
+	// Hooks
+	const { isBalanceVisible } = useBalanceVisible();
+
+	// Selectors
 	const currentPrice = useSelector(getCurrentPrice);
 	const activeCSPRFiat = activeCSPRAmount * currentPrice;
 	const stakedCSPRFiat = stakedCSPRAmount * currentPrice;
@@ -27,11 +32,20 @@ export const AccountAssetsChart = ({
 		{ value: activeCSPRFiat, name: 'Liquid', CSPRAmount: activeCSPRAmount },
 		{ value: stakedCSPRFiat, name: 'Staked', CSPRAmount: stakedCSPRAmount },
 		{ value: undelegatingCSPRFiat, name: 'Undelegating', CSPRAmount: undelegatingCSPRAmount },
-		{ value: otherAmount, name: 'Other' },
+		// ignore other amount if it is too small
+		{ value: otherAmount < 0.001 ? 0 : otherAmount, name: 'Other' },
 	];
 
 	const renderLegend = (props) => {
 		const { payload } = props;
+
+		const getCSPRAmount = (value) => {
+			return isBalanceVisible ? `${toFormattedNumber(value)} CSPR` : '*****';
+		};
+
+		const getFiatAmount = (value) => {
+			return isBalanceVisible ? `${toFormattedCurrency(value)} ` : '*****';
+		};
 
 		return (
 			<div>
@@ -39,8 +53,8 @@ export const AccountAssetsChart = ({
 					<div key={`item-${index}`} className="cd_we_assets-modal__legend">
 						<div className="legend_icon" style={{ backgroundColor: color }} />
 						<div>
-							<b>{value}:</b> {value !== 'Other' ? `${toFormattedNumber(payload.CSPRAmount)} CSPR` : ''} ~
-							{toFormattedCurrency(payload.value < 0 ? 0 : payload.value)}{' '}
+							<b>{value}:</b> {value !== 'Other' ? `${getCSPRAmount(payload.CSPRAmount)}` : ''} ~
+							{getFiatAmount(payload.value)}{' '}
 						</div>
 					</div>
 				))}

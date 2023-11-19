@@ -82,7 +82,7 @@ export const getMassagedUserDetails = createSelector(
 	userAccountDelegationSelector,
 	(userDetails, accountDelegation) => {
 		const totalStakedAmount =
-			accountDelegation.data?.reduce((acc, item) => {
+			accountDelegation?.data?.reduce((acc, item) => {
 				return acc + parseFloat(item.stakedAmount);
 			}, 0) || 0;
 		return massageUserDetails(userDetails.data ? { ...userDetails.data, totalStakedAmount } : {});

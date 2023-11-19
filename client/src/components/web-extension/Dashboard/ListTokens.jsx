@@ -10,7 +10,7 @@ const tokensGridMetadata = {
 	left: [
 		{ key: 'symbol', type: 'primary' },
 		{
-			key: 'balance.displayValue',
+			key: 'balance.displayComp',
 			type: 'secondary',
 		},
 	],
@@ -38,7 +38,8 @@ const ListTokens = () => {
 				totalPrice: isBalanceVisible ? toFormattedCurrency(totalPrice) : '*****',
 				balance: {
 					...balance,
-					displayValue: isBalanceVisible ? (
+					displayValue: isBalanceVisible ? toFormattedNumber(balance.displayValue) : '*****',
+					displayComp: isBalanceVisible ? (
 						<div className="cd_token-balance">
 							{toFormattedNumber(balance.displayValue)}
 							{!!token.totalStakedAmount && (
