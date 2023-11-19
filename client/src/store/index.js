@@ -17,11 +17,9 @@ import tokensReducer from './reducers/tokens';
 import nftsReducer from './reducers/nfts';
 import deployReducer from './reducers/deploys';
 import stakeReducer from './reducers/stakes';
-import requestReducer from './reducers/request';
 import loginModalReducer from './reducers/loginModal';
 import settingsReducer from './reducers/settings';
 import createWalletReducer, { initialState as createWalletInitialState } from './reducers/createWallet';
-import { REQUEST } from './actionTypes';
 
 const isChromeExtension = isUsingExtension();
 const persistConfig = {
@@ -65,18 +63,9 @@ export const initialState = {
 	},
 };
 
-const setLoadingStatus = (actionType) => {
-	return { type: REQUEST.ADD_REQUEST_LOADING_STATUS, payload: actionType };
-};
-
-const removeLoadingStatus = (actionType) => {
-	return { type: REQUEST.REMOVE_REQUEST_LOADING_STATUS, payload: actionType };
-};
-
 const { requestsReducer, requestsMiddleware } = handleRequests({
 	driver: createDriver(axios.create()),
 	onRequest: (request, action, store) => {
-		store.dispatch(setLoadingStatus(action.type));
 		const network = getNetworkState(store.getState);
 
 		const baseURL =
@@ -87,17 +76,6 @@ const { requestsReducer, requestsMiddleware } = handleRequests({
 				: 'https://api.casperdash.io';
 
 		return { ...request, baseURL: request.baseURL || baseURL };
-	},
-	onSuccess: (response, action, store) => {
-		store.dispatch(removeLoadingStatus(action.type));
-		return response;
-	},
-	onError: (error, action, store) => {
-		store.dispatch(removeLoadingStatus(action.type));
-		throw error;
-	},
-	onAbort: (action, store) => {
-		store.dispatch(removeLoadingStatus(action.type));
 	},
 	cache: true,
 });
@@ -110,7 +88,6 @@ const rootReducers = combineReducers({
 	requests: requestsReducer,
 	deploys: deployReducer,
 	stakes: stakeReducer,
-	request: requestReducer,
 	settings: settingsReducer,
 	nfts: nftsReducer,
 	createWallet: createWalletReducer,

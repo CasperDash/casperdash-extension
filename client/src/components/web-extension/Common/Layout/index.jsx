@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation, Outlet } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 import { fetchPriceHistory, fetchCSPRMarketInfo } from '../../../../actions/priceActions';
 import { getLatestBlockHash } from '../../../../actions/deployActions';
 import { REFRESH_TIME } from '../../../../constants/key';
-import { isLoadingRequest } from '../../../../selectors/request';
 import { Header, InnerHeader } from '../Header';
 import BottomBar from './BottomBar';
 import './index.scss';
@@ -20,9 +19,6 @@ const Layout = ({ modules = [] }) => {
 
 	const mainModule = useMemo(() => modules.find((module) => module.route === pathname), [modules, pathname]);
 
-	// Selector
-	const isLoading = useSelector(isLoadingRequest);
-
 	// Effect
 	useEffect(() => {
 		const refreshStateRootHash = setInterval(() => dispatch(getLatestBlockHash()), REFRESH_TIME);
@@ -33,14 +29,6 @@ const Layout = ({ modules = [] }) => {
 		dispatch(fetchPriceHistory());
 		dispatch(fetchCSPRMarketInfo());
 	}, [dispatch]);
-
-	useEffect(() => {
-		if (isLoading) {
-			ref.current.continuousStart();
-		} else {
-			ref.current.complete();
-		}
-	}, [isLoading]);
 
 	return (
 		<div className={`cd_all_pages_content`}>

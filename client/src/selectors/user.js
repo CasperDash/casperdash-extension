@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import { formatAccountName } from '@cd/helpers/format';
 import { CONNECTION_TYPES } from '@cd/constants/settings';
 import { getNetwork } from '@cd/selectors/settings';
+import { toCSPR } from '@cd/helpers/currency';
 import { getConfigKey } from '../services/configurationServices';
 import { convertBalanceFromHex } from '../helpers/balance';
 import { getBase64IdentIcon } from '../helpers/identicon';
@@ -61,6 +62,8 @@ const massageUserDetails = (userDetails) => {
 			mote: parseInt(hexBalance),
 			displayBalance: convertBalanceFromHex(hexBalance),
 		},
+		undelegatingAmount: toCSPR(userDetails.undelegating || 0).toNumber(),
+		totalStakedAmount: toCSPR(userDetails.totalStakedAmount || 0).toNumber(),
 	};
 };
 export const getMassagedBatchUserDetails = (listKeys) => (state) => {
@@ -71,10 +74,20 @@ export const getMassagedBatchUserDetails = (listKeys) => (state) => {
 	});
 };
 
+export const userAccountDelegationSelector = getQuerySelector({ type: USERS.FETCH_ACCOUNT_DELEGATION });
+
 // TODO: should refactor to use batch user details
-export const getMassagedUserDetails = createSelector(userDetailsSelector, (userDetails) => {
-	return massageUserDetails(userDetails.data || {});
-});
+export const getMassagedUserDetails = createSelector(
+	userDetailsSelector,
+	userAccountDelegationSelector,
+	(userDetails, accountDelegation) => {
+		const totalStakedAmount =
+			accountDelegation?.data?.reduce((acc, item) => {
+				return acc + parseFloat(item.stakedAmount);
+			}, 0) || 0;
+		return massageUserDetails(userDetails.data ? { ...userDetails.data, totalStakedAmount } : {});
+	},
+);
 
 export const getAllTokenInfo = createSelector(
 	getMassagedUserDetails,
@@ -82,14 +95,19 @@ export const getAllTokenInfo = createSelector(
 	getMassagedTokenData,
 	getNetwork,
 	(accountDetails, CSPRPrice, tokensData, network) => {
-		const CSPRBalance = (accountDetails && accountDetails.balance && accountDetails.balance.displayBalance) || 0;
+		const CSPRBalance = accountDetails?.balance?.displayBalance ?? 0;
+		const undelegatingCSPRAmount = accountDetails?.undelegatingAmount ?? 0;
+		const totalStakedCSPRAmount = accountDetails?.totalStakedAmount ?? 0;
+
 		const CSPRInfo = {
 			...CSPR_INFO,
 			balance: { displayValue: CSPRBalance },
 			price: CSPRPrice,
-			totalPrice: CSPRPrice * CSPRBalance,
+			totalPrice: CSPRPrice * (CSPRBalance + undelegatingCSPRAmount + totalStakedCSPRAmount),
 			transferFee: getConfigKey('CSPR_TRANSFER_FEE', network),
 			minAmount: getConfigKey('MIN_CSPR_TRANSFER', network),
+			undelegatingAmount: undelegatingCSPRAmount,
+			totalStakedAmount: totalStakedCSPRAmount,
 		};
 
 		//TODO: should get price for each token, currently no token issue on Casper blockchain and no source as well
@@ -110,6 +128,11 @@ export const getAllTokenInfo = createSelector(
 	},
 );
 
+export const getTokenInfo = (tokenAddress) =>
+	createSelector(getAllTokenInfo, (allTokenInfo) => {
+		return allTokenInfo && allTokenInfo.length ? allTokenInfo.find((info) => info.address === tokenAddress) : {};
+	});
+
 export const getAccountTotalBalanceInFiat = createSelector(getAllTokenInfo, (allTokenInfo) => {
 	return allTokenInfo && allTokenInfo.length
 		? allTokenInfo.reduce((out, datum) => {
@@ -126,8 +149,6 @@ export const getTokenInfoByAddress = (token) =>
 	});
 
 export const userStakingRewardSelector = getQuerySelector({ type: USERS.FETCH_STAKING_REWARDS });
-
-export const userAccountDelegationSelector = getQuerySelector({ type: USERS.FETCH_ACCOUNT_DELEGATION });
 
 export const getAccountDelegation = () =>
 	createSelector(userAccountDelegationSelector, ({ data }) => {

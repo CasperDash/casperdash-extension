@@ -1,4 +1,5 @@
 import React from 'react';
+import useBalanceVisible from '@cd/components/hooks/useBalanceVisible';
 import { useLocation } from 'react-router-dom';
 import { useTokenInfo } from '../../hooks/useTokensInfo';
 import { toFormattedCurrency, toFormattedNumber } from '../../../helpers/format';
@@ -12,6 +13,7 @@ const TokenDetails = () => {
 	const {
 		state: { token = {} },
 	} = useLocation();
+	const { isBalanceVisible } = useBalanceVisible();
 
 	const { tokenInfoByAddress: tokenInfo } = useTokenInfo(token);
 
@@ -24,11 +26,17 @@ const TokenDetails = () => {
 							<img src={tokenInfo.icon} />
 						</div>
 						<div className="cd_we_token_info_balance_value">
-							<div>{tokenInfo.balance && toFormattedNumber(tokenInfo.balance.displayValue)}</div>
+							<div>
+								{tokenInfo.balance && isBalanceVisible
+									? toFormattedNumber(tokenInfo.balance.displayValue)
+									: '*****'}
+							</div>
 							<div>{tokenInfo.symbol}</div>
 						</div>
 					</div>
-					<div className="cd_we_token_info_value">~ {toFormattedCurrency(tokenInfo.totalPrice)}</div>
+					<div className="cd_we_token_info_value">
+						~ {isBalanceVisible ? toFormattedCurrency(tokenInfo.totalPrice) : '*****'}
+					</div>
 				</div>
 				<SendReceive token={tokenInfo} />
 			</div>
