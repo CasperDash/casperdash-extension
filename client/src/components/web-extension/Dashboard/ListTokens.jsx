@@ -4,6 +4,7 @@ import Grid from '@cd/web-extension/Common/Grid';
 import { useTokenInfo } from '@cd/hooks/useTokensInfo';
 import useBalanceVisible from '@cd/hooks/useBalanceVisible';
 import { toFormattedCurrency, toFormattedNumber } from '@cd/helpers/format';
+import StakingIcon from '@cd/assets/image/staking-icon-small.svg';
 
 const tokensGridMetadata = {
 	left: [
@@ -34,23 +35,30 @@ const ListTokens = () => {
 
 			return {
 				...token,
-				totalPrice: isBalanceVisible ? toFormattedCurrency(totalPrice): '*****',
+				totalPrice: isBalanceVisible ? toFormattedCurrency(totalPrice) : '*****',
 				balance: {
 					...balance,
-					displayValue: isBalanceVisible ? toFormattedNumber(balance.displayValue) : '*****',
-				}
+					displayValue: isBalanceVisible ? (
+						<div className="cd_token-balance">
+							{toFormattedNumber(balance.displayValue)}
+							{!!token.totalStakedAmount && (
+								<>
+									<div>- {toFormattedNumber(token.totalStakedAmount)}</div>
+									<StakingIcon />
+								</>
+							)}
+						</div>
+					) : (
+						'*****'
+					),
+				},
 			};
 		});
 	}, [isBalanceVisible, allTokenInfo]);
 
 	return (
-		<Grid
-			data={normalizedTokens}
-			metadata={tokensGridMetadata}
-			onRowClick={onSelectToken}
-			isLoading={isFetching}
-		/>
-	)
-}
+		<Grid data={normalizedTokens} metadata={tokensGridMetadata} onRowClick={onSelectToken} isLoading={isFetching} />
+	);
+};
 
 export default ListTokens;
