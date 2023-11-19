@@ -2,6 +2,7 @@
 import { CLPublicKey } from 'casper-js-sdk';
 import { VALIDATOR_REACHED_MAXIMUM } from '@cd/constants/staking';
 import { MAX_METADATA_ATTRIBUTES } from '../constants/nft';
+import { toFormattedCurrency, toFormattedNumber } from './format';
 
 /**
  * Check value is public key.
@@ -75,7 +76,8 @@ export const validateNftTransferForm = (values) => {
 
 const COMMON_ERROR_MESSAGE = {
 	MORE_THAN_ZERO: (tokenSymbol) => `Amount must be more than 0 ${tokenSymbol}.`,
-	NOT_ENOUGH_BALANCE: 'Insufficient balance to complete the transaction. Please add funds to your account and try again.',
+	NOT_ENOUGH_BALANCE:
+		'Insufficient balance to complete the transaction. Please add funds to your account and try again.',
 	NOT_ENOUGH_STAKED_AMOUNT: 'Not enough staked amount.',
 	LESS_THAN_MIN_AMOUNT: (minAmount, tokenSymbol) =>
 		`Please note that the minimum amount for your staking is ${minAmount} ${tokenSymbol} or more. Please adjust your amount and try again.`,
@@ -155,11 +157,7 @@ export const validateStakeForm = ({ amount, tokenSymbol, balance, fee, minAmount
 		errors.amount = COMMON_ERROR_MESSAGE.LESS_THAN_MIN_AMOUNT(minAmount, tokenSymbol);
 	}
 
-	if (
-		selectedValidator &&
-		!selectedValidator.hasDelegated &&
-		selectedValidator.isFullDelegator
-	) {
+	if (selectedValidator && !selectedValidator.hasDelegated && selectedValidator.isFullDelegator) {
 		errors.validator = VALIDATOR_REACHED_MAXIMUM;
 	}
 
@@ -185,4 +183,35 @@ export const validateUndelegateForm = ({ amount, tokenSymbol, balance, fee, stak
 	}
 
 	return errors;
+};
+
+const HOUR_IN_DAY = 24;
+const HOUR_IN_YEAR = 365 * 24;
+const HOUR_IN_MONTH = 30 * 24;
+const HOUR_IN_WEEK = 7 * 24;
+const HOUR_IN_ERA = 2;
+
+const getHoursInPeriod = (period) => {
+	switch (period) {
+		case 'week':
+			return HOUR_IN_WEEK;
+		case 'month':
+			return HOUR_IN_MONTH;
+		case 'year':
+			return HOUR_IN_YEAR;
+		case 'era':
+			return HOUR_IN_ERA;
+		default:
+			return HOUR_IN_DAY;
+	}
+};
+
+export const calculateRewards = ({ amount, period, apy, fee, CSPRPrice }) => {
+	if (!apy) {
+		return 'N/A';
+	}
+	const hours = getHoursInPeriod(period);
+	const rewards = ((amount * apy) / HOUR_IN_YEAR) * hours;
+	const rewardMinusFee = rewards * (1 - (fee || 0));
+	return `${toFormattedNumber(rewardMinusFee)} CSPR - ${toFormattedCurrency(rewardMinusFee * CSPRPrice)}`;
 };
