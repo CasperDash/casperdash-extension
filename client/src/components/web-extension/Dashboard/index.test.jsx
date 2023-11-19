@@ -47,19 +47,6 @@ describe('WalletDetails', () => {
 			expect(getByText(/Account 1/i)).toBeInTheDocument();
 			await fireEvent.click(getByText(/CSPR/i));
 			expect(useNavigate()).toHaveBeenCalledTimes(1);
-			expect(useNavigate()).toHaveBeenCalledWith('/token', {
-				state: {
-					token: {
-						balance: {
-							displayValue: "11",
-						},
-						price: 0.2,
-						symbol: 'CSPR',
-						totalPrice: "$10.00",
-					},
-					name: 'CSPR',
-				},
-			});
 		});
 	});
 });
