@@ -4,32 +4,31 @@ import { useState } from 'react';
 import copyToClipBoard from 'copy-to-clipboard';
 import useTimeout from '@cd/components/hooks/useTimeout';
 
-const CopyButton = ({text, className, delay}) => {
-    const [btnText, setBtnText] = useState('Copy');
+const CopyButton = ({ text, className, delay }) => {
+	const [btnText, setBtnText] = useState('Copy');
 
-    const startTimeOut = useTimeout(() => {
+	const startTimeOut = useTimeout(() => {
 		copyToClipBoard(' ');
-    }, delay);
+	}, delay);
 
-    const backToCopy = useTimeout(() => {
-        setBtnText('Copy');
-    }, 1000);
-      
+	const backToCopy = useTimeout(() => {
+		setBtnText('Copy');
+	}, 1000);
 
 	const onCopy = () => {
 		copyToClipBoard(text);
-        if (delay) {
-            startTimeOut();
-        }
+		if (delay) {
+			startTimeOut();
+		}
 
-        setBtnText('Copied');
-        backToCopy();
-	}
+		setBtnText('Copied');
+		backToCopy();
+	};
 
 	return (
-		<Button variant="normal" onClick={onCopy} className={className} >
-            {btnText}
-        </Button>
+		<Button variant="primary" onClick={onCopy} className={className}>
+			{btnText}
+		</Button>
 	);
 };
 

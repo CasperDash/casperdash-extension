@@ -8,7 +8,7 @@ import { toFormattedCurrency, toFormattedNumber } from '@cd/helpers/format';
 import './AccountAssetsChart.scss';
 import useBalanceVisible from '@cd/components/hooks/useBalanceVisible';
 
-const COLORS = ['blue', 'orange', 'gold', 'cyan'];
+const COLORS = ['blue', 'orange', 'gold', 'cyan', 'grey'];
 
 export const AccountAssetsChart = ({
 	activeCSPRAmount = 0,
@@ -34,7 +34,16 @@ export const AccountAssetsChart = ({
 		{ value: undelegatingCSPRFiat, name: 'Undelegating', CSPRAmount: undelegatingCSPRAmount },
 		// ignore other amount if it is too small
 		{ value: otherAmount < 0.001 ? 0 : otherAmount, name: 'Other' },
-	];
+		// default empty value
+
+		!activeCSPRFiat &&
+			!stakedCSPRFiat &&
+			!undelegatingCSPRFiat &&
+			!otherAmount && {
+				value: 1,
+				name: 'None',
+			},
+	].filter(Boolean);
 
 	const renderLegend = (props) => {
 		const { payload } = props;
@@ -49,15 +58,17 @@ export const AccountAssetsChart = ({
 
 		return (
 			<div>
-				{payload.map(({ value, payload, color }, index) => (
-					<div key={`item-${index}`} className="cd_we_assets-modal__legend">
-						<div className="legend_icon" style={{ backgroundColor: color }} />
-						<div>
-							<b>{value}:</b> {value !== 'Other' ? `${getCSPRAmount(payload.CSPRAmount)}` : ''} ~
-							{getFiatAmount(payload.value)}{' '}
+				{payload.map(({ value, payload, color }, index) =>
+					value === 'None' ? null : (
+						<div key={`item-${index}`} className="cd_we_assets-modal__legend">
+							<div className="legend_icon" style={{ backgroundColor: color }} />
+							<div>
+								<b>{value}:</b> {value !== 'Other' ? `${getCSPRAmount(payload.CSPRAmount)}` : ''} ~
+								{getFiatAmount(payload.value)}{' '}
+							</div>
 						</div>
-					</div>
-				))}
+					),
+				)}
 			</div>
 		);
 	};

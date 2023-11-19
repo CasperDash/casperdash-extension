@@ -95,7 +95,7 @@ export const AccountInfo = () => {
 				onClose={handleOnCloseAccountDetailModal}
 				activeCSPRAmount={CSPRInfo.balance?.displayValue}
 				stakedCSPRAmount={CSPRInfo.totalStakedAmount}
-				undelegatingCSPRAmount={CSPRInfo.totalUndelegatingAmount}
+				undelegatingCSPRAmount={CSPRInfo.undelegatingAmount}
 				totalFiatBalance={totalFiatBalance}
 			/>
 		</div>

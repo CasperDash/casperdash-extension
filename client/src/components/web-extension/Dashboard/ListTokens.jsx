@@ -5,6 +5,7 @@ import { useTokenInfo } from '@cd/hooks/useTokensInfo';
 import useBalanceVisible from '@cd/hooks/useBalanceVisible';
 import { toFormattedCurrency, toFormattedNumber } from '@cd/helpers/format';
 import StakingIcon from '@cd/assets/image/staking-icon-small.svg';
+import _omit from 'lodash/omit';
 
 const tokensGridMetadata = {
 	left: [
@@ -26,7 +27,9 @@ const ListTokens = () => {
 	const { isBalanceVisible } = useBalanceVisible();
 
 	const onSelectToken = (token) => {
-		navigate('/token', { state: { token, name: token.symbol } });
+		navigate('/token', {
+			state: { token: { ...token, balance: _omit(token.balance, 'displayComp') }, name: token.symbol },
+		});
 	};
 
 	const normalizedTokens = useMemo(() => {

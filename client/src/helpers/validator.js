@@ -213,5 +213,8 @@ export const calculateRewards = ({ amount, period, apy, fee, CSPRPrice }) => {
 	const hours = getHoursInPeriod(period);
 	const rewards = ((amount * apy) / HOUR_IN_YEAR) * hours;
 	const rewardMinusFee = rewards * (1 - (fee || 0));
-	return `${toFormattedNumber(rewardMinusFee)} CSPR - ${toFormattedCurrency(rewardMinusFee * CSPRPrice)}`;
+	return `${toFormattedNumber(rewardMinusFee)} CSPR - ${toFormattedCurrency(rewardMinusFee * CSPRPrice, {
+		maximumFractionDigits: 4,
+		minimumFractionDigits: 2,
+	})}`;
 };
