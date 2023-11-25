@@ -13,7 +13,7 @@ test('priceSelector should call getQuerySelector ', () => {
 });
 
 test('getPriceHistory should return price data ', () => {
-	expect(getPriceHistory()).toEqual([[101010, '11.0000']]);
+	expect(getPriceHistory()).toEqual([{ date: '1/1/1970', price: '11.0000' }]);
 });
 
 test('getCurrentPrice should return current price', () => {
