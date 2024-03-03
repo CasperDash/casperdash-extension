@@ -57,13 +57,21 @@ const DappConnection = ({ isUserExisting }) => {
 
 	// TODO: Refactor this later with useQuery
 	useEffect(() => {
-		if (!connectedPublicKeys || !wallets) {
+		let selectedPublicKeys = [];
+		if (publicKey) {
+			selectedPublicKeys = [publicKey];
+		}
+		if (connectedPublicKeys) {
+			selectedPublicKeys = [...selectedPublicKeys, ...connectedPublicKeys];
+		}
+
+		if (!wallets) {
 			return;
 		}
-		const selectedUIDs = wallets.filter((wallet) => connectedPublicKeys.includes(wallet.publicKey)).map((wallet) => wallet.uid);
+		const selectedUIDs = wallets.filter((wallet) => selectedPublicKeys.includes(wallet.publicKey)).map((wallet) => wallet.uid);
 
 		setFieldValue('selectedUIDs', selectedUIDs);
-	}, [connectedPublicKeys, wallets, setFieldValue]);
+	}, [connectedPublicKeys, wallets, setFieldValue, publicKey]);
 
 	useEffect(() => {
 		const loadConnectedUrl = async () => {
@@ -98,15 +106,18 @@ const DappConnection = ({ isUserExisting }) => {
 
 	return (
 		<form className="cd_we_dapp_connect_account" onSubmit={handleSubmit}>
-			<div className="cd_we_dapp_connect_account_header">
-				<div>
-					<h1>Connect With CasperDash</h1>
-				</div>
-				<div className="cd_we_dapp_connect_account_site">
-					<div className="cd_we_dapp_connect_account_site--text">{connectedUrl}</div>
-				</div>
-			</div>
 			<div>
+				<div className="cd_we_dapp_connect_account_header">
+					<div className="cd_we_dapp_connect_account_title">
+						<h1>Connect with CasperDash</h1>
+					</div>
+					<div className="cd_we_dapp_connect_account_description">
+						Select account(s) to use on this site:
+					</div>
+					<div className="cd_we_dapp_connect_account_site">
+						<div className="cd_we_dapp_connect_account_site--text">{connectedUrl}</div>
+					</div>
+				</div>
 				<div className="cd_we_dapp_connect_account_list">
 					{
 						wallets.map((wallet) => {
@@ -130,7 +141,7 @@ const DappConnection = ({ isUserExisting }) => {
 					Cancel
 				</Button>
 				<Button className="cd_we_dapp_connect_account_buttons--connect" variant="primary" type="submit" disabled={isDisabled}>
-					{isDisabled ? 'Select Account(s)' : 'Connect'}
+					Connect
 				</Button>
 			</div>
 		</form>

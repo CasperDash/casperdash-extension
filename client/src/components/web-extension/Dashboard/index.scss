@@ -21,8 +21,16 @@
 					height: 40px;
 					padding: 10px;
 				}
+				.cd_we_item_content {
+					max-width: 90%;
+				}
 			}
 		}
+	}
+	.cd_token-balance {
+		display: flex;
+		align-items: center;
+		gap: 4px;
 	}
 }
 

@@ -7,7 +7,12 @@ export const priceSelector = getQuerySelector({ type: PRICE.FETCH_PRICE_HISTORY 
 export const CSPRMarketInfoSelector = getQuerySelector({ type: PRICE.FETCH_CSPR_MARKET_INFO });
 
 export const getPriceHistory = createSelector(priceSelector, ({ data }) => {
-	return data ? data.map((price) => [price[0], parseFloat(price[1]).toFixed(4)]) : [];
+	return data
+		? data.map((price) => ({
+				date: new Date(price[0]).toLocaleDateString('en-US'),
+				price: parseFloat(price[1]).toFixed(4),
+		  }))
+		: [];
 });
 
 export const getCurrentPrice = createSelector(CSPRMarketInfoSelector, ({ data }) => {
@@ -16,4 +21,8 @@ export const getCurrentPrice = createSelector(CSPRMarketInfoSelector, ({ data })
 
 export const getLatestMarketInfo = createSelector(CSPRMarketInfoSelector, ({ data }) => {
 	return data || {};
+});
+
+export const getCurrentAPY = createSelector(CSPRMarketInfoSelector, ({ data }) => {
+	return data?.apy || 0;
 });

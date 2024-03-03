@@ -279,10 +279,12 @@ class PopupController {
 		await this.closePopup();
 	};
 
-	disconnectFromSite = async ({ origin, publicKey }) => {
+	removePublicKeyOnConnectedSite = async ({ origin, publicKey }) => {
 		let currentPublicKey = publicKey;
+		const activatedPublicKey = await this.accountController.getCurrentPublicKey();
+
 		if (!publicKey) {
-			currentPublicKey = await this.accountController.getCurrentPublicKey();
+			currentPublicKey = activatedPublicKey;
 		}
 		if (!currentPublicKey) {
 			return;
@@ -303,11 +305,36 @@ class PopupController {
 			},
 		});
 
-		await updateStatusEvent(this.currentTab.id, 'disconnected', {
-			isUnlocked: true,
-			isConnected: false,
-			activeKey: publicKey,
+		// Update the status event for the current tab
+		if (activatedPublicKey === currentPublicKey) {
+			await updateStatusEvent(this.currentTab.id, 'disconnected', {
+				isConnected: false,
+				activeKey: publicKey,
+			});
+		}
+
+		return origin;
+	};
+
+	disconnectFromSite = async ({ origin }) => {
+		const connectedSites = await this.getConnectedSites();
+
+		if (_isEmpty(connectedSites)) {
+			return;
+		}
+
+		Object.keys(connectedSites).forEach((key) => {
+			connectedSites[key] = connectedSites[key].filter((connectedSite) => connectedSite !== origin);
 		});
+
+		await setChromeStorageLocal({
+			key: CONNECTED_SITES,
+			value: {
+				...connectedSites,
+			},
+		});
+
+		await updateStatusEvent(this.currentTab.id, 'disconnected', {});
 
 		return origin;
 	};

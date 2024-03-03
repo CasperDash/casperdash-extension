@@ -1,16 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AccountInfo } from '@cd/web-extension/Common/Account';
 import { getPublicKeyAndLoginOptions } from '@cd/selectors/user';
+import { fetchAccountDelegation } from '@cd/actions/userActions';
 import OverlayLoader from '@cd/web-extension/Common/OverlayLoader';
+import { useAutoRefreshEffect } from '@cd/components/hooks/useAutoRefreshEffect';
 import ListTokens from './ListTokens';
 import SendAndReceiveButton from './SendAndReceiveButton';
 import { News } from './News';
 import './index.scss';
 
 const WalletDetails = () => {
+	// Hook
+	const dispatch = useDispatch();
 	// Selector
 	const { publicKey } = useSelector(getPublicKeyAndLoginOptions);
+
+	useAutoRefreshEffect(() => {
+		if (publicKey) {
+			dispatch(fetchAccountDelegation(publicKey));
+		}
+	}, [publicKey]);
 
 	// Functions
 

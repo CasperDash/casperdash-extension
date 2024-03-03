@@ -1,0 +1,28 @@
+.cd_we_account_assets-modal {
+	.cd_we_assets-modal__btn-close {
+		border-radius: 50%;
+		border: 1px solid var(--secondary-text-color-med);
+		cursor: pointer;
+		align-items: center;
+		background-color: transparent;
+		display: flex;
+		height: 28px;
+		justify-content: center;
+		width: 28px;
+	}
+	.cd_we_assets-modal__title {
+		font-size: 18px;
+		font-weight: 600;
+	}
+	.cd_we_assets-modal__legend {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		.legend_icon {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			margin-right: 5px;
+		}
+	}
+}
